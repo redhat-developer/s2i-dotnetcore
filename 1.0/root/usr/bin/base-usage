@@ -1,0 +1,24 @@
+#!/bin/sh -e
+
+cat <<EOF
+This image serves as the base image for all OpenShift v3 S2I builder images.
+It provides all essential libraries and development tools needed to
+successfully build and run an application.
+
+To use this image as a base image, you need to have 's2i/bin' directory in the
+same directory as your S2I image Dockerfile. This directory should contain S2I
+scripts.
+
+This base image also provides the default user you should use to run your
+application. Your Dockerfile should include this instruction after you finish
+installing software:
+
+USER default
+
+The default directory for installing your application sources is
+'/opt/app-root/src' and the WORKDIR and HOME for the 'default' user is set
+to this directory as well. In your S2I scripts, you don't have to use absolute
+path, but rather rely on the relative path.
+
+To learn more about S2I visit: https://github.com/openshift/source-to-image
+EOF
