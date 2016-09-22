@@ -23,8 +23,17 @@ LABEL io.k8s.description="Platform for building and running .NET Core 1.0 applic
 LABEL Name="dotnet/dotnetcore-10-rhel7" \
       BZComponent="rh-dotnetcore10-docker" \
       Version="1.0" \
-      Release="2" \
+      Release="8" \
       Architecture="x86_64"
+
+COPY ./root/usr/bin /usr/bin
+
+# Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
+COPY ./s2i/bin/ /usr/libexec/s2i
+
+# Each language image can have 'contrib' a directory with extra files needed to
+# run and build the applications.
+COPY ./contrib/ /opt/app-root
 
 RUN yum install -y yum-utils && \
     yum-config-manager --enable rhel-7-server-dotnet-rpms && \
@@ -37,14 +46,23 @@ RUN yum install -y yum-utils && \
       -c "Default Application User" default && \
     chown -R 1001:0 /opt/app-root
 
-COPY ./root/usr/bin /usr/bin
+# Switch to default app-user for cache population
+USER 1001
 
-# Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
-COPY ./s2i/bin/ /usr/libexec/s2i
+# Don't download/extract docs for nuget packages
+ENV NUGET_XMLDOC_MODE=skip
 
-# Each language image can have 'contrib' a directory with extra files needed to
-# run and build the applications.
-COPY ./contrib/ /opt/app-root
+# Initialize the .Net cache via 'scl enable rh-dotnetcore10 -- dotnet new'
+# Move to the proper command to do this once https://github.com/dotnet/cli/issues/3692 is fixed.
+RUN cd /opt/app-root/src && mkdir cache-warmup && \
+    cd cache-warmup && \
+    scl enable rh-dotnetcore10 -- dotnet new && \
+    cd .. && \
+    rm -rf cache-warmup && \
+    rm -rf /tmp/NuGetScratch
+
+# Switch back to root for changing dir ownership/permissions
+USER 0
 
 # In order to drop the root user, we have to make some directories world
 # writable as OpenShift default security model is to run the container under
@@ -65,6 +83,7 @@ ENV BASH_ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
 # Directory with the sources is set as the working directory. Set it to ${HOME}
 WORKDIR /opt/app-root/src
 
+# Run container by default as user with id 1001 (default)
 USER 1001
 
 ENTRYPOINT ["container-entrypoint"]
