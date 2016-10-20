@@ -23,7 +23,7 @@ LABEL io.k8s.description="Platform for building and running .NET Core 1.0 applic
 LABEL Name="dotnet/dotnetcore-10-rhel7" \
       BZComponent="rh-dotnetcore10-docker" \
       Version="1.0" \
-      Release="8" \
+      Release="10" \
       Architecture="x86_64"
 
 COPY ./root/usr/bin /usr/bin
@@ -52,14 +52,20 @@ USER 1001
 # Don't download/extract docs for nuget packages
 ENV NUGET_XMLDOC_MODE=skip
 
-# Initialize the .Net cache via 'scl enable rh-dotnetcore10 -- dotnet new'
-# Move to the proper command to do this once https://github.com/dotnet/cli/issues/3692 is fixed.
+# - Initialize the .Net cache via 'scl enable rh-dotnetcore10 -- dotnet new'
+#   Move to the proper command to do this once https://github.com/dotnet/cli/issues/3692 is fixed.
+# - Removal of /tmp/NuGetScratch is needed due to:
+#   https://github.com/NuGet/Home/issues/2793
+# - Work around corefx issue 12758 where some C# source files are included
+#   in nuget packages. See:
+#   https://github.com/dotnet/corefx/issues/12758
 RUN cd /opt/app-root/src && mkdir cache-warmup && \
     cd cache-warmup && \
     scl enable rh-dotnetcore10 -- dotnet new && \
     cd .. && \
     rm -rf cache-warmup && \
-    rm -rf /tmp/NuGetScratch
+    rm -rf /tmp/NuGetScratch && \
+    find .nuget -name '*.cs' -exec rm '{}' \;
 
 # Switch back to root for changing dir ownership/permissions
 USER 0
