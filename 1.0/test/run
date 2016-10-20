@@ -163,7 +163,7 @@ test_web_application() {
   # Wait for the container to write it's CID file
   wait_for_cid
 
-  test_scl_usage "dotnet --version" "1.0.0-preview2-003121" "${cid_file}"
+  test_scl_usage "dotnet --version" "1.0.0-preview2-003131" "${cid_file}"
   check_result $?
   test_connection ${out_file}
   rm -rf ${out_file}
