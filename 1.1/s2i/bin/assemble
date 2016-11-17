@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+echo "---> Copying application source ..."
+cp -Rf /tmp/src/. ./
+
+echo "---> Installing dependencies ..."
+dotnet restore
+
+echo "---> Building application from source ..."
+dotnet build
+
+# Fix source directory permissions
+fix-permissions ./
+# set permissions for any installed artifacts
+fix-permissions /opt/app-root
