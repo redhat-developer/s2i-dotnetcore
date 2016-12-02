@@ -9,7 +9,10 @@ echo "---> Installing dependencies ..."
 dotnet restore
 
 echo "---> Building application from source ..."
-dotnet build
+DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
+DOTNET_FRAMEWORK="${DOTNET_FRAMEWORK:-netcoreapp1.0}"
+
+dotnet build -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION"
 
 # Fix source directory permissions
 fix-permissions ./

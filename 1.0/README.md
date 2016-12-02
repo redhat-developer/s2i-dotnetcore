@@ -88,3 +88,21 @@ Repository organization
 
     ASP .Net hello world example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
 
+Environment variables
+---------------------
+
+To set these environment variables, you can place them as a key value pair into
+a `.s2i/environment` file inside your source code repository.
+
+* **DOTNET_CONFIGURATION**
+
+    Used to run the application in Debug or Release mode. This should be either
+    `Release` or `Debug`.  This is passed to the `dotnet build` invocation.
+    Defaults to `Release`.
+
+* **DOTNET_FRAMEWORK**
+
+    Used to run the select the target framework to run this application under.
+    This is passed to the `dotnet build` invocation. The framework needs to be
+    defined in the `project.json` file. Defaults to `netcoreapp1.0`.
+
