@@ -3,12 +3,19 @@ source /opt/app-root/etc/generate_container_user
 
 set -e
 
+DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
+DOTNET_FRAMEWORK="${DOTNET_FRAMEWORK:-netcoreapp1.0}"
+DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
+
+APP_DLL_NAME="$(basename "$(realpath "$(pwd)/${DOTNET_STARTUP_PROJECT}")").dll"
+APP_DLL_PATH="${DOTNET_STARTUP_PROJECT}/bin/${DOTNET_CONFIGURATION}/${DOTNET_FRAMEWORK}/${APP_DLL_NAME}"
+
 ARG_FILE="arguments.txt"
 if [[ -f "${ARG_FILE}" ]]; then
   echo "---> Running application with arguments from file '${ARG_FILE}' ..."
   PROG_ARGS="$(cat ${ARG_FILE})"
-  dotnet run -- ${PROG_ARGS}
+  dotnet "${APP_DLL_PATH}" ${PROG_ARGS}
 else
   echo "---> Running application ..."
-  dotnet run
+  dotnet "${APP_DLL_PATH}"
 fi

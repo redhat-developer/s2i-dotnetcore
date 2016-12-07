@@ -2,17 +2,19 @@
 
 set -e
 
+DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
+DOTNET_FRAMEWORK="${DOTNET_FRAMEWORK:-netcoreapp1.0}"
+DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
+DOTNET_RESTORE_ROOT="${DOTNET_RESTORE_ROOT:-.}"
+
 echo "---> Copying application source ..."
 cp -Rf /tmp/src/. ./
 
 echo "---> Installing dependencies ..."
-dotnet restore
+dotnet restore $DOTNET_RESTORE_ROOT
 
 echo "---> Building application from source ..."
-DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
-DOTNET_FRAMEWORK="${DOTNET_FRAMEWORK:-netcoreapp1.0}"
-
-dotnet build -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION"
+dotnet build -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT"
 
 # Fix source directory permissions
 fix-permissions ./
