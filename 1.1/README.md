@@ -88,6 +88,10 @@ Repository organization
 
     ASP .Net hello world example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
 
+  * **`asp-net-hello-world-envvar/`**
+
+    ASP .Net hello world example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
+
 Environment variables
 ---------------------
 
