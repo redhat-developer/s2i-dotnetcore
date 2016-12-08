@@ -9,7 +9,7 @@
 # Example usage: $ sudo ./test/run
 IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-10-rhel7}
 
-# TODO: Add tests for other apps
+declare -a CLI_APPS=(helloworld qotd dotnetbot)
 declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
@@ -55,6 +55,10 @@ prepare() {
 
 run_test_application() {
   docker run --user=100001 ${CONTAINER_ARGS} -d --cidfile=${cid_file} -p ${test_port}:${test_port} ${IMAGE_NAME}-testapp
+}
+
+run_cli_test_application() {
+  docker run --user=100001 ${CONTAINER_ARGS} -it --rm ${IMAGE_NAME}-testapp
 }
 
 cleanup_app() {
@@ -171,6 +175,120 @@ test_web_application() {
   cleanup_app
 }
 
+echo_details() {
+  local expected="$1"
+  local actual="$2"
+  cat <<EOF
+expected:
+
+-------->8
+${expected}
+8<--------
+
+but got:
+
+-------->8
+${actual}
+8<--------
+
+EOF
+}
+
+get_expected_cli() {
+  local app="$1"
+  case "${app}" in
+    "helloworld")
+      echo 'Hello World!'
+      ;;
+    "dotnetbot")
+      echo foobarbaz
+      ;;
+    "qotd")
+      echo IGNORE_ME
+      ;;
+    *)
+      echo "Unknown CLI app ${app}"
+      exit 1
+      ;;
+  esac
+}
+
+filter_cli() {
+  local app="$1"
+  local all_output="$2"
+  case "${app}" in
+    "helloworld")
+      # Note: tail -n1 => Omit "--> Running application ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    "dotnetbot")
+      # Only interested in the first 3 lines
+      echo "${all_output}" | head -n3
+      ;;
+    "qotd")
+      # Note: tail -n1 => Omit "--> Running application with ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    *)
+      echo "Unknown CLI app ${app}"
+      exit 1
+      ;;
+  esac
+}
+
+success_cli() {
+  local app="$1"
+  local actual="$2"
+  local expected="$3"
+  case "${app}" in
+    "helloworld")
+      echo "${actual}" | grep -q "${expected}"
+      return $?
+      ;;
+    "dotnetbot")
+      local retval=0
+      # Expect running with arguments from arguments.txt
+      echo "${actual}" | head -n1 | grep -q "arguments.txt"
+      retval=$(( ${retval} + $? ))
+      # Expect to have foobarbaz on 3rd line
+      echo "${actual}" | tail -n1 | grep -q "${expected}"
+      retval=$(( ${retval} + $? ))
+      return ${retval}
+      ;;
+    "qotd")
+      local retval=0
+      # Only match for the QOTD prefix
+      echo ${actual} | grep -q "\[QOTD\]: "
+      retval=$(( ${retval} + $? ))
+      return ${retval}
+      ;;
+    *)
+      echo "Unknown CLI app ${app}"
+      exit 1
+      ;;
+  esac
+}
+
+test_cli_app() {
+  local app="$1"
+  info "Testing CLI app: ${app} ..."
+  prepare ${app}
+  run_s2i_build ${app}
+  check_result $?
+
+  local expected="$( get_expected_cli ${app} )"
+  local actual_pre="$( run_cli_test_application )"
+  local actual="$( filter_cli "${app}" "${actual_pre}" )"
+  if ! success_cli "${app}" "${actual}" "${expected}"; then
+    info "Test CLI app: ${app} FAILED."
+    echo_details "${expected}" "${actual}"
+    cleanup ${app}
+    exit 1
+  else
+    info "Test CLI app: ${app} PASSED."
+  fi
+  cleanup ${app}
+}
 
 # Since we built the candidate image locally, we don't want S2I attempt to pull
 # it from Docker hub
@@ -183,6 +301,11 @@ check_result $?
 # Verify the 'usage' script is working properly when running the base image with 'docker run ...'
 test_docker_run_usage
 check_result $?
+
+# Verify that some CLI s2i apps build and run properly
+for app in ${CLI_APPS[@]}; do
+  test_cli_app "${app}"
+done
 
 for app in ${WEB_APPS[@]}; do
   prepare ${app}
