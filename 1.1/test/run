@@ -9,7 +9,7 @@
 # Example usage: $ sudo ./test/run
 IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-11-rhel7}
 
-declare -a CLI_APPS=(helloworld qotd dotnetbot)
+declare -a CLI_APPS=(hw_framework_config helloworld qotd dotnetbot)
 declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
@@ -200,6 +200,9 @@ get_expected_cli() {
     "helloworld")
       echo 'Hello World!'
       ;;
+    "hw_framework_config")
+      echo 'Hello World!'
+      ;;
     "dotnetbot")
       echo foobarbaz
       ;;
@@ -218,6 +221,10 @@ filter_cli() {
   local all_output="$2"
   case "${app}" in
     "helloworld")
+      # Note: tail -n1 => Omit "--> Running application ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    "hw_framework_config")
       # Note: tail -n1 => Omit "--> Running application ..." output
       echo "${all_output}" | tail -n1
       ;;
@@ -242,6 +249,10 @@ success_cli() {
   local expected="$3"
   case "${app}" in
     "helloworld")
+      echo "${actual}" | grep -q "${expected}"
+      return $?
+      ;;
+    "hw_framework_config")
       echo "${actual}" | grep -q "${expected}"
       return $?
       ;;
