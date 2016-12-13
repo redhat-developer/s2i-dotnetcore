@@ -45,7 +45,7 @@ namespace SchoolBusClient.Handlers
                 if (middleware_name != null)
                 {
                     // Create a new URL to the next server inline.
-                    var url = "http://" + middleware_name + "/" + path_remainder;
+                    var url = "http://" + middleware_name + "/api/" + path_remainder;
                     await StreamAsync(context, url);
                     endRequest = true;
                 }
