@@ -1,0 +1,878 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: REST API Documentation for Schoolbus
+  description: API Sample
+  termsOfService: None
+basePath: /api
+paths:
+  /inspections:
+    get:
+      tags:
+        - Inspection
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Inspection'
+        "404":
+          description: Inspection not found
+      deprecated: false
+  /inspections/{inspection-id}:
+    get:
+      tags:
+        - Inspection
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Inspection'
+        "404":
+          description: Inspection not found
+      deprecated: false
+      parameters:
+        - name: inspection-id
+          in: path
+          description: Id of Inspection to fetch
+          required: true
+          type: integer  
+  /schoolbuses/{schoolbus-id}:
+    get:
+      description: Returns a specific SchoolBus object
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBus'
+        "404":
+           description: SchoolBus not found
+      deprecated: false
+      parameters:
+        - name: schoolbus-id
+          in: path
+          description: Id of SchoolBus to fetch
+          required: true
+          type: integer
+  /schoolbuses/{schoolbus-id}/inspections:
+    get:
+      tags:
+        - Inspection
+      operationId: InspectionsGet
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Inspection'
+        "404":
+          description: SchoolBus not found
+      deprecated: false
+      parameters:
+        - name: schoolbus-id
+          in: path
+          description: Id of SchoolBus to fetch Inspections for
+          required: true
+          type: integer
+  /schoolbuses/{schoolbus-id}/notes:
+    get:
+      description: Returns notes for a particular SchoolBus.
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusNote'
+        "404":
+           description: SchoolBus not found
+      parameters:
+        - name: schoolbus-id
+          in: path
+          description: Id of SchoolBus to fetch notes for
+          required: true
+          type: integer
+  /schoolbus/{schoolbus-id}/attachments:
+    get:
+      description: Returns attachments for a particular SchoolBus
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusAttachment'
+        "404":
+           description: SchoolBus not found
+      parameters:
+        - name: schoolbus-id
+          in: path
+          description: Id of SchoolBus to fetch attachments for
+          required: true
+          type: integer
+  /schoolbus/{schoolbus-id}/history:
+    get:
+      description: Returns History for a particular SchoolBus
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusHistory'
+      parameters:
+        - name: schoolbus-id
+          in: path
+          description: Id of SchoolBus to fetch SchoolBusHistory for
+          required: true
+          type: integer
+  /schoolbus/{schoolbus-id}/ccwdata:
+    get:
+      description: Returns CCWData for a particular Schoolbus
+      tags:
+        - Owner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CCWData'
+      parameters:
+        - name: schoolbus-id
+          in: path
+          description: Id of SchoolBus to fetch CCWData for
+          required: true
+          type: integer      
+  /owner/{owner-id}:
+    get:
+      description: Returns a particular Owner
+      tags:
+        - Owner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Owner'
+      parameters:
+        - name: owner-id
+          in: path
+          description: Id of Owner to fetch
+          required: true
+          type: integer
+  /owner/{owner-id}/attachments:
+    get:
+      description: Returns attachments for a particular Owner
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OwnerAttachments'
+      parameters:
+        - name: owner-id
+          in: path
+          description: Id of Owner to fetch attachments for
+          required: true
+          type: integer
+  /owner/{owner-id}/notes:
+    get:
+      description: Returns notes for a particular Owner
+      tags:
+        - Owner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OwnerNotes'
+      parameters:
+        - name: owner-id
+          in: path
+          description: Id of Owner to fetch notes for
+          required: true
+          type: integer
+  /owner/{owner-id}/contactphones:
+    get:
+      description: Returns phone contacts for a particular Owner
+      tags:
+        - Owner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OwnerContactPhone'
+      parameters:
+        - name: owner-id
+          in: path
+          description: Id of Owner to fetch contact phone for
+          required: true
+          type: integer
+  /owner/{owner-id}/contactaddresses:
+    get:
+      description: Returns address contacts for a particular Owner
+      tags:
+        - Owner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OwnerContactAddress'    
+      parameters:
+        - name: owner-id
+          in: path
+          description: Id of Owner to fetch contact address for
+          required: true
+          type: integer
+  /favoritecontexttypes:
+    get:
+      description: Returns list of available FavoriteContextTypes
+      tags:
+        - Owner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FavoriteContextType'
+  /users/{user-id}:
+    get:
+      description: Returns data for a particular User
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/User'    
+        "404":
+           description: User not found
+      parameters:
+        - name: user-id
+          in: path
+          description: Id of User to fetch
+          required: true
+          type: integer
+  /users/{user-id}/favorites:
+    get:
+      description: Returns a user's favorites of a given context type
+      tags:
+        - Owner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UserFavorite'
+        "404":
+           description: User not found
+      parameters:
+        - name: user-id
+          in: path
+          description: Id of User to fetch favorites for
+          required: true
+          type: integer
+  /users/{user-id}/notifications:
+    get:
+      description: Returns a user's notifications
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UserNotifications'
+      parameters:
+        - name: user-id
+          in: path
+          description: Id of User to fetch notifications for
+          required: true
+          type: integer
+  /regions:
+    get:
+      description: Returns a list of regions for a given province
+      tags:
+        - SchoolDistrict
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Region'    
+  /regions/{region-id}:
+    get:
+      description: Returns a specific region
+      tags:
+        - Region
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Region'
+      parameters:
+        - name: region-id
+          in: path
+          description: Id of Regions to fetch
+          required: true
+          type: integer  
+  /regions/{region-id}/cities:
+    get:
+      description: Returns a list of cities for a given region
+      tags:
+        - City
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/City'
+      parameters:
+        - name: region-id
+          in: path
+          description: Id of Region to fetch Cities for
+          required: true
+          type: integer
+  /regions/{region-id}/localareas:
+    get:
+      description: Returns a list of LocalAreas for a given region
+      tags:
+        - LocalArea
+        - Region
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LocalArea'
+      parameters:
+        - name: region-id
+          in: path
+          description: Id of Region to fetch SchoolDistricts for
+          required: true
+          type: integer        
+  /regions/{region-id}/schooldistricts:
+    get:
+      description: Returns a list of SchoolDistricts for a given region
+      tags:
+        - SchoolDistrict
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolDistrict'
+      parameters:
+        - name: region-id
+          in: path
+          description: Id of Region to fetch SchoolDistricts for
+          required: true
+          type: integer
+definitions:
+  SchoolBus:
+    type: object
+    required:
+      - Id
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      Owner:
+        $ref: '#/definitions/Owner'
+      CRNO:
+        type: string
+        description: CR Number.
+      LesseeNumber:
+        type: integer
+      LicenseExpiryDate:
+        type: string
+        format: date-time
+      PermitExpiryDate:
+        type: string
+        format: date-time
+      NextInspectionDate:
+        type: string
+        format: date-time
+      ManYear:
+        type: integer
+      SB_Cap:
+        type: string
+      MC_Cap:
+        type: string
+      WC_Cap:
+        type: string
+      LastUpdate:
+        type: string
+        format: date-time
+      Plate:
+        type: string
+        x-chance-type: word
+      CCWData:
+        $ref: '#/definitions/CCWData'
+  SchoolBusNote:
+    type: object
+    required:
+      - Id 
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      SchoolBus:
+          $ref: '#/definitions/SchoolBus'
+  SchoolBusAttachment:
+    type: object
+    required:
+      - Id  
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      SchoolBus:
+          $ref: '#/definitions/SchoolBus'
+  SchoolBusHistory:
+    type: object
+    required:
+      - Id    
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      SchoolBus:
+          $ref: '#/definitions/SchoolBus'
+  Owner:
+    type: object
+    required:
+      - Id    
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      FleetNum:
+        format: int32
+        type: integer
+      MCCode:
+        type: string
+      FleetSize:
+        type: string
+      HasBuses:
+        type: integer
+      Diff:
+        type: string
+      LeaseSize:
+        type: string
+      HasDups:
+        type: integer
+      SchoolDistrict:
+        $ref: '#/definitions/SchoolDistrict'
+      City: 
+        $ref: '#/definitions/City'
+  OwnerAttachments:
+    type: object
+    required:
+      - Id    
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      Owner:
+          $ref: '#/definitions/Owner'    
+  OwnerNotes:
+    type: object
+    required:
+      - Id    
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      Owner:
+          $ref: '#/definitions/Owner'    
+  OwnerContact:
+    type: object
+    required:
+      - Id    
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      Owner:
+          $ref: '#/definitions/Owner'    
+  OwnerContactPhone:
+    type: object
+    required:
+      - Id    
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      OwnerContact:
+          $ref: '#/definitions/OwnerContact'    
+  OwnerContactAddress:
+    type: object
+    required:
+      - Id    
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      OwnerContact:
+          $ref: '#/definitions/OwnerContact'    
+  CCWData:
+    type: object
+    required:
+      - Id    
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      ModelYear:
+        format:  int32
+        type: integer
+        description: Vehicle Year
+        x-type-options:
+          min: 1970
+          max: 2017
+      RateClass:
+        type: string
+      CVIPDecal:
+        type: string
+      FleetUnitNo: 
+        type: integer
+      GVW:
+        type: integer
+      Body:
+        type: string
+      RebuiltStatus:
+        type: string
+      CVIPExpiry:
+        type: string
+        format: date-time
+      NetWt:
+        type: integer
+      Model:
+        type: string
+      Fuel:
+        type: string
+      SeatingCapacity:
+        type: integer
+      Colour:
+        type: string	  			
+  Inspection:
+    required:
+      - Id  
+    type: object
+    properties:
+      Id:
+          format: int32
+          type: integer
+          description: Primary Key
+          x-type-options:
+            min: 1
+            max: 1000
+      SchoolBus:
+        $ref: '#/definitions/SchoolBus'
+      Inspector:
+        $ref: '#/definitions/User'
+  User:
+    type: object
+    required:
+      - Id  
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      Email:
+        type: string
+        description:  Email address
+        x-chance-type: email
+      SmUserId:
+        type: string
+        description:  Security Manager User ID
+        x-chance-type:  
+      GivenName:
+        type: string
+        description:  Last Name
+  FavoriteContextType:
+    type: object
+    required:
+      - Id    
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      Name:
+        type: string
+        description:  Context Name
+        x-chance-type: name
+  UserFavorite:
+    type: object
+    required:
+      - Id  
+    properties:
+      Id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      JsonData:
+        type: string
+        description:  Saved search
+        x-chance-type: word
+      Name: 
+        type: string
+        description:  Context Name
+        x-chance-type: name
+  BusNotification:
+    type: object
+    required:
+      - Id  
+    properties:
+      Id:
+          format: int32
+          type: integer
+          description: Primary Key
+          x-type-options:
+            min: 1
+            max: 1000
+      SchoolBus:
+        $ref: '#/definitions/SchoolBus'
+  UserNotifications:
+    type: object
+    required:
+      - Id  
+    properties:
+      Id:
+          format: int32
+          type: integer
+          description: Primary Key
+          x-type-options:
+            min: 1
+            max: 1000
+      BusNotification:
+        $ref: '#/definitions/BusNotification'
+      User:
+        $ref: '#/definitions/User'
+  Region:
+    type: object
+    required:
+      - Id  
+    properties:
+      Id:
+          format: int32
+          type: integer
+          description: Primary Key
+          x-type-options:
+            min: 1
+            max: 1000
+  City:
+    type: object
+    required:
+      - Id  
+    properties:
+      Id:
+          format: int32
+          type: integer
+          description: Primary Key
+          x-type-options:
+            min: 1
+            max: 1000
+      Region:
+        $ref: '#/definitions/Region'
+  LocalArea:
+    type: object
+    required:
+      - Id  
+    properties:
+      Id:
+          format: int32
+          type: integer
+          description: Primary Key
+          x-type-options:
+            min: 1
+            max: 1000
+      Region:
+        $ref: '#/definitions/Region'
+  SchoolDistrict:
+    type: object
+    required:
+      - Id  
+    properties:
+      Id:
+          format: int32
+          type: integer
+          description: Primary Key
+          x-type-options:
+            min: 1
+            max: 1000
+      LocalArea:
+        $ref: '#/definitions/LocalArea'
+securityDefinitions: {}
