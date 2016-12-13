@@ -35,7 +35,7 @@ namespace SchoolBusAPI.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host = postgresql; Username = userCA4; Password = 8RU17TUjclQjGOPi; Database = schoolbus");
+            optionsBuilder.UseNpgsql("Host = postgresql-9-qojhm; Username = userCA4; Password = 8RU17TUjclQjGOPi; Database = schoolbus");
         }
 
         /// <summary>
