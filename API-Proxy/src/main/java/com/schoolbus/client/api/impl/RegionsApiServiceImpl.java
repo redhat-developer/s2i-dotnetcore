@@ -19,15 +19,16 @@ public class RegionsApiServiceImpl implements RegionsApiService {
       
       
       
-      return Response.ok().entity(sendGet()).build();
+      return Response.ok().entity(sendGet("/regions")).build();
   }
       
       
-  private String sendGet() {
+  private String sendGet(String path) {
 
        try
        { 
-		String url = "http://server/api/regions";
+                String server = System.getenv("BACKEND_NAME");
+		String url = "http://" + server + "/api/" + path ;
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
