@@ -33,10 +33,7 @@ namespace SchoolBusAPI.Models
         { }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host=172.30.76.139; Username = userCA4; Password=8RU17TUjclQjGOPi; Database = schoolbus");
-        }
+       
 
         /// <summary>
         /// Override for OnModelCreating - used to change the database naming convention.
