@@ -34,10 +34,6 @@ namespace SchoolBusAPI.Models
 
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host = 127.0.0.1; Username = test; Password = test161107; Database = test");
-        }
 
         /// <summary>
         /// Override for OnModelCreating - used to change the database naming convention.
