@@ -50,18 +50,9 @@ namespace SchoolBusAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = "";
-
-            if (_hostingEnv.IsDevelopment())
-            {
-                connectionString = Configuration["DbContextSettings:ConnectionString"];
-            }
-            else
-            {
-                // construct the connection string from environment.
-                connectionString = "Host = " + Configuration["DATABASE_SERVICE_NAME"] + "; Username = " + Configuration["POSTGRESQL_USER"] + "; Password = " + Configuration["POSTGRESQL_PASSWORD"] + "; Database = " + Configuration["POSTGRESQL_DATABASE"];                
-            }
-		            
+            string connectionString = "Host = " + Configuration["DATABASE_SERVICE_NAME"] + "; Username = " + Configuration["POSTGRESQL_USER"] + "; Password = " + Configuration["POSTGRESQL_PASSWORD"] + "; Database = " + Configuration["POSTGRESQL_DATABASE"];                
+            
+            Console.WriteLine(connectionString);
             services.AddDbContext<DbAppContext>(
                 opts => opts.UseNpgsql(connectionString)
             );
