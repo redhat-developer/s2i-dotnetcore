@@ -30,13 +30,18 @@ namespace SchoolBusAPI.Models
         /// </summary>
         public DbAppContext(DbContextOptions<DbAppContext> options)
                                 : base(options)
-        { }			
+        { }
 
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql("Host = postgresql; Username = userCA4; Password = 8RU17TUjclQjGOPi; Database = schoolbus");
+        }
 
         /// <summary>
         /// Override for OnModelCreating - used to change the database naming convention.
         /// </summary>
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // add our naming convention extension
