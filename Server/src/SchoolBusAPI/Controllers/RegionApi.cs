@@ -38,7 +38,43 @@ namespace SchoolBusAPI.Controllers
         {
             _context = context;
         }
-	
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a specific region</remarks>
+        /// <param name="regionId">Id of Regions to fetch</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/regions")]
+        [SwaggerOperation("RegionsGet")]
+        [SwaggerResponse(200, type: typeof(Region))]
+        public virtual IActionResult RegionsGet()
+        {
+            var results = _context.Regions.ToList();            
+            return new ObjectResult(results);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Create regions</remarks>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/regions")]
+        [SwaggerOperation("RegionsCreate")]
+        [SwaggerResponse(200, type: typeof(Region))]
+        public virtual IActionResult RegionsCreate([FromBody] Region item)
+        {
+            if (item == null)
+            {
+                return BadRequest();
+            }
+            _context.Regions.Add(item);
+            return CreatedAtRoute("GetRegions", new {id = item.Id}, item);            
+        }
+        
+
         /// <summary>
         /// 
         /// </summary>
@@ -50,14 +86,40 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("RegionsRegionIdGet")]
         [SwaggerResponse(200, type: typeof(Region))]
         public virtual IActionResult RegionsRegionIdGet([FromRoute]int regionId)
-        { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<Region>(exampleJson)
-            : default(Region);
-            return new ObjectResult(example);
+        {
+            // get a specific region.
+            var result = _context.Regions.First(a => a.Id == regionId);            
+            return new ObjectResult(result);
+
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Create regions</remarks>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/regions/{region-id}")]
+        [SwaggerOperation("RegionsUpdate")]
+        [SwaggerResponse(200, type: typeof(Region))]
+        public virtual IActionResult RegionsUpdate(int region_id, [FromBody] Region item)
+        {
+            if (item == null || item.Id != region_id)
+            {
+                return BadRequest();
+            }
+
+            var region = _context.Regions.Find(region_id);
+            if (region == null)
+            {
+                return NotFound();
+            }
+
+            _context.Regions.Update(item);
+            return new NoContentResult();            
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -69,13 +131,10 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("RegionsRegionIdLocalareasGet")]
         [SwaggerResponse(200, type: typeof(List<LocalArea>))]
         public virtual IActionResult RegionsRegionIdLocalareasGet([FromRoute]int regionId)
-        { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<LocalArea>>(exampleJson)
-            : default(List<LocalArea>);
-            return new ObjectResult(example);
+        {
+            // get a specific region.
+            var result = _context.LocalAreas.All(a => a.Region.Id == regionId);
+            return new ObjectResult(result);            
         }
     }
 }

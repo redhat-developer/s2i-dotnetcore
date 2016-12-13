@@ -103,6 +103,7 @@ namespace SchoolBusAPI
                 Console.WriteLine("Migrating database");
                 // do any pending migrations
                 context.Database.Migrate();
+                
                 // populate the column comments.  Comments are the PGSQL column descriptions
                 DbCommentsUpdater<DbAppContext> updater = new DbCommentsUpdater<DbAppContext>((DbAppContext)context);
                 updater.UpdateDatabaseDescriptions();
