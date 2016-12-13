@@ -1,3 +1,3 @@
 @ECHO OFF
-call load.bat regions.json http://localhost:8080/api/region
+call load.bat regions.json http://server-dev.router.default.svc.cluster.local/api/region
 
