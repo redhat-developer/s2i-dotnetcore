@@ -19,7 +19,7 @@ public class RegionsApiServiceImpl implements RegionsApiService {
       
       
       
-      return Response.ok().entity(sendGet("/regions")).build();
+      return Response.ok().entity(sendGet("/region")).build();
   }
       
       
