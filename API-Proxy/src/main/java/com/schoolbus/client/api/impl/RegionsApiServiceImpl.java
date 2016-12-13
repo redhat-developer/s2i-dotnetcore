@@ -28,7 +28,7 @@ public class RegionsApiServiceImpl implements RegionsApiService {
        try
        { 
                 String server = System.getenv("BACKEND_NAME");
-		String url = "http://" + server + "/api/" + path ;
+		String url = "http://" + server + "/api" + path ;
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
