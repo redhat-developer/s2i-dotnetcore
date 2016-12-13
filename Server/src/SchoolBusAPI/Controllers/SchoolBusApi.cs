@@ -42,25 +42,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns attachments for a particular Owner</remarks>
-        /// <param name="ownerId">Id of Owner to fetch attachments for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/owner/{owner-id}/attachments")]
-        [SwaggerOperation("OwnerOwnerIdAttachmentsGet")]
-        [SwaggerResponse(200, type: typeof(List<OwnerAttachments>))]
-        public virtual IActionResult OwnerOwnerIdAttachmentsGet([FromRoute]int ownerId)
-        { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<OwnerAttachments>>(exampleJson)
-            : default(List<OwnerAttachments>);
-            return new ObjectResult(example);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Returns attachments for a particular SchoolBus</remarks>
         /// <param name="schoolbusId">Id of SchoolBus to fetch attachments for</param>
         /// <response code="200">OK</response>
