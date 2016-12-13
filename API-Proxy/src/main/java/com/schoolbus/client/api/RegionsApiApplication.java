@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @javax.annotation.Generated(value = "class com.quartech.codegen.FuseGenerator", date = "2016-12-12T18:43:27.997-08:00")
-@ApplicationPath("/api/regions")
+@ApplicationPath("/api/region")
 
 public class RegionsApiApplication extends Application{
 	@Inject
