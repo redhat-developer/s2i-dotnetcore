@@ -45,7 +45,7 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="Id")]
+        [DataMember(Name="id")]
         [MetaDataExtension (Description = "Primary Key")]        
         public int Id { get; set; }
 

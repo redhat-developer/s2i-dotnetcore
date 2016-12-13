@@ -26,7 +26,7 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class CityApiController : Controller
+    public class SchoolDistrictApiController : Controller
     {
         private readonly DbAppContext _context;
 
@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Controllers
         /// Create a controller and set the database context
         /// </summary>
 
-        public CityApiController(DbAppContext context)
+        public SchoolDistrictApiController(DbAppContext context)
         {
             _context = context;
         }
@@ -42,20 +42,20 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of cities for a given region</remarks>
-        /// <param name="regionId">Id of Region to fetch Cities for</param>
+        /// <remarks>Returns a list of SchoolDistricts for a given region</remarks>
+        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/regions/{region-id}/cities")]
-        [SwaggerOperation("RegionsRegionIdCitiesGet")]
-        [SwaggerResponse(200, type: typeof(List<City>))]
-        public virtual IActionResult RegionsRegionIdCitiesGet([FromRoute]int regionId)
+        [Route("/api/regions/{id}/schooldistricts")]
+        [SwaggerOperation("RegionsIdSchooldistrictsGet")]
+        [SwaggerResponse(200, type: typeof(List<SchoolDistrict>))]
+        public virtual IActionResult RegionsIdSchooldistrictsGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<City>>(exampleJson)
-            : default(List<City>);
+            ? JsonConvert.DeserializeObject<List<SchoolDistrict>>(exampleJson)
+            : default(List<SchoolDistrict>);
             return new ObjectResult(example);
         }
     }

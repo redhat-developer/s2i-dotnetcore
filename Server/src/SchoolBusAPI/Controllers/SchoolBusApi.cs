@@ -43,14 +43,14 @@ namespace SchoolBusAPI.Controllers
         /// 
         /// </summary>
         /// <remarks>Returns attachments for a particular SchoolBus</remarks>
-        /// <param name="schoolbusId">Id of SchoolBus to fetch attachments for</param>
+        /// <param name="id">id of SchoolBus to fetch attachments for</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
         [HttpGet]
-        [Route("/api/schoolbus/{schoolbus-id}/attachments")]
-        [SwaggerOperation("SchoolbusSchoolbusIdAttachmentsGet")]
+        [Route("/api/schoolbus/{id}/attachments")]
+        [SwaggerOperation("SchoolbusIdAttachmentsGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBusAttachment>))]
-        public virtual IActionResult SchoolbusSchoolbusIdAttachmentsGet([FromRoute]int schoolbusId)
+        public virtual IActionResult SchoolbusIdAttachmentsGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
@@ -62,34 +62,34 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns History for a particular SchoolBus</remarks>
-        /// <param name="schoolbusId">Id of SchoolBus to fetch SchoolBusHistory for</param>
+        /// <remarks>Returns CCWData for a particular Schoolbus</remarks>
+        /// <param name="id">id of SchoolBus to fetch CCWData for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/schoolbus/{schoolbus-id}/history")]
-        [SwaggerOperation("SchoolbusSchoolbusIdHistoryGet")]
-        [SwaggerResponse(200, type: typeof(List<SchoolBusHistory>))]
-        public virtual IActionResult SchoolbusSchoolbusIdHistoryGet([FromRoute]int schoolbusId)
+        [Route("/api/schoolbus/{id}/ccwdata")]
+        [SwaggerOperation("SchoolbusIdCcwdataGet")]
+        [SwaggerResponse(200, type: typeof(CCWData))]
+        public virtual IActionResult SchoolbusIdCcwdataGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<SchoolBusHistory>>(exampleJson)
-            : default(List<SchoolBusHistory>);
+            ? JsonConvert.DeserializeObject<CCWData>(exampleJson)
+            : default(CCWData);
             return new ObjectResult(example);
         }
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns a specific SchoolBus object</remarks>
-        /// <param name="schoolbusId">Id of SchoolBus to fetch</param>
+        /// <param name="id">id of SchoolBus to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
         [HttpGet]
-        [Route("/api/schoolbuses/{schoolbus-id}")]
-        [SwaggerOperation("SchoolbusesSchoolbusIdGet")]
+        [Route("/api/schoolbus/{id}")]
+        [SwaggerOperation("SchoolbusIdGet")]
         [SwaggerResponse(200, type: typeof(SchoolBus))]
-        public virtual IActionResult SchoolbusesSchoolbusIdGet([FromRoute]int schoolbusId)
+        public virtual IActionResult SchoolbusIdGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
@@ -101,15 +101,34 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns History for a particular SchoolBus</remarks>
+        /// <param name="id">id of SchoolBus to fetch SchoolBusHistory for</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/schoolbus/{id}/history")]
+        [SwaggerOperation("SchoolbusIdHistoryGet")]
+        [SwaggerResponse(200, type: typeof(List<SchoolBusHistory>))]
+        public virtual IActionResult SchoolbusIdHistoryGet([FromRoute]int id)
+        { 
+            string exampleJson = null;
+            
+            var example = exampleJson != null
+            ? JsonConvert.DeserializeObject<List<SchoolBusHistory>>(exampleJson)
+            : default(List<SchoolBusHistory>);
+            return new ObjectResult(example);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns notes for a particular SchoolBus.</remarks>
-        /// <param name="schoolbusId">Id of SchoolBus to fetch notes for</param>
+        /// <param name="id">id of SchoolBus to fetch notes for</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
         [HttpGet]
-        [Route("/api/schoolbuses/{schoolbus-id}/notes")]
-        [SwaggerOperation("SchoolbusesSchoolbusIdNotesGet")]
+        [Route("/api/schoolbuses/{id}/notes")]
+        [SwaggerOperation("SchoolbusesIdNotesGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBusNote>))]
-        public virtual IActionResult SchoolbusesSchoolbusIdNotesGet([FromRoute]int schoolbusId)
+        public virtual IActionResult SchoolbusesIdNotesGet([FromRoute]int id)
         { 
             string exampleJson = null;
             

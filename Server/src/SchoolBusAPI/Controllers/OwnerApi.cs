@@ -60,14 +60,33 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns address contacts for a particular Owner</remarks>
-        /// <param name="ownerId">Id of Owner to fetch contact address for</param>
+        /// <remarks>Returns attachments for a particular Owner</remarks>
+        /// <param name="id">id of Owner to fetch attachments for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/owner/{owner-id}/contactaddresses")]
-        [SwaggerOperation("OwnerOwnerIdContactaddressesGet")]
+        [Route("/api/owner/{id}/attachments")]
+        [SwaggerOperation("OwnerIdAttachmentsGet")]
+        [SwaggerResponse(200, type: typeof(List<OwnerAttachments>))]
+        public virtual IActionResult OwnerIdAttachmentsGet([FromRoute]int id)
+        { 
+            string exampleJson = null;
+            
+            var example = exampleJson != null
+            ? JsonConvert.DeserializeObject<List<OwnerAttachments>>(exampleJson)
+            : default(List<OwnerAttachments>);
+            return new ObjectResult(example);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns address contacts for a particular Owner</remarks>
+        /// <param name="id">id of Owner to fetch contact address for</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/owner/{id}/contactaddresses")]
+        [SwaggerOperation("OwnerIdContactaddressesGet")]
         [SwaggerResponse(200, type: typeof(List<OwnerContactAddress>))]
-        public virtual IActionResult OwnerOwnerIdContactaddressesGet([FromRoute]int ownerId)
+        public virtual IActionResult OwnerIdContactaddressesGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
@@ -80,13 +99,13 @@ namespace SchoolBusAPI.Controllers
         /// 
         /// </summary>
         /// <remarks>Returns phone contacts for a particular Owner</remarks>
-        /// <param name="ownerId">Id of Owner to fetch contact phone for</param>
+        /// <param name="id">id of Owner to fetch contact phone for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/owner/{owner-id}/contactphones")]
-        [SwaggerOperation("OwnerOwnerIdContactphonesGet")]
+        [Route("/api/owner/{id}/contactphones")]
+        [SwaggerOperation("OwnerIdContactphonesGet")]
         [SwaggerResponse(200, type: typeof(List<OwnerContactPhone>))]
-        public virtual IActionResult OwnerOwnerIdContactphonesGet([FromRoute]int ownerId)
+        public virtual IActionResult OwnerIdContactphonesGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
@@ -99,13 +118,13 @@ namespace SchoolBusAPI.Controllers
         /// 
         /// </summary>
         /// <remarks>Returns a particular Owner</remarks>
-        /// <param name="ownerId">Id of Owner to fetch</param>
+        /// <param name="id">id of Owner to fetch</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/owner/{owner-id}")]
-        [SwaggerOperation("OwnerOwnerIdGet")]
+        [Route("/api/owner/{id}")]
+        [SwaggerOperation("OwnerIdGet")]
         [SwaggerResponse(200, type: typeof(List<Owner>))]
-        public virtual IActionResult OwnerOwnerIdGet([FromRoute]int ownerId)
+        public virtual IActionResult OwnerIdGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
@@ -118,13 +137,13 @@ namespace SchoolBusAPI.Controllers
         /// 
         /// </summary>
         /// <remarks>Returns notes for a particular Owner</remarks>
-        /// <param name="ownerId">Id of Owner to fetch notes for</param>
+        /// <param name="id">id of Owner to fetch notes for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/owner/{owner-id}/notes")]
-        [SwaggerOperation("OwnerOwnerIdNotesGet")]
+        [Route("/api/owner/{id}/notes")]
+        [SwaggerOperation("OwnerIdNotesGet")]
         [SwaggerResponse(200, type: typeof(List<OwnerNotes>))]
-        public virtual IActionResult OwnerOwnerIdNotesGet([FromRoute]int ownerId)
+        public virtual IActionResult OwnerIdNotesGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
@@ -136,34 +155,15 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns CCWData for a particular Schoolbus</remarks>
-        /// <param name="schoolbusId">Id of SchoolBus to fetch CCWData for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/schoolbus/{schoolbus-id}/ccwdata")]
-        [SwaggerOperation("SchoolbusSchoolbusIdCcwdataGet")]
-        [SwaggerResponse(200, type: typeof(CCWData))]
-        public virtual IActionResult SchoolbusSchoolbusIdCcwdataGet([FromRoute]int schoolbusId)
-        { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<CCWData>(exampleJson)
-            : default(CCWData);
-            return new ObjectResult(example);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Returns a user&#39;s favorites of a given context type</remarks>
-        /// <param name="userId">Id of User to fetch favorites for</param>
+        /// <param name="id">id of User to fetch favorites for</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
         [HttpGet]
-        [Route("/api/users/{user-id}/favorites")]
-        [SwaggerOperation("UsersUserIdFavoritesGet")]
+        [Route("/api/user/{id}/favorites")]
+        [SwaggerOperation("UserIdFavoritesGet")]
         [SwaggerResponse(200, type: typeof(List<UserFavorite>))]
-        public virtual IActionResult UsersUserIdFavoritesGet([FromRoute]int userId)
+        public virtual IActionResult UserIdFavoritesGet([FromRoute]int id)
         { 
             string exampleJson = null;
             

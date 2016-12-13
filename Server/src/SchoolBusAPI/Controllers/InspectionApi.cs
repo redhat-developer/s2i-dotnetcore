@@ -44,7 +44,6 @@ namespace SchoolBusAPI.Controllers
         /// </summary>
         
         /// <response code="200">OK</response>
-        /// <response code="404">Inspection not found</response>
         [HttpGet]
         [Route("/api/inspections")]
         [SwaggerOperation("InspectionsGet")]
@@ -62,40 +61,40 @@ namespace SchoolBusAPI.Controllers
         /// 
         /// </summary>
         
-        /// <param name="schoolbusId">Id of SchoolBus to fetch Inspections for</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">SchoolBus not found</response>
-        [HttpGet]
-        [Route("/api/schoolbuses/{schoolbus-id}/inspections")]
-        [SwaggerOperation("InspectionsGet_0")]
-        [SwaggerResponse(200, type: typeof(List<Inspection>))]
-        public virtual IActionResult InspectionsGet_0([FromRoute]int schoolbusId)
-        { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<Inspection>>(exampleJson)
-            : default(List<Inspection>);
-            return new ObjectResult(example);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="inspectionId">Id of Inspection to fetch</param>
+        /// <param name="id">id of Inspection to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
         [HttpGet]
-        [Route("/api/inspections/{inspection-id}")]
-        [SwaggerOperation("InspectionsInspectionIdGet")]
+        [Route("/api/inspections/{id}")]
+        [SwaggerOperation("InspectionsIdGet")]
         [SwaggerResponse(200, type: typeof(Inspection))]
-        public virtual IActionResult InspectionsInspectionIdGet([FromRoute]int inspectionId)
+        public virtual IActionResult InspectionsIdGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<Inspection>(exampleJson)
             : default(Inspection);
+            return new ObjectResult(example);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBus not found</response>
+        [HttpGet]
+        [Route("/api/schoolbus/{id}/inspections")]
+        [SwaggerOperation("SchoolbusIdInspectionsGet")]
+        [SwaggerResponse(200, type: typeof(List<Inspection>))]
+        public virtual IActionResult SchoolbusIdInspectionsGet([FromRoute]int id)
+        { 
+            string exampleJson = null;
+            
+            var example = exampleJson != null
+            ? JsonConvert.DeserializeObject<List<Inspection>>(exampleJson)
+            : default(List<Inspection>);
             return new ObjectResult(example);
         }
     }

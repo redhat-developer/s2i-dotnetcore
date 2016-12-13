@@ -67,7 +67,7 @@ namespace SchoolBusAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     EMAIL = table.Column<string>(nullable: true),
                     GIVEN_NAME = table.Column<string>(nullable: true),
-                    SM_USER_ID = table.Column<string>(nullable: true)
+                    SM_USERID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,12 +80,19 @@ namespace SchoolBusAPI.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    FAVORITE_CONTEXT_TYPE_ID = table.Column<int>(nullable: true),
                     JSON_DATA = table.Column<string>(nullable: true),
                     NAME = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_USER_FAVORITE", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_USER_FAVORITE_FAVORITE_CONTEXT_TYPE_FAVORITE_CONTEXT_TYPE_ID",
+                        column: x => x.FAVORITE_CONTEXT_TYPE_ID,
+                        principalTable: "FAVORITE_CONTEXT_TYPE",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -529,6 +536,11 @@ namespace SchoolBusAPI.Migrations
                 column: "LOCAL_AREA_ID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_USER_FAVORITE_FAVORITE_CONTEXT_TYPE_ID",
+                table: "USER_FAVORITE",
+                column: "FAVORITE_CONTEXT_TYPE_ID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_USER_NOTIFICATIONS_BUS_NOTIFICATION_ID",
                 table: "USER_NOTIFICATIONS",
                 column: "BUS_NOTIFICATION_ID");
@@ -541,9 +553,6 @@ namespace SchoolBusAPI.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "FAVORITE_CONTEXT_TYPE");
-
             migrationBuilder.DropTable(
                 name: "INSPECTION");
 
@@ -576,6 +585,9 @@ namespace SchoolBusAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "OWNER_CONTACT");
+
+            migrationBuilder.DropTable(
+                name: "FAVORITE_CONTEXT_TYPE");
 
             migrationBuilder.DropTable(
                 name: "BUS_NOTIFICATION");

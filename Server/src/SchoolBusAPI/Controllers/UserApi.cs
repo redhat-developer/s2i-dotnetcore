@@ -42,15 +42,15 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns data for a particular User</remarks>
-        /// <param name="userId">Id of User to fetch</param>
+        /// <remarks>Returns data for a particular user</remarks>
+        /// <param name="id">id of User to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
         [HttpGet]
-        [Route("/api/users/{user-id}")]
-        [SwaggerOperation("UsersUserIdGet")]
+        [Route("/api/user/{id}")]
+        [SwaggerOperation("UserIdGet")]
         [SwaggerResponse(200, type: typeof(User))]
-        public virtual IActionResult UsersUserIdGet([FromRoute]int userId)
+        public virtual IActionResult UserIdGet([FromRoute]int id)
         { 
             string exampleJson = null;
             
@@ -63,13 +63,13 @@ namespace SchoolBusAPI.Controllers
         /// 
         /// </summary>
         /// <remarks>Returns a user&#39;s notifications</remarks>
-        /// <param name="userId">Id of User to fetch notifications for</param>
+        /// <param name="id">id of User to fetch notifications for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/users/{user-id}/notifications")]
-        [SwaggerOperation("UsersUserIdNotificationsGet")]
+        [Route("/api/user/{id}/notification")]
+        [SwaggerOperation("UserIdNotificationGet")]
         [SwaggerResponse(200, type: typeof(List<UserNotifications>))]
-        public virtual IActionResult UsersUserIdNotificationsGet([FromRoute]int userId)
+        public virtual IActionResult UserIdNotificationGet([FromRoute]int id)
         { 
             string exampleJson = null;
             

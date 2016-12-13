@@ -31,14 +31,14 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="Email">Email address.</param>
-        /// <param name="SmUserId">Security Manager User ID.</param>
+        /// <param name="SmUserid">Security Manager User ID.</param>
         /// <param name="GivenName">Last Name.</param>
-        public User(int Id, string Email = null, string SmUserId = null, string GivenName = null)
+        public User(int Id, string Email = null, string SmUserid = null, string GivenName = null)
         {
             
             this.Id = Id;            
             this.Email = Email;
-            this.SmUserId = SmUserId;
+            this.SmUserid = SmUserid;
             this.GivenName = GivenName;
             
         }
@@ -47,7 +47,7 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="Id")]
+        [DataMember(Name="id")]
         [MetaDataExtension (Description = "Primary Key")]        
         public int Id { get; set; }
 
@@ -63,9 +63,9 @@ namespace SchoolBusAPI.Models
         /// Security Manager User ID
         /// </summary>
         /// <value>Security Manager User ID</value>
-        [DataMember(Name="SmUserId")]
+        [DataMember(Name="SmUserid")]
         [MetaDataExtension (Description = "Security Manager User ID")]        
-        public string SmUserId { get; set; }
+        public string SmUserid { get; set; }
 
         /// <summary>
         /// Last Name
@@ -86,7 +86,7 @@ namespace SchoolBusAPI.Models
             sb.Append("class User {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
-            sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
+            sb.Append("  SmUserid: ").Append(SmUserid).Append("\n");
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -137,9 +137,9 @@ namespace SchoolBusAPI.Models
                     this.Email.Equals(other.Email)
                 ) && 
                 (
-                    this.SmUserId == other.SmUserId ||
-                    this.SmUserId != null &&
-                    this.SmUserId.Equals(other.SmUserId)
+                    this.SmUserid == other.SmUserid ||
+                    this.SmUserid != null &&
+                    this.SmUserid.Equals(other.SmUserid)
                 ) && 
                 (
                     this.GivenName == other.GivenName ||
@@ -167,9 +167,9 @@ namespace SchoolBusAPI.Models
                     { 
                         hash = hash * 59 + this.Email.GetHashCode();
                     }
-                    if (this.SmUserId != null)
+                    if (this.SmUserid != null)
                     { 
-                        hash = hash * 59 + this.SmUserId.GetHashCode();
+                        hash = hash * 59 + this.SmUserid.GetHashCode();
                     }
                     if (this.GivenName != null)
                     { 

@@ -8,7 +8,7 @@ using SchoolBusAPI.Models;
 namespace SchoolBusAPI.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    [Migration("20161208231132_initial")]
+    [Migration("20161213192824_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -413,8 +413,8 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("GivenName")
                         .HasColumnName("GIVEN_NAME");
 
-                    b.Property<string>("SmUserId")
-                        .HasColumnName("SM_USER_ID");
+                    b.Property<string>("SmUserid")
+                        .HasColumnName("SM_USERID");
 
                     b.HasKey("Id");
 
@@ -427,6 +427,9 @@ namespace SchoolBusAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
 
+                    b.Property<int?>("FavoriteContextTypeId")
+                        .HasColumnName("FAVORITE_CONTEXT_TYPE_ID");
+
                     b.Property<string>("JsonData")
                         .HasColumnName("JSON_DATA");
 
@@ -434,6 +437,8 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("NAME");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FavoriteContextTypeId");
 
                     b.ToTable("USER_FAVORITE");
                 });
@@ -574,6 +579,13 @@ namespace SchoolBusAPI.Migrations
                     b.HasOne("SchoolBusAPI.Models.LocalArea", "LocalArea")
                         .WithMany()
                         .HasForeignKey("LocalAreaId");
+                });
+
+            modelBuilder.Entity("SchoolBusAPI.Models.UserFavorite", b =>
+                {
+                    b.HasOne("SchoolBusAPI.Models.FavoriteContextType", "FavoriteContextType")
+                        .WithMany()
+                        .HasForeignKey("FavoriteContextTypeId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.UserNotifications", b =>
