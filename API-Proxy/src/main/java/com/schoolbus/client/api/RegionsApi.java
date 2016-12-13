@@ -35,7 +35,7 @@ public class RegionsApi  {
 
 
     @GET
-    
+    @Path("/")
     
     @Produces({ "text/plain", "application/json", "text/json" })
     @ApiOperation(value = "", notes = "Returns a list of regions for a given province", response = Region.class, responseContainer = "List", tags={ "SchoolDistrict",  })
