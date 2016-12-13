@@ -1,18 +1,10 @@
 package com.schoolbus.client.api.impl;
 
 import com.schoolbus.client.api.*;
-import com.schoolbus.client.model.*;
-
-import org.apache.cxf.jaxrs.ext.multipart.Attachment;
-
-import com.schoolbus.client.model.Region;
-import com.schoolbus.client.model.City;
-import com.schoolbus.client.model.LocalArea;
-import com.schoolbus.client.model.SchoolDistrict;
-
-import java.util.List;
-
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.Response;
@@ -24,8 +16,51 @@ public class RegionsApiServiceImpl implements RegionsApiService {
       @Override
       public Response regionsGet(SecurityContext securityContext) {
       // do some magic!
-      return Response.ok().entity("magic!").build();
+      
+      
+      
+      return Response.ok().entity(sendGet()).build();
   }
+      
+      
+  private String sendGet() {
+
+       try
+       { 
+		String url = "http://server/api/regions";
+
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		// optional default is GET
+		con.setRequestMethod("GET");
+
+		int responseCode = con.getResponseCode();
+		System.out.println("\nSending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " + responseCode);
+
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+
+		//print result
+		return response.toString();
+       }
+       catch (Exception e)
+       {
+           return e.toString();
+       }
+
+    }    
+      
+      
+      
       @Override
       public Response regionsRegionIdCitiesGet(Integer regionId, SecurityContext securityContext) {
       // do some magic!
