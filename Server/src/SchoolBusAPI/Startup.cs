@@ -50,7 +50,7 @@ namespace SchoolBusAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = "Host = " + Configuration["DATABASE_SERVICE_NAME"] + "; Username = " + Configuration["POSTGRESQL_USER"] + "; Password = " + Configuration["POSTGRESQL_PASSWORD"] + "; Database = " + Configuration["POSTGRESQL_DATABASE"];                
+            string connectionString = "Host=" + Configuration["DATABASE_SERVICE_NAME"] + "; Username=" + Configuration["POSTGRESQL_USER"] + "; Password=" + Configuration["POSTGRESQL_PASSWORD"] + "; Database=" + Configuration["POSTGRESQL_DATABASE"];                
             
             Console.WriteLine(connectionString);
             services.AddDbContext<DbAppContext>(
@@ -99,6 +99,8 @@ namespace SchoolBusAPI
             {
                 // get the application's database context
                 DbContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
+
+                Console.WriteLine("Migrating database");
                 // do any pending migrations
                 context.Database.Migrate();
                 // populate the column comments.  Comments are the PGSQL column descriptions
