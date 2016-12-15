@@ -2,7 +2,7 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "moti-dotnecore-builds",
+    "name": "moti-dotnetcore-builds",
     "annotations": {
       "description": "Contains frontend, middleware, backend builds.",
       "tags": "schoolbus,aspnetcore",
