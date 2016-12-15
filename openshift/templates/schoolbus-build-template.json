@@ -22,7 +22,7 @@
         "generation": 2,
         "creationTimestamp": null,
         "labels": {
-            "template": "moti-dotnecore-builds"
+            "template": "moti-dotnetcore-builds"
         },
         "annotations": {
             "openshift.io/image.dockerRepositoryCheck": "2016-12-13T21:35:23Z"
