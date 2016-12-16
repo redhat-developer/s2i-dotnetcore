@@ -20,42 +20,38 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
 { 
     /// <summary>
     /// 
     /// </summary>
-    public class OwnerApiController : Controller
+    public partial class OwnerApiController : Controller
     {
-        private readonly DbAppContext _context;
+        private readonly IOwnerApiService _service;
 
         /// <summary>
-        /// Create a controller and set the database context
+        /// Create a controller and set the service
         /// </summary>
 
-        public OwnerApiController(DbAppContext context)
+        public OwnerApiController(IOwnerApiService service)
         {
-            _context = context;
+            _service = service;
         }
 	
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns list of available FavoriteContextTypes</remarks>
+        /// <remarks>Returns list of available FavouriteContextTypes</remarks>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/favoritecontexttypes")]
-        [SwaggerOperation("FavoritecontexttypesGet")]
-        [SwaggerResponse(200, type: typeof(List<FavoriteContextType>))]
-        public virtual IActionResult FavoritecontexttypesGet()
+        [Route("/api/favouritecontexttypes")]
+        [SwaggerOperation("FavouritecontexttypesGet")]
+        [SwaggerResponse(200, type: typeof(List<FavouriteContextType>))]
+        public virtual IActionResult FavouritecontexttypesGet()
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<FavoriteContextType>>(exampleJson)
-            : default(List<FavoriteContextType>);
-            return new ObjectResult(example);
+            return this._service.FavouritecontexttypesGetAsync();
         }
         /// <summary>
         /// 
@@ -64,17 +60,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Owner to fetch attachments for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/owner/{id}/attachments")]
-        [SwaggerOperation("OwnerIdAttachmentsGet")]
+        [Route("/api/owners/{id}/attachments")]
+        [SwaggerOperation("OwnersIdAttachmentsGet")]
         [SwaggerResponse(200, type: typeof(List<OwnerAttachments>))]
-        public virtual IActionResult OwnerIdAttachmentsGet([FromRoute]int id)
+        public virtual IActionResult OwnersIdAttachmentsGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<OwnerAttachments>>(exampleJson)
-            : default(List<OwnerAttachments>);
-            return new ObjectResult(example);
+            return this._service.OwnersIdAttachmentsGetAsync([FromRoute]int id);
         }
         /// <summary>
         /// 
@@ -83,17 +74,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Owner to fetch contact address for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/owner/{id}/contactaddresses")]
-        [SwaggerOperation("OwnerIdContactaddressesGet")]
+        [Route("/api/owners/{id}/contactaddresses")]
+        [SwaggerOperation("OwnersIdContactaddressesGet")]
         [SwaggerResponse(200, type: typeof(List<OwnerContactAddress>))]
-        public virtual IActionResult OwnerIdContactaddressesGet([FromRoute]int id)
+        public virtual IActionResult OwnersIdContactaddressesGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<OwnerContactAddress>>(exampleJson)
-            : default(List<OwnerContactAddress>);
-            return new ObjectResult(example);
+            return this._service.OwnersIdContactaddressesGetAsync([FromRoute]int id);
         }
         /// <summary>
         /// 
@@ -102,17 +88,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Owner to fetch contact phone for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/owner/{id}/contactphones")]
-        [SwaggerOperation("OwnerIdContactphonesGet")]
+        [Route("/api/owners/{id}/contactphones")]
+        [SwaggerOperation("OwnersIdContactphonesGet")]
         [SwaggerResponse(200, type: typeof(List<OwnerContactPhone>))]
-        public virtual IActionResult OwnerIdContactphonesGet([FromRoute]int id)
+        public virtual IActionResult OwnersIdContactphonesGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<OwnerContactPhone>>(exampleJson)
-            : default(List<OwnerContactPhone>);
-            return new ObjectResult(example);
+            return this._service.OwnersIdContactphonesGetAsync([FromRoute]int id);
         }
         /// <summary>
         /// 
@@ -121,17 +102,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Owner to fetch</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/owner/{id}")]
-        [SwaggerOperation("OwnerIdGet")]
+        [Route("/api/owners/{id}")]
+        [SwaggerOperation("OwnersIdGet")]
         [SwaggerResponse(200, type: typeof(List<Owner>))]
-        public virtual IActionResult OwnerIdGet([FromRoute]int id)
+        public virtual IActionResult OwnersIdGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<Owner>>(exampleJson)
-            : default(List<Owner>);
-            return new ObjectResult(example);
+            return this._service.OwnersIdGetAsync([FromRoute]int id);
         }
         /// <summary>
         /// 
@@ -140,37 +116,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Owner to fetch notes for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/owner/{id}/notes")]
-        [SwaggerOperation("OwnerIdNotesGet")]
+        [Route("/api/owners/{id}/notes")]
+        [SwaggerOperation("OwnersIdNotesGet")]
         [SwaggerResponse(200, type: typeof(List<OwnerNotes>))]
-        public virtual IActionResult OwnerIdNotesGet([FromRoute]int id)
+        public virtual IActionResult OwnersIdNotesGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<OwnerNotes>>(exampleJson)
-            : default(List<OwnerNotes>);
-            return new ObjectResult(example);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns a user&#39;s favorites of a given context type</remarks>
-        /// <param name="id">id of User to fetch favorites for</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        [HttpGet]
-        [Route("/api/user/{id}/favorites")]
-        [SwaggerOperation("UserIdFavoritesGet")]
-        [SwaggerResponse(200, type: typeof(List<UserFavorite>))]
-        public virtual IActionResult UserIdFavoritesGet([FromRoute]int id)
-        { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<UserFavorite>>(exampleJson)
-            : default(List<UserFavorite>);
-            return new ObjectResult(example);
+            return this._service.OwnersIdNotesGetAsync([FromRoute]int id);
         }
     }
 }

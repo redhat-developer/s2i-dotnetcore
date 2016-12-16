@@ -26,11 +26,6 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class Region :  IEquatable<Region>
     {
-
-        public Region()
-        {
-            this.Id = 0;
-        }
         /// <summary>
         /// Initializes a new instance of the <see cref="Region" /> class.
         /// </summary>
@@ -50,10 +45,6 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]        
         public int Id { get; set; }
 
-
-        [DataMember(Name = "Name")]
-
-        public string Name { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

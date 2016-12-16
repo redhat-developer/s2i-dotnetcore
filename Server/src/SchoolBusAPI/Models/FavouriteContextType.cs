@@ -24,14 +24,14 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class FavoriteContextType :  IEquatable<FavoriteContextType>
+    public partial class FavouriteContextType :  IEquatable<FavouriteContextType>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FavoriteContextType" /> class.
+        /// Initializes a new instance of the <see cref="FavouriteContextType" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="Name">Context Name.</param>
-        public FavoriteContextType(int Id, string Name = null)
+        public FavouriteContextType(int Id, string Name = null)
         {
             
             this.Id = Id;            
@@ -63,7 +63,7 @@ namespace SchoolBusAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class FavoriteContextType {\n");
+            sb.Append("class FavouriteContextType {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("}\n");
@@ -89,15 +89,15 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, obj)) { return false; }
             if (ReferenceEquals(this, obj)) { return true; }
             if (obj.GetType() != GetType()) { return false; }
-            return Equals((FavoriteContextType)obj);
+            return Equals((FavouriteContextType)obj);
         }
 
         /// <summary>
-        /// Returns true if FavoriteContextType instances are equal
+        /// Returns true if FavouriteContextType instances are equal
         /// </summary>
-        /// <param name="other">Instance of FavoriteContextType to be compared</param>
+        /// <param name="other">Instance of FavouriteContextType to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FavoriteContextType other)
+        public bool Equals(FavouriteContextType other)
         {
 
             if (ReferenceEquals(null, other)) { return false; }
@@ -141,12 +141,12 @@ namespace SchoolBusAPI.Models
 
         #region Operators
 
-        public static bool operator ==(FavoriteContextType left, FavoriteContextType right)
+        public static bool operator ==(FavouriteContextType left, FavouriteContextType right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(FavoriteContextType left, FavoriteContextType right)
+        public static bool operator !=(FavouriteContextType left, FavouriteContextType right)
         {
             return !Equals(left, right);
         }

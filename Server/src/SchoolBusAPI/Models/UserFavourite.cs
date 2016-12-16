@@ -24,22 +24,22 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class UserFavorite :  IEquatable<UserFavorite>
+    public partial class UserFavourite :  IEquatable<UserFavourite>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserFavorite" /> class.
+        /// Initializes a new instance of the <see cref="UserFavourite" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="JsonData">Saved search.</param>
         /// <param name="Name">Context Name.</param>
-        /// <param name="FavoriteContextType">FavoriteContextType.</param>
-        public UserFavorite(int Id, string JsonData = null, string Name = null, FavoriteContextType FavoriteContextType = null)
+        /// <param name="FavouriteContextType">FavouriteContextType.</param>
+        public UserFavourite(int Id, string JsonData = null, string Name = null, FavouriteContextType FavouriteContextType = null)
         {
             
             this.Id = Id;            
             this.JsonData = JsonData;
             this.Name = Name;
-            this.FavoriteContextType = FavoriteContextType;
+            this.FavouriteContextType = FavouriteContextType;
             
         }
 
@@ -68,11 +68,11 @@ namespace SchoolBusAPI.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets FavoriteContextType
+        /// Gets or Sets FavouriteContextType
         /// </summary>
-        [DataMember(Name="FavoriteContextType")]
+        [DataMember(Name="FavouriteContextType")]
                 
-        public FavoriteContextType FavoriteContextType { get; set; }
+        public FavouriteContextType FavouriteContextType { get; set; }
 
 
         /// <summary>
@@ -82,11 +82,11 @@ namespace SchoolBusAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class UserFavorite {\n");
+            sb.Append("class UserFavourite {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  JsonData: ").Append(JsonData).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  FavoriteContextType: ").Append(FavoriteContextType).Append("\n");
+            sb.Append("  FavouriteContextType: ").Append(FavouriteContextType).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -110,15 +110,15 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, obj)) { return false; }
             if (ReferenceEquals(this, obj)) { return true; }
             if (obj.GetType() != GetType()) { return false; }
-            return Equals((UserFavorite)obj);
+            return Equals((UserFavourite)obj);
         }
 
         /// <summary>
-        /// Returns true if UserFavorite instances are equal
+        /// Returns true if UserFavourite instances are equal
         /// </summary>
-        /// <param name="other">Instance of UserFavorite to be compared</param>
+        /// <param name="other">Instance of UserFavourite to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(UserFavorite other)
+        public bool Equals(UserFavourite other)
         {
 
             if (ReferenceEquals(null, other)) { return false; }
@@ -141,9 +141,9 @@ namespace SchoolBusAPI.Models
                     this.Name.Equals(other.Name)
                 ) && 
                 (
-                    this.FavoriteContextType == other.FavoriteContextType ||
-                    this.FavoriteContextType != null &&
-                    this.FavoriteContextType.Equals(other.FavoriteContextType)
+                    this.FavouriteContextType == other.FavouriteContextType ||
+                    this.FavouriteContextType != null &&
+                    this.FavouriteContextType.Equals(other.FavouriteContextType)
                 );
         }
 
@@ -170,9 +170,9 @@ namespace SchoolBusAPI.Models
                     { 
                         hash = hash * 59 + this.Name.GetHashCode();
                     }
-                    if (this.FavoriteContextType != null)
+                    if (this.FavouriteContextType != null)
                     { 
-                        hash = hash * 59 + this.FavoriteContextType.GetHashCode();
+                        hash = hash * 59 + this.FavouriteContextType.GetHashCode();
                     }
                 return hash;
             }
@@ -180,12 +180,12 @@ namespace SchoolBusAPI.Models
 
         #region Operators
 
-        public static bool operator ==(UserFavorite left, UserFavorite right)
+        public static bool operator ==(UserFavourite left, UserFavourite right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(UserFavorite left, UserFavorite right)
+        public static bool operator !=(UserFavourite left, UserFavourite right)
         {
             return !Equals(left, right);
         }

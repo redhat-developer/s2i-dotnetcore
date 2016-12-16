@@ -79,6 +79,9 @@ namespace SchoolBusAPI
                 options.OperationFilter<XmlCommentsOperationFilter>(comments);
                 options.ModelFilter<XmlCommentsModelFilter>(comments);
             });
+			
+			// Add application services.
+            services.RegisterApplicationServices();
             
         }
 

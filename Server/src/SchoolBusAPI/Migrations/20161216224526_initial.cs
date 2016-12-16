@@ -35,7 +35,7 @@ namespace SchoolBusAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FAVORITE_CONTEXT_TYPE",
+                name: "FAVOURITE_CONTEXT_TYPE",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -44,7 +44,7 @@ namespace SchoolBusAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FAVORITE_CONTEXT_TYPE", x => x.ID);
+                    table.PrimaryKey("PK_FAVOURITE_CONTEXT_TYPE", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,22 +75,22 @@ namespace SchoolBusAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "USER_FAVORITE",
+                name: "USER_FAVOURITE",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    FAVORITE_CONTEXT_TYPE_ID = table.Column<int>(nullable: true),
+                    FAVOURITE_CONTEXT_TYPE_ID = table.Column<int>(nullable: true),
                     JSON_DATA = table.Column<string>(nullable: true),
                     NAME = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_USER_FAVORITE", x => x.ID);
+                    table.PrimaryKey("PK_USER_FAVOURITE", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_USER_FAVORITE_FAVORITE_CONTEXT_TYPE_FAVORITE_CONTEXT_TYPE_ID",
-                        column: x => x.FAVORITE_CONTEXT_TYPE_ID,
-                        principalTable: "FAVORITE_CONTEXT_TYPE",
+                        name: "FK_USER_FAVOURITE_FAVOURITE_CONTEXT_TYPE_FAVOURITE_CONTEXT_TYPE_ID",
+                        column: x => x.FAVOURITE_CONTEXT_TYPE_ID,
+                        principalTable: "FAVOURITE_CONTEXT_TYPE",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -536,9 +536,9 @@ namespace SchoolBusAPI.Migrations
                 column: "LOCAL_AREA_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_USER_FAVORITE_FAVORITE_CONTEXT_TYPE_ID",
-                table: "USER_FAVORITE",
-                column: "FAVORITE_CONTEXT_TYPE_ID");
+                name: "IX_USER_FAVOURITE_FAVOURITE_CONTEXT_TYPE_ID",
+                table: "USER_FAVOURITE",
+                column: "FAVOURITE_CONTEXT_TYPE_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_USER_NOTIFICATIONS_BUS_NOTIFICATION_ID",
@@ -578,7 +578,7 @@ namespace SchoolBusAPI.Migrations
                 name: "SCHOOL_BUS_NOTE");
 
             migrationBuilder.DropTable(
-                name: "USER_FAVORITE");
+                name: "USER_FAVOURITE");
 
             migrationBuilder.DropTable(
                 name: "USER_NOTIFICATIONS");
@@ -587,7 +587,7 @@ namespace SchoolBusAPI.Migrations
                 name: "OWNER_CONTACT");
 
             migrationBuilder.DropTable(
-                name: "FAVORITE_CONTEXT_TYPE");
+                name: "FAVOURITE_CONTEXT_TYPE");
 
             migrationBuilder.DropTable(
                 name: "BUS_NOTIFICATION");

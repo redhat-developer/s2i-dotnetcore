@@ -20,23 +20,24 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
 { 
     /// <summary>
     /// 
     /// </summary>
-    public class RegionApiController : Controller
+    public partial class RegionApiController : Controller
     {
-        private readonly DbAppContext _context;
+        private readonly IRegionApiService _service;
 
         /// <summary>
-        /// Create a controller and set the database context
+        /// Create a controller and set the service
         /// </summary>
 
-        public RegionApiController(DbAppContext context)
+        public RegionApiController(IRegionApiService service)
         {
-            _context = context;
+            _service = service;
         }
 	
         /// <summary>
@@ -45,70 +46,12 @@ namespace SchoolBusAPI.Controllers
         /// <remarks>Returns a list of regions for a given province</remarks>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/region")]
-        [SwaggerOperation("RegionGet")]
+        [Route("/api/regions")]
+        [SwaggerOperation("RegionsGet")]
         [SwaggerResponse(200, type: typeof(List<Region>))]
-        public virtual IActionResult RegionGet()
-        {
-            var results = _context.Regions.ToList();
-            return new ObjectResult(results);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns a specific region</remarks>
-        /// <param name="id">id of Regions to fetch</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/region/{id}")]
-        [SwaggerOperation("RegionIdGet")]
-        [SwaggerResponse(200, type: typeof(Region))]
-        public virtual IActionResult RegionIdGet([FromRoute]int id)
-        {
-            // get a specific region.
-            var result = _context.Regions.First(a => a.Id == id);
-            return new ObjectResult(result);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns a list of LocalAreas for a given region</remarks>
-        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/region/{id}/localareas")]
-        [SwaggerOperation("RegionIdLocalareasGet")]
-        [SwaggerResponse(200, type: typeof(List<LocalArea>))]
-        public virtual IActionResult RegionIdLocalareasGet([FromRoute]int id)
-        {
-            var result = _context.LocalAreas.All(a => a.Region.Id == id);
-            return new ObjectResult(result);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of regions.</remarks>
-        /// <response code="200">OK</response>
-        [HttpPost]
-        [Route("/api/region")]
-        [SwaggerOperation("RegionPost")]
-        [SwaggerResponse(200, type: typeof(List<Region>))]
-        public virtual IActionResult RegionPost([FromBody] Region[] items)
-        {
-            // return this._regionService.RegionsCreate(item);
-
-            if (items == null)
-            {
-                return BadRequest();
-            }
-            foreach (Region item in items)
-            {               
-                _context.Regions.Add(item);
-            }
-            // Save the changes
-            _context.SaveChanges();
-
-            return new NoContentResult();
+        public virtual IActionResult RegionsGet()
+        { 
+            return this._service.RegionsGetAsync();
         }
         /// <summary>
         /// 
@@ -121,9 +64,49 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("RegionsIdCitiesGet")]
         [SwaggerResponse(200, type: typeof(List<City>))]
         public virtual IActionResult RegionsIdCitiesGet([FromRoute]int id)
-        {
-            var result = _context.Citys.All(a => a.Region.Id == id);
-            return new ObjectResult(result);
+        { 
+            return this._service.RegionsIdCitiesGetAsync([FromRoute]int id);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a specific region</remarks>
+        /// <param name="id">id of Regions to fetch</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/regions/{id}")]
+        [SwaggerOperation("RegionsIdGet")]
+        [SwaggerResponse(200, type: typeof(Region))]
+        public virtual IActionResult RegionsIdGet([FromRoute]int id)
+        { 
+            return this._service.RegionsIdGetAsync([FromRoute]int id);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a list of LocalAreas for a given region</remarks>
+        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/regions/{id}/localareas")]
+        [SwaggerOperation("RegionsIdLocalareasGet")]
+        [SwaggerResponse(200, type: typeof(List<LocalArea>))]
+        public virtual IActionResult RegionsIdLocalareasGet([FromRoute]int id)
+        { 
+            return this._service.RegionsIdLocalareasGetAsync([FromRoute]int id);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of regions.</remarks>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/regions")]
+        [SwaggerOperation("RegionsPost")]
+        [SwaggerResponse(200, type: typeof(List<Region>))]
+        public virtual IActionResult RegionsPost()
+        { 
+            return this._service.RegionsPostAsync();
         }
     }
 }
