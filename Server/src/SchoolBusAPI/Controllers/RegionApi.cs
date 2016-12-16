@@ -65,7 +65,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<City>))]
         public virtual IActionResult RegionsIdCitiesGet([FromRoute]int id)
         { 
-            return this._service.RegionsIdCitiesGetAsync([FromRoute]int id);
+            return this._service.RegionsIdCitiesGetAsync(id);
         }
         /// <summary>
         /// 
@@ -79,7 +79,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(Region))]
         public virtual IActionResult RegionsIdGet([FromRoute]int id)
         { 
-            return this._service.RegionsIdGetAsync([FromRoute]int id);
+            return this._service.RegionsIdGetAsync(id);
         }
         /// <summary>
         /// 
@@ -93,7 +93,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<LocalArea>))]
         public virtual IActionResult RegionsIdLocalareasGet([FromRoute]int id)
         { 
-            return this._service.RegionsIdLocalareasGetAsync([FromRoute]int id);
+            return this._service.RegionsIdLocalareasGetAsync(id);
         }
         /// <summary>
         /// 

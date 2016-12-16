@@ -52,7 +52,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(SchoolBus))]
         public virtual IActionResult AddBus([FromBody]SchoolBus body)
         { 
-            return this._service.AddBusAsync([FromBody]SchoolBus body);
+            return this._service.AddBusAsync(body);
         }
         /// <summary>
         /// Returns a single school bus object
@@ -67,7 +67,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(SchoolBus))]
         public virtual IActionResult FindBusById([FromRoute]int id)
         { 
-            return this._service.FindBusByIdAsync([FromRoute]int id);
+            return this._service.FindBusByIdAsync(id);
         }
         /// <summary>
         /// Returns a collection of school buses
@@ -95,7 +95,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<SchoolBusAttachment>))]
         public virtual IActionResult SchoolbusesIdAttachmentsGet([FromRoute]int id)
         { 
-            return this._service.SchoolbusesIdAttachmentsGetAsync([FromRoute]int id);
+            return this._service.SchoolbusesIdAttachmentsGetAsync(id);
         }
         /// <summary>
         /// 
@@ -109,7 +109,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(CCWData))]
         public virtual IActionResult SchoolbusesIdCcwdataGet([FromRoute]int id)
         { 
-            return this._service.SchoolbusesIdCcwdataGetAsync([FromRoute]int id);
+            return this._service.SchoolbusesIdCcwdataGetAsync(id);
         }
         /// <summary>
         /// 
@@ -123,7 +123,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<SchoolBusHistory>))]
         public virtual IActionResult SchoolbusesIdHistoryGet([FromRoute]int id)
         { 
-            return this._service.SchoolbusesIdHistoryGetAsync([FromRoute]int id);
+            return this._service.SchoolbusesIdHistoryGetAsync(id);
         }
         /// <summary>
         /// 
@@ -138,7 +138,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<SchoolBusNote>))]
         public virtual IActionResult SchoolbusesIdNotesGet([FromRoute]int id)
         { 
-            return this._service.SchoolbusesIdNotesGetAsync([FromRoute]int id);
+            return this._service.SchoolbusesIdNotesGetAsync(id);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<UserFavourite>))]
         public virtual IActionResult UsersIdFavouritesGet([FromRoute]int id)
         { 
-            return this._service.UsersIdFavouritesGetAsync([FromRoute]int id);
+            return this._service.UsersIdFavouritesGetAsync(id);
         }
         /// <summary>
         /// 
@@ -68,7 +68,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(User))]
         public virtual IActionResult UsersIdGet([FromRoute]int id)
         { 
-            return this._service.UsersIdGetAsync([FromRoute]int id);
+            return this._service.UsersIdGetAsync(id);
         }
         /// <summary>
         /// 
@@ -82,7 +82,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<UserNotifications>))]
         public virtual IActionResult UsersIdNotificationGet([FromRoute]int id)
         { 
-            return this._service.UsersIdNotificationGetAsync([FromRoute]int id);
+            return this._service.UsersIdNotificationGetAsync(id);
         }
     }
 }

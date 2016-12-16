@@ -65,7 +65,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<OwnerAttachments>))]
         public virtual IActionResult OwnersIdAttachmentsGet([FromRoute]int id)
         { 
-            return this._service.OwnersIdAttachmentsGetAsync([FromRoute]int id);
+            return this._service.OwnersIdAttachmentsGetAsync(id);
         }
         /// <summary>
         /// 
@@ -79,7 +79,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<OwnerContactAddress>))]
         public virtual IActionResult OwnersIdContactaddressesGet([FromRoute]int id)
         { 
-            return this._service.OwnersIdContactaddressesGetAsync([FromRoute]int id);
+            return this._service.OwnersIdContactaddressesGetAsync(id);
         }
         /// <summary>
         /// 
@@ -93,7 +93,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<OwnerContactPhone>))]
         public virtual IActionResult OwnersIdContactphonesGet([FromRoute]int id)
         { 
-            return this._service.OwnersIdContactphonesGetAsync([FromRoute]int id);
+            return this._service.OwnersIdContactphonesGetAsync(id);
         }
         /// <summary>
         /// 
@@ -107,7 +107,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<Owner>))]
         public virtual IActionResult OwnersIdGet([FromRoute]int id)
         { 
-            return this._service.OwnersIdGetAsync([FromRoute]int id);
+            return this._service.OwnersIdGetAsync(id);
         }
         /// <summary>
         /// 
@@ -121,7 +121,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<OwnerNotes>))]
         public virtual IActionResult OwnersIdNotesGet([FromRoute]int id)
         { 
-            return this._service.OwnersIdNotesGetAsync([FromRoute]int id);
+            return this._service.OwnersIdNotesGetAsync(id);
         }
     }
 }

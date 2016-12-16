@@ -26,7 +26,7 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class RegionApiController : Controller
+    public class RegionApiController1 : Controller
     {
         private readonly DbAppContext _context;
 

@@ -52,7 +52,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<SchoolDistrict>))]
         public virtual IActionResult RegionsIdSchooldistrictsGet([FromRoute]int id)
         { 
-            return this._service.RegionsIdSchooldistrictsGetAsync([FromRoute]int id);
+            return this._service.RegionsIdSchooldistrictsGetAsync(id);
         }
     }
 }
