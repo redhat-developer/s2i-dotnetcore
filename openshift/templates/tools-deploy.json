@@ -1,0 +1,467 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "moti-tools",
+    "annotations": {
+      "description": "Contains frontend, middleware, backend and database tiers.",
+      "tags": "schoolbus,aspnetcore,pgsql",
+      "iconClass": "icon-github"
+    }
+  },
+  "labels": {
+    "template": "moti-tools"
+  },
+  "objects": [    
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${EDITOR_NAME}",
+        "annotations": {
+          "description": "Exposes and load balances the application pods"
+        }
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "web",
+			"protocol": "TCP",
+            "port": 8080,
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "name": "${EDITOR_NAME}"
+        }
+      }
+    },
+    {
+      "kind": "Route",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${EDITOR_NAME}"
+      },
+      "spec": {
+        "host": "${APPLICATION_DOMAIN}",
+        "to": {
+          "kind": "Service",
+          "name": "${EDITOR_NAME}"
+        }
+      }
+    },
+    {
+      "kind": "DeploymentConfig",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${EDITOR_NAME}",
+        "annotations": {
+          "description": "Defines how to deploy the frontend server"
+        }
+      },
+      "spec": {
+        "strategy": {
+          "type": "Rolling",
+		  "rollingParams": {
+                "updatePeriodSeconds": 1,
+                "intervalSeconds": 1,
+                "timeoutSeconds": 600,
+                "maxUnavailable": "25%",
+                "maxSurge": "25%"
+            },
+            "resources": {}
+        },
+        "triggers": [		
+          {
+            "type": "ConfigChange"
+          },
+          {
+            "type": "ImageChange",
+            "imageChangeParams": {
+              "automatic": true,
+              "containerNames": [
+                "${EDITOR_NAME}"
+              ],
+              "from": {
+                "kind": "ImageStreamTag",
+                "namespace": "${APP_IMAGE_NAMESPACE}",
+                "name": "${EDITOR_NAME}:latest"
+              }
+            }
+          }
+        ],
+        "replicas": 1,
+        "selector": {
+          "name": "${EDITOR_NAME}"
+        },
+        "template": {
+          "metadata": {
+            "name": "${EDITOR_NAME}",
+            "labels": {
+              "name": "${EDITOR_NAME}"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "${EDITOR_NAME}",
+                "image": " ",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+					"protocol": "TCP"
+                  }
+                ],                
+                "readinessProbe": {
+                  "timeoutSeconds": 3000,
+                  "initialDelaySeconds": 3,
+                  "httpGet": {
+                    "path": "/",
+                    "port": 8080
+                  }
+                },
+                "livenessProbe": {
+                  "timeoutSeconds": 3000,
+                  "initialDelaySeconds": 30,
+                  "httpGet": {
+                    "path": "/",
+                    "port": 8080
+                  }
+                },
+                "resources": {
+                  "limits": {
+                    "memory": "${MEMORY_LIMIT}"
+                  }
+                }                
+              }
+            ]            
+          }
+        }
+      }
+    },
+	    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${MOCKSERVER_NAME}",
+        "annotations": {
+          "description": "Exposes and load balances the mock server pods"
+        }
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "web",
+			"protocol": "TCP",
+            "port": 8080,
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "name": "${MOCKSERVER_NAME}"
+        }
+      }
+    },
+    {
+      "kind": "Route",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${MOCKSERVER_NAME}"
+      },
+      "spec": {
+        "host": "${APPLICATION_DOMAIN}",
+        "to": {
+          "kind": "Service",
+          "name": "${MOCKSERVER_NAME}"
+        }
+      }
+    },
+    {
+      "kind": "DeploymentConfig",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${MOCKSERVER_NAME}",
+        "annotations": {
+          "description": "Defines how to deploy the mock server"
+        }
+      },
+      "spec": {
+        "strategy": {
+          "type": "Rolling",
+		  "rollingParams": {
+                "updatePeriodSeconds": 1,
+                "intervalSeconds": 1,
+                "timeoutSeconds": 600,
+                "maxUnavailable": "25%",
+                "maxSurge": "25%"
+            },
+            "resources": {}
+        },
+        "triggers": [		
+          {
+            "type": "ConfigChange"
+          },
+          {
+            "type": "ImageChange",
+            "imageChangeParams": {
+              "automatic": true,
+              "containerNames": [
+                "${MOCKSERVER_NAME}"
+              ],
+              "from": {
+                "kind": "ImageStreamTag",
+                "namespace": "${APP_IMAGE_NAMESPACE}",
+                "name": "${MOCKSERVER_NAME}:latest"
+              }
+            }
+          }
+        ],
+        "replicas": 1,
+        "selector": {
+          "name": "${MOCKSERVER_NAME}"
+        },
+        "template": {
+          "metadata": {
+            "name": "${MOCKSERVER_NAME}",
+            "labels": {
+              "name": "${MOCKSERVER_NAME}"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "${MOCKSERVER_NAME}",
+                "image": " ",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+					"protocol": "TCP"
+                  }
+                ],  
+				"env": [
+								{
+									"name": "SWAGGER_URL",
+									"value": "http://${EDITOR_NAME}:8080/export/swagger.yaml"
+								}
+				],                
+                "resources": {
+                  "limits": {
+                    "memory": "${MEMORY_LIMIT}"
+                  }
+                }                
+              }
+            ]            
+          }
+        }
+      }
+    },
+	{
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${SCHEMASPY_NAME}",
+        "annotations": {
+          "description": "Exposes and load balances the schema spy pods"
+        }
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "web",
+			"protocol": "TCP",
+            "port": 8080,
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "name": "${SCHEMASPY_NAME}"
+        }
+      }
+    },
+    {
+      "kind": "Route",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${SCHEMASPY_NAME}"
+      },
+      "spec": {
+        "host": "${APPLICATION_DOMAIN}",
+        "to": {
+          "kind": "Service",
+          "name": "${SCHEMASPY_NAME}"
+        }
+      }
+    },
+    {
+      "kind": "DeploymentConfig",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${SCHEMASPY_NAME}",
+        "annotations": {
+          "description": "Defines how to deploy the frontend server"
+        }
+      },
+      "spec": {
+        "strategy": {
+          "type": "Rolling",
+		  "rollingParams": {
+                "updatePeriodSeconds": 1,
+                "intervalSeconds": 1,
+                "timeoutSeconds": 600,
+                "maxUnavailable": "25%",
+                "maxSurge": "25%"
+            },
+            "resources": {}
+        },
+        "triggers": [		
+          {
+            "type": "ConfigChange"
+          },
+          {
+            "type": "ImageChange",
+            "imageChangeParams": {
+              "automatic": true,
+              "containerNames": [
+                "${SCHEMASPY_NAME}"
+              ],
+              "from": {
+                "kind": "ImageStreamTag",
+                "namespace": "${APP_IMAGE_NAMESPACE}",
+                "name": "${SCHEMASPY_NAME}:latest"
+              }
+            }
+          }
+        ],
+        "replicas": 1,
+        "selector": {
+          "name": "${SCHEMASPY_NAME}"
+        },
+        "template": {
+          "metadata": {
+            "name": "${SCHEMASPY_NAME}",
+            "labels": {
+              "name": "${SCHEMASPY_NAME}"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "${SCHEMASPY_NAME}",
+                "image": " ",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+					"protocol": "TCP"
+                  }
+                ],
+				"env": [
+                  {
+                    "name": "DATABASE_SERVICE_NAME",
+                    "value": "${DATABASE_SERVICE_NAME}"
+                  },
+                  {
+                    "name": "POSTGRESQL_USER",
+                    "value": "${DATABASE_USER}"
+                  },
+                  {
+                    "name": "POSTGRESQL_PASSWORD",
+                    "value": "${DATABASE_PASSWORD}"
+                  },
+                  {
+                    "name": "POSTGRESQL_DATABASE",
+                    "value": "${DATABASE_NAME}"
+                  }
+                ],                
+                "readinessProbe": {
+                  "timeoutSeconds": 3000,
+                  "initialDelaySeconds": 3,
+                  "httpGet": {
+                    "path": "/",
+                    "port": 8080
+                  }
+                },
+                "livenessProbe": {
+                  "timeoutSeconds": 3000,
+                  "initialDelaySeconds": 30,
+                  "httpGet": {
+                    "path": "/",
+                    "port": 8080
+                  }
+                },
+                "resources": {
+                  "limits": {
+                    "memory": "${MEMORY_LIMIT}"
+                  }
+                }                
+              }
+            ]            
+          }
+        }
+      }
+    }
+  ],
+  "parameters": [    
+    {
+      "name": "EDITOR_NAME",
+      "displayName": "Swagger Editor Name",
+      "description": "The name assigned to all of the swagger editor objects defined in this template.",
+      "required": true,
+      "value": "editor"
+    },
+	{
+      "name": "MOCKSERVER_NAME",
+      "displayName": "Mock Server Name",
+      "description": "The name assigned to all of the mock server objects defined in this template.",
+      "required": true,
+      "value": "mock"
+    },
+	{
+      "name": "SCHEMASPY_NAME",
+      "displayName": "Schema Spy Name",
+      "description": "The name assigned to all of the schema spy objects defined in this template.",
+      "required": true,
+      "value": "schema-spy"
+    },
+	{
+      "name": "APPLICATION_DOMAIN",
+      "displayName": "Application Hostname",
+      "description": "The exposed hostname that will route to the Node.js service, if left blank a value will be defaulted.",
+      "value": ""
+    },
+	{
+      "name": "MEMORY_LIMIT",
+      "displayName": "Memory Limit",
+      "description": "Maximum amount of memory the tool container can use.",
+      "value": "512Mi"
+    },
+	{
+      "name": "APP_IMAGE_NAMESPACE",
+      "displayName": "Namespace containing application images.",
+      "description": "Namespace containing application images.",
+      "value": "tran-schoolbus-tools",
+      "required": true
+    },
+    {
+      "name": "DATABASE_SERVICE_NAME",
+      "displayName": "Database Service Name",
+      "value": "postgresql"
+    },
+    {
+      "name": "DATABASE_USER",
+      "displayName": "Database Username",
+      "description": "Username for the PostgreSQL user that will be used for accessing the database.",      
+      "value": "user310"
+    },
+    {
+      "name": "DATABASE_PASSWORD",
+      "displayName": "Database Password",
+      "description": "Password for the PostgreSQL user that will be used for accessing the database.",
+      "value": "4886PrDWmdGCyLoN"
+    },
+    {
+      "name": "DATABASE_NAME",
+      "displayName": "Database Name",
+      "value": "schoolbus"
+    }	
+	]  
+}
