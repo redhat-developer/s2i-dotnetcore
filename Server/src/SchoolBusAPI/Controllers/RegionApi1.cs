@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Controllers
         /// Create a controller and set the database context
         /// </summary>
 
-        public RegionApiController(DbAppContext context)
+        public RegionApiController1(DbAppContext context)
         {
             _context = context;
         }

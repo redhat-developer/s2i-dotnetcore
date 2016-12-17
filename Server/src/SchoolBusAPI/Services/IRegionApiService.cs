@@ -23,6 +23,6 @@ namespace SchoolBusAPI.Services
     /// </summary>
     public interface IRegionApiService
     {
-
+        IActionResult RegionsIdSchooldistrictsGetAsync(int id);
     }
 }

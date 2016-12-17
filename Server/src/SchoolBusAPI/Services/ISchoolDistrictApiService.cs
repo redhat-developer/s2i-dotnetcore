@@ -21,7 +21,7 @@ namespace SchoolBusAPI.Services
     /// <summary>
     /// 
     /// </summary>
-    public interface ISchoolBusApiService
+    public interface ISchoolDistrictApiService
     {
         
     }

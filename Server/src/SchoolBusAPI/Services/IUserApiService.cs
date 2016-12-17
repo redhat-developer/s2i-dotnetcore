@@ -23,6 +23,10 @@ namespace SchoolBusAPI.Services
     /// </summary>
     public interface IUserApiService
     {
+        IActionResult UsersIdFavouritesGetAsync(int id);
 
+        IActionResult UsersIdGetAsync(int id);
+
+        IActionResult UsersIdNotificationGetAsync(int id);
     }
 }

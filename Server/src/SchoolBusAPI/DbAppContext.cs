@@ -51,7 +51,7 @@ namespace SchoolBusAPI.Models
         public virtual DbSet<BusNotification> BusNotifications { get; set; } 
         public virtual DbSet<CCWData> CCWDatas { get; set; } 
         public virtual DbSet<City> Citys { get; set; } 
-        public virtual DbSet<FavoriteContextType> FavoriteContextTypes { get; set; } 
+        //public virtual DbSet<FavoriteContextType> FavoriteContextTypes { get; set; } 
         public virtual DbSet<Inspection> Inspections { get; set; } 
         public virtual DbSet<LocalArea> LocalAreas { get; set; } 
         public virtual DbSet<Owner> Owners { get; set; } 
@@ -67,7 +67,7 @@ namespace SchoolBusAPI.Models
         public virtual DbSet<SchoolBusNote> SchoolBusNotes { get; set; } 
         public virtual DbSet<SchoolDistrict> SchoolDistricts { get; set; } 
         public virtual DbSet<User> Users { get; set; } 
-        public virtual DbSet<UserFavorite> UserFavorites { get; set; } 
+        //public virtual DbSet<UserFavorite> UserFavorites { get; set; } 
         public virtual DbSet<UserNotifications> UserNotificationss { get; set; } 
 
         // public DbSet<Classname> Classname { get; set; }

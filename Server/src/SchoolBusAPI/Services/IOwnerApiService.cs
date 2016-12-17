@@ -23,6 +23,6 @@ namespace SchoolBusAPI.Services
     /// </summary>
     public interface IOwnerApiService
     {
-
+        
     }
 }

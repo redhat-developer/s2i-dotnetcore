@@ -24,6 +24,25 @@ namespace SchoolBusAPI.Services
     /// </summary>
     public interface IInspectionApiService
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IActionResult InspectionsGetAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IActionResult InspectionsIdGetAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IActionResult SchoolbusIdInspectionsGetAsync(int id);
         
     }
 }

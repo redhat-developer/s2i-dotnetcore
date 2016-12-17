@@ -22,34 +22,34 @@ namespace SchoolBusAPI.Services.Impl
     /// <summary>
     /// 
     /// </summary>
-    public class RegionApiService : IRegionApiService
+    public class InspectionApiService : IInspectionApiService
     {
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public RegionApiService(DbAppContext context)
+        public InspectionApiService(DbAppContext context)
         {
             _context = context;
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public virtual IActionResult RegionsIdSchooldistrictsGetAsync(int id)
+        public IActionResult InspectionsGetAsync()
         {
-            string exampleJson = null;
-
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<SchoolBus>(exampleJson)
-            : default(SchoolBus);
-            return new ObjectResult(example);
+            return new ObjectResult("");
         }
-        
+
+        public IActionResult InspectionsIdGetAsync(int id)
+        {
+            return new ObjectResult("");
+        }
+
+        public IActionResult SchoolbusIdInspectionsGetAsync(int id)
+        {
+            return new ObjectResult("");
+        }        
     }
 }
+
 
