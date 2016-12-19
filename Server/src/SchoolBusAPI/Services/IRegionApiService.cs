@@ -23,6 +23,53 @@ namespace SchoolBusAPI.Services
     /// </summary>
     public interface IRegionApiService
     {
+        /// <summary>
+        /// Get all regions
+        /// </summary>
+        /// <returns></returns>
+        IActionResult RegionsGetAsync();
+
+        /// <summary>
+        /// Get all cities for a Region
+        /// </summary>
+        /// <param name="id">Region id</param>
+        /// <returns></returns>
+        IActionResult RegionsIdCitiesGetAsync(int id);
+
+        /// <summary>
+        /// Get a specific region
+        /// </summary>
+        /// <param name="id">Region id</param>
+        /// <returns></returns>
+        IActionResult RegionsIdGetAsync(int id);
+
+        /// <summary>
+        /// Returns local aras in a particular Region
+        /// </summary>
+        /// <param name="id">Region id</param>
+        /// <returns></returns>
+        IActionResult RegionsIdLocalareasGetAsync(int id);
+
+        /// <summary>
+        /// Returns School Districts in a particular Region
+        /// </summary>
+        /// <param name="id">Region id</param>
+        /// <returns></returns>
         IActionResult RegionsIdSchooldistrictsGetAsync(int id);
+
+        /// <summary>
+        /// Update the list of Regions
+        /// </summary>
+        /// <returns></returns>
+        IActionResult RegionsPostAsync(Region[] items);
+
+
+        /// <summary>
+        /// Gets School Districts for a given Region
+        /// </summary>
+        /// <returns></returns>
+        IActionResult RegionsIdSchooldistrictsGetAsync();
     }
+
+
 }

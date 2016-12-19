@@ -57,14 +57,10 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="schoolbusId">Id of SchoolBus to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">Not Found</response>
-        public virtual IActionResult FindBusByIdAsync(int schoolbusId)
+        public virtual IActionResult FindBusByIdAsync(int id)
         {
-            string exampleJson = null;
-
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<SchoolBus>(exampleJson)
-            : default(SchoolBus);
-            return new ObjectResult(example);
+            var result = _context.SchoolBuss.First(a => a.Id == id);
+            return new ObjectResult(result);
         }
 
         /// <summary>
@@ -74,14 +70,33 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult GetAllBusesAsync()
         {
-            //this._context.SchoolBuss.
+            var result = _context.SchoolBuss;
+            return new ObjectResult(result);
+        }
 
-            string exampleJson = null;
+        public virtual IActionResult SchoolbusesIdAttachmentsGetAsync(int id)
+        {
+            var result = _context.SchoolBusAttachments.All(a => a.SchoolBus.Id == id);
+            return new ObjectResult(result);
+        }
 
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<SchoolBus>>(exampleJson)
-            : default(List<SchoolBus>);
-            return new ObjectResult(example);
+        public virtual IActionResult SchoolbusesIdCcwdataGetAsync(int id)
+        {
+            var result = "";
+            // need to fix CCWDatas so it relates to the bus.
+//            var result = _context.CCWDatas.First(a => a.SchoolBus.Id == id);
+            return new ObjectResult(result);
+        }
+
+        public virtual IActionResult SchoolbusesIdHistoryGetAsync(int id)
+        {
+            var result = _context.SchoolBusHistorys.All(a => a.SchoolBus.Id == id);
+            return new ObjectResult(result);            
+        }
+        public virtual IActionResult SchoolbusesIdNotesGetAsync(int id)
+        {
+            var result = _context.SchoolBusNotes.All(a => a.SchoolBus.Id == id);
+            return new ObjectResult(result);
         }
     }
 }

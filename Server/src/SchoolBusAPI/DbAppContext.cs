@@ -16,6 +16,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 namespace SchoolBusAPI.Models
 {
 
+    /// <summary>
+    /// The database context used by the application
+    /// </summary>
 	public class DbAppContext : DbContext
     {
         /// <summary>
@@ -50,7 +53,7 @@ namespace SchoolBusAPI.Models
 
         public virtual DbSet<BusNotification> BusNotifications { get; set; } 
         public virtual DbSet<CCWData> CCWDatas { get; set; } 
-        public virtual DbSet<City> Citys { get; set; } 
+        public virtual DbSet<City> Cities { get; set; } 
         //public virtual DbSet<FavoriteContextType> FavoriteContextTypes { get; set; } 
         public virtual DbSet<Inspection> Inspections { get; set; } 
         public virtual DbSet<LocalArea> LocalAreas { get; set; } 

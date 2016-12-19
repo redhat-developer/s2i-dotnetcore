@@ -28,6 +28,9 @@ using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI
 {
+    /// <summary>
+    /// The application Startup class
+    /// </summary>
     public class Startup
     {
         private readonly IHostingEnvironment _hostingEnv;

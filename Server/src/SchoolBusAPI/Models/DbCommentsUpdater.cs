@@ -13,12 +13,13 @@ using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-/// <summary>
-/// 
-/// </summary>
 namespace SchoolBusAPI.Models
 {
 
+    /// <summary>
+    /// The comments update utility used to put Description text into the Comment field of a column
+    /// </summary>
+    /// <typeparam name="TContext"></typeparam>
     public class DbCommentsUpdater<TContext>
         where TContext : DbAppContext
     {

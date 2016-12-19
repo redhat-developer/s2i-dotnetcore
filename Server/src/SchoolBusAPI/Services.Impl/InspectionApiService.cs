@@ -34,20 +34,36 @@ namespace SchoolBusAPI.Services.Impl
             _context = context;
         }
 
-
+        /// <summary>
+        /// Returns all inspections.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult InspectionsGetAsync()
         {
-            return new ObjectResult("");
+            var result = _context.Inspections;
+            return new ObjectResult(result);
         }
 
+        /// <summary>
+        /// Returns an inspection
+        /// </summary>
+        /// <param name="id">Inspection id</param>
+        /// <returns></returns>
         public IActionResult InspectionsIdGetAsync(int id)
         {
-            return new ObjectResult("");
+            var result = _context.Inspections.First(a => a.Id == id);
+            return new ObjectResult(result);
         }
 
+        /// <summary>
+        /// Returns all inspections for a given SchoolBus.
+        /// </summary>
+        /// <param name="id">The SchoolBus id</param>
+        /// <returns></returns>
         public IActionResult SchoolbusIdInspectionsGetAsync(int id)
         {
-            return new ObjectResult("");
+            var result = _context.Inspections.All(a => a.SchoolBus.Id == id);
+            return new ObjectResult(result);
         }        
     }
 }

@@ -8,14 +8,9 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.Services;
-using Newtonsoft.Json;
 
 namespace SchoolBusAPI.Services.Impl
 {
@@ -34,6 +29,29 @@ namespace SchoolBusAPI.Services.Impl
             _context = context;
         }
 
+        public virtual IActionResult RegionsGetAsync()
+        {
+            var results = _context.Regions.ToList();
+            return new ObjectResult(results);
+        }
+
+        public virtual IActionResult RegionsIdCitiesGetAsync(int id)
+        {
+            var result = _context.Cities.All(a => a.Region.Id == id);
+            return new ObjectResult(result);
+        }
+
+        public virtual IActionResult RegionsIdGetAsync(int id)
+        {
+            var result = _context.Regions.First(a => a.Id == id);
+            return new ObjectResult(result);
+        }
+
+        public virtual IActionResult RegionsIdLocalareasGetAsync(int id)
+        {
+            var result = _context.LocalAreas.All(a => a.Region.Id == id);
+            return new ObjectResult(result);
+        }
 
         /// <summary>
         /// 
@@ -42,14 +60,31 @@ namespace SchoolBusAPI.Services.Impl
         /// <returns></returns>
         public virtual IActionResult RegionsIdSchooldistrictsGetAsync(int id)
         {
-            string exampleJson = null;
-
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<SchoolBus>(exampleJson)
-            : default(SchoolBus);
-            return new ObjectResult(example);
+            var result = _context.SchoolDistricts.All(a => a.LocalArea.Region.Id == id);
+            return new ObjectResult(result);
         }
-        
+
+        public virtual IActionResult RegionsPostAsync(Region[] items)
+        {
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (Region item in items)
+            {
+                _context.Regions.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+
+            return new NoContentResult();
+        }
+
+        public virtual IActionResult RegionsIdSchooldistrictsGetAsync()
+        {
+            return new ObjectResult("");
+        }
+
     }
 }
 

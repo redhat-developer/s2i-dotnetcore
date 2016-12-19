@@ -104,8 +104,8 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    this.Id != null &&
+                    this.Id == other.Id 
+                    &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (

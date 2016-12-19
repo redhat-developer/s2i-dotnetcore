@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 
 namespace SchoolBusAPI.Services.Impl
 {
+    /// <summary>
+    /// Implementation for the UserAPIService
+    /// </summary>
     public class UserApiService : IUserApiService
     {
         private readonly DbAppContext _context;
@@ -22,17 +25,22 @@ namespace SchoolBusAPI.Services.Impl
         }
         public IActionResult UsersIdFavouritesGetAsync(int id)
         {
-            return new ObjectResult("");
+            var result = "";
+            // Need to add this object to the model.
+            // var result = _context.UserFavourites.All(a => a.User.Id == id);
+            return new ObjectResult(result);
         }
 
         public IActionResult UsersIdGetAsync(int id)
         {
-            return new ObjectResult("");
+            var result = _context.Users.First(a => a.Id == id);
+            return new ObjectResult(result);
         }
 
         public IActionResult UsersIdNotificationGetAsync(int id)
         {
-            return new ObjectResult("");
+            var result = _context.UserNotificationss.All(a => a.User.Id == id);
+            return new ObjectResult(result);
         }
     }
 }

@@ -23,10 +23,25 @@ namespace SchoolBusAPI.Services
     /// </summary>
     public interface IUserApiService
     {
+        /// <summary>
+        /// Returns Favorites for a given User
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         IActionResult UsersIdFavouritesGetAsync(int id);
 
+        /// <summary>
+        /// Returns a User
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
         IActionResult UsersIdGetAsync(int id);
 
+        /// <summary>
+        /// Used to get notifications for a user
+        /// </summary>
+        /// <param name="id">user id</param>
+        /// <returns>Array of notifications</returns>
         IActionResult UsersIdNotificationGetAsync(int id);
     }
 }

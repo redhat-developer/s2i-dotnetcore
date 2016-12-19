@@ -126,8 +126,7 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    this.Id != null &&
+                    this.Id == other.Id &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -158,10 +157,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
+                    hash = hash * 59 + this.Id.GetHashCode();
+                    
                     if (this.JsonData != null)
                     { 
                         hash = hash * 59 + this.JsonData.GetHashCode();

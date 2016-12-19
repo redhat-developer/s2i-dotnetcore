@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SchoolBusAPI.Migrations
 {
+    /// <summary>
+    /// The first migration
+    /// </summary>
     public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

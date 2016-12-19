@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace SchoolBusAPI
 {
+    /// <summary>
+    /// The main Program for the application.
+    /// </summary>
     public class Program
     {
         public static void Main(string[] args)

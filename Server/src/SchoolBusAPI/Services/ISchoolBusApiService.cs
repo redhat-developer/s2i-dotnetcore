@@ -46,5 +46,14 @@ namespace SchoolBusAPI.Services
         /// <remarks></remarks>
         /// <response code="200">OK</response>
         IActionResult GetAllBusesAsync();
+
+        IActionResult SchoolbusesIdAttachmentsGetAsync(int id);
+
+        IActionResult SchoolbusesIdCcwdataGetAsync(int id);
+
+        IActionResult SchoolbusesIdHistoryGetAsync(int id);
+
+        IActionResult SchoolbusesIdNotesGetAsync(int id);
+
     }
 }

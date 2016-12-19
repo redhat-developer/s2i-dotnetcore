@@ -11,6 +11,10 @@ namespace SchoolBusAPI.Migrations
     [Migration("20161216224526_initial")]
     partial class initial
     {
+        /// <summary>
+        /// Generated code
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
