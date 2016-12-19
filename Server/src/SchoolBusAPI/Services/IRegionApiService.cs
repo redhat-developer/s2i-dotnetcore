@@ -1,75 +1,76 @@
-﻿/*
+/*
  * REST API Documentation for Schoolbus
  *
- * This project is to replace the existing permitting and inspection scheduling functionality in AVIS  such that the mainframe application can be retired. 
+ * API Sample
  *
- * OpenAPI spec version: 1.0.0
+ * OpenAPI spec version: v1
  * 
  * 
  */
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 
+
 namespace SchoolBusAPI.Services
-{
+{ 
     /// <summary>
     /// 
     /// </summary>
     public interface IRegionApiService
     {
+	
         /// <summary>
-        /// Get all regions
+        /// 
         /// </summary>
-        /// <returns></returns>
-        IActionResult RegionsGetAsync();
+        /// <remarks>Returns a list of regions for a given province</remarks>
+        /// <response code="200">OK</response>        
 
+        IActionResult RegionsGetAsync ();        
+        
         /// <summary>
-        /// Get all cities for a Region
+        /// 
         /// </summary>
-        /// <param name="id">Region id</param>
-        /// <returns></returns>
-        IActionResult RegionsIdCitiesGetAsync(int id);
+        /// <remarks>Returns a list of cities for a given region</remarks>
+        /// <param name="id">id of Region to fetch Cities for</param>
+        /// <response code="200">OK</response>        
 
+        IActionResult RegionsIdCitiesGetAsync (int id);        
+        
         /// <summary>
-        /// Get a specific region
+        /// 
         /// </summary>
-        /// <param name="id">Region id</param>
-        /// <returns></returns>
-        IActionResult RegionsIdGetAsync(int id);
+        /// <remarks>Returns a specific region</remarks>
+        /// <param name="id">id of Regions to fetch</param>
+        /// <response code="200">OK</response>        
 
+        IActionResult RegionsIdGetAsync (int id);        
+        
         /// <summary>
-        /// Returns local aras in a particular Region
+        /// 
         /// </summary>
-        /// <param name="id">Region id</param>
-        /// <returns></returns>
-        IActionResult RegionsIdLocalareasGetAsync(int id);
+        /// <remarks>Returns a list of LocalAreas for a given region</remarks>
+        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
+        /// <response code="200">OK</response>        
 
+        IActionResult RegionsIdLocalareasGetAsync (int id);        
+        
         /// <summary>
-        /// Returns School Districts in a particular Region
+        /// 
         /// </summary>
-        /// <param name="id">Region id</param>
-        /// <returns></returns>
-        IActionResult RegionsIdSchooldistrictsGetAsync(int id);
+        /// <remarks>Adds a number of regions.</remarks>
+        /// <response code="200">OK</response>        
 
-        /// <summary>
-        /// Update the list of Regions
-        /// </summary>
-        /// <returns></returns>
-        IActionResult RegionsPostAsync(Region[] items);
-
-
-        /// <summary>
-        /// Gets School Districts for a given Region
-        /// </summary>
-        /// <returns></returns>
-        IActionResult RegionsIdSchooldistrictsGetAsync();
+        IActionResult RegionsPostAsync (Region[] items);        
+        
     }
-
-
 }

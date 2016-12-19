@@ -31,10 +31,11 @@ namespace SchoolBusAPI.Test
         /// </summary>        
 		public InspectionApiIntegrationTest()
 		{
-			_server = new TestServer(new WebHostBuilder()
+            _server = new TestServer(new WebHostBuilder()
             .UseEnvironment("Development")
             .UseContentRoot(Directory.GetCurrentDirectory())
-            .UseStartup<Startup>());
+            .UseStartup<Startup>()            
+            );
             _client = _server.CreateClient();
 		}
 	

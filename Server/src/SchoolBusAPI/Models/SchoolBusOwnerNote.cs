@@ -24,18 +24,29 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class OwnerNotes :  IEquatable<OwnerNotes>
+    public partial class SchoolBusOwnerNote :  IEquatable<SchoolBusOwnerNote>
     {
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="OwnerNotes" /> class.
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public SchoolBusOwnerNote()
+        {
+            this.Id = 0;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchoolBusOwnerNote" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Owner">Owner.</param>
-        public OwnerNotes(int Id, Owner Owner = null)
+        /// <param name="Expired">Expired.</param>
+        /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
+        public SchoolBusOwnerNote(int Id, bool? Expired = null, SchoolBusOwner SchoolBusOwner = null)
         {
             
             this.Id = Id;            
-            this.Owner = Owner;
+            this.Expired = Expired;
+            this.SchoolBusOwner = SchoolBusOwner;
             
         }
 
@@ -48,11 +59,18 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets Owner
+        /// Gets or Sets Expired
         /// </summary>
-        [DataMember(Name="Owner")]
+        [DataMember(Name="Expired")]
                 
-        public Owner Owner { get; set; }
+        public bool? Expired { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SchoolBusOwner
+        /// </summary>
+        [DataMember(Name="SchoolBusOwner")]
+                
+        public SchoolBusOwner SchoolBusOwner { get; set; }
 
 
         /// <summary>
@@ -62,9 +80,10 @@ namespace SchoolBusAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class OwnerNotes {\n");
+            sb.Append("class SchoolBusOwnerNote {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Owner: ").Append(Owner).Append("\n");
+            sb.Append("  Expired: ").Append(Expired).Append("\n");
+            sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -88,15 +107,15 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, obj)) { return false; }
             if (ReferenceEquals(this, obj)) { return true; }
             if (obj.GetType() != GetType()) { return false; }
-            return Equals((OwnerNotes)obj);
+            return Equals((SchoolBusOwnerNote)obj);
         }
 
         /// <summary>
-        /// Returns true if OwnerNotes instances are equal
+        /// Returns true if SchoolBusOwnerNote instances are equal
         /// </summary>
-        /// <param name="other">Instance of OwnerNotes to be compared</param>
+        /// <param name="other">Instance of SchoolBusOwnerNote to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(OwnerNotes other)
+        public bool Equals(SchoolBusOwnerNote other)
         {
 
             if (ReferenceEquals(null, other)) { return false; }
@@ -104,13 +123,19 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id &&
+                    this.Id == other.Id ||
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Owner == other.Owner ||
-                    this.Owner != null &&
-                    this.Owner.Equals(other.Owner)
+                    this.Expired == other.Expired ||
+                    this.Expired != null &&
+                    this.Expired.Equals(other.Expired)
+                ) && 
+                (
+                    this.SchoolBusOwner == other.SchoolBusOwner ||
+                    this.SchoolBusOwner != null &&
+                    this.SchoolBusOwner.Equals(other.SchoolBusOwner)
                 );
         }
 
@@ -129,9 +154,13 @@ namespace SchoolBusAPI.Models
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
                     }
-                    if (this.Owner != null)
+                    if (this.Expired != null)
                     { 
-                        hash = hash * 59 + this.Owner.GetHashCode();
+                        hash = hash * 59 + this.Expired.GetHashCode();
+                    }
+                    if (this.SchoolBusOwner != null)
+                    { 
+                        hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
                     }
                 return hash;
             }
@@ -139,12 +168,12 @@ namespace SchoolBusAPI.Models
 
         #region Operators
 
-        public static bool operator ==(OwnerNotes left, OwnerNotes right)
+        public static bool operator ==(SchoolBusOwnerNote left, SchoolBusOwnerNote right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(OwnerNotes left, OwnerNotes right)
+        public static bool operator !=(SchoolBusOwnerNote left, SchoolBusOwnerNote right)
         {
             return !Equals(left, right);
         }

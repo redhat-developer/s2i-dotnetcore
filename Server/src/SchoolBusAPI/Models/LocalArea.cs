@@ -26,6 +26,15 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class LocalArea :  IEquatable<LocalArea>
     {
+
+        /// <summary>
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public LocalArea()
+        {
+            this.Id = 0;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalArea" /> class.
         /// </summary>
@@ -104,8 +113,8 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id 
-                    &&
+                    this.Id == other.Id ||
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (

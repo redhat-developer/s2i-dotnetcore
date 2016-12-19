@@ -79,7 +79,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/users/{id}/notification")]
         [SwaggerOperation("UsersIdNotificationGet")]
-        [SwaggerResponse(200, type: typeof(List<UserNotifications>))]
+        [SwaggerResponse(200, type: typeof(List<Notification>))]
         public virtual IActionResult UsersIdNotificationGet([FromRoute]int id)
         { 
             return this._service.UsersIdNotificationGetAsync(id);

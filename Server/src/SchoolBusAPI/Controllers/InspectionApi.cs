@@ -44,6 +44,19 @@ namespace SchoolBusAPI.Controllers
         /// 
         /// </summary>
         
+        /// <param name="body"></param>
+        /// <response code="201">Inspections created</response>
+        [HttpPost]
+        [Route("/api/inspections/bulk")]
+        [SwaggerOperation("InspectionsBulkPost")]
+        public virtual void InspectionsBulkPost([FromBody]List<Inspection> body)
+        { 
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/inspections")]
@@ -52,6 +65,20 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult InspectionsGet()
         { 
             return this._service.InspectionsGetAsync();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <param name="id">id of Inspection to delete</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Inspection not found</response>
+        [HttpDelete]
+        [Route("/api/inspections/{id}")]
+        [SwaggerOperation("InspectionsIdDelete")]
+        public virtual void InspectionsIdDelete([FromRoute]int id)
+        { 
+            throw new NotImplementedException();
         }
         /// <summary>
         /// 
@@ -67,6 +94,35 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult InspectionsIdGet([FromRoute]int id)
         { 
             return this._service.InspectionsIdGetAsync(id);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <param name="id">id of Inspection to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Inspection not found</response>
+        [HttpPut]
+        [Route("/api/inspections/{id}")]
+        [SwaggerOperation("InspectionsIdPut")]
+        [SwaggerResponse(200, type: typeof(Inspection))]
+        public virtual IActionResult InspectionsIdPut([FromRoute]int id)
+        { 
+            return this._service.InspectionsIdPutAsync(id);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <param name="body"></param>
+        /// <response code="201">Inspection created</response>
+        [HttpPost]
+        [Route("/api/inspections")]
+        [SwaggerOperation("InspectionsPost")]
+        [SwaggerResponse(200, type: typeof(Inspection))]
+        public virtual IActionResult InspectionsPost([FromBody]Inspection body)
+        { 
+            return this._service.InspectionsPostAsync(body);
         }
         /// <summary>
         /// 

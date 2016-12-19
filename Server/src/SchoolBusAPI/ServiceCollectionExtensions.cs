@@ -27,8 +27,16 @@ namespace SchoolBusAPI
         public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
         {
             services.AddTransient<ISchoolBusApiService, SchoolBusApiService>();
-            // ...and a lot more services!
-
+            services.AddTransient<ISchoolBusAttachmentApiService, SchoolBusAttachmentApiService>();
+            services.AddTransient<ISchoolBusHistoryApiService, SchoolBusHistoryApiService>();
+            services.AddTransient<ISchoolBusNoteApiService, SchoolBusNoteApiService>();
+            services.AddTransient<ISchoolBusOwnerApiService, SchoolBusOwnerApiService>();
+            services.AddTransient<ISchoolBusOwnerAttachmentApiService, SchoolBusOwnerAttachmentApiService>();
+            services.AddTransient<ISchoolBusOwnerHistoryApiService, SchoolBusOwnerHistoryApiService>();
+            services.AddTransient<ISchoolBusOwnerNoteApiService, SchoolBusOwnerNoteApiService>();
+            services.AddTransient<IRegionApiService, RegionApiService>();
+            services.AddTransient<ISchoolDistrictApiService, SchoolDistrictApiService>();
+            services.AddTransient<IUserApiService, UserApiService>();
             return services;
         }
     }

@@ -26,19 +26,30 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class UserFavourite :  IEquatable<UserFavourite>
     {
+
+        /// <summary>
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public UserFavourite()
+        {
+            this.Id = 0;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UserFavourite" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="JsonData">Saved search.</param>
         /// <param name="Name">Context Name.</param>
+        /// <param name="Value">Saved search.</param>
+        /// <param name="IsDefault">IsDefault.</param>
         /// <param name="FavouriteContextType">FavouriteContextType.</param>
-        public UserFavourite(int Id, string JsonData = null, string Name = null, FavouriteContextType FavouriteContextType = null)
+        public UserFavourite(int Id, string Name = null, string Value = null, bool? IsDefault = null, FavouriteContextType FavouriteContextType = null)
         {
             
             this.Id = Id;            
-            this.JsonData = JsonData;
             this.Name = Name;
+            this.Value = Value;
+            this.IsDefault = IsDefault;
             this.FavouriteContextType = FavouriteContextType;
             
         }
@@ -52,20 +63,27 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Saved search
-        /// </summary>
-        /// <value>Saved search</value>
-        [DataMember(Name="JsonData")]
-        [MetaDataExtension (Description = "Saved search")]        
-        public string JsonData { get; set; }
-
-        /// <summary>
         /// Context Name
         /// </summary>
         /// <value>Context Name</value>
         [DataMember(Name="Name")]
         [MetaDataExtension (Description = "Context Name")]        
         public string Name { get; set; }
+
+        /// <summary>
+        /// Saved search
+        /// </summary>
+        /// <value>Saved search</value>
+        [DataMember(Name="Value")]
+        [MetaDataExtension (Description = "Saved search")]        
+        public string Value { get; set; }
+
+        /// <summary>
+        /// Gets or Sets IsDefault
+        /// </summary>
+        [DataMember(Name="IsDefault")]
+                
+        public bool? IsDefault { get; set; }
 
         /// <summary>
         /// Gets or Sets FavouriteContextType
@@ -84,8 +102,9 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class UserFavourite {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  JsonData: ").Append(JsonData).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("  IsDefault: ").Append(IsDefault).Append("\n");
             sb.Append("  FavouriteContextType: ").Append(FavouriteContextType).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -126,18 +145,24 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id &&
+                    this.Id == other.Id ||
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) && 
-                (
-                    this.JsonData == other.JsonData ||
-                    this.JsonData != null &&
-                    this.JsonData.Equals(other.JsonData)
                 ) && 
                 (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
+                ) && 
+                (
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
+                ) && 
+                (
+                    this.IsDefault == other.IsDefault ||
+                    this.IsDefault != null &&
+                    this.IsDefault.Equals(other.IsDefault)
                 ) && 
                 (
                     this.FavouriteContextType == other.FavouriteContextType ||
@@ -157,15 +182,21 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks 
-                    hash = hash * 59 + this.Id.GetHashCode();
-                    
-                    if (this.JsonData != null)
+                    if (this.Id != null)
                     { 
-                        hash = hash * 59 + this.JsonData.GetHashCode();
+                        hash = hash * 59 + this.Id.GetHashCode();
                     }
                     if (this.Name != null)
                     { 
                         hash = hash * 59 + this.Name.GetHashCode();
+                    }
+                    if (this.Value != null)
+                    { 
+                        hash = hash * 59 + this.Value.GetHashCode();
+                    }
+                    if (this.IsDefault != null)
+                    { 
+                        hash = hash * 59 + this.IsDefault.GetHashCode();
                     }
                     if (this.FavouriteContextType != null)
                     { 

@@ -26,15 +26,28 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class SchoolBusNote :  IEquatable<SchoolBusNote>
     {
+
+        /// <summary>
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public SchoolBusNote()
+        {
+            this.Id = 0;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SchoolBusNote" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
+        /// <param name="Value">Value.</param>
+        /// <param name="Expired">Expired.</param>
         /// <param name="SchoolBus">SchoolBus.</param>
-        public SchoolBusNote(int Id, SchoolBus SchoolBus = null)
+        public SchoolBusNote(int Id, string Value = null, bool? Expired = null, SchoolBus SchoolBus = null)
         {
             
             this.Id = Id;            
+            this.Value = Value;
+            this.Expired = Expired;
             this.SchoolBus = SchoolBus;
             
         }
@@ -46,6 +59,20 @@ namespace SchoolBusAPI.Models
         [DataMember(Name="id")]
         [MetaDataExtension (Description = "Primary Key")]        
         public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Value
+        /// </summary>
+        [DataMember(Name="Value")]
+                
+        public string Value { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Expired
+        /// </summary>
+        [DataMember(Name="Expired")]
+                
+        public bool? Expired { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBus
@@ -64,6 +91,8 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolBusNote {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("  Expired: ").Append(Expired).Append("\n");
             sb.Append("  SchoolBus: ").Append(SchoolBus).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -104,8 +133,19 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id &&
+                    this.Id == other.Id ||
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
+                ) && 
+                (
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
+                ) && 
+                (
+                    this.Expired == other.Expired ||
+                    this.Expired != null &&
+                    this.Expired.Equals(other.Expired)
                 ) && 
                 (
                     this.SchoolBus == other.SchoolBus ||
@@ -128,6 +168,14 @@ namespace SchoolBusAPI.Models
                     if (this.Id != null)
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
+                    }
+                    if (this.Value != null)
+                    { 
+                        hash = hash * 59 + this.Value.GetHashCode();
+                    }
+                    if (this.Expired != null)
+                    { 
+                        hash = hash * 59 + this.Expired.GetHashCode();
                     }
                     if (this.SchoolBus != null)
                     { 

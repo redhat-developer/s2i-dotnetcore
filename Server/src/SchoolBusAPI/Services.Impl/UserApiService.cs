@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public IActionResult UsersIdNotificationGetAsync(int id)
         {
-            var result = _context.UserNotificationss.All(a => a.User.Id == id);
+            var result = _context.Notifications.All(a => a.User.Id == id);
             return new ObjectResult(result);
         }
     }

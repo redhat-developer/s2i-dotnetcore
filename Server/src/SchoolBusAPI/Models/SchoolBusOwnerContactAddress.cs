@@ -24,18 +24,27 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class OwnerContactPhone :  IEquatable<OwnerContactPhone>
+    public partial class SchoolBusOwnerContactAddress :  IEquatable<SchoolBusOwnerContactAddress>
     {
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="OwnerContactPhone" /> class.
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public SchoolBusOwnerContactAddress()
+        {
+            this.Id = 0;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchoolBusOwnerContactAddress" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="OwnerContact">OwnerContact.</param>
-        public OwnerContactPhone(int Id, OwnerContact OwnerContact = null)
+        /// <param name="SchoolBusOwnerContact">SchoolBusOwnerContact.</param>
+        public SchoolBusOwnerContactAddress(int Id, SchoolBusOwnerContact SchoolBusOwnerContact = null)
         {
             
             this.Id = Id;            
-            this.OwnerContact = OwnerContact;
+            this.SchoolBusOwnerContact = SchoolBusOwnerContact;
             
         }
 
@@ -48,11 +57,11 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets OwnerContact
+        /// Gets or Sets SchoolBusOwnerContact
         /// </summary>
-        [DataMember(Name="OwnerContact")]
+        [DataMember(Name="SchoolBusOwnerContact")]
                 
-        public OwnerContact OwnerContact { get; set; }
+        public SchoolBusOwnerContact SchoolBusOwnerContact { get; set; }
 
 
         /// <summary>
@@ -62,9 +71,9 @@ namespace SchoolBusAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class OwnerContactPhone {\n");
+            sb.Append("class SchoolBusOwnerContactAddress {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  OwnerContact: ").Append(OwnerContact).Append("\n");
+            sb.Append("  SchoolBusOwnerContact: ").Append(SchoolBusOwnerContact).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -88,15 +97,15 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, obj)) { return false; }
             if (ReferenceEquals(this, obj)) { return true; }
             if (obj.GetType() != GetType()) { return false; }
-            return Equals((OwnerContactPhone)obj);
+            return Equals((SchoolBusOwnerContactAddress)obj);
         }
 
         /// <summary>
-        /// Returns true if OwnerContactPhone instances are equal
+        /// Returns true if SchoolBusOwnerContactAddress instances are equal
         /// </summary>
-        /// <param name="other">Instance of OwnerContactPhone to be compared</param>
+        /// <param name="other">Instance of SchoolBusOwnerContactAddress to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(OwnerContactPhone other)
+        public bool Equals(SchoolBusOwnerContactAddress other)
         {
 
             if (ReferenceEquals(null, other)) { return false; }
@@ -104,13 +113,14 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id &&
+                    this.Id == other.Id ||
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.OwnerContact == other.OwnerContact ||
-                    this.OwnerContact != null &&
-                    this.OwnerContact.Equals(other.OwnerContact)
+                    this.SchoolBusOwnerContact == other.SchoolBusOwnerContact ||
+                    this.SchoolBusOwnerContact != null &&
+                    this.SchoolBusOwnerContact.Equals(other.SchoolBusOwnerContact)
                 );
         }
 
@@ -129,9 +139,9 @@ namespace SchoolBusAPI.Models
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
                     }
-                    if (this.OwnerContact != null)
+                    if (this.SchoolBusOwnerContact != null)
                     { 
-                        hash = hash * 59 + this.OwnerContact.GetHashCode();
+                        hash = hash * 59 + this.SchoolBusOwnerContact.GetHashCode();
                     }
                 return hash;
             }
@@ -139,12 +149,12 @@ namespace SchoolBusAPI.Models
 
         #region Operators
 
-        public static bool operator ==(OwnerContactPhone left, OwnerContactPhone right)
+        public static bool operator ==(SchoolBusOwnerContactAddress left, SchoolBusOwnerContactAddress right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(OwnerContactPhone left, OwnerContactPhone right)
+        public static bool operator !=(SchoolBusOwnerContactAddress left, SchoolBusOwnerContactAddress right)
         {
             return !Equals(left, right);
         }

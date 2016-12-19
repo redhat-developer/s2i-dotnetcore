@@ -104,24 +104,9 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/regions")]
         [SwaggerOperation("RegionsPost")]
         [SwaggerResponse(200, type: typeof(List<Region>))]
-        public virtual IActionResult RegionsPost(Region[] items)
+        public virtual IActionResult RegionsPost([FromBody] Region[] items)
         { 
             return this._service.RegionsPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns a list of SchoolDistricts for a given region</remarks>
-        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/regions/{id}/schooldistricts")]
-        [SwaggerOperation("RegionsIdSchooldistrictsGet")]
-        [SwaggerResponse(200, type: typeof(List<SchoolDistrict>))]
-        public virtual IActionResult RegionsIdSchooldistrictsGet([FromRoute]int id)
-        {
-            return this._service.RegionsIdSchooldistrictsGetAsync(id);
         }
     }
 }

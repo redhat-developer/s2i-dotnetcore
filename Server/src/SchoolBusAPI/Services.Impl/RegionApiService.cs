@@ -60,7 +60,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <returns></returns>
         public virtual IActionResult RegionsIdSchooldistrictsGetAsync(int id)
         {
-            var result = _context.SchoolDistricts.All(a => a.LocalArea.Region.Id == id);
+            var result = _context.SchoolDistricts.All(a => a.Region.Id == id);
             return new ObjectResult(result);
         }
 

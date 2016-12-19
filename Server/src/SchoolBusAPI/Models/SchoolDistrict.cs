@@ -26,16 +26,25 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class SchoolDistrict :  IEquatable<SchoolDistrict>
     {
+
+        /// <summary>
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public SchoolDistrict()
+        {
+            this.Id = 0;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SchoolDistrict" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="LocalArea">LocalArea.</param>
-        public SchoolDistrict(int Id, LocalArea LocalArea = null)
+        /// <param name="Region">Region.</param>
+        public SchoolDistrict(int Id, Region Region = null)
         {
             
             this.Id = Id;            
-            this.LocalArea = LocalArea;
+            this.Region = Region;
             
         }
 
@@ -48,11 +57,11 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets LocalArea
+        /// Gets or Sets Region
         /// </summary>
-        [DataMember(Name="LocalArea")]
+        [DataMember(Name="Region")]
                 
-        public LocalArea LocalArea { get; set; }
+        public Region Region { get; set; }
 
 
         /// <summary>
@@ -64,7 +73,7 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolDistrict {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  LocalArea: ").Append(LocalArea).Append("\n");
+            sb.Append("  Region: ").Append(Region).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -104,13 +113,14 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id &&
+                    this.Id == other.Id ||
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.LocalArea == other.LocalArea ||
-                    this.LocalArea != null &&
-                    this.LocalArea.Equals(other.LocalArea)
+                    this.Region == other.Region ||
+                    this.Region != null &&
+                    this.Region.Equals(other.Region)
                 );
         }
 
@@ -129,9 +139,9 @@ namespace SchoolBusAPI.Models
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
                     }
-                    if (this.LocalArea != null)
+                    if (this.Region != null)
                     { 
-                        hash = hash * 59 + this.LocalArea.GetHashCode();
+                        hash = hash * 59 + this.Region.GetHashCode();
                     }
                 return hash;
             }

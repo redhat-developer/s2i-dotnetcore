@@ -35,20 +35,52 @@ namespace SchoolBusAPI.Services.Impl
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+
+        /// <param name="body"></param>
+        /// <response code="201">Inspections created</response>        
+
+        public IActionResult InspectionsBulkPostAsync(List<Inspection> body)
+        {
+            return new ObjectResult("");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        /// <summary>
         /// Returns all inspections.
         /// </summary>
         /// <returns></returns>
         public IActionResult InspectionsGetAsync()
         {
-            var result = _context.Inspections;
+            var result = _context.Inspections.ToList();
             return new ObjectResult(result);
         }
 
         /// <summary>
-        /// Returns an inspection
+        /// 
         /// </summary>
-        /// <param name="id">Inspection id</param>
-        /// <returns></returns>
+
+        /// <param name="id">id of Inspection to delete</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Inspection not found</response>        
+
+        public IActionResult InspectionsIdDeleteAsync(int id)
+        {
+            return new ObjectResult("");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        /// <param name="id">id of Inspection to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Inspection not found</response>        
+
         public IActionResult InspectionsIdGetAsync(int id)
         {
             var result = _context.Inspections.First(a => a.Id == id);
@@ -56,13 +88,41 @@ namespace SchoolBusAPI.Services.Impl
         }
 
         /// <summary>
-        /// Returns all inspections for a given SchoolBus.
+        /// 
         /// </summary>
-        /// <param name="id">The SchoolBus id</param>
-        /// <returns></returns>
+
+        /// <param name="id">id of Inspection to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Inspection not found</response>        
+
+        public IActionResult InspectionsIdPutAsync(int id)
+        {
+            return new ObjectResult("");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        /// <param name="body"></param>
+        /// <response code="201">Inspection created</response>        
+
+        public IActionResult InspectionsPostAsync(Inspection body)
+        {
+            return new ObjectResult("");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBus not found</response>        
+
         public IActionResult SchoolbusIdInspectionsGetAsync(int id)
         {
-            var result = _context.Inspections.All(a => a.SchoolBus.Id == id);
+            var result = _context.Inspections.All(a => a.Id == id);
             return new ObjectResult(result);
         }        
     }

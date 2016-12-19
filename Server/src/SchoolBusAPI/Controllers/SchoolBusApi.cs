@@ -55,6 +55,19 @@ namespace SchoolBusAPI.Controllers
             return this._service.AddBusAsync(body);
         }
         /// <summary>
+        /// Creates several school buses
+        /// </summary>
+        /// <remarks>Used for bulk creation of schoolbus records.</remarks>
+        /// <param name="body"></param>
+        /// <response code="201">SchoolBus items created</response>
+        [HttpPost]
+        [Route("/api/schoolbuses/bulk")]
+        [SwaggerOperation("AddSchoolBusBulk")]
+        public virtual void AddSchoolBusBulk([FromBody]List<SchoolBus> body)
+        { 
+            throw new NotImplementedException();
+        }
+        /// <summary>
         /// Returns a single school bus object
         /// </summary>
         /// <remarks></remarks>
@@ -114,6 +127,20 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        
+        /// <param name="id">id of SchoolBus to delete</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBus not found</response>
+        [HttpDelete]
+        [Route("/api/schoolbuses/{id}")]
+        [SwaggerOperation("SchoolbusesIdDelete")]
+        public virtual void SchoolbusesIdDelete([FromRoute]int id)
+        { 
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns History for a particular SchoolBus</remarks>
         /// <param name="id">id of SchoolBus to fetch SchoolBusHistory for</param>
         /// <response code="200">OK</response>
@@ -139,6 +166,21 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult SchoolbusesIdNotesGet([FromRoute]int id)
         { 
             return this._service.SchoolbusesIdNotesGetAsync(id);
+        }
+        /// <summary>
+        /// Updates a single school bus object
+        /// </summary>
+        /// <remarks></remarks>
+        /// <param name="id">Id of SchoolBus to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Not Found</response>
+        [HttpPut]
+        [Route("/api/schoolbuses/{id}")]
+        [SwaggerOperation("SchoolbusesIdPut")]
+        [SwaggerResponse(200, type: typeof(SchoolBus))]
+        public virtual IActionResult SchoolbusesIdPut([FromRoute]int id)
+        { 
+            return this._service.SchoolbusesIdPutAsync(id);
         }
     }
 }

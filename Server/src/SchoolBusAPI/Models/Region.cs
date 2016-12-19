@@ -26,6 +26,15 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class Region :  IEquatable<Region>
     {
+
+        /// <summary>
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public Region()
+        {
+            this.Id = 0;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Region" /> class.
         /// </summary>
@@ -94,7 +103,8 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id &&
+                    this.Id == other.Id ||
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 );
         }

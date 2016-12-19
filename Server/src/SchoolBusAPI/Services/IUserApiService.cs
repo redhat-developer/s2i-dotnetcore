@@ -1,47 +1,62 @@
-﻿/*
+/*
  * REST API Documentation for Schoolbus
  *
- * This project is to replace the existing permitting and inspection scheduling functionality in AVIS  such that the mainframe application can be retired. 
+ * API Sample
  *
- * OpenAPI spec version: 1.0.0
+ * OpenAPI spec version: v1
  * 
  * 
  */
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 
+
 namespace SchoolBusAPI.Services
-{
+{ 
     /// <summary>
     /// 
     /// </summary>
     public interface IUserApiService
     {
+	
         /// <summary>
-        /// Returns Favorites for a given User
+        /// 
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        IActionResult UsersIdFavouritesGetAsync(int id);
+        /// <remarks>Returns a user&#39;s favourites of a given context type</remarks>
+        /// <param name="id">id of User to fetch favorites for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>        
 
+        IActionResult UsersIdFavouritesGetAsync (int id);        
+        
         /// <summary>
-        /// Returns a User
+        /// 
         /// </summary>
-        /// <param name="id">User id</param>
-        /// <returns></returns>
-        IActionResult UsersIdGetAsync(int id);
+        /// <remarks>Returns data for a particular user</remarks>
+        /// <param name="id">id of User to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>        
 
+        IActionResult UsersIdGetAsync (int id);        
+        
         /// <summary>
-        /// Used to get notifications for a user
+        /// 
         /// </summary>
-        /// <param name="id">user id</param>
-        /// <returns>Array of notifications</returns>
-        IActionResult UsersIdNotificationGetAsync(int id);
+        /// <remarks>Returns a user&#39;s notifications</remarks>
+        /// <param name="id">id of User to fetch notifications for</param>
+        /// <response code="200">OK</response>        
+
+        IActionResult UsersIdNotificationGetAsync (int id);        
+        
     }
 }
