@@ -113,9 +113,3 @@ a `.s2i/environment` file inside your source code repository.
 
     Used to specify the list of projects or project folders to restore. This is
     passed to the `dotnet restore` invocation. Defaults to `.`.
-
-* **DOTNET_FRAMEWORK**
-
-    Used to run the select the target framework to run this application under.
-    This is passed to the `dotnet build` invocation. The framework needs to be
-    defined in the `project.json` file. Defaults to `netcoreapp1.0`.
