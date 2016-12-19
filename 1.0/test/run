@@ -9,7 +9,7 @@
 # Example usage: $ sudo ./test/run
 IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-10-rhel7}
 
-declare -a CLI_APPS=(helloworld qotd dotnetbot)
+declare -a CLI_APPS=(hw_framework_config helloworld qotd dotnetbot)
 declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
@@ -110,6 +110,19 @@ test_docker_run_usage() {
   docker run ${IMAGE_NAME} 2>&1 | grep https://github.com/redhat-developer/s2i-dotnetcore.git 2>&1 >/dev/null
 }
 
+test_pid_1() {
+  local cid_file="$1"
+  info "Testing whether dotnet runs as PID 1"
+  # Use the 'args' format so as to get command arguments. We are looking for 'dotnet' with
+  # an assembly dll.
+  out="$(docker exec $(cat ${cid_file}) /bin/bash -c 'ps --no-headers -o args 1' 2>&1)"
+  if ! echo "${out}" | grep "dotnet" | grep -q '\.dll' ; then
+    echo "'dotnet <assembly>' not process with PID 1. PID 1 process was: '${out}'"
+    cleanup_app
+    return 1
+  fi
+}
+
 test_scl_usage() {
   local run_cmd="$1"
   local expected="$2"
@@ -166,6 +179,8 @@ test_web_application() {
 
   # Wait for the container to write it's CID file
   wait_for_cid
+  test_pid_1 "${cid_file}"
+  check_result $?
 
   test_scl_usage "dotnet --version" "1.0.0-preview2-003131" "${cid_file}"
   check_result $?
@@ -200,6 +215,9 @@ get_expected_cli() {
     "helloworld")
       echo 'Hello World!'
       ;;
+    "hw_framework_config")
+      echo 'Hello World!'
+      ;;
     "dotnetbot")
       echo foobarbaz
       ;;
@@ -218,6 +236,10 @@ filter_cli() {
   local all_output="$2"
   case "${app}" in
     "helloworld")
+      # Note: tail -n1 => Omit "--> Running application ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    "hw_framework_config")
       # Note: tail -n1 => Omit "--> Running application ..." output
       echo "${all_output}" | tail -n1
       ;;
@@ -242,6 +264,10 @@ success_cli() {
   local expected="$3"
   case "${app}" in
     "helloworld")
+      echo "${actual}" | grep -q "${expected}"
+      return $?
+      ;;
+    "hw_framework_config")
       echo "${actual}" | grep -q "${expected}"
       return $?
       ;;
