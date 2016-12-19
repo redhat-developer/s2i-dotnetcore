@@ -106,6 +106,19 @@ test_docker_run_usage() {
   docker run ${IMAGE_NAME} 2>&1 | grep https://github.com/redhat-developer/s2i-dotnetcore.git 2>&1 >/dev/null
 }
 
+test_pid_1() {
+  local cid_file="$1"
+  info "Testing whether dotnet runs as PID 1"
+  # Use the 'args' format so as to get command arguments. We are looking for 'dotnet' with
+  # an assembly dll.
+  out="$(docker exec $(cat ${cid_file}) /bin/bash -c 'ps --no-headers -o args 1' 2>&1)"
+  if ! echo "${out}" | grep "dotnet" | grep -q '\.dll' ; then
+    echo "'dotnet <assembly>' not process with PID 1. PID 1 process was: '${out}'"
+    cleanup_app
+    return 1
+  fi
+}
+
 test_scl_usage() {
   local run_cmd="$1"
   local expected="$2"
@@ -162,6 +175,8 @@ test_web_application() {
 
   # Wait for the container to write it's CID file
   wait_for_cid
+  test_pid_1 "${cid_file}"
+  check_result $?
 
   test_scl_usage "dotnet --version" "1.0.0-preview2-1-003175" "${cid_file}"
   check_result $?

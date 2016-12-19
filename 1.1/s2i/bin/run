@@ -14,8 +14,8 @@ ARG_FILE="arguments.txt"
 if [[ -f "${ARG_FILE}" ]]; then
   echo "---> Running application with arguments from file '${ARG_FILE}' ..."
   PROG_ARGS="$(cat ${ARG_FILE})"
-  dotnet "${APP_DLL_PATH}" ${PROG_ARGS}
+  exec dotnet "${APP_DLL_PATH}" ${PROG_ARGS}
 else
   echo "---> Running application ..."
-  dotnet "${APP_DLL_PATH}"
+  exec dotnet "${APP_DLL_PATH}"
 fi
