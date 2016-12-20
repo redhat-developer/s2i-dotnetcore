@@ -30,15 +30,13 @@ namespace SchoolBusAPI.Test
     {
         // TODO uncomment below to declare an instance variable for SchoolBusAttachment
         private SchoolBusAttachment instance;
-        private SchoolBus instance_bus;
 
         /// <summary>
         /// Setup the test.
         /// </summary>        
         public SchoolBusAttachmentModelTests()
         {
-            instance_bus = new SchoolBus(0);
-            instance = new SchoolBusAttachment(0, instance_bus);
+            instance = new SchoolBusAttachment();
         }
 
     
@@ -58,6 +56,24 @@ namespace SchoolBusAPI.Test
         public void IdTest()
         {
             // TODO unit test for the property 'Id'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'InternalFileName'
+        /// </summary>
+        [Fact]
+        public void InternalFileNameTest()
+        {
+            // TODO unit test for the property 'InternalFileName'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'ExternalFileName'
+        /// </summary>
+        [Fact]
+        public void ExternalFileNameTest()
+        {
+            // TODO unit test for the property 'ExternalFileName'
 			Assert.True(true);
         }
         /// <summary>

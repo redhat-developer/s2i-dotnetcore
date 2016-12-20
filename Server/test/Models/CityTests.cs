@@ -30,15 +30,13 @@ namespace SchoolBusAPI.Test
     {
         // TODO uncomment below to declare an instance variable for City
         private City instance;
-        private Region instance_region;
 
         /// <summary>
         /// Setup the test.
         /// </summary>        
         public CityModelTests()
         {
-            instance_region = new Region(0);
-            instance = new City(0, instance_region);
+            instance = new City();
         }
 
     

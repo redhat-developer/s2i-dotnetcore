@@ -27,6 +27,16 @@ namespace SchoolBusAPI.Services.Impl
     /// </summary>
     public class NotificationEventApiService : INotificationEventApiService
     {
+
+        private readonly DbAppContext _context;
+
+        /// <summary>
+        /// Create a service and set the database context
+        /// </summary>
+        public NotificationEventApiService (DbAppContext context)
+        {
+            _context = context;
+        }
 	
         /// <summary>
         /// 

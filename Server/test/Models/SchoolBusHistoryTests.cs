@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Test
         /// </summary>        
         public SchoolBusHistoryModelTests()
         {
-            instance = new SchoolBusHistory(0);
+            instance = new SchoolBusHistory();
         }
 
     

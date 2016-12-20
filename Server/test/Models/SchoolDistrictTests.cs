@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Test
         /// </summary>        
         public SchoolDistrictModelTests()
         {
-            instance = new SchoolDistrict(0);
+            instance = new SchoolDistrict();
         }
 
     
@@ -59,12 +59,12 @@ namespace SchoolBusAPI.Test
 			Assert.True(true);
         }
         /// <summary>
-        /// Test the property 'LocalArea'
+        /// Test the property 'Region'
         /// </summary>
         [Fact]
-        public void LocalAreaTest()
+        public void RegionTest()
         {
-            // TODO unit test for the property 'LocalArea'
+            // TODO unit test for the property 'Region'
 			Assert.True(true);
         }
 

@@ -27,6 +27,16 @@ namespace SchoolBusAPI.Services.Impl
     /// </summary>
     public class SchoolBusOwnerHistoryApiService : ISchoolBusOwnerHistoryApiService
     {
+
+        private readonly DbAppContext _context;
+
+        /// <summary>
+        /// Create a service and set the database context
+        /// </summary>
+        public SchoolBusOwnerHistoryApiService (DbAppContext context)
+        {
+            _context = context;
+        }
 	
         /// <summary>
         /// 

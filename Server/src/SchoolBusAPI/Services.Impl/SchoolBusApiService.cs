@@ -1,4 +1,4 @@
-﻿/*
+/*
  * REST API Documentation for Schoolbus
  *
  * API Sample
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Services.Impl
-{
+{ 
     /// <summary>
     /// 
     /// </summary>
@@ -33,11 +33,11 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusApiService(DbAppContext context)
+        public SchoolBusApiService (DbAppContext context)
         {
             _context = context;
         }
-
+	
         /// <summary>
         /// Creates a new school bus
         /// </summary>
@@ -45,7 +45,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="body"></param>
         /// <response code="201">SchoolBus created</response>
 
-        public virtual IActionResult AddBusAsync(SchoolBus body)
+        public virtual IActionResult AddBusAsync (SchoolBus body)        
         {
             var result = "";
             return new ObjectResult(result);
@@ -57,7 +57,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="body"></param>
         /// <response code="201">SchoolBus items created</response>
 
-        public virtual IActionResult AddSchoolBusBulkAsync(List<SchoolBus> body)
+        public virtual IActionResult AddSchoolBusBulkAsync (List<SchoolBus> body)        
         {
             var result = "";
             return new ObjectResult(result);
@@ -70,9 +70,9 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">Not Found</response>
 
-        public virtual IActionResult FindBusByIdAsync(int id)
+        public virtual IActionResult FindBusByIdAsync (int id)        
         {
-            var result = _context.SchoolBuss.First(a => a.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
         /// <summary>
@@ -81,11 +81,10 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks></remarks>
         /// <response code="200">OK</response>
 
-        public virtual IActionResult GetAllBusesAsync()
+        public virtual IActionResult GetAllBusesAsync ()        
         {
-            var result = _context.SchoolBuss;
+            var result = "";
             return new ObjectResult(result);
-
         }
         /// <summary>
         /// 
@@ -95,9 +94,9 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
 
-        public virtual IActionResult SchoolbusesIdAttachmentsGetAsync(int id)
+        public virtual IActionResult SchoolbusesIdAttachmentsGetAsync (int id)        
         {
-            var result = _context.SchoolBusAttachments.All(a => a.SchoolBus.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
         /// <summary>
@@ -107,22 +106,20 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of SchoolBus to fetch CCWData for</param>
         /// <response code="200">OK</response>
 
-        public virtual IActionResult SchoolbusesIdCcwdataGetAsync(int id)
+        public virtual IActionResult SchoolbusesIdCcwdataGetAsync (int id)        
         {
             var result = "";
-            // need to fix CCWDatas so it relates to the bus.
-            //            var result = _context.CCWDatas.First(a => a.SchoolBus.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
         /// 
         /// </summary>
-
+        
         /// <param name="id">id of SchoolBus to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
 
-        public virtual IActionResult SchoolbusesIdDeleteAsync(int id)
+        public virtual IActionResult SchoolbusesIdDeleteAsync (int id)        
         {
             var result = "";
             return new ObjectResult(result);
@@ -134,9 +131,9 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of SchoolBus to fetch SchoolBusHistory for</param>
         /// <response code="200">OK</response>
 
-        public virtual IActionResult SchoolbusesIdHistoryGetAsync(int id)
+        public virtual IActionResult SchoolbusesIdHistoryGetAsync (int id)        
         {
-            var result = _context.SchoolBusHistorys.All(a => a.SchoolBus.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
         /// <summary>
@@ -147,9 +144,9 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
 
-        public virtual IActionResult SchoolbusesIdNotesGetAsync(int id)
+        public virtual IActionResult SchoolbusesIdNotesGetAsync (int id)        
         {
-            var result = _context.SchoolBusNotes.All(a => a.SchoolBus.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
         /// <summary>
@@ -160,13 +157,10 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">Not Found</response>
 
-        public virtual IActionResult SchoolbusesIdPutAsync(int id)
+        public virtual IActionResult SchoolbusesIdPutAsync (int id)        
         {
             var result = "";
             return new ObjectResult(result);
         }
     }
 }
-
-
-

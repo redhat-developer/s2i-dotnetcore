@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Test
         /// </summary>        
         public RegionModelTests()
         {
-            instance = new Region(0);
+            instance = new Region();
         }
 
     

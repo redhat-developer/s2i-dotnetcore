@@ -41,11 +41,11 @@ namespace SchoolBusAPI.Test
         /// </summary>        
 		public RegionApiUnitTest()
 		{			
-			Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
-
-            /*
+                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
 			
-			Here you will need to mock up the context.
+                    /*
+			
+                    Here you will need to mock up the context.
 			
             ItemType fakeItem = new ItemType(...);
 
@@ -53,21 +53,24 @@ namespace SchoolBusAPI.Test
 
             dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
 
-			*/
-            RegionApiService _service = new RegionApiService(dbAppContext.Object);
-            _RegionApi = new RegionApiController (_service);
+                    */
+
+                    RegionApiService _service = new RegionApiService(dbAppContext.Object);
+			
+                    _RegionApi = new RegionApiController (_service);
+
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for RegionsRegionIdGet
+        /// Unit test for RegionsGet
         /// </summary>
-		public void TestRegionsRegionIdGet()
+		public void TestRegionsGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _RegionApiController.RegionsRegionIdGet();
+			//  var result = _RegionApiController.RegionsGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -76,13 +79,58 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for RegionsRegionIdLocalareasGet
+        /// Unit test for RegionsIdCitiesGet
         /// </summary>
-		public void TestRegionsRegionIdLocalareasGet()
+		public void TestRegionsIdCitiesGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _RegionApiController.RegionsRegionIdLocalareasGet();
+			//  var result = _RegionApiController.RegionsIdCitiesGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for RegionsIdGet
+        /// </summary>
+		public void TestRegionsIdGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _RegionApiController.RegionsIdGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for RegionsIdLocalareasGet
+        /// </summary>
+		public void TestRegionsIdLocalareasGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _RegionApiController.RegionsIdLocalareasGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for RegionsPost
+        /// </summary>
+		public void TestRegionsPost()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _RegionApiController.RegionsPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

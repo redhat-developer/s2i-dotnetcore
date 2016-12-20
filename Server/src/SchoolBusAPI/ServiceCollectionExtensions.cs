@@ -37,6 +37,10 @@ namespace SchoolBusAPI
             services.AddTransient<IRegionApiService, RegionApiService>();
             services.AddTransient<ISchoolDistrictApiService, SchoolDistrictApiService>();
             services.AddTransient<IUserApiService, UserApiService>();
+            services.AddTransient<IInspectionApiService, InspectionApiService>();
+            services.AddTransient<INotificationApiService, NotificationApiService>();
+            services.AddTransient<INotificationEventApiService, NotificationEventApiService>();
+
             return services;
         }
     }

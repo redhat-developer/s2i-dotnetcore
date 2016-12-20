@@ -33,10 +33,11 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusOwnerApiService(DbAppContext context)
+        public SchoolBusOwnerApiService (DbAppContext context)
         {
             _context = context;
         }
+	
         /// <summary>
         /// 
         /// </summary>
@@ -80,7 +81,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdAttachmentsGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwnerAttachments.All(a => a.SchoolBusOwner.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
         /// <summary>
@@ -92,7 +93,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdContactaddressesGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwnerContactAddresss.All(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
         /// <summary>
@@ -104,7 +105,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdContactphonesGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwnerContactPhones.All(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
         /// <summary>
@@ -129,7 +130,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwners.First(a => a.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
         /// <summary>
@@ -141,7 +142,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdNotesGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwnerNotes.All(a => a.SchoolBusOwner.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
         /// <summary>
