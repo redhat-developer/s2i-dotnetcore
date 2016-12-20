@@ -41,11 +41,11 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for RegionsRegionIdGet
+        /// Integration test for RegionsGet
         /// </summary>
-		public async void TestRegionsRegionIdGet()
+		public async void TestRegionsGet()
 		{
-			var response = await _client.GetAsync("/api/regions/{region-id}");
+			var response = await _client.GetAsync("/api/regions");
             response.EnsureSuccessStatusCode();
 			
 			// update this to test the API.
@@ -55,11 +55,53 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for RegionsRegionIdLocalareasGet
+        /// Integration test for RegionsIdCitiesGet
         /// </summary>
-		public async void TestRegionsRegionIdLocalareasGet()
+		public async void TestRegionsIdCitiesGet()
 		{
-			var response = await _client.GetAsync("/api/regions/{region-id}/localareas");
+			var response = await _client.GetAsync("/api/regions/{id}/cities");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for RegionsIdGet
+        /// </summary>
+		public async void TestRegionsIdGet()
+		{
+			var response = await _client.GetAsync("/api/regions/{id}");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for RegionsIdLocalareasGet
+        /// </summary>
+		public async void TestRegionsIdLocalareasGet()
+		{
+			var response = await _client.GetAsync("/api/regions/{id}/localareas");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for RegionsPost
+        /// </summary>
+		public async void TestRegionsPost()
+		{
+			var response = await _client.GetAsync("/api/regions");
             response.EnsureSuccessStatusCode();
 			
 			// update this to test the API.

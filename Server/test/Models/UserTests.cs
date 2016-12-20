@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Test
         /// </summary>        
         public UserModelTests()
         {
-            instance = new User(0);
+            instance = new User();
         }
 
     
@@ -68,12 +68,12 @@ namespace SchoolBusAPI.Test
 			Assert.True(true);
         }
         /// <summary>
-        /// Test the property 'SmUserId'
+        /// Test the property 'SmUserid'
         /// </summary>
         [Fact]
-        public void SmUserIdTest()
+        public void SmUseridTest()
         {
-            // TODO unit test for the property 'SmUserId'
+            // TODO unit test for the property 'SmUserid'
 			Assert.True(true);
         }
         /// <summary>

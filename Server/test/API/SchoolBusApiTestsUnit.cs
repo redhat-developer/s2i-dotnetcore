@@ -41,11 +41,11 @@ namespace SchoolBusAPI.Test
         /// </summary>        
 		public SchoolBusApiUnitTest()
 		{			
-			Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
-
-            /*
+                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
 			
-			Here you will need to mock up the context.
+                    /*
+			
+                    Here you will need to mock up the context.
 			
             ItemType fakeItem = new ItemType(...);
 
@@ -53,21 +53,24 @@ namespace SchoolBusAPI.Test
 
             dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
 
-			*/
-            SchoolBusApiService _service = new SchoolBusApiService(dbAppContext.Object);
-            _SchoolBusApi = new SchoolBusApiController (_service);
+                    */
+
+                    SchoolBusApiService _service = new SchoolBusApiService(dbAppContext.Object);
+			
+                    _SchoolBusApi = new SchoolBusApiController (_service);
+
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for OwnerOwnerIdAttachmentsGet
+        /// Unit test for AddBus
         /// </summary>
-		public void TestOwnerOwnerIdAttachmentsGet()
+		public void TestAddBus()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _SchoolBusApiController.OwnerOwnerIdAttachmentsGet();
+			//  var result = _SchoolBusApiController.AddBus();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -76,13 +79,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for SchoolbusSchoolbusIdAttachmentsGet
+        /// Unit test for AddSchoolBusBulk
         /// </summary>
-		public void TestSchoolbusSchoolbusIdAttachmentsGet()
+		public void TestAddSchoolBusBulk()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _SchoolBusApiController.SchoolbusSchoolbusIdAttachmentsGet();
+			//  var result = _SchoolBusApiController.AddSchoolBusBulk();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -91,13 +94,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for SchoolbusSchoolbusIdHistoryGet
+        /// Unit test for FindBusById
         /// </summary>
-		public void TestSchoolbusSchoolbusIdHistoryGet()
+		public void TestFindBusById()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _SchoolBusApiController.SchoolbusSchoolbusIdHistoryGet();
+			//  var result = _SchoolBusApiController.FindBusById();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -106,13 +109,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for SchoolbusesSchoolbusIdGet
+        /// Unit test for GetAllBuses
         /// </summary>
-		public void TestSchoolbusesSchoolbusIdGet()
+		public void TestGetAllBuses()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _SchoolBusApiController.SchoolbusesSchoolbusIdGet();
+			//  var result = _SchoolBusApiController.GetAllBuses();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -121,13 +124,88 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for SchoolbusesSchoolbusIdNotesGet
+        /// Unit test for SchoolbusesIdAttachmentsGet
         /// </summary>
-		public void TestSchoolbusesSchoolbusIdNotesGet()
+		public void TestSchoolbusesIdAttachmentsGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _SchoolBusApiController.SchoolbusesSchoolbusIdNotesGet();
+			//  var result = _SchoolBusApiController.SchoolbusesIdAttachmentsGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for SchoolbusesIdCcwdataGet
+        /// </summary>
+		public void TestSchoolbusesIdCcwdataGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _SchoolBusApiController.SchoolbusesIdCcwdataGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for SchoolbusesIdDelete
+        /// </summary>
+		public void TestSchoolbusesIdDelete()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _SchoolBusApiController.SchoolbusesIdDelete();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for SchoolbusesIdHistoryGet
+        /// </summary>
+		public void TestSchoolbusesIdHistoryGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _SchoolBusApiController.SchoolbusesIdHistoryGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for SchoolbusesIdNotesGet
+        /// </summary>
+		public void TestSchoolbusesIdNotesGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _SchoolBusApiController.SchoolbusesIdNotesGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for SchoolbusesIdPut
+        /// </summary>
+		public void TestSchoolbusesIdPut()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _SchoolBusApiController.SchoolbusesIdPut();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

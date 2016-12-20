@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Test
         /// </summary>        
         public CCWDataModelTests()
         {
-            instance = new CCWData(0);
+            instance = new CCWData();
         }
 
     

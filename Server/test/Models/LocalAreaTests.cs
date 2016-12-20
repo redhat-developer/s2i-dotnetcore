@@ -30,15 +30,13 @@ namespace SchoolBusAPI.Test
     {
         // TODO uncomment below to declare an instance variable for LocalArea
         private LocalArea instance;
-        private Region instance_region;
 
         /// <summary>
         /// Setup the test.
         /// </summary>        
         public LocalAreaModelTests()
         {
-            instance_region = new Region(0);
-            instance = new LocalArea(0,instance_region);
+            instance = new LocalArea();
         }
 
     

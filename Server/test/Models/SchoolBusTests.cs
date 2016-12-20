@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Test
         /// </summary>        
         public SchoolBusModelTests()
         {
-            instance = new SchoolBus(0);
+            instance = new SchoolBus();
         }
 
     
@@ -59,12 +59,39 @@ namespace SchoolBusAPI.Test
 			Assert.True(true);
         }
         /// <summary>
-        /// Test the property 'Owner'
+        /// Test the property 'SchoolBusOwner'
         /// </summary>
         [Fact]
-        public void OwnerTest()
+        public void SchoolBusOwnerTest()
         {
-            // TODO unit test for the property 'Owner'
+            // TODO unit test for the property 'SchoolBusOwner'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'IsActive'
+        /// </summary>
+        [Fact]
+        public void IsActiveTest()
+        {
+            // TODO unit test for the property 'IsActive'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'IsOutOfProvince'
+        /// </summary>
+        [Fact]
+        public void IsOutOfProvinceTest()
+        {
+            // TODO unit test for the property 'IsOutOfProvince'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'NextInspection'
+        /// </summary>
+        [Fact]
+        public void NextInspectionTest()
+        {
+            // TODO unit test for the property 'NextInspection'
 			Assert.True(true);
         }
         /// <summary>
@@ -77,93 +104,12 @@ namespace SchoolBusAPI.Test
 			Assert.True(true);
         }
         /// <summary>
-        /// Test the property 'LesseeNumber'
+        /// Test the property 'NameOfIndependentSchool'
         /// </summary>
         [Fact]
-        public void LesseeNumberTest()
+        public void NameOfIndependentSchoolTest()
         {
-            // TODO unit test for the property 'LesseeNumber'
-			Assert.True(true);
-        }
-        /// <summary>
-        /// Test the property 'LicenseExpiryDate'
-        /// </summary>
-        [Fact]
-        public void LicenseExpiryDateTest()
-        {
-            // TODO unit test for the property 'LicenseExpiryDate'
-			Assert.True(true);
-        }
-        /// <summary>
-        /// Test the property 'PermitExpiryDate'
-        /// </summary>
-        [Fact]
-        public void PermitExpiryDateTest()
-        {
-            // TODO unit test for the property 'PermitExpiryDate'
-			Assert.True(true);
-        }
-        /// <summary>
-        /// Test the property 'NextInspectionDate'
-        /// </summary>
-        [Fact]
-        public void NextInspectionDateTest()
-        {
-            // TODO unit test for the property 'NextInspectionDate'
-			Assert.True(true);
-        }
-        /// <summary>
-        /// Test the property 'ManYear'
-        /// </summary>
-        [Fact]
-        public void ManYearTest()
-        {
-            // TODO unit test for the property 'ManYear'
-			Assert.True(true);
-        }
-        /// <summary>
-        /// Test the property 'SBCap'
-        /// </summary>
-        [Fact]
-        public void SBCapTest()
-        {
-            // TODO unit test for the property 'SBCap'
-			Assert.True(true);
-        }
-        /// <summary>
-        /// Test the property 'MCCap'
-        /// </summary>
-        [Fact]
-        public void MCCapTest()
-        {
-            // TODO unit test for the property 'MCCap'
-			Assert.True(true);
-        }
-        /// <summary>
-        /// Test the property 'WCCap'
-        /// </summary>
-        [Fact]
-        public void WCCapTest()
-        {
-            // TODO unit test for the property 'WCCap'
-			Assert.True(true);
-        }
-        /// <summary>
-        /// Test the property 'LastUpdate'
-        /// </summary>
-        [Fact]
-        public void LastUpdateTest()
-        {
-            // TODO unit test for the property 'LastUpdate'
-			Assert.True(true);
-        }
-        /// <summary>
-        /// Test the property 'Plate'
-        /// </summary>
-        [Fact]
-        public void PlateTest()
-        {
-            // TODO unit test for the property 'Plate'
+            // TODO unit test for the property 'NameOfIndependentSchool'
 			Assert.True(true);
         }
         /// <summary>

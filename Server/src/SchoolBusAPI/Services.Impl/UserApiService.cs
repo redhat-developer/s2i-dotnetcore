@@ -1,45 +1,79 @@
-﻿using System;
+/*
+ * REST API Documentation for Schoolbus
+ *
+ * API Sample
+ *
+ * OpenAPI spec version: v1
+ * 
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SchoolBusAPI.Models;
-using SchoolBusAPI.Services;
 using Newtonsoft.Json;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Services.Impl
-{
+{ 
     /// <summary>
-    /// Implementation for the UserAPIService
+    /// 
     /// </summary>
     public class UserApiService : IUserApiService
     {
+
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public UserApiService(DbAppContext context)
+        public UserApiService (DbAppContext context)
         {
             _context = context;
         }
-        public IActionResult UsersIdFavouritesGetAsync(int id)
+	
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a user&#39;s favourites of a given context type</remarks>
+        /// <param name="id">id of User to fetch favorites for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+
+        public virtual IActionResult UsersIdFavouritesGetAsync (int id)        
         {
             var result = "";
-            // Need to add this object to the model.
-            // var result = _context.UserFavourites.All(a => a.User.Id == id);
             return new ObjectResult(result);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns data for a particular user</remarks>
+        /// <param name="id">id of User to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
 
-        public IActionResult UsersIdGetAsync(int id)
+        public virtual IActionResult UsersIdGetAsync (int id)        
         {
-            var result = _context.Users.First(a => a.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a user&#39;s notifications</remarks>
+        /// <param name="id">id of User to fetch notifications for</param>
+        /// <response code="200">OK</response>
 
-        public IActionResult UsersIdNotificationGetAsync(int id)
+        public virtual IActionResult UsersIdNotificationGetAsync (int id)        
         {
-            var result = _context.Notifications.All(a => a.User.Id == id);
+            var result = "";
             return new ObjectResult(result);
         }
     }

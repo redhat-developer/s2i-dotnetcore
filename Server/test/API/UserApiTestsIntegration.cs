@@ -41,11 +41,11 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for UsersUserIdGet
+        /// Integration test for UsersIdFavouritesGet
         /// </summary>
-		public async void TestUsersUserIdGet()
+		public async void TestUsersIdFavouritesGet()
 		{
-			var response = await _client.GetAsync("/api/users/{user-id}");
+			var response = await _client.GetAsync("/api/users/{id}/favourites");
             response.EnsureSuccessStatusCode();
 			
 			// update this to test the API.
@@ -55,11 +55,25 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for UsersUserIdNotificationsGet
+        /// Integration test for UsersIdGet
         /// </summary>
-		public async void TestUsersUserIdNotificationsGet()
+		public async void TestUsersIdGet()
 		{
-			var response = await _client.GetAsync("/api/users/{user-id}/notifications");
+			var response = await _client.GetAsync("/api/users/{id}");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersIdNotificationGet
+        /// </summary>
+		public async void TestUsersIdNotificationGet()
+		{
+			var response = await _client.GetAsync("/api/users/{id}/notification");
             response.EnsureSuccessStatusCode();
 			
 			// update this to test the API.

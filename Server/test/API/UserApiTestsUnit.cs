@@ -41,11 +41,11 @@ namespace SchoolBusAPI.Test
         /// </summary>        
 		public UserApiUnitTest()
 		{			
-			Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
-
-            /*
+                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
 			
-			Here you will need to mock up the context.
+                    /*
+			
+                    Here you will need to mock up the context.
 			
             ItemType fakeItem = new ItemType(...);
 
@@ -53,21 +53,24 @@ namespace SchoolBusAPI.Test
 
             dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
 
-			*/
-            UserApiService _service = new UserApiService(dbAppContext.Object);
-            _UserApi = new UserApiController (_service);
+                    */
+
+                    UserApiService _service = new UserApiService(dbAppContext.Object);
+			
+                    _UserApi = new UserApiController (_service);
+
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for UsersUserIdGet
+        /// Unit test for UsersIdFavouritesGet
         /// </summary>
-		public void TestUsersUserIdGet()
+		public void TestUsersIdFavouritesGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _UserApiController.UsersUserIdGet();
+			//  var result = _UserApiController.UsersIdFavouritesGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -76,13 +79,28 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for UsersUserIdNotificationsGet
+        /// Unit test for UsersIdGet
         /// </summary>
-		public void TestUsersUserIdNotificationsGet()
+		public void TestUsersIdGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _UserApiController.UsersUserIdNotificationsGet();
+			//  var result = _UserApiController.UsersIdGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersIdNotificationGet
+        /// </summary>
+		public void TestUsersIdNotificationGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersIdNotificationGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

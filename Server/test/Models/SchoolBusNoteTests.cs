@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Test
         /// </summary>        
         public SchoolBusNoteModelTests()
         {
-            instance = new SchoolBusNote(0);
+            instance = new SchoolBusNote();
         }
 
     
@@ -56,6 +56,24 @@ namespace SchoolBusAPI.Test
         public void IdTest()
         {
             // TODO unit test for the property 'Id'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'Value'
+        /// </summary>
+        [Fact]
+        public void ValueTest()
+        {
+            // TODO unit test for the property 'Value'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'Expired'
+        /// </summary>
+        [Fact]
+        public void ExpiredTest()
+        {
+            // TODO unit test for the property 'Expired'
 			Assert.True(true);
         }
         /// <summary>

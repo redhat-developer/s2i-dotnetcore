@@ -41,25 +41,11 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for RegionsGet
+        /// Integration test for RegionsIdSchooldistrictsGet
         /// </summary>
-		public async void TestRegionsGet()
+		public async void TestRegionsIdSchooldistrictsGet()
 		{
-			var response = await _client.GetAsync("/api/regions");
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for RegionsRegionIdSchooldistrictsGet
-        /// </summary>
-		public async void TestRegionsRegionIdSchooldistrictsGet()
-		{
-			var response = await _client.GetAsync("/api/regions/{region-id}/schooldistricts");
+			var response = await _client.GetAsync("/api/regions/{id}/schooldistricts");
             response.EnsureSuccessStatusCode();
 			
 			// update this to test the API.
