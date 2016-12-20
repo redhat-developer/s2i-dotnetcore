@@ -26,15 +26,28 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class SchoolBusAttachment :  IEquatable<SchoolBusAttachment>
     {
+
+        /// <summary>
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public SchoolBusAttachment()
+        {
+            this.Id = 0;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SchoolBusAttachment" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
+        /// <param name="InternalFileName">InternalFileName.</param>
+        /// <param name="ExternalFileName">ExternalFileName.</param>
         /// <param name="SchoolBus">SchoolBus.</param>
-        public SchoolBusAttachment(int Id, SchoolBus SchoolBus = null)
+        public SchoolBusAttachment(int Id, string InternalFileName = null, string ExternalFileName = null, SchoolBus SchoolBus = null)
         {
             
             this.Id = Id;            
+            this.InternalFileName = InternalFileName;
+            this.ExternalFileName = ExternalFileName;
             this.SchoolBus = SchoolBus;
             
         }
@@ -46,6 +59,20 @@ namespace SchoolBusAPI.Models
         [DataMember(Name="id")]
         [MetaDataExtension (Description = "Primary Key")]        
         public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or Sets InternalFileName
+        /// </summary>
+        [DataMember(Name="InternalFileName")]
+                
+        public string InternalFileName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ExternalFileName
+        /// </summary>
+        [DataMember(Name="ExternalFileName")]
+                
+        public string ExternalFileName { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBus
@@ -64,6 +91,8 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolBusAttachment {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  InternalFileName: ").Append(InternalFileName).Append("\n");
+            sb.Append("  ExternalFileName: ").Append(ExternalFileName).Append("\n");
             sb.Append("  SchoolBus: ").Append(SchoolBus).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -109,6 +138,16 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
+                    this.InternalFileName == other.InternalFileName ||
+                    this.InternalFileName != null &&
+                    this.InternalFileName.Equals(other.InternalFileName)
+                ) && 
+                (
+                    this.ExternalFileName == other.ExternalFileName ||
+                    this.ExternalFileName != null &&
+                    this.ExternalFileName.Equals(other.ExternalFileName)
+                ) && 
+                (
                     this.SchoolBus == other.SchoolBus ||
                     this.SchoolBus != null &&
                     this.SchoolBus.Equals(other.SchoolBus)
@@ -129,6 +168,14 @@ namespace SchoolBusAPI.Models
                     if (this.Id != null)
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
+                    }
+                    if (this.InternalFileName != null)
+                    { 
+                        hash = hash * 59 + this.InternalFileName.GetHashCode();
+                    }
+                    if (this.ExternalFileName != null)
+                    { 
+                        hash = hash * 59 + this.ExternalFileName.GetHashCode();
                     }
                     if (this.SchoolBus != null)
                     { 

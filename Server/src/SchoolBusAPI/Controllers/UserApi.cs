@@ -20,25 +20,41 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
 { 
     /// <summary>
     /// 
     /// </summary>
-    public class UserApiController : Controller
+    public partial class UserApiController : Controller
     {
-        private readonly DbAppContext _context;
+        private readonly IUserApiService _service;
 
         /// <summary>
-        /// Create a controller and set the database context
+        /// Create a controller and set the service
         /// </summary>
 
-        public UserApiController(DbAppContext context)
+        public UserApiController(IUserApiService service)
         {
-            _context = context;
+            _service = service;
         }
 	
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a user&#39;s favourites of a given context type</remarks>
+        /// <param name="id">id of User to fetch favorites for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        [HttpGet]
+        [Route("/api/users/{id}/favourites")]
+        [SwaggerOperation("UsersIdFavouritesGet")]
+        [SwaggerResponse(200, type: typeof(List<UserFavourite>))]
+        public virtual IActionResult UsersIdFavouritesGet([FromRoute]int id)
+        { 
+            return this._service.UsersIdFavouritesGetAsync(id);
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -47,17 +63,12 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
         [HttpGet]
-        [Route("/api/user/{id}")]
-        [SwaggerOperation("UserIdGet")]
+        [Route("/api/users/{id}")]
+        [SwaggerOperation("UsersIdGet")]
         [SwaggerResponse(200, type: typeof(User))]
-        public virtual IActionResult UserIdGet([FromRoute]int id)
+        public virtual IActionResult UsersIdGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<User>(exampleJson)
-            : default(User);
-            return new ObjectResult(example);
+            return this._service.UsersIdGetAsync(id);
         }
         /// <summary>
         /// 
@@ -66,17 +77,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of User to fetch notifications for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/user/{id}/notification")]
-        [SwaggerOperation("UserIdNotificationGet")]
-        [SwaggerResponse(200, type: typeof(List<UserNotifications>))]
-        public virtual IActionResult UserIdNotificationGet([FromRoute]int id)
+        [Route("/api/users/{id}/notification")]
+        [SwaggerOperation("UsersIdNotificationGet")]
+        [SwaggerResponse(200, type: typeof(List<Notification>))]
+        public virtual IActionResult UsersIdNotificationGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<UserNotifications>>(exampleJson)
-            : default(List<UserNotifications>);
-            return new ObjectResult(example);
+            return this._service.UsersIdNotificationGetAsync(id);
         }
     }
 }

@@ -26,6 +26,15 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class User :  IEquatable<User>
     {
+
+        /// <summary>
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public User()
+        {
+            this.Id = 0;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>

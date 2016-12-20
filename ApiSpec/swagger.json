@@ -1,0 +1,1391 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "REST API Documentation for Schoolbus",
+        "description": "API Sample",
+        "termsOfService": "None"
+    },
+    "basePath": "/api",
+    "paths": {
+        "/inspections": {
+            "get": {
+                "tags": [
+                    "Inspection"
+                ],
+                "consumes": [],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Inspection"
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/inspections/{id}": {
+            "get": {
+                "tags": [
+                    "Inspection"
+                ],
+                "consumes": [],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Inspection"
+                        }
+                    },
+                    "404": {
+                        "description": "Inspection not found"
+                    }
+                },
+                "deprecated": false,
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Inspection to fetch",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/schoolbuses": {
+            "get": {
+                "summary": "Returns a collection of school buses",
+                "description": "",
+                "operationId": "GetAllBuses",
+                "tags": [
+                    "SchoolBus"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SchoolBus"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Creates a new school bus",
+                "description": "The Location response-header field is used to redirect the recipient to a location other than the Request-URI for completion of the request or identification of a new resource. For 201 (Created) responses, the Location is that of the new resource which was created by the request. \n  The field value consists of a single absolute URI.\n",
+                "operationId": "AddBus",
+                "tags": [
+                    "SchoolBus"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SchoolBus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "SchoolBus created",
+                        "headers": {
+                            "Location": {
+                                "description": "A link to the SchoolBus",
+                                "type": "string",
+                                "format": "url"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/SchoolBus"
+                        }
+                    }
+                }
+            }
+        },
+        "/schoolbuses/{id}": {
+            "get": {
+                "summary": "Returns a single school bus object",
+                "description": "",
+                "operationId": "FindBusById",
+                "tags": [
+                    "SchoolBus"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of SchoolBus to fetch",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/SchoolBus"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/schoolbus/{id}/inspections": {
+            "get": {
+                "tags": [
+                    "Inspection"
+                ],
+                "consumes": [],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Inspection"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "SchoolBus not found"
+                    }
+                },
+                "deprecated": false,
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of SchoolBus to fetch Inspections for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/schoolbuses/{id}/notes": {
+            "get": {
+                "description": "Returns notes for a particular SchoolBus.",
+                "tags": [
+                    "SchoolBus"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SchoolBusNote"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "SchoolBus not found"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of SchoolBus to fetch notes for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/schoolbuses/{id}/attachments": {
+            "get": {
+                "description": "Returns attachments for a particular SchoolBus",
+                "tags": [
+                    "SchoolBus"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SchoolBusAttachment"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "SchoolBus not found"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of SchoolBus to fetch attachments for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/schoolbuses/{id}/history": {
+            "get": {
+                "description": "Returns History for a particular SchoolBus",
+                "tags": [
+                    "SchoolBus"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SchoolBusHistory"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of SchoolBus to fetch SchoolBusHistory for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/schoolbuses/{id}/ccwdata": {
+            "get": {
+                "description": "Returns CCWData for a particular Schoolbus",
+                "tags": [
+                    "SchoolBus"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CCWData"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of SchoolBus to fetch CCWData for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/owners/{id}": {
+            "get": {
+                "description": "Returns a particular Owner",
+                "tags": [
+                    "Owner"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Owner"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Owner to fetch",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/owners/{id}/attachments": {
+            "get": {
+                "description": "Returns attachments for a particular Owner",
+                "tags": [
+                    "Owner"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/OwnerAttachments"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Owner to fetch attachments for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/owners/{id}/notes": {
+            "get": {
+                "description": "Returns notes for a particular Owner",
+                "tags": [
+                    "Owner"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/OwnerNotes"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Owner to fetch notes for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/owners/{id}/contactphones": {
+            "get": {
+                "description": "Returns phone contacts for a particular Owner",
+                "tags": [
+                    "Owner"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/OwnerContactPhone"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Owner to fetch contact phone for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/owners/{id}/contactaddresses": {
+            "get": {
+                "description": "Returns address contacts for a particular Owner",
+                "tags": [
+                    "Owner"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/OwnerContactAddress"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Owner to fetch contact address for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/favouritecontexttypes": {
+            "get": {
+                "description": "Returns list of available FavouriteContextTypes",
+                "tags": [
+                    "Owner"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/FavouriteContextType"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "Returns data for a particular user",
+                "tags": [
+                    "User"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of User to fetch",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/users/{id}/favourites": {
+            "get": {
+                "description": "Returns a user's favourites of a given context type",
+                "tags": [
+                    "User"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserFavourite"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of User to fetch favorites for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/users/{id}/notification": {
+            "get": {
+                "description": "Returns a user's notifications",
+                "tags": [
+                    "User"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserNotifications"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of User to fetch notifications for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/regions": {
+            "get": {
+                "description": "Returns a list of regions for a given province",
+                "tags": [
+                    "Region"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Region"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Adds a number of regions.",
+                "tags": [
+                    "Region"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Region"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/regions/{id}": {
+            "get": {
+                "description": "Returns a specific region",
+                "tags": [
+                    "Region"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Region"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Regions to fetch",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/regions/{id}/cities": {
+            "get": {
+                "description": "Returns a list of cities for a given region",
+                "tags": [
+                    "Region"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/City"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Region to fetch Cities for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/regions/{id}/localareas": {
+            "get": {
+                "description": "Returns a list of LocalAreas for a given region",
+                "tags": [
+                    "Region"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/LocalArea"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Region to fetch SchoolDistricts for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/regions/{id}/schooldistricts": {
+            "get": {
+                "description": "Returns a list of SchoolDistricts for a given region",
+                "tags": [
+                    "SchoolDistrict"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SchoolDistrict"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Region to fetch SchoolDistricts for",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "SchoolBus": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Owner": {
+                    "$ref": "#/definitions/Owner"
+                },
+                "CRNO": {
+                    "type": "string",
+                    "description": "CR Number."
+                },
+                "LesseeNumber": {
+                    "type": "integer"
+                },
+                "LicenseExpiryDate": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "PermitExpiryDate": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "NextInspectionDate": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "ManYear": {
+                    "type": "integer"
+                },
+                "SB_Cap": {
+                    "type": "string"
+                },
+                "MC_Cap": {
+                    "type": "string"
+                },
+                "WC_Cap": {
+                    "type": "string"
+                },
+                "LastUpdate": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "Plate": {
+                    "type": "string",
+                    "x-chance-type": "word"
+                },
+                "CCWData": {
+                    "$ref": "#/definitions/CCWData"
+                }
+            }
+        },
+        "SchoolBusNote": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "SchoolBus": {
+                    "$ref": "#/definitions/SchoolBus"
+                }
+            }
+        },
+        "SchoolBusAttachment": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "SchoolBus": {
+                    "$ref": "#/definitions/SchoolBus"
+                }
+            }
+        },
+        "SchoolBusHistory": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "SchoolBus": {
+                    "$ref": "#/definitions/SchoolBus"
+                }
+            }
+        },
+        "Owner": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "FleetNum": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "MCCode": {
+                    "type": "string"
+                },
+                "FleetSize": {
+                    "type": "string"
+                },
+                "HasBuses": {
+                    "type": "integer"
+                },
+                "Diff": {
+                    "type": "string"
+                },
+                "LeaseSize": {
+                    "type": "string"
+                },
+                "HasDups": {
+                    "type": "integer"
+                },
+                "SchoolDistrict": {
+                    "$ref": "#/definitions/SchoolDistrict"
+                },
+                "City": {
+                    "$ref": "#/definitions/City"
+                }
+            }
+        },
+        "OwnerAttachments": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Owner": {
+                    "$ref": "#/definitions/Owner"
+                }
+            }
+        },
+        "OwnerNotes": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Owner": {
+                    "$ref": "#/definitions/Owner"
+                }
+            }
+        },
+        "OwnerContact": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Owner": {
+                    "$ref": "#/definitions/Owner"
+                }
+            }
+        },
+        "OwnerContactPhone": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "OwnerContact": {
+                    "$ref": "#/definitions/OwnerContact"
+                }
+            }
+        },
+        "OwnerContactAddress": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "OwnerContact": {
+                    "$ref": "#/definitions/OwnerContact"
+                }
+            }
+        },
+        "CCWData": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "ModelYear": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Vehicle Year",
+                    "x-type-options": {
+                        "min": 1970,
+                        "max": 2017
+                    }
+                },
+                "RateClass": {
+                    "type": "string"
+                },
+                "CVIPDecal": {
+                    "type": "string"
+                },
+                "FleetUnitNo": {
+                    "type": "integer"
+                },
+                "GVW": {
+                    "type": "integer"
+                },
+                "Body": {
+                    "type": "string"
+                },
+                "RebuiltStatus": {
+                    "type": "string"
+                },
+                "CVIPExpiry": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "NetWt": {
+                    "type": "integer"
+                },
+                "Model": {
+                    "type": "string"
+                },
+                "Fuel": {
+                    "type": "string"
+                },
+                "SeatingCapacity": {
+                    "type": "integer"
+                },
+                "Colour": {
+                    "type": "string"
+                }
+            }
+        },
+        "Inspection": {
+            "required": [
+                "id"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "SchoolBus": {
+                    "$ref": "#/definitions/SchoolBus"
+                },
+                "Inspector": {
+                    "$ref": "#/definitions/User"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Email": {
+                    "type": "string",
+                    "description": "Email address",
+                    "x-chance-type": "email"
+                },
+                "SmUserid": {
+                    "type": "string",
+                    "description": "Security Manager User ID",
+                    "x-chance-type": "name"
+                },
+                "GivenName": {
+                    "type": "string",
+                    "description": "Last Name",
+                    "x-chance-type": "name"
+                }
+            }
+        },
+        "FavouriteContextType": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Name": {
+                    "type": "string",
+                    "description": "Context Name",
+                    "x-chance-type": "name"
+                }
+            }
+        },
+        "UserFavourite": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "JsonData": {
+                    "type": "string",
+                    "description": "Saved search",
+                    "x-chance-type": "word"
+                },
+                "Name": {
+                    "type": "string",
+                    "description": "Context Name",
+                    "x-chance-type": "name"
+                },
+                "FavouriteContextType": {
+                    "$ref": "#/definitions/FavouriteContextType"
+                }
+            }
+        },
+        "BusNotification": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "SchoolBus": {
+                    "$ref": "#/definitions/SchoolBus"
+                }
+            }
+        },
+        "UserNotifications": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "BusNotification": {
+                    "$ref": "#/definitions/BusNotification"
+                },
+                "User": {
+                    "$ref": "#/definitions/User"
+                }
+            }
+        },
+        "Region": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Name": {
+                    "format": "string",
+                    "description": "City Name",
+                    "x-chance-type": "name"
+                }
+            }
+        },
+        "City": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Name": {
+                    "format": "string",
+                    "description": "City Name",
+                    "x-chance-type": "name"
+                },
+                "Region": {
+                    "$ref": "#/definitions/Region"
+                }
+            }
+        },
+        "LocalArea": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Name": {
+                    "format": "string",
+                    "description": "City Name",
+                    "x-chance-type": "name"
+                },
+                "Region": {
+                    "$ref": "#/definitions/Region"
+                }
+            }
+        },
+        "SchoolDistrict": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer",
+                    "description": "Primary Key",
+                    "x-type-options": {
+                        "min": 1,
+                        "max": 1000
+                    }
+                },
+                "Name": {
+                    "format": "string",
+                    "description": "City Name",
+                    "x-chance-type": "name"
+                },
+                "LocalArea": {
+                    "$ref": "#/definitions/LocalArea"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {}
+}

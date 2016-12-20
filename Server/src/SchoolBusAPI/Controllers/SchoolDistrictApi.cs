@@ -20,23 +20,24 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
 { 
     /// <summary>
     /// 
     /// </summary>
-    public class SchoolDistrictApiController : Controller
+    public partial class SchoolDistrictApiController : Controller
     {
-        private readonly DbAppContext _context;
+        private readonly ISchoolDistrictApiService _service;
 
         /// <summary>
-        /// Create a controller and set the database context
+        /// Create a controller and set the service
         /// </summary>
 
-        public SchoolDistrictApiController(DbAppContext context)
+        public SchoolDistrictApiController(ISchoolDistrictApiService service)
         {
-            _context = context;
+            _service = service;
         }
 	
         /// <summary>
@@ -51,12 +52,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<SchoolDistrict>))]
         public virtual IActionResult RegionsIdSchooldistrictsGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<SchoolDistrict>>(exampleJson)
-            : default(List<SchoolDistrict>);
-            return new ObjectResult(example);
+            return this._service.RegionsIdSchooldistrictsGetAsync(id);
         }
     }
 }

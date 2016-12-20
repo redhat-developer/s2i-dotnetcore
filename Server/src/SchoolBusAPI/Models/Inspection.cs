@@ -26,10 +26,19 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class Inspection :  IEquatable<Inspection>
     {
+
+        /// <summary>
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public Inspection()
+        {
+            this.Id = 0;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Inspection" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
+        /// <param name="Id">Primary Key  make this match the Inspection Details page (required).</param>
         /// <param name="SchoolBus">SchoolBus.</param>
         /// <param name="Inspector">Inspector.</param>
         public Inspection(int Id, SchoolBus SchoolBus = null, User Inspector = null)
@@ -42,11 +51,11 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// Primary Key  make this match the Inspection Details page
         /// </summary>
-        /// <value>Primary Key</value>
+        /// <value>Primary Key  make this match the Inspection Details page</value>
         [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key  make this match the Inspection Details page")]        
         public int Id { get; set; }
 
         /// <summary>

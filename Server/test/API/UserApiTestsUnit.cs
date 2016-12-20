@@ -27,6 +27,7 @@ using Moq;
 using SchoolBusAPI;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.Controllers;
+using SchoolBusAPI.Services.Impl;
 
 namespace SchoolBusAPI.Test
 {
@@ -41,8 +42,8 @@ namespace SchoolBusAPI.Test
 		public UserApiUnitTest()
 		{			
 			Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
-			
-			/*
+
+            /*
 			
 			Here you will need to mock up the context.
 			
@@ -53,8 +54,8 @@ namespace SchoolBusAPI.Test
             dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
 
 			*/
-			
-            _UserApi = new UserApiController (dbAppContext.Object);
+            UserApiService _service = new UserApiService(dbAppContext.Object);
+            _UserApi = new UserApiController (_service);
 		}
 	
 		

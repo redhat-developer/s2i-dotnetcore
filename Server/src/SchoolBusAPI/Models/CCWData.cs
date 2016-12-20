@@ -26,6 +26,15 @@ namespace SchoolBusAPI.Models
     [DataContract]
     public partial class CCWData :  IEquatable<CCWData>
     {
+
+        /// <summary>
+        /// Default constructor, required by entity framework
+        /// </summary>
+        public CCWData()
+        {
+            this.Id = 0;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CCWData" /> class.
         /// </summary>

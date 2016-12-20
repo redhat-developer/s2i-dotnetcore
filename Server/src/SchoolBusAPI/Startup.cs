@@ -28,6 +28,9 @@ using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI
 {
+    /// <summary>
+    /// The application Startup class
+    /// </summary>
     public class Startup
     {
         private readonly IHostingEnvironment _hostingEnv;
@@ -41,8 +44,9 @@ namespace SchoolBusAPI
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)               
                 .AddEnvironmentVariables();
+                
             Configuration = builder.Build();
         }
   
@@ -79,6 +83,9 @@ namespace SchoolBusAPI
                 options.OperationFilter<XmlCommentsOperationFilter>(comments);
                 options.ModelFilter<XmlCommentsModelFilter>(comments);
             });
+			
+			// Add application services.
+            services.RegisterApplicationServices();
             
         }
 

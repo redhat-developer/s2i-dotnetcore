@@ -20,25 +20,81 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
 { 
     /// <summary>
     /// 
     /// </summary>
-    public class SchoolBusApiController : Controller
+    public partial class SchoolBusApiController : Controller
     {
-        private readonly DbAppContext _context;
+        private readonly ISchoolBusApiService _service;
 
         /// <summary>
-        /// Create a controller and set the database context
+        /// Create a controller and set the service
         /// </summary>
 
-        public SchoolBusApiController(DbAppContext context)
+        public SchoolBusApiController(ISchoolBusApiService service)
         {
-            _context = context;
+            _service = service;
         }
 	
+        /// <summary>
+        /// Creates a new school bus
+        /// </summary>
+        /// <remarks>The Location response-header field is used to redirect the recipient to a location other than the Request-URI for completion of the request or identification of a new resource. For 201 (Created) responses, the Location is that of the new resource which was created by the request.    The field value consists of a single absolute URI. </remarks>
+        /// <param name="body"></param>
+        /// <response code="201">SchoolBus created</response>
+        [HttpPost]
+        [Route("/api/schoolbuses")]
+        [SwaggerOperation("AddBus")]
+        [SwaggerResponse(200, type: typeof(SchoolBus))]
+        public virtual IActionResult AddBus([FromBody]SchoolBus body)
+        { 
+            return this._service.AddBusAsync(body);
+        }
+        /// <summary>
+        /// Creates several school buses
+        /// </summary>
+        /// <remarks>Used for bulk creation of schoolbus records.</remarks>
+        /// <param name="body"></param>
+        /// <response code="201">SchoolBus items created</response>
+        [HttpPost]
+        [Route("/api/schoolbuses/bulk")]
+        [SwaggerOperation("AddSchoolBusBulk")]
+        public virtual void AddSchoolBusBulk([FromBody]List<SchoolBus> body)
+        { 
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Returns a single school bus object
+        /// </summary>
+        /// <remarks></remarks>
+        /// <param name="id">Id of SchoolBus to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Not Found</response>
+        [HttpGet]
+        [Route("/api/schoolbuses/{id}")]
+        [SwaggerOperation("FindBusById")]
+        [SwaggerResponse(200, type: typeof(SchoolBus))]
+        public virtual IActionResult FindBusById([FromRoute]int id)
+        { 
+            return this._service.FindBusByIdAsync(id);
+        }
+        /// <summary>
+        /// Returns a collection of school buses
+        /// </summary>
+        /// <remarks></remarks>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/schoolbuses")]
+        [SwaggerOperation("GetAllBuses")]
+        [SwaggerResponse(200, type: typeof(List<SchoolBus>))]
+        public virtual IActionResult GetAllBuses()
+        { 
+            return this._service.GetAllBusesAsync();
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -47,17 +103,12 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
         [HttpGet]
-        [Route("/api/schoolbus/{id}/attachments")]
-        [SwaggerOperation("SchoolbusIdAttachmentsGet")]
+        [Route("/api/schoolbuses/{id}/attachments")]
+        [SwaggerOperation("SchoolbusesIdAttachmentsGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBusAttachment>))]
-        public virtual IActionResult SchoolbusIdAttachmentsGet([FromRoute]int id)
+        public virtual IActionResult SchoolbusesIdAttachmentsGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<SchoolBusAttachment>>(exampleJson)
-            : default(List<SchoolBusAttachment>);
-            return new ObjectResult(example);
+            return this._service.SchoolbusesIdAttachmentsGetAsync(id);
         }
         /// <summary>
         /// 
@@ -66,37 +117,26 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of SchoolBus to fetch CCWData for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/schoolbus/{id}/ccwdata")]
-        [SwaggerOperation("SchoolbusIdCcwdataGet")]
+        [Route("/api/schoolbuses/{id}/ccwdata")]
+        [SwaggerOperation("SchoolbusesIdCcwdataGet")]
         [SwaggerResponse(200, type: typeof(CCWData))]
-        public virtual IActionResult SchoolbusIdCcwdataGet([FromRoute]int id)
+        public virtual IActionResult SchoolbusesIdCcwdataGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<CCWData>(exampleJson)
-            : default(CCWData);
-            return new ObjectResult(example);
+            return this._service.SchoolbusesIdCcwdataGetAsync(id);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a specific SchoolBus object</remarks>
-        /// <param name="id">id of SchoolBus to fetch</param>
+        
+        /// <param name="id">id of SchoolBus to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
-        [HttpGet]
-        [Route("/api/schoolbus/{id}")]
-        [SwaggerOperation("SchoolbusIdGet")]
-        [SwaggerResponse(200, type: typeof(SchoolBus))]
-        public virtual IActionResult SchoolbusIdGet([FromRoute]int id)
+        [HttpDelete]
+        [Route("/api/schoolbuses/{id}")]
+        [SwaggerOperation("SchoolbusesIdDelete")]
+        public virtual void SchoolbusesIdDelete([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<SchoolBus>(exampleJson)
-            : default(SchoolBus);
-            return new ObjectResult(example);
+            throw new NotImplementedException();
         }
         /// <summary>
         /// 
@@ -105,17 +145,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of SchoolBus to fetch SchoolBusHistory for</param>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/api/schoolbus/{id}/history")]
-        [SwaggerOperation("SchoolbusIdHistoryGet")]
+        [Route("/api/schoolbuses/{id}/history")]
+        [SwaggerOperation("SchoolbusesIdHistoryGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBusHistory>))]
-        public virtual IActionResult SchoolbusIdHistoryGet([FromRoute]int id)
+        public virtual IActionResult SchoolbusesIdHistoryGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<SchoolBusHistory>>(exampleJson)
-            : default(List<SchoolBusHistory>);
-            return new ObjectResult(example);
+            return this._service.SchoolbusesIdHistoryGetAsync(id);
         }
         /// <summary>
         /// 
@@ -130,12 +165,22 @@ namespace SchoolBusAPI.Controllers
         [SwaggerResponse(200, type: typeof(List<SchoolBusNote>))]
         public virtual IActionResult SchoolbusesIdNotesGet([FromRoute]int id)
         { 
-            string exampleJson = null;
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<List<SchoolBusNote>>(exampleJson)
-            : default(List<SchoolBusNote>);
-            return new ObjectResult(example);
+            return this._service.SchoolbusesIdNotesGetAsync(id);
+        }
+        /// <summary>
+        /// Updates a single school bus object
+        /// </summary>
+        /// <remarks></remarks>
+        /// <param name="id">Id of SchoolBus to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Not Found</response>
+        [HttpPut]
+        [Route("/api/schoolbuses/{id}")]
+        [SwaggerOperation("SchoolbusesIdPut")]
+        [SwaggerResponse(200, type: typeof(SchoolBus))]
+        public virtual IActionResult SchoolbusesIdPut([FromRoute]int id)
+        { 
+            return this._service.SchoolbusesIdPutAsync(id);
         }
     }
 }
