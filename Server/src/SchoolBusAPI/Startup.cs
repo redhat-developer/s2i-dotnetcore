@@ -56,7 +56,7 @@ namespace SchoolBusAPI
         {
             string connectionString = "Host=" + Configuration["DATABASE_SERVICE_NAME"] + "; Username=" + Configuration["POSTGRESQL_USER"] + "; Password=" + Configuration["POSTGRESQL_PASSWORD"] + "; Database=" + Configuration["POSTGRESQL_DATABASE"];                
             
-            Console.WriteLine(connectionString);
+            
             services.AddDbContext<DbAppContext>(
                 opts => opts.UseNpgsql(connectionString)
             );
@@ -106,6 +106,7 @@ namespace SchoolBusAPI
             {
                 // get the application's database context
                 DbContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
+                Console.WriteLine("Connection string is: " + context.Database.GetDbConnection().ConnectionString);
 
                 Console.WriteLine("Migrating database");
                 // do any pending migrations
