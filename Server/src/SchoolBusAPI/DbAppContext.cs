@@ -71,9 +71,6 @@ namespace SchoolBusAPI.Models
 
         // public DbSet<Classname> Classname { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host = 127.0.0.1; Username = test; Password = test161107; Database = test");
-        }
+        
     }
 }
