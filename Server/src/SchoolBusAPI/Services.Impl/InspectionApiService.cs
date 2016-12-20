@@ -1,4 +1,4 @@
-/*
+﻿/*
  * REST API Documentation for Schoolbus
  *
  * API Sample
@@ -45,10 +45,20 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="body"></param>
         /// <response code="201">Inspections created</response>
 
-        public virtual IActionResult InspectionsBulkPostAsync (List<Inspection> body)        
+        public virtual IActionResult InspectionsBulkPostAsync (Inspection[] items)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (Inspection item in items)
+            {
+                _context.Inspections.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+
+            return new NoContentResult();
         }
         /// <summary>
         /// 
@@ -58,7 +68,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsGetAsync ()        
         {
-            var result = "";
+            var result = _context.Inspections.ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -71,8 +81,14 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsIdDeleteAsync (int id)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            var item = _context.Inspections.First(a => a.Id == id);
+            if (item != null)
+            {
+                _context.Inspections.Remove(item);
+                // Save the changes
+                _context.SaveChanges();
+            }            
+            return new ObjectResult(item);
         }
         /// <summary>
         /// 
@@ -84,7 +100,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsIdGetAsync (int id)        
         {
-            var result = "";
+            var result = _context.Inspections.First(a => a.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
@@ -97,8 +113,14 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsIdPutAsync (int id)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            var item = _context.Inspections.First(a => a.Id == id);
+            if (item != null)
+            {
+                _context.Inspections.Update(item);
+                // Save the changes
+                _context.SaveChanges();
+            }
+            return new ObjectResult(item);
         }
         /// <summary>
         /// 
@@ -109,8 +131,9 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsPostAsync (Inspection body)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            _context.Inspections.Add(body);
+            _context.SaveChanges();
+            return new StatusCodeResult(201);
         }
         /// <summary>
         /// 
@@ -122,8 +145,8 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusIdInspectionsGetAsync (int id)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            var item = _context.Inspections.First(a => a.Id == id);            
+            return new ObjectResult(item);            
         }
     }
 }

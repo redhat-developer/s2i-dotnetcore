@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Services
         /// <param name="body"></param>
         /// <response code="201">NotificationEvents created</response>        
 
-        IActionResult NotficationeventsBulkPostAsync (List<NotificationEvent> body);        
+        IActionResult NotficationeventsBulkPostAsync (NotificationEvent[] body);        
         
         /// <summary>
         /// 

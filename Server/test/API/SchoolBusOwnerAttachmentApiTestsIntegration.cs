@@ -18,6 +18,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using SchoolBusAPI;
+using System.Text;
 
 namespace SchoolBusAPI.Test
 {
@@ -45,11 +46,13 @@ namespace SchoolBusAPI.Test
         /// </summary>
 		public async void TestSchoolbusownerattachmentsBulkPost()
 		{
-			var response = await _client.GetAsync("/api/schoolbusownerattachments/bulk");
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusownerattachments/bulk");
+            request.Content = new StringContent("[]", Encoding.UTF8, "application/json");
+
+            var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
+
+            Assert.True(true);            
 		}		
         
 		

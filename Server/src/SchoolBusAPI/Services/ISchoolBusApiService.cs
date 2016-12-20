@@ -45,7 +45,7 @@ namespace SchoolBusAPI.Services
         /// <param name="body"></param>
         /// <response code="201">SchoolBus items created</response>        
 
-        IActionResult AddSchoolBusBulkAsync (List<SchoolBus> body);        
+        IActionResult AddSchoolBusBulkAsync (SchoolBus[] body);        
         
         /// <summary>
         /// Returns a single school bus object

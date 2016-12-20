@@ -1,4 +1,4 @@
-/*
+﻿/*
  * REST API Documentation for Schoolbus
  *
  * API Sample
@@ -35,7 +35,7 @@ namespace SchoolBusAPI.Services.Impl
         /// </summary>
         public UserApiService (DbAppContext context)
         {
-            _context = context;
+            this._context = context;
         }
 	
         /// <summary>

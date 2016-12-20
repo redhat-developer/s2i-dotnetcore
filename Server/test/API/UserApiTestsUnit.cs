@@ -57,7 +57,7 @@ namespace SchoolBusAPI.Test
 
                     UserApiService _service = new UserApiService(dbAppContext.Object);
 			
-                    _UserApi = new UserApiController (_service);
+                    this._UserApi = new UserApiController (_service);
 
 		}
 	

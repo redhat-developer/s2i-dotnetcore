@@ -42,13 +42,23 @@ namespace SchoolBusAPI.Services.Impl
         /// 
         /// </summary>
         
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">NotificationEvents created</response>
 
-        public virtual IActionResult NotficationeventsBulkPostAsync (List<NotificationEvent> body)        
+        public virtual IActionResult NotficationeventsBulkPostAsync (NotificationEvent[] items)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (NotificationEvent item in items)
+            {
+                _context.NotificationEvents.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+
+            return new NoContentResult();
         }
         /// <summary>
         /// 
@@ -58,7 +68,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult NotficationeventsGetAsync ()        
         {
-            var result = "";
+            var result = _context.NotificationEvents.ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -71,8 +81,14 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult NotficationeventsIdDeleteAsync (int id)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            var item = _context.NotificationEvents.First(a => a.Id == id);
+            if (item != null)
+            {
+                _context.NotificationEvents.Remove(item);
+                // Save the changes
+                _context.SaveChanges();
+            }
+            return new ObjectResult(item);
         }
         /// <summary>
         /// 
@@ -84,7 +100,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult NotficationeventsIdGetAsync (int id)        
         {
-            var result = "";
+            var result = _context.NotificationEvents.First(a => a.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
@@ -97,8 +113,14 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult NotficationeventsIdPutAsync (int id)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            var item = _context.NotificationEvents.First(a => a.Id == id);
+            if (item != null)
+            {
+                _context.NotificationEvents.Update(item);
+                // Save the changes
+                _context.SaveChanges();
+            }
+            return new ObjectResult(item);
         }
         /// <summary>
         /// 
@@ -109,8 +131,9 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult NotficationeventsPostAsync (NotificationEvent body)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            _context.NotificationEvents.Add(body);
+            _context.SaveChanges();
+            return new StatusCodeResult(201);
         }
     }
 }

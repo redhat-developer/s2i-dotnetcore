@@ -42,13 +42,23 @@ namespace SchoolBusAPI.Services.Impl
         /// 
         /// </summary>
         
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">SchoolBusOwnerAttachments created</response>
 
-        public virtual IActionResult SchoolbusownerattachmentsBulkPostAsync (List<SchoolBusOwnerAttachment> body)        
+        public virtual IActionResult SchoolbusownerattachmentsBulkPostAsync (SchoolBusOwnerAttachment[] items)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (SchoolBusOwnerAttachment item in items)
+            {
+                _context.SchoolBusOwnerAttachments.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+
+            return new NoContentResult();
         }
         /// <summary>
         /// 
@@ -58,7 +68,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownerattachmentsGetAsync ()        
         {
-            var result = "";
+            var result = _context.SchoolBusOwnerAttachments.ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -71,8 +81,14 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownerattachmentsIdDeleteAsync (int id)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            var item = _context.SchoolBusOwnerAttachments.First(a => a.Id == id);
+            if (item != null)
+            {
+                _context.SchoolBusOwnerAttachments.Remove(item);
+                // Save the changes
+                _context.SaveChanges();
+            }
+            return new ObjectResult(item);
         }
         /// <summary>
         /// 
@@ -84,7 +100,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownerattachmentsIdGetAsync (int id)        
         {
-            var result = "";
+            var result = _context.SchoolBusOwnerAttachments.First(a => a.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
@@ -97,8 +113,14 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownerattachmentsIdPutAsync (int id)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            var item = _context.SchoolBusOwnerAttachments.First(a => a.Id == id);
+            if (item != null)
+            {
+                _context.SchoolBusOwnerAttachments.Update(item);
+                // Save the changes
+                _context.SaveChanges();
+            }
+            return new ObjectResult(item);
         }
         /// <summary>
         /// 
@@ -109,8 +131,9 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownerattachmentsPostAsync (SchoolBusOwnerAttachment body)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            _context.SchoolBusOwnerAttachments.Add(body);
+            _context.SaveChanges();
+            return new StatusCodeResult(201);
         }
     }
 }

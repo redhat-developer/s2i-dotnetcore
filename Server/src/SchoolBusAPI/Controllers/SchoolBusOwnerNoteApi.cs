@@ -49,9 +49,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/schoolbusownernotes/bulk")]
         [SwaggerOperation("SchoolbusownernotesBulkPost")]
-        public virtual void SchoolbusownernotesBulkPost([FromBody]List<SchoolBusOwnerNote> body)
-        { 
-            throw new NotImplementedException();
+        public virtual IActionResult SchoolbusownernotesBulkPost([FromBody] SchoolBusOwnerNote[] body)
+        {
+            return this._service.SchoolbusownernotesBulkPostAsync(body);
         }
         /// <summary>
         /// 
