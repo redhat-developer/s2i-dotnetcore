@@ -58,7 +58,7 @@ run_test_application() {
 }
 
 run_cli_test_application() {
-  docker run --user=100001 ${CONTAINER_ARGS} -it --rm ${IMAGE_NAME}-testapp
+  docker run --user=100001 ${CONTAINER_ARGS} -i --rm ${IMAGE_NAME}-testapp
 }
 
 cleanup_app() {
