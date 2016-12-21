@@ -24,27 +24,29 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Region :  IEquatable<Region>
+    public partial class RolePermission :  IEquatable<RolePermission>
     {
 
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
-        public Region()
+        public RolePermission()
         {
             this.Id = 0;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Region" /> class.
+        /// Initializes a new instance of the <see cref="RolePermission" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">Region Name.</param>
-        public Region(int Id, string Name = null)
+        /// <param name="Role">Role.</param>
+        /// <param name="Permision">Permision.</param>
+        public RolePermission(int Id, Role Role = null, Permission Permision = null)
         {
             
             this.Id = Id;            
-            this.Name = Name;
+            this.Role = Role;
+            this.Permision = Permision;
             
         }
 
@@ -57,12 +59,18 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Region Name
+        /// Gets or Sets Role
         /// </summary>
-        /// <value>Region Name</value>
-        [DataMember(Name="Name")]
-        [MetaDataExtension (Description = "Region Name")]        
-        public string Name { get; set; }
+        [DataMember(Name="role")]
+                
+        public Role Role { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Permision
+        /// </summary>
+        [DataMember(Name="permision")]
+                
+        public Permission Permision { get; set; }
 
 
         /// <summary>
@@ -72,9 +80,10 @@ namespace SchoolBusAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Region {\n");
+            sb.Append("class RolePermission {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Role: ").Append(Role).Append("\n");
+            sb.Append("  Permision: ").Append(Permision).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -98,15 +107,15 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, obj)) { return false; }
             if (ReferenceEquals(this, obj)) { return true; }
             if (obj.GetType() != GetType()) { return false; }
-            return Equals((Region)obj);
+            return Equals((RolePermission)obj);
         }
 
         /// <summary>
-        /// Returns true if Region instances are equal
+        /// Returns true if RolePermission instances are equal
         /// </summary>
-        /// <param name="other">Instance of Region to be compared</param>
+        /// <param name="other">Instance of RolePermission to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Region other)
+        public bool Equals(RolePermission other)
         {
 
             if (ReferenceEquals(null, other)) { return false; }
@@ -119,9 +128,14 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Name == other.Name ||
-                    this.Name != null &&
-                    this.Name.Equals(other.Name)
+                    this.Role == other.Role ||
+                    this.Role != null &&
+                    this.Role.Equals(other.Role)
+                ) && 
+                (
+                    this.Permision == other.Permision ||
+                    this.Permision != null &&
+                    this.Permision.Equals(other.Permision)
                 );
         }
 
@@ -140,9 +154,13 @@ namespace SchoolBusAPI.Models
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
                     }
-                    if (this.Name != null)
+                    if (this.Role != null)
                     { 
-                        hash = hash * 59 + this.Name.GetHashCode();
+                        hash = hash * 59 + this.Role.GetHashCode();
+                    }
+                    if (this.Permision != null)
+                    { 
+                        hash = hash * 59 + this.Permision.GetHashCode();
                     }
                 return hash;
             }
@@ -150,12 +168,12 @@ namespace SchoolBusAPI.Models
 
         #region Operators
 
-        public static bool operator ==(Region left, Region right)
+        public static bool operator ==(RolePermission left, RolePermission right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Region left, Region right)
+        public static bool operator !=(RolePermission left, RolePermission right)
         {
             return !Equals(left, right);
         }

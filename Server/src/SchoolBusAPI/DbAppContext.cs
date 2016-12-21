@@ -12,19 +12,41 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using System.Collections.Generic;
 
 namespace SchoolBusAPI.Models
 {
 
-	public class DbAppContext : DbContext
+    public interface IDbAppContext
     {
-        /// <summary>
-        /// Constructor used by automated tests
-        /// </summary>
-         public DbAppContext()
-       : base()
-        { }
+        DbSet<CCWData> CCWDatas { get; set; }
 
+        DbSet<City> Cities { get; set; }
+        DbSet<FavouriteContextType> FavouriteContextTypes { get; set; }
+        DbSet<Inspection> Inspections { get; set; }
+        DbSet<LocalArea> LocalAreas { get; set; }
+        DbSet<Notification> Notifications { get; set; }
+        DbSet<NotificationEvent> NotificationEvents { get; set; }
+        DbSet<Region> Regions { get; set; }
+        DbSet<SchoolBus> SchoolBuss { get; set; }
+        DbSet<SchoolBusAttachment> SchoolBusAttachments { get; set; }
+        DbSet<SchoolBusHistory> SchoolBusHistorys { get; set; }
+        DbSet<SchoolBusNote> SchoolBusNotes { get; set; }
+        DbSet<SchoolBusOwner> SchoolBusOwners { get; set; }
+        DbSet<SchoolBusOwnerAttachment> SchoolBusOwnerAttachments { get; set; }
+        DbSet<SchoolBusOwnerContact> SchoolBusOwnerContacts { get; set; }
+        DbSet<SchoolBusOwnerContactAddress> SchoolBusOwnerContactAddresss { get; set; }
+        DbSet<SchoolBusOwnerContactPhone> SchoolBusOwnerContactPhones { get; set; }
+        DbSet<SchoolBusOwnerHistory> SchoolBusOwnerHistorys { get; set; }
+        DbSet<SchoolBusOwnerNote> SchoolBusOwnerNotes { get; set; }
+        DbSet<SchoolDistrict> SchoolDistricts { get; set; }
+        DbSet<User> Users { get; set; }
+        DbSet<UserFavourite> UserFavourites { get; set; }
+    }
+
+	public class DbAppContext : DbContext, IDbAppContext
+    {
+ 
         /// <summary>
         /// Constructor for Class used for Entity Framework access.
         /// </summary>

@@ -57,10 +57,70 @@ namespace SchoolBusAPI.Test
 
                     UserApiService _service = new UserApiService(dbAppContext.Object);
 			
-                    this._UserApi = new UserApiController (_service);
+                    _UserApi = new UserApiController (_service);
 
 		}
 	
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersBulkPost
+        /// </summary>
+		public void TestUsersBulkPost()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersBulkPost();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersCurrentGet
+        /// </summary>
+		public void TestUsersCurrentGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersCurrentGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersGet
+        /// </summary>
+		public void TestUsersGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersIdDelete
+        /// </summary>
+		public void TestUsersIdDelete()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersIdDelete();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
 		
 		[Fact]
 		/// <summary>
@@ -94,6 +154,36 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
+        /// Unit test for UsersIdGroupsGet
+        /// </summary>
+		public void TestUsersIdGroupsGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersIdGroupsGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersIdGroupsPut
+        /// </summary>
+		public void TestUsersIdGroupsPut()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersIdGroupsPut();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
         /// Unit test for UsersIdNotificationGet
         /// </summary>
 		public void TestUsersIdNotificationGet()
@@ -101,6 +191,96 @@ namespace SchoolBusAPI.Test
 			// Add test code here
 			// it may look like: 
 			//  var result = _UserApiController.UsersIdNotificationGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersIdPermissionsGet
+        /// </summary>
+		public void TestUsersIdPermissionsGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersIdPermissionsGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersIdPut
+        /// </summary>
+		public void TestUsersIdPut()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersIdPut();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersIdRolesGet
+        /// </summary>
+		public void TestUsersIdRolesGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersIdRolesGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersIdRolesPost
+        /// </summary>
+		public void TestUsersIdRolesPost()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersIdRolesPost();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersIdRolesPut
+        /// </summary>
+		public void TestUsersIdRolesPut()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersIdRolesPut();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for UsersPost
+        /// </summary>
+		public void TestUsersPost()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _UserApiController.UsersPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

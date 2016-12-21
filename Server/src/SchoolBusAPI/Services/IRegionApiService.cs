@@ -32,7 +32,16 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of regions for a given province</remarks>
+        /// <remarks>Adds a number of regions.</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>        
+
+        IActionResult RegionsBulkPostAsync (Region[] items);        
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a list of available regions</remarks>
         /// <response code="200">OK</response>        
 
         IActionResult RegionsGetAsync ();        
@@ -67,10 +76,11 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Adds a number of regions.</remarks>
+        /// <remarks>Adds a region</remarks>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>        
 
-        IActionResult RegionsPostAsync (Region[] items);        
+        IActionResult RegionsPostAsync (Region item);        
         
     }
 }

@@ -31,47 +31,46 @@ using SchoolBusAPI.Services.Impl;
 
 namespace SchoolBusAPI.Test
 {
-	public class SchoolDistrictApiUnitTest 
+	public class PermissionApiUnitTest 
     { 
 		
-		private readonly SchoolDistrictApiController _SchoolDistrictApi;
+		private readonly PermissionApiController _PermissionApi;
 		
 		/// <summary>
         /// Setup the test
         /// </summary>        
-		public SchoolDistrictApiUnitTest()
-		{
-            DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
-            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
-
-            /*
-
-            Here you will need to mock up the context.
-
-    ItemType fakeItem = new ItemType(...);
-
-    Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
-
-    dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
-
-            */
-
-            SchoolDistrictApiService _service = new SchoolDistrictApiService(dbAppContext.Object);
+		public PermissionApiUnitTest()
+		{			
+                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
 			
-                    _SchoolDistrictApi = new SchoolDistrictApiController (_service);
+                    /*
+			
+                    Here you will need to mock up the context.
+			
+            ItemType fakeItem = new ItemType(...);
+
+            Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+
+            dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+
+                    */
+
+                    PermissionApiService _service = new PermissionApiService(dbAppContext.Object);
+			
+                    _PermissionApi = new PermissionApiController (_service);
 
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for RegionsIdSchooldistrictsGet
+        /// Unit test for PermissionsGet
         /// </summary>
-		public void TestRegionsIdSchooldistrictsGet()
+		public void TestPermissionsGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _SchoolDistrictApiController.RegionsIdSchooldistrictsGet();
+			//  var result = _PermissionApiController.PermissionsGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

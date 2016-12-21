@@ -31,47 +31,46 @@ using SchoolBusAPI.Services.Impl;
 
 namespace SchoolBusAPI.Test
 {
-	public class SchoolDistrictApiUnitTest 
+	public class GroupApiUnitTest 
     { 
 		
-		private readonly SchoolDistrictApiController _SchoolDistrictApi;
+		private readonly GroupApiController _GroupApi;
 		
 		/// <summary>
         /// Setup the test
         /// </summary>        
-		public SchoolDistrictApiUnitTest()
-		{
-            DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
-            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
-
-            /*
-
-            Here you will need to mock up the context.
-
-    ItemType fakeItem = new ItemType(...);
-
-    Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
-
-    dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
-
-            */
-
-            SchoolDistrictApiService _service = new SchoolDistrictApiService(dbAppContext.Object);
+		public GroupApiUnitTest()
+		{			
+                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
 			
-                    _SchoolDistrictApi = new SchoolDistrictApiController (_service);
+                    /*
+			
+                    Here you will need to mock up the context.
+			
+            ItemType fakeItem = new ItemType(...);
+
+            Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+
+            dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+
+                    */
+
+                    GroupApiService _service = new GroupApiService(dbAppContext.Object);
+			
+                    _GroupApi = new GroupApiController (_service);
 
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for RegionsIdSchooldistrictsGet
+        /// Unit test for GroupsGet
         /// </summary>
-		public void TestRegionsIdSchooldistrictsGet()
+		public void TestGroupsGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _SchoolDistrictApiController.RegionsIdSchooldistrictsGet();
+			//  var result = _GroupApiController.GroupsGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

@@ -31,19 +31,17 @@ using SchoolBusAPI.Services.Impl;
 
 namespace SchoolBusAPI.Test
 {
-	public class NotificationEventApiUnitTest 
+	public class RoleApiUnitTest 
     { 
 		
-		private readonly NotificationEventApiController _NotificationEventApi;
+		private readonly RoleApiController _RoleApi;
 		
 		/// <summary>
         /// Setup the test
         /// </summary>        
-		public NotificationEventApiUnitTest()
-		{
-
-            DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
-            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
+		public RoleApiUnitTest()
+		{			
+                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
 			
                     /*
 			
@@ -57,22 +55,22 @@ namespace SchoolBusAPI.Test
 
                     */
 
-                    NotificationEventApiService _service = new NotificationEventApiService(dbAppContext.Object);
+                    RoleApiService _service = new RoleApiService(dbAppContext.Object);
 			
-                    _NotificationEventApi = new NotificationEventApiController (_service);
+                    _RoleApi = new RoleApiController (_service);
 
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsBulkPost
+        /// Unit test for RolesGet
         /// </summary>
-		public void TestNotficationeventsBulkPost()
+		public void TestRolesGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsBulkPost();
+			//  var result = _RoleApiController.RolesGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -81,13 +79,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsGet
+        /// Unit test for RolesIdDelete
         /// </summary>
-		public void TestNotficationeventsGet()
+		public void TestRolesIdDelete()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsGet();
+			//  var result = _RoleApiController.RolesIdDelete();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -96,13 +94,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsIdDelete
+        /// Unit test for RolesIdGet
         /// </summary>
-		public void TestNotficationeventsIdDelete()
+		public void TestRolesIdGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsIdDelete();
+			//  var result = _RoleApiController.RolesIdGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -111,13 +109,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsIdGet
+        /// Unit test for RolesIdPermissionsGet
         /// </summary>
-		public void TestNotficationeventsIdGet()
+		public void TestRolesIdPermissionsGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsIdGet();
+			//  var result = _RoleApiController.RolesIdPermissionsGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -126,13 +124,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsIdPut
+        /// Unit test for RolesIdPermissionsPut
         /// </summary>
-		public void TestNotficationeventsIdPut()
+		public void TestRolesIdPermissionsPut()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsIdPut();
+			//  var result = _RoleApiController.RolesIdPermissionsPut();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -141,13 +139,58 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsPost
+        /// Unit test for RolesIdPut
         /// </summary>
-		public void TestNotficationeventsPost()
+		public void TestRolesIdPut()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsPost();
+			//  var result = _RoleApiController.RolesIdPut();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for RolesIdUsersGet
+        /// </summary>
+		public void TestRolesIdUsersGet()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _RoleApiController.RolesIdUsersGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for RolesIdUsersPut
+        /// </summary>
+		public void TestRolesIdUsersPut()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _RoleApiController.RolesIdUsersPut();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for RolesPost
+        /// </summary>
+		public void TestRolesPost()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _RoleApiController.RolesPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

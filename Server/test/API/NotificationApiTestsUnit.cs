@@ -40,22 +40,23 @@ namespace SchoolBusAPI.Test
         /// Setup the test
         /// </summary>        
 		public NotificationApiUnitTest()
-		{			
-                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
-			
-                    /*
-			
-                    Here you will need to mock up the context.
-			
-            ItemType fakeItem = new ItemType(...);
+		{
+            DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
+            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
 
-            Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+            /*
 
-            dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+            Here you will need to mock up the context.
 
-                    */
+    ItemType fakeItem = new ItemType(...);
 
-                    NotificationApiService _service = new NotificationApiService(dbAppContext.Object);
+    Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+
+    dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+
+            */
+
+            NotificationApiService _service = new NotificationApiService(dbAppContext.Object);
 			
                     _NotificationApi = new NotificationApiController (_service);
 

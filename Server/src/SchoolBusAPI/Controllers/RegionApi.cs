@@ -104,9 +104,24 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/regions")]
         [SwaggerOperation("RegionsPost")]
         [SwaggerResponse(200, type: typeof(List<Region>))]
-        public virtual IActionResult RegionsPost([FromBody] Region[] items)
+        public virtual IActionResult RegionsPost([FromBody] Region item)
         { 
-            return this._service.RegionsPostAsync(items);
+            return this._service.RegionsPostAsync(item);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of regions.</remarks>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/regions/bulk")]
+        [SwaggerOperation("RegionsPost")]
+        [SwaggerResponse(200, type: typeof(List<Region>))]
+        public virtual IActionResult RegionsBulkPost([FromBody] Region[] items)
+        {
+            return this._service.RegionsBulkPostAsync(items);
         }
     }
 }

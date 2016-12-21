@@ -24,27 +24,32 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Region :  IEquatable<Region>
+    public partial class GroupMembership :  IEquatable<GroupMembership>
     {
 
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
-        public Region()
+        public GroupMembership()
         {
             this.Id = 0;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Region" /> class.
+        /// Initializes a new instance of the <see cref="GroupMembership" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">Region Name.</param>
-        public Region(int Id, string Name = null)
+        /// <param name="Active">Active (required).</param>
+        /// <param name="Group">Group.</param>
+        /// <param name="User">User.</param>
+        public GroupMembership(int Id, bool Active, Group Group = null, User User = null)
         {
             
             this.Id = Id;            
-            this.Name = Name;
+            
+            this.Active = Active;            
+            this.Group = Group;
+            this.User = User;
             
         }
 
@@ -57,12 +62,25 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Region Name
+        /// Gets or Sets Active
         /// </summary>
-        /// <value>Region Name</value>
-        [DataMember(Name="Name")]
-        [MetaDataExtension (Description = "Region Name")]        
-        public string Name { get; set; }
+        [DataMember(Name="active")]
+                
+        public bool Active { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Group
+        /// </summary>
+        [DataMember(Name="group")]
+                
+        public Group Group { get; set; }
+
+        /// <summary>
+        /// Gets or Sets User
+        /// </summary>
+        [DataMember(Name="user")]
+                
+        public User User { get; set; }
 
 
         /// <summary>
@@ -72,9 +90,11 @@ namespace SchoolBusAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Region {\n");
+            sb.Append("class GroupMembership {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Active: ").Append(Active).Append("\n");
+            sb.Append("  Group: ").Append(Group).Append("\n");
+            sb.Append("  User: ").Append(User).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -98,15 +118,15 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, obj)) { return false; }
             if (ReferenceEquals(this, obj)) { return true; }
             if (obj.GetType() != GetType()) { return false; }
-            return Equals((Region)obj);
+            return Equals((GroupMembership)obj);
         }
 
         /// <summary>
-        /// Returns true if Region instances are equal
+        /// Returns true if GroupMembership instances are equal
         /// </summary>
-        /// <param name="other">Instance of Region to be compared</param>
+        /// <param name="other">Instance of GroupMembership to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Region other)
+        public bool Equals(GroupMembership other)
         {
 
             if (ReferenceEquals(null, other)) { return false; }
@@ -119,9 +139,19 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Name == other.Name ||
-                    this.Name != null &&
-                    this.Name.Equals(other.Name)
+                    this.Active == other.Active ||
+                    this.Active != null &&
+                    this.Active.Equals(other.Active)
+                ) && 
+                (
+                    this.Group == other.Group ||
+                    this.Group != null &&
+                    this.Group.Equals(other.Group)
+                ) && 
+                (
+                    this.User == other.User ||
+                    this.User != null &&
+                    this.User.Equals(other.User)
                 );
         }
 
@@ -140,9 +170,17 @@ namespace SchoolBusAPI.Models
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
                     }
-                    if (this.Name != null)
+                    if (this.Active != null)
                     { 
-                        hash = hash * 59 + this.Name.GetHashCode();
+                        hash = hash * 59 + this.Active.GetHashCode();
+                    }
+                    if (this.Group != null)
+                    { 
+                        hash = hash * 59 + this.Group.GetHashCode();
+                    }
+                    if (this.User != null)
+                    { 
+                        hash = hash * 59 + this.User.GetHashCode();
                     }
                 return hash;
             }
@@ -150,12 +188,12 @@ namespace SchoolBusAPI.Models
 
         #region Operators
 
-        public static bool operator ==(Region left, Region right)
+        public static bool operator ==(GroupMembership left, GroupMembership right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Region left, Region right)
+        public static bool operator !=(GroupMembership left, GroupMembership right)
         {
             return !Equals(left, right);
         }

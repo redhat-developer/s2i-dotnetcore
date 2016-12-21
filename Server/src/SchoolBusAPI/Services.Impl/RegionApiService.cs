@@ -1,4 +1,4 @@
-﻿/*
+/*
  * REST API Documentation for Schoolbus
  *
  * API Sample
@@ -41,7 +41,29 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of regions for a given province</remarks>
+        /// <remarks>Adds a number of regions.</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+
+        public virtual IActionResult RegionsBulkPostAsync (Region[] items)        
+        {
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (Region item in items)
+            {
+                _context.Regions.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+
+            return new NoContentResult();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a list of available regions</remarks>
         /// <response code="200">OK</response>
 
         public virtual IActionResult RegionsGetAsync ()        
@@ -88,23 +110,17 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Adds a regions.</remarks>
+        /// <remarks>Adds a region</remarks>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
 
-        public virtual IActionResult RegionsPostAsync (Region [] items)        
+        public virtual IActionResult RegionsPostAsync (Region item)        
         {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (Region item in items)
-            {
-                _context.Regions.Add(item);
-            }
-            // Save the changes
+            Region newRegion = new Region();
+            newRegion.Name = item.Name;
+            _context.Regions.Add(newRegion);        
             _context.SaveChanges();
-            
-            return new NoContentResult();
+            return new StatusCodeResult(200);
         }
     }
 }

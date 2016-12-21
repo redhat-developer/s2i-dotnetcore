@@ -24,27 +24,34 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Region :  IEquatable<Region>
+    public partial class UserRole :  IEquatable<UserRole>
     {
 
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
-        public Region()
+        public UserRole()
         {
             this.Id = 0;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Region" /> class.
+        /// Initializes a new instance of the <see cref="UserRole" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">Region Name.</param>
-        public Region(int Id, string Name = null)
+        /// <param name="EffectiveDate">EffectiveDate (required).</param>
+        /// <param name="ExpiryDate">ExpiryDate.</param>
+        /// <param name="User">User.</param>
+        /// <param name="Role">Role.</param>
+        public UserRole(int Id, DateTime EffectiveDate, DateTime? ExpiryDate = null, User User = null, Role Role = null)
         {
             
             this.Id = Id;            
-            this.Name = Name;
+            
+            this.EffectiveDate = EffectiveDate;            
+            this.ExpiryDate = ExpiryDate;
+            this.User = User;
+            this.Role = Role;
             
         }
 
@@ -57,12 +64,32 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Region Name
+        /// Gets or Sets EffectiveDate
         /// </summary>
-        /// <value>Region Name</value>
-        [DataMember(Name="Name")]
-        [MetaDataExtension (Description = "Region Name")]        
-        public string Name { get; set; }
+        [DataMember(Name="effectiveDate")]
+                
+        public DateTime EffectiveDate { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ExpiryDate
+        /// </summary>
+        [DataMember(Name="expiryDate")]
+                
+        public DateTime? ExpiryDate { get; set; }
+
+        /// <summary>
+        /// Gets or Sets User
+        /// </summary>
+        [DataMember(Name="user")]
+                
+        public User User { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Role
+        /// </summary>
+        [DataMember(Name="role")]
+                
+        public Role Role { get; set; }
 
 
         /// <summary>
@@ -72,9 +99,12 @@ namespace SchoolBusAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Region {\n");
+            sb.Append("class UserRole {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  EffectiveDate: ").Append(EffectiveDate).Append("\n");
+            sb.Append("  ExpiryDate: ").Append(ExpiryDate).Append("\n");
+            sb.Append("  User: ").Append(User).Append("\n");
+            sb.Append("  Role: ").Append(Role).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -98,15 +128,15 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, obj)) { return false; }
             if (ReferenceEquals(this, obj)) { return true; }
             if (obj.GetType() != GetType()) { return false; }
-            return Equals((Region)obj);
+            return Equals((UserRole)obj);
         }
 
         /// <summary>
-        /// Returns true if Region instances are equal
+        /// Returns true if UserRole instances are equal
         /// </summary>
-        /// <param name="other">Instance of Region to be compared</param>
+        /// <param name="other">Instance of UserRole to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Region other)
+        public bool Equals(UserRole other)
         {
 
             if (ReferenceEquals(null, other)) { return false; }
@@ -119,9 +149,24 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Name == other.Name ||
-                    this.Name != null &&
-                    this.Name.Equals(other.Name)
+                    this.EffectiveDate == other.EffectiveDate ||
+                    this.EffectiveDate != null &&
+                    this.EffectiveDate.Equals(other.EffectiveDate)
+                ) && 
+                (
+                    this.ExpiryDate == other.ExpiryDate ||
+                    this.ExpiryDate != null &&
+                    this.ExpiryDate.Equals(other.ExpiryDate)
+                ) && 
+                (
+                    this.User == other.User ||
+                    this.User != null &&
+                    this.User.Equals(other.User)
+                ) && 
+                (
+                    this.Role == other.Role ||
+                    this.Role != null &&
+                    this.Role.Equals(other.Role)
                 );
         }
 
@@ -140,9 +185,21 @@ namespace SchoolBusAPI.Models
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
                     }
-                    if (this.Name != null)
+                    if (this.EffectiveDate != null)
                     { 
-                        hash = hash * 59 + this.Name.GetHashCode();
+                        hash = hash * 59 + this.EffectiveDate.GetHashCode();
+                    }
+                    if (this.ExpiryDate != null)
+                    { 
+                        hash = hash * 59 + this.ExpiryDate.GetHashCode();
+                    }
+                    if (this.User != null)
+                    { 
+                        hash = hash * 59 + this.User.GetHashCode();
+                    }
+                    if (this.Role != null)
+                    { 
+                        hash = hash * 59 + this.Role.GetHashCode();
                     }
                 return hash;
             }
@@ -150,12 +207,12 @@ namespace SchoolBusAPI.Models
 
         #region Operators
 
-        public static bool operator ==(Region left, Region right)
+        public static bool operator ==(UserRole left, UserRole right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Region left, Region right)
+        public static bool operator !=(UserRole left, UserRole right)
         {
             return !Equals(left, right);
         }
