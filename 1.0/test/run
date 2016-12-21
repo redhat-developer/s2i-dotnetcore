@@ -182,7 +182,7 @@ test_web_application() {
   test_pid_1 "${cid_file}"
   check_result $?
 
-  test_scl_usage "dotnet --version" "1.0.0-preview2-003131" "${cid_file}"
+  test_scl_usage "dotnet --version" "1.0.0-preview2-003156" "${cid_file}"
   check_result $?
   test_connection ${out_file}
   rm -rf ${out_file}
