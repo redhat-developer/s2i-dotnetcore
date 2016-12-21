@@ -279,7 +279,7 @@ paths:
   /schoolbus/{id}/inspections:
     get:
       tags:
-        - Inspection
+        - SchoolBus
       consumes: []
       produces:
         - text/plain
@@ -778,7 +778,7 @@ paths:
           description: id of SchoolBusHistory to delete
           required: true
           type: integer
-  /notfications:
+  /notifications:
      get:
       tags:
         - Notification
@@ -820,7 +820,7 @@ paths:
               format: url
           schema:
             $ref: "#/definitions/Notification"
-  /notfications/bulk:
+  /notifications/bulk:
     post:
       tags:
         - Notification
@@ -841,7 +841,7 @@ paths:
       responses:
         201:
           description: Notifications created
-  /notfications/{id}:
+  /notifications/{id}:
     get:
       tags:
         - Notification
@@ -907,7 +907,7 @@ paths:
           description: id of Notification to delete
           required: true
           type: integer
-  /notficationevents:
+  /notificationevents:
      get:
       tags:
         - NotificationEvent
@@ -949,7 +949,7 @@ paths:
               format: url
           schema:
             $ref: "#/definitions/NotificationEvent"
-  /notficationevents/bulk:
+  /notificationevents/bulk:
     post:
       tags:
         - NotificationEvent
@@ -970,7 +970,7 @@ paths:
       responses:
         201:
           description: NotificationEvents created
-  /notficationevents/{id}:
+  /notificationevents/{id}:
     get:
       tags:
         - NotificationEvent

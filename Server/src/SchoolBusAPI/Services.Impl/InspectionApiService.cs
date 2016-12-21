@@ -160,28 +160,6 @@ namespace SchoolBusAPI.Services.Impl
             _context.Inspections.Add(body);
             _context.SaveChanges();
             return new ObjectResult(body);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">SchoolBus not found</response>
-
-        public virtual IActionResult SchoolbusIdInspectionsGetAsync (int id)        
-        {
-            var exists = _context.Inspections.Any(a => a.Id == id);
-            if (exists)
-            {
-                var item = _context.Inspections.First(a => a.Id == id);            
-                return new ObjectResult(item);
-            }
-            else
-            {
-                // record not found
-                return new StatusCodeResult(404);
-            }
-        }
+        }         
     }
 }

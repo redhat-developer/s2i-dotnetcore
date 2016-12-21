@@ -46,7 +46,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult FavouritecontexttypesGetAsync ()        
         {
-            var result = "";
+            var result = _context.FavouriteContextTypes.ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -91,8 +91,17 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdAttachmentsGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwnerAttachments.All(a => a.SchoolBusOwner.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusOwnerAttachments.All(a => a.SchoolBusOwner.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -103,8 +112,17 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdContactaddressesGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwnerContactAddresss.All(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusOwnerContactAddresss.All(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -115,8 +133,17 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdContactphonesGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwnerContactPhones.All(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusOwnerContactPhones.All(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -128,14 +155,20 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdDeleteAsync (int id)        
         {
-            var item = _context.SchoolBusOwners.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.SchoolBusOwners.First(a => a.Id == id);            
                 _context.SchoolBusOwners.Remove(item);
                 // Save the changes
-                _context.SaveChanges();
+                _context.SaveChanges();            
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -146,8 +179,17 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwners.First(a => a.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusOwners.First(a => a.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -158,8 +200,17 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdNotesGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwnerNotes.All(a => a.SchoolBusOwner.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusOwnerNotes.All(a => a.SchoolBusOwner.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -171,14 +222,20 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdPutAsync (int id)        
         {
-            var item = _context.SchoolBusOwners.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.SchoolBusOwners.First(a => a.Id == id);
                 _context.SchoolBusOwners.Update(item);
                 // Save the changes
-                _context.SaveChanges();
+                _context.SaveChanges();                
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 

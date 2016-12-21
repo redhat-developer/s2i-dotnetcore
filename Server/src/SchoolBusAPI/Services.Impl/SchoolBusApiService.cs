@@ -248,5 +248,24 @@ namespace SchoolBusAPI.Services.Impl
             }
             
         }
+
+        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBus not found</response>
+
+        public virtual IActionResult SchoolbusIdInspectionsGetAsync(int id)
+        {
+            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                var items = _context.Inspections.All(a => a.SchoolBus.Id == id);
+                return new ObjectResult(items);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
     }
 }
