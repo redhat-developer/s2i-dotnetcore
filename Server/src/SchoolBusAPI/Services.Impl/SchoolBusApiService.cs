@@ -116,8 +116,18 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdAttachmentsGetAsync (int id)        
         {
-            var result = _context.SchoolBusAttachments.All(a => a.SchoolBus.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusAttachments.All(a => a.SchoolBus.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+
         }
         /// <summary>
         /// 
@@ -142,14 +152,23 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdDeleteAsync (int id)        
         {
-            var item = _context.SchoolBuss.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
             {
-                _context.SchoolBuss.Remove(item);
-                // Save the changes
-                _context.SaveChanges();
+                var item = _context.SchoolBuss.First(a => a.Id == id);
+                if (item != null)
+                {
+                    _context.SchoolBuss.Remove(item);
+                    // Save the changes
+                    _context.SaveChanges();
+                }
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -160,8 +179,17 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdHistoryGetAsync (int id)        
         {
-            var result = _context.SchoolBusHistorys.All(a => a.SchoolBus.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusHistorys.All(a => a.SchoolBus.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -173,8 +201,17 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdNotesGetAsync (int id)        
         {
-            var result = _context.SchoolBusNotes.All(a => a.SchoolBus.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusNotes.All(a => a.SchoolBus.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// Updates a single school bus object
@@ -186,9 +223,11 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdPutAsync (int id, SchoolBus bus)        
         {
-            var item = _context.SchoolBuss.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
             {
+
+                var item = _context.SchoolBuss.First(a => a.Id == id);
                 // can only update certain fields.
                 item.CCWData = bus.CCWData;
                 item.CRNO = bus.CRNO;

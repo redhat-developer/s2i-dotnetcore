@@ -76,8 +76,6 @@ namespace SchoolBusAPI.Test
         /// </summary>
 		public async void TestSchoolBuses()
 		{
-
-
             // first test the POST.
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbuses");
 
@@ -139,6 +137,11 @@ namespace SchoolBusAPI.Test
             request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbuses/" + id + "/notes");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
+
+            //test inspections
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbuses/" + id + "/inspections");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();            
 
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbuses/" + id);

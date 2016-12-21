@@ -81,8 +81,17 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsIdCitiesGetAsync (int id)        
         {
-            var result = _context.Cities.All(a => a.Region.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.Regions.Any(a => a.Id == id);
+            if (exists)
+            {
+
+                var result = _context.Cities.All(a => a.Region.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -95,14 +104,19 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsIdDeleteAsync(int id)
         {
-            var item = _context.Regions.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.Regions.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.Regions.First(a => a.Id == id);
                 _context.Regions.Remove(item);
                 // Save the changes
                 _context.SaveChanges();
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -114,9 +128,10 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsIdGetAsync (int id)        
         {
-            var result = _context.Regions.First(a => a.Id == id);
-            if (result != null)
+            var exists = _context.Regions.Any(a => a.Id == id);
+            if (exists)
             {
+                var result = _context.Regions.First(a => a.Id == id);
                 return new ObjectResult(result);
             }
             else
@@ -133,8 +148,18 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsIdLocalareasGetAsync (int id)        
         {
-            var result = _context.LocalAreas.All(a => a.Region.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.Regions.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.LocalAreas.All(a => a.Region.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+
         }
 
         /// <summary>
@@ -148,9 +173,10 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsIdPutAsync(int id, Region item)
         {
-            var region = _context.Regions.First(a => a.Id == id);
-            if (region != null)
+            var exists = _context.Regions.Any(a => a.Id == id);
+            if (exists)
             {
+                var region = _context.Regions.First(a => a.Id == id);
                 region.Name = item.Name;
                 _context.Entry(region).State = EntityState.Modified;
                 // Save the changes
