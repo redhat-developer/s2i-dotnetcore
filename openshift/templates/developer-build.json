@@ -2,18 +2,213 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "moti-dotnetcore-builds",
+    "name": "moti-dev-tools",
     "annotations": {
-      "description": "Contains frontend, middleware, backend builds.",
-      "tags": "schoolbus,aspnetcore",
+      "description": "Contains swagger editor, mock server, schema spy",
+      "tags": "development",
       "iconClass": "icon-github"
     }
   },
   "labels": {
-    "template": "schoolbus-builds"
+    "template": "moti-dev-tools"
   },
   "objects": [
-  
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${EDITOR_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "${EDITOR_NAME}",
+                "annotations": null,
+                "generation": null,
+                "importPolicy": {}
+            }
+
+        ]
+    },
+    "status": {    
+    }
+},
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${MOCKSERVER_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "${MOCKSERVER_NAME}",
+                "annotations": null,
+                "generation": null,
+                "importPolicy": {}
+            }
+
+        ]
+    },
+    "status": {    
+    }
+},
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${SCHEMASPY_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "${SCHEMASPY_NAME}",
+                "annotations": null,
+                "generation": null,
+                "importPolicy": {}
+            }
+
+        ]
+    },
+    "status": {    
+    }
+},
+{
+	"kind": "BuildConfig",
+	"apiVersion": "v1",
+	"metadata": {
+		"name": "${EDITOR_NAME}",
+		"creationTimestamp": null,
+		"labels": {
+			"app": "${EDITOR_NAME}",
+			"buildconfig": "${EDITOR_NAME}"                    
+		}                  
+	},
+	"spec": {                
+		"source": {
+			"type": "Git",
+			"git": {
+				"uri": "https://github.com/bcgov/Swagger-Editor.git"
+			}
+		},
+		"strategy": {
+			"type": "Docker"
+		},
+		"output": {
+			"to": {
+				"kind": "ImageStreamTag",
+				"name": "${EDITOR_NAME}:latest"
+			}
+		},
+		"resources": {},
+		"postCommit": {},
+		"nodeSelector": null,
+		"triggers": [
+			{
+				"type": "ConfigChange"
+			},
+			{
+				"type": "ImageChange",
+				"imageChange": {}
+			}
+		]
+	},
+	"status": {                
+	}            
+},
+{
+	"kind": "BuildConfig",
+	"apiVersion": "v1",
+	"metadata": {
+		"name": "${MOCKSERVER_NAME}",
+		"creationTimestamp": null,
+		"labels": {
+			"app": "${MOCKSERVER_NAME}",
+			"buildconfig": "${MOCKSERVER_NAME}"                    
+		}                  
+	},
+	"spec": {                
+		"source": {
+			"type": "Git",
+			"git": {
+				"uri": "https://github.com/bcgov/Mock-Server.git"
+			}
+		},
+		"strategy": {
+			"type": "Docker"
+		},
+		"output": {
+			"to": {
+				"kind": "ImageStreamTag",
+				"name": "${MOCKSERVER_NAME}:latest"
+			}
+		},
+		"resources": {},
+		"postCommit": {},
+		"nodeSelector": null,
+		"triggers": [
+			{
+				"type": "ConfigChange"
+			},
+			{
+				"type": "ImageChange",
+				"imageChange": {}
+			}
+		]
+	},
+	"status": {                
+	}            
+},
+{
+	"kind": "BuildConfig",
+	"apiVersion": "v1",
+	"metadata": {
+		"name": "${SCHEMASPY_NAME}",
+		"creationTimestamp": null,
+		"labels": {
+			"app": "${SCHEMASPY_NAME}",
+			"buildconfig": "${SCHEMASPY_NAME}"                    
+		}                  
+	},
+	"spec": {                
+		"source": {
+			"type": "Git",
+			"git": {
+				"uri": "https://github.com/bcgov/SchemaSpy.git"
+			}
+		},
+		"strategy": {
+			"type": "Docker"
+		},
+		"output": {
+			"to": {
+				"kind": "ImageStreamTag",
+				"name": "${SCHEMASPY_NAME}:latest"
+			}
+		},
+		"resources": {},
+		"postCommit": {},
+		"nodeSelector": null,
+		"triggers": [
+			{
+				"type": "ConfigChange"
+			},
+			{
+				"type": "ImageChange",
+				"imageChange": {}
+			}
+		]
+	},
+	"status": {                
+	}            
+},
+
 {
     "kind": "ImageStream",
     "apiVersion": "v1",
@@ -332,8 +527,31 @@
     "status": {
         "lastVersion": 0
     }
-}],
-  "parameters": [
+}
+
+],
+  "parameters": [    
+    {
+      "name": "EDITOR_NAME",
+      "displayName": "Swagger Editor Name",
+      "description": "The name assigned to all of the swagger editor objects defined in this template.",
+      "required": true,
+      "value": "editor"
+    },
+	{
+      "name": "MOCKSERVER_NAME",
+      "displayName": "Mock Server Name",
+      "description": "The name assigned to all of the mock server objects defined in this template.",
+      "required": true,
+      "value": "mock"
+    },
+	{
+      "name": "SCHEMASPY_NAME",
+      "displayName": "Schema Spy Name",
+      "description": "The name assigned to all of the schema spy objects defined in this template.",
+      "required": true,
+      "value": "schema-spy"
+    },
     {
 	  "name": "APPLICATION_NAME",
       "displayName": "Application Name",
@@ -341,7 +559,7 @@
       "required": true,
       "value": "schoolbus"
 	},
-    {
+{
       "name": "FRONTEND_NAME",
       "displayName": "Frontend Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
@@ -368,6 +586,7 @@
       "description": "The name assigned to the imagestreams defined in this template.",
       "required": true,
       "value": "dev"
-    }
+    }	
+	
 	]
 }
