@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -83,6 +84,27 @@ namespace SchoolBusAPI.Services.Impl
             var result = _context.Cities.All(a => a.Region.Id == id);
             return new ObjectResult(result);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Deletes a region</remarks>
+        /// <param name="id">id of Region to delete</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Region not found</response>
+
+        public virtual IActionResult RegionsIdDeleteAsync(int id)
+        {
+            var item = _context.Regions.First(a => a.Id == id);
+            if (item != null)
+            {
+                _context.Regions.Remove(item);
+                // Save the changes
+                _context.SaveChanges();
+            }
+            return new ObjectResult(item);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -93,7 +115,14 @@ namespace SchoolBusAPI.Services.Impl
         public virtual IActionResult RegionsIdGetAsync (int id)        
         {
             var result = _context.Regions.First(a => a.Id == id);
-            return new ObjectResult(result);
+            if (result != null)
+            {
+                return new ObjectResult(result);
+            }
+            else
+            {
+                return new StatusCodeResult(404);
+            }            
         }
         /// <summary>
         /// 
@@ -107,6 +136,35 @@ namespace SchoolBusAPI.Services.Impl
             var result = _context.LocalAreas.All(a => a.Region.Id == id);
             return new ObjectResult(result);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Updates a region</remarks>
+        /// <param name="id">id of Region to update</param>
+        /// <param name="item"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Region not found</response>
+
+        public virtual IActionResult RegionsIdPutAsync(int id, Region item)
+        {
+            var region = _context.Regions.First(a => a.Id == id);
+            if (region != null)
+            {
+                region.Name = item.Name;
+                _context.Entry(region).State = EntityState.Modified;
+                // Save the changes
+                _context.SaveChanges();
+                return new ObjectResult(region);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+            
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -115,12 +173,10 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
 
         public virtual IActionResult RegionsPostAsync (Region item)        
-        {
-            Region newRegion = new Region();
-            newRegion.Name = item.Name;
-            _context.Regions.Add(newRegion);        
+        {            
+            _context.Regions.Add(item);        
             _context.SaveChanges();
-            return new StatusCodeResult(200);
+            return new ObjectResult(item);
         }
     }
 }

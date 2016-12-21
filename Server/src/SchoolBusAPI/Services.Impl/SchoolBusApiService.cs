@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -49,7 +50,7 @@ namespace SchoolBusAPI.Services.Impl
         {
             _context.SchoolBuss.Add(body);
             _context.SaveChanges();
-            return new StatusCodeResult(201);
+            return new ObjectResult(body);            
         }
         /// <summary>
         /// Creates several school buses
@@ -83,8 +84,16 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult FindBusByIdAsync (int id)        
         {
-            var result = _context.SchoolBuss.First(a => a.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBuss.First(a => a.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// Returns a collection of school buses
@@ -133,8 +142,14 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdDeleteAsync (int id)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            var item = _context.SchoolBuss.First(a => a.Id == id);
+            if (item != null)
+            {
+                _context.SchoolBuss.Remove(item);
+                // Save the changes
+                _context.SaveChanges();
+            }
+            return new ObjectResult(item);
         }
         /// <summary>
         /// 
@@ -169,16 +184,30 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">Not Found</response>
 
-        public virtual IActionResult SchoolbusesIdPutAsync (int id)        
+        public virtual IActionResult SchoolbusesIdPutAsync (int id, SchoolBus bus)        
         {
             var item = _context.SchoolBuss.First(a => a.Id == id);
             if (item != null)
             {
-                _context.SchoolBuss.Update(item);
+                // can only update certain fields.
+                item.CCWData = bus.CCWData;
+                item.CRNO = bus.CRNO;
+                item.IsActive = bus.IsActive;
+                item.NameOfIndependentSchool = bus.NameOfIndependentSchool;
+                item.NextInspection = bus.NextInspection;
+                item.SchoolBusOwner = bus.SchoolBusOwner;
+
+                _context.Entry(item).State = EntityState.Modified;
                 // Save the changes
                 _context.SaveChanges();
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+            
         }
     }
 }
