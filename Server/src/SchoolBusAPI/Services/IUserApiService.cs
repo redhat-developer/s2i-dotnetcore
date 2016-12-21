@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Services
         /// <param name="items"></param>
         /// <response code="200">OK</response>        
 
-        IActionResult UsersBulkPostAsync (List<User> items);        
+        IActionResult UsersBulkPostAsync (User[] items);        
         
         /// <summary>
         /// 

@@ -37,7 +37,18 @@ namespace SchoolBusAPI.Services.Impl
         {
             _context = context;
         }
-	
+
+        /// <summary>
+        /// Add many users
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public IActionResult UsersBulkPostAsync(User[] items)
+        {
+            var result = "";
+            return new ObjectResult(result);
+        }
+
         /// <summary>
         /// 
         /// </summary>
