@@ -19,6 +19,11 @@ dotnet restore $DOTNET_RESTORE_ROOT
 echo "---> Building application from source ..."
 dotnet build -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT"
 
+for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
+    echo "---> Running test project: $TEST_PROJECT..."
+    dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK"
+done
+
 # Fix source directory permissions
 fix-permissions ./
 # set permissions for any installed artifacts

@@ -103,6 +103,11 @@ a `.s2i/environment` file inside your source code repository.
     Used to select the project to run. This must be the folder containing
     `project.json`. Defaults to `.`.
 
+* **DOTNET_TEST_PROJECTS**
+
+    Used to specify the list of test projects to run. This must be folders containing
+    `project.json`. `dotnet test` is invoked for each folder. Defaults to ``.
+
 * **DOTNET_CONFIGURATION**
 
     Used to run the application in Debug or Release mode. This should be either
