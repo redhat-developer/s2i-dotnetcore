@@ -47,8 +47,9 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult AddBusAsync (SchoolBus body)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            _context.SchoolBuss.Add(body);
+            _context.SaveChanges();
+            return new StatusCodeResult(201);
         }
         /// <summary>
         /// Creates several school buses
@@ -57,10 +58,20 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="body"></param>
         /// <response code="201">SchoolBus items created</response>
 
-        public virtual IActionResult AddSchoolBusBulkAsync (List<SchoolBus> body)        
+        public virtual IActionResult AddSchoolBusBulkAsync (SchoolBus[] items)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (SchoolBus item in items)
+            {
+                _context.SchoolBuss.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+
+            return new NoContentResult();
         }
         /// <summary>
         /// Returns a single school bus object
@@ -72,7 +83,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult FindBusByIdAsync (int id)        
         {
-            var result = "";
+            var result = _context.SchoolBuss.First(a => a.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
@@ -83,7 +94,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult GetAllBusesAsync ()        
         {
-            var result = "";
+            var result = _context.SchoolBuss.ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -96,7 +107,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdAttachmentsGetAsync (int id)        
         {
-            var result = "";
+            var result = _context.SchoolBusAttachments.All(a => a.SchoolBus.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
@@ -108,6 +119,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdCcwdataGetAsync (int id)        
         {
+            // TODO: need to fix the model for CCWData
             var result = "";
             return new ObjectResult(result);
         }
@@ -133,7 +145,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdHistoryGetAsync (int id)        
         {
-            var result = "";
+            var result = _context.SchoolBusHistorys.All(a => a.SchoolBus.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
@@ -146,7 +158,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdNotesGetAsync (int id)        
         {
-            var result = "";
+            var result = _context.SchoolBusNotes.All(a => a.SchoolBus.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
@@ -159,8 +171,14 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdPutAsync (int id)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            var item = _context.SchoolBuss.First(a => a.Id == id);
+            if (item != null)
+            {
+                _context.SchoolBuss.Update(item);
+                // Save the changes
+                _context.SaveChanges();
+            }
+            return new ObjectResult(item);
         }
     }
 }

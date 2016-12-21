@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Services
         /// <param name="body"></param>
         /// <response code="201">SchoolBusOwnerAttachments created</response>        
 
-        IActionResult SchoolbusownerattachmentsBulkPostAsync (List<SchoolBusOwnerAttachment> body);        
+        IActionResult SchoolbusownerattachmentsBulkPostAsync (SchoolBusOwnerAttachment[] body);        
         
         /// <summary>
         /// 

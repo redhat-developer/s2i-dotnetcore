@@ -49,9 +49,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/notfications/bulk")]
         [SwaggerOperation("NotficationsBulkPost")]
-        public virtual void NotficationsBulkPost([FromBody]List<Notification> body)
-        { 
-            throw new NotImplementedException();
+        public virtual IActionResult NotficationsBulkPost([FromBody] Notification[] body)
+        {
+            return this._service.NotficationsBulkPostAsync(body);
         }
         /// <summary>
         /// 

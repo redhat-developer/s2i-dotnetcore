@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Services
         /// <param name="body"></param>
         /// <response code="201">Inspections created</response>        
 
-        IActionResult InspectionsBulkPostAsync (List<Inspection> body);        
+        IActionResult InspectionsBulkPostAsync (Inspection [] body);        
         
         /// <summary>
         /// 

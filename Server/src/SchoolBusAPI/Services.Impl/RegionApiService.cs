@@ -46,7 +46,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsGetAsync ()        
         {
-            var result = "";
+            var result = _context.Regions.ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -58,7 +58,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsIdCitiesGetAsync (int id)        
         {
-            var result = "";
+            var result = _context.Cities.All(a => a.Region.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
@@ -70,7 +70,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsIdGetAsync (int id)        
         {
-            var result = "";
+            var result = _context.Regions.First(a => a.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
@@ -82,19 +82,29 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsIdLocalareasGetAsync (int id)        
         {
-            var result = "";
+            var result = _context.LocalAreas.All(a => a.Region.Id == id);
             return new ObjectResult(result);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Adds a number of regions.</remarks>
+        /// <remarks>Adds a regions.</remarks>
         /// <response code="200">OK</response>
 
-        public virtual IActionResult RegionsPostAsync (Region [] data)        
+        public virtual IActionResult RegionsPostAsync (Region [] items)        
         {
-            var result = "";
-            return new ObjectResult(result);
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (Region item in items)
+            {
+                _context.Regions.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+            
+            return new NoContentResult();
         }
     }
 }

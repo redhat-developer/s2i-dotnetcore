@@ -63,9 +63,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/schoolbuses/bulk")]
         [SwaggerOperation("AddSchoolBusBulk")]
-        public virtual void AddSchoolBusBulk([FromBody]List<SchoolBus> body)
-        { 
-            throw new NotImplementedException();
+        public virtual IActionResult AddSchoolBusBulk([FromBody] SchoolBus[] body)
+        {
+            return this._service.AddSchoolBusBulkAsync(body);
         }
         /// <summary>
         /// Returns a single school bus object
