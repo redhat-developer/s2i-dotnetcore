@@ -2,10 +2,13 @@
 
 set -e
 
+# User settable environment
 DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
-DOTNET_FRAMEWORK="${DOTNET_FRAMEWORK:-netcoreapp1.0}"
 DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
 DOTNET_RESTORE_ROOT="${DOTNET_RESTORE_ROOT:-.}"
+
+# Private environment
+DOTNET_FRAMEWORK="netcoreapp1.0"
 
 echo "---> Copying application source ..."
 cp -Rf /tmp/src/. ./
