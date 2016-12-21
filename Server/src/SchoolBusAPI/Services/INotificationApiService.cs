@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Services
         /// <param name="body"></param>
         /// <response code="201">Notifications created</response>        
 
-        IActionResult NotficationsBulkPostAsync (Notification[] body);        
+        IActionResult notificationsBulkPostAsync (Notification[] body);        
         
         /// <summary>
         /// 
@@ -44,7 +44,7 @@ namespace SchoolBusAPI.Services
         
         /// <response code="200">OK</response>        
 
-        IActionResult NotficationsGetAsync ();        
+        IActionResult notificationsGetAsync ();        
         
         /// <summary>
         /// 
@@ -54,7 +54,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>        
 
-        IActionResult NotficationsIdDeleteAsync (int id);        
+        IActionResult notificationsIdDeleteAsync (int id);        
         
         /// <summary>
         /// 
@@ -64,7 +64,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>        
 
-        IActionResult NotficationsIdGetAsync (int id);        
+        IActionResult notificationsIdGetAsync (int id);        
         
         /// <summary>
         /// 
@@ -74,7 +74,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>        
 
-        IActionResult NotficationsIdPutAsync (int id);        
+        IActionResult notificationsIdPutAsync (int id, Notification body);        
         
         /// <summary>
         /// 
@@ -83,7 +83,7 @@ namespace SchoolBusAPI.Services
         /// <param name="body"></param>
         /// <response code="201">Notification created</response>        
 
-        IActionResult NotficationsPostAsync (Notification body);        
+        IActionResult notificationsPostAsync (Notification body);        
         
     }
 }

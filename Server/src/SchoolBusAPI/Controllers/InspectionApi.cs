@@ -76,9 +76,9 @@ namespace SchoolBusAPI.Controllers
         [HttpDelete]
         [Route("/api/inspections/{id}")]
         [SwaggerOperation("InspectionsIdDelete")]
-        public virtual void InspectionsIdDelete([FromRoute]int id)
-        { 
-            throw new NotImplementedException();
+        public virtual IActionResult InspectionsIdDelete([FromRoute]int id)
+        {
+            return this._service.InspectionsIdDeleteAsync(id);
         }
         /// <summary>
         /// 

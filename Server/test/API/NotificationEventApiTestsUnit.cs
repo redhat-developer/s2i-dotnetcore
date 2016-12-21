@@ -66,13 +66,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsBulkPost
+        /// Unit test for notificationeventsBulkPost
         /// </summary>
-		public void TestNotficationeventsBulkPost()
+		public void TestnotificationeventsBulkPost()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsBulkPost();
+			//  var result = _NotificationEventApiController.notificationeventsBulkPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -81,13 +81,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsGet
+        /// Unit test for notificationeventsGet
         /// </summary>
-		public void TestNotficationeventsGet()
+		public void TestnotificationeventsGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsGet();
+			//  var result = _NotificationEventApiController.notificationeventsGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -96,13 +96,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsIdDelete
+        /// Unit test for notificationeventsIdDelete
         /// </summary>
-		public void TestNotficationeventsIdDelete()
+		public void TestnotificationeventsIdDelete()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsIdDelete();
+			//  var result = _NotificationEventApiController.notificationeventsIdDelete();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -111,13 +111,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsIdGet
+        /// Unit test for notificationeventsIdGet
         /// </summary>
-		public void TestNotficationeventsIdGet()
+		public void TestnotificationeventsIdGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsIdGet();
+			//  var result = _NotificationEventApiController.notificationeventsIdGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -126,13 +126,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsIdPut
+        /// Unit test for notificationeventsIdPut
         /// </summary>
-		public void TestNotficationeventsIdPut()
+		public void TestnotificationeventsIdPut()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsIdPut();
+			//  var result = _NotificationEventApiController.notificationeventsIdPut();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -141,13 +141,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationeventsPost
+        /// Unit test for notificationeventsPost
         /// </summary>
-		public void TestNotficationeventsPost()
+		public void TestnotificationeventsPost()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationEventApiController.NotficationeventsPost();
+			//  var result = _NotificationEventApiController.notificationeventsPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

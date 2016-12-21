@@ -53,10 +53,7 @@ namespace SchoolBusAPI.Test
             request.Content = new StringContent ("[]",Encoding.UTF8,"application/json");
             
 			var response = await _client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
+            response.EnsureSuccessStatusCode();						
 		}		
         
 		
