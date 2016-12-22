@@ -81,14 +81,19 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusattachmentsIdDeleteAsync (int id)        
         {
-            var item = _context.SchoolBusAttachments.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBusAttachments.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.SchoolBusAttachments.First(a => a.Id == id);
                 _context.SchoolBusAttachments.Remove(item);
                 // Save the changes
                 _context.SaveChanges();
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -100,8 +105,16 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusattachmentsIdGetAsync (int id)        
         {
-            var item = _context.SchoolBusAttachments.First(a => a.Id == id);            
-            return new ObjectResult(item);
+            var exists = _context.SchoolBusAttachments.Any(a => a.Id == id);
+            if (exists)
+            {
+                var item = _context.SchoolBusAttachments.First(a => a.Id == id);            
+                return new ObjectResult(item);
+            }
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -111,16 +124,21 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusAttachment not found</response>
 
-        public virtual IActionResult SchoolbusattachmentsIdPutAsync (int id)        
+        public virtual IActionResult SchoolbusattachmentsIdPutAsync (int id, SchoolBusAttachment body)        
         {
-            var item = _context.SchoolBusAttachments.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBusAttachments.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.SchoolBusAttachments.First(a => a.Id == id);
                 _context.SchoolBusAttachments.Update(item);
                 // Save the changes
                 _context.SaveChanges();
+                return new StatusCodeResult(200);
             }
-            return new StatusCodeResult(200);
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -133,20 +151,8 @@ namespace SchoolBusAPI.Services.Impl
         {
             _context.SchoolBusAttachments.Add(body);
             _context.SaveChanges();
-            return new StatusCodeResult(200);
+            return new ObjectResult(body);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="id">id of SchoolBusHistory to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusHistory not found</response>
-
-        public virtual IActionResult SchoolbushistoriesIdGetAsync (int id)        
-        {
-            var result = _context.SchoolBusHistorys.All(a => a.SchoolBus.Id == id);
-            return new ObjectResult(result);
-        }
+       
     }
 }

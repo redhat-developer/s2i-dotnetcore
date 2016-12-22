@@ -81,14 +81,19 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownerhistoryIdDeleteAsync (int id)        
         {
-            var item = _context.SchoolBusOwnerHistorys.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBusOwnerHistorys.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.SchoolBusOwnerHistorys.First(a => a.Id == id);
                 _context.SchoolBusOwnerHistorys.Remove(item);
                 // Save the changes
-                _context.SaveChanges();
+                _context.SaveChanges();            
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -100,8 +105,16 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownerhistoryIdGetAsync (int id)        
         {
-            var result = _context.SchoolBusOwnerHistorys.First(a => a.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.SchoolBusOwnerHistorys.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusOwnerHistorys.First(a => a.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -113,14 +126,19 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownerhistoryIdPutAsync (int id)        
         {
-            var item = _context.SchoolBusOwnerHistorys.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBusOwnerHistorys.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.SchoolBusOwnerHistorys.First(a => a.Id == id);            
                 _context.SchoolBusOwnerHistorys.Update(item);
                 // Save the changes
-                _context.SaveChanges();
+                _context.SaveChanges();            
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -133,7 +151,7 @@ namespace SchoolBusAPI.Services.Impl
         {
             _context.SchoolBusOwnerHistorys.Add(body);
             _context.SaveChanges();
-            return new StatusCodeResult(201);
+            return new ObjectResult(body);
         }
     }
 }

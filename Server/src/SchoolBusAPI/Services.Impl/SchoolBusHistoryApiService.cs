@@ -81,14 +81,19 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbushistoriesIdDeleteAsync (int id)        
         {
-            var item = _context.SchoolBusHistorys.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBusHistorys.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.SchoolBusHistorys.First(a => a.Id == id);           
                 _context.SchoolBusHistorys.Remove(item);
                 // Save the changes
-                _context.SaveChanges();
+                _context.SaveChanges();            
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -100,14 +105,19 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbushistoriesIdPutAsync (int id)        
         {
-            var item = _context.SchoolBusHistorys.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.SchoolBusHistorys.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.SchoolBusHistorys.First(a => a.Id == id);            
                 _context.SchoolBusHistorys.Update(item);
                 // Save the changes
-                _context.SaveChanges();
+                _context.SaveChanges();            
+                return new StatusCodeResult(200);
             }
-            return new StatusCodeResult(200);
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -121,6 +131,28 @@ namespace SchoolBusAPI.Services.Impl
             _context.SchoolBusHistorys.Add(body);
             _context.SaveChanges();
             return new StatusCodeResult(200);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        /// <param name="id">id of SchoolBusHistory to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBusHistory not found</response>
+
+        public virtual IActionResult SchoolbushistoriesIdGetAsync(int id)
+        {
+            var exists = _context.SchoolBusHistorys.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusHistorys.All(a => a.SchoolBus.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                return new StatusCodeResult(404);
+            }
         }
     }
 }

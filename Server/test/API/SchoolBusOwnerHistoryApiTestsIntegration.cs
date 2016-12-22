@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 using Xunit;
 using SchoolBusAPI;
 using System.Text;
+using System.Net;
+using Newtonsoft.Json;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Test
 {
@@ -51,79 +54,64 @@ namespace SchoolBusAPI.Test
 
             var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-
-            Assert.True(true);            
-		}		
+        }		
         
 		
 		[Fact]
 		/// <summary>
         /// Integration test for SchoolbusownerhistoryGet
         /// </summary>
-		public async void TestSchoolbusownerhistoryGet()
+		public async void TestSchoolBusOwnerHistory()
 		{
-			var response = await _client.GetAsync("/api/schoolbusownerhistory");
+            // now create a school bus owner record
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusownerhistory");
+            SchoolBusOwnerHistory schoolBusOwnerHistory = new SchoolBusOwnerHistory();
+
+            var jsonString = schoolBusOwnerHistory.ToJson();
+
+            request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+            var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for SchoolbusownerhistoryIdDelete
-        /// </summary>
-		public async void TestSchoolbusownerhistoryIdDelete()
-		{
-			var response = await _client.GetAsync("/api/schoolbusownerhistory/{id}");
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+
+            schoolBusOwnerHistory = JsonConvert.DeserializeObject<SchoolBusOwnerHistory>(jsonString);
+            // get the id
+            var id = schoolBusOwnerHistory.Id;
+
+            // make a change.    
+
+            // now do an update.
+
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/schoolbusownerhistory/" + id);
+            request.Content = new StringContent(schoolBusOwnerHistory.ToJson(), Encoding.UTF8, "application/json");
+            response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for SchoolbusownerhistoryIdGet
-        /// </summary>
-		public async void TestSchoolbusownerhistoryIdGet()
-		{
-			var response = await _client.GetAsync("/api/schoolbusownerhistory/{id}");
+
+            // do a get.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbusownerhistory/" + id);
+            response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for SchoolbusownerhistoryIdPut
-        /// </summary>
-		public async void TestSchoolbusownerhistoryIdPut()
-		{
-			var response = await _client.GetAsync("/api/schoolbusownerhistory/{id}");
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+            schoolBusOwnerHistory = JsonConvert.DeserializeObject<SchoolBusOwnerHistory>(jsonString);
+
+            // compare the change, should match.
+            // Assert.Equal(schoolbus.IsActive, testActive);
+
+            // do a delete.
+            request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbusownerhistory/" + id);
+            response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for SchoolbusownerhistoryPost
-        /// </summary>
-		public async void TestSchoolbusownerhistoryPost()
-		{
-			var response = await _client.GetAsync("/api/schoolbusownerhistory");
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
+
+            // should get a 404 if we try a get now.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbusownerhistory/" + id);
+            response = await _client.SendAsync(request);
+            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
+        }		                
     }
 }

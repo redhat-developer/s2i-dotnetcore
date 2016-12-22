@@ -40,22 +40,23 @@ namespace SchoolBusAPI.Test
         /// Setup the test
         /// </summary>        
 		public PermissionApiUnitTest()
-		{			
-                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
-			
-                    /*
-			
-                    Here you will need to mock up the context.
-			
-            ItemType fakeItem = new ItemType(...);
+		{
+            DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
+            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
 
-            Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+            /*
 
-            dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+            Here you will need to mock up the context.
 
-                    */
+    ItemType fakeItem = new ItemType(...);
 
-                    PermissionApiService _service = new PermissionApiService(dbAppContext.Object);
+    Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+
+    dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+
+            */
+
+            PermissionApiService _service = new PermissionApiService(dbAppContext.Object);
 			
                     _PermissionApi = new PermissionApiController (_service);
 
