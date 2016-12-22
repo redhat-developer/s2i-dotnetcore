@@ -248,7 +248,7 @@ namespace SchoolBusAPI.Services.Impl
         {
             _context.SchoolBusOwners.Add(body);
             _context.SaveChanges();
-            return new StatusCodeResult(200);
+            return new ObjectResult(body);
         }
     }
 }
