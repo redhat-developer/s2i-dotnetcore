@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 using Xunit;
 using SchoolBusAPI;
 using System.Text;
+using System.Net;
+using SchoolBusAPI.Models;
+using Newtonsoft.Json;
 
 namespace SchoolBusAPI.Test
 {
@@ -50,10 +53,7 @@ namespace SchoolBusAPI.Test
             request.Content = new StringContent ("[]",Encoding.UTF8,"application/json");
             
 			var response = await _client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
+            response.EnsureSuccessStatusCode();						
 		}		
         
 		
@@ -61,84 +61,59 @@ namespace SchoolBusAPI.Test
 		/// <summary>
         /// Integration test for InspectionsGet
         /// </summary>
-		public async void TestInspectionsGet()
+		public async void TestInspections()
 		{
-			var response = await _client.GetAsync("/api/inspections");
+			// first test the POST.
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/inspections");
+
+            // create a new schoolbus.
+            Inspection inspection = new Inspection();
+            string jsonString = inspection.ToJson();
+
+            request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+            var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for InspectionsIdDelete
-        /// </summary>
-		public async void TestInspectionsIdDelete()
-		{
-			var response = await _client.GetAsync("/api/inspections/{id}");
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+
+            inspection = JsonConvert.DeserializeObject<Inspection>(jsonString);
+            // get the id
+            var id = inspection.Id;
+
+            // make a change.    
+            
+            // now do an update.
+
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/inspections/" + id);
+            request.Content = new StringContent(inspection.ToJson(), Encoding.UTF8, "application/json");
+            response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for InspectionsIdGet
-        /// </summary>
-		public async void TestInspectionsIdGet()
-		{
-			var response = await _client.GetAsync("/api/inspections/{id}");
+
+            // do a get.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/inspections/" + id);
+            response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for InspectionsIdPut
-        /// </summary>
-		public async void TestInspectionsIdPut()
-		{
-			var response = await _client.GetAsync("/api/inspections/{id}");
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+            inspection = JsonConvert.DeserializeObject<Inspection>(jsonString);
+
+            // compare the change, should match.
+            // Assert.Equal(schoolbus.IsActive, testActive);
+
+            // do a delete.
+            request = new HttpRequestMessage(HttpMethod.Delete, "/api/inspections/" + id);
+            response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for InspectionsPost
-        /// </summary>
-		public async void TestInspectionsPost()
-		{
-			var response = await _client.GetAsync("/api/inspections");
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for SchoolbusIdInspectionsGet
-        /// </summary>
-		public async void TestSchoolbusIdInspectionsGet()
-		{
-			var response = await _client.GetAsync("/api/schoolbus/{id}/inspections");
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
+
+            // should get a 404 if we try a get now.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/inspections/" + id);
+            response = await _client.SendAsync(request);
+            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
+
+        }		
+
     }
 }

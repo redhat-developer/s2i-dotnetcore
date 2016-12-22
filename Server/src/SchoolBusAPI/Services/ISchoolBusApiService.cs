@@ -121,7 +121,17 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">Not Found</response>        
 
-        IActionResult SchoolbusesIdPutAsync (int id);        
-        
+        IActionResult SchoolbusesIdPutAsync (int id, SchoolBus item);
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBus not found</response>        
+
+        IActionResult SchoolbusIdInspectionsGetAsync(int id);
+
     }
 }

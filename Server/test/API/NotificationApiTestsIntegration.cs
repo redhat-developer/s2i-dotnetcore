@@ -18,6 +18,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using SchoolBusAPI;
+using System.Text;
+using SchoolBusAPI.Models;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace SchoolBusAPI.Test
 {
@@ -36,91 +40,79 @@ namespace SchoolBusAPI.Test
             .UseContentRoot(Directory.GetCurrentDirectory())
             .UseStartup<Startup>());
             _client = _server.CreateClient();
-		}
-	
+		}	
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for NotficationsBulkPost
+        /// Integration test for notificationsBulkPost
         /// </summary>
-		public async void TestNotficationsBulkPost()
+		public async void TestnotificationsBulkPost()
 		{
-			var response = await _client.GetAsync("/api/notfications/bulk");
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/inspections/bulk");
+            request.Content = new StringContent("[]", Encoding.UTF8, "application/json");
+
+            var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
+        }		
         
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for NotficationsGet
+        /// Integration test for notificationsGet
         /// </summary>
-		public async void TestNotficationsGet()
+		public async void TestNotifications()
 		{
-			var response = await _client.GetAsync("/api/notfications");
+            // first test the POST.
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/notifications");
+
+            // create a new schoolbus.
+            Notification notification = new Notification();
+            string jsonString = notification.ToJson();
+
+            request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+            var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+
+            notification = JsonConvert.DeserializeObject<Notification>(jsonString);
+            // get the id
+            var id = notification.Id;
+
+            // make a change.    
+
+            // now do an update.
+
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/notifications/" + id);
+            request.Content = new StringContent(notification.ToJson(), Encoding.UTF8, "application/json");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // do a get.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/notifications/" + id);
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+            notification = JsonConvert.DeserializeObject<Notification>(jsonString);
+
+            // compare the change, should match.
+            // Assert.Equal(schoolbus.IsActive, testActive);
+
+            // do a delete.
+            request = new HttpRequestMessage(HttpMethod.Delete, "/api/notifications/" + id);
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // should get a 404 if we try a get now.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/notifications/" + id);
+            response = await _client.SendAsync(request);
+            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
+        }		
         
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for NotficationsIdDelete
-        /// </summary>
-		public async void TestNotficationsIdDelete()
-		{
-			var response = await _client.GetAsync("/api/notfications/{id}");
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for NotficationsIdGet
-        /// </summary>
-		public async void TestNotficationsIdGet()
-		{
-			var response = await _client.GetAsync("/api/notfications/{id}");
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for NotficationsIdPut
-        /// </summary>
-		public async void TestNotficationsIdPut()
-		{
-			var response = await _client.GetAsync("/api/notfications/{id}");
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for NotficationsPost
-        /// </summary>
-		public async void TestNotficationsPost()
-		{
-			var response = await _client.GetAsync("/api/notfications");
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
         
     }
 }

@@ -32,7 +32,16 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of regions for a given province</remarks>
+        /// <remarks>Adds a number of regions.</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>        
+
+        IActionResult RegionsBulkPostAsync (Region[] items);        
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a list of available regions</remarks>
         /// <response code="200">OK</response>        
 
         IActionResult RegionsGetAsync ();        
@@ -44,8 +53,18 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of Region to fetch Cities for</param>
         /// <response code="200">OK</response>        
 
-        IActionResult RegionsIdCitiesGetAsync (int id);        
-        
+        IActionResult RegionsIdCitiesGetAsync (int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Deletes a region</remarks>
+        /// <param name="id">id of Region to delete</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Region not found</response>        
+
+        IActionResult RegionsIdDeleteAsync(int id);
+
         /// <summary>
         /// 
         /// </summary>
@@ -62,15 +81,27 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of Region to fetch SchoolDistricts for</param>
         /// <response code="200">OK</response>        
 
-        IActionResult RegionsIdLocalareasGetAsync (int id);        
-        
+        IActionResult RegionsIdLocalareasGetAsync (int id);
+
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Adds a number of regions.</remarks>
+        /// <remarks>Updates a region</remarks>
+        /// <param name="id">id of Region to update</param>
+        /// <param name="item"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Region not found</response>        
+
+        IActionResult RegionsIdPutAsync(int id, Region item);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a region</remarks>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>        
 
-        IActionResult RegionsPostAsync (Region[] items);        
+        IActionResult RegionsPostAsync (Region item);        
         
     }
 }

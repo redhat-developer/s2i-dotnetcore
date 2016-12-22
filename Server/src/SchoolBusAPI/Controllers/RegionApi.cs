@@ -39,7 +39,22 @@ namespace SchoolBusAPI.Controllers
         {
             _service = service;
         }
-	
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of regions.</remarks>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/regions/bulk")]
+        [SwaggerOperation("RegionsPost")]
+        [SwaggerResponse(200, type: typeof(List<Region>))]
+        public virtual IActionResult RegionsBulkPost([FromBody] Region[] items)
+        {
+            return this._service.RegionsBulkPostAsync(items);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -67,6 +82,22 @@ namespace SchoolBusAPI.Controllers
         { 
             return this._service.RegionsIdCitiesGetAsync(id);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Deletes a region</remarks>
+        /// <param name="id">id of Region to delete</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Region not found</response>
+        [HttpDelete]
+        [Route("/api/regions/{id}")]
+        [SwaggerOperation("RegionsIdDelete")]
+        public virtual IActionResult RegionsIdDelete([FromRoute]int id)
+        {
+            return this._service.RegionsIdDeleteAsync(id);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -95,18 +126,35 @@ namespace SchoolBusAPI.Controllers
         { 
             return this._service.RegionsIdLocalareasGetAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Adds a number of regions.</remarks>
+        /// <remarks>Updates a region</remarks>
+        /// <param name="id">id of Region to update</param>
+        /// <param name="item"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Region not found</response>
+        [HttpPut]
+        [Route("/api/regions/{id}")]
+        [SwaggerOperation("RegionsIdPut")]
+        public virtual IActionResult RegionsIdPut([FromRoute]int id, [FromBody]Region item)
+        {
+            return this._service.RegionsIdPutAsync(id, item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a region</remarks>
         /// <response code="200">OK</response>
         [HttpPost]
         [Route("/api/regions")]
         [SwaggerOperation("RegionsPost")]
         [SwaggerResponse(200, type: typeof(List<Region>))]
-        public virtual IActionResult RegionsPost([FromBody] Region[] items)
+        public virtual IActionResult RegionsPost([FromBody] Region item)
         { 
-            return this._service.RegionsPostAsync(items);
-        }
+            return this._service.RegionsPostAsync(item);
+        }        
     }
 }

@@ -134,9 +134,9 @@ namespace SchoolBusAPI.Controllers
         [HttpDelete]
         [Route("/api/schoolbuses/{id}")]
         [SwaggerOperation("SchoolbusesIdDelete")]
-        public virtual void SchoolbusesIdDelete([FromRoute]int id)
-        { 
-            throw new NotImplementedException();
+        public virtual IActionResult SchoolbusesIdDelete([FromRoute]int id)
+        {
+            return this._service.SchoolbusesIdDeleteAsync(id);
         }
         /// <summary>
         /// 
@@ -178,9 +178,21 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/schoolbuses/{id}")]
         [SwaggerOperation("SchoolbusesIdPut")]
         [SwaggerResponse(200, type: typeof(SchoolBus))]
-        public virtual IActionResult SchoolbusesIdPut([FromRoute]int id)
+        public virtual IActionResult SchoolbusesIdPut([FromRoute]int id, [FromBody] SchoolBus item)
         { 
-            return this._service.SchoolbusesIdPutAsync(id);
+            return this._service.SchoolbusesIdPutAsync(id, item);
+        }
+
+        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBus not found</response>
+        [HttpGet]
+        [Route("/api/schoolbuses/{id}/inspections")]
+        [SwaggerOperation("SchoolbusIdInspectionsGet")]
+        [SwaggerResponse(200, type: typeof(List<Inspection>))]
+        public virtual IActionResult SchoolbusIdInspectionsGet([FromRoute]int id)
+        {
+            return this._service.SchoolbusIdInspectionsGetAsync(id);
         }
     }
 }

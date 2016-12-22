@@ -40,22 +40,23 @@ namespace SchoolBusAPI.Test
         /// Setup the test
         /// </summary>        
 		public SchoolBusApiUnitTest()
-		{			
-                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
-			
-                    /*
-			
-                    Here you will need to mock up the context.
-			
-            ItemType fakeItem = new ItemType(...);
+		{
+            DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
+            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
 
-            Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+            /*
 
-            dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+            Here you will need to mock up the context.
 
-                    */
+    ItemType fakeItem = new ItemType(...);
 
-                    SchoolBusApiService _service = new SchoolBusApiService(dbAppContext.Object);
+    Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+
+    dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+
+            */
+
+            SchoolBusApiService _service = new SchoolBusApiService(dbAppContext.Object);
 			
                     _SchoolBusApi = new SchoolBusApiController (_service);
 

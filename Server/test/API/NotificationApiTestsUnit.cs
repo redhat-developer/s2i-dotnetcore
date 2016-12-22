@@ -40,22 +40,23 @@ namespace SchoolBusAPI.Test
         /// Setup the test
         /// </summary>        
 		public NotificationApiUnitTest()
-		{			
-                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
-			
-                    /*
-			
-                    Here you will need to mock up the context.
-			
-            ItemType fakeItem = new ItemType(...);
+		{
+            DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
+            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
 
-            Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+            /*
 
-            dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+            Here you will need to mock up the context.
 
-                    */
+    ItemType fakeItem = new ItemType(...);
 
-                    NotificationApiService _service = new NotificationApiService(dbAppContext.Object);
+    Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+
+    dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+
+            */
+
+            NotificationApiService _service = new NotificationApiService(dbAppContext.Object);
 			
                     _NotificationApi = new NotificationApiController (_service);
 
@@ -64,13 +65,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationsBulkPost
+        /// Unit test for notificationsBulkPost
         /// </summary>
-		public void TestNotficationsBulkPost()
+		public void TestnotificationsBulkPost()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationApiController.NotficationsBulkPost();
+			//  var result = _NotificationApiController.notificationsBulkPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -79,13 +80,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationsGet
+        /// Unit test for notificationsGet
         /// </summary>
-		public void TestNotficationsGet()
+		public void TestnotificationsGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationApiController.NotficationsGet();
+			//  var result = _NotificationApiController.notificationsGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -94,13 +95,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationsIdDelete
+        /// Unit test for notificationsIdDelete
         /// </summary>
-		public void TestNotficationsIdDelete()
+		public void TestnotificationsIdDelete()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationApiController.NotficationsIdDelete();
+			//  var result = _NotificationApiController.notificationsIdDelete();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -109,13 +110,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationsIdGet
+        /// Unit test for notificationsIdGet
         /// </summary>
-		public void TestNotficationsIdGet()
+		public void TestnotificationsIdGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationApiController.NotficationsIdGet();
+			//  var result = _NotificationApiController.notificationsIdGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -124,13 +125,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationsIdPut
+        /// Unit test for notificationsIdPut
         /// </summary>
-		public void TestNotficationsIdPut()
+		public void TestnotificationsIdPut()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationApiController.NotficationsIdPut();
+			//  var result = _NotificationApiController.notificationsIdPut();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -139,13 +140,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for NotficationsPost
+        /// Unit test for notificationsPost
         /// </summary>
-		public void TestNotficationsPost()
+		public void TestnotificationsPost()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _NotificationApiController.NotficationsPost();
+			//  var result = _NotificationApiController.notificationsPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

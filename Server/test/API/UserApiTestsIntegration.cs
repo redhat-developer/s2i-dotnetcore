@@ -41,6 +41,62 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
+        /// Integration test for UsersBulkPost
+        /// </summary>
+		public async void TestUsersBulkPost()
+		{
+			var response = await _client.GetAsync("/api/users/bulk");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersCurrentGet
+        /// </summary>
+		public async void TestUsersCurrentGet()
+		{
+			var response = await _client.GetAsync("/api/users/current");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersGet
+        /// </summary>
+		public async void TestUsersGet()
+		{
+			var response = await _client.GetAsync("/api/users");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersIdDelete
+        /// </summary>
+		public async void TestUsersIdDelete()
+		{
+			var response = await _client.GetAsync("/api/users/{id}");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
         /// Integration test for UsersIdFavouritesGet
         /// </summary>
 		public async void TestUsersIdFavouritesGet()
@@ -69,11 +125,123 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
+        /// Integration test for UsersIdGroupsGet
+        /// </summary>
+		public async void TestUsersIdGroupsGet()
+		{
+			var response = await _client.GetAsync("/api/users/{id}/groups");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersIdGroupsPut
+        /// </summary>
+		public async void TestUsersIdGroupsPut()
+		{
+			var response = await _client.GetAsync("/api/users/{id}/groups");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
         /// Integration test for UsersIdNotificationGet
         /// </summary>
 		public async void TestUsersIdNotificationGet()
 		{
 			var response = await _client.GetAsync("/api/users/{id}/notification");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersIdPermissionsGet
+        /// </summary>
+		public async void TestUsersIdPermissionsGet()
+		{
+			var response = await _client.GetAsync("/api/users/{id}/permissions");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersIdPut
+        /// </summary>
+		public async void TestUsersIdPut()
+		{
+			var response = await _client.GetAsync("/api/users/{id}");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersIdRolesGet
+        /// </summary>
+		public async void TestUsersIdRolesGet()
+		{
+			var response = await _client.GetAsync("/api/users/{id}/roles");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersIdRolesPost
+        /// </summary>
+		public async void TestUsersIdRolesPost()
+		{
+			var response = await _client.GetAsync("/api/users/{id}/roles");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersIdRolesPut
+        /// </summary>
+		public async void TestUsersIdRolesPut()
+		{
+			var response = await _client.GetAsync("/api/users/{id}/roles");
+            response.EnsureSuccessStatusCode();
+			
+			// update this to test the API.
+			Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Integration test for UsersPost
+        /// </summary>
+		public async void TestUsersPost()
+		{
+			var response = await _client.GetAsync("/api/users");
             response.EnsureSuccessStatusCode();
 			
 			// update this to test the API.

@@ -39,10 +39,12 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="Region" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        public Region(int Id)
+        /// <param name="Name">Region Name.</param>
+        public Region(int Id, string Name = null)
         {
             
             this.Id = Id;            
+            this.Name = Name;
             
         }
 
@@ -54,6 +56,14 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]        
         public int Id { get; set; }
 
+        /// <summary>
+        /// Region Name
+        /// </summary>
+        /// <value>Region Name</value>
+        [DataMember(Name="Name")]
+        [MetaDataExtension (Description = "Region Name")]        
+        public string Name { get; set; }
+
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -64,6 +74,7 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class Region {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -106,6 +117,11 @@ namespace SchoolBusAPI.Models
                     this.Id == other.Id ||
                     this.Id != null &&
                     this.Id.Equals(other.Id)
+                ) && 
+                (
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
                 );
         }
 
@@ -123,6 +139,10 @@ namespace SchoolBusAPI.Models
                     if (this.Id != null)
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
+                    }
+                    if (this.Name != null)
+                    { 
+                        hash = hash * 59 + this.Name.GetHashCode();
                     }
                 return hash;
             }

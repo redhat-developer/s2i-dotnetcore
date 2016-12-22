@@ -83,17 +83,7 @@ namespace SchoolBusAPI.Services
         /// <param name="body"></param>
         /// <response code="201">Inspection created</response>        
 
-        IActionResult InspectionsPostAsync (Inspection body);        
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">SchoolBus not found</response>        
-
-        IActionResult SchoolbusIdInspectionsGetAsync (int id);        
+        IActionResult InspectionsPostAsync (Inspection body);                        
         
     }
 }

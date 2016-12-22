@@ -45,7 +45,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="items"></param>
         /// <response code="201">Notifications created</response>
 
-        public virtual IActionResult NotficationsBulkPostAsync (Notification[] items)        
+        public virtual IActionResult notificationsBulkPostAsync (Notification[] items)        
         {
             if (items == null)
             {
@@ -66,7 +66,7 @@ namespace SchoolBusAPI.Services.Impl
         
         /// <response code="200">OK</response>
 
-        public virtual IActionResult NotficationsGetAsync ()        
+        public virtual IActionResult notificationsGetAsync ()        
         {
             var result = _context.Notifications.ToList();
             return new ObjectResult(result);
@@ -79,48 +79,81 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>
 
-        public virtual IActionResult NotficationsIdDeleteAsync (int id)        
+        public virtual IActionResult notificationsIdDeleteAsync (int id)        
         {
-            var item = _context.Notifications.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.Notifications.Any(a => a.Id == id);
+            if (exists)
             {
-                _context.Notifications.Remove(item);
-                // Save the changes
-                _context.SaveChanges();
+                var item = _context.Notifications.First(a => a.Id == id);
+                if (item != null)
+                {
+                    _context.Notifications.Remove(item);
+                    // Save the changes
+                    _context.SaveChanges();
+                }
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="id">id of Notification to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Notification not found</response>
-
-        public virtual IActionResult NotficationsIdGetAsync (int id)        
-        {
-            var result = _context.Notifications.First(a => a.Id == id);
-            return new ObjectResult(result);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="id">id of Notification to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Notification not found</response>
-
-        public virtual IActionResult NotficationsIdPutAsync (int id)        
-        {
-            var item = _context.Notifications.First(a => a.Id == id);
-            if (item != null)
+            else
             {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <param name="id">id of Notification to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Notification not found</response>
+
+        public virtual IActionResult notificationsIdGetAsync (int id)        
+        {
+            var exists = _context.Notifications.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.Notifications.First(a => a.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <param name="id">id of Notification to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Notification not found</response>
+
+        public virtual IActionResult notificationsIdPutAsync (int id, Notification body)        
+        {
+            var exists = _context.Notifications.Any(a => a.Id == id);
+            if (exists)
+            {
+                var item = _context.Notifications.First(a => a.Id == id);
+                item.Event = body.Event;
+                item.Event2 = body.Event2;
+                item.HasBeenViewed = body.HasBeenViewed;
+                item.IsAllDay = body.IsAllDay;
+                item.IsExpired = body.IsExpired;
+                item.IsWatchNotification = body.IsWatchNotification;
+                item.PriorityCode = body.PriorityCode;
+                item.User = body.User;
+
                 _context.Notifications.Update(item);
                 // Save the changes
-                _context.SaveChanges();
+                _context.SaveChanges();                
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -129,12 +162,11 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="body"></param>
         /// <response code="201">Notification created</response>
 
-        public virtual IActionResult NotficationsPostAsync (Notification body)        
+        public virtual IActionResult notificationsPostAsync (Notification body)        
         {
             _context.Notifications.Add(body);
             _context.SaveChanges();
-            return new StatusCodeResult(201);
-
+            return new ObjectResult(body);
         }
     }
 }

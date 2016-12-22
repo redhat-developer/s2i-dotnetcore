@@ -33,22 +33,38 @@ namespace SchoolBusAPI.Models
         public User()
         {
             this.Id = 0;
+            this.Active = false;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Email">Email address.</param>
-        /// <param name="SmUserid">Security Manager User ID.</param>
-        /// <param name="GivenName">Last Name.</param>
-        public User(int Id, string Email = null, string SmUserid = null, string GivenName = null)
+        /// <param name="GivenName">GivenName.</param>
+        /// <param name="Surname">Surname.</param>
+        /// <param name="Initials">Initials.</param>
+        /// <param name="Email">Email.</param>
+        /// <param name="Active">Active (required).</param>
+        /// <param name="SmUserId">Security Manager User ID.</param>
+        /// <param name="Guid">Guid.</param>
+        /// <param name="SmAuthorizationDirectory">SmAuthorizationDirectory.</param>
+        /// <param name="UserRoles">UserRoles.</param>
+        /// <param name="GroupMemberships">GroupMemberships.</param>
+        public User(int Id, bool Active, string GivenName = null, string Surname = null, string Initials = null, string Email = null, string SmUserId = null, string Guid = null, string SmAuthorizationDirectory = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null)
         {
             
             this.Id = Id;            
-            this.Email = Email;
-            this.SmUserid = SmUserid;
+            
+            this.Active = Active;            
             this.GivenName = GivenName;
+            this.Surname = Surname;
+            this.Initials = Initials;
+            this.Email = Email;
+            this.SmUserId = SmUserId;
+            this.Guid = Guid;
+            this.SmAuthorizationDirectory = SmAuthorizationDirectory;
+            this.UserRoles = UserRoles;
+            this.GroupMemberships = GroupMemberships;
             
         }
 
@@ -61,28 +77,75 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Email address
+        /// Gets or Sets GivenName
         /// </summary>
-        /// <value>Email address</value>
-        [DataMember(Name="Email")]
-        [MetaDataExtension (Description = "Email address")]        
+        [DataMember(Name="givenName")]
+                
+        public string GivenName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Surname
+        /// </summary>
+        [DataMember(Name="surname")]
+                
+        public string Surname { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Initials
+        /// </summary>
+        [DataMember(Name="initials")]
+                
+        public string Initials { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Email
+        /// </summary>
+        [DataMember(Name="email")]
+                
         public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Active
+        /// </summary>
+        [DataMember(Name="active")]
+                
+        public bool Active { get; set; }
 
         /// <summary>
         /// Security Manager User ID
         /// </summary>
         /// <value>Security Manager User ID</value>
-        [DataMember(Name="SmUserid")]
+        [DataMember(Name="smUserId")]
         [MetaDataExtension (Description = "Security Manager User ID")]        
-        public string SmUserid { get; set; }
+        public string SmUserId { get; set; }
 
         /// <summary>
-        /// Last Name
+        /// Gets or Sets Guid
         /// </summary>
-        /// <value>Last Name</value>
-        [DataMember(Name="GivenName")]
-        [MetaDataExtension (Description = "Last Name")]        
-        public string GivenName { get; set; }
+        [DataMember(Name="guid")]
+                
+        public string Guid { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SmAuthorizationDirectory
+        /// </summary>
+        [DataMember(Name="smAuthorizationDirectory")]
+                
+        public string SmAuthorizationDirectory { get; set; }
+
+        /// <summary>
+        /// Gets or Sets UserRoles
+        /// </summary>
+        [DataMember(Name="userRoles")]
+                
+        public List<UserRole> UserRoles { get; set; }
+
+        /// <summary>
+        /// Gets or Sets GroupMemberships
+        /// </summary>
+        [DataMember(Name="groupMemberships")]
+                
+        public List<GroupMembership> GroupMemberships { get; set; }
 
 
         /// <summary>
@@ -94,9 +157,16 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class User {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Email: ").Append(Email).Append("\n");
-            sb.Append("  SmUserid: ").Append(SmUserid).Append("\n");
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
+            sb.Append("  Surname: ").Append(Surname).Append("\n");
+            sb.Append("  Initials: ").Append(Initials).Append("\n");
+            sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  Active: ").Append(Active).Append("\n");
+            sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
+            sb.Append("  Guid: ").Append(Guid).Append("\n");
+            sb.Append("  SmAuthorizationDirectory: ").Append(SmAuthorizationDirectory).Append("\n");
+            sb.Append("  UserRoles: ").Append(UserRoles).Append("\n");
+            sb.Append("  GroupMemberships: ").Append(GroupMemberships).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -141,19 +211,54 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
+                    this.GivenName == other.GivenName ||
+                    this.GivenName != null &&
+                    this.GivenName.Equals(other.GivenName)
+                ) && 
+                (
+                    this.Surname == other.Surname ||
+                    this.Surname != null &&
+                    this.Surname.Equals(other.Surname)
+                ) && 
+                (
+                    this.Initials == other.Initials ||
+                    this.Initials != null &&
+                    this.Initials.Equals(other.Initials)
+                ) && 
+                (
                     this.Email == other.Email ||
                     this.Email != null &&
                     this.Email.Equals(other.Email)
                 ) && 
                 (
-                    this.SmUserid == other.SmUserid ||
-                    this.SmUserid != null &&
-                    this.SmUserid.Equals(other.SmUserid)
+                    this.Active == other.Active ||
+                    this.Active != null &&
+                    this.Active.Equals(other.Active)
                 ) && 
                 (
-                    this.GivenName == other.GivenName ||
-                    this.GivenName != null &&
-                    this.GivenName.Equals(other.GivenName)
+                    this.SmUserId == other.SmUserId ||
+                    this.SmUserId != null &&
+                    this.SmUserId.Equals(other.SmUserId)
+                ) && 
+                (
+                    this.Guid == other.Guid ||
+                    this.Guid != null &&
+                    this.Guid.Equals(other.Guid)
+                ) && 
+                (
+                    this.SmAuthorizationDirectory == other.SmAuthorizationDirectory ||
+                    this.SmAuthorizationDirectory != null &&
+                    this.SmAuthorizationDirectory.Equals(other.SmAuthorizationDirectory)
+                ) && 
+                (
+                    this.UserRoles == other.UserRoles ||
+                    this.UserRoles != null &&
+                    this.UserRoles.SequenceEqual(other.UserRoles)
+                ) && 
+                (
+                    this.GroupMemberships == other.GroupMemberships ||
+                    this.GroupMemberships != null &&
+                    this.GroupMemberships.SequenceEqual(other.GroupMemberships)
                 );
         }
 
@@ -172,17 +277,45 @@ namespace SchoolBusAPI.Models
                     { 
                         hash = hash * 59 + this.Id.GetHashCode();
                     }
+                    if (this.GivenName != null)
+                    { 
+                        hash = hash * 59 + this.GivenName.GetHashCode();
+                    }
+                    if (this.Surname != null)
+                    { 
+                        hash = hash * 59 + this.Surname.GetHashCode();
+                    }
+                    if (this.Initials != null)
+                    { 
+                        hash = hash * 59 + this.Initials.GetHashCode();
+                    }
                     if (this.Email != null)
                     { 
                         hash = hash * 59 + this.Email.GetHashCode();
                     }
-                    if (this.SmUserid != null)
+                    if (this.Active != null)
                     { 
-                        hash = hash * 59 + this.SmUserid.GetHashCode();
+                        hash = hash * 59 + this.Active.GetHashCode();
                     }
-                    if (this.GivenName != null)
+                    if (this.SmUserId != null)
                     { 
-                        hash = hash * 59 + this.GivenName.GetHashCode();
+                        hash = hash * 59 + this.SmUserId.GetHashCode();
+                    }
+                    if (this.Guid != null)
+                    { 
+                        hash = hash * 59 + this.Guid.GetHashCode();
+                    }
+                    if (this.SmAuthorizationDirectory != null)
+                    { 
+                        hash = hash * 59 + this.SmAuthorizationDirectory.GetHashCode();
+                    }
+                    if (this.UserRoles != null)
+                    { 
+                        hash = hash * 59 + this.UserRoles.GetHashCode();
+                    }
+                    if (this.GroupMemberships != null)
+                    { 
+                        hash = hash * 59 + this.GroupMemberships.GetHashCode();
                     }
                 return hash;
             }

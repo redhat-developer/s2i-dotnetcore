@@ -89,17 +89,18 @@ namespace SchoolBusAPI.Models
         public DateTime? DateCreated { get; set; }
 
 
-        //Foreign key for Standard
-        public int PrimaryContactRefId { get; set; }
+        [DataMember(Name = "PrimaryContact")]
+        public SchoolBusOwnerContact PrimaryContact { get; set; }
 
-        [ForeignKey("PrimaryContactRefId")]
+
+        [ForeignKey("PrimaryContact")]
+        //Foreign key for PrimaryContact
+        public int? PrimaryContactRefId { get; set; }
 
         /// <summary>
         /// Gets or Sets PrimaryContact
         /// </summary>
         //[DataMember(Name="PrimaryContact")]
-                
-        public SchoolBusOwnerContact PrimaryContact { get; set; }
 
         /// <summary>
         /// Gets or Sets LocalArea

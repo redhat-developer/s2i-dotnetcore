@@ -40,22 +40,23 @@ namespace SchoolBusAPI.Test
         /// Setup the test
         /// </summary>        
 		public RegionApiUnitTest()
-		{			
-                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>();
-			
-                    /*
-			
-                    Here you will need to mock up the context.
-			
-            ItemType fakeItem = new ItemType(...);
+		{
+            DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
+            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
 
-            Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+            /*
 
-            dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+            Here you will need to mock up the context.
 
-                    */
+    ItemType fakeItem = new ItemType(...);
 
-                    RegionApiService _service = new RegionApiService(dbAppContext.Object);
+    Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+
+    dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+
+            */
+
+            RegionApiService _service = new RegionApiService(dbAppContext.Object);
 			
                     _RegionApi = new RegionApiController (_service);
 

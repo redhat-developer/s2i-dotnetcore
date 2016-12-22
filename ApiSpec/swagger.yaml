@@ -279,7 +279,7 @@ paths:
   /schoolbus/{id}/inspections:
     get:
       tags:
-        - Inspection
+        - SchoolBus
       consumes: []
       produces:
         - text/plain
@@ -778,7 +778,7 @@ paths:
           description: id of SchoolBusHistory to delete
           required: true
           type: integer
-  /notfications:
+  /notifications:
      get:
       tags:
         - Notification
@@ -820,7 +820,7 @@ paths:
               format: url
           schema:
             $ref: "#/definitions/Notification"
-  /notfications/bulk:
+  /notifications/bulk:
     post:
       tags:
         - Notification
@@ -841,7 +841,7 @@ paths:
       responses:
         201:
           description: Notifications created
-  /notfications/{id}:
+  /notifications/{id}:
     get:
       tags:
         - Notification
@@ -907,7 +907,7 @@ paths:
           description: id of Notification to delete
           required: true
           type: integer
-  /notficationevents:
+  /notificationevents:
      get:
       tags:
         - NotificationEvent
@@ -949,7 +949,7 @@ paths:
               format: url
           schema:
             $ref: "#/definitions/NotificationEvent"
-  /notficationevents/bulk:
+  /notificationevents/bulk:
     post:
       tags:
         - NotificationEvent
@@ -970,7 +970,7 @@ paths:
       responses:
         201:
           description: NotificationEvents created
-  /notficationevents/{id}:
+  /notificationevents/{id}:
     get:
       tags:
         - NotificationEvent
@@ -1956,6 +1956,28 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/User'
+  /users/bulk:
+    post:
+      description: Adds a number of users
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
   /users/{id}:
     get:
       description: Returns data for a particular user
@@ -2221,7 +2243,7 @@ paths:
           type: integer
   /regions:
     get:
-      description: Returns a list of regions for a given province
+      description: Returns a list of available regions
       tags:
         - Region
       produces:
@@ -2236,13 +2258,19 @@ paths:
             items:
               $ref: '#/definitions/Region'   
     post:
-      description: Adds a number of regions.
+      description: Adds a region
       tags:
         - Region
       produces:
         - text/plain
         - application/json
         - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Region"
       responses:
         '200':
           description: OK
@@ -2250,6 +2278,26 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Region'
+  /regions/bulk:
+    post:
+      description: Adds a number of regions.
+      tags:
+        - Region
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Region"
+      responses:
+        '200':
+          description: OK
   /regions/{id}:
     get:
       description: Returns a specific region
@@ -2269,7 +2317,54 @@ paths:
           in: path
           description: id of Regions to fetch
           required: true
-          type: integer  
+          type: integer
+    put:
+      description: Updates a region
+      tags:
+        - Region
+      consumes: 
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Region to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Region"
+      responses:
+        200:
+          description: OK
+        404:
+          description: Region not found
+    delete:
+      description: Deletes a region
+      tags:
+        - Region
+      consumes: 
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Region to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Region not found   
   /regions/{id}/cities:
     get:
       description: Returns a list of cities for a given region
@@ -2639,6 +2734,7 @@ definitions:
           min: 1
           max: 1000
       Name:
+        type: string
         format: string
         description:  Region Name
         x-chance-type: name

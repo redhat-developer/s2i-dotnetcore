@@ -59,6 +59,33 @@ namespace SchoolBusAPI.Test
 			Assert.True(true);
         }
         /// <summary>
+        /// Test the property 'GivenName'
+        /// </summary>
+        [Fact]
+        public void GivenNameTest()
+        {
+            // TODO unit test for the property 'GivenName'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'Surname'
+        /// </summary>
+        [Fact]
+        public void SurnameTest()
+        {
+            // TODO unit test for the property 'Surname'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'Initials'
+        /// </summary>
+        [Fact]
+        public void InitialsTest()
+        {
+            // TODO unit test for the property 'Initials'
+			Assert.True(true);
+        }
+        /// <summary>
         /// Test the property 'Email'
         /// </summary>
         [Fact]
@@ -68,21 +95,57 @@ namespace SchoolBusAPI.Test
 			Assert.True(true);
         }
         /// <summary>
-        /// Test the property 'SmUserid'
+        /// Test the property 'Active'
         /// </summary>
         [Fact]
-        public void SmUseridTest()
+        public void ActiveTest()
         {
-            // TODO unit test for the property 'SmUserid'
+            // TODO unit test for the property 'Active'
 			Assert.True(true);
         }
         /// <summary>
-        /// Test the property 'GivenName'
+        /// Test the property 'SmUserId'
         /// </summary>
         [Fact]
-        public void GivenNameTest()
+        public void SmUserIdTest()
         {
-            // TODO unit test for the property 'GivenName'
+            // TODO unit test for the property 'SmUserId'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'Guid'
+        /// </summary>
+        [Fact]
+        public void GuidTest()
+        {
+            // TODO unit test for the property 'Guid'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'SmAuthorizationDirectory'
+        /// </summary>
+        [Fact]
+        public void SmAuthorizationDirectoryTest()
+        {
+            // TODO unit test for the property 'SmAuthorizationDirectory'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'UserRoles'
+        /// </summary>
+        [Fact]
+        public void UserRolesTest()
+        {
+            // TODO unit test for the property 'UserRoles'
+			Assert.True(true);
+        }
+        /// <summary>
+        /// Test the property 'GroupMemberships'
+        /// </summary>
+        [Fact]
+        public void GroupMembershipsTest()
+        {
+            // TODO unit test for the property 'GroupMemberships'
 			Assert.True(true);
         }
 

@@ -31,6 +31,7 @@ namespace SchoolBusAPI
             services.AddTransient<ISchoolBusHistoryApiService, SchoolBusHistoryApiService>();
             services.AddTransient<ISchoolBusNoteApiService, SchoolBusNoteApiService>();
             services.AddTransient<ISchoolBusOwnerApiService, SchoolBusOwnerApiService>();
+            services.AddTransient<ISchoolBusOwnerContactApiService, SchoolBusOwnerContactApiService>();
             services.AddTransient<ISchoolBusOwnerAttachmentApiService, SchoolBusOwnerAttachmentApiService>();
             services.AddTransient<ISchoolBusOwnerHistoryApiService, SchoolBusOwnerHistoryApiService>();
             services.AddTransient<ISchoolBusOwnerNoteApiService, SchoolBusOwnerNoteApiService>();
@@ -40,6 +41,7 @@ namespace SchoolBusAPI
             services.AddTransient<IInspectionApiService, InspectionApiService>();
             services.AddTransient<INotificationApiService, NotificationApiService>();
             services.AddTransient<INotificationEventApiService, NotificationEventApiService>();
+            
 
             return services;
         }

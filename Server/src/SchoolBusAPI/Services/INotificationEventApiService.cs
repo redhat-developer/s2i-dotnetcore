@@ -36,7 +36,7 @@ namespace SchoolBusAPI.Services
         /// <param name="body"></param>
         /// <response code="201">NotificationEvents created</response>        
 
-        IActionResult NotficationeventsBulkPostAsync (NotificationEvent[] body);        
+        IActionResult notificationeventsBulkPostAsync (NotificationEvent[] body);        
         
         /// <summary>
         /// 
@@ -44,7 +44,7 @@ namespace SchoolBusAPI.Services
         
         /// <response code="200">OK</response>        
 
-        IActionResult NotficationeventsGetAsync ();        
+        IActionResult notificationeventsGetAsync ();        
         
         /// <summary>
         /// 
@@ -54,7 +54,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">NotificationEvent not found</response>        
 
-        IActionResult NotficationeventsIdDeleteAsync (int id);        
+        IActionResult notificationeventsIdDeleteAsync (int id);        
         
         /// <summary>
         /// 
@@ -64,7 +64,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">NotificationEvent not found</response>        
 
-        IActionResult NotficationeventsIdGetAsync (int id);        
+        IActionResult notificationeventsIdGetAsync (int id);        
         
         /// <summary>
         /// 
@@ -74,7 +74,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">NotificationEvent not found</response>        
 
-        IActionResult NotficationeventsIdPutAsync (int id);        
+        IActionResult notificationeventsIdPutAsync (int id, NotificationEvent body);        
         
         /// <summary>
         /// 
@@ -83,7 +83,7 @@ namespace SchoolBusAPI.Services
         /// <param name="body"></param>
         /// <response code="201">NotificationEvent created</response>        
 
-        IActionResult NotficationeventsPostAsync (NotificationEvent body);        
+        IActionResult notificationeventsPostAsync (NotificationEvent body);        
         
     }
 }

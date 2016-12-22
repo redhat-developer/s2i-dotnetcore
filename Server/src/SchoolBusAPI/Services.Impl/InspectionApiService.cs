@@ -57,7 +57,6 @@ namespace SchoolBusAPI.Services.Impl
             }
             // Save the changes
             _context.SaveChanges();
-
             return new NoContentResult();
         }
         /// <summary>
@@ -81,14 +80,23 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsIdDeleteAsync (int id)        
         {
-            var item = _context.Inspections.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.Inspections.Any(a => a.Id == id);
+            if (exists)
             {
-                _context.Inspections.Remove(item);
-                // Save the changes
-                _context.SaveChanges();
-            }            
-            return new ObjectResult(item);
+                var item = _context.Inspections.First(a => a.Id == id);
+                if (item != null)
+                {
+                    _context.Inspections.Remove(item);
+                    // Save the changes
+                    _context.SaveChanges();
+                }            
+                return new ObjectResult(item);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -100,8 +108,17 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsIdGetAsync (int id)        
         {
-            var result = _context.Inspections.First(a => a.Id == id);
-            return new ObjectResult(result);
+            var exists = _context.Inspections.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.Inspections.First(a => a.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -113,14 +130,23 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsIdPutAsync (int id)        
         {
-            var item = _context.Inspections.First(a => a.Id == id);
-            if (item != null)
+            var exists = _context.Inspections.Any(a => a.Id == id);
+            if (exists)
             {
-                _context.Inspections.Update(item);
-                // Save the changes
-                _context.SaveChanges();
+                var item = _context.Inspections.First(a => a.Id == id);
+                if (item != null)
+                {
+                    _context.Inspections.Update(item);
+                    // Save the changes
+                    _context.SaveChanges();
+                }
+                return new ObjectResult(item);
             }
-            return new ObjectResult(item);
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
         /// <summary>
         /// 
@@ -133,20 +159,7 @@ namespace SchoolBusAPI.Services.Impl
         {
             _context.Inspections.Add(body);
             _context.SaveChanges();
-            return new StatusCodeResult(201);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">SchoolBus not found</response>
-
-        public virtual IActionResult SchoolbusIdInspectionsGetAsync (int id)        
-        {
-            var item = _context.Inspections.First(a => a.Id == id);            
-            return new ObjectResult(item);            
-        }
+            return new ObjectResult(body);
+        }         
     }
 }
