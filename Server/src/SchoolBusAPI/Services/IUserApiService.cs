@@ -37,14 +37,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>        
 
         IActionResult UsersBulkPostAsync (User[] items);        
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Get the currently logged in user</remarks>
-        /// <response code="200">OK</response>        
-
-        IActionResult UsersCurrentGetAsync ();        
+          
         
         /// <summary>
         /// 

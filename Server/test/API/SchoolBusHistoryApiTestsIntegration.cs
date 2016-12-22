@@ -83,13 +83,13 @@ namespace SchoolBusAPI.Test
 
             // now do an update.
 
-            request = new HttpRequestMessage(HttpMethod.Put, "/api/schoolbusnotes/" + id);
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/schoolbushistories/" + id);
             request.Content = new StringContent(schoolBusHistory.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // do a get.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbusnotes/" + id);
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbushistories/" + id);
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
@@ -101,12 +101,12 @@ namespace SchoolBusAPI.Test
             // Assert.Equal(schoolbus.IsActive, testActive);
 
             // do a delete.
-            request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbusnotes/" + id);
+            request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbushistories/" + id);
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // should get a 404 if we try a get now.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbusnotes/" + id);
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbushistories/" + id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
         }		

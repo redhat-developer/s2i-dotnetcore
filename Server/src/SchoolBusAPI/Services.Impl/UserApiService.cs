@@ -48,18 +48,7 @@ namespace SchoolBusAPI.Services.Impl
             var result = "";
             return new ObjectResult(result);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Get the currently logged in user</remarks>
-        /// <response code="200">OK</response>
-
-        public virtual IActionResult UsersCurrentGetAsync ()        
-        {
-            var result = "";
-            return new ObjectResult(result);
-        }
+    
         /// <summary>
         /// 
         /// </summary>

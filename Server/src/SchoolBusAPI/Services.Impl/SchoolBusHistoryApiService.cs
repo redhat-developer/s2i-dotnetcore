@@ -112,7 +112,7 @@ namespace SchoolBusAPI.Services.Impl
                 _context.SchoolBusHistorys.Update(item);
                 // Save the changes
                 _context.SaveChanges();            
-                return new StatusCodeResult(200);
+                return new ObjectResult(item);
             }
             else
             {
@@ -130,7 +130,7 @@ namespace SchoolBusAPI.Services.Impl
         {
             _context.SchoolBusHistorys.Add(body);
             _context.SaveChanges();
-            return new StatusCodeResult(200);
+            return new ObjectResult(body);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusHistorys.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusHistorys.All(a => a.SchoolBus.Id == id);
+                var result = _context.SchoolBusHistorys.First(a => a.Id == id);
                 return new ObjectResult(result);
             }
             else
