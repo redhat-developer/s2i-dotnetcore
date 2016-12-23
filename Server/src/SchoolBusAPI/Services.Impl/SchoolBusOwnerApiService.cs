@@ -94,7 +94,7 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusOwnerAttachments.All(a => a.SchoolBusOwner.Id == id);
+                var result = _context.SchoolBusOwnerAttachments.Where(a => a.SchoolBusOwner.Id == id);
                 return new ObjectResult(result);
             }
             else
@@ -115,7 +115,7 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusOwnerContactAddresss.All(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
+                var result = _context.SchoolBusOwnerContactAddresss.Where(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
                 return new ObjectResult(result);
             }
             else
@@ -136,7 +136,7 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusOwnerContactPhones.All(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
+                var result = _context.SchoolBusOwnerContactPhones.Where(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
                 return new ObjectResult(result);
             }
             else
@@ -203,7 +203,7 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusOwnerNotes.All(a => a.SchoolBusOwner.Id == id);
+                var result = _context.SchoolBusOwnerNotes.Where(a => a.SchoolBusOwner.Id == id);
                 return new ObjectResult(result);
             }
             else

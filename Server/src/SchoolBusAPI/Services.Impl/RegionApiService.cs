@@ -84,8 +84,7 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.Regions.Any(a => a.Id == id);
             if (exists)
             {
-
-                var result = _context.Cities.All(a => a.Region.Id == id);
+                var result = _context.Cities.Where(a => a.Region.Id == id);
                 return new ObjectResult(result);
             }
             else
@@ -151,7 +150,7 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.Regions.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.LocalAreas.All(a => a.Region.Id == id);
+                var result = _context.LocalAreas.Where(a => a.Region.Id == id);
                 return new ObjectResult(result);
             }
             else
