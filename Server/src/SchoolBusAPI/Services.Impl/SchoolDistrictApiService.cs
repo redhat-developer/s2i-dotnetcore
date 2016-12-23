@@ -47,7 +47,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult RegionsIdSchooldistrictsGetAsync (int id)        
         {
-            var result = _context.SchoolDistricts.All(a => a.Region.Id == id);
+            var result = _context.SchoolDistricts.Where(a => a.Region.Id == id);
             return new ObjectResult(result);
         }
     }
