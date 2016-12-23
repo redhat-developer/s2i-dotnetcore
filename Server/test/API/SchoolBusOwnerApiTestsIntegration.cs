@@ -113,10 +113,7 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
             schoolBusOwner = JsonConvert.DeserializeObject<SchoolBusOwner>(jsonString);
-
-            // compare the change, should match.
-            // Assert.Equal(schoolbus.IsActive, testActive);
-
+            
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbusowners/" + id);
             response = await _client.SendAsync(request);

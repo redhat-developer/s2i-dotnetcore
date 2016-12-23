@@ -54,19 +54,7 @@ namespace SchoolBusAPI.Controllers
         { 
             return this._service.UsersBulkPostAsync(items);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Get the currently logged in user</remarks>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/users/current")]
-        [SwaggerOperation("UsersCurrentGet")]
-        [SwaggerResponse(200, type: typeof(User))]
-        public virtual IActionResult UsersCurrentGet()
-        { 
-            return this._service.UsersCurrentGetAsync();
-        }
+   
         /// <summary>
         /// 
         /// </summary>

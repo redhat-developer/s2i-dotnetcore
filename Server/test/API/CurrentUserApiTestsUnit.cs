@@ -31,47 +31,47 @@ using SchoolBusAPI.Services.Impl;
 
 namespace SchoolBusAPI.Test
 {
-	public class PermissionApiUnitTest 
+	public class CurrentUserApiUnitTest 
     { 
 		
-		private readonly PermissionApiController _PermissionApi;
+		private readonly CurrentUserApiController _CurrentUserApi;
 		
 		/// <summary>
         /// Setup the test
         /// </summary>        
-		public PermissionApiUnitTest()
-		{
-            DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
-            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
-
-            /*
-
-            Here you will need to mock up the context.
-
-    ItemType fakeItem = new ItemType(...);
-
-    Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
-
-    dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
-
-            */
-
-            PermissionApiService _service = new PermissionApiService(dbAppContext.Object);
+		public CurrentUserApiUnitTest()
+		{			
+                    DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
+                    Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
 			
-                    _PermissionApi = new PermissionApiController (_service);
+                    /*
+			
+                    Here you will need to mock up the context.
+			
+            ItemType fakeItem = new ItemType(...);
+
+            Mock<DbSet<ItemType>> mockList = MockDbSet.Create(fakeItem);
+
+            dbAppContext.Setup(x => x.ModelEndpoint).Returns(mockItem.Object);
+
+                    */
+
+                    CurrentUserApiService _service = new CurrentUserApiService(dbAppContext.Object);
+			
+                    _CurrentUserApi = new CurrentUserApiController (_service);
 
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for PermissionsGet
+        /// Unit test for UsersCurrentGet
         /// </summary>
-		public void TestPermissionsGet()
+		public void TestUsersCurrentGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _PermissionApiController.PermissionsGet();
+			//  var result = _CurrentUserApiController.UsersCurrentGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

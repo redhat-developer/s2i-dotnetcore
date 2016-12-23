@@ -76,9 +76,9 @@ namespace SchoolBusAPI.Controllers
         [HttpDelete]
         [Route("/api/schoolbusownernotes/{id}")]
         [SwaggerOperation("SchoolbusownernotesIdDelete")]
-        public virtual void SchoolbusownernotesIdDelete([FromRoute]int id)
-        { 
-            throw new NotImplementedException();
+        public virtual IActionResult SchoolbusownernotesIdDelete([FromRoute]int id)
+        {
+            return this._service.SchoolbusownernotesIdDeleteAsync(id);
         }
         /// <summary>
         /// 
@@ -106,9 +106,9 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/schoolbusownernotes/{id}")]
         [SwaggerOperation("SchoolbusownernotesIdPut")]
         [SwaggerResponse(200, type: typeof(SchoolBusOwnerNote))]
-        public virtual IActionResult SchoolbusownernotesIdPut([FromRoute]int id)
+        public virtual IActionResult SchoolbusownernotesIdPut([FromRoute]int id, [FromBody]SchoolBusOwnerNote body)
         { 
-            return this._service.SchoolbusownernotesIdPutAsync(id);
+            return this._service.SchoolbusownernotesIdPutAsync(id, body);
         }
         /// <summary>
         /// 

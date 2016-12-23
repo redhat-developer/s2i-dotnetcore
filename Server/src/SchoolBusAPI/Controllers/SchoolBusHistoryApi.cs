@@ -76,9 +76,9 @@ namespace SchoolBusAPI.Controllers
         [HttpDelete]
         [Route("/api/schoolbushistories/{id}")]
         [SwaggerOperation("SchoolbushistoriesIdDelete")]
-        public virtual void SchoolbushistoriesIdDelete([FromRoute]int id)
-        { 
-            throw new NotImplementedException();
+        public virtual IActionResult SchoolbushistoriesIdDelete([FromRoute]int id)
+        {
+            return this._service.SchoolbushistoriesIdDeleteAsync(id);
         }
         /// <summary>
         /// 
@@ -91,9 +91,9 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/schoolbushistories/{id}")]
         [SwaggerOperation("SchoolbushistoriesIdPut")]
         [SwaggerResponse(200, type: typeof(SchoolBusHistory))]
-        public virtual IActionResult SchoolbushistoriesIdPut([FromRoute]int id)
+        public virtual IActionResult SchoolbushistoriesIdPut([FromRoute]int id, [FromBody]SchoolBusHistory body)
         { 
-            return this._service.SchoolbushistoriesIdPutAsync(id);
+            return this._service.SchoolbushistoriesIdPutAsync(id, body);
         }
         /// <summary>
         /// 
@@ -108,6 +108,22 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult SchoolbushistoriesPost([FromBody]SchoolBusHistory body)
         { 
             return this._service.SchoolbushistoriesPostAsync(body);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        /// <param name="id">id of SchoolBusHistory to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBusHistory not found</response>
+        [HttpGet]
+        [Route("/api/schoolbushistories/{id}")]
+        [SwaggerOperation("SchoolbushistoriesIdGet")]
+        [SwaggerResponse(200, type: typeof(SchoolBusAttachment))]
+        public virtual IActionResult SchoolbushistoriesIdGet([FromRoute]int id)
+        {
+            return this._service.SchoolbushistoriesIdGetAsync(id);
         }
     }
 }

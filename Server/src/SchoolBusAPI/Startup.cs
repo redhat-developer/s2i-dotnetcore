@@ -8,7 +8,6 @@
  * 
  */
 
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,16 +47,13 @@ namespace SchoolBusAPI
                 .AddEnvironmentVariables();
                 
             Configuration = builder.Build();
-        }
-  
+        } 
     
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Console.WriteLine("Configuring Services");
-            string connectionString = "Host=" + Configuration["DATABASE_SERVICE_NAME"] + "; Username=" + Configuration["POSTGRESQL_USER"] + "; Password=" + Configuration["POSTGRESQL_PASSWORD"] + "; Database=" + Configuration["POSTGRESQL_DATABASE"];
-            Console.WriteLine(connectionString);
-            
+            // Add database context
+            string connectionString = "Host=" + Configuration["DATABASE_SERVICE_NAME"] + "; Username=" + Configuration["POSTGRESQL_USER"] + "; Password=" + Configuration["POSTGRESQL_PASSWORD"] + "; Database=" + Configuration["POSTGRESQL_DATABASE"];                        
             services.AddDbContext<DbAppContext>(
                 opts => opts.UseNpgsql(connectionString)
             );
@@ -67,8 +63,8 @@ namespace SchoolBusAPI
                 .AddJsonOptions(
                     opts => { opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
             
-            services.AddSwaggerGen();
-            
+            // Configure Swagger
+            services.AddSwaggerGen();            
             services.ConfigureSwaggerGen(options =>
             {
                 options.SingleApiVersion(new Info
@@ -86,8 +82,7 @@ namespace SchoolBusAPI
             });
 			
 			// Add application services.
-            services.RegisterApplicationServices();
-            
+            services.RegisterApplicationServices();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,10 +91,10 @@ namespace SchoolBusAPI
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-			//if (env.IsDevelopment())
-			//{
+			if (env.IsDevelopment())
+			{
 				app.UseDeveloperExceptionPage();
-			//}
+			}
 			
 			// migrate database
 			
@@ -107,8 +102,7 @@ namespace SchoolBusAPI
             {
                 // get the application's database context
                 DbContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
-                Console.WriteLine("Connection string is: " + context.Database.GetDbConnection().ConnectionString);
-
+                                
                 Console.WriteLine("Migrating database");
                 // do any pending migrations
                 context.Database.Migrate();

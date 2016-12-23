@@ -37,8 +37,7 @@ namespace SchoolBusAPI.Test
             .UseStartup<Startup>());
             _client = _server.CreateClient();
 		}
-	
-		
+			
 		[Fact]
 		/// <summary>
         /// Integration test for RolesGet
@@ -51,8 +50,7 @@ namespace SchoolBusAPI.Test
 			// update this to test the API.
 			Assert.True(true);
 		}		
-        
-		
+        		
 		[Fact]
 		/// <summary>
         /// Integration test for RolesIdDelete
@@ -64,8 +62,7 @@ namespace SchoolBusAPI.Test
 			
 			// update this to test the API.
 			Assert.True(true);
-		}		
-        
+		}		        
 		
 		[Fact]
 		/// <summary>
@@ -78,8 +75,7 @@ namespace SchoolBusAPI.Test
 			
 			// update this to test the API.
 			Assert.True(true);
-		}		
-        
+		}		        
 		
 		[Fact]
 		/// <summary>
@@ -92,8 +88,7 @@ namespace SchoolBusAPI.Test
 			
 			// update this to test the API.
 			Assert.True(true);
-		}		
-        
+		}		        
 		
 		[Fact]
 		/// <summary>
@@ -107,8 +102,7 @@ namespace SchoolBusAPI.Test
 			// update this to test the API.
 			Assert.True(true);
 		}		
-        
-		
+        		
 		[Fact]
 		/// <summary>
         /// Integration test for RolesIdPut
@@ -120,8 +114,7 @@ namespace SchoolBusAPI.Test
 			
 			// update this to test the API.
 			Assert.True(true);
-		}		
-        
+		}		        
 		
 		[Fact]
 		/// <summary>
@@ -135,8 +128,7 @@ namespace SchoolBusAPI.Test
 			// update this to test the API.
 			Assert.True(true);
 		}		
-        
-		
+        		
 		[Fact]
 		/// <summary>
         /// Integration test for RolesIdUsersPut
@@ -149,8 +141,7 @@ namespace SchoolBusAPI.Test
 			// update this to test the API.
 			Assert.True(true);
 		}		
-        
-		
+        		
 		[Fact]
 		/// <summary>
         /// Integration test for RolesPost
@@ -162,7 +153,6 @@ namespace SchoolBusAPI.Test
 			
 			// update this to test the API.
 			Assert.True(true);
-		}		
-        
+		}		        
     }
 }

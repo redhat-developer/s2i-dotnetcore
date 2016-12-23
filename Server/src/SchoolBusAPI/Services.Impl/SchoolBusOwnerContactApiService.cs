@@ -125,8 +125,7 @@ namespace SchoolBusAPI.Services.Impl
                 var item = _context.SchoolBusOwnerContacts.First(a => a.Id == id);
                 if (item != null)
                 {
-                    item.SchoolBusOwner = body.SchoolBusOwner;
-
+                    item.SchoolBusOwner = body.SchoolBusOwner;                    
                     _context.SchoolBusOwnerContacts.Update(item);
                     // Save the changes
                     _context.SaveChanges();

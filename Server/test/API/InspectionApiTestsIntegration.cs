@@ -82,10 +82,7 @@ namespace SchoolBusAPI.Test
             // get the id
             var id = inspection.Id;
 
-            // make a change.    
-            
             // now do an update.
-
             request = new HttpRequestMessage(HttpMethod.Put, "/api/inspections/" + id);
             request.Content = new StringContent(inspection.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
@@ -99,10 +96,7 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
             inspection = JsonConvert.DeserializeObject<Inspection>(jsonString);
-
-            // compare the change, should match.
-            // Assert.Equal(schoolbus.IsActive, testActive);
-
+            
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Delete, "/api/inspections/" + id);
             response = await _client.SendAsync(request);
@@ -112,8 +106,6 @@ namespace SchoolBusAPI.Test
             request = new HttpRequestMessage(HttpMethod.Get, "/api/inspections/" + id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
-
         }		
-
     }
 }

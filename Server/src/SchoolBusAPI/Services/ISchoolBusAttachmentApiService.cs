@@ -74,7 +74,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusAttachment not found</response>        
 
-        IActionResult SchoolbusattachmentsIdPutAsync (int id);        
+        IActionResult SchoolbusattachmentsIdPutAsync (int id, SchoolBusAttachment body);        
         
         /// <summary>
         /// 
@@ -85,15 +85,7 @@ namespace SchoolBusAPI.Services
 
         IActionResult SchoolbusattachmentsPostAsync (SchoolBusAttachment body);        
         
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="id">id of SchoolBusHistory to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusHistory not found</response>        
-
-        IActionResult SchoolbushistoriesIdGetAsync (int id);        
+       
         
     }
 }
