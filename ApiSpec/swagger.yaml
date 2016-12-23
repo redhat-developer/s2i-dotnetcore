@@ -1511,6 +1511,93 @@ paths:
           description: id of SchoolBusOwnerAttachment to delete
           required: true
           type: integer
+  /schoolbusownercontacts/bulk:
+    post:
+      tags:
+        - SchoolBusOwnerContact
+      consumes: 
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusOwnerContact"
+      responses:
+        201:
+          description: SchoolBusOwnerContacts created
+  /schoolbusownercontacts/{id}:
+    get:
+      tags:
+        - SchoolBusOwnerContact
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerContact'
+        404:
+          description: SchoolBusOwnerContact not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerContact to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - SchoolBusOwnerContact
+      consumes: 
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerContact'
+        404:
+          description: SchoolBusOwnerContact not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerContact to fetch
+          required: true
+          type: integer
+    delete:
+      tags:
+        - SchoolBusOwnerContact
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBusOwnerContact not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerContact to delete
+          required: true
+          type: integer
   /schoolbusownerhistory:
      get:
       tags:
@@ -1946,7 +2033,7 @@ paths:
     get:
       description: Get the currently logged in user
       tags:
-        - User
+        - CurrentUser
       produces:
         - text/plain
         - application/json
@@ -1955,7 +2042,7 @@ paths:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/SchoolBusCurrentUserInfo'
   /users/bulk:
     post:
       description: Adds a number of users
@@ -2563,6 +2650,9 @@ definitions:
           max: 1000
       Expired:
         type: boolean
+      Value:
+        type: string
+        description: The note text
       SchoolBusOwner:
           $ref: '#/definitions/SchoolBusOwner'    
   SchoolBusOwnerContact:
@@ -3018,5 +3108,34 @@ definitions:
         x-chance-type: name
       description:
         type: string
-        x-chance-type: sentence        
+        x-chance-type: sentence 
+  SchoolBusCurrentUserInfo:
+    type: object
+    properties:
+      givenName:
+        type: string
+        x-chance-type: name
+      surname:
+        type: string
+        x-chance-type: name
+      fullName:
+        type: string
+        x-chance-type: name
+      districtName:
+        type: string
+      overdueInspections:
+        type: integer
+        x-type-options:
+          min: 1
+          max: 10
+      scheduledInspections:
+        type: integer
+        x-type-options:
+          min: 1
+          max: 10
+      dueNextMonthInspections:
+        type: integer
+        x-type-options:
+          min: 1
+          max: 10
 securityDefinitions: {}

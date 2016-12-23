@@ -51,7 +51,6 @@ namespace SchoolBusAPI.Test
 		{
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusattachments/bulk");
             request.Content = new StringContent("[]", Encoding.UTF8, "application/json");
-
             var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
         }		
@@ -100,9 +99,6 @@ namespace SchoolBusAPI.Test
             jsonString = await response.Content.ReadAsStringAsync();
             schoolBusAttachment = JsonConvert.DeserializeObject<SchoolBusAttachment>(jsonString);
 
-            // compare the change, should match.
-            // Assert.Equal(schoolbus.IsActive, testActive);
-
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbusattachments/" + id);
             response = await _client.SendAsync(request);
@@ -112,9 +108,6 @@ namespace SchoolBusAPI.Test
             request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbusattachments/" + id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
-        }		
-        
-		
-        
+        }		        
     }
 }

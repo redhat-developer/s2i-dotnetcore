@@ -177,9 +177,10 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 var region = _context.Regions.First(a => a.Id == id);
-                region.Name = item.Name;
+                // update data
+                region.Name = item.Name;                
                 _context.Entry(region).State = EntityState.Modified;
-                // Save the changes
+                // save the changes
                 _context.SaveChanges();
                 return new ObjectResult(region);
             }

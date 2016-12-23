@@ -220,12 +220,19 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwner not found</response>
 
-        public virtual IActionResult SchoolbusownersIdPutAsync (int id)        
+        public virtual IActionResult SchoolbusownersIdPutAsync (int id, SchoolBusOwner body)        
         {
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
                 var item = _context.SchoolBusOwners.First(a => a.Id == id);
+                item.City = body.City;
+                item.DateCreated = body.DateCreated;
+                item.IsActive = body.IsActive;
+                item.LocalArea = body.LocalArea;
+                item.Name = body.Name;
+                item.PrimaryContact = body.PrimaryContact;
+                item.PrimaryContactRefId = body.PrimaryContactRefId;
                 _context.SchoolBusOwners.Update(item);
                 // Save the changes
                 _context.SaveChanges();                

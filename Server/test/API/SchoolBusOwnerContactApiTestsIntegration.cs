@@ -79,12 +79,9 @@ namespace SchoolBusAPI.Test
 
             schoolBusOwnerContact = JsonConvert.DeserializeObject<SchoolBusOwnerContact>(jsonString);
             // get the id
-            var id = schoolBusOwnerContact.Id;
-
-            // make a change.    
+            var id = schoolBusOwnerContact.Id; 
             
-            // now do an update.
-
+            // do an update.
             request = new HttpRequestMessage(HttpMethod.Put, "/api/schoolbusownercontacts/" + id);
             request.Content = new StringContent(schoolBusOwnerContact.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
@@ -98,10 +95,7 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
             schoolBusOwnerContact = JsonConvert.DeserializeObject<SchoolBusOwnerContact>(jsonString);
-
-            // compare the change, should match.
-            //Assert.Equal(schoolbus.IsActive, testActive);
-
+            
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbusownercontacts/" + id);
             response = await _client.SendAsync(request);

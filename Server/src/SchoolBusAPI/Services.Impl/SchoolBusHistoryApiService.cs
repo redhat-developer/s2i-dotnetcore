@@ -103,13 +103,14 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusHistory not found</response>
 
-        public virtual IActionResult SchoolbushistoriesIdPutAsync (int id)        
+        public virtual IActionResult SchoolbushistoriesIdPutAsync (int id, SchoolBusHistory body)        
         {
             var exists = _context.SchoolBusHistorys.Any(a => a.Id == id);
             if (exists)
             {
-                var item = _context.SchoolBusHistorys.First(a => a.Id == id);            
-                _context.SchoolBusHistorys.Update(item);
+                var item = _context.SchoolBusHistorys.First(a => a.Id == id);
+                item.SchoolBus = body.SchoolBus;                
+                _context.SchoolBusHistorys.Update(item);                
                 // Save the changes
                 _context.SaveChanges();            
                 return new ObjectResult(item);

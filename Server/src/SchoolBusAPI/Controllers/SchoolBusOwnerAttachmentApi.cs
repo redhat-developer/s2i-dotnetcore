@@ -106,9 +106,9 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/schoolbusownerattachments/{id}")]
         [SwaggerOperation("SchoolbusownerattachmentsIdPut")]
         [SwaggerResponse(200, type: typeof(SchoolBusOwnerAttachment))]
-        public virtual IActionResult SchoolbusownerattachmentsIdPut([FromRoute]int id)
+        public virtual IActionResult SchoolbusownerattachmentsIdPut([FromRoute]int id, [FromBody]SchoolBusOwnerAttachment body)
         { 
-            return this._service.SchoolbusownerattachmentsIdPutAsync(id);
+            return this._service.SchoolbusownerattachmentsIdPutAsync(id, body);
         }
         /// <summary>
         /// 

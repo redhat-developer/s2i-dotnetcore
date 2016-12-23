@@ -64,7 +64,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusHistory not found</response>        
 
-        IActionResult SchoolbushistoriesIdPutAsync (int id);        
+        IActionResult SchoolbushistoriesIdPutAsync (int id, SchoolBusHistory body);        
         
         /// <summary>
         /// 

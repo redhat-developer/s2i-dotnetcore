@@ -130,6 +130,9 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 var item = _context.SchoolBusAttachments.First(a => a.Id == id);
+                item.ExternalFileName = body.ExternalFileName;
+                item.InternalFileName = body.InternalFileName;
+                item.SchoolBus = body.SchoolBus;                
                 _context.SchoolBusAttachments.Update(item);
                 // Save the changes
                 _context.SaveChanges();

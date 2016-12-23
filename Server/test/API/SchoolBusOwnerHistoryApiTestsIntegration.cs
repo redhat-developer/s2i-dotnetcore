@@ -82,10 +82,7 @@ namespace SchoolBusAPI.Test
             // get the id
             var id = schoolBusOwnerHistory.Id;
 
-            // make a change.    
-
             // now do an update.
-
             request = new HttpRequestMessage(HttpMethod.Put, "/api/schoolbusownerhistory/" + id);
             request.Content = new StringContent(schoolBusOwnerHistory.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
@@ -99,10 +96,7 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
             schoolBusOwnerHistory = JsonConvert.DeserializeObject<SchoolBusOwnerHistory>(jsonString);
-
-            // compare the change, should match.
-            // Assert.Equal(schoolbus.IsActive, testActive);
-
+            
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbusownerhistory/" + id);
             response = await _client.SendAsync(request);

@@ -130,6 +130,9 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 var item = _context.SchoolBusNotes.First(a => a.Id == id);
+                item.Expired = body.Expired;
+                item.SchoolBus = body.SchoolBus;
+                item.Value = body.Value;                               
                 _context.SchoolBusNotes.Update(item);
                 // Save the changes
                 _context.SaveChanges();            

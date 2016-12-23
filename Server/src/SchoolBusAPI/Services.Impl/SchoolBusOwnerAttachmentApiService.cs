@@ -124,12 +124,13 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerAttachment not found</response>
 
-        public virtual IActionResult SchoolbusownerattachmentsIdPutAsync (int id)        
+        public virtual IActionResult SchoolbusownerattachmentsIdPutAsync (int id, SchoolBusOwnerAttachment body)        
         {
             var exists = _context.SchoolBusOwnerAttachments.Any(a => a.Id == id);
             if (exists)
             {
-                var item = _context.SchoolBusOwnerAttachments.First(a => a.Id == id);            
+                var item = _context.SchoolBusOwnerAttachments.First(a => a.Id == id);
+                item.SchoolBusOwner = body.SchoolBusOwner;                            
                 _context.SchoolBusOwnerAttachments.Update(item);
                 // Save the changes
                 _context.SaveChanges();            

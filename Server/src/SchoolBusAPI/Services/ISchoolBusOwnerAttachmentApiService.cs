@@ -74,7 +74,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerAttachment not found</response>        
 
-        IActionResult SchoolbusownerattachmentsIdPutAsync (int id);        
+        IActionResult SchoolbusownerattachmentsIdPutAsync (int id, SchoolBusOwnerAttachment body);        
         
         /// <summary>
         /// 

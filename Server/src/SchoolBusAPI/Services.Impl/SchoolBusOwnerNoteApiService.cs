@@ -124,12 +124,13 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerNote not found</response>
 
-        public virtual IActionResult SchoolbusownernotesIdPutAsync (int id)        
+        public virtual IActionResult SchoolbusownernotesIdPutAsync (int id, SchoolBusOwnerNote body)        
         {
             var exists = _context.SchoolBusOwnerNotes.Any(a => a.Id == id);
             if (exists)
             {
                 var item = _context.SchoolBusOwnerNotes.First(a => a.Id == id);
+                item.Expired = body.Expired;                                
                 _context.SchoolBusOwnerNotes.Update(item);
                 // Save the changes
                 _context.SaveChanges();

@@ -40,8 +40,7 @@ namespace SchoolBusAPI.Test
             .UseContentRoot(Directory.GetCurrentDirectory())
             .UseStartup<Startup>());
             _client = _server.CreateClient();
-		}
-	
+		}	
 		
 		[Fact]
 		/// <summary>
@@ -51,11 +50,9 @@ namespace SchoolBusAPI.Test
 		{
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/notificationevents/bulk");
             request.Content = new StringContent("[]", Encoding.UTF8, "application/json");
-
             var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();    
-		}		
-        
+		}		        
 		
 		[Fact]
 		/// <summary>
@@ -82,10 +79,7 @@ namespace SchoolBusAPI.Test
             // get the id
             var id = notificationEvent.Id;
 
-            // make a change.    
-
             // now do an update.
-
             request = new HttpRequestMessage(HttpMethod.Put, "/api/notificationevents/" + id);
             request.Content = new StringContent(notificationEvent.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
@@ -100,9 +94,6 @@ namespace SchoolBusAPI.Test
             jsonString = await response.Content.ReadAsStringAsync();
             notificationEvent = JsonConvert.DeserializeObject<NotificationEvent>(jsonString);
 
-            // compare the change, should match.
-            // Assert.Equal(schoolbus.IsActive, testActive);
-
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Delete, "/api/notificationevents/" + id);
             response = await _client.SendAsync(request);
@@ -113,8 +104,5 @@ namespace SchoolBusAPI.Test
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
         }		
-        
-		
-        
     }
 }
