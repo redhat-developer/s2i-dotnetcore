@@ -10,7 +10,7 @@
     }
   },
   "labels": {
-    "template": "schoolbus-environment"
+    "template": "schoolbus-deployment"
   },
   "objects": [
     {
@@ -67,20 +67,6 @@
         ],
         "selector": {
           "app": "${FRONTEND_NAME}"
-        }
-      }
-    },
-    {
-      "kind": "Route",
-      "apiVersion": "v1",
-      "metadata": {
-        "name": "${FRONTEND_NAME}"
-      },
-      "spec": {
-        "host": "${APPLICATION_DOMAIN}",
-        "to": {
-          "kind": "Service",
-          "name": "${FRONTEND_NAME}"
         }
       }
     },
@@ -228,23 +214,6 @@
       }
     },
     {
-      "kind": "Route",
-      "apiVersion": "v1",
-      "metadata": {
-        "name": "${MIDDLEWARE_NAME}"
-      },
-      "spec": {
-        "host": "${APPLICATION_DOMAIN}",
-        "to": {
-          "kind": "Service",
-          "name": "${MIDDLEWARE_NAME}"
-        },
-		"port": {
-            "targetPort": "web"
-        }
-      }
-    },
-	{
 		"kind": "DeploymentConfig",
 		"apiVersion": "v1",
 		"metadata": {
@@ -418,20 +387,6 @@
       }
     },
     {
-      "kind": "Route",
-      "apiVersion": "v1",
-      "metadata": {
-        "name": "${BACKEND_NAME}"
-      },
-      "spec": {
-        "host": "${APPLICATION_DOMAIN}",
-        "to": {
-          "kind": "Service",
-          "name": "${BACKEND_NAME}"
-        }
-      }
-    },
-    {
       "kind": "DeploymentConfig",
       "apiVersion": "v1",
       "metadata": {
@@ -598,7 +553,7 @@
 			},			
 			"annotations": {
 				"description": "Defines how to deploy the database",
-				"openshift.io/container.${DATABASE_SERVICE_NAME}.image.entrypoint": "[\"container-entrypoint\",\"run-postgresql\"]"
+				"openshift.io/container.postgresql.image.entrypoint": "[\"container-entrypoint\",\"run-postgresql\"]"
 			}
 		},
 		"spec": {
@@ -639,7 +594,7 @@
 						"deploymentconfig": "${DATABASE_SERVICE_NAME}"
 					},
 					"annotations": {
-						"openshift.io/container.${DATABASE_SERVICE_NAME}.image.entrypoint": "[\"container-entrypoint\",\"run-postgresql\"]"
+						"openshift.io/container.postgresql.image.entrypoint": "[\"container-entrypoint\",\"run-postgresql\"]"
 					}
 				},
 				"spec": {
@@ -713,7 +668,140 @@
 		},		
 		"status": {}
 	    }
-    }	
+    },
+	{
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${RPROXY_NAME}",
+        "annotations": {
+          "description": "Exposes and load balances the reverse proxy used for SiteMinder"
+        }
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "web",
+			"protocol": "TCP",
+            "port": 8080,
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "name": "${RPROXY_NAME}"
+        }
+      }
+    },
+    {
+      "kind": "Route",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${RPROXY_NAME}"
+      },
+      "spec": {
+        "host": "${APPLICATION_DOMAIN}",		
+        "to": {
+          "kind": "Service",
+          "name": "${RPROXY_NAME}"
+		},
+		"tls": {
+            "termination": "edge"
+        },
+        "wildcardPolicy": "None"
+        }
+    },
+	{
+		"kind": "DeploymentConfig",
+		"apiVersion": "v1",
+		"metadata": {
+			"name": "${RPROXY_NAME}",
+			"generation": 1,
+			"creationTimestamp": null,
+			"labels": {
+				"app": "${RPROXY_NAME}"
+			}
+		},
+		"spec": {
+			"strategy": {
+				"type": "Rolling",
+				"rollingParams": {
+					"updatePeriodSeconds": 1,
+					"intervalSeconds": 1,
+					"timeoutSeconds": 600,
+					"maxUnavailable": "25%",
+					"maxSurge": "25%"
+				},
+				"resources": {}
+			},
+			"triggers": [
+				{
+					"type": "ConfigChange"
+				},
+				{
+					"type": "ImageChange",
+					"imageChangeParams": {
+						"automatic": true,
+						"containerNames": [
+							"${RPROXY_NAME}"
+						],
+						"from": {
+							"kind": "ImageStreamTag",
+							"namespace": "${APP_IMAGE_NAMESPACE}",
+							"name": "${RPROXY_NAME}:${APP_DEPLOYMENT_TAG}"
+						}
+					}
+				}
+			],
+			"replicas": 2,
+			"test": false,
+			"selector": {
+				"app": "${RPROXY_NAME}",
+				"deploymentconfig": "${RPROXY_NAME}"
+			},
+			"template": {
+				"metadata": {
+					"creationTimestamp": null,
+					"labels": {
+						"app": "${RPROXY_NAME}",
+						"deploymentconfig": "${RPROXY_NAME}"
+					}
+				},
+				"spec": {
+					"containers": [
+						{
+							"name": "${RPROXY_NAME}",
+							"image": " ",
+							"ports": [
+								{
+									"containerPort": 8080,
+									"protocol": "TCP"
+								}
+							],
+							"env": [
+								{
+									"name": "NGINX_PROXY_HOST",
+									"value": "${RPROXY_NAME}"
+								},
+								{
+									"name": "NGINX_PROXY_URL",
+									"value": "http://${FRONTEND_NAME}:8080"
+								}
+							],
+							"resources": {},
+							"terminationMessagePath": "/dev/termination-log",
+							"imagePullPolicy": "Always"
+						}
+					],
+					"restartPolicy": "Always",
+					"terminationGracePeriodSeconds": 30,
+					"dnsPolicy": "ClusterFirst",
+					"securityContext": {}
+				}
+			}
+		},
+		"status": {}
+	}
+
   ],
   "parameters": [
     {
@@ -744,6 +832,13 @@
       "required": true,
       "value": "server"
     },
+	{
+      "name": "RPROXY_NAME",
+      "displayName": "Reverse Proxy Name (SiteMinder)",
+      "description": "The name assigned to the objects used as a SiteMinder entry point (or Reverse Proxy).  Typcially this is an NGINX instance.",
+      "required": true,
+      "value": "cerberus"
+    },
     {
       "name": "FRONTEND_MEMORY_LIMIT",
       "displayName": "Memory Limit",
@@ -766,6 +861,12 @@
       "name": "POSTGRESQL_MEMORY_LIMIT",
       "displayName": "Memory Limit (PostgreSQL)",
       "description": "Maximum amount of memory the PostgreSQL container can use.",
+      "value": "512Mi"
+    },
+	{
+      "name": "RPROXY_MEMORY_LIMIT",
+      "displayName": "Memory Limit (Reverse Proxy)",
+      "description": "Maximum amount of memory the reverse proxy container can use.",
       "value": "512Mi"
     },
     {
