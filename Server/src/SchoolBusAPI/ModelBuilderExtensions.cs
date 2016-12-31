@@ -24,25 +24,40 @@ namespace SchoolBusAPI.Models
     public static class ModelBuilderExtensions
     {
         /// <summary>
+        /// The table prefix for this application
+        /// </summary>
+        public const string TABLE_PREFIX = "SBI_"; 
+
+        /// <summary>
         /// Implements the following naming convention:
         /// Camel Case converted to upper case, with underscores between words.
+        /// Tables have an application specific prefix.
+        /// Primary keys have the table name as a prefix
         /// </summary>
         /// <param name="modelBuilder"></param>
         public static void UpperCaseUnderscoreSingularConvention(this ModelBuilder modelBuilder)
-        {
-
+        {            
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 // Skip shadow types
                 if (entityType.ClrType == null)
                     continue;
 
-                entityType.Relational().TableName = ConvertName(entityType.ClrType.Name);
+                entityType.Relational().TableName = TABLE_PREFIX + ConvertName(entityType.ClrType.Name);
 
                 // Now convert the column names.
                 foreach (var entityProperty in entityType.GetProperties())
                 {
-                    entityProperty.Relational().ColumnName = ConvertName(entityProperty.Name);
+                    // Special case for the primary key.
+                    if (entityProperty.Name != null && entityProperty.Name.ToLowerInvariant().Equals("id"))
+                    {
+                        entityProperty.Relational().ColumnName = entityType.Relational().TableName + "_ID";
+                    }
+                    else
+                    {
+                        entityProperty.Relational().ColumnName = ConvertName(entityProperty.Name);
+                    }
+                    
                 }
             }
         }
