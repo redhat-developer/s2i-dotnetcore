@@ -1,6 +1,6 @@
-FROM microsoft/dotnet:1.1.0-sdk-projectjson
+FROM tran-schoolbus-tools/client
 # Dockerfile for package SchoolBusClient
-
+ 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 
 COPY . /app

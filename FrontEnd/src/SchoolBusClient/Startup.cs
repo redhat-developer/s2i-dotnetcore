@@ -25,7 +25,8 @@ using Swashbuckle.Swagger.Model;
 using Swashbuckle.SwaggerGen.Annotations;
 using Microsoft.EntityFrameworkCore;
 using SchoolBusClient.Handlers;
-
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
 
 namespace SchoolBusClient
 {
@@ -73,7 +74,12 @@ namespace SchoolBusClient
             app.UseMvc();
             
             app.UseDefaultFiles();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+			{
+				FileProvider = new PhysicalFileProvider(
+					Path.Combine(Directory.GetCurrentDirectory(), @"src/dist")),
+				RequestPath = new PathString("")
+			});
 
             app.UseProxyServer(Configuration);
 
