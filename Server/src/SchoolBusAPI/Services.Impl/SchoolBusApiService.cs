@@ -17,49 +17,48 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-using Microsoft.EntityFrameworkCore;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services.Impl
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public class SchoolBusApiService : ISchoolBusApiService
     {
-
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusApiService (DbAppContext context)
+        public SchoolBusApiService(DbAppContext context)
         {
             _context = context;
         }
-	
+
         /// <summary>
         /// Creates a new school bus
         /// </summary>
         /// <remarks>The Location response-header field is used to redirect the recipient to a location other than the Request-URI for completion of the request or identification of a new resource. For 201 (Created) responses, the Location is that of the new resource which was created by the request.    The field value consists of a single absolute URI. </remarks>
-        /// <param name="body"></param>
+        /// <param name="item"></param>
         /// <response code="201">SchoolBus created</response>
-
-        public virtual IActionResult AddBusAsync (SchoolBus body)        
+        public virtual IActionResult AddBusAsync(SchoolBus item)
         {
-            _context.SchoolBuss.Add(body);
+            _context.SchoolBuss.Add(item);
             _context.SaveChanges();
-            return new ObjectResult(body);            
+            return new ObjectResult(item);            
         }
+
         /// <summary>
         /// Creates several school buses
         /// </summary>
         /// <remarks>Used for bulk creation of schoolbus records.</remarks>
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">SchoolBus items created</response>
-
-        public virtual IActionResult AddSchoolBusBulkAsync (SchoolBus[] items)        
+        public virtual IActionResult AddSchoolBusBulkAsync(SchoolBus[] items)
         {
             if (items == null)
             {
@@ -74,6 +73,7 @@ namespace SchoolBusAPI.Services.Impl
 
             return new NoContentResult();
         }
+
         /// <summary>
         /// Returns a single school bus object
         /// </summary>
@@ -81,8 +81,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">Id of SchoolBus to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">Not Found</response>
-
-        public virtual IActionResult FindBusByIdAsync (int id)        
+        public virtual IActionResult FindBusByIdAsync(int id)
         {
             var exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
@@ -95,17 +94,18 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// Returns a collection of school buses
         /// </summary>
         /// <remarks></remarks>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult GetAllBusesAsync ()        
+        public virtual IActionResult GetAllBusesAsync()
         {
             var result = _context.SchoolBuss.ToList();
             return new ObjectResult(result);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -113,8 +113,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of SchoolBus to fetch attachments for</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
-
-        public virtual IActionResult SchoolbusesIdAttachmentsGetAsync (int id)        
+        public virtual IActionResult SchoolbusesIdAttachmentsGetAsync(int id)
         {
             var exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
@@ -129,28 +128,27 @@ namespace SchoolBusAPI.Services.Impl
             }
 
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns CCWData for a particular Schoolbus</remarks>
         /// <param name="id">id of SchoolBus to fetch CCWData for</param>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult SchoolbusesIdCcwdataGetAsync (int id)        
+        public virtual IActionResult SchoolbusesIdCcwdataGetAsync(int id)
         {
             // TODO: need to fix the model for CCWData
             var result = "";
             return new ObjectResult(result);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBus to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
-
-        public virtual IActionResult SchoolbusesIdDeleteAsync (int id)        
+        public virtual IActionResult SchoolbusesIdDeleteAsync(int id)
         {
             var exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
@@ -170,14 +168,14 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns History for a particular SchoolBus</remarks>
         /// <param name="id">id of SchoolBus to fetch SchoolBusHistory for</param>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult SchoolbusesIdHistoryGetAsync (int id)        
+        public virtual IActionResult SchoolbusesIdHistoryGetAsync(int id)
         {
             var exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
@@ -191,6 +189,28 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBus not found</response>
+        public virtual IActionResult SchoolbusesIdInspectionsGetAsync(int id)
+        {
+            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                var items = _context.Inspections.Where(a => a.SchoolBus.Id == id);
+                return new ObjectResult(items);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -198,8 +218,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of SchoolBus to fetch notes for</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
-
-        public virtual IActionResult SchoolbusesIdNotesGetAsync (int id)        
+        public virtual IActionResult SchoolbusesIdNotesGetAsync(int id)
         {
             var exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
@@ -213,33 +232,34 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// Updates a single school bus object
         /// </summary>
         /// <remarks></remarks>
         /// <param name="id">Id of SchoolBus to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Not Found</response>
-
-        public virtual IActionResult SchoolbusesIdPutAsync (int id, SchoolBus bus)        
+        public virtual IActionResult SchoolbusesIdPutAsync(int id, SchoolBus item)
         {
             var exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
 
-                var item = _context.SchoolBuss.First(a => a.Id == id);
+                var dbItem = _context.SchoolBuss.First(a => a.Id == id);
                 // can only update certain fields.
-                item.CCWData = bus.CCWData;
-                item.CRNO = bus.CRNO;
-                item.IsActive = bus.IsActive;
-                item.NameOfIndependentSchool = bus.NameOfIndependentSchool;
-                item.NextInspection = bus.NextInspection;
-                item.SchoolBusOwner = bus.SchoolBusOwner;
+                dbItem.CCWData = item.CCWData;
+                dbItem.CRNO = item.CRNO;
+                dbItem.IsActive = item.IsActive;
+                dbItem.NameOfIndependentSchool = item.NameOfIndependentSchool;
+                dbItem.NextInspection = item.NextInspection;
+                dbItem.SchoolBusOwner = item.SchoolBusOwner;
 
-                _context.Entry(item).State = EntityState.Modified;
+                _context.Entry(dbItem).State = EntityState.Modified;
                 // Save the changes
                 _context.SaveChanges();
-                return new ObjectResult(item);
+                return new ObjectResult(dbItem);
             }
             else
             {
@@ -247,25 +267,6 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
             
-        }
-
-        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">SchoolBus not found</response>
-
-        public virtual IActionResult SchoolbusIdInspectionsGetAsync(int id)
-        {
-            var exists = _context.SchoolBuss.Any(a => a.Id == id);
-            if (exists)
-            {
-                var items = _context.Inspections.Where(a => a.SchoolBus.Id == id);
-                return new ObjectResult(items);
-            }
-            else
-            {
-                // record not found
-                return new StatusCodeResult(404);
-            }
         }
     }
 }

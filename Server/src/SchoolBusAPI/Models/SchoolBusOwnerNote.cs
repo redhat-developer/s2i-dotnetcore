@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
     public partial class SchoolBusOwnerNote : IEquatable<SchoolBusOwnerNote>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -44,44 +42,37 @@ namespace SchoolBusAPI.Models
         /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
         public SchoolBusOwnerNote(int Id, bool? Expired = null, string Value = null, SchoolBusOwner SchoolBusOwner = null)
         {
-
+            
             this.Id = Id;
             this.Expired = Expired;
             this.Value = Value;
             this.SchoolBusOwner = SchoolBusOwner;
-
+            
         }
 
         /// <summary>
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name = "id")]
-        [MetaDataExtension(Description = "Primary Key")]
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Expired
         /// </summary>
-        [DataMember(Name = "Expired")]
-
         public bool? Expired { get; set; }
 
         /// <summary>
         /// The note text
         /// </summary>
         /// <value>The note text</value>
-        [DataMember(Name = "Value")]
-        [MetaDataExtension(Description = "The note text")]
+        [MetaDataExtension (Description = "The note text")]
         public string Value { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBusOwner
         /// </summary>
-        [DataMember(Name = "SchoolBusOwner")]
-
         public SchoolBusOwner SchoolBusOwner { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -132,22 +123,22 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return
+            return 
                 (
                     this.Id == other.Id ||
                     this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) &&
+                ) && 
                 (
                     this.Expired == other.Expired ||
                     this.Expired != null &&
                     this.Expired.Equals(other.Expired)
-                ) &&
+                ) && 
                 (
                     this.Value == other.Value ||
                     this.Value != null &&
                     this.Value.Equals(other.Value)
-                ) &&
+                ) && 
                 (
                     this.SchoolBusOwner == other.SchoolBusOwner ||
                     this.SchoolBusOwner != null &&
@@ -165,7 +156,7 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
+                // Suitable nullity checks
                 if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
@@ -199,6 +190,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

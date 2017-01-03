@@ -19,23 +19,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public interface IGroupApiService
     {
-	
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns a collection of groups</remarks>
-        /// <response code="200">OK</response>        
-
-        IActionResult GroupsGetAsync ();        
-        
+        /// <response code="200">OK</response>
+        IActionResult GroupsGetAsync();
     }
 }

@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class GroupMembership :  IEquatable<GroupMembership>
+    public partial class GroupMembership : IEquatable<GroupMembership>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -45,9 +43,9 @@ namespace SchoolBusAPI.Models
         public GroupMembership(int Id, bool Active, Group Group = null, User User = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             
-            this.Active = Active;            
+            this.Active = Active;
             this.Group = Group;
             this.User = User;
             
@@ -57,31 +55,23 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Active
         /// </summary>
-        [DataMember(Name="active")]
-                
         public bool Active { get; set; }
 
         /// <summary>
         /// Gets or Sets Group
         /// </summary>
-        [DataMember(Name="group")]
-                
         public Group Group { get; set; }
 
         /// <summary>
         /// Gets or Sets User
         /// </summary>
-        [DataMember(Name="user")]
-                
         public User User { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -165,23 +155,23 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.Active != null)
-                    { 
-                        hash = hash * 59 + this.Active.GetHashCode();
-                    }
-                    if (this.Group != null)
-                    { 
-                        hash = hash * 59 + this.Group.GetHashCode();
-                    }
-                    if (this.User != null)
-                    { 
-                        hash = hash * 59 + this.User.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Active != null)
+                {
+                    hash = hash * 59 + this.Active.GetHashCode();
+                }
+                if (this.Group != null)
+                {
+                    hash = hash * 59 + this.Group.GetHashCode();
+                }
+                if (this.User != null)
+                {
+                    hash = hash * 59 + this.User.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -199,6 +189,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

@@ -19,23 +19,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public interface ICurrentUserApiService
     {
-	
+
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Get the details for the currently logged in user</remarks>
-        /// <response code="200">OK</response>        
-
-        IActionResult UsersCurrentGetAsync ();        
-        
+        /// <remarks>Get the currently logged in user</remarks>
+        /// <response code="200">OK</response>
+        IActionResult UsersCurrentGetAsync();
     }
 }

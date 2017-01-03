@@ -19,102 +19,89 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public interface IRoleApiService
     {
-	
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns a collection of roles</remarks>
-        /// <response code="200">OK</response>        
+        /// <response code="200">OK</response>
+        IActionResult RolesGetAsync();
 
-        IActionResult RolesGetAsync ();        
-        
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Role to delete</param>
         /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>        
+        /// <response code="404">Role not found</response>
+        IActionResult RolesIdDeleteAsync(int id);
 
-        IActionResult RolesIdDeleteAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Role to fetch</param>
         /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>        
+        /// <response code="404">Role not found</response>
+        IActionResult RolesIdGetAsync(int id);
 
-        IActionResult RolesIdGetAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Get all the permissions for a role</remarks>
         /// <param name="id">id of Role to fetch</param>
-        /// <response code="200">OK</response>        
+        /// <response code="200">OK</response>
+        IActionResult RolesIdPermissionsGetAsync(int id);
 
-        IActionResult RolesIdPermissionsGetAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Updates the permissions for a role</remarks>
         /// <param name="id">id of Role to update</param>
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>        
+        /// <response code="404">Role not found</response>
+        IActionResult RolesIdPermissionsPutAsync(int id, PermissionViewModel[] items);
 
-        IActionResult RolesIdPermissionsPutAsync (int id, List<Permission> body);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Role to update</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>        
+        /// <response code="404">Role not found</response>
+        IActionResult RolesIdPutAsync(int id, RoleViewModel item);
 
-        IActionResult RolesIdPutAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Get all the users for a role</remarks>
+        /// <remarks>Gets all the users for a role</remarks>
         /// <param name="id">id of Role to fetch</param>
-        /// <response code="200">OK</response>        
+        /// <response code="200">OK</response>
+        IActionResult RolesIdUsersGetAsync(int id);
 
-        IActionResult RolesIdUsersGetAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Updates the users for a role</remarks>
         /// <param name="id">id of Role to update</param>
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>        
+        /// <response code="404">Role not found</response>
+        IActionResult RolesIdUsersPutAsync(int id, UserRoleViewModel[] items);
 
-        IActionResult RolesIdUsersPutAsync (int id, List<User> body);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
-        /// <response code="201">Role created</response>        
-
-        IActionResult RolesPostAsync (Role body);        
-        
+        /// <param name="item"></param>
+        /// <response code="201">Role created</response>
+        IActionResult RolesPostAsync(RoleViewModel item);
     }
 }

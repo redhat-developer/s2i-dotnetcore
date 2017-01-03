@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class UserFavourite :  IEquatable<UserFavourite>
+    public partial class UserFavourite : IEquatable<UserFavourite>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -46,7 +44,7 @@ namespace SchoolBusAPI.Models
         public UserFavourite(int Id, string Name = null, string Value = null, bool? IsDefault = null, FavouriteContextType FavouriteContextType = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.Name = Name;
             this.Value = Value;
             this.IsDefault = IsDefault;
@@ -58,40 +56,32 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Context Name
         /// </summary>
         /// <value>Context Name</value>
-        [DataMember(Name="Name")]
-        [MetaDataExtension (Description = "Context Name")]        
+        [MetaDataExtension (Description = "Context Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Saved search
         /// </summary>
         /// <value>Saved search</value>
-        [DataMember(Name="Value")]
-        [MetaDataExtension (Description = "Saved search")]        
+        [MetaDataExtension (Description = "Saved search")]
         public string Value { get; set; }
 
         /// <summary>
         /// Gets or Sets IsDefault
         /// </summary>
-        [DataMember(Name="IsDefault")]
-                
         public bool? IsDefault { get; set; }
 
         /// <summary>
         /// Gets or Sets FavouriteContextType
         /// </summary>
-        [DataMember(Name="FavouriteContextType")]
-                
         public FavouriteContextType FavouriteContextType { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -181,27 +171,27 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.Name != null)
-                    { 
-                        hash = hash * 59 + this.Name.GetHashCode();
-                    }
-                    if (this.Value != null)
-                    { 
-                        hash = hash * 59 + this.Value.GetHashCode();
-                    }
-                    if (this.IsDefault != null)
-                    { 
-                        hash = hash * 59 + this.IsDefault.GetHashCode();
-                    }
-                    if (this.FavouriteContextType != null)
-                    { 
-                        hash = hash * 59 + this.FavouriteContextType.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Name != null)
+                {
+                    hash = hash * 59 + this.Name.GetHashCode();
+                }
+                if (this.Value != null)
+                {
+                    hash = hash * 59 + this.Value.GetHashCode();
+                }
+                if (this.IsDefault != null)
+                {
+                    hash = hash * 59 + this.IsDefault.GetHashCode();
+                }
+                if (this.FavouriteContextType != null)
+                {
+                    hash = hash * 59 + this.FavouriteContextType.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -219,6 +209,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

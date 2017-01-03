@@ -24,10 +24,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class SchoolBusOwner :  IEquatable<SchoolBusOwner>
+    public partial class SchoolBusOwner : IEquatable<SchoolBusOwner>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -49,7 +47,7 @@ namespace SchoolBusAPI.Models
         public SchoolBusOwner(int Id, string Name = null, bool? IsActive = null, DateTime? DateCreated = null, SchoolBusOwnerContact PrimaryContact = null, LocalArea LocalArea = null, City City = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.Name = Name;
             this.IsActive = IsActive;
             this.DateCreated = DateCreated;
@@ -63,35 +61,25 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
-        [DataMember(Name="Name")]
-                
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or Sets IsActive
         /// </summary>
-        [DataMember(Name="IsActive")]
-                
         public bool? IsActive { get; set; }
 
         /// <summary>
         /// Gets or Sets DateCreated
         /// </summary>
-        [DataMember(Name="DateCreated")]
-                
         public DateTime? DateCreated { get; set; }
 
-
-        [DataMember(Name = "PrimaryContact")]
         public SchoolBusOwnerContact PrimaryContact { get; set; }
-
 
         [ForeignKey("PrimaryContact")]
         //Foreign key for PrimaryContact
@@ -105,17 +93,12 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets LocalArea
         /// </summary>
-        [DataMember(Name="LocalArea")]
-                
         public LocalArea LocalArea { get; set; }
 
         /// <summary>
         /// Gets or Sets City
         /// </summary>
-        [DataMember(Name="City")]
-                
         public City City { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -217,35 +200,35 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.Name != null)
-                    { 
-                        hash = hash * 59 + this.Name.GetHashCode();
-                    }
-                    if (this.IsActive != null)
-                    { 
-                        hash = hash * 59 + this.IsActive.GetHashCode();
-                    }
-                    if (this.DateCreated != null)
-                    { 
-                        hash = hash * 59 + this.DateCreated.GetHashCode();
-                    }
-                    if (this.PrimaryContact != null)
-                    { 
-                        hash = hash * 59 + this.PrimaryContact.GetHashCode();
-                    }
-                    if (this.LocalArea != null)
-                    { 
-                        hash = hash * 59 + this.LocalArea.GetHashCode();
-                    }
-                    if (this.City != null)
-                    { 
-                        hash = hash * 59 + this.City.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Name != null)
+                {
+                    hash = hash * 59 + this.Name.GetHashCode();
+                }
+                if (this.IsActive != null)
+                {
+                    hash = hash * 59 + this.IsActive.GetHashCode();
+                }
+                if (this.DateCreated != null)
+                {
+                    hash = hash * 59 + this.DateCreated.GetHashCode();
+                }
+                if (this.PrimaryContact != null)
+                {
+                    hash = hash * 59 + this.PrimaryContact.GetHashCode();
+                }
+                if (this.LocalArea != null)
+                {
+                    hash = hash * 59 + this.LocalArea.GetHashCode();
+                }
+                if (this.City != null)
+                {
+                    hash = hash * 59 + this.City.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -263,6 +246,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class NotificationEvent :  IEquatable<NotificationEvent>
+    public partial class NotificationEvent : IEquatable<NotificationEvent>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -48,7 +46,7 @@ namespace SchoolBusAPI.Models
         public NotificationEvent(int Id, string EventTime = null, string EventTypeCode = null, string EventSubTypeCode = null, string Notes = null, bool? NotificationGenerated = null, SchoolBus SchoolBus = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.EventTime = EventTime;
             this.EventTypeCode = EventTypeCode;
             this.EventSubTypeCode = EventSubTypeCode;
@@ -62,52 +60,38 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets EventTime
         /// </summary>
-        [DataMember(Name="EventTime")]
-                
         public string EventTime { get; set; }
 
         /// <summary>
         /// Gets or Sets EventTypeCode
         /// </summary>
-        [DataMember(Name="EventTypeCode")]
-                
         public string EventTypeCode { get; set; }
 
         /// <summary>
         /// Gets or Sets EventSubTypeCode
         /// </summary>
-        [DataMember(Name="EventSubTypeCode")]
-                
         public string EventSubTypeCode { get; set; }
 
         /// <summary>
         /// Gets or Sets Notes
         /// </summary>
-        [DataMember(Name="Notes")]
-                
         public string Notes { get; set; }
 
         /// <summary>
         /// Gets or Sets NotificationGenerated
         /// </summary>
-        [DataMember(Name="NotificationGenerated")]
-                
         public bool? NotificationGenerated { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBus
         /// </summary>
-        [DataMember(Name="SchoolBus")]
-                
         public SchoolBus SchoolBus { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -209,35 +193,35 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.EventTime != null)
-                    { 
-                        hash = hash * 59 + this.EventTime.GetHashCode();
-                    }
-                    if (this.EventTypeCode != null)
-                    { 
-                        hash = hash * 59 + this.EventTypeCode.GetHashCode();
-                    }
-                    if (this.EventSubTypeCode != null)
-                    { 
-                        hash = hash * 59 + this.EventSubTypeCode.GetHashCode();
-                    }
-                    if (this.Notes != null)
-                    { 
-                        hash = hash * 59 + this.Notes.GetHashCode();
-                    }
-                    if (this.NotificationGenerated != null)
-                    { 
-                        hash = hash * 59 + this.NotificationGenerated.GetHashCode();
-                    }
-                    if (this.SchoolBus != null)
-                    { 
-                        hash = hash * 59 + this.SchoolBus.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.EventTime != null)
+                {
+                    hash = hash * 59 + this.EventTime.GetHashCode();
+                }
+                if (this.EventTypeCode != null)
+                {
+                    hash = hash * 59 + this.EventTypeCode.GetHashCode();
+                }
+                if (this.EventSubTypeCode != null)
+                {
+                    hash = hash * 59 + this.EventSubTypeCode.GetHashCode();
+                }
+                if (this.Notes != null)
+                {
+                    hash = hash * 59 + this.Notes.GetHashCode();
+                }
+                if (this.NotificationGenerated != null)
+                {
+                    hash = hash * 59 + this.NotificationGenerated.GetHashCode();
+                }
+                if (this.SchoolBus != null)
+                {
+                    hash = hash * 59 + this.SchoolBus.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -255,6 +239,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

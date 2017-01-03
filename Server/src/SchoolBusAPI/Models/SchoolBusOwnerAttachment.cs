@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class SchoolBusOwnerAttachment :  IEquatable<SchoolBusOwnerAttachment>
+    public partial class SchoolBusOwnerAttachment : IEquatable<SchoolBusOwnerAttachment>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -43,7 +41,7 @@ namespace SchoolBusAPI.Models
         public SchoolBusOwnerAttachment(int Id, SchoolBusOwner SchoolBusOwner = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.SchoolBusOwner = SchoolBusOwner;
             
         }
@@ -52,17 +50,13 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBusOwner
         /// </summary>
-        [DataMember(Name="SchoolBusOwner")]
-                
         public SchoolBusOwner SchoolBusOwner { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -134,15 +128,15 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.SchoolBusOwner != null)
-                    { 
-                        hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.SchoolBusOwner != null)
+                {
+                    hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -160,6 +154,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

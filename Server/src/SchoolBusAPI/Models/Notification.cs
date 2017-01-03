@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class Notification :  IEquatable<Notification>
+    public partial class Notification : IEquatable<Notification>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -50,7 +48,7 @@ namespace SchoolBusAPI.Models
         public Notification(int Id, NotificationEvent Event = null, NotificationEvent Event2 = null, bool? HasBeenViewed = null, bool? IsWatchNotification = null, bool? IsExpired = null, bool? IsAllDay = null, string PriorityCode = null, User User = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.Event = Event;
             this.Event2 = Event2;
             this.HasBeenViewed = HasBeenViewed;
@@ -66,66 +64,48 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Event
         /// </summary>
-        [DataMember(Name="Event")]
-                
         public NotificationEvent Event { get; set; }
 
         /// <summary>
         /// Gets or Sets Event2
         /// </summary>
-        [DataMember(Name="Event2")]
-                
         public NotificationEvent Event2 { get; set; }
 
         /// <summary>
         /// Gets or Sets HasBeenViewed
         /// </summary>
-        [DataMember(Name="HasBeenViewed")]
-                
         public bool? HasBeenViewed { get; set; }
 
         /// <summary>
         /// Gets or Sets IsWatchNotification
         /// </summary>
-        [DataMember(Name="IsWatchNotification")]
-                
         public bool? IsWatchNotification { get; set; }
 
         /// <summary>
         /// Gets or Sets IsExpired
         /// </summary>
-        [DataMember(Name="IsExpired")]
-                
         public bool? IsExpired { get; set; }
 
         /// <summary>
         /// Gets or Sets IsAllDay
         /// </summary>
-        [DataMember(Name="IsAllDay")]
-                
         public bool? IsAllDay { get; set; }
 
         /// <summary>
         /// Gets or Sets PriorityCode
         /// </summary>
-        [DataMember(Name="PriorityCode")]
-                
         public string PriorityCode { get; set; }
 
         /// <summary>
         /// Gets or Sets User
         /// </summary>
-        [DataMember(Name="User")]
-                
         public User User { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -239,43 +219,43 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.Event != null)
-                    { 
-                        hash = hash * 59 + this.Event.GetHashCode();
-                    }
-                    if (this.Event2 != null)
-                    { 
-                        hash = hash * 59 + this.Event2.GetHashCode();
-                    }
-                    if (this.HasBeenViewed != null)
-                    { 
-                        hash = hash * 59 + this.HasBeenViewed.GetHashCode();
-                    }
-                    if (this.IsWatchNotification != null)
-                    { 
-                        hash = hash * 59 + this.IsWatchNotification.GetHashCode();
-                    }
-                    if (this.IsExpired != null)
-                    { 
-                        hash = hash * 59 + this.IsExpired.GetHashCode();
-                    }
-                    if (this.IsAllDay != null)
-                    { 
-                        hash = hash * 59 + this.IsAllDay.GetHashCode();
-                    }
-                    if (this.PriorityCode != null)
-                    { 
-                        hash = hash * 59 + this.PriorityCode.GetHashCode();
-                    }
-                    if (this.User != null)
-                    { 
-                        hash = hash * 59 + this.User.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Event != null)
+                {
+                    hash = hash * 59 + this.Event.GetHashCode();
+                }
+                if (this.Event2 != null)
+                {
+                    hash = hash * 59 + this.Event2.GetHashCode();
+                }
+                if (this.HasBeenViewed != null)
+                {
+                    hash = hash * 59 + this.HasBeenViewed.GetHashCode();
+                }
+                if (this.IsWatchNotification != null)
+                {
+                    hash = hash * 59 + this.IsWatchNotification.GetHashCode();
+                }
+                if (this.IsExpired != null)
+                {
+                    hash = hash * 59 + this.IsExpired.GetHashCode();
+                }
+                if (this.IsAllDay != null)
+                {
+                    hash = hash * 59 + this.IsAllDay.GetHashCode();
+                }
+                if (this.PriorityCode != null)
+                {
+                    hash = hash * 59 + this.PriorityCode.GetHashCode();
+                }
+                if (this.User != null)
+                {
+                    hash = hash * 59 + this.User.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -293,6 +273,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

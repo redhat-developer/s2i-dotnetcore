@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class CCWData :  IEquatable<CCWData>
+    public partial class CCWData : IEquatable<CCWData>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -55,7 +53,7 @@ namespace SchoolBusAPI.Models
         public CCWData(int Id, int? ModelYear = null, string RateClass = null, string CVIPDecal = null, int? FleetUnitNo = null, int? GVW = null, string Body = null, string RebuiltStatus = null, DateTime? CVIPExpiry = null, int? NetWt = null, string Model = null, string Fuel = null, int? SeatingCapacity = null, string Colour = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.ModelYear = ModelYear;
             this.RateClass = RateClass;
             this.CVIPDecal = CVIPDecal;
@@ -76,102 +74,75 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Vehicle Year
         /// </summary>
         /// <value>Vehicle Year</value>
-        [DataMember(Name="ModelYear")]
-        [MetaDataExtension (Description = "Vehicle Year")]        
+        [MetaDataExtension (Description = "Vehicle Year")]
         public int? ModelYear { get; set; }
 
         /// <summary>
         /// Gets or Sets RateClass
         /// </summary>
-        [DataMember(Name="RateClass")]
-                
         public string RateClass { get; set; }
 
         /// <summary>
         /// Gets or Sets CVIPDecal
         /// </summary>
-        [DataMember(Name="CVIPDecal")]
-                
         public string CVIPDecal { get; set; }
 
         /// <summary>
         /// Gets or Sets FleetUnitNo
         /// </summary>
-        [DataMember(Name="FleetUnitNo")]
-                
         public int? FleetUnitNo { get; set; }
 
         /// <summary>
         /// Gets or Sets GVW
         /// </summary>
-        [DataMember(Name="GVW")]
-                
         public int? GVW { get; set; }
 
         /// <summary>
         /// Gets or Sets Body
         /// </summary>
-        [DataMember(Name="Body")]
-                
         public string Body { get; set; }
 
         /// <summary>
         /// Gets or Sets RebuiltStatus
         /// </summary>
-        [DataMember(Name="RebuiltStatus")]
-                
         public string RebuiltStatus { get; set; }
 
         /// <summary>
         /// Gets or Sets CVIPExpiry
         /// </summary>
-        [DataMember(Name="CVIPExpiry")]
-                
         public DateTime? CVIPExpiry { get; set; }
 
         /// <summary>
         /// Gets or Sets NetWt
         /// </summary>
-        [DataMember(Name="NetWt")]
-                
         public int? NetWt { get; set; }
 
         /// <summary>
         /// Gets or Sets Model
         /// </summary>
-        [DataMember(Name="Model")]
-                
         public string Model { get; set; }
 
         /// <summary>
         /// Gets or Sets Fuel
         /// </summary>
-        [DataMember(Name="Fuel")]
-                
         public string Fuel { get; set; }
 
         /// <summary>
         /// Gets or Sets SeatingCapacity
         /// </summary>
-        [DataMember(Name="SeatingCapacity")]
-                
         public int? SeatingCapacity { get; set; }
 
         /// <summary>
         /// Gets or Sets Colour
         /// </summary>
-        [DataMember(Name="Colour")]
-                
         public string Colour { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -315,63 +286,63 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.ModelYear != null)
-                    { 
-                        hash = hash * 59 + this.ModelYear.GetHashCode();
-                    }
-                    if (this.RateClass != null)
-                    { 
-                        hash = hash * 59 + this.RateClass.GetHashCode();
-                    }
-                    if (this.CVIPDecal != null)
-                    { 
-                        hash = hash * 59 + this.CVIPDecal.GetHashCode();
-                    }
-                    if (this.FleetUnitNo != null)
-                    { 
-                        hash = hash * 59 + this.FleetUnitNo.GetHashCode();
-                    }
-                    if (this.GVW != null)
-                    { 
-                        hash = hash * 59 + this.GVW.GetHashCode();
-                    }
-                    if (this.Body != null)
-                    { 
-                        hash = hash * 59 + this.Body.GetHashCode();
-                    }
-                    if (this.RebuiltStatus != null)
-                    { 
-                        hash = hash * 59 + this.RebuiltStatus.GetHashCode();
-                    }
-                    if (this.CVIPExpiry != null)
-                    { 
-                        hash = hash * 59 + this.CVIPExpiry.GetHashCode();
-                    }
-                    if (this.NetWt != null)
-                    { 
-                        hash = hash * 59 + this.NetWt.GetHashCode();
-                    }
-                    if (this.Model != null)
-                    { 
-                        hash = hash * 59 + this.Model.GetHashCode();
-                    }
-                    if (this.Fuel != null)
-                    { 
-                        hash = hash * 59 + this.Fuel.GetHashCode();
-                    }
-                    if (this.SeatingCapacity != null)
-                    { 
-                        hash = hash * 59 + this.SeatingCapacity.GetHashCode();
-                    }
-                    if (this.Colour != null)
-                    { 
-                        hash = hash * 59 + this.Colour.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.ModelYear != null)
+                {
+                    hash = hash * 59 + this.ModelYear.GetHashCode();
+                }
+                if (this.RateClass != null)
+                {
+                    hash = hash * 59 + this.RateClass.GetHashCode();
+                }
+                if (this.CVIPDecal != null)
+                {
+                    hash = hash * 59 + this.CVIPDecal.GetHashCode();
+                }
+                if (this.FleetUnitNo != null)
+                {
+                    hash = hash * 59 + this.FleetUnitNo.GetHashCode();
+                }
+                if (this.GVW != null)
+                {
+                    hash = hash * 59 + this.GVW.GetHashCode();
+                }
+                if (this.Body != null)
+                {
+                    hash = hash * 59 + this.Body.GetHashCode();
+                }
+                if (this.RebuiltStatus != null)
+                {
+                    hash = hash * 59 + this.RebuiltStatus.GetHashCode();
+                }
+                if (this.CVIPExpiry != null)
+                {
+                    hash = hash * 59 + this.CVIPExpiry.GetHashCode();
+                }
+                if (this.NetWt != null)
+                {
+                    hash = hash * 59 + this.NetWt.GetHashCode();
+                }
+                if (this.Model != null)
+                {
+                    hash = hash * 59 + this.Model.GetHashCode();
+                }
+                if (this.Fuel != null)
+                {
+                    hash = hash * 59 + this.Fuel.GetHashCode();
+                }
+                if (this.SeatingCapacity != null)
+                {
+                    hash = hash * 59 + this.SeatingCapacity.GetHashCode();
+                }
+                if (this.Colour != null)
+                {
+                    hash = hash * 59 + this.Colour.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -389,6 +360,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

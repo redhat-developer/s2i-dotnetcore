@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class City :  IEquatable<City>
+    public partial class City : IEquatable<City>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -39,11 +37,13 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="City" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
+        /// <param name="Name">City Name.</param>
         /// <param name="Region">Region.</param>
-        public City(int Id, Region Region = null)
+        public City(int Id, string Name = null, Region Region = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
+            this.Name = Name;
             this.Region = Region;
             
         }
@@ -52,17 +52,20 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
+
+        /// <summary>
+        /// City Name
+        /// </summary>
+        /// <value>City Name</value>
+        [MetaDataExtension (Description = "City Name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or Sets Region
         /// </summary>
-        [DataMember(Name="Region")]
-                
         public Region Region { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -73,6 +76,7 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class City {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Region: ").Append(Region).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -118,6 +122,11 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
+                ) && 
+                (
                     this.Region == other.Region ||
                     this.Region != null &&
                     this.Region.Equals(other.Region)
@@ -134,15 +143,19 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.Region != null)
-                    { 
-                        hash = hash * 59 + this.Region.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Name != null)
+                {
+                    hash = hash * 59 + this.Name.GetHashCode();
+                }
+                if (this.Region != null)
+                {
+                    hash = hash * 59 + this.Region.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -160,6 +173,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }
