@@ -17,36 +17,35 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-using Microsoft.EntityFrameworkCore;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services.Impl
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public class RegionApiService : IRegionApiService
     {
-
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public RegionApiService (DbAppContext context)
+        public RegionApiService(DbAppContext context)
         {
             _context = context;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Adds a number of regions.</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult RegionsBulkPostAsync (Region[] items)        
+        public virtual IActionResult RegionsBulkPostAsync(Region[] items)
         {
             if (items == null)
             {
@@ -61,25 +60,25 @@ namespace SchoolBusAPI.Services.Impl
 
             return new NoContentResult();
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns a list of available regions</remarks>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult RegionsGetAsync ()        
+        public virtual IActionResult RegionsGetAsync()
         {
             var result = _context.Regions.ToList();
             return new ObjectResult(result);
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns a list of cities for a given region</remarks>
         /// <param name="id">id of Region to fetch Cities for</param>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult RegionsIdCitiesGetAsync (int id)        
+        public virtual IActionResult RegionsIdCitiesGetAsync(int id)
         {
             var exists = _context.Regions.Any(a => a.Id == id);
             if (exists)
@@ -100,7 +99,6 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of Region to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Region not found</response>
-
         public virtual IActionResult RegionsIdDeleteAsync(int id)
         {
             var exists = _context.Regions.Any(a => a.Id == id);
@@ -124,8 +122,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks>Returns a specific region</remarks>
         /// <param name="id">id of Regions to fetch</param>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult RegionsIdGetAsync (int id)        
+        public virtual IActionResult RegionsIdGetAsync(int id)
         {
             var exists = _context.Regions.Any(a => a.Id == id);
             if (exists)
@@ -138,14 +135,14 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }            
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns a list of LocalAreas for a given region</remarks>
         /// <param name="id">id of Region to fetch SchoolDistricts for</param>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult RegionsIdLocalareasGetAsync (int id)        
+        public virtual IActionResult RegionsIdLocalareasGetAsync(int id)
         {
             var exists = _context.Regions.Any(a => a.Id == id);
             if (exists)
@@ -169,7 +166,6 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Region not found</response>
-
         public virtual IActionResult RegionsIdPutAsync(int id, Region item)
         {
             var exists = _context.Regions.Any(a => a.Id == id);
@@ -197,9 +193,8 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks>Adds a region</remarks>
         /// <param name="item"></param>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult RegionsPostAsync (Region item)        
-        {            
+        public virtual IActionResult RegionsPostAsync(Region item)
+        {
             _context.Regions.Add(item);        
             _context.SaveChanges();
             return new ObjectResult(item);

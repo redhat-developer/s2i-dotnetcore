@@ -41,6 +41,9 @@ namespace SchoolBusAPI
             services.AddTransient<IInspectionApiService, InspectionApiService>();
             services.AddTransient<INotificationApiService, NotificationApiService>();
             services.AddTransient<INotificationEventApiService, NotificationEventApiService>();
+            services.AddTransient<IGroupApiService, GroupApiService>();
+            services.AddTransient<IPermissionApiService, PermissionApiService>();
+            services.AddTransient<IRoleApiService, RoleApiService>();
             services.AddTransient<ICurrentUserApiService, CurrentUserApiService>();
 
             return services;

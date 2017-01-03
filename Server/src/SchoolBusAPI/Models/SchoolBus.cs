@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class SchoolBus :  IEquatable<SchoolBus>
+    public partial class SchoolBus : IEquatable<SchoolBus>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -49,7 +47,7 @@ namespace SchoolBusAPI.Models
         public SchoolBus(int Id, SchoolBusOwner SchoolBusOwner = null, bool? IsActive = null, bool? IsOutOfProvince = null, DateTime? NextInspection = null, string CRNO = null, string NameOfIndependentSchool = null, CCWData CCWData = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.SchoolBusOwner = SchoolBusOwner;
             this.IsActive = IsActive;
             this.IsOutOfProvince = IsOutOfProvince;
@@ -64,60 +62,45 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBusOwner
         /// </summary>
-        [DataMember(Name="SchoolBusOwner")]
-                
         public SchoolBusOwner SchoolBusOwner { get; set; }
 
         /// <summary>
         /// Gets or Sets IsActive
         /// </summary>
-        [DataMember(Name="IsActive")]
-                
         public bool? IsActive { get; set; }
 
         /// <summary>
         /// Gets or Sets IsOutOfProvince
         /// </summary>
-        [DataMember(Name="IsOutOfProvince")]
-                
         public bool? IsOutOfProvince { get; set; }
 
         /// <summary>
         /// Gets or Sets NextInspection
         /// </summary>
-        [DataMember(Name="NextInspection")]
-                
         public DateTime? NextInspection { get; set; }
 
         /// <summary>
         /// CR Number.
         /// </summary>
         /// <value>CR Number.</value>
-        [DataMember(Name="CRNO")]
-        [MetaDataExtension (Description = "CR Number.")]        
+        [MetaDataExtension (Description = "CR Number.")]
         public string CRNO { get; set; }
 
         /// <summary>
         /// Gets or Sets NameOfIndependentSchool
         /// </summary>
-        [DataMember(Name="NameOfIndependentSchool")]
-                
         public string NameOfIndependentSchool { get; set; }
 
         /// <summary>
         /// Gets or Sets CCWData
         /// </summary>
-        [DataMember(Name="CCWData")]
-                
         public CCWData CCWData { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -225,39 +208,39 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.SchoolBusOwner != null)
-                    { 
-                        hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
-                    }
-                    if (this.IsActive != null)
-                    { 
-                        hash = hash * 59 + this.IsActive.GetHashCode();
-                    }
-                    if (this.IsOutOfProvince != null)
-                    { 
-                        hash = hash * 59 + this.IsOutOfProvince.GetHashCode();
-                    }
-                    if (this.NextInspection != null)
-                    { 
-                        hash = hash * 59 + this.NextInspection.GetHashCode();
-                    }
-                    if (this.CRNO != null)
-                    { 
-                        hash = hash * 59 + this.CRNO.GetHashCode();
-                    }
-                    if (this.NameOfIndependentSchool != null)
-                    { 
-                        hash = hash * 59 + this.NameOfIndependentSchool.GetHashCode();
-                    }
-                    if (this.CCWData != null)
-                    { 
-                        hash = hash * 59 + this.CCWData.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.SchoolBusOwner != null)
+                {
+                    hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
+                }
+                if (this.IsActive != null)
+                {
+                    hash = hash * 59 + this.IsActive.GetHashCode();
+                }
+                if (this.IsOutOfProvince != null)
+                {
+                    hash = hash * 59 + this.IsOutOfProvince.GetHashCode();
+                }
+                if (this.NextInspection != null)
+                {
+                    hash = hash * 59 + this.NextInspection.GetHashCode();
+                }
+                if (this.CRNO != null)
+                {
+                    hash = hash * 59 + this.CRNO.GetHashCode();
+                }
+                if (this.NameOfIndependentSchool != null)
+                {
+                    hash = hash * 59 + this.NameOfIndependentSchool.GetHashCode();
+                }
+                if (this.CCWData != null)
+                {
+                    hash = hash * 59 + this.CCWData.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -275,6 +258,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

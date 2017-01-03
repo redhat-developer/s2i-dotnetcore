@@ -20,10 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -34,12 +35,11 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// Create a controller and set the service
         /// </summary>
-
         public GroupApiController(IGroupApiService service)
         {
             _service = service;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
@@ -48,9 +48,9 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/groups")]
         [SwaggerOperation("GroupsGet")]
-        [SwaggerResponse(200, type: typeof(List<Group>))]
+        [SwaggerResponse(200, type: typeof(List<GroupViewModel>))]
         public virtual IActionResult GroupsGet()
-        { 
+        {
             return this._service.GroupsGetAsync();
         }
     }

@@ -20,10 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -34,95 +35,94 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// Create a controller and set the service
         /// </summary>
-
         public NotificationApiController(INotificationApiService service)
         {
             _service = service;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">Notifications created</response>
         [HttpPost]
         [Route("/api/notifications/bulk")]
-        [SwaggerOperation("notificationsBulkPost")]
-        public virtual IActionResult notificationsBulkPost([FromBody] Notification[] body)
+        [SwaggerOperation("NotificationsBulkPost")]
+        public virtual IActionResult NotificationsBulkPost([FromBody]Notification[] items)
         {
-            return this._service.notificationsBulkPostAsync(body);
+            return this._service.NotificationsBulkPostAsync(items);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/notifications")]
-        [SwaggerOperation("notificationsGet")]
+        [SwaggerOperation("NotificationsGet")]
         [SwaggerResponse(200, type: typeof(List<Notification>))]
-        public virtual IActionResult notificationsGet()
-        { 
-            return this._service.notificationsGetAsync();
+        public virtual IActionResult NotificationsGet()
+        {
+            return this._service.NotificationsGetAsync();
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Notification to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>
         [HttpDelete]
         [Route("/api/notifications/{id}")]
-        [SwaggerOperation("notificationsIdDelete")]
-        public virtual IActionResult notificationsIdDelete([FromRoute]int id)
+        [SwaggerOperation("NotificationsIdDelete")]
+        public virtual IActionResult NotificationsIdDelete([FromRoute]int id)
         {
-            return this._service.notificationsIdDeleteAsync(id);
+            return this._service.NotificationsIdDeleteAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Notification to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>
         [HttpGet]
         [Route("/api/notifications/{id}")]
-        [SwaggerOperation("notificationsIdGet")]
+        [SwaggerOperation("NotificationsIdGet")]
         [SwaggerResponse(200, type: typeof(Notification))]
-        public virtual IActionResult notificationsIdGet([FromRoute]int id)
-        { 
-            return this._service.notificationsIdGetAsync(id);
+        public virtual IActionResult NotificationsIdGet([FromRoute]int id)
+        {
+            return this._service.NotificationsIdGetAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Notification to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>
         [HttpPut]
         [Route("/api/notifications/{id}")]
-        [SwaggerOperation("notificationsIdPut")]
+        [SwaggerOperation("NotificationsIdPut")]
         [SwaggerResponse(200, type: typeof(Notification))]
-        public virtual IActionResult notificationsIdPut([FromRoute]int id, [FromBody] Notification body)
-        { 
-            return this._service.notificationsIdPutAsync(id, body);
+        public virtual IActionResult NotificationsIdPut([FromRoute]int id, [FromBody]Notification item)
+        {
+            return this._service.NotificationsIdPutAsync(id, item);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="item"></param>
         /// <response code="201">Notification created</response>
         [HttpPost]
         [Route("/api/notifications")]
-        [SwaggerOperation("notificationsPost")]
+        [SwaggerOperation("NotificationsPost")]
         [SwaggerResponse(200, type: typeof(Notification))]
-        public virtual IActionResult notificationsPost([FromBody]Notification body)
-        { 
-            return this._service.notificationsPostAsync(body);
+        public virtual IActionResult NotificationsPost([FromBody]Notification item)
+        {
+            return this._service.NotificationsPostAsync(item);
         }
     }
 }

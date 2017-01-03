@@ -19,71 +19,59 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public interface ISchoolBusOwnerHistoryApiService
     {
-	
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="body"></param>
-        /// <response code="201">SchoolBusOwnerHistories created</response>        
 
-        IActionResult SchoolbusownerhistoryBulkPostAsync (SchoolBusOwnerHistory[] body);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <response code="200">OK</response>        
+        /// <param name="items"></param>
+        /// <response code="201">SchoolBusOwnerHistories created</response>
+        IActionResult SchoolbusownerhistoryBulkPostAsync(SchoolBusOwnerHistory[] items);
 
-        IActionResult SchoolbusownerhistoryGetAsync ();        
-        
         /// <summary>
         /// 
         /// </summary>
-        
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusownerhistoryGetAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id">id of SchoolBusOwnerHistory to delete</param>
         /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusOwnerHistory not found</response>        
+        /// <response code="404">SchoolBusOwnerHistory not found</response>
+        IActionResult SchoolbusownerhistoryIdDeleteAsync(int id);
 
-        IActionResult SchoolbusownerhistoryIdDeleteAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusOwnerHistory to fetch</param>
         /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusOwnerHistory not found</response>        
+        /// <response code="404">SchoolBusOwnerHistory not found</response>
+        IActionResult SchoolbusownerhistoryIdGetAsync(int id);
 
-        IActionResult SchoolbusownerhistoryIdGetAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusOwnerHistory to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusOwnerHistory not found</response>        
+        /// <response code="404">SchoolBusOwnerHistory not found</response>
+        IActionResult SchoolbusownerhistoryIdPutAsync(int id, SchoolBusOwnerHistory item);
 
-        IActionResult SchoolbusownerhistoryIdPutAsync (int id, SchoolBusOwnerHistory body);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
-        /// <response code="201">SchoolBusOwnerHistory created</response>        
-
-        IActionResult SchoolbusownerhistoryPostAsync (SchoolBusOwnerHistory body);        
-        
+        /// <param name="item"></param>
+        /// <response code="201">SchoolBusOwnerHistory created</response>
+        IActionResult SchoolbusownerhistoryPostAsync(SchoolBusOwnerHistory item);
     }
 }

@@ -17,36 +17,37 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
+using SchoolBusAPI.Mappings;
 
 namespace SchoolBusAPI.Services.Impl
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public class GroupApiService : IGroupApiService
     {
-
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public GroupApiService (DbAppContext context)
+        public GroupApiService(DbAppContext context)
         {
             _context = context;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns a collection of groups</remarks>
         /// <response code="200">OK</response>
-
-        public virtual IActionResult GroupsGetAsync ()        
+        public virtual IActionResult GroupsGetAsync()
         {
-            var result = "";
+            var result = _context.Groups.Select(x => x.ToViewModel()).ToList();
             return new ObjectResult(result);
         }
     }

@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class RolePermission :  IEquatable<RolePermission>
+    public partial class RolePermission : IEquatable<RolePermission>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -40,13 +38,13 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="Role">Role.</param>
-        /// <param name="Permision">Permision.</param>
-        public RolePermission(int Id, Role Role = null, Permission Permision = null)
+        /// <param name="Permission">Permission.</param>
+        public RolePermission(int Id, Role Role = null, Permission Permission = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.Role = Role;
-            this.Permision = Permision;
+            this.Permission = Permission;
             
         }
 
@@ -54,24 +52,18 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Role
         /// </summary>
-        [DataMember(Name="role")]
-                
         public Role Role { get; set; }
 
         /// <summary>
-        /// Gets or Sets Permision
+        /// Gets or Sets Permission
         /// </summary>
-        [DataMember(Name="permision")]
-                
-        public Permission Permision { get; set; }
-
+        public Permission Permission { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -83,7 +75,7 @@ namespace SchoolBusAPI.Models
             sb.Append("class RolePermission {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Role: ").Append(Role).Append("\n");
-            sb.Append("  Permision: ").Append(Permision).Append("\n");
+            sb.Append("  Permission: ").Append(Permission).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -133,9 +125,9 @@ namespace SchoolBusAPI.Models
                     this.Role.Equals(other.Role)
                 ) && 
                 (
-                    this.Permision == other.Permision ||
-                    this.Permision != null &&
-                    this.Permision.Equals(other.Permision)
+                    this.Permission == other.Permission ||
+                    this.Permission != null &&
+                    this.Permission.Equals(other.Permission)
                 );
         }
 
@@ -149,19 +141,19 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.Role != null)
-                    { 
-                        hash = hash * 59 + this.Role.GetHashCode();
-                    }
-                    if (this.Permision != null)
-                    { 
-                        hash = hash * 59 + this.Permision.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Role != null)
+                {
+                    hash = hash * 59 + this.Role.GetHashCode();
+                }
+                if (this.Permission != null)
+                {
+                    hash = hash * 59 + this.Permission.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -179,6 +171,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

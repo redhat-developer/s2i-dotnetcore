@@ -20,10 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -34,42 +35,40 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// Create a controller and set the service
         /// </summary>
-
         public InspectionApiController(IInspectionApiService service)
         {
             _service = service;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">Inspections created</response>
         [HttpPost]
         [Route("/api/inspections/bulk")]
         [SwaggerOperation("InspectionsBulkPost")]
-        public virtual IActionResult InspectionsBulkPost([FromBody] Inspection[] body)
+        public virtual IActionResult InspectionsBulkPost([FromBody]Inspection[] items)
         {
-            return this._service.InspectionsBulkPostAsync(body);
+            return this._service.InspectionsBulkPostAsync(items);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/inspections")]
         [SwaggerOperation("InspectionsGet")]
         [SwaggerResponse(200, type: typeof(List<Inspection>))]
         public virtual IActionResult InspectionsGet()
-        { 
+        {
             return this._service.InspectionsGetAsync();
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Inspection to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
@@ -80,10 +79,10 @@ namespace SchoolBusAPI.Controllers
         {
             return this._service.InspectionsIdDeleteAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Inspection to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
@@ -92,41 +91,38 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("InspectionsIdGet")]
         [SwaggerResponse(200, type: typeof(Inspection))]
         public virtual IActionResult InspectionsIdGet([FromRoute]int id)
-        { 
+        {
             return this._service.InspectionsIdGetAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Inspection to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
         [HttpPut]
         [Route("/api/inspections/{id}")]
         [SwaggerOperation("InspectionsIdPut")]
         [SwaggerResponse(200, type: typeof(Inspection))]
-        public virtual IActionResult InspectionsIdPut([FromRoute]int id)
-        { 
-            return this._service.InspectionsIdPutAsync(id);
+        public virtual IActionResult InspectionsIdPut([FromRoute]int id, [FromBody]Inspection item)
+        {
+            return this._service.InspectionsIdPutAsync(id, item);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="item"></param>
         /// <response code="201">Inspection created</response>
         [HttpPost]
         [Route("/api/inspections")]
         [SwaggerOperation("InspectionsPost")]
         [SwaggerResponse(200, type: typeof(Inspection))]
-        public virtual IActionResult InspectionsPost([FromBody]Inspection body)
-        { 
-            return this._service.InspectionsPostAsync(body);
+        public virtual IActionResult InspectionsPost([FromBody]Inspection item)
+        {
+            return this._service.InspectionsPostAsync(item);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-                
     }
 }

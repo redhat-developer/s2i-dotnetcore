@@ -33,7 +33,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -59,7 +59,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -115,6 +115,11 @@ paths:
           description: id of Inspection to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Inspection"
     delete:
       tags:
         - Inspection
@@ -168,7 +173,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -198,7 +203,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -249,6 +254,11 @@ paths:
           description: Id of SchoolBus to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBus"
       responses:
         200:
           description: OK
@@ -276,7 +286,7 @@ paths:
           description: id of SchoolBus to delete
           required: true
           type: integer
-  /schoolbus/{id}/inspections:
+  /schoolbuses/{id}/inspections:
     get:
       tags:
         - SchoolBus
@@ -418,7 +428,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -444,7 +454,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -500,6 +510,11 @@ paths:
           description: id of SchoolBusNote to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusNote"
     delete:
       tags:
         - SchoolBusNote
@@ -547,7 +562,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -573,7 +588,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -629,6 +644,11 @@ paths:
           description: id of SchoolBusAttachment to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusAttachment"
     delete:
       tags:
         - SchoolBusAttachment
@@ -676,7 +696,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -702,7 +722,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -715,7 +735,7 @@ paths:
   /schoolbushistories/{id}:
     get:
       tags:
-        - SchoolBusAttachment
+        - SchoolBusHistory
       consumes: []
       produces:
         - text/plain
@@ -725,7 +745,7 @@ paths:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/SchoolBusAttachment'
+            $ref: '#/definitions/SchoolBusHistory'
         404:
           description: SchoolBusHistory not found
       deprecated: false
@@ -758,6 +778,11 @@ paths:
           description: id of SchoolBusHistory to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusHistory"
     delete:
       tags:
         - SchoolBusHistory
@@ -805,7 +830,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -831,7 +856,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -887,6 +912,11 @@ paths:
           description: id of Notification to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Notification"
     delete:
       tags:
         - Notification
@@ -934,7 +964,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -960,7 +990,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -1016,6 +1046,11 @@ paths:
           description: id of NotificationEvent to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/NotificationEvent"
     delete:
       tags:
         - NotificationEvent
@@ -1063,7 +1098,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -1089,7 +1124,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -1145,6 +1180,11 @@ paths:
           description: id of SchoolBusOwner to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwner"
     delete:
       tags:
         - SchoolBusOwner
@@ -1280,7 +1320,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -1306,7 +1346,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -1362,6 +1402,11 @@ paths:
           description: id of SchoolBusOwnerNote to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerNote"
     delete:
       tags:
         - SchoolBusOwnerNote
@@ -1409,7 +1454,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -1435,7 +1480,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -1491,6 +1536,11 @@ paths:
           description: id of SchoolBusOwnerAttachment to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerAttachment"
     delete:
       tags:
         - SchoolBusOwnerAttachment
@@ -1511,6 +1561,48 @@ paths:
           description: id of SchoolBusOwnerAttachment to delete
           required: true
           type: integer
+  /schoolbusownercontacts:
+     get:
+      tags:
+        - SchoolBusOwnerContact
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerContact'        
+      deprecated: false
+     post:
+      tags:
+        - SchoolBusOwnerContact
+      consumes: 
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerContact"
+      responses:
+        201:
+          description: SchoolBusOwnerContact created
+          headers:
+            Location: 
+              description: A link to the SchoolBusOwnerContact
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerContact"
   /schoolbusownercontacts/bulk:
     post:
       tags:
@@ -1522,7 +1614,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -1578,6 +1670,11 @@ paths:
           description: id of SchoolBusOwnerContact to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerContact"
     delete:
       tags:
         - SchoolBusOwnerContact
@@ -1625,7 +1722,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
@@ -1651,7 +1748,7 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
@@ -1707,6 +1804,11 @@ paths:
           description: id of SchoolBusOwnerHistory to fetch
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerHistory"
     delete:
       tags:
         - SchoolBusOwnerHistory
@@ -1758,7 +1860,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Group'
+              $ref: "#/definitions/GroupViewModel"
   /permissions:
     get:
       description: Returns a collection of permissions
@@ -1774,7 +1876,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Permission'
+              $ref: "#/definitions/PermissionViewModel"
   /roles:
     get:
       description: Returns a collection of roles
@@ -1790,7 +1892,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Role'
+              $ref: "#/definitions/RoleViewModel"
     post:
       tags:
         - Role
@@ -1801,11 +1903,11 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Role"
+            $ref: "#/definitions/RoleViewModel"
       responses:
         201:
           description: Role created
@@ -1815,7 +1917,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Role"
+            $ref: "#/definitions/RoleViewModel"
   /roles/{id}:
     get:
       tags:
@@ -1834,7 +1936,7 @@ paths:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/Role'
+            $ref: '#/definitions/RoleViewModel'
         404:
           description: Role not found
     put:
@@ -1852,11 +1954,16 @@ paths:
           description: id of Role to update
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/RoleViewModel"
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/Role'
+            $ref: "#/definitions/RoleViewModel"
         404:
           description: Role not found
     delete:
@@ -1898,7 +2005,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Permission'    
+              $ref: "#/definitions/PermissionViewModel"
     put:
       description: Updates the permissions for a role
       tags:
@@ -1915,25 +2022,25 @@ paths:
           description: id of Role to update
           required: true
           type: integer
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
             type: array
             items:
-              $ref: "#/definitions/Permission"
+              $ref: "#/definitions/PermissionViewModel"
       responses:
         200:
           description: OK
           schema:
             type: array
             items:
-              $ref: "#/definitions/Permission"
+              $ref: "#/definitions/PermissionViewModel"
         404:
           description: Role not found
   /roles/{id}/users:
     get:
-      description: Get all the users for a role
+      description: Gets all the users for a role
       tags:
         - Role
       produces:
@@ -1952,7 +2059,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/User'    
+              $ref: "#/definitions/UserRoleViewModel"
     put:
       description: Updates the users for a role
       tags:
@@ -1969,20 +2076,20 @@ paths:
           description: id of Role to update
           required: true
           type: integer
-        - name: body
+        - name: items
           in: body
           required: true
           schema:
             type: array
             items:
-              $ref: "#/definitions/User"
+              $ref: "#/definitions/UserRoleViewModel"
       responses:
         200:
           description: OK
           schema:
             type: array
             items:
-              $ref: "#/definitions/User"
+              $ref: "#/definitions/UserRoleViewModel"
         404:
           description: Role not found
   /users:
@@ -2000,7 +2107,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/User'    
+              $ref: "#/definitions/UserViewModel"    
         404:
            description: User not found
     post:
@@ -2014,11 +2121,11 @@ paths:
         - application/json
         - text/json
       parameters:
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/UserViewModel"
       responses:
         201:
           description: User created
@@ -2028,7 +2135,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/UserViewModel"
   /users/current:
     get:
       description: Get the currently logged in user
@@ -2042,7 +2149,7 @@ paths:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/SchoolBusCurrentUserInfo'
+            $ref: "#/definitions/CurrentUserViewModel"
   /users/bulk:
     post:
       description: Adds a number of users
@@ -2059,12 +2166,10 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/User"
+              $ref: "#/definitions/UserViewModel"
       responses:
         200:
           description: OK
-          schema:
-            $ref: '#/definitions/User'
   /users/{id}:
     get:
       description: Returns data for a particular user
@@ -2084,7 +2189,7 @@ paths:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/User'    
+            $ref: "#/definitions/UserViewModel"
         404:
            description: User not found
     put:
@@ -2103,11 +2208,16 @@ paths:
           description: id of User to update
           required: true
           type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserViewModel"
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/User'
+            $ref: "#/definitions/UserViewModel"
         404:
           description: User not found
     delete:
@@ -2150,7 +2260,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/UserRole'    
+              $ref: "#/definitions/UserRoleViewModel"
         404:
            description: User not found
     post:
@@ -2169,11 +2279,11 @@ paths:
           description: id of User to update
           required: true
           type: integer
-        - name: body
+        - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/UserRole"
+            $ref: "#/definitions/UserRoleViewModel"
       responses:
         201:
           description: Role created for user
@@ -2183,7 +2293,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/UserRole"
+            $ref: "#/definitions/UserRoleViewModel"
     put:
       description: Updates the roles for a user
       tags:
@@ -2200,13 +2310,20 @@ paths:
           description: id of User to update
           required: true
           type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserRoleViewModel"
       responses:
         200:
           description: OK
           schema:
             type: array
             items:
-              $ref: '#/definitions/UserRole'
+              $ref: "#/definitions/UserRoleViewModel"
         404:
           description: User not found
   /users/{id}/permissions:
@@ -2230,7 +2347,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Permission'    
+              $ref: "#/definitions/PermissionViewModel"
         404:
            description: User not found
   /users/{id}/groups:
@@ -2254,7 +2371,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/GroupMembership'    
+              $ref: "#/definitions/GroupMembershipViewModel"
         404:
            description: User not found
     put:
@@ -2273,13 +2390,20 @@ paths:
           description: id of User to update
           required: true
           type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembershipViewModel"
       responses:
         200:
           description: OK
           schema:
             type: array
             items:
-              $ref: '#/definitions/GroupMembership'
+              $ref: "#/definitions/GroupMembershipViewModel"
         404:
           description: User not found
   /users/{id}/favourites:
@@ -2297,7 +2421,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/UserFavourite'
+              $ref: "#/definitions/UserFavouriteViewModel"
         "404":
            description: User not found
       parameters:
@@ -2306,7 +2430,7 @@ paths:
           description: id of User to fetch favorites for
           required: true
           type: integer
-  /users/{id}/notification:
+  /users/{id}/notifications:
     get:
       description: Returns a user's notifications
       tags:
@@ -2321,7 +2445,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Notification'
+              $ref: "#/definitions/NotificationViewModel"
       parameters:
         - name: id
           in: path
@@ -2936,8 +3060,7 @@ definitions:
       NotificationGenerated:
         type: boolean
       SchoolBus:
-        $ref: '#/definitions/SchoolBus'
-        
+        $ref: '#/definitions/SchoolBus'        
   User:
     type: object
     required:
@@ -3045,7 +3168,7 @@ definitions:
           max: 1000
       role:
         $ref: '#/definitions/Role'
-      permision:
+      permission:
         $ref: '#/definitions/Permission'
   Permission:
     type: object
@@ -3108,9 +3231,14 @@ definitions:
         x-chance-type: name
       description:
         type: string
-        x-chance-type: sentence 
-  SchoolBusCurrentUserInfo:
+        x-chance-type: sentence
+
+################################################################################
+#                              View Models (DTO)                               #
+################################################################################
+  CurrentUserViewModel:
     type: object
+    x-codegen-viewmodel: true
     properties:
       givenName:
         type: string
@@ -3138,4 +3266,262 @@ definitions:
         x-type-options:
           min: 1
           max: 10
+  UserViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - id
+      - active
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      givenName:
+        type: string
+        x-chance-type: name
+      surname:
+        type: string
+        x-chance-type: name
+      initials:
+        type: string
+      email:
+        type: string
+        x-chance-type: email
+      active:
+        type: boolean
+  UserDetailsViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - id
+      - active
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      givenName:
+        type: string
+        x-chance-type: name
+      surname:
+        type: string
+        x-chance-type: name
+      initials:
+        type: string
+      email:
+        type: string
+        x-chance-type: email
+      active:
+        type: boolean
+      permissions:
+        type: array
+        items:
+          $ref: '#/definitions/PermissionViewModel'
+  UserRoleViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - effectiveDate
+      - userId
+      - roleId
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      effectiveDate:
+        type: string
+        format: date-time
+      expiryDate:
+        type: string
+        format: date-time
+      userId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      roleId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+  RoleViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - id
+      - name
+      - description
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      name:
+        type: string
+        x-chance-type: name
+      description:
+        type: string
+        x-chance-type: sentence
+  RolePermissionViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - roleId
+      - permissionId
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      roleId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      permissionId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+  PermissionViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - code
+      - name
+      - description
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+        x-chance-type: name
+      description:
+        type: string
+        x-chance-type: sentence
+  GroupMembershipViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - active
+      - userId
+      - groupId
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      active:
+        type: boolean
+      groupId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      userId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+  GroupViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - name
+      - description
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      name:
+        type: string
+        x-chance-type: name
+      description:
+        type: string
+        x-chance-type: sentence
+  UserFavouriteViewModel:
+    type: object
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      name: 
+        type: string
+        description:  Context Name
+        x-chance-type: name
+      value:
+        type: string
+        description:  Saved search
+        x-chance-type: word
+      isDefault:
+        type: boolean
+      favouriteContextTypeId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+  NotificationViewModel:
+    type: object
+    properties:
+      id:
+          format: int32
+          type: integer
+          x-type-options:
+            min: 1
+            max: 1000
+      eventId:
+          format: int32
+          type: integer
+          x-type-options:
+            min: 1
+            max: 1000
+      event2Id:
+          format: int32
+          type: integer
+          x-type-options:
+            min: 1
+            max: 1000
+      hasBeenViewed:
+        type: boolean
+      isWatchNotification:
+        type: boolean
+      isExpired:
+        type: boolean
+      isAllDay:
+        type: boolean
+      priorityCode: 
+        type: string
+      userId:
+          format: int32
+          type: integer
+          x-type-options:
+            min: 1
+            max: 1000
 securityDefinitions: {}

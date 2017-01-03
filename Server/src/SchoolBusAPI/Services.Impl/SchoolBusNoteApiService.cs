@@ -17,35 +17,34 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services.Impl
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public class SchoolBusNoteApiService : ISchoolBusNoteApiService
     {
-
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusNoteApiService (DbAppContext context)
+        public SchoolBusNoteApiService(DbAppContext context)
         {
             _context = context;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">SchoolBusNotes created</response>
-
-        public virtual IActionResult SchoolbusnotesBulkPostAsync (SchoolBusNote[] items)        
+        public virtual IActionResult SchoolbusnotesBulkPostAsync(SchoolBusNote[] items)
         {
             if (items == null)
             {
@@ -60,26 +59,24 @@ namespace SchoolBusAPI.Services.Impl
 
             return new NoContentResult();
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <response code="200">OK</response>
-
-        public virtual IActionResult SchoolbusnotesGetAsync ()        
+        public virtual IActionResult SchoolbusnotesGetAsync()
         {
             var result = _context.Inspections.ToList();
             return new ObjectResult(result);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusNote to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusNote not found</response>
-
-        public virtual IActionResult SchoolbusnotesIdDeleteAsync (int id)        
+        public virtual IActionResult SchoolbusnotesIdDeleteAsync(int id)
         {
             var exists = _context.SchoolBusNotes.Any(a => a.Id == id);
             if (exists)
@@ -95,15 +92,14 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusNote to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusNote not found</response>
-
-        public virtual IActionResult SchoolbusnotesIdGetAsync (int id)        
+        public virtual IActionResult SchoolbusnotesIdGetAsync(int id)
         {
             var exists = _context.SchoolBusNotes.Any(a => a.Id == id);
             if (exists)
@@ -116,45 +112,44 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusNote to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusNote not found</response>
-
-        public virtual IActionResult SchoolbusnotesIdPutAsync (int id, SchoolBusNote body)        
+        public virtual IActionResult SchoolbusnotesIdPutAsync(int id, SchoolBusNote item)
         {
             var exists = _context.SchoolBusNotes.Any(a => a.Id == id);
             if (exists)
             {
-                var item = _context.SchoolBusNotes.First(a => a.Id == id);
-                item.Expired = body.Expired;
-                item.SchoolBus = body.SchoolBus;
-                item.Value = body.Value;                               
-                _context.SchoolBusNotes.Update(item);
+                var dbItem = _context.SchoolBusNotes.First(a => a.Id == id);
+                dbItem.Expired = item.Expired;
+                dbItem.SchoolBus = item.SchoolBus;
+                dbItem.Value = item.Value;                               
+                _context.SchoolBusNotes.Update(dbItem);
                 // Save the changes
                 _context.SaveChanges();            
-                return new ObjectResult(item);
+                return new ObjectResult(dbItem);
             }
             else
             {
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="item"></param>
         /// <response code="201">SchoolBusNote created</response>
-
-        public virtual IActionResult SchoolbusnotesPostAsync (SchoolBusNote body)        
+        public virtual IActionResult SchoolbusnotesPostAsync(SchoolBusNote item)
         {
-            _context.SchoolBusNotes.Add(body);
+            _context.SchoolBusNotes.Add(item);
             _context.SaveChanges();
-            return new ObjectResult(body);
+            return new ObjectResult(item);
         }
     }
 }

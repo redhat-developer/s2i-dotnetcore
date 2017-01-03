@@ -20,10 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -34,23 +35,21 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// Create a controller and set the service
         /// </summary>
-
         public RegionApiController(IRegionApiService service)
         {
             _service = service;
         }
 
-
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Adds a number of regions.</remarks>
+        /// <param name="items"></param>
         /// <response code="200">OK</response>
         [HttpPost]
         [Route("/api/regions/bulk")]
-        [SwaggerOperation("RegionsPost")]
-        [SwaggerResponse(200, type: typeof(List<Region>))]
-        public virtual IActionResult RegionsBulkPost([FromBody] Region[] items)
+        [SwaggerOperation("RegionsBulkPost")]
+        public virtual IActionResult RegionsBulkPost([FromBody]Region[] items)
         {
             return this._service.RegionsBulkPostAsync(items);
         }
@@ -58,16 +57,17 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of regions for a given province</remarks>
+        /// <remarks>Returns a list of available regions</remarks>
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/regions")]
         [SwaggerOperation("RegionsGet")]
         [SwaggerResponse(200, type: typeof(List<Region>))]
         public virtual IActionResult RegionsGet()
-        { 
+        {
             return this._service.RegionsGetAsync();
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -79,7 +79,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("RegionsIdCitiesGet")]
         [SwaggerResponse(200, type: typeof(List<City>))]
         public virtual IActionResult RegionsIdCitiesGet([FromRoute]int id)
-        { 
+        {
             return this._service.RegionsIdCitiesGetAsync(id);
         }
 
@@ -109,9 +109,10 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("RegionsIdGet")]
         [SwaggerResponse(200, type: typeof(Region))]
         public virtual IActionResult RegionsIdGet([FromRoute]int id)
-        { 
+        {
             return this._service.RegionsIdGetAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -123,7 +124,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("RegionsIdLocalareasGet")]
         [SwaggerResponse(200, type: typeof(List<LocalArea>))]
         public virtual IActionResult RegionsIdLocalareasGet([FromRoute]int id)
-        { 
+        {
             return this._service.RegionsIdLocalareasGetAsync(id);
         }
 
@@ -147,14 +148,15 @@ namespace SchoolBusAPI.Controllers
         /// 
         /// </summary>
         /// <remarks>Adds a region</remarks>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         [HttpPost]
         [Route("/api/regions")]
         [SwaggerOperation("RegionsPost")]
         [SwaggerResponse(200, type: typeof(List<Region>))]
-        public virtual IActionResult RegionsPost([FromBody] Region item)
-        { 
+        public virtual IActionResult RegionsPost([FromBody]Region item)
+        {
             return this._service.RegionsPostAsync(item);
-        }        
+        }
     }
 }

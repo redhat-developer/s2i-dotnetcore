@@ -19,73 +19,59 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public interface ISchoolBusAttachmentApiService
     {
-	
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="body"></param>
-        /// <response code="201">SchoolBusAttachments created</response>        
 
-        IActionResult SchoolbusattachmentsBulkPostAsync (SchoolBusAttachment [] body );        
-        
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <response code="200">OK</response>        
+        /// <param name="items"></param>
+        /// <response code="201">SchoolBusAttachments created</response>
+        IActionResult SchoolbusattachmentsBulkPostAsync(SchoolBusAttachment[] items);
 
-        IActionResult SchoolbusattachmentsGetAsync ();        
-        
         /// <summary>
         /// 
         /// </summary>
-        
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusattachmentsGetAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id">id of SchoolBusAttachment to delete</param>
         /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusAttachment not found</response>        
+        /// <response code="404">SchoolBusAttachment not found</response>
+        IActionResult SchoolbusattachmentsIdDeleteAsync(int id);
 
-        IActionResult SchoolbusattachmentsIdDeleteAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusAttachment to fetch</param>
         /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusAttachment not found</response>        
+        /// <response code="404">SchoolBusAttachment not found</response>
+        IActionResult SchoolbusattachmentsIdGetAsync(int id);
 
-        IActionResult SchoolbusattachmentsIdGetAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusAttachment to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusAttachment not found</response>        
+        /// <response code="404">SchoolBusAttachment not found</response>
+        IActionResult SchoolbusattachmentsIdPutAsync(int id, SchoolBusAttachment item);
 
-        IActionResult SchoolbusattachmentsIdPutAsync (int id, SchoolBusAttachment body);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
-        /// <response code="201">SchoolBusAttachment created</response>        
-
-        IActionResult SchoolbusattachmentsPostAsync (SchoolBusAttachment body);        
-        
-       
-        
+        /// <param name="item"></param>
+        /// <response code="201">SchoolBusAttachment created</response>
+        IActionResult SchoolbusattachmentsPostAsync(SchoolBusAttachment item);
     }
 }

@@ -19,23 +19,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public interface IPermissionApiService
     {
-	
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Returns a collection of permissions</remarks>
-        /// <response code="200">OK</response>        
-
-        IActionResult PermissionsGetAsync ();        
-        
+        /// <response code="200">OK</response>
+        IActionResult PermissionsGetAsync();
     }
 }

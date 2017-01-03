@@ -20,10 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -34,42 +35,40 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// Create a controller and set the service
         /// </summary>
-
         public SchoolBusOwnerHistoryApiController(ISchoolBusOwnerHistoryApiService service)
         {
             _service = service;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">SchoolBusOwnerHistories created</response>
         [HttpPost]
         [Route("/api/schoolbusownerhistory/bulk")]
         [SwaggerOperation("SchoolbusownerhistoryBulkPost")]
-        public virtual IActionResult SchoolbusownerhistoryBulkPost([FromBody] SchoolBusOwnerHistory[] body)
+        public virtual IActionResult SchoolbusownerhistoryBulkPost([FromBody]SchoolBusOwnerHistory[] items)
         {
-            return this._service.SchoolbusownerhistoryBulkPostAsync(body);
+            return this._service.SchoolbusownerhistoryBulkPostAsync(items);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusownerhistory")]
         [SwaggerOperation("SchoolbusownerhistoryGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBusOwnerHistory>))]
         public virtual IActionResult SchoolbusownerhistoryGet()
-        { 
+        {
             return this._service.SchoolbusownerhistoryGetAsync();
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusOwnerHistory to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerHistory not found</response>
@@ -80,10 +79,10 @@ namespace SchoolBusAPI.Controllers
         {
             return this._service.SchoolbusownerhistoryIdDeleteAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusOwnerHistory to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerHistory not found</response>
@@ -92,37 +91,38 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("SchoolbusownerhistoryIdGet")]
         [SwaggerResponse(200, type: typeof(SchoolBusOwnerAttachment))]
         public virtual IActionResult SchoolbusownerhistoryIdGet([FromRoute]int id)
-        { 
+        {
             return this._service.SchoolbusownerhistoryIdGetAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusOwnerHistory to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerHistory not found</response>
         [HttpPut]
         [Route("/api/schoolbusownerhistory/{id}")]
         [SwaggerOperation("SchoolbusownerhistoryIdPut")]
         [SwaggerResponse(200, type: typeof(SchoolBusOwnerHistory))]
-        public virtual IActionResult SchoolbusownerhistoryIdPut([FromRoute]int id, [FromBody]SchoolBusOwnerHistory body)
-        { 
-            return this._service.SchoolbusownerhistoryIdPutAsync(id, body);
+        public virtual IActionResult SchoolbusownerhistoryIdPut([FromRoute]int id, [FromBody]SchoolBusOwnerHistory item)
+        {
+            return this._service.SchoolbusownerhistoryIdPutAsync(id, item);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="item"></param>
         /// <response code="201">SchoolBusOwnerHistory created</response>
         [HttpPost]
         [Route("/api/schoolbusownerhistory")]
         [SwaggerOperation("SchoolbusownerhistoryPost")]
         [SwaggerResponse(200, type: typeof(SchoolBusOwnerHistory))]
-        public virtual IActionResult SchoolbusownerhistoryPost([FromBody]SchoolBusOwnerHistory body)
-        { 
-            return this._service.SchoolbusownerhistoryPostAsync(body);
+        public virtual IActionResult SchoolbusownerhistoryPost([FromBody]SchoolBusOwnerHistory item)
+        {
+            return this._service.SchoolbusownerhistoryPostAsync(item);
         }
     }
 }

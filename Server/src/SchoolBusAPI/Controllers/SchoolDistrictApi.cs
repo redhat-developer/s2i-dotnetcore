@@ -20,10 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -34,12 +35,11 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// Create a controller and set the service
         /// </summary>
-
         public SchoolDistrictApiController(ISchoolDistrictApiService service)
         {
             _service = service;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
@@ -51,7 +51,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("RegionsIdSchooldistrictsGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolDistrict>))]
         public virtual IActionResult RegionsIdSchooldistrictsGet([FromRoute]int id)
-        { 
+        {
             return this._service.RegionsIdSchooldistrictsGetAsync(id);
         }
     }

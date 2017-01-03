@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class Group :  IEquatable<Group>
+    public partial class Group : IEquatable<Group>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -44,11 +42,11 @@ namespace SchoolBusAPI.Models
         public Group(int Id, string Name, string Description)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             
-            this.Name = Name;            
+            this.Name = Name;
             
-            this.Description = Description;            
+            this.Description = Description;
             
         }
 
@@ -56,24 +54,18 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
-        [DataMember(Name="name")]
-                
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
-        [DataMember(Name="description")]
-                
         public string Description { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -151,19 +143,19 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.Name != null)
-                    { 
-                        hash = hash * 59 + this.Name.GetHashCode();
-                    }
-                    if (this.Description != null)
-                    { 
-                        hash = hash * 59 + this.Description.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Name != null)
+                {
+                    hash = hash * 59 + this.Name.GetHashCode();
+                }
+                if (this.Description != null)
+                {
+                    hash = hash * 59 + this.Description.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -181,6 +173,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

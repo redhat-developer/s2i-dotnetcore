@@ -19,71 +19,59 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public interface INotificationApiService
     {
-	
-        /// <summary>
-        /// 
-        /// </summary>
-        
-        /// <param name="body"></param>
-        /// <response code="201">Notifications created</response>        
 
-        IActionResult notificationsBulkPostAsync (Notification[] body);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <response code="200">OK</response>        
+        /// <param name="items"></param>
+        /// <response code="201">Notifications created</response>
+        IActionResult NotificationsBulkPostAsync(Notification[] items);
 
-        IActionResult notificationsGetAsync ();        
-        
         /// <summary>
         /// 
         /// </summary>
-        
+        /// <response code="200">OK</response>
+        IActionResult NotificationsGetAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id">id of Notification to delete</param>
         /// <response code="200">OK</response>
-        /// <response code="404">Notification not found</response>        
+        /// <response code="404">Notification not found</response>
+        IActionResult NotificationsIdDeleteAsync(int id);
 
-        IActionResult notificationsIdDeleteAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Notification to fetch</param>
         /// <response code="200">OK</response>
-        /// <response code="404">Notification not found</response>        
+        /// <response code="404">Notification not found</response>
+        IActionResult NotificationsIdGetAsync(int id);
 
-        IActionResult notificationsIdGetAsync (int id);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of Notification to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
-        /// <response code="404">Notification not found</response>        
+        /// <response code="404">Notification not found</response>
+        IActionResult NotificationsIdPutAsync(int id, Notification item);
 
-        IActionResult notificationsIdPutAsync (int id, Notification body);        
-        
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
-        /// <response code="201">Notification created</response>        
-
-        IActionResult notificationsPostAsync (Notification body);        
-        
+        /// <param name="item"></param>
+        /// <response code="201">Notification created</response>
+        IActionResult NotificationsPostAsync(Notification item);
     }
 }

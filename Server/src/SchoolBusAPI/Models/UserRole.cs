@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class UserRole :  IEquatable<UserRole>
+    public partial class UserRole : IEquatable<UserRole>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -46,9 +44,9 @@ namespace SchoolBusAPI.Models
         public UserRole(int Id, DateTime EffectiveDate, DateTime? ExpiryDate = null, User User = null, Role Role = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             
-            this.EffectiveDate = EffectiveDate;            
+            this.EffectiveDate = EffectiveDate;
             this.ExpiryDate = ExpiryDate;
             this.User = User;
             this.Role = Role;
@@ -59,38 +57,28 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets EffectiveDate
         /// </summary>
-        [DataMember(Name="effectiveDate")]
-                
         public DateTime EffectiveDate { get; set; }
 
         /// <summary>
         /// Gets or Sets ExpiryDate
         /// </summary>
-        [DataMember(Name="expiryDate")]
-                
         public DateTime? ExpiryDate { get; set; }
 
         /// <summary>
         /// Gets or Sets User
         /// </summary>
-        [DataMember(Name="user")]
-                
         public User User { get; set; }
 
         /// <summary>
         /// Gets or Sets Role
         /// </summary>
-        [DataMember(Name="role")]
-                
         public Role Role { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -180,27 +168,27 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.EffectiveDate != null)
-                    { 
-                        hash = hash * 59 + this.EffectiveDate.GetHashCode();
-                    }
-                    if (this.ExpiryDate != null)
-                    { 
-                        hash = hash * 59 + this.ExpiryDate.GetHashCode();
-                    }
-                    if (this.User != null)
-                    { 
-                        hash = hash * 59 + this.User.GetHashCode();
-                    }
-                    if (this.Role != null)
-                    { 
-                        hash = hash * 59 + this.Role.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.EffectiveDate != null)
+                {
+                    hash = hash * 59 + this.EffectiveDate.GetHashCode();
+                }
+                if (this.ExpiryDate != null)
+                {
+                    hash = hash * 59 + this.ExpiryDate.GetHashCode();
+                }
+                if (this.User != null)
+                {
+                    hash = hash * 59 + this.User.GetHashCode();
+                }
+                if (this.Role != null)
+                {
+                    hash = hash * 59 + this.Role.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -218,6 +206,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

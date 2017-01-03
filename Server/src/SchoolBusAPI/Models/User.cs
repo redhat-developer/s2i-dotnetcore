@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class User :  IEquatable<User>
+    public partial class User : IEquatable<User>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -40,11 +38,11 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
+        /// <param name="Active">Active (required).</param>
         /// <param name="GivenName">GivenName.</param>
         /// <param name="Surname">Surname.</param>
         /// <param name="Initials">Initials.</param>
         /// <param name="Email">Email.</param>
-        /// <param name="Active">Active (required).</param>
         /// <param name="SmUserId">Security Manager User ID.</param>
         /// <param name="Guid">Guid.</param>
         /// <param name="SmAuthorizationDirectory">SmAuthorizationDirectory.</param>
@@ -53,9 +51,9 @@ namespace SchoolBusAPI.Models
         public User(int Id, bool Active, string GivenName = null, string Surname = null, string Initials = null, string Email = null, string SmUserId = null, string Guid = null, string SmAuthorizationDirectory = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             
-            this.Active = Active;            
+            this.Active = Active;
             this.GivenName = GivenName;
             this.Surname = Surname;
             this.Initials = Initials;
@@ -72,81 +70,60 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Active
+        /// </summary>
+        public bool Active { get; set; }
 
         /// <summary>
         /// Gets or Sets GivenName
         /// </summary>
-        [DataMember(Name="givenName")]
-                
         public string GivenName { get; set; }
 
         /// <summary>
         /// Gets or Sets Surname
         /// </summary>
-        [DataMember(Name="surname")]
-                
         public string Surname { get; set; }
 
         /// <summary>
         /// Gets or Sets Initials
         /// </summary>
-        [DataMember(Name="initials")]
-                
         public string Initials { get; set; }
 
         /// <summary>
         /// Gets or Sets Email
         /// </summary>
-        [DataMember(Name="email")]
-                
         public string Email { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Active
-        /// </summary>
-        [DataMember(Name="active")]
-                
-        public bool Active { get; set; }
 
         /// <summary>
         /// Security Manager User ID
         /// </summary>
         /// <value>Security Manager User ID</value>
-        [DataMember(Name="smUserId")]
-        [MetaDataExtension (Description = "Security Manager User ID")]        
+        [MetaDataExtension (Description = "Security Manager User ID")]
         public string SmUserId { get; set; }
 
         /// <summary>
         /// Gets or Sets Guid
         /// </summary>
-        [DataMember(Name="guid")]
-                
         public string Guid { get; set; }
 
         /// <summary>
         /// Gets or Sets SmAuthorizationDirectory
         /// </summary>
-        [DataMember(Name="smAuthorizationDirectory")]
-                
         public string SmAuthorizationDirectory { get; set; }
 
         /// <summary>
         /// Gets or Sets UserRoles
         /// </summary>
-        [DataMember(Name="userRoles")]
-                
         public List<UserRole> UserRoles { get; set; }
 
         /// <summary>
         /// Gets or Sets GroupMemberships
         /// </summary>
-        [DataMember(Name="groupMemberships")]
-                
         public List<GroupMembership> GroupMemberships { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -157,11 +134,11 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class User {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Active: ").Append(Active).Append("\n");
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
             sb.Append("  Surname: ").Append(Surname).Append("\n");
             sb.Append("  Initials: ").Append(Initials).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
-            sb.Append("  Active: ").Append(Active).Append("\n");
             sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
             sb.Append("  Guid: ").Append(Guid).Append("\n");
             sb.Append("  SmAuthorizationDirectory: ").Append(SmAuthorizationDirectory).Append("\n");
@@ -211,6 +188,11 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
+                    this.Active == other.Active ||
+                    this.Active != null &&
+                    this.Active.Equals(other.Active)
+                ) && 
+                (
                     this.GivenName == other.GivenName ||
                     this.GivenName != null &&
                     this.GivenName.Equals(other.GivenName)
@@ -229,11 +211,6 @@ namespace SchoolBusAPI.Models
                     this.Email == other.Email ||
                     this.Email != null &&
                     this.Email.Equals(other.Email)
-                ) && 
-                (
-                    this.Active == other.Active ||
-                    this.Active != null &&
-                    this.Active.Equals(other.Active)
                 ) && 
                 (
                     this.SmUserId == other.SmUserId ||
@@ -272,51 +249,51 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.GivenName != null)
-                    { 
-                        hash = hash * 59 + this.GivenName.GetHashCode();
-                    }
-                    if (this.Surname != null)
-                    { 
-                        hash = hash * 59 + this.Surname.GetHashCode();
-                    }
-                    if (this.Initials != null)
-                    { 
-                        hash = hash * 59 + this.Initials.GetHashCode();
-                    }
-                    if (this.Email != null)
-                    { 
-                        hash = hash * 59 + this.Email.GetHashCode();
-                    }
-                    if (this.Active != null)
-                    { 
-                        hash = hash * 59 + this.Active.GetHashCode();
-                    }
-                    if (this.SmUserId != null)
-                    { 
-                        hash = hash * 59 + this.SmUserId.GetHashCode();
-                    }
-                    if (this.Guid != null)
-                    { 
-                        hash = hash * 59 + this.Guid.GetHashCode();
-                    }
-                    if (this.SmAuthorizationDirectory != null)
-                    { 
-                        hash = hash * 59 + this.SmAuthorizationDirectory.GetHashCode();
-                    }
-                    if (this.UserRoles != null)
-                    { 
-                        hash = hash * 59 + this.UserRoles.GetHashCode();
-                    }
-                    if (this.GroupMemberships != null)
-                    { 
-                        hash = hash * 59 + this.GroupMemberships.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Active != null)
+                {
+                    hash = hash * 59 + this.Active.GetHashCode();
+                }
+                if (this.GivenName != null)
+                {
+                    hash = hash * 59 + this.GivenName.GetHashCode();
+                }
+                if (this.Surname != null)
+                {
+                    hash = hash * 59 + this.Surname.GetHashCode();
+                }
+                if (this.Initials != null)
+                {
+                    hash = hash * 59 + this.Initials.GetHashCode();
+                }
+                if (this.Email != null)
+                {
+                    hash = hash * 59 + this.Email.GetHashCode();
+                }
+                if (this.SmUserId != null)
+                {
+                    hash = hash * 59 + this.SmUserId.GetHashCode();
+                }
+                if (this.Guid != null)
+                {
+                    hash = hash * 59 + this.Guid.GetHashCode();
+                }
+                if (this.SmAuthorizationDirectory != null)
+                {
+                    hash = hash * 59 + this.SmAuthorizationDirectory.GetHashCode();
+                }
+                if (this.UserRoles != null)
+                {
+                    hash = hash * 59 + this.UserRoles.GetHashCode();
+                }
+                if (this.GroupMemberships != null)
+                {
+                    hash = hash * 59 + this.GroupMemberships.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -334,6 +311,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

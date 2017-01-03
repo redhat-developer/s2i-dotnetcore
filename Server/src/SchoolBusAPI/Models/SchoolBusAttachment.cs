@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class SchoolBusAttachment :  IEquatable<SchoolBusAttachment>
+    public partial class SchoolBusAttachment : IEquatable<SchoolBusAttachment>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -45,7 +43,7 @@ namespace SchoolBusAPI.Models
         public SchoolBusAttachment(int Id, string InternalFileName = null, string ExternalFileName = null, SchoolBus SchoolBus = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.InternalFileName = InternalFileName;
             this.ExternalFileName = ExternalFileName;
             this.SchoolBus = SchoolBus;
@@ -56,31 +54,23 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets InternalFileName
         /// </summary>
-        [DataMember(Name="InternalFileName")]
-                
         public string InternalFileName { get; set; }
 
         /// <summary>
         /// Gets or Sets ExternalFileName
         /// </summary>
-        [DataMember(Name="ExternalFileName")]
-                
         public string ExternalFileName { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBus
         /// </summary>
-        [DataMember(Name="SchoolBus")]
-                
         public SchoolBus SchoolBus { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -164,23 +154,23 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.InternalFileName != null)
-                    { 
-                        hash = hash * 59 + this.InternalFileName.GetHashCode();
-                    }
-                    if (this.ExternalFileName != null)
-                    { 
-                        hash = hash * 59 + this.ExternalFileName.GetHashCode();
-                    }
-                    if (this.SchoolBus != null)
-                    { 
-                        hash = hash * 59 + this.SchoolBus.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.InternalFileName != null)
+                {
+                    hash = hash * 59 + this.InternalFileName.GetHashCode();
+                }
+                if (this.ExternalFileName != null)
+                {
+                    hash = hash * 59 + this.ExternalFileName.GetHashCode();
+                }
+                if (this.SchoolBus != null)
+                {
+                    hash = hash * 59 + this.SchoolBus.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -198,6 +188,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

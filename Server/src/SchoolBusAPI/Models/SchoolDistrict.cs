@@ -23,10 +23,8 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public partial class SchoolDistrict :  IEquatable<SchoolDistrict>
+    public partial class SchoolDistrict : IEquatable<SchoolDistrict>
     {
-
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
@@ -43,7 +41,7 @@ namespace SchoolBusAPI.Models
         public SchoolDistrict(int Id, Region Region = null)
         {
             
-            this.Id = Id;            
+            this.Id = Id;
             this.Region = Region;
             
         }
@@ -52,17 +50,13 @@ namespace SchoolBusAPI.Models
         /// Primary Key
         /// </summary>
         /// <value>Primary Key</value>
-        [DataMember(Name="id")]
-        [MetaDataExtension (Description = "Primary Key")]        
+        [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Region
         /// </summary>
-        [DataMember(Name="Region")]
-                
         public Region Region { get; set; }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -134,15 +128,15 @@ namespace SchoolBusAPI.Models
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                // Suitable nullity checks 
-                    if (this.Id != null)
-                    { 
-                        hash = hash * 59 + this.Id.GetHashCode();
-                    }
-                    if (this.Region != null)
-                    { 
-                        hash = hash * 59 + this.Region.GetHashCode();
-                    }
+                // Suitable nullity checks
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Region != null)
+                {
+                    hash = hash * 59 + this.Region.GetHashCode();
+                }
                 return hash;
             }
         }
@@ -160,6 +154,5 @@ namespace SchoolBusAPI.Models
         }
 
         #endregion Operators
-
     }
 }

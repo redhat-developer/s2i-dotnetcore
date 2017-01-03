@@ -20,10 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -34,42 +35,40 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// Create a controller and set the service
         /// </summary>
-
         public SchoolBusOwnerNoteApiController(ISchoolBusOwnerNoteApiService service)
         {
             _service = service;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">SchoolBusOwnerNotes created</response>
         [HttpPost]
         [Route("/api/schoolbusownernotes/bulk")]
         [SwaggerOperation("SchoolbusownernotesBulkPost")]
-        public virtual IActionResult SchoolbusownernotesBulkPost([FromBody] SchoolBusOwnerNote[] body)
+        public virtual IActionResult SchoolbusownernotesBulkPost([FromBody]SchoolBusOwnerNote[] items)
         {
-            return this._service.SchoolbusownernotesBulkPostAsync(body);
+            return this._service.SchoolbusownernotesBulkPostAsync(items);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusownernotes")]
         [SwaggerOperation("SchoolbusownernotesGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBusOwnerNote>))]
         public virtual IActionResult SchoolbusownernotesGet()
-        { 
+        {
             return this._service.SchoolbusownernotesGetAsync();
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusOwnerNote to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerNote not found</response>
@@ -80,10 +79,10 @@ namespace SchoolBusAPI.Controllers
         {
             return this._service.SchoolbusownernotesIdDeleteAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusOwnerNote to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerNote not found</response>
@@ -92,37 +91,38 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("SchoolbusownernotesIdGet")]
         [SwaggerResponse(200, type: typeof(SchoolBusOwnerNote))]
         public virtual IActionResult SchoolbusownernotesIdGet([FromRoute]int id)
-        { 
+        {
             return this._service.SchoolbusownernotesIdGetAsync(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusOwnerNote to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerNote not found</response>
         [HttpPut]
         [Route("/api/schoolbusownernotes/{id}")]
         [SwaggerOperation("SchoolbusownernotesIdPut")]
         [SwaggerResponse(200, type: typeof(SchoolBusOwnerNote))]
-        public virtual IActionResult SchoolbusownernotesIdPut([FromRoute]int id, [FromBody]SchoolBusOwnerNote body)
-        { 
-            return this._service.SchoolbusownernotesIdPutAsync(id, body);
+        public virtual IActionResult SchoolbusownernotesIdPut([FromRoute]int id, [FromBody]SchoolBusOwnerNote item)
+        {
+            return this._service.SchoolbusownernotesIdPutAsync(id, item);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="item"></param>
         /// <response code="201">SchoolBusOwnerNote created</response>
         [HttpPost]
         [Route("/api/schoolbusownernotes")]
         [SwaggerOperation("SchoolbusownernotesPost")]
         [SwaggerResponse(200, type: typeof(SchoolBusOwnerNote))]
-        public virtual IActionResult SchoolbusownernotesPost([FromBody]SchoolBusOwnerNote body)
-        { 
-            return this._service.SchoolbusownernotesPostAsync(body);
+        public virtual IActionResult SchoolbusownernotesPost([FromBody]SchoolBusOwnerNote item)
+        {
+            return this._service.SchoolbusownernotesPostAsync(item);
         }
     }
 }

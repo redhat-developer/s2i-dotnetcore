@@ -17,35 +17,34 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services.Impl
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     public class SchoolBusAttachmentApiService : ISchoolBusAttachmentApiService
     {
-
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusAttachmentApiService (DbAppContext context)
+        public SchoolBusAttachmentApiService(DbAppContext context)
         {
             _context = context;
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">SchoolBusAttachments created</response>
-
-        public virtual IActionResult SchoolbusattachmentsBulkPostAsync (SchoolBusAttachment[] items)        
+        public virtual IActionResult SchoolbusattachmentsBulkPostAsync(SchoolBusAttachment[] items)
         {
             if (items == null)
             {
@@ -60,26 +59,24 @@ namespace SchoolBusAPI.Services.Impl
 
             return new NoContentResult();
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <response code="200">OK</response>
-
-        public virtual IActionResult SchoolbusattachmentsGetAsync ()        
+        public virtual IActionResult SchoolbusattachmentsGetAsync()
         {
             var result = _context.SchoolBusAttachments.ToList();
             return new ObjectResult(result);
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusAttachment to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusAttachment not found</response>
-
-        public virtual IActionResult SchoolbusattachmentsIdDeleteAsync (int id)        
+        public virtual IActionResult SchoolbusattachmentsIdDeleteAsync(int id)
         {
             var exists = _context.SchoolBusAttachments.Any(a => a.Id == id);
             if (exists)
@@ -95,15 +92,14 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusAttachment to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusAttachment not found</response>
-
-        public virtual IActionResult SchoolbusattachmentsIdGetAsync (int id)        
+        public virtual IActionResult SchoolbusattachmentsIdGetAsync(int id)
         {
             var exists = _context.SchoolBusAttachments.Any(a => a.Id == id);
             if (exists)
@@ -116,24 +112,24 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
         /// <param name="id">id of SchoolBusAttachment to fetch</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusAttachment not found</response>
-
-        public virtual IActionResult SchoolbusattachmentsIdPutAsync (int id, SchoolBusAttachment body)        
+        public virtual IActionResult SchoolbusattachmentsIdPutAsync(int id, SchoolBusAttachment item)
         {
             var exists = _context.SchoolBusAttachments.Any(a => a.Id == id);
             if (exists)
             {
-                var item = _context.SchoolBusAttachments.First(a => a.Id == id);
-                item.ExternalFileName = body.ExternalFileName;
-                item.InternalFileName = body.InternalFileName;
-                item.SchoolBus = body.SchoolBus;                
-                _context.SchoolBusAttachments.Update(item);
+                var dbItem = _context.SchoolBusAttachments.First(a => a.Id == id);
+                dbItem.ExternalFileName = item.ExternalFileName;
+                dbItem.InternalFileName = item.InternalFileName;
+                dbItem.SchoolBus = item.SchoolBus;                
+                _context.SchoolBusAttachments.Update(dbItem);
                 // Save the changes
                 _context.SaveChanges();
                 return new StatusCodeResult(200);
@@ -143,19 +139,17 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
-        
-        /// <param name="body"></param>
+        /// <param name="item"></param>
         /// <response code="201">SchoolBusAttachment created</response>
-
-        public virtual IActionResult SchoolbusattachmentsPostAsync (SchoolBusAttachment body)        
+        public virtual IActionResult SchoolbusattachmentsPostAsync(SchoolBusAttachment item)
         {
-            _context.SchoolBusAttachments.Add(body);
+            _context.SchoolBusAttachments.Add(item);
             _context.SaveChanges();
-            return new ObjectResult(body);
+            return new ObjectResult(item);
         }
-       
     }
 }
