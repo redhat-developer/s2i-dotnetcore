@@ -74,11 +74,10 @@ namespace SchoolBusClient
             app.UseMvc();
             
             app.UseDefaultFiles();
-            app.UseStaticFiles(new StaticFileOptions()
+            app.UseFileServer(new FileServerOptions()
 			{
 				FileProvider = new PhysicalFileProvider(
-					Path.Combine(Directory.GetCurrentDirectory(), @"src/dist")),
-				RequestPath = new PathString("")
+					Path.Combine(Directory.GetCurrentDirectory(), @"src/dist"))
 			});
 
             app.UseProxyServer(Configuration);

@@ -73,7 +73,6 @@
         "dockerImageRepository": ""
     }
 },
-
 {
     "kind": "ImageStream",
     "apiVersion": "v1",
@@ -107,6 +106,28 @@
                 ]
             }
         
+},
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${CLIENT_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "${DEPLOYMENT_TYPE}",
+                "annotations": null,
+                "generation": null,
+                "importPolicy": {}
+            }
+
+        ]
+    },
+    "status": {    
+    }
 },
 {
     "kind": "ImageStream",
@@ -285,6 +306,58 @@
     "kind": "BuildConfig",
     "apiVersion": "v1",
     "metadata": {
+        "name": "${CLIENT_NAME}",
+        "creationTimestamp": null,
+        "labels": {
+            "app": "${CLIENT_NAME}"
+        }
+    },
+    "spec": {
+        "triggers": [
+            {
+                "type": "ImageChange",
+                "imageChange": {}
+            },
+            {
+                "type": "ConfigChange"
+            }
+        ],
+        "runPolicy": "Serial",
+        "source": {
+            "type": "Git",
+            "git": {
+                "uri": "https://github.com/bcgov/schoolbus.git"
+            },
+            "contextDir": "/Client"
+        },
+        "strategy": {
+            "type": "Docker", 
+			"dockerStrategy": {
+				"from": {
+					"kind": "ImageStreamTag",
+					"name": "dotnet:latest"
+					}
+			}
+        },
+        "output": {
+            "to": {
+                "kind": "ImageStreamTag",
+				"namespace": "tran-schoolbus-tools",
+                "name": "${CLIENT_NAME}:${DEPLOYMENT_TYPE}"
+            }
+        },
+        "resources": {},
+        "postCommit": {},
+        "nodeSelector": null
+    },
+    "status": {
+        "lastVersion": 0
+      }
+	},
+	{
+    "kind": "BuildConfig",
+    "apiVersion": "v1",
+    "metadata": {
         "name": "${FRONTEND_NAME}",
         "creationTimestamp": null,
         "labels": {
@@ -307,14 +380,14 @@
             "git": {
                 "uri": "https://github.com/bcgov/schoolbus.git"
             },
-            "contextDir": "/Client/src/SchoolBusClient"
+            "contextDir": "/FrontEnd/src/SchoolBusClient"
         },
         "strategy": {
-            "type": "Source",
-            "sourceStrategy": {
+            "type": "Docker",
+            "dockerStrategy": {
                 "from": {
                     "kind": "ImageStreamTag",
-                    "name": "dotnetcore-11-rhel7:latest"
+                    "name": "${CLIENT_NAME}:${DEPLOYMENT_TYPE}"
                 }
             }
         },
@@ -341,12 +414,19 @@
       "required": true,
       "value": "schoolbus"
 	},
+	{
+      "name": "CLIENT_NAME",
+      "displayName": "Client Name",
+      "description": "The name assigned to all of the client side build objects defined in this template.  This is where the client side code is compiled.",
+      "required": true,
+      "value": "client"
+    },
     {
       "name": "FRONTEND_NAME",
       "displayName": "Frontend Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
       "required": true,
-      "value": "client"
+      "value": "frontend"
     },
 	{
       "name": "MIDDLEWARE_NAME",
