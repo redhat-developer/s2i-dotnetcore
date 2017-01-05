@@ -11,7 +11,7 @@ export function test(/*testId*/) {
 }
 
 export function getCurrentUser() {
-  if (TESTING) { return store.dispatch({ type: 'TEST_USER' }); }
+  if (TESTING) { store.dispatch({ type: 'TEST_USER' }); return {}; }
 
   return new ApiRequest('/users/current').get().then(response => {
     store.dispatch({ type: 'UPDATE_USER', user: response });
@@ -19,7 +19,7 @@ export function getCurrentUser() {
 }
 
 export function getUsers(regionId, cityId, localAreaId) {
-  if (TESTING) { return store.dispatch({ type: 'TEST_USERS' }); }
+  if (TESTING) { store.dispatch({ type: 'TEST_USERS' }); return {}; }
 
   return new ApiRequest('/users').get({
     regionId    : regionId,
