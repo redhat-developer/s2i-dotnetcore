@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.
     /// </summary>
     public partial class UserFavourite : IEquatable<UserFavourite>
     {
@@ -37,9 +37,9 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="UserFavourite" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">Context Name.</param>
-        /// <param name="Value">Saved search.</param>
-        /// <param name="IsDefault">IsDefault.</param>
+        /// <param name="Name">The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed..</param>
+        /// <param name="Value">The settings saved by the user. In general, a UI defined chunk of json that stores the settings in place when the user created the favourite..</param>
+        /// <param name="IsDefault">True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite, a system-wide default is invoked. On return to the context within a session, the last parameters used are reapplied..</param>
         /// <param name="FavouriteContextType">FavouriteContextType.</param>
         public UserFavourite(int Id, string Name = null, string Value = null, bool? IsDefault = null, FavouriteContextType FavouriteContextType = null)
         {
@@ -60,22 +60,24 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Context Name
+        /// The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.
         /// </summary>
-        /// <value>Context Name</value>
-        [MetaDataExtension (Description = "Context Name")]
+        /// <value>The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.</value>
+        [MetaDataExtension (Description = "The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Saved search
+        /// The settings saved by the user. In general, a UI defined chunk of json that stores the settings in place when the user created the favourite.
         /// </summary>
-        /// <value>Saved search</value>
-        [MetaDataExtension (Description = "Saved search")]
+        /// <value>The settings saved by the user. In general, a UI defined chunk of json that stores the settings in place when the user created the favourite.</value>
+        [MetaDataExtension (Description = "The settings saved by the user. In general, a UI defined chunk of json that stores the settings in place when the user created the favourite.")]
         public string Value { get; set; }
 
         /// <summary>
-        /// Gets or Sets IsDefault
+        /// True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite, a system-wide default is invoked. On return to the context within a session, the last parameters used are reapplied.
         /// </summary>
+        /// <value>True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite, a system-wide default is invoked. On return to the context within a session, the last parameters used are reapplied.</value>
+        [MetaDataExtension (Description = "True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite, a system-wide default is invoked. On return to the context within a session, the last parameters used are reapplied.")]
         public bool? IsDefault { get; set; }
 
         /// <summary>

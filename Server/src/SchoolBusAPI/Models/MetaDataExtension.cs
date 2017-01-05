@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 
 namespace SchoolBusAPI.Models
 {
-    /// <summary>
-    /// Utility extension for the Column Comment feature
-    /// </summary>
     public class MetaDataExtension : Attribute
     {
         private string _description;

@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -37,11 +37,15 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolBusOwnerContactPhone" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
+        /// <param name="Type">The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list..</param>
+        /// <param name="PhoneNumber">The phone number of the contact. Entered as free form to support a range of formats..</param>
         /// <param name="SchoolBusOwnerContact">SchoolBusOwnerContact.</param>
-        public SchoolBusOwnerContactPhone(int Id, SchoolBusOwnerContact SchoolBusOwnerContact = null)
+        public SchoolBusOwnerContactPhone(int Id, string Type = null, string PhoneNumber = null, SchoolBusOwnerContact SchoolBusOwnerContact = null)
         {
             
             this.Id = Id;
+            this.Type = Type;
+            this.PhoneNumber = PhoneNumber;
             this.SchoolBusOwnerContact = SchoolBusOwnerContact;
             
         }
@@ -52,6 +56,20 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
+
+        /// <summary>
+        /// The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.
+        /// </summary>
+        /// <value>The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.</value>
+        [MetaDataExtension (Description = "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// The phone number of the contact. Entered as free form to support a range of formats.
+        /// </summary>
+        /// <value>The phone number of the contact. Entered as free form to support a range of formats.</value>
+        [MetaDataExtension (Description = "The phone number of the contact. Entered as free form to support a range of formats.")]
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBusOwnerContact
@@ -67,6 +85,8 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolBusOwnerContactPhone {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  PhoneNumber: ").Append(PhoneNumber).Append("\n");
             sb.Append("  SchoolBusOwnerContact: ").Append(SchoolBusOwnerContact).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -112,6 +132,16 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
+                ) && 
+                (
+                    this.PhoneNumber == other.PhoneNumber ||
+                    this.PhoneNumber != null &&
+                    this.PhoneNumber.Equals(other.PhoneNumber)
+                ) && 
+                (
                     this.SchoolBusOwnerContact == other.SchoolBusOwnerContact ||
                     this.SchoolBusOwnerContact != null &&
                     this.SchoolBusOwnerContact.Equals(other.SchoolBusOwnerContact)
@@ -132,6 +162,14 @@ namespace SchoolBusAPI.Models
                 if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Type != null)
+                {
+                    hash = hash * 59 + this.Type.GetHashCode();
+                }
+                if (this.PhoneNumber != null)
+                {
+                    hash = hash * 59 + this.PhoneNumber.GetHashCode();
                 }
                 if (this.SchoolBusOwnerContact != null)
                 {

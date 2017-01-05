@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.
     /// </summary>
     public partial class SchoolBusAttachment : IEquatable<SchoolBusAttachment>
     {
@@ -37,15 +37,17 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolBusAttachment" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="InternalFileName">InternalFileName.</param>
-        /// <param name="ExternalFileName">ExternalFileName.</param>
+        /// <param name="InternalFileName">The physical location of the attachment on the file system..</param>
+        /// <param name="ExternalFileName">The name of the attachment as defined by the user in uploading the document..</param>
+        /// <param name="Description">A note about the attachment, optionally maintained by the user..</param>
         /// <param name="SchoolBus">SchoolBus.</param>
-        public SchoolBusAttachment(int Id, string InternalFileName = null, string ExternalFileName = null, SchoolBus SchoolBus = null)
+        public SchoolBusAttachment(int Id, string InternalFileName = null, string ExternalFileName = null, string Description = null, SchoolBus SchoolBus = null)
         {
             
             this.Id = Id;
             this.InternalFileName = InternalFileName;
             this.ExternalFileName = ExternalFileName;
+            this.Description = Description;
             this.SchoolBus = SchoolBus;
             
         }
@@ -58,14 +60,25 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets InternalFileName
+        /// The physical location of the attachment on the file system.
         /// </summary>
+        /// <value>The physical location of the attachment on the file system.</value>
+        [MetaDataExtension (Description = "The physical location of the attachment on the file system.")]
         public string InternalFileName { get; set; }
 
         /// <summary>
-        /// Gets or Sets ExternalFileName
+        /// The name of the attachment as defined by the user in uploading the document.
         /// </summary>
+        /// <value>The name of the attachment as defined by the user in uploading the document.</value>
+        [MetaDataExtension (Description = "The name of the attachment as defined by the user in uploading the document.")]
         public string ExternalFileName { get; set; }
+
+        /// <summary>
+        /// A note about the attachment, optionally maintained by the user.
+        /// </summary>
+        /// <value>A note about the attachment, optionally maintained by the user.</value>
+        [MetaDataExtension (Description = "A note about the attachment, optionally maintained by the user.")]
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBus
@@ -83,6 +96,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  InternalFileName: ").Append(InternalFileName).Append("\n");
             sb.Append("  ExternalFileName: ").Append(ExternalFileName).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  SchoolBus: ").Append(SchoolBus).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -138,6 +152,11 @@ namespace SchoolBusAPI.Models
                     this.ExternalFileName.Equals(other.ExternalFileName)
                 ) && 
                 (
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
+                ) && 
+                (
                     this.SchoolBus == other.SchoolBus ||
                     this.SchoolBus != null &&
                     this.SchoolBus.Equals(other.SchoolBus)
@@ -166,6 +185,10 @@ namespace SchoolBusAPI.Models
                 if (this.ExternalFileName != null)
                 {
                     hash = hash * 59 + this.ExternalFileName.GetHashCode();
+                }
+                if (this.Description != null)
+                {
+                    hash = hash * 59 + this.Description.GetHashCode();
                 }
                 if (this.SchoolBus != null)
                 {

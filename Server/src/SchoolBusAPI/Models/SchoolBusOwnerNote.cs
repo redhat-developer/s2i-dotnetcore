@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -37,15 +37,15 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolBusOwnerNote" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Expired">Expired.</param>
-        /// <param name="Value">The note text.</param>
+        /// <param name="Expired">Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment..</param>
+        /// <param name="Note">The contents of the note..</param>
         /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
-        public SchoolBusOwnerNote(int Id, bool? Expired = null, string Value = null, SchoolBusOwner SchoolBusOwner = null)
+        public SchoolBusOwnerNote(int Id, bool? Expired = null, string Note = null, SchoolBusOwner SchoolBusOwner = null)
         {
             
             this.Id = Id;
             this.Expired = Expired;
-            this.Value = Value;
+            this.Note = Note;
             this.SchoolBusOwner = SchoolBusOwner;
             
         }
@@ -58,16 +58,18 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets Expired
+        /// Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.
         /// </summary>
+        /// <value>Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.</value>
+        [MetaDataExtension (Description = "Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.")]
         public bool? Expired { get; set; }
 
         /// <summary>
-        /// The note text
+        /// The contents of the note.
         /// </summary>
-        /// <value>The note text</value>
-        [MetaDataExtension (Description = "The note text")]
-        public string Value { get; set; }
+        /// <value>The contents of the note.</value>
+        [MetaDataExtension (Description = "The contents of the note.")]
+        public string Note { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBusOwner
@@ -84,7 +86,7 @@ namespace SchoolBusAPI.Models
             sb.Append("class SchoolBusOwnerNote {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Expired: ").Append(Expired).Append("\n");
-            sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("  Note: ").Append(Note).Append("\n");
             sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -135,9 +137,9 @@ namespace SchoolBusAPI.Models
                     this.Expired.Equals(other.Expired)
                 ) && 
                 (
-                    this.Value == other.Value ||
-                    this.Value != null &&
-                    this.Value.Equals(other.Value)
+                    this.Note == other.Note ||
+                    this.Note != null &&
+                    this.Note.Equals(other.Note)
                 ) && 
                 (
                     this.SchoolBusOwner == other.SchoolBusOwner ||
@@ -165,9 +167,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Expired.GetHashCode();
                 }
-                if (this.Value != null)
+                if (this.Note != null)
                 {
-                    hash = hash * 59 + this.Value.GetHashCode();
+                    hash = hash * 59 + this.Note.GetHashCode();
                 }
                 if (this.SchoolBusOwner != null)
                 {
