@@ -107,7 +107,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  MinistryServiceAreaID: ").Append(MinistryServiceAreaID).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Region: ").Append(District).Append("\n");
+            sb.Append("  District: ").Append(District).Append("\n");
             sb.Append("  StartDate: ").Append(StartDate).Append("\n");
             sb.Append("  EndDate: ").Append(EndDate).Append("\n");
             sb.Append("}\n");

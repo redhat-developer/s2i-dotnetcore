@@ -51,7 +51,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of Region to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Region not found</response>
-        IActionResult RegionsIdDeleteAsync(int id);
+        IActionResult RegionsIdDeletePostAsync(int id);
 
         /// <summary>
         /// 

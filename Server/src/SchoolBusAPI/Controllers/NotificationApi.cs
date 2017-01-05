@@ -72,12 +72,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Notification to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>
-        [HttpDelete]
-        [Route("/api/notifications/{id}")]
-        [SwaggerOperation("NotificationsIdDelete")]
-        public virtual IActionResult NotificationsIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/notifications/{id}/delete")]
+        [SwaggerOperation("NotificationsIdDeletePost")]
+        public virtual IActionResult NotificationsIdDeletePost([FromRoute]int id)
         {
-            return this._service.NotificationsIdDeleteAsync(id);
+            return this._service.NotificationsIdDeletePostAsync(id);
         }
 
         /// <summary>

@@ -144,7 +144,7 @@ namespace SchoolBusAPI.Test
             response.EnsureSuccessStatusCode();            
 
             // do a delete.
-            request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbuses/" + id);
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbuses/" + id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 

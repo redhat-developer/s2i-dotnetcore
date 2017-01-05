@@ -79,7 +79,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of SchoolBusOwner to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwner not found</response>
-        IActionResult SchoolbusownersIdDeleteAsync(int id);
+        IActionResult SchoolbusownersIdDeletePostAsync(int id);
 
         /// <summary>
         /// 

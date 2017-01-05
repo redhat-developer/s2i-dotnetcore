@@ -75,12 +75,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Region to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Region not found</response>
-        [HttpDelete]
-        [Route("/api/regions/{id}")]
-        [SwaggerOperation("RegionsIdDelete")]
-        public virtual IActionResult RegionsIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/regions/{id}/delete")]
+        [SwaggerOperation("RegionsIdDeletePost")]
+        public virtual IActionResult RegionsIdDeletePost([FromRoute]int id)
         {
-            return this._service.RegionsIdDeleteAsync(id);
+            return this._service.RegionsIdDeletePostAsync(id);
         }
 
         /// <summary>

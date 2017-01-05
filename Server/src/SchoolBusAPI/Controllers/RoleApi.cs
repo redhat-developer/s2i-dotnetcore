@@ -60,12 +60,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Role to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        [HttpDelete]
-        [Route("/api/roles/{id}")]
-        [SwaggerOperation("RolesIdDelete")]
-        public virtual IActionResult RolesIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/roles/{id}/delete")]
+        [SwaggerOperation("RolesIdDeletePost")]
+        public virtual IActionResult RolesIdDeletePost([FromRoute]int id)
         {
-            return this._service.RolesIdDeleteAsync(id);
+            return this._service.RolesIdDeletePostAsync(id);
         }
 
         /// <summary>
