@@ -13,8 +13,8 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const PORT = argv.port || 8000;
 const HOST = argv.host || 'localhost';
-const API_HOST = argv.apihost || 'localhost';
-const API_PORT = argv.apiport || process.env.BC_GOV_SCHOOLBUS_API_PORT || 8080;
+const API_HOST = argv.apihost || 'server-tran-schoolbus-dev.pathfinder.gov.bc.ca';
+const API_PORT = argv.apiport || process.env.BC_GOV_SCHOOLBUS_API_PORT || 80;
 
 const PROJECT_ROOT = path.join(__dirname, '..');
 const DIST_PATH = path.join(PROJECT_ROOT, 'dist');
@@ -36,8 +36,9 @@ app.get('/api/test', function(req, res) {
 
 
 app.use('/api', proxy({
-  target: `https://${API_HOST}:${API_PORT}/schoolbus-tbd/api`,
+  target: `http://${API_HOST}:${API_PORT}/api`,
   changeOrigin: true,
+  logLevel: 'debug',
 }));
 
 // Override WebPack config to work with this express server
