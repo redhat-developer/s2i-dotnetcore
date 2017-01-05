@@ -3,6 +3,9 @@ FROM microsoft/dotnet:1.1.0-sdk-projectjson
 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 
+# This setting is a workaround for issues with dotnet and certain docker versions
+ENV LTTNG_UST_REGISTER_TIMEOUT 0
+
 COPY . /app
 WORKDIR /app
 
