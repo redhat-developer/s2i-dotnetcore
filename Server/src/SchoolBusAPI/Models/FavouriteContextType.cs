@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// The name for a place in the UI where per user settings can be stored - for example, the School Bus search screen, School Bus Owner search screen, etc.
     /// </summary>
     public partial class FavouriteContextType : IEquatable<FavouriteContextType>
     {
@@ -37,7 +37,7 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="FavouriteContextType" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">Context Name.</param>
+        /// <param name="Name">Context Name known by the UI..</param>
         public FavouriteContextType(int Id, string Name = null)
         {
             
@@ -54,10 +54,10 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Context Name
+        /// Context Name known by the UI.
         /// </summary>
-        /// <value>Context Name</value>
-        [MetaDataExtension (Description = "Context Name")]
+        /// <value>Context Name known by the UI.</value>
+        [MetaDataExtension (Description = "Context Name known by the UI.")]
         public string Name { get; set; }
 
         /// <summary>

@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -38,11 +38,19 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
-        public SchoolBusOwnerContact(int Id, SchoolBusOwner SchoolBusOwner = null)
+        /// <param name="GivenName">The given name of the contact..</param>
+        /// <param name="Surname">The surname of the contact..</param>
+        /// <param name="Role">The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list..</param>
+        /// <param name="Notes">Notes about the contact..</param>
+        public SchoolBusOwnerContact(int Id, SchoolBusOwner SchoolBusOwner = null, string GivenName = null, string Surname = null, string Role = null, string Notes = null)
         {
             
             this.Id = Id;
             this.SchoolBusOwner = SchoolBusOwner;
+            this.GivenName = GivenName;
+            this.Surname = Surname;
+            this.Role = Role;
+            this.Notes = Notes;
             
         }
 
@@ -59,6 +67,34 @@ namespace SchoolBusAPI.Models
         public SchoolBusOwner SchoolBusOwner { get; set; }
 
         /// <summary>
+        /// The given name of the contact.
+        /// </summary>
+        /// <value>The given name of the contact.</value>
+        [MetaDataExtension (Description = "The given name of the contact.")]
+        public string GivenName { get; set; }
+
+        /// <summary>
+        /// The surname of the contact.
+        /// </summary>
+        /// <value>The surname of the contact.</value>
+        [MetaDataExtension (Description = "The surname of the contact.")]
+        public string Surname { get; set; }
+
+        /// <summary>
+        /// The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.
+        /// </summary>
+        /// <value>The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.</value>
+        [MetaDataExtension (Description = "The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.")]
+        public string Role { get; set; }
+
+        /// <summary>
+        /// Notes about the contact.
+        /// </summary>
+        /// <value>Notes about the contact.</value>
+        [MetaDataExtension (Description = "Notes about the contact.")]
+        public string Notes { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -68,6 +104,10 @@ namespace SchoolBusAPI.Models
             sb.Append("class SchoolBusOwnerContact {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
+            sb.Append("  GivenName: ").Append(GivenName).Append("\n");
+            sb.Append("  Surname: ").Append(Surname).Append("\n");
+            sb.Append("  Role: ").Append(Role).Append("\n");
+            sb.Append("  Notes: ").Append(Notes).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -115,6 +155,26 @@ namespace SchoolBusAPI.Models
                     this.SchoolBusOwner == other.SchoolBusOwner ||
                     this.SchoolBusOwner != null &&
                     this.SchoolBusOwner.Equals(other.SchoolBusOwner)
+                ) && 
+                (
+                    this.GivenName == other.GivenName ||
+                    this.GivenName != null &&
+                    this.GivenName.Equals(other.GivenName)
+                ) && 
+                (
+                    this.Surname == other.Surname ||
+                    this.Surname != null &&
+                    this.Surname.Equals(other.Surname)
+                ) && 
+                (
+                    this.Role == other.Role ||
+                    this.Role != null &&
+                    this.Role.Equals(other.Role)
+                ) && 
+                (
+                    this.Notes == other.Notes ||
+                    this.Notes != null &&
+                    this.Notes.Equals(other.Notes)
                 );
         }
 
@@ -136,6 +196,22 @@ namespace SchoolBusAPI.Models
                 if (this.SchoolBusOwner != null)
                 {
                     hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
+                }
+                if (this.GivenName != null)
+                {
+                    hash = hash * 59 + this.GivenName.GetHashCode();
+                }
+                if (this.Surname != null)
+                {
+                    hash = hash * 59 + this.Surname.GetHashCode();
+                }
+                if (this.Role != null)
+                {
+                    hash = hash * 59 + this.Role.GetHashCode();
+                }
+                if (this.Notes != null)
+                {
+                    hash = hash * 59 + this.Notes.GetHashCode();
                 }
                 return hash;
             }

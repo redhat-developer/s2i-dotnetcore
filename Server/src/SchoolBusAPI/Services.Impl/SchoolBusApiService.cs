@@ -249,13 +249,29 @@ namespace SchoolBusAPI.Services.Impl
 
                 var dbItem = _context.SchoolBuss.First(a => a.Id == id);
                 // can only update certain fields.
-                dbItem.CCWData = item.CCWData;
-                dbItem.CRNO = item.CRNO;
-                dbItem.IsActive = item.IsActive;
+                dbItem.BusLocationAddr1 = item.BusLocationAddr1;
+                dbItem.BusLocationAddr2 = item.BusLocationAddr2;
+                dbItem.BusLocationCity = item.BusLocationCity;
+                dbItem.BusLocationPostCode = item.BusLocationPostCode;
+                dbItem.BusLocationProv = item.BusLocationProv;
+                dbItem.IndependentSchool = item.IndependentSchool;
+                dbItem.IsOutOfProvince = item.IsOutOfProvince;
+                dbItem.Location = item.Location;
+                dbItem.MobilityAidCapacity = item.MobilityAidCapacity;
                 dbItem.NameOfIndependentSchool = item.NameOfIndependentSchool;
                 dbItem.NextInspection = item.NextInspection;
+                dbItem.PermitNumber = item.PermitNumber;
+                dbItem.Plate = item.Plate;
+                dbItem.Regi = item.Regi;
+                dbItem.Restrictions = item.Restrictions;
+                dbItem.SchoolBusClass = item.SchoolBusClass;
+                dbItem.SchoolBusDistrict = item.SchoolBusDistrict;
                 dbItem.SchoolBusOwner = item.SchoolBusOwner;
-
+                dbItem.SchoolBusSeatingCapacity = item.SchoolBusSeatingCapacity;
+                dbItem.SchoolBusUnitNumber = item.SchoolBusUnitNumber;
+                dbItem.Status = item.Status;
+                dbItem.VIN = item.VIN;
+                
                 _context.Entry(dbItem).State = EntityState.Modified;
                 // Save the changes
                 _context.SaveChanges();

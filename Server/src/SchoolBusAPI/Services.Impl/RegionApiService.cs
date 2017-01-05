@@ -142,12 +142,12 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks>Returns a list of LocalAreas for a given region</remarks>
         /// <param name="id">id of Region to fetch SchoolDistricts for</param>
         /// <response code="200">OK</response>
-        public virtual IActionResult RegionsIdLocalareasGetAsync(int id)
+        public virtual IActionResult RegionsIdServiceareasGetAsync(int id)
         {
             var exists = _context.Regions.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.LocalAreas.Where(a => a.Region.Id == id);
+                var result = _context.ServiceAreas.Where(a => a.District.Id == id);
                 return new ObjectResult(result);
             }
             else

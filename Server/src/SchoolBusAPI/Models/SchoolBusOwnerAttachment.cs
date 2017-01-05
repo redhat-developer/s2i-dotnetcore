@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -38,11 +38,17 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
-        public SchoolBusOwnerAttachment(int Id, SchoolBusOwner SchoolBusOwner = null)
+        /// <param name="InternalFileName">The physical location of the attachment on the file system..</param>
+        /// <param name="ExternalFileName">The name of the attachment as defined by the user in uploading the document..</param>
+        /// <param name="Description">A note about the attachment, optionally maintained by the user..</param>
+        public SchoolBusOwnerAttachment(int Id, SchoolBusOwner SchoolBusOwner = null, string InternalFileName = null, string ExternalFileName = null, string Description = null)
         {
             
             this.Id = Id;
             this.SchoolBusOwner = SchoolBusOwner;
+            this.InternalFileName = InternalFileName;
+            this.ExternalFileName = ExternalFileName;
+            this.Description = Description;
             
         }
 
@@ -59,6 +65,27 @@ namespace SchoolBusAPI.Models
         public SchoolBusOwner SchoolBusOwner { get; set; }
 
         /// <summary>
+        /// The physical location of the attachment on the file system.
+        /// </summary>
+        /// <value>The physical location of the attachment on the file system.</value>
+        [MetaDataExtension (Description = "The physical location of the attachment on the file system.")]
+        public string InternalFileName { get; set; }
+
+        /// <summary>
+        /// The name of the attachment as defined by the user in uploading the document.
+        /// </summary>
+        /// <value>The name of the attachment as defined by the user in uploading the document.</value>
+        [MetaDataExtension (Description = "The name of the attachment as defined by the user in uploading the document.")]
+        public string ExternalFileName { get; set; }
+
+        /// <summary>
+        /// A note about the attachment, optionally maintained by the user.
+        /// </summary>
+        /// <value>A note about the attachment, optionally maintained by the user.</value>
+        [MetaDataExtension (Description = "A note about the attachment, optionally maintained by the user.")]
+        public string Description { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -68,6 +95,9 @@ namespace SchoolBusAPI.Models
             sb.Append("class SchoolBusOwnerAttachment {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
+            sb.Append("  InternalFileName: ").Append(InternalFileName).Append("\n");
+            sb.Append("  ExternalFileName: ").Append(ExternalFileName).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -115,6 +145,21 @@ namespace SchoolBusAPI.Models
                     this.SchoolBusOwner == other.SchoolBusOwner ||
                     this.SchoolBusOwner != null &&
                     this.SchoolBusOwner.Equals(other.SchoolBusOwner)
+                ) && 
+                (
+                    this.InternalFileName == other.InternalFileName ||
+                    this.InternalFileName != null &&
+                    this.InternalFileName.Equals(other.InternalFileName)
+                ) && 
+                (
+                    this.ExternalFileName == other.ExternalFileName ||
+                    this.ExternalFileName != null &&
+                    this.ExternalFileName.Equals(other.ExternalFileName)
+                ) && 
+                (
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 );
         }
 
@@ -136,6 +181,18 @@ namespace SchoolBusAPI.Models
                 if (this.SchoolBusOwner != null)
                 {
                     hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
+                }
+                if (this.InternalFileName != null)
+                {
+                    hash = hash * 59 + this.InternalFileName.GetHashCode();
+                }
+                if (this.ExternalFileName != null)
+                {
+                    hash = hash * 59 + this.ExternalFileName.GetHashCode();
+                }
+                if (this.Description != null)
+                {
+                    hash = hash * 59 + this.Description.GetHashCode();
                 }
                 return hash;
             }

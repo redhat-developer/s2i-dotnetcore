@@ -128,7 +128,7 @@ namespace SchoolBusAPI.Services.Impl
                 var dbItem = _context.SchoolBusNotes.First(a => a.Id == id);
                 dbItem.Expired = item.Expired;
                 dbItem.SchoolBus = item.SchoolBus;
-                dbItem.Value = item.Value;                               
+                dbItem.Note = item.Note;                               
                 _context.SchoolBusNotes.Update(dbItem);
                 // Save the changes
                 _context.SaveChanges();            

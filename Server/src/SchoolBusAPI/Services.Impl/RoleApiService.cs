@@ -158,8 +158,8 @@ namespace SchoolBusAPI.Services.Impl
                 }
 
                 // Permissions to remove
-                var permissionsToRemove = role.RolePermissions.Where(x => !permissionCodes.Contains(x.Permission.Code)).ToList();
-                foreach (var perm in permissionsToRemove)
+                List<RolePermission> permissionsToRemove = role.RolePermissions.Where(x => !permissionCodes.Contains(x.Permission.Code)).ToList();
+                foreach (RolePermission perm in permissionsToRemove)
                 {
                     role.RemovePermission(perm.Permission);
                     _context.RolePermissions.Remove(perm);
@@ -169,7 +169,7 @@ namespace SchoolBusAPI.Services.Impl
                 _context.SaveChanges();
                 txn.Commit();
 
-                var dbPermissions = role.RolePermissions.Select(x => x.Permission);
+                List<RolePermission> dbPermissions = _context.RolePermissions.ToList();
 
                 // Create DTO with serializable response
                 var result = dbPermissions.Select(x => x.ToViewModel()).ToList();

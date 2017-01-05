@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -116,21 +116,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of LocalAreas for a given region</remarks>
-        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/regions/{id}/localareas")]
-        [SwaggerOperation("RegionsIdLocalareasGet")]
-        [SwaggerResponse(200, type: typeof(List<LocalArea>))]
-        public virtual IActionResult RegionsIdLocalareasGet([FromRoute]int id)
-        {
-            return this._service.RegionsIdLocalareasGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Updates a region</remarks>
         /// <param name="id">id of Region to update</param>
         /// <param name="item"></param>
@@ -142,6 +127,21 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult RegionsIdPut([FromRoute]int id, [FromBody]Region item)
         {
             return this._service.RegionsIdPutAsync(id, item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a list of ServiceAreas for a given region</remarks>
+        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/regions/{id}/serviceareas")]
+        [SwaggerOperation("RegionsIdServiceareasGet")]
+        [SwaggerResponse(200, type: typeof(List<ServiceArea>))]
+        public virtual IActionResult RegionsIdServiceareasGet([FromRoute]int id)
+        {
+            return this._service.RegionsIdServiceareasGetAsync(id);
         }
 
         /// <summary>

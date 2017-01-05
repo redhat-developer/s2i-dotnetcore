@@ -23,30 +23,32 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
-    public partial class Region : IEquatable<Region>
+    public partial class ServiceArea : IEquatable<ServiceArea>
     {
         /// <summary>
         /// Default constructor, required by entity framework
         /// </summary>
-        public Region()
+        public ServiceArea()
         {
             this.Id = 0;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Region" /> class.
+        /// Initializes a new instance of the <see cref="ServiceArea" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="MinistryRegionID">The Ministry ID for the Region.</param>
-        /// <param name="Name">The name of the Region.</param>
-        /// <param name="StartDate">The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
-        /// <param name="EndDate">The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
-        public Region(int Id, int? MinistryRegionID = null, string Name = null, DateTime? StartDate = null, DateTime? EndDate = null)
+        /// <param name="MinistryServiceAreaID">The Ministry ID for the Service Area.</param>
+        /// <param name="Name">The name of the Service Area.</param>
+        /// <param name="Region">The district in which the Service Area is found..</param>
+        /// <param name="StartDate">The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
+        /// <param name="EndDate">The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
+        public ServiceArea(int Id, int? MinistryServiceAreaID = null, string Name = null, District District = null, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             
             this.Id = Id;
-            this.MinistryRegionID = MinistryRegionID;
+            this.MinistryServiceAreaID = MinistryServiceAreaID;
             this.Name = Name;
+            this.District = District;
             this.StartDate = StartDate;
             this.EndDate = EndDate;
             
@@ -60,31 +62,38 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// The Ministry ID for the Region
+        /// The Ministry ID for the Service Area
         /// </summary>
-        /// <value>The Ministry ID for the Region</value>
-        [MetaDataExtension (Description = "The Ministry ID for the Region")]
-        public int? MinistryRegionID { get; set; }
+        /// <value>The Ministry ID for the Service Area</value>
+        [MetaDataExtension (Description = "The Ministry ID for the Service Area")]
+        public int? MinistryServiceAreaID { get; set; }
 
         /// <summary>
-        /// The name of the Region
+        /// The name of the Service Area
         /// </summary>
-        /// <value>The name of the Region</value>
-        [MetaDataExtension (Description = "The name of the Region")]
+        /// <value>The name of the Service Area</value>
+        [MetaDataExtension (Description = "The name of the Service Area")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        /// The district in which the Service Area is found.
         /// </summary>
-        /// <value>The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
-        [MetaDataExtension (Description = "The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
+        /// <value>The district in which the Service Area is found.</value>
+        [MetaDataExtension (Description = "The district in which the Service Area is found.")]
+        public District District { get; set; }
+
+        /// <summary>
+        /// The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        /// </summary>
+        /// <value>The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
+        [MetaDataExtension (Description = "The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? StartDate { get; set; }
 
         /// <summary>
-        /// The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        /// The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
-        /// <value>The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
-        [MetaDataExtension (Description = "The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
+        /// <value>The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
+        [MetaDataExtension (Description = "The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? EndDate { get; set; }
 
         /// <summary>
@@ -94,10 +103,11 @@ namespace SchoolBusAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Region {\n");
+            sb.Append("class ServiceArea {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  MinistryRegionID: ").Append(MinistryRegionID).Append("\n");
+            sb.Append("  MinistryServiceAreaID: ").Append(MinistryServiceAreaID).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Region: ").Append(District).Append("\n");
             sb.Append("  StartDate: ").Append(StartDate).Append("\n");
             sb.Append("  EndDate: ").Append(EndDate).Append("\n");
             sb.Append("}\n");
@@ -123,15 +133,15 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, obj)) { return false; }
             if (ReferenceEquals(this, obj)) { return true; }
             if (obj.GetType() != GetType()) { return false; }
-            return Equals((Region)obj);
+            return Equals((ServiceArea)obj);
         }
 
         /// <summary>
-        /// Returns true if Region instances are equal
+        /// Returns true if ServiceArea instances are equal
         /// </summary>
-        /// <param name="other">Instance of Region to be compared</param>
+        /// <param name="other">Instance of ServiceArea to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Region other)
+        public bool Equals(ServiceArea other)
         {
 
             if (ReferenceEquals(null, other)) { return false; }
@@ -144,14 +154,19 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.MinistryRegionID == other.MinistryRegionID ||
-                    this.MinistryRegionID != null &&
-                    this.MinistryRegionID.Equals(other.MinistryRegionID)
+                    this.MinistryServiceAreaID == other.MinistryServiceAreaID ||
+                    this.MinistryServiceAreaID != null &&
+                    this.MinistryServiceAreaID.Equals(other.MinistryServiceAreaID)
                 ) && 
                 (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
+                ) && 
+                (
+                    this.District == other.District ||
+                    this.District != null &&
+                    this.District.Equals(other.District)
                 ) && 
                 (
                     this.StartDate == other.StartDate ||
@@ -180,13 +195,17 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
                 }
-                if (this.MinistryRegionID != null)
+                if (this.MinistryServiceAreaID != null)
                 {
-                    hash = hash * 59 + this.MinistryRegionID.GetHashCode();
+                    hash = hash * 59 + this.MinistryServiceAreaID.GetHashCode();
                 }
                 if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
+                }
+                if (this.District != null)
+                {
+                    hash = hash * 59 + this.District.GetHashCode();
                 }
                 if (this.StartDate != null)
                 {
@@ -202,12 +221,12 @@ namespace SchoolBusAPI.Models
 
         #region Operators
 
-        public static bool operator ==(Region left, Region right)
+        public static bool operator ==(ServiceArea left, ServiceArea right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Region left, Region right)
+        public static bool operator !=(ServiceArea left, ServiceArea right)
         {
             return !Equals(left, right);
         }

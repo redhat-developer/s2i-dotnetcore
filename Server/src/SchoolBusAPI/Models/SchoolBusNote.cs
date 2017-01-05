@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// Notes entered by users about a specific School Bus
     /// </summary>
     public partial class SchoolBusNote : IEquatable<SchoolBusNote>
     {
@@ -37,14 +37,14 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolBusNote" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Value">Value.</param>
-        /// <param name="Expired">Expired.</param>
+        /// <param name="Note">The contents of the note..</param>
+        /// <param name="Expired">A flag indicating when true that the note is no longer relevant to support retaining the history but communicating when a note is no longer to be used..</param>
         /// <param name="SchoolBus">SchoolBus.</param>
-        public SchoolBusNote(int Id, string Value = null, bool? Expired = null, SchoolBus SchoolBus = null)
+        public SchoolBusNote(int Id, string Note = null, bool? Expired = null, SchoolBus SchoolBus = null)
         {
             
             this.Id = Id;
-            this.Value = Value;
+            this.Note = Note;
             this.Expired = Expired;
             this.SchoolBus = SchoolBus;
             
@@ -58,13 +58,17 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets Value
+        /// The contents of the note.
         /// </summary>
-        public string Value { get; set; }
+        /// <value>The contents of the note.</value>
+        [MetaDataExtension (Description = "The contents of the note.")]
+        public string Note { get; set; }
 
         /// <summary>
-        /// Gets or Sets Expired
+        /// A flag indicating when true that the note is no longer relevant to support retaining the history but communicating when a note is no longer to be used.
         /// </summary>
+        /// <value>A flag indicating when true that the note is no longer relevant to support retaining the history but communicating when a note is no longer to be used.</value>
+        [MetaDataExtension (Description = "A flag indicating when true that the note is no longer relevant to support retaining the history but communicating when a note is no longer to be used.")]
         public bool? Expired { get; set; }
 
         /// <summary>
@@ -81,7 +85,7 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolBusNote {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("  Note: ").Append(Note).Append("\n");
             sb.Append("  Expired: ").Append(Expired).Append("\n");
             sb.Append("  SchoolBus: ").Append(SchoolBus).Append("\n");
             sb.Append("}\n");
@@ -128,9 +132,9 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Value == other.Value ||
-                    this.Value != null &&
-                    this.Value.Equals(other.Value)
+                    this.Note == other.Note ||
+                    this.Note != null &&
+                    this.Note.Equals(other.Note)
                 ) && 
                 (
                     this.Expired == other.Expired ||
@@ -159,9 +163,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
                 }
-                if (this.Value != null)
+                if (this.Note != null)
                 {
-                    hash = hash * 59 + this.Value.GetHashCode();
+                    hash = hash * 59 + this.Note.GetHashCode();
                 }
                 if (this.Expired != null)
                 {

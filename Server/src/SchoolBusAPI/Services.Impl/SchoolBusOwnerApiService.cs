@@ -223,13 +223,13 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 var dbItem = _context.SchoolBusOwners.First(a => a.Id == id);
-                dbItem.City = item.City;
+                dbItem.ServiceArea = item.ServiceArea;
                 dbItem.DateCreated = item.DateCreated;
-                dbItem.IsActive = item.IsActive;
-                dbItem.LocalArea = item.LocalArea;
+                dbItem.Status = item.Status;
+                dbItem.ServiceArea = item.ServiceArea;
                 dbItem.Name = item.Name;
                 dbItem.PrimaryContact = item.PrimaryContact;
-                dbItem.PrimaryContactRefId = item.PrimaryContactRefId;
+                
                 _context.SchoolBusOwners.Update(dbItem);
                 // Save the changes
                 _context.SaveChanges();                
