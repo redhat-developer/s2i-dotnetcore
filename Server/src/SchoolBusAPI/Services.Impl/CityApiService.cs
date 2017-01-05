@@ -47,8 +47,17 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult CitiesBulkPostAsync(City[] items)
         {
-            var result = "";
-            return new ObjectResult(result);
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (City item in items)
+            {
+                _context.Cities.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+            return new NoContentResult();
         }
 
         /// <summary>
@@ -58,7 +67,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult CitiesGetAsync()
         {
-            var result = "";
+            var result = _context.Cities.ToList();
             return new ObjectResult(result);
         }
 
@@ -71,8 +80,23 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">City not found</response>
         public virtual IActionResult CitiesIdDeletePostAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var exists = _context.Cities.Any(a => a.Id == id);
+            if (exists)
+            {
+                var item = _context.Cities.First(a => a.Id == id);
+                if (item != null)
+                {
+                    _context.Cities.Remove(item);
+                    // Save the changes
+                    _context.SaveChanges();
+                }
+                return new ObjectResult(item);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -83,8 +107,17 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult CitiesIdGetAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var exists = _context.Cities.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.Cities.First(a => a.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -95,22 +128,34 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">City not found</response>
-        public virtual IActionResult CitiesIdPutAsync(int id, City item)
+        public virtual IActionResult CitiesIdPutAsync(int id, City body)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var exists = _context.Inspections.Any(a => a.Id == id);
+            if (exists && id == body.Id)
+            {
+                _context.Cities.Update(body);
+                // Save the changes
+                _context.SaveChanges();
+                return new ObjectResult(body);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Adds a City</remarks>
-        /// <param name="item"></param>
+        /// <param name="body"></param>
         /// <response code="200">OK</response>
-        public virtual IActionResult CitiesPostAsync(City item)
+        public virtual IActionResult CitiesPostAsync(City body)
         {
-            var result = "";
-            return new ObjectResult(result);
+            _context.Cities.Add(body);
+            _context.SaveChanges();
+            return new ObjectResult(body);
         }
     }
 }

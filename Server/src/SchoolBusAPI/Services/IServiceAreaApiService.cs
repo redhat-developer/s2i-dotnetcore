@@ -32,6 +32,14 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a number of districts.</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        IActionResult ServiceareasBulkPostAsync(ServiceArea[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns a list of available districts</remarks>
         /// <response code="200">OK</response>
         IActionResult ServiceareasGetAsync();

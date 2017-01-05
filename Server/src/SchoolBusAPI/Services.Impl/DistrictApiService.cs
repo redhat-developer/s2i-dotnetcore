@@ -47,8 +47,17 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult DistrictsBulkPostAsync(District[] items)
         {
-            var result = "";
-            return new ObjectResult(result);
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (District item in items)
+            {
+                _context.Districts.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+            return new NoContentResult();
         }
 
         /// <summary>
@@ -58,7 +67,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult DistrictsGetAsync()
         {
-            var result = "";
+            var result = _context.Districts.ToList();
             return new ObjectResult(result);
         }
 
@@ -71,8 +80,23 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">District not found</response>
         public virtual IActionResult DistrictsIdDeletePostAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var exists = _context.Districts.Any(a => a.Id == id);
+            if (exists)
+            {
+                var item = _context.Districts.First(a => a.Id == id);
+                if (item != null)
+                {
+                    _context.Districts.Remove(item);
+                    // Save the changes
+                    _context.SaveChanges();
+                }
+                return new ObjectResult(item);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -83,8 +107,17 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult DistrictsIdGetAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var exists = _context.Districts.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.Districts.First(a => a.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -95,10 +128,21 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">District not found</response>
-        public virtual IActionResult DistrictsIdPutAsync(int id, District item)
+        public virtual IActionResult DistrictsIdPutAsync(int id, District body)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var exists = _context.Inspections.Any(a => a.Id == id);
+            if (exists && id == body.Id)
+            {
+                _context.Districts.Update(body);
+                // Save the changes
+                _context.SaveChanges();
+                return new ObjectResult(body);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -117,24 +161,15 @@ namespace SchoolBusAPI.Services.Impl
         /// 
         /// </summary>
         /// <remarks>Adds a district</remarks>
-        /// <param name="item"></param>
+        /// <param name="body"></param>
         /// <response code="200">OK</response>
-        public virtual IActionResult DistrictsPostAsync(District item)
+        public virtual IActionResult DistrictsPostAsync(District body)
         {
-            var result = "";
-            return new ObjectResult(result);
+            _context.Districts.Add(body);
+            _context.SaveChanges();
+            return new ObjectResult(body);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of districts.</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult ServiceareasBulkPostAsync(District[] items)
-        {
-            var result = "";
-            return new ObjectResult(result);
-        }
+        
     }
 }

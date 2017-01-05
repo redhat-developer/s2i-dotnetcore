@@ -42,6 +42,27 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a number of districts.</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult ServiceareasBulkPostAsync(ServiceArea[] items)
+        {
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (ServiceArea item in items)
+            {
+                _context.ServiceAreas.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns a list of available districts</remarks>
         /// <response code="200">OK</response>
         public virtual IActionResult ServiceareasGetAsync()

@@ -87,12 +87,5 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         IActionResult DistrictsPostAsync(District item);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of districts.</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        IActionResult ServiceareasBulkPostAsync(District[] items);
     }
 }

@@ -2800,7 +2800,7 @@ paths:
     post:
       description: Adds a number of districts.
       tags:
-        - District
+        - ServiceArea
       produces:
         - text/plain
         - application/json
@@ -2812,7 +2812,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/District"
+              $ref: "#/definitions/ServiceArea"
       responses:
         '200':
           description: OK
