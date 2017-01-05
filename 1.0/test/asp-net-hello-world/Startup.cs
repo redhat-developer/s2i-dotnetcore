@@ -45,10 +45,9 @@ namespace SampleApp
                 {
                     // options.ThreadCount = 4;
                     options.NoDelay = true;
-                    options.UseHttps("testCert.pfx", "testPassword");
                     options.UseConnectionLogging();
                 })
-                .UseUrls("http://0.0.0.0:8080", "https://0.0.0.0:8081")
+                .UseUrls("http://0.0.0.0:8080")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .Build();

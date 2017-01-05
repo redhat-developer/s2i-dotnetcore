@@ -12,5 +12,5 @@ Sample invocation:
 sudo s2i build https://github.com/redhat-developer/s2i-dotnetcore.git --context-dir=1.0/test/asp-net-hello-world/ ${NAMESPACE}/dotnetcore-10-${DISTRO}7 dotnet-sample-app
 
 You can then run the resulting image via:
-sudo docker run -p 8080-8081:8080-8081 dotnet-sample-app
+sudo docker run -p 8080:8080 dotnet-sample-app
 EOF
