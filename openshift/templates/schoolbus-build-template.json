@@ -221,7 +221,7 @@
         "source": {
             "type": "Git",
             "git": {
-                "uri": "https://github.com/bcgov/schoolbus.git"
+                "uri": "${SRC_REPO}"
             },
             "contextDir": "/Server/src/SchoolBusAPI"
         },
@@ -231,13 +231,13 @@
                 "from": {
                     "kind": "ImageStreamTag",
                     "name": "dotnetcore-11-rhel7:latest"
-                }				         
+                }                
             }
         },
         "output": {
             "to": {
                 "kind": "ImageStreamTag",
-				"namespace": "tran-schoolbus-tools",
+        "namespace": "tran-schoolbus-tools",
                 "name": "${BACKEND_NAME}:${DEPLOYMENT_TYPE}"
             }
         },
@@ -273,7 +273,7 @@
         "source": {
             "type": "Git",
             "git": {
-                "uri": "https://github.com/bcgov/schoolbus.git"
+                "uri": "${SRC_REPO}"
             },
             "contextDir": "/API-Proxy"
         },
@@ -290,7 +290,7 @@
         "output": {
             "to": {
                 "kind": "ImageStreamTag",
-				"namespace": "tran-schoolbus-tools",
+        "namespace": "tran-schoolbus-tools",
                 "name": "${MIDDLEWARE_NAME}:${DEPLOYMENT_TYPE}"
             }
         },
@@ -326,23 +326,23 @@
         "source": {
             "type": "Git",
             "git": {
-                "uri": "https://github.com/bcgov/schoolbus.git"
+                "uri": "${SRC_REPO}"
             },
             "contextDir": "/Client"
         },
         "strategy": {
             "type": "Docker", 
-			"dockerStrategy": {
-				"from": {
-					"kind": "ImageStreamTag",
-					"name": "dotnet:latest"
-					}
-			}
+      "dockerStrategy": {
+        "from": {
+          "kind": "ImageStreamTag",
+          "name": "dotnet:latest"
+          }
+      }
         },
         "output": {
             "to": {
                 "kind": "ImageStreamTag",
-				"namespace": "tran-schoolbus-tools",
+        "namespace": "tran-schoolbus-tools",
                 "name": "${CLIENT_NAME}:${DEPLOYMENT_TYPE}"
             }
         },
@@ -353,8 +353,8 @@
     "status": {
         "lastVersion": 0
       }
-	},
-	{
+  },
+  {
     "kind": "BuildConfig",
     "apiVersion": "v1",
     "metadata": {
@@ -378,7 +378,7 @@
         "source": {
             "type": "Git",
             "git": {
-                "uri": "https://github.com/bcgov/schoolbus.git"
+                "uri": "${SRC_REPO}"
             },
             "contextDir": "/FrontEnd/src/SchoolBusClient"
         },
@@ -394,7 +394,7 @@
         "output": {
             "to": {
                 "kind": "ImageStreamTag",
-				"namespace": "tran-schoolbus-tools",
+        "namespace": "tran-schoolbus-tools",
                 "name": "${FRONTEND_NAME}:${DEPLOYMENT_TYPE}"
             }
         },
@@ -408,13 +408,13 @@
 }],
   "parameters": [
     {
-	  "name": "APPLICATION_NAME",
+      "name": "APPLICATION_NAME",
       "displayName": "Application Name",
       "description": "The name given to the application",
       "required": true,
       "value": "schoolbus"
-	},
-	{
+    },
+    {
       "name": "CLIENT_NAME",
       "displayName": "Client Name",
       "description": "The name assigned to all of the client side build objects defined in this template.  This is where the client side code is compiled.",
@@ -428,26 +428,33 @@
       "required": true,
       "value": "frontend"
     },
-	{
+    {
       "name": "MIDDLEWARE_NAME",
       "displayName": "Middleware Name",
       "description": "The name assigned to all of the middleware objects defined in this template.",
       "required": true,
       "value": "api-proxy"
     },
-	{
+    {
       "name": "BACKEND_NAME",
       "displayName": "Backend Name",
       "description": "The name assigned to all of the backend objects defined in this template.",
       "required": true,
       "value": "server"
     },
-	{
+    {
       "name": "DEPLOYMENT_TYPE",
       "displayName": "Deployment Type",
       "description": "The name assigned to the imagestreams defined in this template.",
       "required": true,
       "value": "dev"
+    },
+    {
+      "name": "SRC_REPO",
+      "displayName": "Source Repository",
+      "description": "The source repository to use for the builds.",
+      "required": true,
+      "value": "https://github.com/bcgov/schoolbus.git"
     }
-	]
+  ]
 }
