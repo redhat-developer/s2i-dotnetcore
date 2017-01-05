@@ -47,19 +47,19 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of cities for a given region</remarks>
-        /// <param name="id">id of Region to fetch Cities for</param>
-        /// <response code="200">OK</response>
-        IActionResult RegionsIdCitiesGetAsync(int id);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Deletes a region</remarks>
         /// <param name="id">id of Region to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Region not found</response>
         IActionResult RegionsIdDeleteAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns the districts for a specific region</remarks>
+        /// <param name="id">id of Region for which to fetch the Districts</param>
+        /// <response code="200">OK</response>
+        IActionResult RegionsIdDistrictsGetAsync(int id);
 
         /// <summary>
         /// 
@@ -78,14 +78,6 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">Region not found</response>
         IActionResult RegionsIdPutAsync(int id, Region item);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns a list of ServiceAreas for a given region</remarks>
-        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
-        /// <response code="200">OK</response>
-        IActionResult RegionsIdServiceareasGetAsync(int id);
 
         /// <summary>
         /// 

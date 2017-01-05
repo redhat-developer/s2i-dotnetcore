@@ -41,11 +41,10 @@ namespace SchoolBusAPI.Models
         /// <param name="Inspector">Defaults for a new inspection to the current user, but can be changed as needed..</param>
         /// <param name="InspectionDate">The date the inspection was conducted..</param>
         /// <param name="InspectionResult">The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here..</param>
-        /// <param name="NextInspectionDate">The calculated/entered Next Inspection date based on the results of the Inspection. Within 30 days on a fail, within a year (or so) on a pass..</param>
-        /// <param name="Notes">A note about the inspection Independent of what goes into the RIP inspection..</param>
+        /// <param name="Notes">A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application..</param>
         /// <param name="Restrictions">The \&quot;Restrictions\&quot; text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page..</param>
         /// <param name="RIPInspectionId">The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details..</param>
-        public Inspection(int Id, SchoolBus SchoolBus = null, User Inspector = null, DateTime? InspectionDate = null, string InspectionResult = null, DateTime? NextInspectionDate = null, string Notes = null, string Restrictions = null, string RIPInspectionId = null)
+        public Inspection(int Id, SchoolBus SchoolBus = null, User Inspector = null, DateTime? InspectionDate = null, string InspectionResult = null, string Notes = null, string Restrictions = null, string RIPInspectionId = null)
         {
             
             this.Id = Id;
@@ -53,7 +52,6 @@ namespace SchoolBusAPI.Models
             this.Inspector = Inspector;
             this.InspectionDate = InspectionDate;
             this.InspectionResult = InspectionResult;
-            this.NextInspectionDate = NextInspectionDate;
             this.Notes = Notes;
             this.Restrictions = Restrictions;
             this.RIPInspectionId = RIPInspectionId;
@@ -94,17 +92,10 @@ namespace SchoolBusAPI.Models
         public string InspectionResult { get; set; }
 
         /// <summary>
-        /// The calculated/entered Next Inspection date based on the results of the Inspection. Within 30 days on a fail, within a year (or so) on a pass.
+        /// A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.
         /// </summary>
-        /// <value>The calculated/entered Next Inspection date based on the results of the Inspection. Within 30 days on a fail, within a year (or so) on a pass.</value>
-        [MetaDataExtension (Description = "The calculated/entered Next Inspection date based on the results of the Inspection. Within 30 days on a fail, within a year (or so) on a pass.")]
-        public DateTime? NextInspectionDate { get; set; }
-
-        /// <summary>
-        /// A note about the inspection Independent of what goes into the RIP inspection.
-        /// </summary>
-        /// <value>A note about the inspection Independent of what goes into the RIP inspection.</value>
-        [MetaDataExtension (Description = "A note about the inspection Independent of what goes into the RIP inspection.")]
+        /// <value>A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.</value>
+        [MetaDataExtension (Description = "A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.")]
         public string Notes { get; set; }
 
         /// <summary>
@@ -134,7 +125,6 @@ namespace SchoolBusAPI.Models
             sb.Append("  Inspector: ").Append(Inspector).Append("\n");
             sb.Append("  InspectionDate: ").Append(InspectionDate).Append("\n");
             sb.Append("  InspectionResult: ").Append(InspectionResult).Append("\n");
-            sb.Append("  NextInspectionDate: ").Append(NextInspectionDate).Append("\n");
             sb.Append("  Notes: ").Append(Notes).Append("\n");
             sb.Append("  Restrictions: ").Append(Restrictions).Append("\n");
             sb.Append("  RIPInspectionId: ").Append(RIPInspectionId).Append("\n");
@@ -202,11 +192,6 @@ namespace SchoolBusAPI.Models
                     this.InspectionResult.Equals(other.InspectionResult)
                 ) && 
                 (
-                    this.NextInspectionDate == other.NextInspectionDate ||
-                    this.NextInspectionDate != null &&
-                    this.NextInspectionDate.Equals(other.NextInspectionDate)
-                ) && 
-                (
                     this.Notes == other.Notes ||
                     this.Notes != null &&
                     this.Notes.Equals(other.Notes)
@@ -253,10 +238,6 @@ namespace SchoolBusAPI.Models
                 if (this.InspectionResult != null)
                 {
                     hash = hash * 59 + this.InspectionResult.GetHashCode();
-                }
-                if (this.NextInspectionDate != null)
-                {
-                    hash = hash * 59 + this.NextInspectionDate.GetHashCode();
                 }
                 if (this.Notes != null)
                 {

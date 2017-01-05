@@ -119,6 +119,28 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns the districts for a specific region</remarks>
+        /// <param name="id">id of Region for which to fetch the Districts</param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult RegionsIdDistrictsGetAsync(int id)
+        {
+            var exists = _context.Regions.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.Districts.Where(a => a.Region.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns a specific region</remarks>
         /// <param name="id">id of Regions to fetch</param>
         /// <response code="200">OK</response>
@@ -147,7 +169,7 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.Regions.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.ServiceAreas.Where(a => a.District.Id == id);
+                var result = _context.ServiceAreas.Where(a => a.District.Region.Id == id);
                 return new ObjectResult(result);
             }
             else
@@ -195,9 +217,16 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult RegionsPostAsync(Region item)
         {
-            _context.Regions.Add(item);        
-            _context.SaveChanges();
-            return new ObjectResult(item);
+            if (item == null)
+            {
+                return new BadRequestResult();
+            }
+            else
+            {
+                _context.Regions.Add(item);
+                _context.SaveChanges();
+                return new ObjectResult(item);
+            }            
         }
     }
 }

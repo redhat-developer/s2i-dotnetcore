@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Models
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="MinistryServiceAreaID">The Ministry ID for the Service Area.</param>
         /// <param name="Name">The name of the Service Area.</param>
-        /// <param name="Region">The district in which the Service Area is found..</param>
+        /// <param name="District">The district in which the Service Area is found..</param>
         /// <param name="StartDate">The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
         /// <param name="EndDate">The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
         public ServiceArea(int Id, int? MinistryServiceAreaID = null, string Name = null, District District = null, DateTime? StartDate = null, DateTime? EndDate = null)

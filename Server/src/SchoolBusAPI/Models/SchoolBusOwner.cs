@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
@@ -93,9 +92,6 @@ namespace SchoolBusAPI.Models
         /// <value>Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.</value>
         [MetaDataExtension (Description = "Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.")]
         public SchoolBusOwnerContact PrimaryContact { get; set; }
-
-        [ForeignKey("PrimaryContact")]
-        public int? PrimaryContactRefId { get; set; }
 
         /// <summary>
         /// The District to which this School Bus is affliated.
