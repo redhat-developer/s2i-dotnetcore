@@ -18,7 +18,7 @@ var TopNav = React.createClass({
         <div className="container">
           <div id="logo">
             <a href="http://www2.gov.bc.ca/gov/content/home">
-              <img title="Government of B.C." alt="Government of B.C." src="images/gov3_bc_logo.png"/>
+              <img title="Government of B.C." alt="Government of B.C." src="images/gov/gov3_bc_logo.png"/>
             </a>
           </div>
           <h1 id="banner">MOTI School Bus Inspection Tracking System</h1>
