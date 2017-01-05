@@ -182,15 +182,18 @@ test_web_application() {
 
   # Wait for the container to write it's CID file
   wait_for_cid
-  test_pid_1 "${cid_file}"
-  check_result $?
 
   test_scl_usage "dotnet --version" "1.0.0-preview2-1-003175" "${cid_file}"
   check_result $?
+
   test_http "/" "Hello world"
   check_result $?
   test_http "/TextFile.txt" "A text file."
   check_result $?
+
+  test_pid_1 "${cid_file}"
+  check_result $?
+
   cleanup_app
 }
 
