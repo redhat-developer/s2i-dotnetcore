@@ -11,7 +11,6 @@ import Owners           from './views/Owners.jsx';
 import Notifications    from './views/Notifications.jsx';
 import UserManagement   from './views/UserManagement.jsx';
 import RolesPermissions from './views/RolesPermissions.jsx';
-import TestView         from './views/TestView.jsx';
 import FourOhFour       from './views/404.jsx';
 
 
@@ -25,7 +24,6 @@ const App = <Provider store={store}>
       <Route path="notifications" component={Notifications}/>
       <Route path="user-management" component={UserManagement}/>
       <Route path="roles-permissions" component={RolesPermissions}/>
-      <Route path="test" component={TestView}/>
       <Route path="*" component={FourOhFour}/>
     </Route>
   </Router>

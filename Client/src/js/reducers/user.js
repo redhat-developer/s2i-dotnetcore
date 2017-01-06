@@ -1,5 +1,4 @@
 const DEFAULT_STATE = {
-  userId                  : null,
   firstName               : null,
   lastName                : null,
   fullName                : null,

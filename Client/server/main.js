@@ -23,21 +23,8 @@ const app = express();
 
 app.use(morgan('dev'));
 
-// TODO: Remove - just for testing
-var count = 0;
-app.get('/api/test', function(req, res) {
-  res.status(200);
-  count++;
-  var newCount = count;
-  setTimeout(function() {
-    res.send(JSON.stringify({ count: newCount })).end();
-  }, Math.random() * 10 * 1000);
-});
-
-
 app.use('/api', proxy(`http://${API_HOST}:${API_PORT}/api`, {
   changeOrigin: true,
-  // logLevel: 'debug',
 }));
 
 // Override WebPack config to work with this express server
