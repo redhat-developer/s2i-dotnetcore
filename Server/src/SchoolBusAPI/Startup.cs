@@ -61,8 +61,12 @@ namespace SchoolBusAPI
             // Add framework services.
             services.AddMvc()
                 .AddJsonOptions(
-                    opts => { opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
-
+                    opts => {
+                        opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                        // ReferenceLoopHandling is set to Ignore to prevent JSON parser issues with the user / roles model.
+                        opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    });
+            
             // Configure Swagger
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
@@ -114,6 +118,7 @@ namespace SchoolBusAPI
             }
 
             app.UseMvc();
+
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
