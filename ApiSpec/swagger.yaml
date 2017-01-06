@@ -2175,7 +2175,37 @@ paths:
           schema:
             type: array
             items:
+              $ref: "#/definitions/Permission"      
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
               $ref: "#/definitions/PermissionViewModel"
+        404:
+          description: Role not found
+    post:
+      description: Adds a permissions to a role
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Permission"      
       responses:
         200:
           description: OK
@@ -2544,7 +2574,39 @@ paths:
           schema:
             type: array
             items:
+              $ref: "#/definitions/GroupMembership"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
               $ref: "#/definitions/GroupMembershipViewModel"
+        404:
+          description: User not found
+    post:
+      description: Add to the active set of groups for a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembership"
       responses:
         200:
           description: OK
@@ -4174,7 +4236,7 @@ definitions:
     x-codegen-viewmodel: true
     required:
       - id
-      - active
+      - active 
     properties:
       id:
         format: int32
