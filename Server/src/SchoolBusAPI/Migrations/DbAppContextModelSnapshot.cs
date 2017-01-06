@@ -20,7 +20,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_CCWDATA_ID");
+                        .HasColumnName("CCWDATA_ID");
 
                     b.Property<string>("ICBCBody")
                         .HasColumnName("ICBCBODY");
@@ -43,8 +43,8 @@ namespace SchoolBusAPI.Migrations
                     b.Property<int?>("ICBCGrossVehicleWeight")
                         .HasColumnName("ICBCGROSS_VEHICLE_WEIGHT");
 
-                    b.Property<string>("ICBCMICBCake")
-                        .HasColumnName("ICBCMICBCAKE");
+                    b.Property<string>("ICBCMake")
+                        .HasColumnName("ICBCMAKE");
 
                     b.Property<string>("ICBCModel")
                         .HasColumnName("ICBCMODEL");
@@ -142,17 +142,12 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_CITY_ID");
-
-                    b.Property<int?>("RegionId")
-                        .HasColumnName("REGION_ID");
+                        .HasColumnName("CITY_ID");
 
                     b.Property<string>("_City")
                         .HasColumnName("_CITY");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RegionId");
 
                     b.ToTable("SBI_CITY");
                 });
@@ -161,7 +156,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_DISTRICT_ID");
+                        .HasColumnName("DISTRICT_ID");
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnName("END_DATE");
@@ -189,7 +184,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_FAVOURITE_CONTEXT_TYPE_ID");
+                        .HasColumnName("FAVOURITE_CONTEXT_TYPE_ID");
 
                     b.Property<string>("Name")
                         .HasColumnName("NAME");
@@ -203,7 +198,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_GROUP_ID");
+                        .HasColumnName("GROUP_ID");
 
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION");
@@ -220,7 +215,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_GROUP_MEMBERSHIP_ID");
+                        .HasColumnName("GROUP_MEMBERSHIP_ID");
 
                     b.Property<bool>("Active")
                         .HasColumnName("ACTIVE");
@@ -244,7 +239,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_INSPECTION_ID");
+                        .HasColumnName("INSPECTION_ID");
 
                     b.Property<DateTime?>("InspectionDate")
                         .HasColumnName("INSPECTION_DATE");
@@ -254,9 +249,6 @@ namespace SchoolBusAPI.Migrations
 
                     b.Property<int?>("InspectorId")
                         .HasColumnName("INSPECTOR_ID");
-
-                    b.Property<DateTime?>("NextInspectionDate")
-                        .HasColumnName("NEXT_INSPECTION_DATE");
 
                     b.Property<string>("Notes")
                         .HasColumnName("NOTES");
@@ -283,7 +275,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_NOTIFICATION_ID");
+                        .HasColumnName("NOTIFICATION_ID");
 
                     b.Property<int?>("Event2Id")
                         .HasColumnName("EVENT2_ID");
@@ -324,7 +316,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_NOTIFICATION_EVENT_ID");
+                        .HasColumnName("NOTIFICATION_EVENT_ID");
 
                     b.Property<string>("EventSubTypeCode")
                         .HasColumnName("EVENT_SUB_TYPE_CODE");
@@ -355,7 +347,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_NOTIFICATION_VIEW_MODEL_ID");
+                        .HasColumnName("NOTIFICATION_VIEW_MODEL_ID");
 
                     b.Property<int?>("Event2Id")
                         .HasColumnName("EVENT2_ID");
@@ -390,7 +382,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_PERMISSION_ID");
+                        .HasColumnName("PERMISSION_ID");
 
                     b.Property<string>("Code")
                         .HasColumnName("CODE");
@@ -410,7 +402,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_REGION_ID");
+                        .HasColumnName("REGION_ID");
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnName("END_DATE");
@@ -433,7 +425,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_ROLE_ID");
+                        .HasColumnName("ROLE_ID");
 
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION");
@@ -450,7 +442,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_ROLE_PERMISSION_ID");
+                        .HasColumnName("ROLE_PERMISSION_ID");
 
                     b.Property<int?>("PermissionId")
                         .HasColumnName("PERMISSION_ID");
@@ -471,7 +463,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_ID");
+                        .HasColumnName("SCHOOL_BUS_ID");
 
                     b.Property<string>("BusLocationAddr1")
                         .HasColumnName("BUS_LOCATION_ADDR1");
@@ -488,8 +480,8 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("BusLocationProv")
                         .HasColumnName("BUS_LOCATION_PROV");
 
-                    b.Property<bool?>("IndependentSchool")
-                        .HasColumnName("INDEPENDENT_SCHOOL");
+                    b.Property<bool?>("IsIndependentSchool")
+                        .HasColumnName("IS_INDEPENDENT_SCHOOL");
 
                     b.Property<bool?>("IsOutOfProvince")
                         .HasColumnName("IS_OUT_OF_PROVINCE");
@@ -503,8 +495,11 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("NameOfIndependentSchool")
                         .HasColumnName("NAME_OF_INDEPENDENT_SCHOOL");
 
-                    b.Property<DateTime?>("NextInspection")
-                        .HasColumnName("NEXT_INSPECTION");
+                    b.Property<DateTime?>("NextInspectionDate")
+                        .HasColumnName("NEXT_INSPECTION_DATE");
+
+                    b.Property<string>("NextInspectionType")
+                        .HasColumnName("NEXT_INSPECTION_TYPE");
 
                     b.Property<string>("PermitNumber")
                         .HasColumnName("PERMIT_NUMBER");
@@ -556,7 +551,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_ATTACHMENT_ID");
+                        .HasColumnName("SCHOOL_BUS_ATTACHMENT_ID");
 
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION");
@@ -581,7 +576,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_HISTORY_ID");
+                        .HasColumnName("SCHOOL_BUS_HISTORY_ID");
 
                     b.Property<int?>("SchoolBusId")
                         .HasColumnName("SCHOOL_BUS_ID");
@@ -597,10 +592,10 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_NOTE_ID");
+                        .HasColumnName("SCHOOL_BUS_NOTE_ID");
 
-                    b.Property<bool?>("Expired")
-                        .HasColumnName("EXPIRED");
+                    b.Property<bool?>("IsNoLongerRelevant")
+                        .HasColumnName("IS_NO_LONGER_RELEVANT");
 
                     b.Property<string>("Note")
                         .HasColumnName("NOTE");
@@ -619,7 +614,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_OWNER_ID");
+                        .HasColumnName("SCHOOL_BUS_OWNER_ID");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnName("DATE_CREATED");
@@ -656,7 +651,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_OWNER_ATTACHMENT_ID");
+                        .HasColumnName("SCHOOL_BUS_OWNER_ATTACHMENT_ID");
 
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION");
@@ -681,7 +676,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_OWNER_CONTACT_ID");
+                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_ID");
 
                     b.Property<string>("GivenName")
                         .HasColumnName("GIVEN_NAME");
@@ -704,7 +699,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_OWNER_CONTACT_ADDRESS_ID");
+                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_ADDRESS_ID");
 
                     b.Property<string>("Addr1")
                         .HasColumnName("ADDR1");
@@ -738,7 +733,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_OWNER_CONTACT_PHONE_ID");
+                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_PHONE_ID");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnName("PHONE_NUMBER");
@@ -760,7 +755,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_OWNER_HISTORY_ID");
+                        .HasColumnName("SCHOOL_BUS_OWNER_HISTORY_ID");
 
                     b.Property<int?>("SchoolBusOwnerId")
                         .HasColumnName("SCHOOL_BUS_OWNER_ID");
@@ -776,10 +771,10 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_BUS_OWNER_NOTE_ID");
+                        .HasColumnName("SCHOOL_BUS_OWNER_NOTE_ID");
 
-                    b.Property<bool?>("Expired")
-                        .HasColumnName("EXPIRED");
+                    b.Property<bool?>("IsNoLongerRelevant")
+                        .HasColumnName("IS_NO_LONGER_RELEVANT");
 
                     b.Property<string>("Note")
                         .HasColumnName("NOTE");
@@ -798,14 +793,9 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SCHOOL_DISTRICT_ID");
-
-                    b.Property<int?>("RegionId")
-                        .HasColumnName("REGION_ID");
+                        .HasColumnName("SCHOOL_DISTRICT_ID");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RegionId");
 
                     b.ToTable("SBI_SCHOOL_DISTRICT");
                 });
@@ -814,7 +804,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_SERVICE_AREA_ID");
+                        .HasColumnName("SERVICE_AREA_ID");
 
                     b.Property<int?>("DistrictId")
                         .HasColumnName("DISTRICT_ID");
@@ -842,7 +832,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_USER_ID");
+                        .HasColumnName("USER_ID");
 
                     b.Property<bool>("Active")
                         .HasColumnName("ACTIVE");
@@ -877,7 +867,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_USER_FAVOURITE_ID");
+                        .HasColumnName("USER_FAVOURITE_ID");
 
                     b.Property<int?>("FavouriteContextTypeId")
                         .HasColumnName("FAVOURITE_CONTEXT_TYPE_ID");
@@ -902,7 +892,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_USER_FAVOURITE_VIEW_MODEL_ID");
+                        .HasColumnName("USER_FAVOURITE_VIEW_MODEL_ID");
 
                     b.Property<int?>("FavouriteContextTypeId")
                         .HasColumnName("FAVOURITE_CONTEXT_TYPE_ID");
@@ -925,7 +915,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SBI_USER_ROLE_ID");
+                        .HasColumnName("USER_ROLE_ID");
 
                     b.Property<DateTime>("EffectiveDate")
                         .HasColumnName("EFFECTIVE_DATE");
@@ -946,13 +936,6 @@ namespace SchoolBusAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("SBI_USER_ROLE");
-                });
-
-            modelBuilder.Entity("SchoolBusAPI.Models.City", b =>
-                {
-                    b.HasOne("SchoolBusAPI.Models.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.District", b =>
@@ -1101,13 +1084,6 @@ namespace SchoolBusAPI.Migrations
                     b.HasOne("SchoolBusAPI.Models.SchoolBusOwner", "SchoolBusOwner")
                         .WithMany()
                         .HasForeignKey("SchoolBusOwnerId");
-                });
-
-            modelBuilder.Entity("SchoolBusAPI.Models.SchoolDistrict", b =>
-                {
-                    b.HasOne("SchoolBusAPI.Models.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.ServiceArea", b =>

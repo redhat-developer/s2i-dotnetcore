@@ -72,12 +72,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of SchoolBusOwnerAttachment to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerAttachment not found</response>
-        [HttpDelete]
-        [Route("/api/schoolbusownerattachments/{id}")]
-        [SwaggerOperation("SchoolbusownerattachmentsIdDelete")]
-        public virtual IActionResult SchoolbusownerattachmentsIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/schoolbusownerattachments/{id}/delete")]
+        [SwaggerOperation("SchoolbusownerattachmentsIdDeletePost")]
+        public virtual IActionResult SchoolbusownerattachmentsIdDeletePost([FromRoute]int id)
         {
-            return this._service.SchoolbusownerattachmentsIdDeleteAsync(id);
+            return this._service.SchoolbusownerattachmentsIdDeletePostAsync(id);
         }
 
         /// <summary>

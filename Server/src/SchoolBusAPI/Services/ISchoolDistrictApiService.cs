@@ -32,9 +32,51 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of SchoolDistricts for a given region</remarks>
-        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
+        /// <remarks>Adds a number of school districts.</remarks>
+        /// <param name="items"></param>
         /// <response code="200">OK</response>
-        IActionResult RegionsIdSchooldistrictsGetAsync(int id);
+        IActionResult SchooldistrictsBulkPostAsync(SchoolDistrict[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a list of available schooldistricts</remarks>
+        /// <response code="200">OK</response>
+        IActionResult SchooldistrictsGetAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Deletes a School District</remarks>
+        /// <param name="id">id of School District to delete</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">School District not found</response>
+        IActionResult SchooldistrictsIdDeletePostAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a specific school district</remarks>
+        /// <param name="id">id of School Districts to fetch</param>
+        /// <response code="200">OK</response>
+        IActionResult SchooldistrictsIdGetAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Updates a school district</remarks>
+        /// <param name="id">id of School District to update</param>
+        /// <param name="item"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">School District not found</response>
+        IActionResult SchooldistrictsIdPutAsync(int id, SchoolDistrict item);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a school district</remarks>
+        /// <param name="item"></param>
+        /// <response code="200">OK</response>
+        IActionResult SchooldistrictsPostAsync(SchoolDistrict item);
     }
 }

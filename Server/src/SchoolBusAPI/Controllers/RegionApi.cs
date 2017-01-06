@@ -71,31 +71,31 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of cities for a given region</remarks>
-        /// <param name="id">id of Region to fetch Cities for</param>
+        /// <remarks>Deletes a region</remarks>
+        /// <param name="id">id of Region to delete</param>
         /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/regions/{id}/cities")]
-        [SwaggerOperation("RegionsIdCitiesGet")]
-        [SwaggerResponse(200, type: typeof(List<City>))]
-        public virtual IActionResult RegionsIdCitiesGet([FromRoute]int id)
+        /// <response code="404">Region not found</response>
+        [HttpPost]
+        [Route("/api/regions/{id}/delete")]
+        [SwaggerOperation("RegionsIdDeletePost")]
+        public virtual IActionResult RegionsIdDeletePost([FromRoute]int id)
         {
-            return this._service.RegionsIdCitiesGetAsync(id);
+            return this._service.RegionsIdDeletePostAsync(id);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Deletes a region</remarks>
-        /// <param name="id">id of Region to delete</param>
+        /// <remarks>Returns the districts for a specific region</remarks>
+        /// <param name="id">id of Region for which to fetch the Districts</param>
         /// <response code="200">OK</response>
-        /// <response code="404">Region not found</response>
-        [HttpDelete]
-        [Route("/api/regions/{id}")]
-        [SwaggerOperation("RegionsIdDelete")]
-        public virtual IActionResult RegionsIdDelete([FromRoute]int id)
+        [HttpGet]
+        [Route("/api/regions/{id}/districts")]
+        [SwaggerOperation("RegionsIdDistrictsGet")]
+        [SwaggerResponse(200, type: typeof(List<District>))]
+        public virtual IActionResult RegionsIdDistrictsGet([FromRoute]int id)
         {
-            return this._service.RegionsIdDeleteAsync(id);
+            return this._service.RegionsIdDistrictsGetAsync(id);
         }
 
         /// <summary>
@@ -127,21 +127,6 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult RegionsIdPut([FromRoute]int id, [FromBody]Region item)
         {
             return this._service.RegionsIdPutAsync(id, item);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns a list of ServiceAreas for a given region</remarks>
-        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/regions/{id}/serviceareas")]
-        [SwaggerOperation("RegionsIdServiceareasGet")]
-        [SwaggerResponse(200, type: typeof(List<ServiceArea>))]
-        public virtual IActionResult RegionsIdServiceareasGet([FromRoute]int id)
-        {
-            return this._service.RegionsIdServiceareasGetAsync(id);
         }
 
         /// <summary>

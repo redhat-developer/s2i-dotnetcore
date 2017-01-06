@@ -52,7 +52,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdDeleteAsync(int id);
+        IActionResult UsersIdDeletePostAsync(int id);
 
         /// <summary>
         /// 

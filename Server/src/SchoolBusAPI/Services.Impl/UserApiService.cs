@@ -88,7 +88,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdDeleteAsync(int id)
+        public virtual IActionResult UsersIdDeletePostAsync(int id)
         {
             var user = _context.Users.FirstOrDefault(x => x.Id == id);
             if (user == null)

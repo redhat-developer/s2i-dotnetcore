@@ -37,14 +37,14 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolBusOwnerNote" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Expired">Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment..</param>
+        /// <param name="IsNoLongerRelevant">A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant..</param>
         /// <param name="Note">The contents of the note..</param>
         /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
-        public SchoolBusOwnerNote(int Id, bool? Expired = null, string Note = null, SchoolBusOwner SchoolBusOwner = null)
+        public SchoolBusOwnerNote(int Id, bool? IsNoLongerRelevant = null, string Note = null, SchoolBusOwner SchoolBusOwner = null)
         {
             
             this.Id = Id;
-            this.Expired = Expired;
+            this.IsNoLongerRelevant = IsNoLongerRelevant;
             this.Note = Note;
             this.SchoolBusOwner = SchoolBusOwner;
             
@@ -58,11 +58,11 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.
+        /// A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.
         /// </summary>
-        /// <value>Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.</value>
-        [MetaDataExtension (Description = "Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.")]
-        public bool? Expired { get; set; }
+        /// <value>A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.</value>
+        [MetaDataExtension (Description = "A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.")]
+        public bool? IsNoLongerRelevant { get; set; }
 
         /// <summary>
         /// The contents of the note.
@@ -85,7 +85,7 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolBusOwnerNote {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Expired: ").Append(Expired).Append("\n");
+            sb.Append("  IsNoLongerRelevant: ").Append(IsNoLongerRelevant).Append("\n");
             sb.Append("  Note: ").Append(Note).Append("\n");
             sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
             sb.Append("}\n");
@@ -132,9 +132,9 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Expired == other.Expired ||
-                    this.Expired != null &&
-                    this.Expired.Equals(other.Expired)
+                    this.IsNoLongerRelevant == other.IsNoLongerRelevant ||
+                    this.IsNoLongerRelevant != null &&
+                    this.IsNoLongerRelevant.Equals(other.IsNoLongerRelevant)
                 ) && 
                 (
                     this.Note == other.Note ||
@@ -163,9 +163,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
                 }
-                if (this.Expired != null)
+                if (this.IsNoLongerRelevant != null)
                 {
-                    hash = hash * 59 + this.Expired.GetHashCode();
+                    hash = hash * 59 + this.IsNoLongerRelevant.GetHashCode();
                 }
                 if (this.Note != null)
                 {

@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// Notes entered by users about a specific School Bus
+    /// Notes entered by users about a specific School Bus.
     /// </summary>
     public partial class SchoolBusNote : IEquatable<SchoolBusNote>
     {
@@ -38,14 +38,14 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="Note">The contents of the note..</param>
-        /// <param name="Expired">A flag indicating when true that the note is no longer relevant to support retaining the history but communicating when a note is no longer to be used..</param>
+        /// <param name="IsNoLongerRelevant">A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant..</param>
         /// <param name="SchoolBus">SchoolBus.</param>
-        public SchoolBusNote(int Id, string Note = null, bool? Expired = null, SchoolBus SchoolBus = null)
+        public SchoolBusNote(int Id, string Note = null, bool? IsNoLongerRelevant = null, SchoolBus SchoolBus = null)
         {
             
             this.Id = Id;
             this.Note = Note;
-            this.Expired = Expired;
+            this.IsNoLongerRelevant = IsNoLongerRelevant;
             this.SchoolBus = SchoolBus;
             
         }
@@ -65,11 +65,11 @@ namespace SchoolBusAPI.Models
         public string Note { get; set; }
 
         /// <summary>
-        /// A flag indicating when true that the note is no longer relevant to support retaining the history but communicating when a note is no longer to be used.
+        /// A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.
         /// </summary>
-        /// <value>A flag indicating when true that the note is no longer relevant to support retaining the history but communicating when a note is no longer to be used.</value>
-        [MetaDataExtension (Description = "A flag indicating when true that the note is no longer relevant to support retaining the history but communicating when a note is no longer to be used.")]
-        public bool? Expired { get; set; }
+        /// <value>A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.</value>
+        [MetaDataExtension (Description = "A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.")]
+        public bool? IsNoLongerRelevant { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBus
@@ -86,7 +86,7 @@ namespace SchoolBusAPI.Models
             sb.Append("class SchoolBusNote {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Note: ").Append(Note).Append("\n");
-            sb.Append("  Expired: ").Append(Expired).Append("\n");
+            sb.Append("  IsNoLongerRelevant: ").Append(IsNoLongerRelevant).Append("\n");
             sb.Append("  SchoolBus: ").Append(SchoolBus).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -137,9 +137,9 @@ namespace SchoolBusAPI.Models
                     this.Note.Equals(other.Note)
                 ) && 
                 (
-                    this.Expired == other.Expired ||
-                    this.Expired != null &&
-                    this.Expired.Equals(other.Expired)
+                    this.IsNoLongerRelevant == other.IsNoLongerRelevant ||
+                    this.IsNoLongerRelevant != null &&
+                    this.IsNoLongerRelevant.Equals(other.IsNoLongerRelevant)
                 ) && 
                 (
                     this.SchoolBus == other.SchoolBus ||
@@ -167,9 +167,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Note.GetHashCode();
                 }
-                if (this.Expired != null)
+                if (this.IsNoLongerRelevant != null)
                 {
-                    hash = hash * 59 + this.Expired.GetHashCode();
+                    hash = hash * 59 + this.IsNoLongerRelevant.GetHashCode();
                 }
                 if (this.SchoolBus != null)
                 {

@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// A list of cities in BC. Authoritative source to be determined.
     /// </summary>
     public partial class City : IEquatable<City>
     {
@@ -38,13 +38,11 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="_City">The name of the City.</param>
-        /// <param name="Region">Region.</param>
-        public City(int Id, string _City = null, Region Region = null)
+        public City(int Id, string _City = null)
         {
             
             this.Id = Id;
             this._City = _City;
-            this.Region = Region;
             
         }
 
@@ -63,11 +61,6 @@ namespace SchoolBusAPI.Models
         public string _City { get; set; }
 
         /// <summary>
-        /// Gets or Sets Region
-        /// </summary>
-        public Region Region { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -77,7 +70,6 @@ namespace SchoolBusAPI.Models
             sb.Append("class City {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  _City: ").Append(_City).Append("\n");
-            sb.Append("  Region: ").Append(Region).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -125,11 +117,6 @@ namespace SchoolBusAPI.Models
                     this._City == other._City ||
                     this._City != null &&
                     this._City.Equals(other._City)
-                ) && 
-                (
-                    this.Region == other.Region ||
-                    this.Region != null &&
-                    this.Region.Equals(other.Region)
                 );
         }
 
@@ -151,10 +138,6 @@ namespace SchoolBusAPI.Models
                 if (this._City != null)
                 {
                     hash = hash * 59 + this._City.GetHashCode();
-                }
-                if (this.Region != null)
-                {
-                    hash = hash * 59 + this.Region.GetHashCode();
                 }
                 return hash;
             }

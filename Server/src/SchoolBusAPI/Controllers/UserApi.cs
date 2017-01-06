@@ -76,12 +76,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        [HttpDelete]
-        [Route("/api/users/{id}")]
-        [SwaggerOperation("UsersIdDelete")]
-        public virtual IActionResult UsersIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/users/{id}/delete")]
+        [SwaggerOperation("UsersIdDeletePost")]
+        public virtual IActionResult UsersIdDeletePost([FromRoute]int id)
         {
-            return this._service.UsersIdDeleteAsync(id);
+            return this._service.UsersIdDeletePostAsync(id);
         }
 
         /// <summary>
