@@ -37,7 +37,7 @@ app.get('/api/test', function(req, res) {
 
 app.use('/api', proxy(`http://${API_HOST}:${API_PORT}/api`, {
   changeOrigin: true,
-  logLevel: 'debug',
+  // logLevel: 'debug',
 }));
 
 // Override WebPack config to work with this express server
