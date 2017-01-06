@@ -1,0 +1,31 @@
+File,regi,plate,VIN,schoolBusOwner,permitNumber,status,isOutOfProvince,location,busLocationAddr1,busLocationAddr2,busLocationCity,busLocationProv,busLocationPostCode,restrictions,nextInspection,schoolBusDistrict,independentSchool,nameOfIndependentSchool,schoolBusClass,schoolBusUnitNumber,schoolBusSeatingCapacity,mobiityAidCapacity
+SchoolBus,34665518,MNG 505,4UZABRCS08CY65184,8,31419,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-06-20,#REF!,rg:False,rg:None,Class 2,38428,56,0
+SchoolBus,44638457,PLB 734,1M8PDMTA7VP041237,9,33345,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-11-16,#REF!,rg:False,rg:None,Class 3,27194,80,3
+SchoolBus,39588457,NNR 799,1GBHG31R7X1112773,2,28734,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-04-18,#REF!,rg:False,rg:None,Class 2,31459,32,3
+SchoolBus,37510907,NNN 110,1BAANB7A7XF088727,5,28632,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-12-07,#REF!,rg:False,rg:None,Class 1,28764,31,3
+SchoolBus,17572894,VEX 466,1BAANB7A9XF085459,16,28631,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2016-12-27,#REF!,rg:False,rg:None,Class 3,18915,37,0
+SchoolBus,19550624,BKH 714,1HVBBAAN2XH208823,5,28724,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-07-21,#REF!,rg:True,GLENLYON NORFOLK SCHOOL,Class 2,37887,80,1
+SchoolBus,37794763,JHS 644,4UZABRCS48CY68366,12,31418,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-11-15,#REF!,rg:True,CATHOLIC PUBLIC SCHOOLS,Class 3,39144,82,0
+SchoolBus,12103539,GCE 975,1GJGG25V771152586,2,32022,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-08-08,#REF!,rg:True,WSA'NEC' SCHOOL BOARD,Class 1,45726,77,0
+SchoolBus,36536914,TJR 794,1GJGG25V571161785,15,32004,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-12-22,#REF!,rg:True,NANAIMO CHRISTIAN SCHOOL,Class 3,20854,33,2
+SchoolBus,44541094,LEE 402,4UZ3CFAC2XCB69823,8,28702,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-04-01,#REF!,rg:False,rg:None,Class 2,19836,0,3
+SchoolBus,46080028,PSC 516,1BAAJCSH6XF082445,19,30453,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-05-05,#REF!,rg:True,GLENLYON NORFOLK SCHOOL,Class 3,47736,16,0
+SchoolBus,15151423,KHZ 108,1HVBBABN5XH206462,9,28655,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-12-14,#REF!,rg:True,MAIMONIDES SCHOOL SOCIETY,Class 2,43459,35,0
+SchoolBus,12649740,NLN 307,1HVBBABP8YH201181,3,28654,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-01-09,#REF!,rg:False,rg:None,Class 1,16038,13,0
+SchoolBus,26664288,XES 635,1GBHG31F6X1079908,19,28675,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-04-27,#REF!,rg:False,rg:None,Class 3,19748,31,5
+SchoolBus,37421444,MPA 390,1GBHG31F2X1073328,16,28676,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-04-03,#REF!,rg:False,rg:None,Class 3,44685,60,0
+SchoolBus,28930520,TJJ 517,1GBHG31F2X1118184,8,28672,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-10-27,#REF!,rg:True,THE CATHOLIC IND SCHOOL,Class 4,40275,7,3
+SchoolBus,13454882,MWJ 920,1GBHG31F0X1114546,11,28674,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-05-07,#REF!,rg:True,ST GEORGE'S SCHOOL,Class 4,12571,71,0
+SchoolBus,35057125,SSR 601,1GBHG31F2X1119610,9,28671,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-11-30,#REF!,rg:False,rg:None,Class 1,43722,200,2
+SchoolBus,37140891,VTC 949,1GBHG31F8X1115759,6,29848,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-06-21,#REF!,rg:False,rg:None,Class 2,42123,17,0
+SchoolBus,30717817,TNC 450,1GBJG31F9X1153768,19,28706,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-03-30,#REF!,rg:False,rg:None,Class 4,27547,89,2
+SchoolBus,47366207,TJK 988,1GBJG31F5X1156509,11,31971,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2016-12-27,#REF!,rg:False,rg:None,Class 3,22789,69,2
+SchoolBus,29373703,PKR 253,1GBJG31F8X1153013,18,32121,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-05-11,#REF!,rg:False,rg:None,Class 4,43237,38,0
+SchoolBus,47512903,VJA 211,1GBJG31F3X1158146,2,31680,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2016-12-28,#REF!,rg:False,rg:None,Class 2,48478,20,2
+SchoolBus,46222733,VNN 705,1GBJG31F1X1156835,6,34199,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-08-06,#REF!,rg:False,rg:None,Class 1,40414,2,0
+SchoolBus,15740892,KPM 250,1GAHG39R1X1149047,11,32855,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-07-16,#REF!,rg:False,rg:None,Class 2,33104,81,0
+SchoolBus,43914325,TKW 525,1FDXE47S4XHB19340,16,30267,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-01-30,#REF!,rg:False,rg:None,Class 1,23145,64,0
+SchoolBus,32270571,LTA 599,1HVBBAAN3XH242948,19,28737,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-06-05,#REF!,rg:True,AGASSIZ CHRISTIAN SCHOOL,Class 1,46807,57,0
+SchoolBus,46715146,HBM 344,1BABNBXA9YF093727,17,28769,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2016-12-31,#REF!,rg:True,VALLEY CHRISTIAN SCHOOL,Class 3,15111,28,0
+SchoolBus,32911744,THJ 509,2PCH3349071716248,19,32117,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-03-28,#REF!,rg:False,rg:None,Class 3,25524,55,0
+SchoolBus,32108785,MAM 873,2PCH3349971715715,17,32113,Active,rg:False,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,2017-08-28,#REF!,rg:False,rg:None,Class 2,41071,33,0

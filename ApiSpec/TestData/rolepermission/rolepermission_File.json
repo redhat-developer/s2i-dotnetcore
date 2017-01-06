@@ -1,0 +1,14 @@
+[
+    {
+        "permissionid": "1",
+        "roleid": "1"
+    },
+    {
+        "permissionid": "1",
+        "roleid": "2"
+    },
+    {
+        "permissionid": "2",
+        "roleid": "2"
+    }
+]

@@ -1,0 +1,9 @@
+File,userId,roleId,effectiveDate,expiryDate
+userRole,1,2,2017-01-01,rg:None
+userRole,2,2,2017-01-01,rg:None
+userRole,3,2,2017-01-01,rg:None
+userRole,4,2,2017-01-01,rg:None
+userRole,5,2,2017-01-01,rg:None
+userRole,6,2,2017-01-01,rg:None
+-,7,2,2017-01-01,rg:None
+-,8,2,2017-01-01,rg:None

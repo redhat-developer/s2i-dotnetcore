@@ -1,0 +1,7 @@
+File,givenName,surname,smUserID,active,initials,email
+user,Stephen,Curran,SCURRAN,rg:True,SWC,rg:None
+user,George,Walker,GEWALKER,rg:True,GW,rg:None
+user,Wade,Barnes,WABARNES,rg:True,WAB,rg:None
+user,Seamus,O'Connor,SEOCONNO,rg:True,SO,rg:None
+user,Randy,Posynick,RAPOSYNI,rg:True,RP,rg:None
+user,Geoff,Ford,GEFORD,rg:True,GF,rg:None

@@ -1,0 +1,12 @@
+[
+    {
+        "code": "User",
+        "description": "A minimum permission needed for an authenticated user to access the system.",
+        "name": "User"
+    },
+    {
+        "code": "Admin",
+        "description": "Gives the user System Administration power in the system. Assignment of this permission should go to a very limited set of users an an as needed/backup basis.",
+        "name": "System Administrator"
+    }
+]

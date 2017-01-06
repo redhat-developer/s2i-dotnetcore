@@ -1,0 +1,14 @@
+File,region,ministryDistrict,name,startDate,endDate
+District,1,1,Lower Mainland,2009-01-01,rg:None
+District,1,2,Vancouver Island,2009-01-01,rg:None
+District,2,3,Rocky Mountain,2009-01-01,rg:None
+District,2,4,West Kootenay,2009-01-01,rg:None
+District,2,5,Okanagan-Shuswap,2009-01-01,rg:None
+District,2,6,Thompson-Nicola,2009-01-01,rg:None
+District,2,7,Cariboo,2009-01-01,rg:None
+District,3,8,Peace,2009-01-01,rg:None
+District,3,9,Fort George,2009-01-01,rg:None
+District,3,10,Bulkley-Stikine,2009-01-01,rg:None
+District,3,11,Skeena,2009-01-01,rg:None
+District,4,99,NON-BC,2009-01-01,rg:None
+District,5,999,Unknown,2009-01-01,rg:None
