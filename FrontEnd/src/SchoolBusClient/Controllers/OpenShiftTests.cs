@@ -65,7 +65,8 @@ namespace SchoolBusClient.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("/headers")]        
+        [Route("/headers")]
+        [Route("/schoolbus/headers")]
         public virtual IActionResult DoHeaders()
         {
             StringBuilder headers = new StringBuilder();
