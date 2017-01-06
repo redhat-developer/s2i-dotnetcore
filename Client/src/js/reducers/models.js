@@ -1,23 +1,5 @@
-const TEST_USERS = {
-  users : [{
-    id        : 1,
-    active    : true,
-    givenName : 'Rob',
-    surname   : 'Chamberlin',
-    initials  : 'RC',
-    email     : 'robchamberlin@mail.com',
-  },{
-    id        : 2,
-    active    : true,
-    givenName : 'Tom',
-    surname   : 'Higgins',
-    initials  : 'TH',
-    email     : 'tomhiggins@mail.com',
-  }],
-};
-
 const DEFAULT_STATE = {
-  users : [],
+  users : {},
 };
 
 export default function modelsReducer(state = DEFAULT_STATE, action) {
@@ -26,13 +8,9 @@ export default function modelsReducer(state = DEFAULT_STATE, action) {
   switch(action.type) {
     // Users
     case 'UPDATE_USERS':
-      newState = Object.assign({}, state, action.users);
-      break;
-
-    case 'TEST_USERS':
-      newState = Object.assign({}, state, TEST_USERS);
+      newState = { ...state, ...action.users };
       break;
   }
 
-  return Object.assign({}, state, newState);
+  return { ...state, ...newState };
 }
