@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap';
 
 var Notifications = React.createClass({
   propTypes: {
@@ -9,11 +9,7 @@ var Notifications = React.createClass({
 
   render: function() {
     return <div id="notifications">
-      <Row>
-        <Col md={8}>
-          <h1>Notifications</h1>
-        </Col>
-      </Row>
+      <PageHeader>Notifications</PageHeader>
     </div>;
   },
 });

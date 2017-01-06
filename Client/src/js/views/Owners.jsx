@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap';
 
 var Owners = React.createClass({
   propTypes: {
@@ -9,11 +9,7 @@ var Owners = React.createClass({
 
   render: function() {
     return <div id="owners">
-      <Row>
-        <Col md={8}>
-          <h1>Owners</h1>
-        </Col>
-      </Row>
+      <PageHeader>Owners</PageHeader>
     </div>;
   },
 });

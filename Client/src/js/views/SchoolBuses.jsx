@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap';
 
 var SchoolBuses = React.createClass({
   propTypes: {
@@ -9,11 +9,7 @@ var SchoolBuses = React.createClass({
 
   render: function() {
     return <div id="school-buses">
-      <Row>
-        <Col md={8}>
-          <h1>School Buses</h1>
-        </Col>
-      </Row>
+      <PageHeader>School Buses</PageHeader>
     </div>;
   },
 });
