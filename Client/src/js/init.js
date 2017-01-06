@@ -39,9 +39,9 @@ function renderApp() {
 export default function startApp() {
   incrementProgressBar();
 
-  Api.getCurrentUser();
+  var userPromise = Api.getCurrentUser();
 
-  Promise.all([]).then(() => {
+  Promise.all([userPromise]).then(() => {
     // Wrapping in a setTimeout to silence an error from Bluebird's promise lib about API requests
     // made inside of component{Will,Did}Mount.
     setTimeout(renderApp, 0);
