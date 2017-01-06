@@ -51,15 +51,16 @@ namespace SchoolBusAPI.Models
         /// <param name="BusLocationProv">Province of physical location of the School Bus - free form..</param>
         /// <param name="BusLocationPostCode">Postal Code of physical location of the School Bus..</param>
         /// <param name="Restrictions">Text of any restrictions to be printed on the school bus permit..</param>
-        /// <param name="NextInspection">Derived from the inspection table - the closest in the future inspection date for this School Bus..</param>
+        /// <param name="NextInspectionDate">The next inspection date for this School Bus. Set at the time an inspection is set..</param>
+        /// <param name="NextInspectionType">An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass/Fail status of the most recent inspection..</param>
         /// <param name="SchoolBusDistrict">The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless..</param>
-        /// <param name="IndependentSchool">True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the associated field..</param>
-        /// <param name="NameOfIndependentSchool">The name of the Independent School to which the School Bus is associated..</param>
+        /// <param name="IsIndependentSchool">True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the companion field..</param>
+        /// <param name="NameOfIndependentSchool">The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false..</param>
         /// <param name="SchoolBusClass">The enumerated class of School Bus..</param>
         /// <param name="SchoolBusUnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
         /// <param name="SchoolBusSeatingCapacity">The maximum number of passengers in the bus based on the specific use of the bus. For example, the same 2-per seat / 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children, 3 per seat..</param>
         /// <param name="MobilityAidCapacity">The number of mobility aid passenger seats in the bus..</param>
-        public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea Location = null, string BusLocationAddr1 = null, string BusLocationAddr2 = null, City BusLocationCity = null, string BusLocationProv = null, string BusLocationPostCode = null, string Restrictions = null, DateTime? NextInspection = null, SchoolDistrict SchoolBusDistrict = null, bool? IndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null)
+        public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea Location = null, string BusLocationAddr1 = null, string BusLocationAddr2 = null, City BusLocationCity = null, string BusLocationProv = null, string BusLocationPostCode = null, string Restrictions = null, DateTime? NextInspectionDate = null, string NextInspectionType = null, SchoolDistrict SchoolBusDistrict = null, bool? IsIndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null)
         {
             
             this.Id = Id;
@@ -77,9 +78,10 @@ namespace SchoolBusAPI.Models
             this.BusLocationProv = BusLocationProv;
             this.BusLocationPostCode = BusLocationPostCode;
             this.Restrictions = Restrictions;
-            this.NextInspection = NextInspection;
+            this.NextInspectionDate = NextInspectionDate;
+            this.NextInspectionType = NextInspectionType;
             this.SchoolBusDistrict = SchoolBusDistrict;
-            this.IndependentSchool = IndependentSchool;
+            this.IsIndependentSchool = IsIndependentSchool;
             this.NameOfIndependentSchool = NameOfIndependentSchool;
             this.SchoolBusClass = SchoolBusClass;
             this.SchoolBusUnitNumber = SchoolBusUnitNumber;
@@ -188,11 +190,18 @@ namespace SchoolBusAPI.Models
         public string Restrictions { get; set; }
 
         /// <summary>
-        /// Derived from the inspection table - the closest in the future inspection date for this School Bus.
+        /// The next inspection date for this School Bus. Set at the time an inspection is set.
         /// </summary>
-        /// <value>Derived from the inspection table - the closest in the future inspection date for this School Bus.</value>
-        [MetaDataExtension (Description = "Derived from the inspection table - the closest in the future inspection date for this School Bus.")]
-        public DateTime? NextInspection { get; set; }
+        /// <value>The next inspection date for this School Bus. Set at the time an inspection is set.</value>
+        [MetaDataExtension (Description = "The next inspection date for this School Bus. Set at the time an inspection is set.")]
+        public DateTime? NextInspectionDate { get; set; }
+
+        /// <summary>
+        /// An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass/Fail status of the most recent inspection.
+        /// </summary>
+        /// <value>An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass/Fail status of the most recent inspection.</value>
+        [MetaDataExtension (Description = "An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass/Fail status of the most recent inspection.")]
+        public string NextInspectionType { get; set; }
 
         /// <summary>
         /// The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.
@@ -202,17 +211,17 @@ namespace SchoolBusAPI.Models
         public SchoolDistrict SchoolBusDistrict { get; set; }
 
         /// <summary>
-        /// True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the associated field.
+        /// True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the companion field.
         /// </summary>
-        /// <value>True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the associated field.</value>
-        [MetaDataExtension (Description = "True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the associated field.")]
-        public bool? IndependentSchool { get; set; }
+        /// <value>True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the companion field.</value>
+        [MetaDataExtension (Description = "True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the companion field.")]
+        public bool? IsIndependentSchool { get; set; }
 
         /// <summary>
-        /// The name of the Independent School to which the School Bus is associated.
+        /// The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.
         /// </summary>
-        /// <value>The name of the Independent School to which the School Bus is associated.</value>
-        [MetaDataExtension (Description = "The name of the Independent School to which the School Bus is associated.")]
+        /// <value>The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.</value>
+        [MetaDataExtension (Description = "The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.")]
         public string NameOfIndependentSchool { get; set; }
 
         /// <summary>
@@ -266,9 +275,10 @@ namespace SchoolBusAPI.Models
             sb.Append("  BusLocationProv: ").Append(BusLocationProv).Append("\n");
             sb.Append("  BusLocationPostCode: ").Append(BusLocationPostCode).Append("\n");
             sb.Append("  Restrictions: ").Append(Restrictions).Append("\n");
-            sb.Append("  NextInspection: ").Append(NextInspection).Append("\n");
+            sb.Append("  NextInspectionDate: ").Append(NextInspectionDate).Append("\n");
+            sb.Append("  NextInspectionType: ").Append(NextInspectionType).Append("\n");
             sb.Append("  SchoolBusDistrict: ").Append(SchoolBusDistrict).Append("\n");
-            sb.Append("  IndependentSchool: ").Append(IndependentSchool).Append("\n");
+            sb.Append("  IsIndependentSchool: ").Append(IsIndependentSchool).Append("\n");
             sb.Append("  NameOfIndependentSchool: ").Append(NameOfIndependentSchool).Append("\n");
             sb.Append("  SchoolBusClass: ").Append(SchoolBusClass).Append("\n");
             sb.Append("  SchoolBusUnitNumber: ").Append(SchoolBusUnitNumber).Append("\n");
@@ -388,9 +398,14 @@ namespace SchoolBusAPI.Models
                     this.Restrictions.Equals(other.Restrictions)
                 ) && 
                 (
-                    this.NextInspection == other.NextInspection ||
-                    this.NextInspection != null &&
-                    this.NextInspection.Equals(other.NextInspection)
+                    this.NextInspectionDate == other.NextInspectionDate ||
+                    this.NextInspectionDate != null &&
+                    this.NextInspectionDate.Equals(other.NextInspectionDate)
+                ) && 
+                (
+                    this.NextInspectionType == other.NextInspectionType ||
+                    this.NextInspectionType != null &&
+                    this.NextInspectionType.Equals(other.NextInspectionType)
                 ) && 
                 (
                     this.SchoolBusDistrict == other.SchoolBusDistrict ||
@@ -398,9 +413,9 @@ namespace SchoolBusAPI.Models
                     this.SchoolBusDistrict.Equals(other.SchoolBusDistrict)
                 ) && 
                 (
-                    this.IndependentSchool == other.IndependentSchool ||
-                    this.IndependentSchool != null &&
-                    this.IndependentSchool.Equals(other.IndependentSchool)
+                    this.IsIndependentSchool == other.IsIndependentSchool ||
+                    this.IsIndependentSchool != null &&
+                    this.IsIndependentSchool.Equals(other.IsIndependentSchool)
                 ) && 
                 (
                     this.NameOfIndependentSchool == other.NameOfIndependentSchool ||
@@ -500,17 +515,21 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Restrictions.GetHashCode();
                 }
-                if (this.NextInspection != null)
+                if (this.NextInspectionDate != null)
                 {
-                    hash = hash * 59 + this.NextInspection.GetHashCode();
+                    hash = hash * 59 + this.NextInspectionDate.GetHashCode();
+                }
+                if (this.NextInspectionType != null)
+                {
+                    hash = hash * 59 + this.NextInspectionType.GetHashCode();
                 }
                 if (this.SchoolBusDistrict != null)
                 {
                     hash = hash * 59 + this.SchoolBusDistrict.GetHashCode();
                 }
-                if (this.IndependentSchool != null)
+                if (this.IsIndependentSchool != null)
                 {
-                    hash = hash * 59 + this.IndependentSchool.GetHashCode();
+                    hash = hash * 59 + this.IsIndependentSchool.GetHashCode();
                 }
                 if (this.NameOfIndependentSchool != null)
                 {

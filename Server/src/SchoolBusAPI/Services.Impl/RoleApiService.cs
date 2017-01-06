@@ -57,7 +57,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of Role to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdDeleteAsync(int id)
+        public virtual IActionResult RolesIdDeletePostAsync(int id)
         {
             var role = _context.Roles.FirstOrDefault(x => x.Id == id);
             if (role == null)

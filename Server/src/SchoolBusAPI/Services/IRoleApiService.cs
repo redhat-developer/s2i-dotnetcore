@@ -42,7 +42,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of Role to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        IActionResult RolesIdDeleteAsync(int id);
+        IActionResult RolesIdDeletePostAsync(int id);
 
         /// <summary>
         /// 

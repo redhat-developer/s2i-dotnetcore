@@ -9,7 +9,7 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E1B20217-2820-466F-895B-AA5ECCF66719}</ProjectGuid>
+    <ProjectGuid>{23B5AD69-ACA2-4CC2-8E77-D4AD24471006}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MSBuild</RootNamespace>

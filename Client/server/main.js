@@ -13,8 +13,8 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const PORT = argv.port || 8000;
 const HOST = argv.host || 'localhost';
-const API_HOST = argv.apihost || 'localhost';
-const API_PORT = argv.apiport || process.env.BC_GOV_SCHOOLBUS_API_PORT || 8080;
+const API_HOST = argv.apihost || 'server-tran-schoolbus-dev.pathfinder.gov.bc.ca';
+const API_PORT = argv.apiport || process.env.BC_GOV_SCHOOLBUS_API_PORT || 80;
 
 const PROJECT_ROOT = path.join(__dirname, '..');
 const DIST_PATH = path.join(PROJECT_ROOT, 'dist');
@@ -23,20 +23,7 @@ const app = express();
 
 app.use(morgan('dev'));
 
-// TODO: Remove - just for testing
-var count = 0;
-app.get('/api/test', function(req, res) {
-  res.status(200);
-  count++;
-  var newCount = count;
-  setTimeout(function() {
-    res.send(JSON.stringify({ count: newCount })).end();
-  }, Math.random() * 10 * 1000);
-});
-
-
-app.use('/api', proxy({
-  target: `https://${API_HOST}:${API_PORT}/schoolbus-tbd/api`,
+app.use('/api', proxy(`http://${API_HOST}:${API_PORT}/api`, {
   changeOrigin: true,
 }));
 

@@ -72,12 +72,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Inspection to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
-        [HttpDelete]
-        [Route("/api/inspections/{id}")]
-        [SwaggerOperation("InspectionsIdDelete")]
-        public virtual IActionResult InspectionsIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/inspections/{id}/delete")]
+        [SwaggerOperation("InspectionsIdDeletePost")]
+        public virtual IActionResult InspectionsIdDeletePost([FromRoute]int id)
         {
-            return this._service.InspectionsIdDeleteAsync(id);
+            return this._service.InspectionsIdDeletePostAsync(id);
         }
 
         /// <summary>

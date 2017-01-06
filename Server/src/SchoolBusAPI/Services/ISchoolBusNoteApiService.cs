@@ -48,7 +48,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of SchoolBusNote to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusNote not found</response>
-        IActionResult SchoolbusnotesIdDeleteAsync(int id);
+        IActionResult SchoolbusnotesIdDeletePostAsync(int id);
 
         /// <summary>
         /// 
