@@ -4206,6 +4206,7 @@ definitions:
         x-chance-type: sentence
   UserFavouriteViewModel:
     type: object
+    x-codegen-viewmodel: true
     properties:
       id:
         format: int32
@@ -4231,6 +4232,7 @@ definitions:
           max: 1000
   NotificationViewModel:
     type: object
+    x-codegen-viewmodel: true
     properties:
       id:
           format: int32

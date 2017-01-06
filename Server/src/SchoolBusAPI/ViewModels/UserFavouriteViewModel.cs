@@ -17,12 +17,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using SchoolBusAPI.Models;
 
-namespace SchoolBusAPI.Models
+namespace SchoolBusAPI.ViewModels
 {
     /// <summary>
     /// 
     /// </summary>
+    [DataContract]
     public partial class UserFavouriteViewModel : IEquatable<UserFavouriteViewModel>
     {
         /// <summary>
@@ -30,7 +32,6 @@ namespace SchoolBusAPI.Models
         /// </summary>
         public UserFavouriteViewModel()
         {
-            this.Id = 0;
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace SchoolBusAPI.Models
         /// <param name="Value">Saved search.</param>
         /// <param name="IsDefault">IsDefault.</param>
         /// <param name="FavouriteContextTypeId">FavouriteContextTypeId.</param>
-        public UserFavouriteViewModel(int? Id = null, string Name = null, string Value = null, bool? IsDefault = null, int? FavouriteContextTypeId = null)
+        public UserFavouriteViewModel(int Id, string Name = null, string Value = null, bool? IsDefault = null, int? FavouriteContextTypeId = null)
         {
             this.Id = Id;
             this.Name = Name;
@@ -54,12 +55,14 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
-        public int? Id { get; set; }
+        [DataMember(Name="id")]
+        public int Id { get; set; }
 
         /// <summary>
         /// Context Name
         /// </summary>
         /// <value>Context Name</value>
+        [DataMember(Name="name")]
         [MetaDataExtension (Description = "Context Name")]
         public string Name { get; set; }
 
@@ -67,17 +70,20 @@ namespace SchoolBusAPI.Models
         /// Saved search
         /// </summary>
         /// <value>Saved search</value>
+        [DataMember(Name="value")]
         [MetaDataExtension (Description = "Saved search")]
         public string Value { get; set; }
 
         /// <summary>
         /// Gets or Sets IsDefault
         /// </summary>
+        [DataMember(Name="isDefault")]
         public bool? IsDefault { get; set; }
 
         /// <summary>
         /// Gets or Sets FavouriteContextTypeId
         /// </summary>
+        [DataMember(Name="favouriteContextTypeId")]
         public int? FavouriteContextTypeId { get; set; }
 
         /// <summary>

@@ -96,7 +96,10 @@ namespace SchoolBusAPI.Services.Impl
                 // Not Found
                 return new StatusCodeResult(404);
             }
-
+            // remove any user role associations.            
+            var toRemove = _context.UserRoles.Where(x => x.User.Id == id ).ToList();
+            toRemove.ForEach(x => _context.UserRoles.Remove(x));
+            
             _context.Users.Remove(user);
             _context.SaveChanges();
             return new ObjectResult(user.ToViewModel());

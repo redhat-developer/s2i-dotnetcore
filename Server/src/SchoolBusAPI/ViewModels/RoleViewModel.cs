@@ -119,7 +119,7 @@ namespace SchoolBusAPI.ViewModels
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
+                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (

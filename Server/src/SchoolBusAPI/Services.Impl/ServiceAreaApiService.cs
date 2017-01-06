@@ -130,7 +130,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">Service Area not found</response>
         public virtual IActionResult ServiceareasIdPutAsync(int id, ServiceArea body)
         {
-            var exists = _context.Inspections.Any(a => a.Id == id);
+            var exists = _context.ServiceAreas.Any(a => a.Id == id);
             if (exists && id == body.Id)
             {
                 _context.ServiceAreas.Update(body);
