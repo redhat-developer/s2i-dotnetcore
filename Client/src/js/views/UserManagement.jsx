@@ -14,7 +14,7 @@ import * as Api from '../api';
 var UserManagement = React.createClass({
   propTypes: {
     currentUser : React.PropTypes.object,
-    models      : React.PropTypes.object,
+    users       : React.PropTypes.object,
   },
 
   getInitialState() {
@@ -24,7 +24,7 @@ var UserManagement = React.createClass({
   },
 
   componentDidMount() {
-    this.fetch({});
+    this.fetch();
   },
 
   fetch(params) {
@@ -45,9 +45,10 @@ var UserManagement = React.createClass({
   render() {
     return <div id="user-management">
       <PageHeader>User Management</PageHeader>
+
       {(() => {
         if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-        if (this.props.models.users.length === 0) { return <Alert bsStyle="info">No users</Alert>; }
+        if (Object.keys(this.props.users).length === 0) { return <Alert bsStyle="info">No users</Alert>; }
 
         return <Table condensed striped>
           <thead>
@@ -59,7 +60,7 @@ var UserManagement = React.createClass({
           </thead>
           <tbody>
           {
-            _.map(this.props.models.users, (user) => {
+            _.map(this.props.users, (user) => {
               return <tr key={ user.id } className={ !user.active ? 'info' : null }>
                 <td style={{ verticalAlign: 'middle' }}><strong>{ user.surname }, { user.givenName }</strong></td>
                 <td style={{ verticalAlign: 'middle' }}>{ user.initials }</td>
@@ -75,6 +76,7 @@ var UserManagement = React.createClass({
           </tbody>
         </Table>;
       })()}
+
     </div>;
   },
 });
@@ -82,7 +84,7 @@ var UserManagement = React.createClass({
 function mapStateToProps(state) {
   return {
     currentUser : state.user,
-    models      : state.models,
+    users       : state.models.users,
   };
 }
 
