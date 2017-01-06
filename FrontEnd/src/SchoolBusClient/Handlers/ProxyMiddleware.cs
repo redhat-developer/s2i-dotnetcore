@@ -32,32 +32,42 @@ namespace SchoolBusClient.Handlers
             var endRequest = false;
 
             string contextRequestPath = context.Request.Path.Value;
-            string API_PREFIX = "/api/";
-            if (contextRequestPath.Length >= API_PREFIX.Length && contextRequestPath.Substring(0, API_PREFIX.Length).Equals(API_PREFIX))
+            bool matchFound = false;
+            string[] apiPrefixes =new string[] { "/api/", "/schoolbus/api/" };
+            foreach (string apiPrefix in apiPrefixes)
             {
-                // extract the remainder of the path.
-                string path_remainder = contextRequestPath.Substring(API_PREFIX.Length);
-
-                // Get the application configuration
-
-                string middleware_name = _configuration["MIDDLEWARE_NAME"];
-
-                if (middleware_name != null)
+                if (matchFound)
                 {
-                    // Create a new URL to the next server inline.
-                    var url = "http://" + middleware_name + "/api/" + path_remainder;
-                    await StreamAsync(context, url);
-                    endRequest = true;
+                    continue;
                 }
-                else
+
+                if (contextRequestPath.Length >= apiPrefix.Length && contextRequestPath.Substring(0, apiPrefix.Length).Equals(apiPrefix))
                 {
-                    string error = "Error: Environment variable MIDDLEWARE_NAME is empty.";
-                    await context.Response.WriteAsync(error);
-                }                
-            }
-            if (!endRequest)
-            {
-                await _next(context);
+                    matchFound = true;
+                    // extract the remainder of the path.
+                    string path_remainder = contextRequestPath.Substring(apiPrefix.Length);
+
+                    // Get the application configuration
+
+                    string middleware_name = _configuration["MIDDLEWARE_NAME"];
+
+                    if (middleware_name != null)
+                    {
+                        // Create a new URL to the next server inline.
+                        var url = "http://" + middleware_name + "/api/" + path_remainder;
+                        await StreamAsync(context, url);
+                        endRequest = true;
+                    }
+                    else
+                    {
+                        string error = "Error: Environment variable MIDDLEWARE_NAME is empty.";
+                        await context.Response.WriteAsync(error);
+                    }
+                }
+                if (!endRequest)
+                {
+                    await _next(context);
+                }
             }
         }
 
