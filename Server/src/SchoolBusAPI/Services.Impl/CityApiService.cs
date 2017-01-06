@@ -125,12 +125,12 @@ namespace SchoolBusAPI.Services.Impl
         /// </summary>
         /// <remarks>Updates a City</remarks>
         /// <param name="id">id of City to update</param>
-        /// <param name="item"></param>
+        /// <param name="body"></param>
         /// <response code="200">OK</response>
         /// <response code="404">City not found</response>
         public virtual IActionResult CitiesIdPutAsync(int id, City body)
         {
-            var exists = _context.Inspections.Any(a => a.Id == id);
+            var exists = _context.Cities.Any(a => a.Id == id);
             if (exists && id == body.Id)
             {
                 _context.Cities.Update(body);

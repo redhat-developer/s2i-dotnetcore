@@ -145,12 +145,11 @@ namespace SchoolBusAPI.ViewModels
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
+                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
                     this.Active == other.Active ||
-                    this.Active != null &&
                     this.Active.Equals(other.Active)
                 ) && 
                 (
@@ -185,15 +184,10 @@ namespace SchoolBusAPI.ViewModels
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
+                hash = hash * 59 + this.Id.GetHashCode();
+
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
-                if (this.Active != null)
-                {
-                    hash = hash * 59 + this.Active.GetHashCode();
-                }
+
                 if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();

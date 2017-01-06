@@ -143,7 +143,7 @@ namespace SchoolBusAPI.ViewModels
                 ) && 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
+                    
                     this.Id.Equals(other.Id)
                 );
         }

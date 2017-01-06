@@ -130,7 +130,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">District not found</response>
         public virtual IActionResult DistrictsIdPutAsync(int id, District body)
         {
-            var exists = _context.Inspections.Any(a => a.Id == id);
+            var exists = _context.Districts.Any(a => a.Id == id);
             if (exists && id == body.Id)
             {
                 _context.Districts.Update(body);
