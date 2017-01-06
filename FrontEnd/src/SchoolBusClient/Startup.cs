@@ -74,11 +74,19 @@ namespace SchoolBusClient
             app.UseMvc();
             
             app.UseDefaultFiles();
-            app.UseFileServer(new FileServerOptions()
-			{
-				FileProvider = new PhysicalFileProvider(
-					Path.Combine(Directory.GetCurrentDirectory(), @"src/dist"))
-			});
+
+            string webFileFolder = Path.Combine(Directory.GetCurrentDirectory(), @"src/dist");
+            // Only serve up static files if they exist.
+            if (File.Exists(webFileFolder))
+            {
+                app.UseFileServer(new FileServerOptions()
+                {
+                    // first see if the production folder is present.                
+                    FileProvider = new PhysicalFileProvider(webFileFolder)
+                });
+            }
+
+
 
             app.UseProxyServer(Configuration);
 
