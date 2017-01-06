@@ -35,8 +35,7 @@ app.get('/api/test', function(req, res) {
 });
 
 
-app.use('/api', proxy({
-  target: `http://${API_HOST}:${API_PORT}/api`,
+app.use('/api', proxy(`http://${API_HOST}:${API_PORT}/api`, {
   changeOrigin: true,
   logLevel: 'debug',
 }));
