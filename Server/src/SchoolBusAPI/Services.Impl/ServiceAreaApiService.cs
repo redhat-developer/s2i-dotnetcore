@@ -67,7 +67,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult ServiceareasGetAsync()
         {
-            var result = "";
+            var result = _context.ServiceAreas.ToList();
             return new ObjectResult(result);
         }
 
@@ -80,8 +80,23 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">Service Area not found</response>
         public virtual IActionResult ServiceareasIdDeletePostAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var exists = _context.ServiceAreas.Any(a => a.Id == id);
+            if (exists)
+            {
+                var item = _context.ServiceAreas.First(a => a.Id == id);
+                if (item != null)
+                {
+                    _context.ServiceAreas.Remove(item);
+                    // Save the changes
+                    _context.SaveChanges();
+                }
+                return new ObjectResult(item);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -92,8 +107,17 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult ServiceareasIdGetAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var exists = _context.ServiceAreas.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.ServiceAreas.First(a => a.Id == id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -104,22 +128,34 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Service Area not found</response>
-        public virtual IActionResult ServiceareasIdPutAsync(int id, ServiceArea item)
+        public virtual IActionResult ServiceareasIdPutAsync(int id, ServiceArea body)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var exists = _context.Inspections.Any(a => a.Id == id);
+            if (exists && id == body.Id)
+            {
+                _context.ServiceAreas.Update(body);
+                // Save the changes
+                _context.SaveChanges();
+                return new ObjectResult(body);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Adds a Service Area</remarks>
-        /// <param name="item"></param>
+        /// <param name="body"></param>
         /// <response code="200">OK</response>
-        public virtual IActionResult ServiceareasPostAsync(ServiceArea item)
+        public virtual IActionResult ServiceareasPostAsync(ServiceArea body)
         {
-            var result = "";
-            return new ObjectResult(result);
+            _context.ServiceAreas.Add(body);
+            _context.SaveChanges();
+            return new ObjectResult(body);
         }
     }
 }
