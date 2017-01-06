@@ -1888,6 +1888,120 @@ paths:
             type: array
             items:
               $ref: "#/definitions/PermissionViewModel"
+    post:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Permission"
+      responses:
+        201:
+          description: Permission created
+          headers:
+            Location:
+              description: A link to the Permission
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/Permission"
+  /permissions/bulk:
+    post:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Permission"
+      responses:
+        201:
+          description: Permissions created              
+  /permissions/{id}:
+    get:
+      description: Returns a permission
+      tags:
+        - Permission
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Permission to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/PermissionViewModel'
+        404:
+          description: Permission not found
+    put:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Permission to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/PermissionViewModel"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/PermissionViewModel"
+        404:
+          description: Permission not found
+  /permissions/{id}/delete:
+    post:
+      tags:
+        - Permission
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Permission to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Permission not found                         
   /roles:
     get:
       description: Returns a collection of roles
@@ -1929,6 +2043,27 @@ paths:
               format: url
           schema:
             $ref: "#/definitions/RoleViewModel"
+  /roles/bulk:
+    post:
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/RoleViewModel"
+      responses:
+        201:
+          description: Permissions created   
   /roles/{id}:
     get:
       tags:
@@ -2137,7 +2272,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/UserViewModel"
+            $ref: "#/definitions/User"
       responses:
         201:
           description: User created
@@ -2147,7 +2282,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/UserViewModel"
+            $ref: "#/definitions/User"
   /users/current:
     get:
       description: Get the currently logged in user
@@ -2178,7 +2313,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/UserViewModel"
+              $ref: "#/definitions/User"
       responses:
         200:
           description: OK
