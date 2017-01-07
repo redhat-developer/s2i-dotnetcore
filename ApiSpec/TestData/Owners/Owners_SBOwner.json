@@ -1,164 +1,164 @@
 [
     {
-        "dateCreated": "2006-09-26",
-        "name": "School District 61",
+        "dateCreated": "2010-06-21",
+        "name": "Jones Transportation",
         "nextInspectionDate": "0",
         "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "13",
+        "primaryContact": {},
+        "serviceArea": "1",
         "status": "Active"
     },
     {
-        "dateCreated": "2010-04-17",
-        "name": "Williams Lake",
+        "dateCreated": "2007-09-30",
+        "name": "Rutland",
         "nextInspectionDate": "0",
         "numberOfBuses": "0",
-        "primaryContact": [],
+        "primaryContact": {},
+        "serviceArea": "17",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2008-08-17",
+        "name": "Salmon Arm",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "29",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2008-08-28",
+        "name": "Surrey",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
         "serviceArea": "15",
         "status": "Active"
     },
     {
-        "dateCreated": "2015-03-27",
-        "name": "Vancouver",
+        "dateCreated": "2015-03-01",
+        "name": "Surrey",
         "nextInspectionDate": "0",
         "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "18",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2006-05-20",
-        "name": "Dawson Creek",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "18",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2004-12-12",
-        "name": "Trail",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "21",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2006-01-13",
-        "name": "Vancouver",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "22",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2010-01-14",
-        "name": "Fraser Valley",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "24",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2015-03-30",
-        "name": "Williams Lake",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "7",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2004-03-31",
-        "name": "Williams Lake",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "26",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2011-12-21",
-        "name": "North Shore/Squamish",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "26",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2013-08-18",
-        "name": "Kamloops",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "16",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2009-01-08",
-        "name": "Penticton",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "19",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2015-03-12",
-        "name": "Dawson Creek",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "13",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2012-08-25",
-        "name": "Trail",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "27",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2013-04-24",
-        "name": "Rutland",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "24",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2015-02-11",
-        "name": "Fraser Valley",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "23",
-        "status": "Active"
-    },
-    {
-        "dateCreated": "2010-06-22",
-        "name": "West Kootenay",
-        "nextInspectionDate": "0",
-        "numberOfBuses": "0",
-        "primaryContact": [],
+        "primaryContact": {},
         "serviceArea": "8",
         "status": "Active"
     },
     {
-        "dateCreated": "2014-12-03",
-        "name": "East Kootenay",
+        "dateCreated": "2015-04-09",
+        "name": "Prince George",
         "nextInspectionDate": "0",
         "numberOfBuses": "0",
-        "primaryContact": [],
-        "serviceArea": "30",
+        "primaryContact": {},
+        "serviceArea": "4",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2010-02-24",
+        "name": "West Kootenay",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "15",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2011-12-01",
+        "name": "Smithers",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "5",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2009-03-19",
+        "name": "Rutland",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "20",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2005-06-08",
+        "name": "North Shore/Squamish",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "2",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2007-05-15",
+        "name": "Smithers",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "25",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2005-11-26",
+        "name": "North Shore/Squamish",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "19",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2008-07-29",
+        "name": "Penticton",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "23",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2003-08-30",
+        "name": "Kamloops",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "28",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2014-06-07",
+        "name": "North Vancouver Island",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "4",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2015-05-13",
+        "name": "Kamloops",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "22",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2007-10-12",
+        "name": "Penticton",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "4",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2006-12-10",
+        "name": "Central Vancouver Island",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "15",
         "status": "Active"
     }
 ]
