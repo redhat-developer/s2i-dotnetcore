@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -19,55 +19,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
+using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
+using SchoolBusAPI.Services;
 using System.Text;
 
-namespace SchoolBusClient.Controllers
-{ 
+namespace SchoolBusAPI.Controllers
+{
     /// <summary>
     /// 
     /// </summary>
-    public class OpenShiftTestsController : Controller
+    public class TestApiController : Controller
     {
-       
-
-        /// <summary>
-        /// Create a controller 
-        /// </summary>
-
-        public OpenShiftTestsController()
-        {
-        
-        }
-	
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of regions for a given province</remarks>
+        /// <remarks>Test function - returns headers</remarks>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Route("/readinessProbe")]
-        public virtual IActionResult doReadinessProbe()
-        {
-            string result = "1";
-            return new ObjectResult(result);
-        }
-
-        [HttpGet]
-        [Route("/livenessProbe")]
-        public virtual IActionResult doLivenessProbe()
-        {
-            string result = "1";
-            return new ObjectResult(result);
-        }
-
-        /// <summary>
-        /// Handler for the headers service
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("/headers")]
-        [Route("/schoolbus/headers")]
-        public virtual IActionResult DoHeaders()
+        [Route("/api/headers")]        
+        public virtual IActionResult UsersCurrentGet()
         {
             StringBuilder headers = new StringBuilder();
             headers.AppendLine("<html>");
@@ -78,7 +49,7 @@ namespace SchoolBusClient.Controllers
             }
             headers.AppendLine("</body>");
             headers.AppendLine("</html>");
-            
+
             return new ObjectResult(headers);
         }
 
@@ -101,6 +72,5 @@ namespace SchoolBusClient.Controllers
             }
             return value.ToString();
         }
-
     }
 }

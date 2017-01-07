@@ -49,7 +49,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/users/bulk")]
         [SwaggerOperation("UsersBulkPost")]
-        public virtual IActionResult UsersBulkPost([FromBody]UserViewModel[] items)
+        public virtual IActionResult UsersBulkPost([FromBody]User[] items)
         {
             return this._service.UsersBulkPostAsync(items);
         }
@@ -255,8 +255,8 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/users")]
         [SwaggerOperation("UsersPost")]
-        [SwaggerResponse(200, type: typeof(UserViewModel))]
-        public virtual IActionResult UsersPost([FromBody]UserViewModel item)
+        [SwaggerResponse(200, type: typeof(User))]
+        public virtual IActionResult UsersPost([FromBody]User item)
         {
             return this._service.UsersPostAsync(item);
         }
