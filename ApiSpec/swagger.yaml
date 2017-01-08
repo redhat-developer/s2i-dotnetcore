@@ -1056,7 +1056,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/NotificationEvent"       
+            $ref: "#/definitions/NotificationEvent"
   /notificationevents/{id}/delete:
     post:
       tags:
@@ -3366,21 +3366,21 @@ definitions:
         description: Enumerated type of Status - Inactive, Active, Archived
       isOutOfProvince:
         type: boolean
-      location:
+      ServiceArea:
         $ref: '#/definitions/ServiceArea'
-      busLocationAddr1:
+      homeTerminalAddr1:
         type: string
         description: Address 1 of physical location of the School Bus.
-      busLocationAddr2:
+      homeTerminalAddr2:
         type: string
         description: Address 2 of physical location of the School Bus.
-      busLocationCity:
+      homeTerminalCity:
         $ref: '#/definitions/City'
         description: City of physical location of the School Bus.
-      busLocationProv:
+      homeTerminalProvince:
         type: string
         description: Province of physical location of the School Bus - free form.
-      busLocationPostCode:
+      homeTerminalPostalCode:
         type: string
         description: Postal Code of physical location of the School Bus.
       restrictions:
@@ -4218,7 +4218,7 @@ definitions:
       surname:
         type: string
         x-chance-type: name
-      fullName:        
+      fullName:
         type: string
       districtName:
         type: string
@@ -4230,7 +4230,7 @@ definitions:
         type: integer
       dueNextMonthInspections:
         format: int32
-        type: integer                
+        type: integer
   UserDetailsViewModel:
     type: object
     x-codegen-viewmodel: true

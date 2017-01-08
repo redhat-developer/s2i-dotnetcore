@@ -1,0 +1,32 @@
+[
+    {
+        "Name": "South Coast",
+        "endDate": null,
+        "ministryRegionID": "1",
+        "startDate": "2009-01-01"
+    },
+    {
+        "Name": "Southern Interior",
+        "endDate": null,
+        "ministryRegionID": "2",
+        "startDate": "2009-01-01"
+    },
+    {
+        "Name": "Northern",
+        "endDate": null,
+        "ministryRegionID": "3",
+        "startDate": "2009-01-01"
+    },
+    {
+        "Name": "NON-BC",
+        "endDate": null,
+        "ministryRegionID": "99",
+        "startDate": "2009-01-01"
+    },
+    {
+        "Name": "Unknown",
+        "endDate": null,
+        "ministryRegionID": "999",
+        "startDate": "2009-01-01"
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "description": "A regular user in the system.",
+        "name": "User"
+    },
+    {
+        "description": "A System Administrator in the system.",
+        "name": "Admin"
+    }
+]
