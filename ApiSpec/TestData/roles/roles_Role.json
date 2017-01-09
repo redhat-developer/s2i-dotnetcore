@@ -1,10 +1,12 @@
 [
     {
         "description": "A regular user in the system.",
+        "id": "101",
         "name": "User"
     },
     {
         "description": "A System Administrator in the system.",
+        "id": "102",
         "name": "Admin"
     }
 ]

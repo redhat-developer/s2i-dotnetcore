@@ -1,4 +1,4 @@
-File,name,description
-Group,Inspector,The group of AVIs - Inspectors.
-Group,Manager,The group of AVI Managers.
-Group,Other,Users in the system not part of the other groups.
+File,name,description,id
+Group,Inspector,The group of AVIs - Inspectors.,101
+Group,Manager,The group of AVI Managers.,102
+Group,Other,Users in the system not part of the other groups.,103
