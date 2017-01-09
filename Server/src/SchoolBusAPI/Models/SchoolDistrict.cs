@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// A list of School Districts in the Province of BC. Authoritative source to be determined.
     /// </summary>
     public partial class SchoolDistrict : IEquatable<SchoolDistrict>
     {
@@ -37,12 +37,10 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolDistrict" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Region">Region.</param>
-        public SchoolDistrict(int Id, Region Region = null)
+        public SchoolDistrict(int Id)
         {
             
             this.Id = Id;
-            this.Region = Region;
             
         }
 
@@ -54,11 +52,6 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets Region
-        /// </summary>
-        public Region Region { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -67,7 +60,6 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolDistrict {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Region: ").Append(Region).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -108,13 +100,8 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
+                    
                     this.Id.Equals(other.Id)
-                ) && 
-                (
-                    this.Region == other.Region ||
-                    this.Region != null &&
-                    this.Region.Equals(other.Region)
                 );
         }
 
@@ -132,10 +119,6 @@ namespace SchoolBusAPI.Models
                 if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
-                }
-                if (this.Region != null)
-                {
-                    hash = hash * 59 + this.Region.GetHashCode();
                 }
                 return hash;
             }

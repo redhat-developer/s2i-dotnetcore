@@ -101,7 +101,7 @@ namespace SchoolBusAPI.Test
             schoolBusNote = JsonConvert.DeserializeObject<SchoolBusNote>(jsonString);
             
             // do a delete.
-            request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbusnotes/" + id);
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusnotes/" + id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 

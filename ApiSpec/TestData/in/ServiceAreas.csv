@@ -1,0 +1,31 @@
+File,district,ministryServiceArea,name,startDate,endDate
+ServiceArea,rg:{ 'id': '2'},1,South Island,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '2'},2,Central  Island,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '2'},3,North  Island,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '1'},4,Howe Sound,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '1'},5,Sunshine Coast,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '1'},6,Lower Mainland,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '1'},7,Fraser Valley,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '5'},8,South Okanagan,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '4'},9,Kootenay Boundary,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '4'},10,Central Kootenay,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '3'},11,East Kootenay,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '3'},12,Selkirk,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '5'},13,Okanagan - Shuswap,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '6'},14,Nicola,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '6'},15,Thompson,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '7'},16,South Cariboo,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '7'},17,Central Cariboo,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '7'},18,North Cariboo,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '9'},19,Fort George,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '9'},20,Robson,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '8'},21,South Peace,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '8'},22,North Peace,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '9'},23,Nechako,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '10'},24,Lakes,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '10'},25,Bulkley - Nass,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '11'},26,Skeena,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '11'},27,North Coast,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '10'},28,Stikine,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '12'},99,NON-BC,2009-01-01,rg:None
+ServiceArea,rg:{ 'id': '13'},999,Unknown,2009-01-01,rg:None

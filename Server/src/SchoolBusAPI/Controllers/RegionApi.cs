@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -71,31 +71,31 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a list of cities for a given region</remarks>
-        /// <param name="id">id of Region to fetch Cities for</param>
+        /// <remarks>Deletes a region</remarks>
+        /// <param name="id">id of Region to delete</param>
         /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/regions/{id}/cities")]
-        [SwaggerOperation("RegionsIdCitiesGet")]
-        [SwaggerResponse(200, type: typeof(List<City>))]
-        public virtual IActionResult RegionsIdCitiesGet([FromRoute]int id)
+        /// <response code="404">Region not found</response>
+        [HttpPost]
+        [Route("/api/regions/{id}/delete")]
+        [SwaggerOperation("RegionsIdDeletePost")]
+        public virtual IActionResult RegionsIdDeletePost([FromRoute]int id)
         {
-            return this._service.RegionsIdCitiesGetAsync(id);
+            return this._service.RegionsIdDeletePostAsync(id);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Deletes a region</remarks>
-        /// <param name="id">id of Region to delete</param>
+        /// <remarks>Returns the districts for a specific region</remarks>
+        /// <param name="id">id of Region for which to fetch the Districts</param>
         /// <response code="200">OK</response>
-        /// <response code="404">Region not found</response>
-        [HttpDelete]
-        [Route("/api/regions/{id}")]
-        [SwaggerOperation("RegionsIdDelete")]
-        public virtual IActionResult RegionsIdDelete([FromRoute]int id)
+        [HttpGet]
+        [Route("/api/regions/{id}/districts")]
+        [SwaggerOperation("RegionsIdDistrictsGet")]
+        [SwaggerResponse(200, type: typeof(List<District>))]
+        public virtual IActionResult RegionsIdDistrictsGet([FromRoute]int id)
         {
-            return this._service.RegionsIdDeleteAsync(id);
+            return this._service.RegionsIdDistrictsGetAsync(id);
         }
 
         /// <summary>
@@ -111,21 +111,6 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult RegionsIdGet([FromRoute]int id)
         {
             return this._service.RegionsIdGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns a list of LocalAreas for a given region</remarks>
-        /// <param name="id">id of Region to fetch SchoolDistricts for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/regions/{id}/localareas")]
-        [SwaggerOperation("RegionsIdLocalareasGet")]
-        [SwaggerResponse(200, type: typeof(List<LocalArea>))]
-        public virtual IActionResult RegionsIdLocalareasGet([FromRoute]int id)
-        {
-            return this._service.RegionsIdLocalareasGetAsync(id);
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// A list of cities in BC. Authoritative source to be determined.
     /// </summary>
     public partial class City : IEquatable<City>
     {
@@ -37,14 +37,12 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="City" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">City Name.</param>
-        /// <param name="Region">Region.</param>
-        public City(int Id, string Name = null, Region Region = null)
+        /// <param name="_City">The name of the City.</param>
+        public City(int Id, string _City = null)
         {
             
             this.Id = Id;
-            this.Name = Name;
-            this.Region = Region;
+            this._City = _City;
             
         }
 
@@ -56,16 +54,11 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// City Name
+        /// The name of the City
         /// </summary>
-        /// <value>City Name</value>
-        [MetaDataExtension (Description = "City Name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Region
-        /// </summary>
-        public Region Region { get; set; }
+        /// <value>The name of the City</value>
+        [MetaDataExtension (Description = "The name of the City")]
+        public string _City { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -76,8 +69,7 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class City {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Region: ").Append(Region).Append("\n");
+            sb.Append("  _City: ").Append(_City).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -118,18 +110,13 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
+                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Name == other.Name ||
-                    this.Name != null &&
-                    this.Name.Equals(other.Name)
-                ) && 
-                (
-                    this.Region == other.Region ||
-                    this.Region != null &&
-                    this.Region.Equals(other.Region)
+                    this._City == other._City ||
+                    this._City != null &&
+                    this._City.Equals(other._City)
                 );
         }
 
@@ -148,13 +135,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
                 }
-                if (this.Name != null)
+                if (this._City != null)
                 {
-                    hash = hash * 59 + this.Name.GetHashCode();
-                }
-                if (this.Region != null)
-                {
-                    hash = hash * 59 + this.Region.GetHashCode();
+                    hash = hash * 59 + this._City.GetHashCode();
                 }
                 return hash;
             }

@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -137,22 +137,19 @@ namespace SchoolBusAPI.ViewModels
             return 
                 (
                     this.EffectiveDate == other.EffectiveDate ||
-                    this.EffectiveDate != null &&
                     this.EffectiveDate.Equals(other.EffectiveDate)
                 ) && 
                 (
                     this.UserId == other.UserId ||
-                    this.UserId != null &&
                     this.UserId.Equals(other.UserId)
                 ) && 
                 (
                     this.RoleId == other.RoleId ||
-                    this.RoleId != null &&
                     this.RoleId.Equals(other.RoleId)
                 ) && 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
+                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -173,18 +170,12 @@ namespace SchoolBusAPI.ViewModels
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.EffectiveDate != null)
-                {
-                    hash = hash * 59 + this.EffectiveDate.GetHashCode();
-                }
-                if (this.UserId != null)
-                {
-                    hash = hash * 59 + this.UserId.GetHashCode();
-                }
-                if (this.RoleId != null)
-                {
-                    hash = hash * 59 + this.RoleId.GetHashCode();
-                }
+                hash = hash * 59 + this.EffectiveDate.GetHashCode();
+                
+                hash = hash * 59 + this.UserId.GetHashCode();
+                
+                hash = hash * 59 + this.RoleId.GetHashCode();
+                
                 if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();

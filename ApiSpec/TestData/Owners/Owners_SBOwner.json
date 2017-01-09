@@ -1,0 +1,164 @@
+[
+    {
+        "dateCreated": "2013-11-08",
+        "name": "SB School Bus, Inc.",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "26",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2012-07-12",
+        "name": "Vancouver",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "23",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2012-08-29",
+        "name": "Surrey",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "27",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2013-11-01",
+        "name": "Dawson Creek",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "6",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2007-01-19",
+        "name": "Rutland",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "1",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2013-01-15",
+        "name": "East Kootenay",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "10",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2015-04-19",
+        "name": "Smithers",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "1",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2008-12-30",
+        "name": "Dawson Creek",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "16",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2008-06-25",
+        "name": "West Kootenay",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "17",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2009-03-06",
+        "name": "Williams Lake",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "17",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2015-02-17",
+        "name": "Vancouver",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "23",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2005-07-29",
+        "name": "North Shore/Squamish",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "16",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2015-06-23",
+        "name": "North Shore/Squamish",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "9",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2010-04-03",
+        "name": "Smithers",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "18",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2007-04-27",
+        "name": "North Vancouver Island",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "27",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2005-07-05",
+        "name": "Dawson Creek",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "20",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2014-07-25",
+        "name": "North Vancouver Island",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "10",
+        "status": "Active"
+    },
+    {
+        "dateCreated": "2006-02-02",
+        "name": "West Kootenay",
+        "nextInspectionDate": "0",
+        "numberOfBuses": "0",
+        "primaryContact": {},
+        "serviceArea": "26",
+        "status": "Active"
+    }
+]

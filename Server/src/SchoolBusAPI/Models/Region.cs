@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -37,12 +37,18 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="Region" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">Region Name.</param>
-        public Region(int Id, string Name = null)
+        /// <param name="MinistryRegionID">The Ministry ID for the Region.</param>
+        /// <param name="Name">The name of the Region.</param>
+        /// <param name="StartDate">The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
+        /// <param name="EndDate">The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
+        public Region(int Id, int? MinistryRegionID = null, string Name = null, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             
             this.Id = Id;
+            this.MinistryRegionID = MinistryRegionID;
             this.Name = Name;
+            this.StartDate = StartDate;
+            this.EndDate = EndDate;
             
         }
 
@@ -54,11 +60,32 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Region Name
+        /// The Ministry ID for the Region
         /// </summary>
-        /// <value>Region Name</value>
-        [MetaDataExtension (Description = "Region Name")]
+        /// <value>The Ministry ID for the Region</value>
+        [MetaDataExtension (Description = "The Ministry ID for the Region")]
+        public int? MinistryRegionID { get; set; }
+
+        /// <summary>
+        /// The name of the Region
+        /// </summary>
+        /// <value>The name of the Region</value>
+        [MetaDataExtension (Description = "The name of the Region")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        /// </summary>
+        /// <value>The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
+        [MetaDataExtension (Description = "The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
+        public DateTime? StartDate { get; set; }
+
+        /// <summary>
+        /// The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        /// </summary>
+        /// <value>The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
+        [MetaDataExtension (Description = "The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -69,7 +96,10 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class Region {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  MinistryRegionID: ").Append(MinistryRegionID).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  StartDate: ").Append(StartDate).Append("\n");
+            sb.Append("  EndDate: ").Append(EndDate).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -110,13 +140,28 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
+                    
                     this.Id.Equals(other.Id)
+                ) && 
+                (
+                    this.MinistryRegionID == other.MinistryRegionID ||
+                    this.MinistryRegionID != null &&
+                    this.MinistryRegionID.Equals(other.MinistryRegionID)
                 ) && 
                 (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
+                ) && 
+                (
+                    this.StartDate == other.StartDate ||
+                    this.StartDate != null &&
+                    this.StartDate.Equals(other.StartDate)
+                ) && 
+                (
+                    this.EndDate == other.EndDate ||
+                    this.EndDate != null &&
+                    this.EndDate.Equals(other.EndDate)
                 );
         }
 
@@ -135,9 +180,21 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
                 }
+                if (this.MinistryRegionID != null)
+                {
+                    hash = hash * 59 + this.MinistryRegionID.GetHashCode();
+                }
                 if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
+                }
+                if (this.StartDate != null)
+                {
+                    hash = hash * 59 + this.StartDate.GetHashCode();
+                }
+                if (this.EndDate != null)
+                {
+                    hash = hash * 59 + this.EndDate.GetHashCode();
                 }
                 return hash;
             }

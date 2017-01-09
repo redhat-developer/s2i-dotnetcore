@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -131,12 +131,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of SchoolBusOwner to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwner not found</response>
-        [HttpDelete]
-        [Route("/api/schoolbusowners/{id}")]
-        [SwaggerOperation("SchoolbusownersIdDelete")]
-        public virtual IActionResult SchoolbusownersIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/schoolbusowners/{id}/delete")]
+        [SwaggerOperation("SchoolbusownersIdDeletePost")]
+        public virtual IActionResult SchoolbusownersIdDeletePost([FromRoute]int id)
         {
-            return this._service.SchoolbusownersIdDeleteAsync(id);
+            return this._service.SchoolbusownersIdDeletePostAsync(id);
         }
 
         /// <summary>

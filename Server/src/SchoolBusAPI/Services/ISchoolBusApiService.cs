@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -32,7 +32,7 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// Creates a new school bus
         /// </summary>
-        /// <remarks>The Location response-header field is used to redirect the recipient to a location other than the Request-URI for completion of the request or identification of a new resource. For 201 (Created) responses, the Location is that of the new resource which was created by the request.    The field value consists of a single absolute URI. </remarks>
+        /// <remarks>The Location response-header field is used to redirect the recipient to a location other than the Request-URI for completion of the request or identification of a new resource. For 201 (Created) responses, the Location is that of the new resource which was created by the request.   The field value consists of a single absolute URI. </remarks>
         /// <param name="item"></param>
         /// <response code="201">SchoolBus created</response>
         IActionResult AddBusAsync(SchoolBus item);
@@ -84,7 +84,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of SchoolBus to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
-        IActionResult SchoolbusesIdDeleteAsync(int id);
+        IActionResult SchoolbusesIdDeletePostAsync(int id);
 
         /// <summary>
         /// 

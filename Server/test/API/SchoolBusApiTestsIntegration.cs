@@ -81,7 +81,7 @@ namespace SchoolBusAPI.Test
 
             // create a new schoolbus.
             SchoolBus schoolbus = new SchoolBus();
-            schoolbus.IsActive = true;
+            schoolbus.Status = "0";
             string jsonString = schoolbus.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
@@ -97,8 +97,8 @@ namespace SchoolBusAPI.Test
             var id = schoolbus.Id;
 
             // make a change.    
-            bool testActive = false;
-            schoolbus.IsActive = testActive;
+            string testStatus = "1";
+            schoolbus.Status = testStatus;
             // now do an update.
 
             request = new HttpRequestMessage(HttpMethod.Put, "/api/schoolbuses/" + id);
@@ -116,7 +116,7 @@ namespace SchoolBusAPI.Test
             schoolbus = JsonConvert.DeserializeObject<SchoolBus>(jsonString);
 
             // compare the change, should match.
-            Assert.Equal(schoolbus.IsActive, testActive);
+            Assert.Equal(schoolbus.Status, testStatus);
 
             //test attachments            
             request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbuses/" + id + "/attachments");
@@ -144,7 +144,7 @@ namespace SchoolBusAPI.Test
             response.EnsureSuccessStatusCode();            
 
             // do a delete.
-            request = new HttpRequestMessage(HttpMethod.Delete, "/api/schoolbuses/" + id);
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbuses/" + id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 

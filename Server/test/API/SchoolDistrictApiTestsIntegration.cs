@@ -43,9 +43,9 @@ namespace SchoolBusAPI.Test
 		/// <summary>
         /// Integration test for RegionsIdSchooldistrictsGet
         /// </summary>
-		public async void TestRegionsIdSchooldistrictsGet()
+		public async void TestSchooldistricts()
 		{
-			var response = await _client.GetAsync("/api/regions/{id}/schooldistricts");
+			var response = await _client.GetAsync("/api/schooldistricts");
             response.EnsureSuccessStatusCode();
 			
 			// update this to test the API.

@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// Notes entered by users about a specific School Bus.
     /// </summary>
     public partial class SchoolBusNote : IEquatable<SchoolBusNote>
     {
@@ -37,15 +37,15 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolBusNote" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Value">Value.</param>
-        /// <param name="Expired">Expired.</param>
+        /// <param name="Note">The contents of the note..</param>
+        /// <param name="IsNoLongerRelevant">A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant..</param>
         /// <param name="SchoolBus">SchoolBus.</param>
-        public SchoolBusNote(int Id, string Value = null, bool? Expired = null, SchoolBus SchoolBus = null)
+        public SchoolBusNote(int Id, string Note = null, bool? IsNoLongerRelevant = null, SchoolBus SchoolBus = null)
         {
             
             this.Id = Id;
-            this.Value = Value;
-            this.Expired = Expired;
+            this.Note = Note;
+            this.IsNoLongerRelevant = IsNoLongerRelevant;
             this.SchoolBus = SchoolBus;
             
         }
@@ -58,14 +58,18 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets Value
+        /// The contents of the note.
         /// </summary>
-        public string Value { get; set; }
+        /// <value>The contents of the note.</value>
+        [MetaDataExtension (Description = "The contents of the note.")]
+        public string Note { get; set; }
 
         /// <summary>
-        /// Gets or Sets Expired
+        /// A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.
         /// </summary>
-        public bool? Expired { get; set; }
+        /// <value>A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.</value>
+        [MetaDataExtension (Description = "A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.")]
+        public bool? IsNoLongerRelevant { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBus
@@ -81,8 +85,8 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolBusNote {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Value: ").Append(Value).Append("\n");
-            sb.Append("  Expired: ").Append(Expired).Append("\n");
+            sb.Append("  Note: ").Append(Note).Append("\n");
+            sb.Append("  IsNoLongerRelevant: ").Append(IsNoLongerRelevant).Append("\n");
             sb.Append("  SchoolBus: ").Append(SchoolBus).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -124,18 +128,18 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
+                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Value == other.Value ||
-                    this.Value != null &&
-                    this.Value.Equals(other.Value)
+                    this.Note == other.Note ||
+                    this.Note != null &&
+                    this.Note.Equals(other.Note)
                 ) && 
                 (
-                    this.Expired == other.Expired ||
-                    this.Expired != null &&
-                    this.Expired.Equals(other.Expired)
+                    this.IsNoLongerRelevant == other.IsNoLongerRelevant ||
+                    this.IsNoLongerRelevant != null &&
+                    this.IsNoLongerRelevant.Equals(other.IsNoLongerRelevant)
                 ) && 
                 (
                     this.SchoolBus == other.SchoolBus ||
@@ -159,13 +163,13 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
                 }
-                if (this.Value != null)
+                if (this.Note != null)
                 {
-                    hash = hash * 59 + this.Value.GetHashCode();
+                    hash = hash * 59 + this.Note.GetHashCode();
                 }
-                if (this.Expired != null)
+                if (this.IsNoLongerRelevant != null)
                 {
-                    hash = hash * 59 + this.Expired.GetHashCode();
+                    hash = hash * 59 + this.IsNoLongerRelevant.GetHashCode();
                 }
                 if (this.SchoolBus != null)
                 {

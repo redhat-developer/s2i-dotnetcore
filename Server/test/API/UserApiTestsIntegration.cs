@@ -156,6 +156,58 @@ namespace SchoolBusAPI.Test
             Assert.Equal(items[0].Name, "");
 
             // cleanup the user            
+            response.EnsureSuccessStatusCode();
+        }
+
+        [Fact]
+		/// <summary>
+        /// Integration test for Users
+        /// </summary>
+		public async void TestUsers()
+		{
+            string initialName = "InitialName";
+            string changedName = "ChangedName";
+            // first test the POST.
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/users");
+
+            // create a new object.
+            UserViewModel user = new UserViewModel();
+            user.GivenName = initialName;
+            string jsonString = user.ToJson();
+
+            request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+            var response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+
+            user = JsonConvert.DeserializeObject<UserViewModel>(jsonString);
+            // get the id
+            var id = user.Id;
+            // change the name
+            user.GivenName = changedName;
+
+            // now do an update.
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/users/" + id);
+            request.Content = new StringContent(user.ToJson(), Encoding.UTF8, "application/json");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // do a get.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/users/" + id);
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+            user = JsonConvert.DeserializeObject<UserViewModel>(jsonString);
+
+            // verify the change went through.
+            Assert.Equal(user.GivenName, changedName);
+
+            // do a delete.
             request = new HttpRequestMessage(HttpMethod.Post, "/api/users/" + id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
@@ -164,6 +216,7 @@ namespace SchoolBusAPI.Test
             request = new HttpRequestMessage(HttpMethod.Get, "/api/users/" + id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
-        }
+
+        }        
     }
 }

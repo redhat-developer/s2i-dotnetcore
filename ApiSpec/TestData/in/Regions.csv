@@ -1,0 +1,6 @@
+File,ministryRegionID,Name,startDate,endDate
+Region,1,South Coast,2009-01-01,rg:None
+Region,2,Southern Interior,2009-01-01,rg:None
+Region,3,Northern,2009-01-01,rg:None
+Region,99,NON-BC,2009-01-01,rg:None
+Region,999,Unknown,2009-01-01,rg:None

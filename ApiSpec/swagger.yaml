@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   version: v1
-  title: REST API Documentation for Schoolbus
-  description: API Sample
-  termsOfService: None
+  title: REST API Documentation for the MOTI School Bus Application
+  description: The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
+  termsOfService: N/A
 basePath: /api
 paths:
   /inspections:
@@ -21,12 +21,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Inspection'        
+              $ref: '#/definitions/Inspection'
       deprecated: false
     post:
       tags:
         - Inspection
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -42,7 +42,7 @@ paths:
         201:
           description: Inspection created
           headers:
-            Location: 
+            Location:
               description: A link to the Inspection
               type: string
               format: url
@@ -52,7 +52,7 @@ paths:
     post:
       tags:
         - Inspection
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -95,7 +95,7 @@ paths:
     put:
       tags:
         - Inspection
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -120,7 +120,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/Inspection"
-    delete:
+  /inspections/{id}/delete:
+    post:
       tags:
         - Inspection
       consumes: []
@@ -139,7 +140,7 @@ paths:
           in: path
           description: id of Inspection to delete
           required: true
-          type: integer    
+          type: integer
   /schoolbuses:
     get:
       summary: Returns a collection of school buses
@@ -161,7 +162,7 @@ paths:
     post:
       summary: Creates a new school bus
       description: |
-        The Location response-header field is used to redirect the recipient to a location other than the Request-URI for completion of the request or identification of a new resource. For 201 (Created) responses, the Location is that of the new resource which was created by the request. 
+        The Location response-header field is used to redirect the recipient to a location other than the Request-URI for completion of the request or identification of a new resource. For 201 (Created) responses, the Location is that of the new resource which was created by the request.
           The field value consists of a single absolute URI.
       operationId: AddBus
       tags:
@@ -182,7 +183,7 @@ paths:
         201:
           description: SchoolBus created
           headers:
-            Location: 
+            Location:
               description: A link to the SchoolBus
               type: string
               format: url
@@ -191,7 +192,7 @@ paths:
   /schoolbuses/bulk:
     post:
       summary: Creates several school buses
-      description: 
+      description:
         Used for bulk creation of schoolbus records.
       operationId: AddSchoolBusBulk
       tags:
@@ -265,8 +266,9 @@ paths:
           schema:
             $ref: "#/definitions/SchoolBus"
         404:
-          description: Not Found 
-    delete:
+          description: Not Found
+  /schoolbuses/{id}/delete:
+    post:
       tags:
         - SchoolBus
       consumes: []
@@ -400,7 +402,7 @@ paths:
           in: path
           description: id of SchoolBus to fetch CCWData for
           required: true
-          type: integer  
+          type: integer
   /schoolbusnotes:
      get:
       tags:
@@ -416,12 +418,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusNote'        
+              $ref: '#/definitions/SchoolBusNote'
       deprecated: false
      post:
       tags:
         - SchoolBusNote
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -437,7 +439,7 @@ paths:
         201:
           description: SchoolBusNote created
           headers:
-            Location: 
+            Location:
               description: A link to the SchoolBusNote
               type: string
               format: url
@@ -447,7 +449,7 @@ paths:
     post:
       tags:
         - SchoolBusNote
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -490,7 +492,7 @@ paths:
     put:
       tags:
         - SchoolBusNote
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -515,7 +517,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/SchoolBusNote"
-    delete:
+  /schoolbusnotes/{id}/delete:
+    post:
       tags:
         - SchoolBusNote
       consumes: []
@@ -550,12 +553,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusAttachment'        
+              $ref: '#/definitions/SchoolBusAttachment'
       deprecated: false
      post:
       tags:
         - SchoolBusAttachment
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -571,7 +574,7 @@ paths:
         201:
           description: SchoolBusAttachment created
           headers:
-            Location: 
+            Location:
               description: A link to the SchoolBusAttachment
               type: string
               format: url
@@ -581,7 +584,7 @@ paths:
     post:
       tags:
         - SchoolBusAttachment
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -624,7 +627,7 @@ paths:
     put:
       tags:
         - SchoolBusAttachment
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -649,7 +652,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/SchoolBusAttachment"
-    delete:
+  /schoolbusattachments/{id}/delete:
+    post:
       tags:
         - SchoolBusAttachment
       consumes: []
@@ -684,12 +688,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusHistory'        
+              $ref: '#/definitions/SchoolBusHistory'
       deprecated: false
      post:
       tags:
         - SchoolBusHistory
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -705,7 +709,7 @@ paths:
         201:
           description: SchoolBusHistory created
           headers:
-            Location: 
+            Location:
               description: A link to the SchoolBusHistory
               type: string
               format: url
@@ -715,7 +719,7 @@ paths:
     post:
       tags:
         - SchoolBusHistory
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -758,7 +762,7 @@ paths:
     put:
       tags:
         - SchoolBusHistory
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -783,7 +787,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/SchoolBusHistory"
-    delete:
+  /schoolbushistories/{id}/delete:
+    post:
       tags:
         - SchoolBusHistory
       consumes: []
@@ -818,12 +823,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Notification'        
+              $ref: '#/definitions/Notification'
       deprecated: false
      post:
       tags:
         - Notification
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -839,7 +844,7 @@ paths:
         201:
           description: Notification created
           headers:
-            Location: 
+            Location:
               description: A link to the Notification
               type: string
               format: url
@@ -849,7 +854,7 @@ paths:
     post:
       tags:
         - Notification
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -892,7 +897,7 @@ paths:
     put:
       tags:
         - Notification
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -917,7 +922,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/Notification"
-    delete:
+  /notifications/{id}/delete:
+    post:
       tags:
         - Notification
       consumes: []
@@ -952,12 +958,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/NotificationEvent'        
+              $ref: '#/definitions/NotificationEvent'
       deprecated: false
      post:
       tags:
         - NotificationEvent
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -973,7 +979,7 @@ paths:
         201:
           description: NotificationEvent created
           headers:
-            Location: 
+            Location:
               description: A link to the NotificationEvent
               type: string
               format: url
@@ -983,7 +989,7 @@ paths:
     post:
       tags:
         - NotificationEvent
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1026,7 +1032,7 @@ paths:
     put:
       tags:
         - NotificationEvent
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1051,7 +1057,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/NotificationEvent"
-    delete:
+  /notificationevents/{id}/delete:
+    post:
       tags:
         - NotificationEvent
       consumes: []
@@ -1086,12 +1093,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwner'        
+              $ref: '#/definitions/SchoolBusOwner'
       deprecated: false
     post:
       tags:
         - SchoolBusOwner
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1107,7 +1114,7 @@ paths:
         201:
           description: SchoolBusOwner created
           headers:
-            Location: 
+            Location:
               description: A link to the SchoolBusOwner
               type: string
               format: url
@@ -1117,7 +1124,7 @@ paths:
     post:
       tags:
         - SchoolBusOwner
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1134,7 +1141,6 @@ paths:
       responses:
         201:
           description: SchoolBusOwners created
-          
   /schoolbusowners/{id}:
     get:
       description: Returns a particular SchoolBusOwner
@@ -1160,7 +1166,7 @@ paths:
     put:
       tags:
         - SchoolBusOwner
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1185,7 +1191,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/SchoolBusOwner"
-    delete:
+  /schoolbusowners/{id}/delete:
+    post:
       tags:
         - SchoolBusOwner
       consumes: []
@@ -1286,7 +1293,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwnerContactAddress'    
+              $ref: '#/definitions/SchoolBusOwnerContactAddress'
       parameters:
         - name: id
           in: path
@@ -1308,12 +1315,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwnerNote'        
+              $ref: '#/definitions/SchoolBusOwnerNote'
       deprecated: false
      post:
       tags:
         - SchoolBusOwnerNote
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1329,7 +1336,7 @@ paths:
         201:
           description: SchoolBusOwnerNote created
           headers:
-            Location: 
+            Location:
               description: A link to the SchoolBusOwnerNote
               type: string
               format: url
@@ -1339,7 +1346,7 @@ paths:
     post:
       tags:
         - SchoolBusOwnerNote
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1382,7 +1389,7 @@ paths:
     put:
       tags:
         - SchoolBusOwnerNote
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1407,7 +1414,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/SchoolBusOwnerNote"
-    delete:
+  /schoolbusownernotes/{id}/delete:
+    post:
       tags:
         - SchoolBusOwnerNote
       consumes: []
@@ -1442,12 +1450,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwnerAttachment'        
+              $ref: '#/definitions/SchoolBusOwnerAttachment'
       deprecated: false
      post:
       tags:
         - SchoolBusOwnerAttachment
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1463,7 +1471,7 @@ paths:
         201:
           description: SchoolBusOwnerAttachment created
           headers:
-            Location: 
+            Location:
               description: A link to the SchoolBusOwnerAttachment
               type: string
               format: url
@@ -1473,7 +1481,7 @@ paths:
     post:
       tags:
         - SchoolBusOwnerAttachment
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1516,7 +1524,7 @@ paths:
     put:
       tags:
         - SchoolBusOwnerAttachment
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1541,7 +1549,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/SchoolBusOwnerAttachment"
-    delete:
+  /schoolbusownerattachments/{id}/delete:
+    post:
       tags:
         - SchoolBusOwnerAttachment
       consumes: []
@@ -1576,12 +1585,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwnerContact'        
+              $ref: '#/definitions/SchoolBusOwnerContact'
       deprecated: false
      post:
       tags:
         - SchoolBusOwnerContact
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1597,7 +1606,7 @@ paths:
         201:
           description: SchoolBusOwnerContact created
           headers:
-            Location: 
+            Location:
               description: A link to the SchoolBusOwnerContact
               type: string
               format: url
@@ -1607,7 +1616,7 @@ paths:
     post:
       tags:
         - SchoolBusOwnerContact
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1650,7 +1659,7 @@ paths:
     put:
       tags:
         - SchoolBusOwnerContact
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1675,7 +1684,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/SchoolBusOwnerContact"
-    delete:
+  /schoolbusownercontacts/{id}/delete:
+    post:
       tags:
         - SchoolBusOwnerContact
       consumes: []
@@ -1710,12 +1720,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwnerHistory'        
+              $ref: '#/definitions/SchoolBusOwnerHistory'
       deprecated: false
      post:
       tags:
         - SchoolBusOwnerHistory
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1731,7 +1741,7 @@ paths:
         201:
           description: SchoolBusOwnerHistory created
           headers:
-            Location: 
+            Location:
               description: A link to the SchoolBusOwnerHistory
               type: string
               format: url
@@ -1741,7 +1751,7 @@ paths:
     post:
       tags:
         - SchoolBusOwnerHistory
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1784,7 +1794,7 @@ paths:
     put:
       tags:
         - SchoolBusOwnerHistory
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1809,7 +1819,8 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/SchoolBusOwnerHistory"
-    delete:
+  /schoolbusownerhistory/{id}/delete:
+    post:
       tags:
         - SchoolBusOwnerHistory
       consumes: []
@@ -1877,6 +1888,120 @@ paths:
             type: array
             items:
               $ref: "#/definitions/PermissionViewModel"
+    post:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Permission"
+      responses:
+        201:
+          description: Permission created
+          headers:
+            Location:
+              description: A link to the Permission
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/Permission"
+  /permissions/bulk:
+    post:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Permission"
+      responses:
+        201:
+          description: Permissions created              
+  /permissions/{id}:
+    get:
+      description: Returns a permission
+      tags:
+        - Permission
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Permission to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/PermissionViewModel'
+        404:
+          description: Permission not found
+    put:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Permission to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/PermissionViewModel"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/PermissionViewModel"
+        404:
+          description: Permission not found
+  /permissions/{id}/delete:
+    post:
+      tags:
+        - Permission
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Permission to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Permission not found                         
   /roles:
     get:
       description: Returns a collection of roles
@@ -1896,7 +2021,7 @@ paths:
     post:
       tags:
         - Role
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1912,12 +2037,33 @@ paths:
         201:
           description: Role created
           headers:
-            Location: 
+            Location:
               description: A link to the Role
               type: string
               format: url
           schema:
             $ref: "#/definitions/RoleViewModel"
+  /roles/bulk:
+    post:
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/RoleViewModel"
+      responses:
+        201:
+          description: Permissions created   
   /roles/{id}:
     get:
       tags:
@@ -1942,7 +2088,7 @@ paths:
     put:
       tags:
         - Role
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -1966,7 +2112,8 @@ paths:
             $ref: "#/definitions/RoleViewModel"
         404:
           description: Role not found
-    delete:
+  /roles/{id}/delete:
+    post:
       tags:
         - Role
       produces:
@@ -1978,7 +2125,7 @@ paths:
           in: path
           description: id of Role to delete
           required: true
-          type: integer    
+          type: integer
       responses:
         200:
           description: OK
@@ -2010,7 +2157,7 @@ paths:
       description: Updates the permissions for a role
       tags:
         - Role
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -2028,7 +2175,37 @@ paths:
           schema:
             type: array
             items:
+              $ref: "#/definitions/Permission"      
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
               $ref: "#/definitions/PermissionViewModel"
+        404:
+          description: Role not found
+    post:
+      description: Adds a permissions to a role
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Permission"      
       responses:
         200:
           description: OK
@@ -2064,7 +2241,7 @@ paths:
       description: Updates the users for a role
       tags:
         - Role
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -2107,14 +2284,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/UserViewModel"    
+              $ref: "#/definitions/UserViewModel"
         404:
            description: User not found
     post:
       description: Create new user
       tags:
         - User
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -2125,17 +2302,17 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/UserViewModel"
+            $ref: "#/definitions/User"
       responses:
         201:
           description: User created
           headers:
-            Location: 
+            Location:
               description: A link to the User
               type: string
               format: url
           schema:
-            $ref: "#/definitions/UserViewModel"
+            $ref: "#/definitions/User"
   /users/current:
     get:
       description: Get the currently logged in user
@@ -2166,7 +2343,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/UserViewModel"
+              $ref: "#/definitions/User"
       responses:
         200:
           description: OK
@@ -2196,7 +2373,7 @@ paths:
       description: Updates a user
       tags:
         - User
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -2220,7 +2397,8 @@ paths:
             $ref: "#/definitions/UserViewModel"
         404:
           description: User not found
-    delete:
+  /users/{id}/delete:
+    post:
       description: Deletes a user
       tags:
         - User
@@ -2233,7 +2411,7 @@ paths:
           in: path
           description: id of User to delete
           required: true
-          type: integer    
+          type: integer
       responses:
         200:
           description: OK
@@ -2267,7 +2445,7 @@ paths:
       description: Adds a role to a user
       tags:
         - User
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -2288,7 +2466,7 @@ paths:
         201:
           description: Role created for user
           headers:
-            Location: 
+            Location:
               description: A link to the User Role
               type: string
               format: url
@@ -2298,7 +2476,7 @@ paths:
       description: Updates the roles for a user
       tags:
         - User
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -2378,7 +2556,7 @@ paths:
       description: Updates the active set of groups for a user
       tags:
         - User
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -2396,7 +2574,39 @@ paths:
           schema:
             type: array
             items:
+              $ref: "#/definitions/GroupMembership"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
               $ref: "#/definitions/GroupMembershipViewModel"
+        404:
+          description: User not found
+    post:
+      description: Add to the active set of groups for a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembership"
       responses:
         200:
           description: OK
@@ -2467,7 +2677,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Region'   
+              $ref: '#/definitions/Region'
     post:
       description: Adds a region
       tags:
@@ -2533,7 +2743,7 @@ paths:
       description: Updates a region
       tags:
         - Region
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -2555,11 +2765,12 @@ paths:
           description: OK
         404:
           description: Region not found
-    delete:
+  /regions/{id}/delete:
+    post:
       description: Deletes a region
       tags:
         - Region
-      consumes: 
+      consumes:
         - application/json
       produces:
         - text/plain
@@ -2575,12 +2786,306 @@ paths:
         200:
           description: OK
         404:
-          description: Region not found   
-  /regions/{id}/cities:
+          description: Region not found
+  /regions/{id}/districts:
     get:
-      description: Returns a list of cities for a given region
+      description: Returns the districts for a specific region
       tags:
         - Region
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/District'
+      parameters:
+        - name: id
+          in: path
+          description: id of Region for which to fetch the Districts
+          required: true
+          type: integer
+  /districts:
+    get:
+      description: Returns a list of available districts
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/District'
+    post:
+      description: Adds a district
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/District"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/District'
+  /districts/bulk:
+    post:
+      description: Adds a number of districts.
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/District"
+      responses:
+        '200':
+          description: OK
+  /districts/{id}:
+    get:
+      description: Returns a specific district
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/District'
+      parameters:
+        - name: id
+          in: path
+          description: id of Districts to fetch
+          required: true
+          type: integer
+    put:
+      description: Updates a district
+      tags:
+        - District
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of District to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/District"
+      responses:
+        200:
+          description: OK
+        404:
+          description: District not found
+  /districts/{id}/delete:
+    post:
+      description: Deletes a district
+      tags:
+        - District
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of District to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: District not found
+  /districts/{id}/serviceareas:
+    get:
+      description: Returns the Service Areas for a specific region
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceArea'
+      parameters:
+        - name: id
+          in: path
+          description: id of District for which to fetch the ServiceAreas
+          required: true
+          type: integer
+  /serviceareas:
+    get:
+      description: Returns a list of available districts
+      tags:
+        - ServiceArea
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceArea'
+    post:
+      description: Adds a Service Area
+      tags:
+        - ServiceArea
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceArea"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceArea'
+  /serviceareas/bulk:
+    post:
+      description: Adds a number of districts.
+      tags:
+        - ServiceArea
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ServiceArea"
+      responses:
+        '200':
+          description: OK
+  /serviceareas/{id}:
+    get:
+      description: Returns a specific Service Area
+      tags:
+        - ServiceArea
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ServiceArea'
+      parameters:
+        - name: id
+          in: path
+          description: id of Service Area to fetch
+          required: true
+          type: integer
+    put:
+      description: Updates a Service Area
+      tags:
+        - ServiceArea
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Service Area to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceArea"
+      responses:
+        200:
+          description: OK
+        404:
+          description: Service Area not found
+  /serviceareas/{id}/delete:
+    post:
+      description: Deletes a Service Area
+      tags:
+        - ServiceArea
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Service Area to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Service Area not found
+  /cities:
+    get:
+      description: Returns a list of cities
+      tags:
+        - City
       produces:
         - text/plain
         - application/json
@@ -2592,17 +3097,52 @@ paths:
             type: array
             items:
               $ref: '#/definitions/City'
-      parameters:
-        - name: id
-          in: path
-          description: id of Region to fetch Cities for
-          required: true
-          type: integer
-  /regions/{id}/localareas:
-    get:
-      description: Returns a list of LocalAreas for a given region
+    post:
+      description: Adds a City
       tags:
-        - Region
+        - City
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/City"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/City'
+  /cities/bulk:
+    post:
+      description: Adds a number of cities
+      tags:
+        - City
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/City"
+      responses:
+        '200':
+          description: OK
+  /cities/{id}:
+    get:
+      description: Returns a specific City by ID
+      tags:
+        - City
       produces:
         - text/plain
         - application/json
@@ -2611,18 +3151,65 @@ paths:
         '200':
           description: OK
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/LocalArea'
+            $ref: '#/definitions/City'
       parameters:
         - name: id
           in: path
-          description: id of Region to fetch SchoolDistricts for
+          description: id of City to fetch
           required: true
-          type: integer        
-  /regions/{id}/schooldistricts:
+          type: integer
+    put:
+      description: Updates a City
+      tags:
+        - City
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of City to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/City"
+      responses:
+        200:
+          description: OK
+        404:
+          description: City not found
+  /cities/{id}/delete:
+    post:
+      description: Deletes a City
+      tags:
+        - City
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of City to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: City not found
+
+  /schooldistricts:
     get:
-      description: Returns a list of SchoolDistricts for a given region
+      description: Returns a list of available schooldistricts
       tags:
         - SchoolDistrict
       produces:
@@ -2636,14 +3223,260 @@ paths:
             type: array
             items:
               $ref: '#/definitions/SchoolDistrict'
+    post:
+      description: Adds a school district
+      tags:
+        - SchoolDistrict
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolDistrict"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolDistrict'
+  /schooldistricts/bulk:
+    post:
+      description: Adds a number of school districts.
+      tags:
+        - SchoolDistrict
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolDistrict"
+      responses:
+        '200':
+          description: OK
+  /schooldistricts/{id}:
+    get:
+      description: Returns a specific school district
+      tags:
+        - SchoolDistrict
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolDistrict'
       parameters:
         - name: id
           in: path
-          description: id of Region to fetch SchoolDistricts for
+          description: id of School Districts to fetch
           required: true
           type: integer
+    put:
+      description: Updates a school district
+      tags:
+        - SchoolDistrict
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of School District to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolDistrict"
+      responses:
+        200:
+          description: OK
+        404:
+          description: School District not found
+  /schooldistricts/{id}/delete:
+    post:
+      description: Deletes a School District
+      tags:
+        - SchoolDistrict
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of School District to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: School District not found
+
 definitions:
   SchoolBus:
+    type: object
+    description: The School Bus entity, including only information that is of specific interest to the School Bus inspector and not tracked in other systems such as ICBC or NSC
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      regi:
+        type: string
+        description: The ICBC Registration number for the School Bus
+      plate:
+        type: string
+        description: The ICBC Plate Number for the School Bus
+      VIN:
+        type: string
+        description: The VIN for the School Bus
+      schoolBusOwner:
+        $ref: '#/definitions/SchoolBusOwner'
+      permitNumber:
+        type: string
+        description: The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.
+      status:
+        type: string
+        description: Enumerated type of Status - Inactive, Active, Archived
+      isOutOfProvince:
+        type: boolean
+      ServiceArea:
+        $ref: '#/definitions/ServiceArea'
+      homeTerminalAddr1:
+        type: string
+        description: Address 1 of physical location of the School Bus.
+      homeTerminalAddr2:
+        type: string
+        description: Address 2 of physical location of the School Bus.
+      homeTerminalCity:
+        $ref: '#/definitions/City'
+        description: City of physical location of the School Bus.
+      homeTerminalProvince:
+        type: string
+        description: Province of physical location of the School Bus - free form.
+      homeTerminalPostalCode:
+        type: string
+        description: Postal Code of physical location of the School Bus.
+      restrictions:
+        type: string
+        description: Text of any restrictions to be printed on the school bus permit.
+      nextInspectionDate:
+        type: string
+        format: date-time
+        description: The next inspection date for this School Bus. Set at the time an inspection is set.
+      nextInspectionType:
+        type: string
+        description: An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass/Fail status of the most recent inspection.
+      schoolBusDistrict:
+        $ref: '#/definitions/SchoolDistrict'
+        description: The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.
+      isIndependentSchool:
+        type: boolean
+        description: True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the companion field.
+      nameOfIndependentSchool:
+        type: string
+        description: The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.
+      schoolBusClass:
+        type: string
+        description: The enumerated class of School Bus.
+      schoolBusUnitNumber:
+        type: string
+        description: The unit number of the Bus as defined by the School Bus owner - freeform text.
+      schoolBusSeatingCapacity:
+        type: integer
+        format: int32
+        description: The maximum number of passengers in the bus based on the specific use of the bus. For example, the same 2-per seat / 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children, 3 per seat.
+      mobilityAidCapacity:
+        type: integer
+        format: int32
+        description: The number of mobility aid passenger seats in the bus.
+  SchoolBusNote:
+    type: object
+    required:
+      - id
+    description: Notes entered by users about a specific School Bus.
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      note:
+        type: string
+        description: The contents of the note.
+      isNoLongerRelevant:
+        type: boolean
+        description: A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.
+      schoolBus:
+          $ref: '#/definitions/SchoolBus'
+  SchoolBusAttachment:
+    type: object
+    required:
+      - id
+    description: Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      internalFileName:
+        type: string
+        description: The physical location of the attachment on the file system.
+      externalFileName:
+        type: string
+        description: The name of the attachment as defined by the user in uploading the document.
+      description:
+        type: string
+        description: A note about the attachment, optionally maintained by the user.
+      schoolBus:
+          $ref: '#/definitions/SchoolBus'
+  SchoolBusHistory:
+    type: object
+    required:
+      - id
+    description: The history of updates made to a School Bus. Exact format of the history TBD.
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      schoolBus:
+          $ref: '#/definitions/SchoolBus'
+  SchoolBusOwner:
     type: object
     required:
       - id
@@ -2655,101 +3488,37 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      SchoolBusOwner:
-        $ref: '#/definitions/SchoolBusOwner'
-      IsActive: 
-        type: boolean
-      IsOutOfProvince:
-        type: boolean
-      NextInspection:
+      name:
         type: string
+        description: The name of the School Bus owner as defined by the user/Inspector. Not tied to the ICBC or NSC names, but whatever is most useful for the Inspectors.
+      status:
+        type: string
+        description: Status of the School Bus owner - enumerated value Active, Archived
+      dateCreated:
+        type: string
+        readOnly: true
         format: date-time
-      CRNO:
-        type: string
-        description: CR Number.
-      NameOfIndependentSchool:
-        type: string
-      CCWData:
-        $ref: '#/definitions/CCWData'
-  SchoolBusNote:
-    type: object
-    required:
-      - id 
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-        x-type-options:
-          min: 1
-          max: 1000
-      Value:
-        type: string
-      Expired:
-        type: boolean
-      SchoolBus:
-          $ref: '#/definitions/SchoolBus'
-  SchoolBusAttachment:
-    type: object
-    required:
-      - id  
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-        x-type-options:
-          min: 1
-          max: 1000
-      InternalFileName:
-        type: string
-      ExternalFileName:
-        type: string
-      SchoolBus:
-          $ref: '#/definitions/SchoolBus'
-  SchoolBusHistory:
-    type: object
-    required:
-      - id    
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-        x-type-options:
-          min: 1
-          max: 1000
-      SchoolBus:
-          $ref: '#/definitions/SchoolBus'
-  SchoolBusOwner:
-    type: object
-    required:
-      - id    
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key  
-        x-type-options:
-          min: 1
-          max: 1000
-      Name:
-        type: string
-      IsActive:
-        type: boolean
-      DateCreated:
-        type: string
-        format: date-time
-      PrimaryContact:
+        description: The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API, adding it to the definition.
+      primaryContact:
         $ref: '#/definitions/SchoolBusOwnerContact'
-      LocalArea:
-        $ref: '#/definitions/LocalArea'
-      City: 
-        $ref: '#/definitions/City'
+        description: Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.
+      serviceArea:
+        $ref: '#/definitions/ServiceArea'
+        description: The District to which this School Bus is affliated.
+      nextInspectionDate:
+        type: string
+        readOnly: true
+        format: date-time
+        description: The calculated next inspection date from across the School Buses associated with this School Bus Owner
+      numberOfBuses:
+        type: integer
+        format: int32
+        readOnly: true
+        description: The calculated count of the number of School Buses associated with this School Bus Owner
   SchoolBusOwnerAttachment:
     type: object
     required:
-      - id    
+      - id
     properties:
       id:
         format: int32
@@ -2758,12 +3527,21 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      SchoolBusOwner:
-          $ref: '#/definitions/SchoolBusOwner'    
+      schoolBusOwner:
+          $ref: '#/definitions/SchoolBusOwner'
+      internalFileName:
+        type: string
+        description: The physical location of the attachment on the file system.
+      externalFileName:
+        type: string
+        description: The name of the attachment as defined by the user in uploading the document.
+      description:
+        type: string
+        description: A note about the attachment, optionally maintained by the user.
   SchoolBusOwnerNote:
     type: object
     required:
-      - id    
+      - id
     properties:
       id:
         format: int32
@@ -2772,17 +3550,18 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      Expired:
+      isNoLongerRelevant:
         type: boolean
-      Value:
+        description: A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons, but identified to the user as no longer relevant.
+      note:
         type: string
-        description: The note text
-      SchoolBusOwner:
-          $ref: '#/definitions/SchoolBusOwner'    
+        description: The contents of the note.
+      schoolBusOwner:
+          $ref: '#/definitions/SchoolBusOwner'
   SchoolBusOwnerContact:
     type: object
     required:
-      - id    
+      - id
     properties:
       id:
         format: int32
@@ -2791,12 +3570,24 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      SchoolBusOwner:
-          $ref: '#/definitions/SchoolBusOwner'    
+      schoolBusOwner:
+        $ref: '#/definitions/SchoolBusOwner'
+      givenName:
+        type: string
+        description: The given name of the contact.
+      surname:
+        type: string
+        description: The surname of the contact.
+      role:
+        type: string
+        description: The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.
+      notes:
+        type: string
+        description: Notes about the contact.
   SchoolBusOwnerContactPhone:
     type: object
     required:
-      - id    
+      - id
     properties:
       id:
         format: int32
@@ -2805,12 +3596,18 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      SchoolBusOwnerContact:
-          $ref: '#/definitions/SchoolBusOwnerContact'    
+      type:
+        type: string
+        description: The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.
+      phoneNumber:
+        type: string
+        description: The phone number of the contact. Entered as free form to support a range of formats.
+      schoolBusOwnerContact:
+          $ref: '#/definitions/SchoolBusOwnerContact'
   SchoolBusOwnerContactAddress:
     type: object
     required:
-      - id    
+      - id
     properties:
       id:
         format: int32
@@ -2819,12 +3616,31 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      SchoolBusOwnerContact:
-          $ref: '#/definitions/SchoolBusOwnerContact' 
+      type:
+        type: string
+        description: The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.
+      addr1:
+        type: string
+        description: Address 1 line of the address.
+      addr2:
+        type: string
+        description: Address 2 line of the address.
+      city:
+        type: string
+        description: The City of the address.
+      province:
+        type: string
+        description: The Province of the address.
+      postalCode:
+        type: string
+        description: The postal code of the address.
+      schoolBusOwnerContact:
+          $ref: '#/definitions/SchoolBusOwnerContact'
   SchoolBusOwnerHistory:
     type: object
     required:
-      - id    
+      - id
+    description: The history of updates made to a School Bus. Exact format of the history TBD.
     properties:
       id:
         format: int32
@@ -2833,12 +3649,13 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      SchoolBusOwner:
+      schoolBusOwner:
           $ref: '#/definitions/SchoolBusOwner'
   CCWData:
     type: object
     required:
-      - id    
+      - id
+    description: Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls.
     properties:
       id:
         format: int32
@@ -2847,58 +3664,130 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      ModelYear:
+      ICBCRegi:
+        type: string
+        description: The Registration Number (Regi) is the link between the CCW information and a specific School Bus
+      ICBCModelYear:
         format:  int32
         type: integer
         description: Vehicle Year
         x-type-options:
           min: 1970
           max: 2017
-      RateClass:
+      ICBCVehicleType:
         type: string
-      CVIPDecal:
+      ICBCRateClass:
         type: string
-      FleetUnitNo: 
+      ICBCCVIPDecal:
+        type: string
+      ICBCFleetUnitNo:
         type: integer
-      GVW:
+      ICBCGrossVehicleWeight:
         type: integer
-      Body:
+      ICBCMake:
         type: string
-      RebuiltStatus:
+      ICBCBody:
         type: string
-      CVIPExpiry:
+      ICBCRebuiltStatus:
+        type: string
+      ICBCCVIPExpiry:
         type: string
         format: date-time
-      NetWt:
+      ICBCNetWt:
         type: integer
-      Model:
+      ICBCModel:
         type: string
-      Fuel:
+      ICBCFuel:
         type: string
-      SeatingCapacity:
+      ICBCSeatingCapacity:
         type: integer
-      Colour:
+      ICBCColour:
+        type: string
+      ICBCNotesAndOrders:
+        type: string
+      ICBCOrderedOn:
+        type: string
+        format: date-time
+      ICBCRegOwnerName:
+        type: string
+      ICBCRegOwnerAddr1:
+        type: string
+      ICBCRegOwnerAddr2:
+        type: string
+      ICBCRegOwnerCity:
+        type: string
+      ICBCRegOwnerProv:
+        type: string
+      ICBCRegOwnerPostalCode:
+        type: string
+      ICBCRegOwnerStatus:
+        type: string
+      ICBCRegOwnerRODL:
+        type: string
+      ICBCRegOwnerPool:
+        type: string
+      NSCClientNum:
+        type: string
+      NSCCarrierName:
+        type: string
+      NSCCarrierConditions:
+        type: string
+      NSCCarrierSafetyRating:
+        type: string
+      NSCPolicyNumber:
+        type: string
+      NSCPolicyEffectiveDate:
+        type: string
+        format: date-time
+      NSCPolicyStatusDate:
+        type: string
+        format: date-time
+      NSCPolicyExpiryDate:
+        type: string
+        format: date-time
+      NSCPolicyStatus:
+        type: string
+      NSCPlateDecal:
         type: string
   Inspection:
     required:
-      - id  
+      - id
     type: object
     properties:
       id:
           format: int32
           type: integer
-          description: Primary Key  make this match the Inspection Details page
+          description: Primary Key make this match the Inspection Details page
           x-type-options:
             min: 1
             max: 1000
-      SchoolBus:
+      schoolBus:
         $ref: '#/definitions/SchoolBus'
-      Inspector:
+      inspector:
         $ref: '#/definitions/User'
+        description: Defaults for a new inspection to the current user, but can be changed as needed.
+      inspectionDate:
+        type: string
+        format: date-time
+        description: The date the inspection was conducted.
+      inspectionResult:
+        type: string
+        description: The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.
+      notes:
+        type: string
+        description: A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.
+      restrictions:
+        type: string
+        readOnly: true
+        description: The "Restrictions" text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page.
+      RIPInspectionId:
+        type: string
+        description: The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.
   FavouriteContextType:
     type: object
     required:
-      - id    
+      - id
+    description: The name for a place in the UI where per user settings can be stored - for example, the School Bus search screen, School Bus Owner search screen, etc.
     properties:
       id:
         format: int32
@@ -2907,14 +3796,15 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      Name:
+      name:
         type: string
-        description:  Context Name
+        description:  Context Name known by the UI.
         x-chance-type: name
   UserFavourite:
     type: object
     required:
-      - id  
+      - id
+    description: User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.
     properties:
       id:
         format: int32
@@ -2923,22 +3813,22 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      Name: 
+      name:
         type: string
-        description:  Context Name
+        description:  The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.
         x-chance-type: name
-      Value:
+      value:
         type: string
-        description:  Saved search
-        x-chance-type: word
-      IsDefault:
+        description:  The settings saved by the user. In general, a UI defined chunk of json that stores the settings in place when the user created the favourite.
+      isDefault:
         type: boolean
-      FavouriteContextType:
+        description: True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite, a system-wide default is invoked. On return to the context within a session, the last parameters used are reapplied.
+      favouriteContextType:
         $ref: '#/definitions/FavouriteContextType'
   Region:
     type: object
     required:
-      - id  
+      - id
     properties:
       id:
         format: int32
@@ -2947,53 +3837,95 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      Name:
+      ministryRegionID:
+        type: integer
+        format: int32
+        description: The Ministry ID for the Region
+        x-type-options:
+          min: 1
+          max: 1000
+      name:
         type: string
-        format: string
-        description:  Region Name
-        x-chance-type: name
-  City:
+        description: The name of the Region
+      startDate:
+        type: string
+        format: date-time
+        description: The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+      endDate:
+        type: string
+        format: date-time
+        description: The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+  District:
     type: object
     required:
-      - id  
+      - id
     properties:
       id:
-          format: int32
-          type: integer
-          description: Primary Key
-          x-type-options:
-            min: 1
-            max: 1000
-      Name:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      ministryDistrictID:
+        type: integer
+        format: int32
+        description: The Ministry ID for the District
+        x-type-options:
+          min: 1
+          max: 1000
+      name:
         type: string
-        format: string
-        description:  City Name
-        x-chance-type: name
-      Region:
+        description: The name of the District
+      region:
         $ref: '#/definitions/Region'
-  LocalArea:
+        description: The region in which the District is found.
+      startDate:
+        type: string
+        format: date-time
+        description: The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+      endDate:
+        type: string
+        format: date-time
+        description: The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+  ServiceArea:
     type: object
     required:
-      - id  
+      - id
     properties:
       id:
-          format: int32
-          type: integer
-          description: Primary Key
-          x-type-options:
-            min: 1
-            max: 1000
-      Name:
-          type: string
-          format: string
-          description:  City Name
-          x-chance-type: name          
-      Region:
-        $ref: '#/definitions/Region'
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      ministryServiceAreaID:
+        type: integer
+        format: int32
+        description: The Ministry ID for the Service Area
+        x-type-options:
+          min: 1
+          max: 1000
+      name:
+        type: string
+        description: The name of the Service Area
+      district:
+        $ref: '#/definitions/District'
+        description: The district in which the Service Area is found.
+      startDate:
+        type: string
+        format: date-time
+        description: The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+      endDate:
+        type: string
+        format: date-time
+        description: The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
   SchoolDistrict:
     type: object
+    description: A list of School Districts in the Province of BC. Authoritative source to be determined.
     required:
-      - id  
+      - id
     properties:
       id:
           format: int32
@@ -3002,12 +3934,29 @@ definitions:
           x-type-options:
             min: 1
             max: 1000
-      Name:
-          format: string          
-          description:  City Name
+      name:
+          format: string
+          description:  The full name of the School District
           x-chance-type: name
-      Region:
-        $ref: '#/definitions/Region'
+      shortName:
+          format: string
+          description: A short name for the School District useful in some areas of the UI. Usually with format "SD 61".
+  City:
+    type: object
+    description: A list of cities in BC. Authoritative source to be determined.
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      city:
+        type: string
+        description: The name of the City
   Notification:
     type: object
     required:
@@ -3020,21 +3969,21 @@ definitions:
           x-type-options:
             min: 1
             max: 1000
-      Event:
+      event:
           $ref: '#/definitions/NotificationEvent'
-      Event2:
+      event2:
           $ref: '#/definitions/NotificationEvent'
-      HasBeenViewed:
+      hasBeenViewed:
         type: boolean
-      IsWatchNotification:
+      isWatchNotification:
         type: boolean
-      IsExpired:
+      isExpired:
         type: boolean
-      IsAllDay:
+      isAllDay:
         type: boolean
-      PriorityCode: 
+      priorityCode:
         type: string
-      User:
+      user:
         $ref: '#/definitions/User'
   NotificationEvent:
     type: object
@@ -3048,24 +3997,25 @@ definitions:
           x-type-options:
             min: 1
             max: 1000
-      EventTime:
+      eventTime:
         type: string
         format: datetime
-      EventTypeCode:
+      eventTypeCode:
         type: string
-      EventSubTypeCode:
+      eventSubTypeCode:
         type: string
-      Notes:
+      notes:
         type: string
-      NotificationGenerated:
+      notificationGenerated:
         type: boolean
-      SchoolBus:
-        $ref: '#/definitions/SchoolBus'        
+      schoolBus:
+        $ref: '#/definitions/SchoolBus'
   User:
     type: object
     required:
       - id
       - active
+    description: Information about the users of the system.
     properties:
       id:
         format: int32
@@ -3232,40 +4182,6 @@ definitions:
       description:
         type: string
         x-chance-type: sentence
-
-################################################################################
-#                              View Models (DTO)                               #
-################################################################################
-  CurrentUserViewModel:
-    type: object
-    x-codegen-viewmodel: true
-    properties:
-      givenName:
-        type: string
-        x-chance-type: name
-      surname:
-        type: string
-        x-chance-type: name
-      fullName:
-        type: string
-        x-chance-type: name
-      districtName:
-        type: string
-      overdueInspections:
-        type: integer
-        x-type-options:
-          min: 1
-          max: 10
-      scheduledInspections:
-        type: integer
-        x-type-options:
-          min: 1
-          max: 10
-      dueNextMonthInspections:
-        type: integer
-        x-type-options:
-          min: 1
-          max: 10
   UserViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -3292,12 +4208,35 @@ definitions:
         x-chance-type: email
       active:
         type: boolean
+  CurrentUserViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    properties:
+      givenName:
+        type: string
+        x-chance-type: name
+      surname:
+        type: string
+        x-chance-type: name
+      fullName:
+        type: string
+      districtName:
+        type: string
+      overdueInspections:
+        format: int32
+        type: integer
+      scheduledInspections:
+        format: int32
+        type: integer
+      dueNextMonthInspections:
+        format: int32
+        type: integer
   UserDetailsViewModel:
     type: object
     x-codegen-viewmodel: true
     required:
       - id
-      - active
+      - active 
     properties:
       id:
         format: int32
@@ -3464,6 +4403,7 @@ definitions:
         x-chance-type: sentence
   UserFavouriteViewModel:
     type: object
+    x-codegen-viewmodel: true
     properties:
       id:
         format: int32
@@ -3471,7 +4411,7 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      name: 
+      name:
         type: string
         description:  Context Name
         x-chance-type: name
@@ -3489,6 +4429,7 @@ definitions:
           max: 1000
   NotificationViewModel:
     type: object
+    x-codegen-viewmodel: true
     properties:
       id:
           format: int32
@@ -3516,7 +4457,7 @@ definitions:
         type: boolean
       isAllDay:
         type: boolean
-      priorityCode: 
+      priorityCode:
         type: string
       userId:
           format: int32

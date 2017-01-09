@@ -26,26 +26,28 @@ namespace SchoolBusAPI
         /// <returns></returns>
         public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
         {
+            services.AddTransient<ICityApiService, CityApiService>();
+            services.AddTransient<ICurrentUserApiService, CurrentUserApiService>();
+            services.AddTransient<IDistrictApiService, DistrictApiService>();
+            services.AddTransient<IGroupApiService, GroupApiService>();
+            services.AddTransient<IInspectionApiService, InspectionApiService>();
+            services.AddTransient<INotificationApiService, NotificationApiService>();
+            services.AddTransient<INotificationEventApiService, NotificationEventApiService>();
+            services.AddTransient<IPermissionApiService, PermissionApiService>();
+            services.AddTransient<IRegionApiService, RegionApiService>();
+            services.AddTransient<IRoleApiService, RoleApiService>();
             services.AddTransient<ISchoolBusApiService, SchoolBusApiService>();
             services.AddTransient<ISchoolBusAttachmentApiService, SchoolBusAttachmentApiService>();
             services.AddTransient<ISchoolBusHistoryApiService, SchoolBusHistoryApiService>();
             services.AddTransient<ISchoolBusNoteApiService, SchoolBusNoteApiService>();
             services.AddTransient<ISchoolBusOwnerApiService, SchoolBusOwnerApiService>();
-            services.AddTransient<ISchoolBusOwnerContactApiService, SchoolBusOwnerContactApiService>();
             services.AddTransient<ISchoolBusOwnerAttachmentApiService, SchoolBusOwnerAttachmentApiService>();
+            services.AddTransient<ISchoolBusOwnerContactApiService, SchoolBusOwnerContactApiService>();
             services.AddTransient<ISchoolBusOwnerHistoryApiService, SchoolBusOwnerHistoryApiService>();
             services.AddTransient<ISchoolBusOwnerNoteApiService, SchoolBusOwnerNoteApiService>();
-            services.AddTransient<IRegionApiService, RegionApiService>();
             services.AddTransient<ISchoolDistrictApiService, SchoolDistrictApiService>();
-            services.AddTransient<IUserApiService, UserApiService>();
-            services.AddTransient<IInspectionApiService, InspectionApiService>();
-            services.AddTransient<INotificationApiService, NotificationApiService>();
-            services.AddTransient<INotificationEventApiService, NotificationEventApiService>();
-            services.AddTransient<IGroupApiService, GroupApiService>();
-            services.AddTransient<IPermissionApiService, PermissionApiService>();
-            services.AddTransient<IRoleApiService, RoleApiService>();
-            services.AddTransient<ICurrentUserApiService, CurrentUserApiService>();
-
+            services.AddTransient<IServiceAreaApiService, ServiceAreaApiService>();
+            services.AddTransient<IUserApiService, UserApiService>();            
             return services;
         }
     }
