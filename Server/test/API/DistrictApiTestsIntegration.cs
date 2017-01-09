@@ -63,11 +63,15 @@ namespace SchoolBusAPI.Test
         /// </summary>
 		public async void TestDistrictsGet()
 		{
+            string initialName = "InitialName";
+            string changedName = "ChangedName";
+
             // first test the POST.
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/districts");
 
             // create a new object.
             District district = new District();
+            district.Name = initialName;
             string jsonString = district.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
@@ -82,12 +86,15 @@ namespace SchoolBusAPI.Test
             // get the id
             var id = district.Id;
 
+            // change the name
+            district.Name = changedName;        
+
             // now do an update.
             request = new HttpRequestMessage(HttpMethod.Put, "/api/districts/" + id);
             request.Content = new StringContent(district.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-
+            
             // do a get.
             request = new HttpRequestMessage(HttpMethod.Get, "/api/districts/" + id);
             response = await _client.SendAsync(request);
@@ -96,6 +103,8 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
             district = JsonConvert.DeserializeObject<District>(jsonString);
+
+            Assert.Equal(changedName, district.Name);
 
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Post, "/api/districts/" + id + "/delete");
