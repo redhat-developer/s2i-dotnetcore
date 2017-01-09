@@ -3,6 +3,7 @@
   "dependencies": {
     "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
     "Microsoft.Extensions.Logging.Console": "1.1.0",
+    "Microsoft.AspNetCore.StaticFiles": "1.1.0",
     "lib": "1.0.0-*"
   },
   "buildOptions": {
@@ -19,5 +20,10 @@
       },
       "imports": "dnxcore50"
     }
+  },
+  "publishOptions": {
+    "include": [
+      "wwwroot"
+    ]
   }
 }

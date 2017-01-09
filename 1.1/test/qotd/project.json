@@ -13,5 +13,10 @@
     "netcoreapp1.1": {
       "imports": "dnxcore50"
     }
+  },
+  "publishOptions": {
+    "include": [
+      "quotes.txt"
+    ]
   }
 }

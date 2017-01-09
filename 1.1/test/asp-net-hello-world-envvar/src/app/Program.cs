@@ -16,6 +16,8 @@ namespace SampleApp
         {
             loggerFactory.AddConsole(LogLevel.Trace);
 
+            app.UseStaticFiles();
+
             app.Run(async context =>
             {
                 Console.WriteLine("{0} {1}{2}{3}",
