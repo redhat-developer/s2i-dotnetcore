@@ -4,6 +4,7 @@
             "id": "2"
         },
         "endDate": null,
+        "id": "1",
         "ministryServiceArea": "1",
         "name": "South Island",
         "startDate": "2009-01-01"
@@ -13,6 +14,7 @@
             "id": "2"
         },
         "endDate": null,
+        "id": "2",
         "ministryServiceArea": "2",
         "name": "Central  Island",
         "startDate": "2009-01-01"
@@ -22,6 +24,7 @@
             "id": "2"
         },
         "endDate": null,
+        "id": "3",
         "ministryServiceArea": "3",
         "name": "North  Island",
         "startDate": "2009-01-01"
@@ -31,6 +34,7 @@
             "id": "1"
         },
         "endDate": null,
+        "id": "4",
         "ministryServiceArea": "4",
         "name": "Howe Sound",
         "startDate": "2009-01-01"
@@ -40,6 +44,7 @@
             "id": "1"
         },
         "endDate": null,
+        "id": "5",
         "ministryServiceArea": "5",
         "name": "Sunshine Coast",
         "startDate": "2009-01-01"
@@ -49,6 +54,7 @@
             "id": "1"
         },
         "endDate": null,
+        "id": "6",
         "ministryServiceArea": "6",
         "name": "Lower Mainland",
         "startDate": "2009-01-01"
@@ -58,6 +64,7 @@
             "id": "1"
         },
         "endDate": null,
+        "id": "7",
         "ministryServiceArea": "7",
         "name": "Fraser Valley",
         "startDate": "2009-01-01"
@@ -67,6 +74,7 @@
             "id": "5"
         },
         "endDate": null,
+        "id": "8",
         "ministryServiceArea": "8",
         "name": "South Okanagan",
         "startDate": "2009-01-01"
@@ -76,6 +84,7 @@
             "id": "4"
         },
         "endDate": null,
+        "id": "9",
         "ministryServiceArea": "9",
         "name": "Kootenay Boundary",
         "startDate": "2009-01-01"
@@ -85,6 +94,7 @@
             "id": "4"
         },
         "endDate": null,
+        "id": "10",
         "ministryServiceArea": "10",
         "name": "Central Kootenay",
         "startDate": "2009-01-01"
@@ -94,6 +104,7 @@
             "id": "3"
         },
         "endDate": null,
+        "id": "11",
         "ministryServiceArea": "11",
         "name": "East Kootenay",
         "startDate": "2009-01-01"
@@ -103,6 +114,7 @@
             "id": "3"
         },
         "endDate": null,
+        "id": "12",
         "ministryServiceArea": "12",
         "name": "Selkirk",
         "startDate": "2009-01-01"
@@ -112,6 +124,7 @@
             "id": "5"
         },
         "endDate": null,
+        "id": "13",
         "ministryServiceArea": "13",
         "name": "Okanagan - Shuswap",
         "startDate": "2009-01-01"
@@ -121,6 +134,7 @@
             "id": "6"
         },
         "endDate": null,
+        "id": "14",
         "ministryServiceArea": "14",
         "name": "Nicola",
         "startDate": "2009-01-01"
@@ -130,6 +144,7 @@
             "id": "6"
         },
         "endDate": null,
+        "id": "15",
         "ministryServiceArea": "15",
         "name": "Thompson",
         "startDate": "2009-01-01"
@@ -139,6 +154,7 @@
             "id": "7"
         },
         "endDate": null,
+        "id": "16",
         "ministryServiceArea": "16",
         "name": "South Cariboo",
         "startDate": "2009-01-01"
@@ -148,6 +164,7 @@
             "id": "7"
         },
         "endDate": null,
+        "id": "17",
         "ministryServiceArea": "17",
         "name": "Central Cariboo",
         "startDate": "2009-01-01"
@@ -157,6 +174,7 @@
             "id": "7"
         },
         "endDate": null,
+        "id": "18",
         "ministryServiceArea": "18",
         "name": "North Cariboo",
         "startDate": "2009-01-01"
@@ -166,6 +184,7 @@
             "id": "9"
         },
         "endDate": null,
+        "id": "19",
         "ministryServiceArea": "19",
         "name": "Fort George",
         "startDate": "2009-01-01"
@@ -175,6 +194,7 @@
             "id": "9"
         },
         "endDate": null,
+        "id": "20",
         "ministryServiceArea": "20",
         "name": "Robson",
         "startDate": "2009-01-01"
@@ -184,6 +204,7 @@
             "id": "8"
         },
         "endDate": null,
+        "id": "21",
         "ministryServiceArea": "21",
         "name": "South Peace",
         "startDate": "2009-01-01"
@@ -193,6 +214,7 @@
             "id": "8"
         },
         "endDate": null,
+        "id": "22",
         "ministryServiceArea": "22",
         "name": "North Peace",
         "startDate": "2009-01-01"
@@ -202,6 +224,7 @@
             "id": "9"
         },
         "endDate": null,
+        "id": "23",
         "ministryServiceArea": "23",
         "name": "Nechako",
         "startDate": "2009-01-01"
@@ -211,6 +234,7 @@
             "id": "10"
         },
         "endDate": null,
+        "id": "24",
         "ministryServiceArea": "24",
         "name": "Lakes",
         "startDate": "2009-01-01"
@@ -220,6 +244,7 @@
             "id": "10"
         },
         "endDate": null,
+        "id": "25",
         "ministryServiceArea": "25",
         "name": "Bulkley - Nass",
         "startDate": "2009-01-01"
@@ -229,6 +254,7 @@
             "id": "11"
         },
         "endDate": null,
+        "id": "26",
         "ministryServiceArea": "26",
         "name": "Skeena",
         "startDate": "2009-01-01"
@@ -238,6 +264,7 @@
             "id": "11"
         },
         "endDate": null,
+        "id": "27",
         "ministryServiceArea": "27",
         "name": "North Coast",
         "startDate": "2009-01-01"
@@ -247,6 +274,7 @@
             "id": "10"
         },
         "endDate": null,
+        "id": "28",
         "ministryServiceArea": "28",
         "name": "Stikine",
         "startDate": "2009-01-01"
@@ -256,6 +284,7 @@
             "id": "12"
         },
         "endDate": null,
+        "id": "29",
         "ministryServiceArea": "99",
         "name": "NON-BC",
         "startDate": "2009-01-01"
@@ -265,6 +294,7 @@
             "id": "13"
         },
         "endDate": null,
+        "id": "30",
         "ministryServiceArea": "999",
         "name": "Unknown",
         "startDate": "2009-01-01"
