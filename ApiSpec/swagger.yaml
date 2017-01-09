@@ -1256,50 +1256,6 @@ paths:
           description: id of SchoolBusOwner to fetch notes for
           required: true
           type: integer
-  /schoolbusowners/{id}/contactphones:
-    get:
-      description: Returns phone contacts for a particular SchoolBusOwner
-      tags:
-        - SchoolBusOwner
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/SchoolBusOwnerContactPhone'
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwner to fetch contact phone for
-          required: true
-          type: integer
-  /schoolbusowners/{id}/contactaddresses:
-    get:
-      description: Returns address contacts for a particular SchoolBusOwner
-      tags:
-        - SchoolBusOwner
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/SchoolBusOwnerContactAddress'
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwner to fetch contact address for
-          required: true
-          type: integer
   /schoolbusownernotes:
      get:
       tags:
@@ -1705,6 +1661,50 @@ paths:
           description: id of SchoolBusOwnerContact to delete
           required: true
           type: integer
+  /schoolbusownercontacts/{id}/contactphones:
+    get:
+      description: Returns phone contacts for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwnerContact
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerContactPhone'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch contact phone for
+          required: true
+          type: integer
+  /schoolbusownercontacts/{id}/contactaddresses:
+    get:
+      description: Returns address contacts for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwnerContact
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerContactAddress'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch contact address for
+          required: true
+          type: integer
   /schoolbusownerhistory:
      get:
       tags:
@@ -1933,7 +1933,7 @@ paths:
               $ref: "#/definitions/Permission"
       responses:
         201:
-          description: Permissions created              
+          description: Permissions created
   /permissions/{id}:
     get:
       description: Returns a permission
@@ -2001,7 +2001,7 @@ paths:
         200:
           description: OK
         404:
-          description: Permission not found                         
+          description: Permission not found
   /roles:
     get:
       description: Returns a collection of roles
@@ -2063,7 +2063,7 @@ paths:
               $ref: "#/definitions/RoleViewModel"
       responses:
         201:
-          description: Permissions created   
+          description: Permissions created
   /roles/{id}:
     get:
       tags:
@@ -2175,7 +2175,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Permission"      
+              $ref: "#/definitions/Permission"
       responses:
         200:
           description: OK
@@ -2205,7 +2205,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Permission"      
+            $ref: "#/definitions/Permission"
       responses:
         200:
           description: OK
@@ -4236,7 +4236,7 @@ definitions:
     x-codegen-viewmodel: true
     required:
       - id
-      - active 
+      - active
     properties:
       id:
         format: int32
