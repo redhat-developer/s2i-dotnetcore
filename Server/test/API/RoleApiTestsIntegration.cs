@@ -26,29 +26,29 @@ using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Test
 {
-	public class RoleApiIntegrationTest 
-    { 
-		private readonly TestServer _server;
-		private readonly HttpClient _client;
-			
-		/// <summary>
+    public class RoleApiIntegrationTest
+    {
+        private readonly TestServer _server;
+        private readonly HttpClient _client;
+
+        /// <summary>
         /// Setup the test
         /// </summary>        
-		public RoleApiIntegrationTest()
-		{
-			_server = new TestServer(new WebHostBuilder()
+        public RoleApiIntegrationTest()
+        {
+            _server = new TestServer(new WebHostBuilder()
             .UseEnvironment("Development")
             .UseContentRoot(Directory.GetCurrentDirectory())
             .UseStartup<Startup>());
             _client = _server.CreateClient();
-		}    
+        }
 
         [Fact]
-		/// <summary>
+        /// <summary>
         /// Basic Integration test for Roles
         /// </summary>
-		public async void TestRolesBasic()
-		{
+        public async void TestRolesBasic()
+        {
             string initialName = "InitialName";
             string changedName = "ChangedName";
             // first test the POST.
@@ -194,5 +194,100 @@ namespace SchoolBusAPI.Test
 
         }
 
+        [Fact]
+        /// <summary>
+        /// Test Users and Roles
+        /// </summary>
+        public async void TestRolePermissions()
+        {
+            // first create a role.
+
+            string initialName = "InitialName";
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/roles");
+            RoleViewModel roleViewModel = new RoleViewModel();
+            roleViewModel.Name = initialName;
+            string jsonString = roleViewModel.ToJson();
+            request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+            var response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+
+            roleViewModel = JsonConvert.DeserializeObject<RoleViewModel>(jsonString);
+            // get the role id
+            var role_id = roleViewModel.Id;
+
+            // now create a permission.
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/permissions");
+            Permission permission = new Permission();
+            permission.Name = initialName;
+            jsonString = permission.ToJson();
+            request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+            permission = JsonConvert.DeserializeObject<Permission>(jsonString);
+            // get the permission id
+            var permission_id = permission.Id;
+
+
+            // now add the permission to the role.           
+            Permission[] items = new Permission[1];
+            items[0] = permission;
+
+            // send the request.
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/roles/" + role_id + "/permissions");
+            jsonString = JsonConvert.SerializeObject(items, Formatting.Indented);
+            request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // if we do a get we should get the same items.
+
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/roles/" + role_id + "/permissions");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+            PermissionViewModel[] rolePermissionsResponse = JsonConvert.DeserializeObject<PermissionViewModel[]>(jsonString);
+
+            Assert.Equal(permission.Code, rolePermissionsResponse[0].Code);
+            Assert.Equal(permission.Name, rolePermissionsResponse[0].Name);
+
+            // test the put.
+
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/roles/" + role_id + "/permissions");
+            jsonString = JsonConvert.SerializeObject(items, Formatting.Indented);
+            request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // cleanup
+
+            // Delete permission
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/permissions/" + permission_id + "/delete");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // should get a 404 if we try a get now.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/permissions/" + permission_id);
+            response = await _client.SendAsync(request);
+            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
+
+            // Delete role
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/roles/" + role_id + "/delete");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // should get a 404 if we try a get now.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/roles/" + role_id);
+            response = await _client.SendAsync(request);
+            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
+        }
     }
 }

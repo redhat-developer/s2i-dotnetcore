@@ -40,6 +40,29 @@ namespace SchoolBusAPI.Services.Impl
             _context = context;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="items"></param>
+        /// <response code="201">Permissions created</response>
+        public IActionResult RolesBulkPostAsync(Role[] items)
+        {
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (Role item in items)
+            {
+                _context.Roles.Add(item);
+            }
+            // Save the changes
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
+
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -124,7 +147,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdPermissionsPutAsync(int id, PermissionViewModel[] items)
+        public virtual IActionResult RolesIdPermissionsPutAsync(int id, Permission[] items)
         {
             using (var txn = _context.BeginTransaction())
             {
@@ -176,6 +199,71 @@ namespace SchoolBusAPI.Services.Impl
                 return new ObjectResult(result);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Updates the permissions for a role</remarks>
+        /// <param name="id">id of Role to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Role not found</response>
+        public virtual IActionResult RolesIdPermissionsPostAsync(int id, Permission[] items)
+        {
+
+            // first check that the role id is valid.
+
+            using (var txn = _context.BeginTransaction())
+            {
+                // Eager loading of related data
+                var role = _context.Roles
+                    .Where(x => x.Id == id)
+                    .Include(x => x.RolePermissions)
+                    .ThenInclude(rolePerm => rolePerm.Permission)
+                    .FirstOrDefault();
+
+                if (role == null)
+                {
+                    // Not Found
+                    return new StatusCodeResult(404);
+                }
+
+                var allPermissions = _context.Permissions.ToList();
+                var permissionCodes = items.Select(x => x.Code).ToList();
+                var existingPermissionCodes = role.RolePermissions.Select(x => x.Permission.Code).ToList();
+                var permissionCodesToAdd = permissionCodes.Where(x => !existingPermissionCodes.Contains(x)).ToList();
+
+                // Permissions to add
+                foreach (var code in permissionCodesToAdd)
+                {
+                    var permToAdd = allPermissions.FirstOrDefault(x => x.Code == code);
+                    if (permToAdd == null)
+                    {
+                        // TODO throw new BusinessLayerException(string.Format("Invalid Permission Code {0}", code));
+                    }
+                    role.AddPermission(permToAdd);
+                }
+
+                // Permissions to remove
+                List<RolePermission> permissionsToRemove = role.RolePermissions.Where(x => !permissionCodes.Contains(x.Permission.Code)).ToList();
+                foreach (RolePermission perm in permissionsToRemove)
+                {
+                    role.RemovePermission(perm.Permission);
+                    _context.RolePermissions.Remove(perm);
+                }
+
+                _context.Roles.Update(role);
+                _context.SaveChanges();
+                txn.Commit();
+
+                List<RolePermission> dbPermissions = _context.RolePermissions.ToList();
+
+                // Create DTO with serializable response
+                var result = dbPermissions.Select(x => x.ToViewModel()).ToList();
+                return new ObjectResult(result);
+            }
+        }
+
 
         /// <summary>
         /// 
