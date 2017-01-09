@@ -104,6 +104,9 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "The District to which this School Bus is affliated.")]
         public ServiceArea ServiceArea { get; set; }
 
+        [ForeignKey("ServiceArea")]
+        public int? ServiceAreaRefId { get; set; }
+
         /// <summary>
         /// The calculated next inspection date from across the School Buses associated with this School Bus Owner
         /// </summary>
