@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
@@ -70,12 +71,18 @@ namespace SchoolBusAPI.Models
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
 
+        [ForeignKey("SchoolBus")]
+        public int? SchoolBusRefId { get; set; }
+
         /// <summary>
         /// Defaults for a new inspection to the current user, but can be changed as needed.
         /// </summary>
         /// <value>Defaults for a new inspection to the current user, but can be changed as needed.</value>
         [MetaDataExtension (Description = "Defaults for a new inspection to the current user, but can be changed as needed.")]
         public User Inspector { get; set; }
+
+        [ForeignKey("Inspector")]
+        public int? InspectorRefId { get; set; }
 
         /// <summary>
         /// The date the inspection was conducted.

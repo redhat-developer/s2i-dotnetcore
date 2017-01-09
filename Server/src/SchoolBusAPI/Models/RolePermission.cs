@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
@@ -60,10 +61,16 @@ namespace SchoolBusAPI.Models
         /// </summary>
         public Role Role { get; set; }
 
+        [ForeignKey("Role")]
+        public int? RoleRefId { get; set; }
+
         /// <summary>
         /// Gets or Sets Permission
         /// </summary>
         public Permission Permission { get; set; }
+
+        [ForeignKey("Permission")]
+        public int? PermissionRefId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
