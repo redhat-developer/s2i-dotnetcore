@@ -3584,6 +3584,14 @@ definitions:
       notes:
         type: string
         description: Notes about the contact.
+      schoolBusOwnerContactPhones:
+        type: array
+        items:
+          $ref: '#/definitions/SchoolBusOwnerContactPhone'
+      schoolBusOwnerContactAddresses:
+        type: array
+        items:
+          $ref: '#/definitions/SchoolBusOwnerContactAddress'
   SchoolBusOwnerContactPhone:
     type: object
     required:
