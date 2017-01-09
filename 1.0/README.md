@@ -17,21 +17,15 @@ resulting image with [Docker](http://docker.io) execute:
 
     ```
     $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=1.0/test/asp-net-hello-world dotnet/dotnetcore-10-rhel7 dotnet-sample-app
-    $ sudo docker run -p 8080-8081:8080-8081 dotnet-sample-app
+    $ sudo docker run -p 8080:8080 dotnet-sample-app
     ```
 
 **Accessing the application:**
 
-Plain HTTP:
+HTTP:
 
 ```
 $ curl http://127.0.0.1:8080
-```
-
-HTTPS (uses a self-signed certificate, thus, `--insecure`):
-
-```
-$ curl --tlsv1 --insecure https://127.0.0.1:8081
 ```
 
 Repository organization
