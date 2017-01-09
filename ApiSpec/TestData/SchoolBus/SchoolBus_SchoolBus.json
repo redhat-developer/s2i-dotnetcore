@@ -1,90 +1,62 @@
 [
     {
-        "VIN": "4UZABRCS08CY67082",
-        "homeTerminalAddr1": "4819 Wallace Street",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Nanaimo",
-        "homeTerminalPostalCode": "V9R 3A8",
+        "VIN": "4UZABRCS08CY68935",
+        "homeTerminalAddr1": "4397 Burdett Avenue",
+        "homeTerminalAddr2": "Unit 100",
+        "homeTerminalCity": "Terrace",
+        "homeTerminalPostalCode": "V8G 1S2",
         "homeTerminalProvince": "BC",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobiityAidCapacity": "3",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-09-05",
-        "permitNumber": "36151",
-        "plate": "MNG 505",
-        "regi": "17878092",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
-        "schoolBusDistrict": {
-            "id": "12"
-        },
-        "schoolBusOwner": "7",
-        "schoolBusSeatingCapacity": "55",
-        "schoolBusUnitNumber": "28027",
-        "serviceArea": {
-            "id": "5"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1M8PDMTA7VP043127",
-        "homeTerminalAddr1": "2578 Glover Road",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Fort Langley",
-        "homeTerminalPostalCode": "V3A 6X5",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "3",
+        "mobiityAidCapacity": "0",
         "nameOfIndependentSchool": null,
         "nextInspection": "2017-08-18",
-        "permitNumber": "31599",
-        "plate": "PLB 734",
-        "regi": "21154843",
+        "permitNumber": "27247",
+        "plate": "MNG 505",
+        "regi": "20011428",
         "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "schoolBusClass": "Class 4",
         "schoolBusDistrict": {
-            "id": "3"
+            "id": "47"
         },
-        "schoolBusOwner": "8",
-        "schoolBusSeatingCapacity": "67",
-        "schoolBusUnitNumber": "18206",
+        "schoolBusOwner": "9",
+        "schoolBusSeatingCapacity": "12",
+        "schoolBusUnitNumber": "18210",
         "serviceArea": {
-            "id": "6"
+            "id": "10"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBHG31R7X1115917",
+        "VIN": "1M8PDMTA7VP046794",
         "homeTerminalAddr1": "4526 Glover Road",
-        "homeTerminalAddr2": null,
+        "homeTerminalAddr2": "Unit 100",
         "homeTerminalCity": "Coquitlam",
         "homeTerminalPostalCode": "V3J 4S1",
         "homeTerminalProvince": "BC",
-        "independentSchool": true,
+        "independentSchool": false,
         "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": "DELTA CHRISTIAN SCHOOL",
-        "nextInspection": "2017-06-29",
-        "permitNumber": "27470",
-        "plate": "NNR 799",
-        "regi": "36941401",
+        "mobiityAidCapacity": "2",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-10-20",
+        "permitNumber": "35829",
+        "plate": "PLB 734",
+        "regi": "28960470",
         "restrictions": null,
-        "schoolBusClass": "Class 1",
+        "schoolBusClass": "Class 4",
         "schoolBusDistrict": {
-            "id": "25"
+            "id": "23"
         },
         "schoolBusOwner": "1",
-        "schoolBusSeatingCapacity": "22",
-        "schoolBusUnitNumber": "30580",
+        "schoolBusSeatingCapacity": "0",
+        "schoolBusUnitNumber": "20791",
         "serviceArea": {
-            "id": "30"
+            "id": "20"
         },
         "status": "Active"
     },
     {
-        "VIN": "1BAANB7A7XF088698",
+        "VIN": "1GBHG31R7X1113381",
         "homeTerminalAddr1": "3644 Roger Street",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "Nanaimo",
@@ -93,54 +65,138 @@
         "independentSchool": true,
         "isOutOfProvince": false,
         "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": "YORK HOUSE SCHOOL SOCIETY",
-        "nextInspection": "2017-04-09",
-        "permitNumber": "29985",
-        "plate": "NNN 110",
-        "regi": "12079657",
+        "nameOfIndependentSchool": "STRATFORD HALL (SCHOOL)",
+        "nextInspection": "2017-11-12",
+        "permitNumber": "28828",
+        "plate": "NNR 799",
+        "regi": "45745061",
         "restrictions": null,
-        "schoolBusClass": "Class 4",
+        "schoolBusClass": "Class 1",
         "schoolBusDistrict": {
-            "id": "28"
+            "id": "12"
         },
         "schoolBusOwner": "4",
-        "schoolBusSeatingCapacity": "71",
-        "schoolBusUnitNumber": "28641",
+        "schoolBusSeatingCapacity": "69",
+        "schoolBusUnitNumber": "17368",
         "serviceArea": {
             "id": "12"
         },
         "status": "Active"
     },
     {
-        "VIN": "1BAANB7A9XF083141",
-        "homeTerminalAddr1": "4305 Essendene Avenue",
+        "VIN": "1BAANB7A7XF086261",
+        "homeTerminalAddr1": "4819 Wallace Street",
         "homeTerminalAddr2": null,
-        "homeTerminalCity": "Abbotsford",
-        "homeTerminalPostalCode": "V2S 2H7",
+        "homeTerminalCity": "Nanaimo",
+        "homeTerminalPostalCode": "V9R 3A8",
         "homeTerminalProvince": "BC",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobiityAidCapacity": "2",
+        "mobiityAidCapacity": "4",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-06-13",
-        "permitNumber": "35940",
-        "plate": "VEX 466",
-        "regi": "36281587",
+        "nextInspection": "2017-10-04",
+        "permitNumber": "36796",
+        "plate": "NNN 110",
+        "regi": "29219272",
         "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "schoolBusClass": "Class 2",
         "schoolBusDistrict": {
-            "id": "17"
+            "id": "9"
         },
-        "schoolBusOwner": "5",
-        "schoolBusSeatingCapacity": "6",
-        "schoolBusUnitNumber": "21092",
+        "schoolBusOwner": "7",
+        "schoolBusSeatingCapacity": "10",
+        "schoolBusUnitNumber": "34326",
         "serviceArea": {
-            "id": "4"
+            "id": "20"
         },
         "status": "Active"
     },
     {
-        "VIN": "1HVBBAAN2XH201701",
+        "VIN": "1BAANB7A9XF083028",
+        "homeTerminalAddr1": "4397 Burdett Avenue",
+        "homeTerminalAddr2": "Unit 100",
+        "homeTerminalCity": "Terrace",
+        "homeTerminalPostalCode": "V8G 1S2",
+        "homeTerminalProvince": "BC",
+        "independentSchool": true,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": "THE CATHOLIC IND SCHOOL L",
+        "nextInspection": "2017-09-15",
+        "permitNumber": "35847",
+        "plate": "VEX 466",
+        "regi": "33718506",
+        "restrictions": null,
+        "schoolBusClass": "Class 4",
+        "schoolBusDistrict": {
+            "id": "29"
+        },
+        "schoolBusOwner": "9",
+        "schoolBusSeatingCapacity": "10",
+        "schoolBusUnitNumber": "31003",
+        "serviceArea": {
+            "id": "2"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1HVBBAAN2XH204277",
+        "homeTerminalAddr1": "1028 Glover Road",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Langley",
+        "homeTerminalPostalCode": "V3A 1Z3",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-08-05",
+        "permitNumber": "35767",
+        "plate": "BKH 714",
+        "regi": "45166361",
+        "restrictions": null,
+        "schoolBusClass": "Class 1",
+        "schoolBusDistrict": {
+            "id": "16"
+        },
+        "schoolBusOwner": "16",
+        "schoolBusSeatingCapacity": "4",
+        "schoolBusUnitNumber": "38405",
+        "serviceArea": {
+            "id": "17"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "4UZABRCS48CY69578",
+        "homeTerminalAddr1": "2420 Roger Street",
+        "homeTerminalAddr2": "Unit 100",
+        "homeTerminalCity": "Duncan",
+        "homeTerminalPostalCode": "V9L 1E5",
+        "homeTerminalProvince": "BC",
+        "independentSchool": true,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "2",
+        "nameOfIndependentSchool": "YORK HOUSE SCHOOL SOCIETY",
+        "nextInspection": "2017-10-04",
+        "permitNumber": "31194",
+        "plate": "JHS 644",
+        "regi": "40829630",
+        "restrictions": null,
+        "schoolBusClass": "Class 1",
+        "schoolBusDistrict": {
+            "id": "3"
+        },
+        "schoolBusOwner": "18",
+        "schoolBusSeatingCapacity": "33",
+        "schoolBusUnitNumber": "10142",
+        "serviceArea": {
+            "id": "24"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GJGG25V771152917",
         "homeTerminalAddr1": "2565 Tchesinkut Lake Rd",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "Mcbride",
@@ -148,139 +204,27 @@
         "homeTerminalProvince": "BC",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobiityAidCapacity": "3",
+        "mobiityAidCapacity": "4",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-12-22",
-        "permitNumber": "33650",
-        "plate": "BKH 714",
-        "regi": "19844142",
+        "nextInspection": "2017-09-24",
+        "permitNumber": "37713",
+        "plate": "GCE 975",
+        "regi": "26850550",
         "restrictions": null,
-        "schoolBusClass": "Class 2",
+        "schoolBusClass": "Class 1",
         "schoolBusDistrict": {
-            "id": "40"
+            "id": "21"
         },
         "schoolBusOwner": "12",
-        "schoolBusSeatingCapacity": "14",
-        "schoolBusUnitNumber": "39184",
+        "schoolBusSeatingCapacity": "18",
+        "schoolBusUnitNumber": "28078",
         "serviceArea": {
-            "id": "22"
+            "id": "16"
         },
         "status": "Active"
     },
     {
-        "VIN": "4UZABRCS48CY66844",
-        "homeTerminalAddr1": "3694 Lake City Way",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Burnaby",
-        "homeTerminalPostalCode": "V5A 2Z6",
-        "homeTerminalProvince": "BC",
-        "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": "BODWELL HIGH SCHOOL INC",
-        "nextInspection": "2017-11-19",
-        "permitNumber": "33273",
-        "plate": "JHS 644",
-        "regi": "24853201",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
-        "schoolBusDistrict": {
-            "id": "23"
-        },
-        "schoolBusOwner": "3",
-        "schoolBusSeatingCapacity": "41",
-        "schoolBusUnitNumber": "44548",
-        "serviceArea": {
-            "id": "25"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GJGG25V771157605",
-        "homeTerminalAddr1": "3694 Lake City Way",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Burnaby",
-        "homeTerminalPostalCode": "V5A 2Z6",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-04-30",
-        "permitNumber": "28021",
-        "plate": "GCE 975",
-        "regi": "23690720",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "42"
-        },
-        "schoolBusOwner": "3",
-        "schoolBusSeatingCapacity": "27",
-        "schoolBusUnitNumber": "11310",
-        "serviceArea": {
-            "id": "8"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GJGG25V571161912",
-        "homeTerminalAddr1": "936 Coldstream Avenue",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Vernon",
-        "homeTerminalPostalCode": "V1T 6N1",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "4",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-07-02",
-        "permitNumber": "37733",
-        "plate": "TJR 794",
-        "regi": "44168772",
-        "restrictions": null,
-        "schoolBusClass": "Class 4",
-        "schoolBusDistrict": {
-            "id": "39"
-        },
-        "schoolBusOwner": "2",
-        "schoolBusSeatingCapacity": "61",
-        "schoolBusUnitNumber": "48011",
-        "serviceArea": {
-            "id": "14"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "4UZ3CFAC2XCB67117",
-        "homeTerminalAddr1": "2031 Blind Bay Road",
-        "homeTerminalAddr2": "Unit 100",
-        "homeTerminalCity": "Sicamous",
-        "homeTerminalPostalCode": "V0E 2V0",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "4",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-07-26",
-        "permitNumber": "38458",
-        "plate": "LEE 402",
-        "regi": "37470609",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "25"
-        },
-        "schoolBusOwner": "14",
-        "schoolBusSeatingCapacity": "81",
-        "schoolBusUnitNumber": "27035",
-        "serviceArea": {
-            "id": "24"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1BAAJCSH6XF081946",
+        "VIN": "1GJGG25V571169743",
         "homeTerminalAddr1": "2578 Glover Road",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "Fort Langley",
@@ -288,55 +232,111 @@
         "homeTerminalProvince": "BC",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobiityAidCapacity": "5",
+        "mobiityAidCapacity": "0",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-03-21",
-        "permitNumber": "39433",
-        "plate": "PSC 516",
-        "regi": "12015327",
+        "nextInspection": "2017-06-26",
+        "permitNumber": "37286",
+        "plate": "TJR 794",
+        "regi": "29211146",
         "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "schoolBusClass": "Class 1",
         "schoolBusDistrict": {
-            "id": "11"
+            "id": "19"
         },
         "schoolBusOwner": "8",
-        "schoolBusSeatingCapacity": "41",
-        "schoolBusUnitNumber": "48348",
+        "schoolBusSeatingCapacity": "33",
+        "schoolBusUnitNumber": "10122",
         "serviceArea": {
-            "id": "18"
+            "id": "28"
         },
         "status": "Active"
     },
     {
-        "VIN": "1HVBBABN5XH208177",
+        "VIN": "4UZ3CFAC2XCB61139",
         "homeTerminalAddr1": "3109 Wellington Ave",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "Chilliwack",
         "homeTerminalPostalCode": "V2P 2M1",
         "homeTerminalProvince": "BC",
-        "independentSchool": true,
+        "independentSchool": false,
         "isOutOfProvince": false,
-        "mobiityAidCapacity": "5",
-        "nameOfIndependentSchool": "OSOYOOS SECONDARY SCHOOL",
-        "nextInspection": "2017-03-16",
-        "permitNumber": "34900",
-        "plate": "KHZ 108",
-        "regi": "35071455",
+        "mobiityAidCapacity": "3",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-06-06",
+        "permitNumber": "34125",
+        "plate": "LEE 402",
+        "regi": "38865823",
         "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "schoolBusClass": "Class 4",
         "schoolBusDistrict": {
-            "id": "16"
+            "id": "31"
         },
         "schoolBusOwner": "17",
-        "schoolBusSeatingCapacity": "29",
-        "schoolBusUnitNumber": "32523",
+        "schoolBusSeatingCapacity": "25",
+        "schoolBusUnitNumber": "13706",
         "serviceArea": {
-            "id": "11"
+            "id": "22"
         },
         "status": "Active"
     },
     {
-        "VIN": "1HVBBABP8YH208848",
+        "VIN": "1BAAJCSH6XF088313",
+        "homeTerminalAddr1": "4397 Burdett Avenue",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Terrace",
+        "homeTerminalPostalCode": "V8G 1S2",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-01-25",
+        "permitNumber": "27211",
+        "plate": "PSC 516",
+        "regi": "44798013",
+        "restrictions": null,
+        "schoolBusClass": "Class 2",
+        "schoolBusDistrict": {
+            "id": "33"
+        },
+        "schoolBusOwner": "9",
+        "schoolBusSeatingCapacity": "22",
+        "schoolBusUnitNumber": "28758",
+        "serviceArea": {
+            "id": "25"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1HVBBABN5XH208453",
+        "homeTerminalAddr1": "2956 Shaughnessy St",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Port Coquitlam",
+        "homeTerminalPostalCode": "V3C 4S7",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-07-11",
+        "permitNumber": "27275",
+        "plate": "KHZ 108",
+        "regi": "38142077",
+        "restrictions": null,
+        "schoolBusClass": "Class 2",
+        "schoolBusDistrict": {
+            "id": "36"
+        },
+        "schoolBusOwner": "11",
+        "schoolBusSeatingCapacity": "79",
+        "schoolBusUnitNumber": "18680",
+        "serviceArea": {
+            "id": "20"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1HVBBABP8YH208687",
         "homeTerminalAddr1": "936 Coldstream Avenue",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "Vernon",
@@ -346,81 +346,445 @@
         "isOutOfProvince": false,
         "mobiityAidCapacity": "0",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-03-16",
-        "permitNumber": "39535",
+        "nextInspection": "2017-11-01",
+        "permitNumber": "33935",
         "plate": "NLN 307",
-        "regi": "45717506",
+        "regi": "42945627",
         "restrictions": null,
-        "schoolBusClass": "Class 2",
+        "schoolBusClass": "Class 3",
         "schoolBusDistrict": {
-            "id": "29"
+            "id": "12"
         },
         "schoolBusOwner": "2",
-        "schoolBusSeatingCapacity": "57",
-        "schoolBusUnitNumber": "41474",
+        "schoolBusSeatingCapacity": "33",
+        "schoolBusUnitNumber": "22054",
         "serviceArea": {
-            "id": "13"
+            "id": "23"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBHG31F6X1076069",
-        "homeTerminalAddr1": "2565 Tchesinkut Lake Rd",
+        "VIN": "1GBHG31F6X1077693",
+        "homeTerminalAddr1": "2076 James Street",
+        "homeTerminalAddr2": "Unit 100",
+        "homeTerminalCity": "Aldergrove",
+        "homeTerminalPostalCode": "V5G 4S4",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-09-25",
+        "permitNumber": "26601",
+        "plate": "XES 635",
+        "regi": "30096123",
+        "restrictions": null,
+        "schoolBusClass": "Class 3",
+        "schoolBusDistrict": {
+            "id": "2"
+        },
+        "schoolBusOwner": "15",
+        "schoolBusSeatingCapacity": "27",
+        "schoolBusUnitNumber": "29562",
+        "serviceArea": {
+            "id": "28"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBHG31F2X1079729",
+        "homeTerminalAddr1": "2578 Glover Road",
         "homeTerminalAddr2": null,
-        "homeTerminalCity": "Mcbride",
-        "homeTerminalPostalCode": "V0J 2E0",
+        "homeTerminalCity": "Fort Langley",
+        "homeTerminalPostalCode": "V3A 6X5",
         "homeTerminalProvince": "BC",
         "independentSchool": true,
         "isOutOfProvince": false,
         "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": "CATHOLIC PUBLIC SCHOOLS",
-        "nextInspection": "2017-08-22",
-        "permitNumber": "34698",
-        "plate": "XES 635",
-        "regi": "39232291",
+        "nameOfIndependentSchool": "THE CATHOLIC IND SCHOOL L",
+        "nextInspection": "2017-04-04",
+        "permitNumber": "28382",
+        "plate": "MPA 390",
+        "regi": "31392895",
         "restrictions": null,
-        "schoolBusClass": "Class 2",
+        "schoolBusClass": "Class 3",
         "schoolBusDistrict": {
-            "id": "25"
-        },
-        "schoolBusOwner": "12",
-        "schoolBusSeatingCapacity": "56",
-        "schoolBusUnitNumber": "10485",
-        "serviceArea": {
             "id": "12"
+        },
+        "schoolBusOwner": "8",
+        "schoolBusSeatingCapacity": "0",
+        "schoolBusUnitNumber": "17208",
+        "serviceArea": {
+            "id": "20"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBHG31F2X1076044",
-        "homeTerminalAddr1": "936 Coldstream Avenue",
+        "VIN": "1GBHG31F2X1118247",
+        "homeTerminalAddr1": "2031 Blind Bay Road",
         "homeTerminalAddr2": null,
-        "homeTerminalCity": "Vernon",
-        "homeTerminalPostalCode": "V1T 6N1",
+        "homeTerminalCity": "Sicamous",
+        "homeTerminalPostalCode": "V0E 2V0",
         "homeTerminalProvince": "BC",
-        "independentSchool": true,
+        "independentSchool": false,
         "isOutOfProvince": false,
-        "mobiityAidCapacity": "4",
-        "nameOfIndependentSchool": "YORK HOUSE SCHOOL SOCIETY",
-        "nextInspection": "2017-02-02",
-        "permitNumber": "33306",
-        "plate": "MPA 390",
-        "regi": "20833738",
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-04-14",
+        "permitNumber": "37513",
+        "plate": "TJJ 517",
+        "regi": "32570448",
+        "restrictions": null,
+        "schoolBusClass": "Class 2",
+        "schoolBusDistrict": {
+            "id": "43"
+        },
+        "schoolBusOwner": "14",
+        "schoolBusSeatingCapacity": "25",
+        "schoolBusUnitNumber": "37639",
+        "serviceArea": {
+            "id": "3"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBHG31F0X1119237",
+        "homeTerminalAddr1": "2031 Blind Bay Road",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Sicamous",
+        "homeTerminalPostalCode": "V0E 2V0",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-01-11",
+        "permitNumber": "27515",
+        "plate": "MWJ 920",
+        "regi": "32736349",
+        "restrictions": null,
+        "schoolBusClass": "Class 1",
+        "schoolBusDistrict": {
+            "id": "34"
+        },
+        "schoolBusOwner": "14",
+        "schoolBusSeatingCapacity": "9",
+        "schoolBusUnitNumber": "44624",
+        "serviceArea": {
+            "id": "30"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBHG31F2X1114171",
+        "homeTerminalAddr1": "2031 Blind Bay Road",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Sicamous",
+        "homeTerminalPostalCode": "V0E 2V0",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "3",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-05-02",
+        "permitNumber": "39181",
+        "plate": "SSR 601",
+        "regi": "43618271",
+        "restrictions": null,
+        "schoolBusClass": "Class 1",
+        "schoolBusDistrict": {
+            "id": "9"
+        },
+        "schoolBusOwner": "14",
+        "schoolBusSeatingCapacity": "12",
+        "schoolBusUnitNumber": "13049",
+        "serviceArea": {
+            "id": "2"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBHG31F8X1114643",
+        "homeTerminalAddr1": "2913 Blind Bay Road",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Blue River",
+        "homeTerminalPostalCode": "V0E 1J0",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "2",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-05-23",
+        "permitNumber": "26968",
+        "plate": "VTC 949",
+        "regi": "39980731",
         "restrictions": null,
         "schoolBusClass": "Class 4",
         "schoolBusDistrict": {
             "id": "22"
         },
-        "schoolBusOwner": "2",
-        "schoolBusSeatingCapacity": "54",
-        "schoolBusUnitNumber": "33766",
+        "schoolBusOwner": "13",
+        "schoolBusSeatingCapacity": "37",
+        "schoolBusUnitNumber": "48243",
         "serviceArea": {
-            "id": "21"
+            "id": "23"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBHG31F2X1114396",
+        "VIN": "1GBJG31F9X1153890",
+        "homeTerminalAddr1": "1477 Hastings Street",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Vancouver",
+        "homeTerminalPostalCode": "V6C 1B4",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "1",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-03-06",
+        "permitNumber": "25685",
+        "plate": "TNC 450",
+        "regi": "49562644",
+        "restrictions": null,
+        "schoolBusClass": "Class 2",
+        "schoolBusDistrict": {
+            "id": "15"
+        },
+        "schoolBusOwner": "19",
+        "schoolBusSeatingCapacity": "61",
+        "schoolBusUnitNumber": "23415",
+        "serviceArea": {
+            "id": "26"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBJG31F5X1158507",
+        "homeTerminalAddr1": "1028 Glover Road",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Langley",
+        "homeTerminalPostalCode": "V3A 1Z3",
+        "homeTerminalProvince": "BC",
+        "independentSchool": true,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": "VANCOUVER SCHOOL BUS",
+        "nextInspection": "2017-01-24",
+        "permitNumber": "30272",
+        "plate": "TJK 988",
+        "regi": "27149749",
+        "restrictions": null,
+        "schoolBusClass": "Class 4",
+        "schoolBusDistrict": {
+            "id": "45"
+        },
+        "schoolBusOwner": "16",
+        "schoolBusSeatingCapacity": "41",
+        "schoolBusUnitNumber": "34637",
+        "serviceArea": {
+            "id": "20"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBJG31F8X1158506",
+        "homeTerminalAddr1": "4819 Wallace Street",
+        "homeTerminalAddr2": "Unit 100",
+        "homeTerminalCity": "Nanaimo",
+        "homeTerminalPostalCode": "V9R 3A8",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-02-10",
+        "permitNumber": "35096",
+        "plate": "PKR 253",
+        "regi": "37372583",
+        "restrictions": null,
+        "schoolBusClass": "Class 1",
+        "schoolBusDistrict": {
+            "id": "35"
+        },
+        "schoolBusOwner": "7",
+        "schoolBusSeatingCapacity": "18",
+        "schoolBusUnitNumber": "20268",
+        "serviceArea": {
+            "id": "27"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBJG31F3X1154338",
+        "homeTerminalAddr1": "3109 Wellington Ave",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Chilliwack",
+        "homeTerminalPostalCode": "V2P 2M1",
+        "homeTerminalProvince": "BC",
+        "independentSchool": true,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": "LANGLEY CHRISTIAN SCHOOL",
+        "nextInspection": "2017-11-12",
+        "permitNumber": "34946",
+        "plate": "VJA 211",
+        "regi": "12031986",
+        "restrictions": null,
+        "schoolBusClass": "Class 3",
+        "schoolBusDistrict": {
+            "id": "37"
+        },
+        "schoolBusOwner": "17",
+        "schoolBusSeatingCapacity": "66",
+        "schoolBusUnitNumber": "25919",
+        "serviceArea": {
+            "id": "5"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBJG31F1X1159225",
+        "homeTerminalAddr1": "2956 Shaughnessy St",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Port Coquitlam",
+        "homeTerminalPostalCode": "V3C 4S7",
+        "homeTerminalProvince": "BC",
+        "independentSchool": true,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": "SHAWNIGAN LAKE SCHOOL (LS",
+        "nextInspection": "2017-03-16",
+        "permitNumber": "36500",
+        "plate": "VNN 705",
+        "regi": "12478280",
+        "restrictions": null,
+        "schoolBusClass": "Class 1",
+        "schoolBusDistrict": {
+            "id": "26"
+        },
+        "schoolBusOwner": "11",
+        "schoolBusSeatingCapacity": "10",
+        "schoolBusUnitNumber": "28774",
+        "serviceArea": {
+            "id": "19"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GAHG39R1X1145965",
+        "homeTerminalAddr1": "1477 Hastings Street",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Vancouver",
+        "homeTerminalPostalCode": "V6C 1B4",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-02-02",
+        "permitNumber": "29926",
+        "plate": "KPM 250",
+        "regi": "10402704",
+        "restrictions": null,
+        "schoolBusClass": "Class 1",
+        "schoolBusDistrict": {
+            "id": "33"
+        },
+        "schoolBusOwner": "19",
+        "schoolBusSeatingCapacity": "0",
+        "schoolBusUnitNumber": "10067",
+        "serviceArea": {
+            "id": "7"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1FDXE47S4XHB16148",
+        "homeTerminalAddr1": "3694 Lake City Way",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Burnaby",
+        "homeTerminalPostalCode": "V5A 2Z6",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-06-10",
+        "permitNumber": "32758",
+        "plate": "TKW 525",
+        "regi": "38885017",
+        "restrictions": null,
+        "schoolBusClass": "Class 2",
+        "schoolBusDistrict": {
+            "id": "7"
+        },
+        "schoolBusOwner": "3",
+        "schoolBusSeatingCapacity": "40",
+        "schoolBusUnitNumber": "28106",
+        "serviceArea": {
+            "id": "30"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1HVBBAAN3XH246390",
+        "homeTerminalAddr1": "2913 Blind Bay Road",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Blue River",
+        "homeTerminalPostalCode": "V0E 1J0",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "4",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-05-04",
+        "permitNumber": "28549",
+        "plate": "LTA 599",
+        "regi": "23518309",
+        "restrictions": null,
+        "schoolBusClass": "Class 2",
+        "schoolBusDistrict": {
+            "id": "25"
+        },
+        "schoolBusOwner": "13",
+        "schoolBusSeatingCapacity": "34",
+        "schoolBusUnitNumber": "32915",
+        "serviceArea": {
+            "id": "25"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1BABNBXA9YF095903",
+        "homeTerminalAddr1": "2956 Shaughnessy St",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "Port Coquitlam",
+        "homeTerminalPostalCode": "V3C 4S7",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-06-27",
+        "permitNumber": "26037",
+        "plate": "HBM 344",
+        "regi": "47887940",
+        "restrictions": null,
+        "schoolBusClass": "Class 2",
+        "schoolBusDistrict": {
+            "id": "7"
+        },
+        "schoolBusOwner": "11",
+        "schoolBusSeatingCapacity": "21",
+        "schoolBusUnitNumber": "42259",
+        "serviceArea": {
+            "id": "6"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "2PCH3349071715369",
         "homeTerminalAddr1": "2076 James Street",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "Aldergrove",
@@ -430,412 +794,48 @@
         "isOutOfProvince": false,
         "mobiityAidCapacity": "0",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-07-15",
-        "permitNumber": "26992",
-        "plate": "TJJ 517",
-        "regi": "36524494",
+        "nextInspection": "2017-06-14",
+        "permitNumber": "36299",
+        "plate": "THJ 509",
+        "regi": "10436982",
         "restrictions": null,
         "schoolBusClass": "Class 1",
         "schoolBusDistrict": {
-            "id": "4"
+            "id": "11"
         },
         "schoolBusOwner": "15",
-        "schoolBusSeatingCapacity": "12",
-        "schoolBusUnitNumber": "19897",
+        "schoolBusSeatingCapacity": "59",
+        "schoolBusUnitNumber": "14729",
         "serviceArea": {
+            "id": "12"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "2PCH3349971712238",
+        "homeTerminalAddr1": "3694 Lake City Way",
+        "homeTerminalAddr2": "Unit 100",
+        "homeTerminalCity": "Burnaby",
+        "homeTerminalPostalCode": "V5A 2Z6",
+        "homeTerminalProvince": "BC",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobiityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-02-03",
+        "permitNumber": "34199",
+        "plate": "MAM 873",
+        "regi": "42228906",
+        "restrictions": null,
+        "schoolBusClass": "Class 4",
+        "schoolBusDistrict": {
             "id": "22"
         },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBHG31F0X1118530",
-        "homeTerminalAddr1": "3694 Lake City Way",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Burnaby",
-        "homeTerminalPostalCode": "V5A 2Z6",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-09-23",
-        "permitNumber": "32888",
-        "plate": "MWJ 920",
-        "regi": "24018529",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
-        "schoolBusDistrict": {
-            "id": "16"
-        },
         "schoolBusOwner": "3",
-        "schoolBusSeatingCapacity": "53",
-        "schoolBusUnitNumber": "21354",
-        "serviceArea": {
-            "id": "31"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBHG31F2X1112555",
-        "homeTerminalAddr1": "2565 Tchesinkut Lake Rd",
-        "homeTerminalAddr2": "Unit 100",
-        "homeTerminalCity": "Mcbride",
-        "homeTerminalPostalCode": "V0J 2E0",
-        "homeTerminalProvince": "BC",
-        "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": "ISLAND PACIFIC SCHOOL",
-        "nextInspection": "2017-03-31",
-        "permitNumber": "39644",
-        "plate": "SSR 601",
-        "regi": "18880168",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "26"
-        },
-        "schoolBusOwner": "12",
-        "schoolBusSeatingCapacity": "14",
-        "schoolBusUnitNumber": "45683",
-        "serviceArea": {
-            "id": "5"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBHG31F8X1111376",
-        "homeTerminalAddr1": "3109 Wellington Ave",
-        "homeTerminalAddr2": "Unit 100",
-        "homeTerminalCity": "Chilliwack",
-        "homeTerminalPostalCode": "V2P 2M1",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-09-25",
-        "permitNumber": "26942",
-        "plate": "VTC 949",
-        "regi": "21133086",
-        "restrictions": null,
-        "schoolBusClass": "Class 2",
-        "schoolBusDistrict": {
-            "id": "34"
-        },
-        "schoolBusOwner": "17",
-        "schoolBusSeatingCapacity": "30",
-        "schoolBusUnitNumber": "11854",
-        "serviceArea": {
-            "id": "31"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBJG31F9X1151395",
-        "homeTerminalAddr1": "2956 Shaughnessy St",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Port Coquitlam",
-        "homeTerminalPostalCode": "V3C 4S7",
-        "homeTerminalProvince": "BC",
-        "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": "VANCOUVER SCHOOL BUS",
-        "nextInspection": "2017-03-23",
-        "permitNumber": "27577",
-        "plate": "TNC 450",
-        "regi": "28360998",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "21"
-        },
-        "schoolBusOwner": "11",
-        "schoolBusSeatingCapacity": "69",
-        "schoolBusUnitNumber": "27306",
-        "serviceArea": {
-            "id": "6"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBJG31F5X1159823",
-        "homeTerminalAddr1": "3694 Lake City Way",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Burnaby",
-        "homeTerminalPostalCode": "V5A 2Z6",
-        "homeTerminalProvince": "BC",
-        "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": "COLLINGWOOD SCHOOL SOCIET",
-        "nextInspection": "2017-06-08",
-        "permitNumber": "29408",
-        "plate": "TJK 988",
-        "regi": "16799482",
-        "restrictions": null,
-        "schoolBusClass": "Class 2",
-        "schoolBusDistrict": {
-            "id": "28"
-        },
-        "schoolBusOwner": "3",
-        "schoolBusSeatingCapacity": "38",
-        "schoolBusUnitNumber": "48543",
-        "serviceArea": {
-            "id": "16"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBJG31F8X1159259",
-        "homeTerminalAddr1": "2578 Glover Road",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Fort Langley",
-        "homeTerminalPostalCode": "V3A 6X5",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "3",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-04-25",
-        "permitNumber": "36488",
-        "plate": "PKR 253",
-        "regi": "46241940",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "37"
-        },
-        "schoolBusOwner": "8",
-        "schoolBusSeatingCapacity": "0",
-        "schoolBusUnitNumber": "18300",
-        "serviceArea": {
-            "id": "9"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBJG31F3X1154509",
-        "homeTerminalAddr1": "4347 Blanshard",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Victoria",
-        "homeTerminalPostalCode": "V8W 2H9",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "3",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-10-20",
-        "permitNumber": "30434",
-        "plate": "VJA 211",
-        "regi": "43079988",
-        "restrictions": null,
-        "schoolBusClass": "Class 4",
-        "schoolBusDistrict": {
-            "id": "18"
-        },
-        "schoolBusOwner": "6",
-        "schoolBusSeatingCapacity": "33",
-        "schoolBusUnitNumber": "41204",
+        "schoolBusSeatingCapacity": "43",
+        "schoolBusUnitNumber": "10834",
         "serviceArea": {
             "id": "4"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBJG31F1X1154361",
-        "homeTerminalAddr1": "2956 Shaughnessy St",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Port Coquitlam",
-        "homeTerminalPostalCode": "V3C 4S7",
-        "homeTerminalProvince": "BC",
-        "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": "COMBINED CHRISTIAN SCHOOL",
-        "nextInspection": "2017-08-25",
-        "permitNumber": "33037",
-        "plate": "VNN 705",
-        "regi": "17381152",
-        "restrictions": null,
-        "schoolBusClass": "Class 2",
-        "schoolBusDistrict": {
-            "id": "8"
-        },
-        "schoolBusOwner": "11",
-        "schoolBusSeatingCapacity": "0",
-        "schoolBusUnitNumber": "18898",
-        "serviceArea": {
-            "id": "15"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GAHG39R1X1142039",
-        "homeTerminalAddr1": "2956 Shaughnessy St",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Port Coquitlam",
-        "homeTerminalPostalCode": "V3C 4S7",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "2",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-04-08",
-        "permitNumber": "25133",
-        "plate": "KPM 250",
-        "regi": "43076551",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "31"
-        },
-        "schoolBusOwner": "11",
-        "schoolBusSeatingCapacity": "62",
-        "schoolBusUnitNumber": "11697",
-        "serviceArea": {
-            "id": "24"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1FDXE47S4XHB11292",
-        "homeTerminalAddr1": "4526 Glover Road",
-        "homeTerminalAddr2": "Unit 100",
-        "homeTerminalCity": "Coquitlam",
-        "homeTerminalPostalCode": "V3J 4S1",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2016-12-30",
-        "permitNumber": "31702",
-        "plate": "TKW 525",
-        "regi": "43687480",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
-        "schoolBusDistrict": {
-            "id": "15"
-        },
-        "schoolBusOwner": "1",
-        "schoolBusSeatingCapacity": "16",
-        "schoolBusUnitNumber": "35406",
-        "serviceArea": {
-            "id": "4"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1HVBBAAN3XH248458",
-        "homeTerminalAddr1": "936 Coldstream Avenue",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Vernon",
-        "homeTerminalPostalCode": "V1T 6N1",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-03-30",
-        "permitNumber": "30261",
-        "plate": "LTA 599",
-        "regi": "44417425",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
-        "schoolBusDistrict": {
-            "id": "34"
-        },
-        "schoolBusOwner": "2",
-        "schoolBusSeatingCapacity": "35",
-        "schoolBusUnitNumber": "41812",
-        "serviceArea": {
-            "id": "31"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1BABNBXA9YF097768",
-        "homeTerminalAddr1": "2565 Tchesinkut Lake Rd",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Mcbride",
-        "homeTerminalPostalCode": "V0J 2E0",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "1",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-02-20",
-        "permitNumber": "27758",
-        "plate": "HBM 344",
-        "regi": "39333693",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "2"
-        },
-        "schoolBusOwner": "12",
-        "schoolBusSeatingCapacity": "31",
-        "schoolBusUnitNumber": "11404",
-        "serviceArea": {
-            "id": "2"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "2PCH3349071714660",
-        "homeTerminalAddr1": "4526 Glover Road",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Coquitlam",
-        "homeTerminalPostalCode": "V3J 4S1",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "2",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-01-25",
-        "permitNumber": "29394",
-        "plate": "THJ 509",
-        "regi": "14238245",
-        "restrictions": null,
-        "schoolBusClass": "Class 4",
-        "schoolBusDistrict": {
-            "id": "23"
-        },
-        "schoolBusOwner": "1",
-        "schoolBusSeatingCapacity": "31",
-        "schoolBusUnitNumber": "16324",
-        "serviceArea": {
-            "id": "27"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "2PCH3349971715710",
-        "homeTerminalAddr1": "4526 Glover Road",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "Coquitlam",
-        "homeTerminalPostalCode": "V3J 4S1",
-        "homeTerminalProvince": "BC",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobiityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-11-15",
-        "permitNumber": "33265",
-        "plate": "MAM 873",
-        "regi": "44613465",
-        "restrictions": null,
-        "schoolBusClass": "Class 4",
-        "schoolBusDistrict": {
-            "id": "44"
-        },
-        "schoolBusOwner": "1",
-        "schoolBusSeatingCapacity": "49",
-        "schoolBusUnitNumber": "32922",
-        "serviceArea": {
-            "id": "29"
         },
         "status": "Active"
     }

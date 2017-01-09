@@ -1,19 +1,19 @@
 File,name,status,dateCreated,primaryContact,serviceArea,nextInspectionDate,numberOfBuses
-SBOwner,"SB School Bus, Inc.",Active,2013-11-08,rg:{},26,0,0
-SBOwner,Vancouver,Active,2012-07-12,rg:{},23,0,0
-SBOwner,Surrey,Active,2012-08-29,rg:{},27,0,0
-SBOwner,Dawson Creek,Active,2013-11-01,rg:{},6,0,0
-SBOwner,Rutland,Active,2007-01-19,rg:{},1,0,0
-SBOwner,East Kootenay,Active,2013-01-15,rg:{},10,0,0
-SBOwner,Smithers,Active,2015-04-19,rg:{},1,0,0
-SBOwner,Dawson Creek,Active,2008-12-30,rg:{},16,0,0
-SBOwner,West Kootenay,Active,2008-06-25,rg:{},17,0,0
-SBOwner,Williams Lake,Active,2009-03-06,rg:{},17,0,0
-SBOwner,Vancouver,Active,2015-02-17,rg:{},23,0,0
-SBOwner,North Shore/Squamish,Active,2005-07-29,rg:{},16,0,0
-SBOwner,North Shore/Squamish,Active,2015-06-23,rg:{},9,0,0
-SBOwner,Smithers,Active,2010-04-03,rg:{},18,0,0
-SBOwner,North Vancouver Island,Active,2007-04-27,rg:{},27,0,0
-SBOwner,Dawson Creek,Active,2005-07-05,rg:{},20,0,0
-SBOwner,North Vancouver Island,Active,2014-07-25,rg:{},10,0,0
-SBOwner,West Kootenay,Active,2006-02-02,rg:{},26,0,0
+SBOwner,School District 61,Active,2007-09-09,rg:{},15,0,0
+SBOwner,Salmon Arm,Active,2011-12-22,rg:{},18,0,0
+SBOwner,Penticton,Active,2015-11-30,rg:{},2,0,0
+SBOwner,Dawson Creek,Active,2005-03-17,rg:{},20,0,0
+SBOwner,Fraser Valley,Active,2013-06-05,rg:{},29,0,0
+SBOwner,Surrey,Active,2014-11-11,rg:{},7,0,0
+SBOwner,East Kootenay,Active,2008-07-05,rg:{},13,0,0
+SBOwner,Surrey,Active,2010-01-30,rg:{},3,0,0
+SBOwner,Rutland,Active,2011-01-05,rg:{},6,0,0
+SBOwner,Trail,Active,2009-10-11,rg:{},11,0,0
+SBOwner,North Vancouver Island,Active,2004-10-07,rg:{},13,0,0
+SBOwner,Salmon Arm,Active,2011-02-07,rg:{},7,0,0
+SBOwner,Smithers,Active,2016-02-21,rg:{},6,0,0
+SBOwner,Dawson Creek,Active,2013-12-22,rg:{},27,0,0
+SBOwner,Penticton,Active,2010-11-06,rg:{},20,0,0
+SBOwner,Smithers,Active,2010-07-08,rg:{},7,0,0
+SBOwner,Prince George,Active,2013-04-09,rg:{},18,0,0
+SBOwner,West Kootenay,Active,2008-03-26,rg:{},21,0,0
