@@ -46,22 +46,15 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks>Adds a number of users</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
-        public virtual IActionResult UsersBulkPostAsync(UserViewModel[] items)
+        public virtual IActionResult UsersBulkPostAsync(User[] items)
         {
             if (items == null)
             {
                 return new BadRequestResult();
             }
-            foreach (UserViewModel item in items)
+            foreach (User item in items)
             {
-                var user = new User();
-                user.Active = item.Active;
-                user.Email = item.Email;
-                user.GivenName = item.GivenName;
-                user.Initials = item.Initials;
-                user.Surname = item.Surname;
-
-                _context.Users.Add(user);
+                _context.Users.Add(item);
             }
 
             // Save the changes
@@ -88,7 +81,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdDeleteAsync(int id)
+        public virtual IActionResult UsersIdDeletePostAsync(int id)
         {
             var user = _context.Users.FirstOrDefault(x => x.Id == id);
             if (user == null)
@@ -96,7 +89,10 @@ namespace SchoolBusAPI.Services.Impl
                 // Not Found
                 return new StatusCodeResult(404);
             }
-
+            // remove any user role associations.            
+            var toRemove = _context.UserRoles.Where(x => x.User.Id == id ).ToList();
+            toRemove.ForEach(x => _context.UserRoles.Remove(x));
+            
             _context.Users.Remove(user);
             _context.SaveChanges();
             return new ObjectResult(user.ToViewModel());
@@ -111,6 +107,14 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdFavouritesGetAsync(int id)
         {
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                // Not Found
+                return new StatusCodeResult(404);
+            }
+            // TODO adjust UserFavourites model such that we can query to find a user's favourites.
+            // var result = _context.UserFavourites.Select(x => x.x.ToViewModel()).ToList();
             var result = "";
             return new ObjectResult(result);
         }
@@ -154,7 +158,21 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdGroupsPutAsync(int id, GroupMembershipViewModel[] items)
+        public virtual IActionResult UsersIdGroupsPutAsync(int id, GroupMembership[] items)
+        {
+            var result = "";
+            return new ObjectResult(result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a user to groups</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        public virtual IActionResult UsersIdGroupsPostAsync(int id, GroupMembership[] items)
         {
             var result = "";
             return new ObjectResult(result);
@@ -260,19 +278,12 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks>Create new user</remarks>
         /// <param name="item"></param>
         /// <response code="201">User created</response>
-        public virtual IActionResult UsersPostAsync(UserViewModel item)
-        {
-            var user = new User();
-            user.Active = item.Active;
-            user.Email = item.Email;
-            user.GivenName = item.GivenName;
-            user.Initials = item.Initials;
-            user.Surname = item.Surname;
-
+        public virtual IActionResult UsersPostAsync(User item)
+        {            
             // Save changes
-            _context.Users.Add(user);
+            _context.Users.Add(item);
             _context.SaveChanges();
-            return new ObjectResult(user.ToViewModel());
+            return new ObjectResult(item);
         }
     }
 }

@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -43,6 +43,19 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="items"></param>
+        /// <response code="201">Permissions created</response>
+        [HttpPost]
+        [Route("/api/roles/bulk")]
+        [SwaggerOperation("RolesBulkPost")]
+        public virtual IActionResult RolesBulkPost([FromBody]Role[] items)
+        {
+            return this._service.RolesBulkPostAsync(items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns a collection of roles</remarks>
         /// <response code="200">OK</response>
         [HttpGet]
@@ -60,12 +73,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of Role to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        [HttpDelete]
-        [Route("/api/roles/{id}")]
-        [SwaggerOperation("RolesIdDelete")]
-        public virtual IActionResult RolesIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/roles/{id}/delete")]
+        [SwaggerOperation("RolesIdDeletePost")]
+        public virtual IActionResult RolesIdDeletePost([FromRoute]int id)
         {
-            return this._service.RolesIdDeleteAsync(id);
+            return this._service.RolesIdDeletePostAsync(id);
         }
 
         /// <summary>
@@ -101,6 +114,23 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a permissions to a role</remarks>
+        /// <param name="id">id of Role to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Role not found</response>
+        [HttpPost]
+        [Route("/api/roles/{id}/permissions")]
+        [SwaggerOperation("RolesIdPermissionsPost")]
+        [SwaggerResponse(200, type: typeof(List<Permission>))]
+        public virtual IActionResult RolesIdPermissionsPost([FromRoute]int id, [FromBody]Permission[] items)
+        {
+            return this._service.RolesIdPermissionsPostAsync(id, items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Updates the permissions for a role</remarks>
         /// <param name="id">id of Role to update</param>
         /// <param name="items"></param>
@@ -110,7 +140,7 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/roles/{id}/permissions")]
         [SwaggerOperation("RolesIdPermissionsPut")]
         [SwaggerResponse(200, type: typeof(List<PermissionViewModel>))]
-        public virtual IActionResult RolesIdPermissionsPut([FromRoute]int id, [FromBody]PermissionViewModel[] items)
+        public virtual IActionResult RolesIdPermissionsPut([FromRoute]int id, [FromBody]Permission[] items)
         {
             return this._service.RolesIdPermissionsPutAsync(id, items);
         }

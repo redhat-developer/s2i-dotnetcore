@@ -1,7 +1,7 @@
 /*
- * REST API Documentation for Schoolbus
+ * REST API Documentation for the MOTI School Bus Application
  *
- * API Sample
+ * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
  * 
@@ -35,7 +35,7 @@ namespace SchoolBusAPI.Services
         /// <remarks>Adds a number of users</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
-        IActionResult UsersBulkPostAsync(UserViewModel[] items);
+        IActionResult UsersBulkPostAsync(User[] items);
 
         /// <summary>
         /// 
@@ -52,7 +52,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdDeleteAsync(int id);
+        IActionResult UsersIdDeletePostAsync(int id);
 
         /// <summary>
         /// 
@@ -84,12 +84,22 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Add to the active set of groups for a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        IActionResult UsersIdGroupsPostAsync(int id, GroupMembership[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Updates the active set of groups for a user</remarks>
         /// <param name="id">id of User to update</param>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdGroupsPutAsync(int id, GroupMembershipViewModel[] items);
+        IActionResult UsersIdGroupsPutAsync(int id, GroupMembership[] items);
 
         /// <summary>
         /// 
@@ -152,6 +162,6 @@ namespace SchoolBusAPI.Services
         /// <remarks>Create new user</remarks>
         /// <param name="item"></param>
         /// <response code="201">User created</response>
-        IActionResult UsersPostAsync(UserViewModel item);
+        IActionResult UsersPostAsync(User item);
     }
 }

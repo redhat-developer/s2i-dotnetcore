@@ -49,7 +49,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/users/bulk")]
         [SwaggerOperation("UsersBulkPost")]
-        public virtual IActionResult UsersBulkPost([FromBody]UserViewModel[] items)
+        public virtual IActionResult UsersBulkPost([FromBody]User[] items)
         {
             return this._service.UsersBulkPostAsync(items);
         }
@@ -76,12 +76,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        [HttpDelete]
+        [HttpPost]
         [Route("/api/users/{id}")]
         [SwaggerOperation("UsersIdDelete")]
         public virtual IActionResult UsersIdDelete([FromRoute]int id)
         {
-            return this._service.UsersIdDeleteAsync(id);
+            return this._service.UsersIdDeletePostAsync(id);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/users/{id}/groups")]
         [SwaggerOperation("UsersIdGroupsPut")]
         [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
-        public virtual IActionResult UsersIdGroupsPut([FromRoute]int id, [FromBody]GroupMembershipViewModel[] items)
+        public virtual IActionResult UsersIdGroupsPut([FromRoute]int id, [FromBody]GroupMembership[] items)
         {
             return this._service.UsersIdGroupsPutAsync(id, items);
         }
@@ -256,7 +256,7 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/users")]
         [SwaggerOperation("UsersPost")]
         [SwaggerResponse(200, type: typeof(UserViewModel))]
-        public virtual IActionResult UsersPost([FromBody]UserViewModel item)
+        public virtual IActionResult UsersPost([FromBody]User item)
         {
             return this._service.UsersPostAsync(item);
         }
