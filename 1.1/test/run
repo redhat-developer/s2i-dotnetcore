@@ -146,20 +146,23 @@ test_scl_usage() {
   fi
 }
 
-test_connection() {
-  info "Testing the HTTP connection (http://$(container_ip):${test_port}) ${CONTAINER_ARGS} output file ${1}..."
-  local output_file=$1
+test_http() {
+  local path=$1
+  local expected=$2
+  local output_file=$(mktemp --suffix=.dotnet_out)
   local max_attempts=30
   local sleep_time=1
   local attempt=1
   local result=1
+  local url=http://$(container_ip):${test_port}${path}
+  info "Testing HTTP ($url) ${CONTAINER_ARGS} output file ${output_file}..."
   while [ $attempt -le $max_attempts ]; do
-    response_code=$(curl -s -w %{http_code} -o ${output_file} http://$(container_ip):${test_port}/)
+    response_code=$(curl -s -w %{http_code} -o ${output_file} ${url})
     status=$?
     if [ $status -eq 0 ]; then
       if [ $response_code -eq 200 ]; then
         output=$(cat ${output_file})
-        if [ "${output}_" == "Hello World_" ]; then
+        if [ "${output}_" == "${expected}_" ]; then
           result=0
         fi
       fi
@@ -168,25 +171,29 @@ test_connection() {
     attempt=$(( $attempt + 1 ))
     sleep $sleep_time
   done
+  rm -rf ${output_file}
   return $result
 }
 
 test_web_application() {
   local cid_file=$(mktemp -u --suffix=.cid)
-  local out_file=$(mktemp --suffix=.dotnet_out)
   # Verify that the HTTP connection can be established to test application container
   run_test_application &
 
   # Wait for the container to write it's CID file
   wait_for_cid
-  test_pid_1 "${cid_file}"
-  check_result $?
 
   test_scl_usage "dotnet --version" "1.0.0-preview2-1-003175" "${cid_file}"
   check_result $?
-  test_connection ${out_file}
-  rm -rf ${out_file}
+
+  test_http "/" "Hello world"
   check_result $?
+  test_http "/TextFile.txt" "A text file."
+  check_result $?
+
+  test_pid_1 "${cid_file}"
+  check_result $?
+
   cleanup_app
 }
 

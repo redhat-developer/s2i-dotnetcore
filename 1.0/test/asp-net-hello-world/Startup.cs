@@ -15,6 +15,8 @@ namespace SampleApp
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(LogLevel.Trace);
+            
+            app.UseStaticFiles();
 
             app.Run(async context =>
             {
