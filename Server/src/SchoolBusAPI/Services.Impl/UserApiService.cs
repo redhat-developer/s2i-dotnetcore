@@ -46,22 +46,15 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks>Adds a number of users</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
-        public virtual IActionResult UsersBulkPostAsync(UserViewModel[] items)
+        public virtual IActionResult UsersBulkPostAsync(User[] items)
         {
             if (items == null)
             {
                 return new BadRequestResult();
             }
-            foreach (UserViewModel item in items)
+            foreach (User item in items)
             {
-                var user = new User();
-                user.Active = item.Active;
-                user.Email = item.Email;
-                user.GivenName = item.GivenName;
-                user.Initials = item.Initials;
-                user.Surname = item.Surname;
-
-                _context.Users.Add(user);
+                _context.Users.Add(item);
             }
 
             // Save the changes
@@ -263,19 +256,12 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks>Create new user</remarks>
         /// <param name="item"></param>
         /// <response code="201">User created</response>
-        public virtual IActionResult UsersPostAsync(UserViewModel item)
-        {
-            var user = new User();
-            user.Active = item.Active;
-            user.Email = item.Email;
-            user.GivenName = item.GivenName;
-            user.Initials = item.Initials;
-            user.Surname = item.Surname;
-
+        public virtual IActionResult UsersPostAsync(User item)
+        {            
             // Save changes
-            _context.Users.Add(user);
+            _context.Users.Add(item);
             _context.SaveChanges();
-            return new ObjectResult(user.ToViewModel());
+            return new ObjectResult(item);
         }
     }
 }

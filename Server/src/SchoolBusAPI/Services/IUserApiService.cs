@@ -35,7 +35,7 @@ namespace SchoolBusAPI.Services
         /// <remarks>Adds a number of users</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
-        IActionResult UsersBulkPostAsync(UserViewModel[] items);
+        IActionResult UsersBulkPostAsync(User[] items);
 
         /// <summary>
         /// 
@@ -152,6 +152,6 @@ namespace SchoolBusAPI.Services
         /// <remarks>Create new user</remarks>
         /// <param name="item"></param>
         /// <response code="201">User created</response>
-        IActionResult UsersPostAsync(UserViewModel item);
+        IActionResult UsersPostAsync(User item);
     }
 }
