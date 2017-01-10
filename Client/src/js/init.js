@@ -70,7 +70,7 @@ function showError(err) {
   console.error(err);
   var errorMessage = String(err);
   if (err instanceof ApiError) {
-    errorMessage = `Fetching ${err.jQxhr.url} failed — ${err.jQxhr.status}\n${err}`;
+    errorMessage = err.message;
   }
 
   ReactDOM.render((
