@@ -8,9 +8,10 @@ using SchoolBusAPI.Models;
 namespace SchoolBusAPI.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    partial class DbAppContextModelSnapshot : ModelSnapshot
+    [Migration("20170109220629_1-9-foreign-keys")]
+    partial class _19foreignkeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -1014,8 +1015,6 @@ namespace SchoolBusAPI.Migrations
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContactAddress", b =>
                 {
                     b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
-                        .WithMany("SchoolBusOwnerContactAddresses")
-                        .HasForeignKey("SchoolBusOwnerContactId");
                         .WithMany()
                         .HasForeignKey("SchoolBusOwnerContactRefId");
                 });
@@ -1023,8 +1022,6 @@ namespace SchoolBusAPI.Migrations
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContactPhone", b =>
                 {
                     b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
-                        .WithMany("SchoolBusOwnerContactPhones")
-                        .HasForeignKey("SchoolBusOwnerContactId");
                         .WithMany()
                         .HasForeignKey("SchoolBusOwnerContactRefId");
                 });

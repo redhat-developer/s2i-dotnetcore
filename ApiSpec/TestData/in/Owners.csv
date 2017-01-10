@@ -1,22 +1,22 @@
 File,name,id,status,dateCreated,primaryContactRefId,!serviceArea,serviceAreaRefId
-SBOwner,Edwards & Co,101,Archive,2005-07-25,rg:None,Lower Mainland,6
-SBOwner,"Wilson's Transportion, Inc.",102,Active,2009-05-14,rg:None,Bulkley - Nass,25
-SBOwner,School District 61,103,Active,2006-04-17,rg:None,South Peace,21
-SBOwner,SMUS,104,Active,2005-11-22,rg:None,Thompson,15
-SBOwner,School District 62,105,Active,2015-09-09,rg:None,Bulkley - Nass,25
-SBOwner,JC Kingston Transportation,106,Active,2008-04-01,rg:None,Selkirk,12
-SBOwner,BC Transit School Bus,107,Active,2011-05-04,rg:None,Lakes,24
-SBOwner,Ferries Transit,108,Active,2005-06-26,rg:None,North  Island,3
-SBOwner,Jones Transportation,109,Active,2012-10-12,rg:None,Okanagan - Shuswap,13
-SBOwner,"SB School Bus, Inc.",110,Active,2006-12-07,rg:None,South Okanagan,8
-SBOwner,School District 64,111,Active,2009-10-08,rg:None,Lower Mainland,6
-SBOwner,Service Merchandise,112,Active,2015-04-12,rg:None,NON-BC,29
-SBOwner,Lionel Playworld,113,Active,2011-05-25,rg:None,East Kootenay,11
-SBOwner,Sandy's,114,Active,2007-08-15,rg:None,South Peace,21
-SBOwner,Stratacard,115,Active,2003-06-25,rg:None,East Kootenay,11
-SBOwner,Gamma Gas,116,Active,2006-12-24,rg:None,Fraser Valley,7
-SBOwner,J. Brannam,117,Active,2013-05-08,rg:None,NON-BC,29
-SBOwner,Success Is Yours,118,Active,2009-06-07,rg:None,South Island,1
+SBOwner,Edwards & Co,101,Archive,2016-06-18,1,Nechako,23
+SBOwner,"Wilson's Transportion, Inc.",102,Active,2006-03-20,6,NON-BC,29
+SBOwner,School District 61,103,Active,2015-12-28,7,South Peace,21
+SBOwner,SMUS,104,Active,2006-06-23,15,Lakes,24
+SBOwner,School District 62,105,Active,2004-02-01,17,Stikine,28
+SBOwner,JC Kingston Transportation,106,Active,2003-12-06,18,South Cariboo,16
+SBOwner,BC Transit School Bus,107,Active,2009-11-30,21,South Cariboo,16
+SBOwner,Ferries Transit,108,Active,2010-06-10,24,Selkirk,12
+SBOwner,Jones Transportation,109,Active,2006-12-17,26,NON-BC,29
+SBOwner,"SB School Bus, Inc.",110,Active,2011-04-07,31,North Coast,27
+SBOwner,School District 64,111,Active,2013-09-04,32,Nicola,14
+SBOwner,Service Merchandise,112,Active,2007-06-28,37,Howe Sound,4
+SBOwner,Lionel Playworld,113,Active,2007-05-29,40,Central  Island,2
+SBOwner,Sandy's,114,Active,2008-06-22,41,Central  Island,2
+SBOwner,Stratacard,115,Active,2008-05-19,45,North  Island,3
+SBOwner,Gamma Gas,116,Active,2012-09-24,47,Bulkley - Nass,25
+SBOwner,J. Brannam,117,Active,2008-01-22,49,South Cariboo,16
+SBOwner,Success Is Yours,118,Active,2003-11-02,50,Nicola,14
 -,,,,,,,
 -,,,,,,,
 -,,,,,,,
