@@ -45,6 +45,22 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns address contacts for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch contact address for</param>
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusownercontactsIdContactaddressesGetAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns phone contacts for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch contact phone for</param>
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusownercontactsIdContactphonesGetAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id">id of SchoolBusOwnerContact to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerContact not found</response>

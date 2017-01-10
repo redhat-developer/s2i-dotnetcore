@@ -53,7 +53,11 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (District item in items)
             {
-                _context.Districts.Add(item);
+                // fix for Region issue.
+                int region_id = item.Region.Id;
+                Region region = _context.Regions.First(a => a.Id == region_id);
+                item.Region = region;
+                _context.Districts.Add(item);                
             }
             // Save the changes
             _context.SaveChanges();

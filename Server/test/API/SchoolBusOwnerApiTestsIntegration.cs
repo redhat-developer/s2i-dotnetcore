@@ -73,17 +73,16 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for SchoolbusownersGet
+        /// Integration test for SchoolbusownersContacts
         /// </summary>
-		public async void TestSchoolbusOwners()
+		public async void TestSchoolbusOwnerContacts()
 		{
-            string initialName = "InitialName";
-            string changedName = "ChangedName";
+            string initialNumber = "123-123-1234";
+            string initialAddress = "1234 Main St.";
 
-            // now create a school bus owner record
+            // first create a school bus owner record
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusowners");
             SchoolBusOwner schoolBusOwner = new SchoolBusOwner();
-            schoolBusOwner.Name = initialName;
             var jsonString = schoolBusOwner.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
@@ -99,7 +98,18 @@ namespace SchoolBusAPI.Test
             var id = schoolBusOwner.Id;
 
             // make a change.   
-            schoolBusOwner.Name = changedName;
+            SchoolBusOwnerContact contact = new SchoolBusOwnerContact();
+            SchoolBusOwnerContactPhone contactPhone = new SchoolBusOwnerContactPhone();
+            contactPhone.PhoneNumber = initialNumber;
+            SchoolBusOwnerContactAddress contactAddress = new SchoolBusOwnerContactAddress();
+            contactAddress.Addr1 = initialAddress;
+            contact.SchoolBusOwnerContactAddresses = new List<SchoolBusOwnerContactAddress>();
+            contact.SchoolBusOwnerContactPhones = new List<SchoolBusOwnerContactPhone>();
+
+            contact.SchoolBusOwnerContactAddresses.Add(contactAddress);
+            contact.SchoolBusOwnerContactPhones.Add(contactPhone);
+
+            schoolBusOwner.PrimaryContact = contact;
 
             // now do an update.
             request = new HttpRequestMessage(HttpMethod.Put, "/api/schoolbusowners/" + id);
@@ -116,7 +126,8 @@ namespace SchoolBusAPI.Test
             jsonString = await response.Content.ReadAsStringAsync();
             schoolBusOwner = JsonConvert.DeserializeObject<SchoolBusOwner>(jsonString);
 
-            Assert.Equal(changedName, schoolBusOwner.Name);
+            Assert.Equal(initialAddress, schoolBusOwner.PrimaryContact.SchoolBusOwnerContactAddresses[0].Addr1);
+            Assert.Equal(initialNumber, schoolBusOwner.PrimaryContact.SchoolBusOwnerContactPhones[0].PhoneNumber);
 
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusowners/" + id + "/delete");
@@ -128,7 +139,7 @@ namespace SchoolBusAPI.Test
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);           
 
-        }		
+        }        	
                 
     }
 }

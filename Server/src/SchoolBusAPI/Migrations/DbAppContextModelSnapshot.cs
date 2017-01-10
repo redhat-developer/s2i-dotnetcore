@@ -167,7 +167,7 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnName("NAME");
 
-                    b.Property<int?>("RegionRefId")
+                    b.Property<int>("RegionRefId")
                         .HasColumnName("REGION_REF_ID");
 
                     b.Property<DateTime?>("StartDate")
@@ -888,7 +888,8 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.HasOne("SchoolBusAPI.Models.Region", "Region")
                         .WithMany()
-                        .HasForeignKey("RegionRefId");
+                        .HasForeignKey("RegionRefId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.GroupMembership", b =>
@@ -1014,14 +1015,14 @@ namespace SchoolBusAPI.Migrations
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContactAddress", b =>
                 {
                     b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
-                        .WithMany()
+                        .WithMany("SchoolBusOwnerContactAddresses")
                         .HasForeignKey("SchoolBusOwnerContactRefId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContactPhone", b =>
                 {
                     b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
-                        .WithMany()
+                        .WithMany("SchoolBusOwnerContactPhones")
                         .HasForeignKey("SchoolBusOwnerContactRefId");
                 });
 

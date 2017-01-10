@@ -98,36 +98,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns address contacts for a particular SchoolBusOwner</remarks>
-        /// <param name="id">id of SchoolBusOwner to fetch contact address for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/schoolbusowners/{id}/contactaddresses")]
-        [SwaggerOperation("SchoolbusownersIdContactaddressesGet")]
-        [SwaggerResponse(200, type: typeof(List<SchoolBusOwnerContactAddress>))]
-        public virtual IActionResult SchoolbusownersIdContactaddressesGet([FromRoute]int id)
-        {
-            return this._service.SchoolbusownersIdContactaddressesGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns phone contacts for a particular SchoolBusOwner</remarks>
-        /// <param name="id">id of SchoolBusOwner to fetch contact phone for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/schoolbusowners/{id}/contactphones")]
-        [SwaggerOperation("SchoolbusownersIdContactphonesGet")]
-        [SwaggerResponse(200, type: typeof(List<SchoolBusOwnerContactPhone>))]
-        public virtual IActionResult SchoolbusownersIdContactphonesGet([FromRoute]int id)
-        {
-            return this._service.SchoolbusownersIdContactphonesGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of SchoolBusOwner to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwner not found</response>
