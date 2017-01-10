@@ -1015,17 +1015,13 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
                         .WithMany("SchoolBusOwnerContactAddresses")
-                        .HasForeignKey("SchoolBusOwnerContactId");
-                        .WithMany()
                         .HasForeignKey("SchoolBusOwnerContactRefId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContactPhone", b =>
                 {
                     b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
-                        .WithMany("SchoolBusOwnerContactPhones")
-                        .HasForeignKey("SchoolBusOwnerContactId");
-                        .WithMany()
+                        .WithMany("SchoolBusOwnerContactPhones")                        
                         .HasForeignKey("SchoolBusOwnerContactRefId");
                 });
 
