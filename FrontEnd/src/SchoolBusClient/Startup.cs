@@ -35,7 +35,7 @@ namespace SchoolBusClient
 
             // Allow access to the Configuration object
             services.AddSingleton<IConfiguration>(Configuration);
-            services.Configure<ApiServerOptions>(Configuration.GetSection("ApiServerUri"));
+            services.Configure<ApiProxyServerOptions>(Configuration.GetSection("ApiProxyServer"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

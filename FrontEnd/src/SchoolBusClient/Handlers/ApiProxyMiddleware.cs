@@ -11,18 +11,18 @@ namespace SchoolBusClient.Handlers
 {
     // ToDo:
     // - Replace MIDDLEWARE_NAME environment variable with variables the can be used with ApiServerOptions:
-    // -- ApiServerUri:Scheme
-    // -- ApiServerUri:Host
-    // -- ApiServerUri:Port
+    // -- ApiProxyServer:Scheme
+    // -- ApiProxyServer:Host
+    // -- ApiProxyServer:Port
     // - Remove use of IConfiguration and MIDDLEWARE_NAME environment variable 
     public class ApiProxyMiddleware
     {
         private static readonly string _apiPathKey = "/api/";
-        private readonly IOptions<ApiServerOptions> _apiServerOptions;
+        private readonly IOptions<ApiProxyServerOptions> _apiServerOptions;
         private readonly IConfiguration _configuration;
         private readonly Microsoft.AspNetCore.Proxy.ProxyMiddleware _proxy;
 
-        public ApiProxyMiddleware(RequestDelegate next, IConfiguration configuration, IOptions<ApiServerOptions> apiServerOptions)
+        public ApiProxyMiddleware(RequestDelegate next, IConfiguration configuration, IOptions<ApiProxyServerOptions> apiServerOptions)
         {
             _apiServerOptions = apiServerOptions;
             _configuration = configuration;

@@ -1,8 +1,8 @@
 ﻿namespace SchoolBusClient.Handlers
 {
-    public class ApiServerOptions
+    public class ApiProxyServerOptions
     {
-        public ApiServerOptions()
+        public ApiProxyServerOptions()
         {
             Scheme = "http";
             Host = "localhost";
