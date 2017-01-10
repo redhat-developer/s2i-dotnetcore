@@ -53,7 +53,15 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (SchoolBusOwnerContact item in items)
             {
-                _context.SchoolBusOwnerContacts.Add(item);
+                var exists = _context.SchoolBusOwners.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.SchoolBusOwnerContacts.Update(item);
+                }
+                else
+                {
+                    _context.SchoolBusOwnerContacts.Add(item);
+                }                
             }
             // Save the changes
             _context.SaveChanges();
