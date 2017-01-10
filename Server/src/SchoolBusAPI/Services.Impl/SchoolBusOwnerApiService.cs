@@ -64,7 +64,26 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (SchoolBusOwner item in items)
             {
-                _context.SchoolBusOwners.Add(item);
+                // adjust Primary Contact.
+                if (item.PrimaryContact != null)
+                {
+                    int primary_contact_id = item.PrimaryContact.Id;
+                    var primary_contact_exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == primary_contact_id);
+                    if (primary_contact_exists)
+                    {
+                        SchoolBusOwnerContact contact = _context.SchoolBusOwnerContacts.First(a => a.Id == primary_contact_id);
+                        item.PrimaryContact = contact;
+                    }
+                }
+                var exists = _context.SchoolBusOwners.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.SchoolBusOwners.Update(item);
+                }
+                else
+                {
+                    _context.SchoolBusOwners.Add(item);
+                }               
             }
             // Save the changes
             _context.SaveChanges();

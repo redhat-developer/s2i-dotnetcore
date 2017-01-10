@@ -54,7 +54,15 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (User item in items)
             {
-                _context.Users.Add(item);
+                var exists = _context.Users.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Users.Update(item);
+                }
+                else
+                {
+                    _context.Users.Add(item);
+                }                
             }
 
             // Save the changes

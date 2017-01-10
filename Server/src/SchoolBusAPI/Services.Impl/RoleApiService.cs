@@ -53,8 +53,16 @@ namespace SchoolBusAPI.Services.Impl
                 return new BadRequestResult();
             }
             foreach (Role item in items)
-            {
-                _context.Roles.Add(item);
+            {                
+                var exists = _context.Roles.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Roles.Update(item);
+                }
+                else
+                {
+                    _context.Roles.Add(item);
+                }                
             }
             // Save the changes
             _context.SaveChanges();
