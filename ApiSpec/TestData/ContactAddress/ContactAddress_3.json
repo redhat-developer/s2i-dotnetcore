@@ -1,0 +1,26 @@
+[
+    {
+        "addr1": "510 Burdett Avenue",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 1B2",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "4761 King George Hwy",
+        "addr2": null,
+        "city": "Surrey",
+        "postalCode": "V3W 4E3",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2310 Mesa Vista Drive",
+        "addr2": null,
+        "city": "Boston Bar",
+        "postalCode": "V0K 1C0",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]

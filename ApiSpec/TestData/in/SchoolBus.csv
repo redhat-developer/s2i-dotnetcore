@@ -1,31 +1,31 @@
-File,regi,plate,VIN,schoolBusOwner,permitNumber,status,isOutOfProvince,serviceArea,homeTerminalAddr1,homeTerminalAddr2,homeTerminalCity,homeTerminalProvince,homeTerminalPostalCode,restrictions,nextInspection,schoolBusDistrict,independentSchool,nameOfIndependentSchool,schoolBusClass,schoolBusUnitNumber,schoolBusSeatingCapacity,mobiityAidCapacity
-SchoolBus,40270035,MNG 505,4UZABRCS08CY69403,109,37832,Active,rg:False,rg:{ 'id': '30'},0,rg:None,0,0,0,rg:None,2017-10-31,rg:{'id': '23'},rg:False,rg:None,Class 2,45286,23,0
-SchoolBus,30517883,PLB 734,1M8PDMTA7VP042790,117,35483,Active,rg:False,rg:{ 'id': '16'},0,rg:None,0,0,0,rg:None,2017-04-29,rg:{'id': '16'},rg:False,rg:None,Class 4,20995,79,5
-SchoolBus,22724953,NNR 799,1GBHG31R7X1114879,110,28240,Active,rg:False,rg:{ 'id': '30'},0,rg:None,0,0,0,rg:None,2017-11-06,rg:{'id': '32'},rg:True,SHAWNIGAN LAKE SCHOOL (LS,Class 4,44463,89,2
-SchoolBus,32921139,NNN 110,1BAANB7A7XF087934,114,30006,Active,rg:False,rg:{ 'id': '22'},0,rg:None,0,0,0,rg:None,2017-04-12,rg:{'id': '12'},rg:True,NANAIMO CHRISTIAN SCHOOL,Class 2,28635,89,0
-SchoolBus,42663745,VEX 466,1BAANB7A9XF088678,108,30408,Active,rg:False,rg:{ 'id': '28'},0,rg:None,0,0,0,rg:None,2017-10-22,rg:{'id': '10'},rg:False,rg:None,Class 2,16812,13,0
-SchoolBus,34284996,BKH 714,1HVBBAAN2XH201311,104,39699,Active,rg:False,rg:{ 'id': '25'},0,rg:None,0,0,0,rg:None,2017-10-05,rg:{'id': '23'},rg:False,rg:None,Class 1,38023,39,4
-SchoolBus,38315827,JHS 644,4UZABRCS48CY67067,109,28240,Active,rg:False,rg:{ 'id': '21'},0,rg:None,0,0,0,rg:None,2017-03-07,rg:{'id': '15'},rg:False,rg:None,Class 4,40167,82,1
-SchoolBus,29317413,GCE 975,1GJGG25V771156636,118,39031,Active,rg:False,rg:{ 'id': '20'},0,rg:None,0,0,0,rg:None,2017-10-18,rg:{'id': '32'},rg:True,OSOYOOS SECONDARY SCHOOL,Class 3,33600,48,0
-SchoolBus,39128361,TJR 794,1GJGG25V571165139,104,28354,Active,rg:False,rg:{ 'id': '25'},0,rg:None,0,0,0,rg:None,2017-07-14,rg:{'id': '36'},rg:True,SHAWNIGAN LAKE SCHOOL (LS,Class 3,37788,59,0
-SchoolBus,29419219,LEE 402,4UZ3CFAC2XCB65072,115,32552,Active,rg:False,rg:{ 'id': '19'},0,rg:None,0,0,0,rg:None,2017-02-22,rg:{'id': '48'},rg:False,rg:None,Class 1,32055,35,0
-SchoolBus,38104742,PSC 516,1BAAJCSH6XF084514,115,30679,Active,rg:False,rg:{ 'id': '14'},0,rg:None,0,0,0,rg:None,2017-03-26,rg:{'id': '10'},rg:True,COMBINED CHRISTIAN SCHOOL,Class 4,13609,20,0
-SchoolBus,36007873,KHZ 108,1HVBBABN5XH203176,101,37431,Active,rg:False,rg:{ 'id': '19'},0,rg:None,0,0,0,rg:None,2017-01-11,rg:{'id': '34'},rg:True,THE CATHOLIC IND SCHOOL L,Class 3,24325,80,0
-SchoolBus,22578285,NLN 307,1HVBBABP8YH201519,110,27214,Active,rg:False,rg:{ 'id': '17'},0,rg:None,0,0,0,rg:None,2017-05-25,rg:{'id': '4'},rg:True,CHOICE SCHOOL FOR GIFTED,Class 1,43808,200,2
-SchoolBus,24522840,XES 635,1GBHG31F6X1072992,116,27471,Active,rg:False,rg:{ 'id': '3'},0,rg:None,0,0,0,rg:None,2017-03-09,rg:{'id': '26'},rg:True,NANAIMO CHRISTIAN SCHOOL,Class 2,11684,58,0
-SchoolBus,28340323,MPA 390,1GBHG31F2X1078970,117,27557,Active,rg:False,rg:{ 'id': '24'},0,rg:None,0,0,0,rg:None,2017-01-03,rg:{'id': '7'},rg:True,AGASSIZ CHRISTIAN SCHOOL,Class 2,31241,5,2
-SchoolBus,20992379,TJJ 517,1GBHG31F2X1116754,107,35854,Active,rg:False,rg:{ 'id': '14'},0,Unit 100,0,0,0,rg:None,2017-01-26,rg:{'id': '22'},rg:False,rg:None,Class 2,46199,72,0
-SchoolBus,40565644,MWJ 920,1GBHG31F0X1115888,113,36975,Active,rg:False,rg:{ 'id': '11'},0,rg:None,0,0,0,rg:None,2017-01-21,rg:{'id': '39'},rg:False,rg:None,Class 3,32902,10,0
-SchoolBus,21275019,SSR 601,1GBHG31F2X1115262,103,37492,Active,rg:False,rg:{ 'id': '13'},0,Unit 100,0,0,0,rg:None,2017-12-25,rg:{'id': '47'},rg:False,rg:None,Class 1,41134,70,0
-SchoolBus,38398270,VTC 949,1GBHG31F8X1112941,113,31777,Active,rg:False,rg:{ 'id': '14'},0,rg:None,0,0,0,rg:None,2017-11-25,rg:{'id': '9'},rg:False,rg:None,Class 3,32335,54,0
-SchoolBus,19195980,TNC 450,1GBJG31F9X1153421,101,39970,Active,rg:False,rg:{ 'id': '29'},0,rg:None,0,0,0,rg:None,2017-09-12,rg:{'id': '21'},rg:False,rg:None,Class 3,29054,89,0
-SchoolBus,10748707,TJK 988,1GBJG31F5X1158661,113,27482,Active,rg:False,rg:{ 'id': '10'},0,rg:None,0,0,0,rg:None,2017-03-01,rg:{'id': '23'},rg:True,DELTA CHRISTIAN SCHOOL,Class 3,40164,18,1
-SchoolBus,41924021,PKR 253,1GBJG31F8X1153956,107,32677,Active,rg:False,rg:{ 'id': '29'},0,rg:None,0,0,0,rg:None,2017-04-21,rg:{'id': '41'},rg:False,rg:None,Class 2,30598,70,0
-SchoolBus,49729293,VJA 211,1GBJG31F3X1157717,113,34008,Active,rg:False,rg:{ 'id': '1'},0,rg:None,0,0,0,rg:None,2017-07-23,rg:{'id': '23'},rg:True,MAIMONIDES SCHOOL SOCIETY,Class 2,26550,47,0
-SchoolBus,34105842,VNN 705,1GBJG31F1X1154653,109,27350,Active,rg:False,rg:{ 'id': '30'},0,rg:None,0,0,0,rg:None,2017-08-25,rg:{'id': '42'},rg:False,rg:None,Class 3,36947,39,5
-SchoolBus,19826317,KPM 250,1GAHG39R1X1148128,108,37567,Active,rg:False,rg:{ 'id': '7'},0,rg:None,0,0,0,rg:None,2017-02-26,rg:{'id': '33'},rg:False,rg:None,Class 2,39898,84,0
-SchoolBus,13954121,TKW 525,1FDXE47S4XHB15931,114,27868,Active,rg:False,rg:{ 'id': '6'},0,rg:None,0,0,0,rg:None,2017-02-04,rg:{'id': '47'},rg:True,WSA'NEC' SCHOOL BOARD,Class 3,11596,9,0
-SchoolBus,13791026,LTA 599,1HVBBAAN3XH244052,105,28438,Active,rg:False,rg:{ 'id': '7'},0,rg:None,0,0,0,rg:None,2017-04-17,rg:{'id': '11'},rg:True,VANCOUVER SCHOOL BUS,Class 4,19354,60,3
-SchoolBus,25415475,HBM 344,1BABNBXA9YF091374,101,26405,Active,rg:False,rg:{ 'id': '2'},0,rg:None,0,0,0,rg:None,2017-08-25,rg:{'id': '3'},rg:False,rg:None,Class 1,48321,16,0
-SchoolBus,19592858,THJ 509,2PCH3349071713096,116,37262,Active,rg:False,rg:{ 'id': '17'},0,rg:None,0,0,0,rg:None,2017-03-03,rg:{'id': '36'},rg:False,rg:None,Class 2,21188,55,5
-SchoolBus,30260771,MAM 873,2PCH3349971713031,103,28420,Active,rg:False,rg:{ 'id': '3'},0,rg:None,0,0,0,rg:None,2017-05-08,rg:{'id': '14'},rg:False,rg:None,Class 4,27924,66,0
+File,regi,plate,VIN,!schoolBusOwner,schoolBusOwner,permitNumber,status,isOutOfProvince,serviceArea,homeTerminalAddr1,homeTerminalAddr2,homeTerminalCity,homeTerminalProvince,homeTerminalPostalCode,restrictions,nextInspection,schoolBusDistrict,independentSchool,nameOfIndependentSchool,schoolBusClass,schoolBusUnitNumber,schoolBusSeatingCapacity,mobilityAidCapacity
+SchoolBus,29323910,MNG 505,4UZABRCS08CY64758,106,{ 'id': '106'},29127,Active,rg:False,rg:{ 'id': '16'},0,rg:None,0,0,0,rg:None,2017-02-23,rg:{'id': '38'},rg:False,rg:None,Class 1,14936,12,1
+SchoolBus,15006812,PLB 734,1M8PDMTA7VP047915,118,{ 'id': '118'},39088,Active,rg:False,rg:{ 'id': '18'},0,rg:None,0,0,0,rg:None,2017-12-12,rg:{'id': '4'},rg:True,THE CATHOLIC IND SCHOOL L,Class 4,22920,51,5
+SchoolBus,45048416,NNR 799,1GBHG31R7X1111554,107,{ 'id': '107'},35071,Active,rg:False,rg:{ 'id': '31'},0,rg:None,0,0,0,rg:None,2017-04-05,rg:{'id': '22'},rg:False,rg:None,Class 2,49443,48,4
+SchoolBus,31418498,NNN 110,1BAANB7A7XF086625,113,{ 'id': '113'},31806,Active,rg:False,rg:{ 'id': '17'},0,rg:None,0,0,0,rg:None,2017-04-02,rg:{'id': '19'},rg:False,rg:None,Class 3,46562,75,0
+SchoolBus,44826943,VEX 466,1BAANB7A9XF082557,118,{ 'id': '118'},28123,Active,rg:False,rg:{ 'id': '17'},0,rg:None,0,0,0,rg:None,2017-06-13,rg:{'id': '31'},rg:False,rg:None,Class 4,49855,44,2
+SchoolBus,39500113,BKH 714,1HVBBAAN2XH205159,112,{ 'id': '112'},26061,Active,rg:False,rg:{ 'id': '11'},0,rg:None,0,0,0,rg:None,2017-10-12,rg:{'id': '12'},rg:False,rg:None,Class 3,18870,36,4
+SchoolBus,16821258,JHS 644,4UZABRCS48CY62910,117,{ 'id': '117'},38968,Active,rg:False,rg:{ 'id': '9'},0,rg:None,0,0,0,rg:None,2017-05-20,rg:{'id': '27'},rg:False,rg:None,Class 2,27085,18,0
+SchoolBus,25085726,GCE 975,1GJGG25V771154037,101,{ 'id': '101'},25379,Active,rg:False,rg:{ 'id': '4'},0,rg:None,0,0,0,rg:None,2017-12-26,rg:{'id': '44'},rg:True,MEADOWRIDGE SCHOOL SOCIET,Class 2,43769,15,0
+SchoolBus,41628300,TJR 794,1GJGG25V571162796,104,{ 'id': '104'},29071,Active,rg:False,rg:{ 'id': '31'},0,Unit 100,0,0,0,rg:None,2017-10-30,rg:{'id': '44'},rg:False,rg:None,Class 4,16204,81,4
+SchoolBus,10889893,LEE 402,4UZ3CFAC2XCB61489,108,{ 'id': '108'},36181,Active,rg:False,rg:{ 'id': '4'},0,rg:None,0,0,0,rg:None,2017-08-16,rg:{'id': '27'},rg:False,rg:None,Class 4,19609,21,5
+SchoolBus,26905527,PSC 516,1BAAJCSH6XF085010,101,{ 'id': '101'},34404,Active,rg:False,rg:{ 'id': '3'},0,Unit 100,0,0,0,rg:None,2017-10-14,rg:{'id': '44'},rg:False,rg:None,Class 2,48278,13,0
+SchoolBus,20522128,KHZ 108,1HVBBABN5XH204038,113,{ 'id': '113'},31078,Active,rg:False,rg:{ 'id': '1'},0,rg:None,0,0,0,rg:None,2017-02-19,rg:{'id': '20'},rg:False,rg:None,Class 4,15043,46,0
+SchoolBus,25455953,NLN 307,1HVBBABP8YH209384,111,{ 'id': '111'},39283,Active,rg:False,rg:{ 'id': '22'},0,Unit 100,0,0,0,rg:None,2017-08-26,rg:{'id': '36'},rg:False,rg:None,Class 3,36647,24,0
+SchoolBus,20311337,XES 635,1GBHG31F6X1076555,111,{ 'id': '111'},33163,Active,rg:False,rg:{ 'id': '29'},0,rg:None,0,0,0,rg:None,2017-06-24,rg:{'id': '38'},rg:False,rg:None,Class 2,16856,74,0
+SchoolBus,22429457,MPA 390,1GBHG31F2X1079199,107,{ 'id': '107'},36668,Active,rg:False,rg:{ 'id': '29'},0,rg:None,0,0,0,rg:None,2017-01-16,rg:{'id': '47'},rg:False,rg:None,Class 4,11723,23,0
+SchoolBus,24871110,TJJ 517,1GBHG31F2X1118620,108,{ 'id': '108'},39116,Active,rg:False,rg:{ 'id': '25'},0,rg:None,0,0,0,rg:None,2017-05-01,rg:{'id': '10'},rg:False,rg:None,Class 3,45754,51,0
+SchoolBus,21128270,MWJ 920,1GBHG31F0X1115173,108,{ 'id': '108'},33199,Active,rg:False,rg:{ 'id': '29'},0,rg:None,0,0,0,rg:None,2017-10-08,rg:{'id': '7'},rg:False,rg:None,Class 3,28758,26,0
+SchoolBus,11769949,SSR 601,1GBHG31F2X1112487,108,{ 'id': '108'},27589,Active,rg:False,rg:{ 'id': '17'},0,Unit 100,0,0,0,rg:None,2017-11-12,rg:{'id': '6'},rg:False,rg:None,Class 4,40766,12,0
+SchoolBus,28522965,VTC 949,1GBHG31F8X1114049,108,{ 'id': '108'},31137,Active,rg:False,rg:{ 'id': '12'},0,Unit 100,0,0,0,rg:None,2017-02-21,rg:{'id': '18'},rg:False,rg:None,Class 3,43352,77,0
+SchoolBus,34040918,TNC 450,1GBJG31F9X1152774,114,{ 'id': '114'},34735,Active,rg:False,rg:{ 'id': '12'},0,rg:None,0,0,0,rg:None,2017-09-21,rg:{'id': '21'},rg:False,rg:None,Class 4,32014,46,0
+SchoolBus,11182291,TJK 988,1GBJG31F5X1151667,109,{ 'id': '109'},27756,Active,rg:False,rg:{ 'id': '27'},0,rg:None,0,0,0,rg:None,2017-02-05,rg:{'id': '9'},rg:False,rg:None,Class 3,31607,0,1
+SchoolBus,48416778,PKR 253,1GBJG31F8X1157035,112,{ 'id': '112'},30124,Active,rg:False,rg:{ 'id': '9'},0,rg:None,0,0,0,rg:None,2017-01-01,rg:{'id': '19'},rg:False,rg:None,Class 3,43476,5,0
+SchoolBus,32376956,VJA 211,1GBJG31F3X1155328,108,{ 'id': '108'},39407,Active,rg:False,rg:{ 'id': '31'},0,Unit 100,0,0,0,rg:None,2017-04-19,rg:{'id': '39'},rg:False,rg:None,Class 4,18282,21,5
+SchoolBus,22605787,VNN 705,1GBJG31F1X1154162,111,{ 'id': '111'},30704,Active,rg:False,rg:{ 'id': '17'},0,rg:None,0,0,0,rg:None,2017-09-24,rg:{'id': '48'},rg:True,ISLAND PACIFIC SCHOOL,Class 3,11070,13,2
+SchoolBus,11407870,KPM 250,1GAHG39R1X1148002,106,{ 'id': '106'},33596,Active,rg:False,rg:{ 'id': '13'},0,rg:None,0,0,0,rg:None,2017-01-12,rg:{'id': '34'},rg:False,rg:None,Class 4,29952,46,0
+SchoolBus,15969674,TKW 525,1FDXE47S4XHB16690,108,{ 'id': '108'},37496,Active,rg:False,rg:{ 'id': '31'},0,rg:None,0,0,0,rg:None,2017-06-15,rg:{'id': '14'},rg:True,SHAWNIGAN LAKE SCHOOL (LS,Class 2,17433,77,0
+SchoolBus,30364083,LTA 599,1HVBBAAN3XH241554,109,{ 'id': '109'},39392,Active,rg:False,rg:{ 'id': '14'},0,rg:None,0,0,0,rg:None,2017-03-06,rg:{'id': '14'},rg:True,OSOYOOS SECONDARY SCHOOL,Class 1,24396,40,0
+SchoolBus,36063440,HBM 344,1BABNBXA9YF093697,108,{ 'id': '108'},31477,Active,rg:False,rg:{ 'id': '17'},0,rg:None,0,0,0,rg:None,2017-10-21,rg:{'id': '23'},rg:False,rg:None,Class 2,24917,7,0
+SchoolBus,49434191,THJ 509,2PCH3349071711573,109,{ 'id': '109'},30534,Active,rg:False,rg:{ 'id': '31'},0,rg:None,0,0,0,rg:None,2017-06-28,rg:{'id': '30'},rg:True,THE CATHOLIC IND SCHOOL,Class 1,31214,33,1
+SchoolBus,32456944,MAM 873,2PCH3349971713869,102,{ 'id': '102'},32993,Active,rg:False,rg:{ 'id': '4'},0,rg:None,0,0,0,rg:None,2017-10-23,rg:{'id': '7'},rg:False,rg:None,Class 2,42580,59,0

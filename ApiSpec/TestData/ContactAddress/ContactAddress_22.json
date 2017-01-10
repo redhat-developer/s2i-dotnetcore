@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "4283 Burdett Avenue",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 1L6",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "2558 Glover Road",
+        "addr2": null,
+        "city": "Coquitlam",
+        "postalCode": "V3J 4S1",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]

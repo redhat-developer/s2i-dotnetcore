@@ -1,0 +1,50 @@
+[
+    {
+        "addr1": "4963 Kinchant St",
+        "addr2": null,
+        "city": "Kamloops",
+        "postalCode": "V2C 1Y1",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2881 Alaska Hwy",
+        "addr2": null,
+        "city": "Fort Nelson",
+        "postalCode": "V0C 1C0",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "2644 102nd Avenue",
+        "addr2": null,
+        "city": "Cranbrook",
+        "postalCode": "V1C 2R9",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "2714 Russell Avenue",
+        "addr2": null,
+        "city": "Langley",
+        "postalCode": "V4X 1J7",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "896 Roger Street",
+        "addr2": null,
+        "city": "Nanaimo",
+        "postalCode": "V9R 5H9",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "998 McGill Road",
+        "addr2": null,
+        "city": "Kamloops",
+        "postalCode": "V2C 5R8",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]

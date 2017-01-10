@@ -1,0 +1,26 @@
+[
+    {
+        "addr1": "1019 Hardy Street",
+        "addr2": null,
+        "city": "Kelowna",
+        "postalCode": "V1Y 8H2",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "3758 Mesa Vista Drive",
+        "addr2": null,
+        "city": "Spences Bridge",
+        "postalCode": "V0K 2L0",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "4580 Hastings Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6C 1B4",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]

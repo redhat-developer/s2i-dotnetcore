@@ -1,0 +1,42 @@
+[
+    {
+        "addr1": "1356 Old Spallumcheen Rd",
+        "addr2": null,
+        "city": "Yarrow",
+        "postalCode": "V0X 2A0",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "2519 St George Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V5T 1Z7",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2814 Scotts Lane",
+        "addr2": null,
+        "city": "Youbou",
+        "postalCode": "V0R 3E0",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "396 Quayside Dr",
+        "addr2": null,
+        "city": "New Westminster",
+        "postalCode": "V3M 6A1",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "2805 Burdett Avenue",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 1B2",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]

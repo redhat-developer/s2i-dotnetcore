@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "2657 Wellington Ave",
+        "addr2": null,
+        "city": "Chilliwack",
+        "postalCode": "V2P 2M1",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "608 Jade St",
+        "addr2": null,
+        "city": "Richmond",
+        "postalCode": "V7E 2E4",
+        "province": "BC",
+        "type": "Field Office"
+    }
+]
