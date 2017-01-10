@@ -1,6 +1,20 @@
 .multi-dropdown {
+  .dropdown-toggle {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-right: 22px;
+
+    .caret {
+      position: absolute;
+      top: 50%;
+      margin-top: -3px;
+      right: 10px;
+    }
+  }
+
   .dropdown-menu {
-    padding: 10px;
+    padding: 7px;
 
     ul {
       margin: 0;
@@ -13,21 +27,9 @@
     li {
       margin: 5px 0;
     }
-  }
-
-  .multi-dropdown-controls {
-    width: 300px;
-
-    input[type="text"] {
-      float: left;
-      width: 200px;
-    }
 
     .checkbox {
-      float: right;
       text-align: right;
-      width: 100px;
-      white-space: nowrap;
     }
   }
 }

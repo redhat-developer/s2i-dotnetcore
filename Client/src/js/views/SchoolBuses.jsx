@@ -101,10 +101,10 @@ var SchoolBuses = React.createClass({
         <Row>
           <Col md={10}>
             <ButtonToolbar id="school-buses-search">
-              <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas" items={ serviceAreas } onChange={this.serviceAreasChanged} showMaxItems="1" />
-              <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors" items={ inspectors } onChange={this.inspectorsChanged} showMaxItems="1" />
-              <MultiDropdown id="cities-dropdown" placeholder="Cities" items={ cities } onChange={this.citiesChanged} showMaxItems="1" />
-              <MultiDropdown id="school-districts-dropdown" placeholder="School Districts" items={ schoolDistricts } onChange={this.schoolDistrictsChanged} showMaxItems="1" />
+              <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas" items={ serviceAreas } onChange={this.serviceAreasChanged} showMaxItems={1} />
+              <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors" items={ inspectors } onChange={this.inspectorsChanged} showMaxItems={1} />
+              <MultiDropdown id="cities-dropdown" placeholder="Cities" items={ cities } onChange={this.citiesChanged} showMaxItems={1} />
+              <MultiDropdown id="school-districts-dropdown" placeholder="School Districts" items={ schoolDistricts } onChange={this.schoolDistrictsChanged} showMaxItems={1} />
               <div className="search-label">Key Search By:</div>
               <DropdownButton id="school-buses-key-dropdown" title="Regi">
                 <MenuItem key="regi" eventKey="1">Regi</MenuItem>

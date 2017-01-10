@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dropdown, FormControl, Checkbox } from 'react-bootstrap';
+import RootCloseWrapper from 'react-overlays/lib/RootCloseWrapper';
 
 import _ from 'lodash';
 
@@ -7,13 +8,17 @@ const MAX_ITEMS_FOR_TITLE = 3;
 
 var MultiMenu = React.createClass({
   propTypes: {
+    open: React.PropTypes.bool,
+    onClose: React.PropTypes.func,
     children: React.PropTypes.node,
   },
 
   render() {
-    return <div className="dropdown-menu">
-      {this.props.children}
-    </div>;
+    return <RootCloseWrapper disabled={!this.props.open} onRootClose={this.props.onClose}>
+      <div className="dropdown-menu">
+        {this.props.children}
+      </div>
+    </RootCloseWrapper>;
   },
 });
 
@@ -111,21 +116,23 @@ var MultiDropdown = React.createClass({
     return <Dropdown className={`multi-dropdown ${this.props.className || ''}`} id={ this.props.id} title={ this.state.title }>
       <Dropdown.Toggle title={this.state.title} />
       <MultiMenu bsRole="menu">
-        <div className="multi-dropdown-controls clearfix">
-          <FormControl type="text" placeholder="Search" onChange={this.filter} />
-          <Checkbox checked={this.state.allSelected} onChange={this.selectAll}>Select All</Checkbox>
-        </div>
-        <ul>
-          {
-            _.map(items, item => {
-              return <li key={ item.id }>
-                <Checkbox value={item.id} checked={this.state.selectedIds.includes(item.id)} onChange={this.itemSelected}>
-                  { item.name }
-                </Checkbox>
-              </li>;
-            })
+        <FormControl type="text" placeholder="Search" onChange={this.filter} />
+        <Checkbox checked={this.state.allSelected} onChange={this.selectAll}>Select All</Checkbox>
+        {(() => {
+          if(items.length > 0) {
+            return <ul>
+              {
+                _.map(items, item => {
+                  return <li key={ item.id }>
+                    <Checkbox value={item.id} checked={this.state.selectedIds.includes(item.id)} onChange={this.itemSelected}>
+                      { item.name }
+                    </Checkbox>
+                  </li>;
+                })
+              }
+            </ul>;
           }
-        </ul>
+        })()}
       </MultiMenu>
     </Dropdown>;
   },
