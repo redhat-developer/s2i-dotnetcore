@@ -4,19 +4,15 @@ const DEFAULT_MODELS = {
 };
 
 export default function modelsReducer(state = DEFAULT_MODELS, action) {
-  var newState = {};
-
   switch(action.type) {
     // Users
     case 'UPDATE_USERS':
-      newState = { ...state, ...action.users };
-      break;
+      return { ...state, users: action.users };
 
     // Buses
     case 'UPDATE_BUSES':
-      newState = { ...state, ...action.schoolBuses };
-      break;
+      return { ...state, schoolBuses: action.schoolBuses };
   }
 
-  return { ...state, ...newState };
+  return state;
 }

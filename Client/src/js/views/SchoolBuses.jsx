@@ -38,7 +38,7 @@ I said in the JIRA let the server handle the conversion to From/To, but that's n
 var SchoolBuses = React.createClass({
   propTypes: {
     schoolBuses: React.PropTypes.object,
-    lookups: React.PropTypes.object,
+    serviceAreas: React.PropTypes.object,
   },
 
   getInitialState() {
@@ -62,7 +62,7 @@ var SchoolBuses = React.createClass({
     return <div id="school-buses">
       <PageHeader>School Buses</PageHeader>
 
-      <MultiDropdown id="service-area-dropdown" title="Service Areas" lookup={ this.props.lookups.serviceAreas } />
+      <MultiDropdown id="service-area-dropdown" title="Service Areas" lookup={ this.props.serviceAreas } />
 
       {(() => {
         if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
@@ -110,7 +110,7 @@ var SchoolBuses = React.createClass({
 function mapStateToProps(state) {
   return {
     schoolBuses: state.models.schoolBuses,
-    lookups: state.lookups,
+    serviceAreas: state.lookups.serviceAreas,
   };
 }
 

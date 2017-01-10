@@ -53,13 +53,11 @@ export default function startApp() {
     var schoolDistrictsPromise = Api.getSchoolDistricts();
     var serviceAreasPromise = Api.getServiceAreas();
 
-    Promise.all([citiesPromise, districtsPromise, regionsPromise, schoolDistrictsPromise, serviceAreasPromise]).then(() => {
+    return Promise.all([citiesPromise, districtsPromise, regionsPromise, schoolDistrictsPromise, serviceAreasPromise]).then(() => {
       incrementProgressBar(75);
       // Wrapping in a setTimeout to silence an error from Bluebird's promise lib about API requests
       // made inside of component{Will,Did}Mount.
       setTimeout(renderApp, 0);
-    }).catch(err => {
-      showError(err);
     });
   }).catch(err => {
     showError(err);

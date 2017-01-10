@@ -13,23 +13,18 @@ export function getCurrentUser() {
 export function getUsers(params) {
   return new ApiRequest('/users').get(params).then(response => {
     // Normalize the response
-    var data = { users: {} };
-    _.map(response, (user) => { data.users[user.id] = user; });
+    var users = _.fromPairs(response.map(user => [ user.id, user ]));
 
-    store.dispatch({ type: 'UPDATE_USERS', users: data });
+    store.dispatch({ type: 'UPDATE_USERS', users: users });
   });
 }
 
 export function getSchoolBuses(params) {
   return new ApiRequest('/schoolbuses').get(params).then(response => {
     // Normalize the response
-    var data = { schoolBuses: {} };
-    _.map(response, (bus) => {
-      var normal = bus;
-      data.schoolBuses[bus.id] = normal;
-    });
+    var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
 
-    store.dispatch({ type: 'UPDATE_BUSES', schoolBuses: data });
+    store.dispatch({ type: 'UPDATE_BUSES', schoolBuses: schoolBuses });
   });
 }
 
@@ -38,49 +33,44 @@ export function getSchoolBuses(params) {
 export function getCities() {
   return new ApiRequest('/cities').get().then(response => {
     // Normalize the response
-    var data = { cities: {} };
-    _.map(response, (city) => { data.cities[city.id] = city; });
+    var cities = _.fromPairs(response.map(city => [ city.id, city ]));
 
-    store.dispatch({ type: 'UPDATE_CITIES', cities: data });
+    store.dispatch({ type: 'UPDATE_CITIES', cities: cities });
   });
 }
 
 export function getDistricts() {
   return new ApiRequest('/districts').get().then(response => {
     // Normalize the response
-    var data = { districts: {} };
-    _.map(response, (district) => { data.districts[district.id] = district; });
+    var districts = _.fromPairs(response.map(district => [ district.id, district ]));
 
-    store.dispatch({ type: 'UPDATE_DISTRICTS', districts: data });
+    store.dispatch({ type: 'UPDATE_DISTRICTS', districts: districts });
   });
 }
 
 export function getRegions() {
   return new ApiRequest('/regions').get().then(response => {
     // Normalize the response
-    var data = { regions: {} };
-    _.map(response, (region) => { data.regions[region.id] = region; });
+    var regions = _.fromPairs(response.map(region => [ region.id, region ]));
 
-    store.dispatch({ type: 'UPDATE_REGIONS', regions: data });
+    store.dispatch({ type: 'UPDATE_REGIONS', regions: regions });
   });
 }
 
 export function getSchoolDistricts() {
   return new ApiRequest('/schooldistricts').get().then(response => {
     // Normalize the response
-    var data = { schoolDistricts: {} };
-    _.map(response, (schoolDistrict) => { data.schoolDistricts[schoolDistrict.id] = schoolDistrict; });
+    var schoolDistricts = _.fromPairs(response.map(schoolDistrict => [ schoolDistrict.id, schoolDistrict ]));
 
-    store.dispatch({ type: 'UPDATE_SCHOOL_DISTRICTS', schoolDistricts: data });
+    store.dispatch({ type: 'UPDATE_SCHOOL_DISTRICTS', schoolDistricts: schoolDistricts });
   });
 }
 
 export function getServiceAreas() {
   return new ApiRequest('/serviceareas').get().then(response => {
     // Normalize the response
-    var data = { serviceAreas: {} };
-    _.map(response, (serviceArea) => { data.serviceAreas[serviceArea.id] = serviceArea; });
+    var serviceAreas = _.fromPairs(response.map(serviceArea => [ serviceArea.id, serviceArea ]));
 
-    store.dispatch({ type: 'UPDATE_SERVICE_AREAS', serviceAreas: data });
+    store.dispatch({ type: 'UPDATE_SERVICE_AREAS', serviceAreas: serviceAreas });
   });
 }

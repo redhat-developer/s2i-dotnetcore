@@ -7,29 +7,22 @@ const DEFAULT_LOOKUPS = {
 };
 
 export default function lookupsReducer(state = DEFAULT_LOOKUPS, action) {
-  var newState = {};
-
   switch(action.type) {
     case 'UPDATE_CITIES':
-      newState = { ...state, ...action.cities };
-      break;
+      return { ...state, cities: action.cities };
 
     case 'UPDATE_DISTRICTS':
-      newState = { ...state, ...action.districts };
-      break;
+      return { ...state, districts: action.districts };
 
     case 'UPDATE_REGIONS':
-      newState = { ...state, ...action.regions };
-      break;
+      return { ...state, regions: action.regions };
 
     case 'UPDATE_SCHOOL_DISTRICTS':
-      newState = { ...state, ...action.schoolDistricts };
-      break;
+      return { ...state, schoolDistricts: action.schoolDistricts };
 
     case 'UPDATE_SERVICE_AREAS':
-      newState = { ...state, ...action.serviceAreas };
-      break;
+      return { ...state, serviceAreas: action.serviceAreas };
   }
 
-  return { ...state, ...newState };
+  return state;
 }
