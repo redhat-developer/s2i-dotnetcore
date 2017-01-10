@@ -53,11 +53,24 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (District item in items)
             {
-                // fix for Region issue.
+                // avoid inserting a Region if possible.
                 int region_id = item.Region.Id;
-                Region region = _context.Regions.First(a => a.Id == region_id);
-                item.Region = region;
-                _context.Districts.Add(item);                
+                var exists = _context.Regions.Any(a => a.Id == region_id);
+                if (exists)
+                {
+                    Region region = _context.Regions.First(a => a.Id == region_id);
+                    item.Region = region;
+                }
+
+                exists = _context.Districts.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Districts.Update(item);
+                }
+                else
+                {
+                    _context.Districts.Add(item);
+                }               
             }
             // Save the changes
             _context.SaveChanges();
