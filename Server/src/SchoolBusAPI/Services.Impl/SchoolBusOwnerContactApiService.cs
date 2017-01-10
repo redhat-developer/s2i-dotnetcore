@@ -120,6 +120,51 @@ namespace SchoolBusAPI.Services.Impl
             return new ObjectResult(result);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns address contacts for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch contact address for</param>
+        /// <response code="200">OK</response>
+        public IActionResult SchoolbusownercontactsIdContactaddressesGetAsync(int id)
+        {
+            var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusOwnerContacts.First(a => a.Id == id);
+                return new ObjectResult(result.SchoolBusOwnerContactAddresses.ToList());
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns phone contacts for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch contact phone for</param>
+        /// <response code="200">OK</response>
+        public IActionResult SchoolbusownercontactsIdContactphonesGetAsync(int id)
+        {
+            var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusOwnerContacts.First(a => a.Id == id);
+                return new ObjectResult(result.SchoolBusOwnerContactAddresses.ToList());
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
+
+
         /// <summary>
         /// 
         /// </summary>

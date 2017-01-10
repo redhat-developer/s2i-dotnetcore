@@ -43,6 +43,20 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a number of districts.</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/serviceareas/bulk")]
+        [SwaggerOperation("ServiceareasBulkPost")]
+        public virtual IActionResult ServiceareasBulkPost([FromBody]ServiceArea[] items)
+        {
+            return this._service.ServiceareasBulkPostAsync(items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns a list of available districts</remarks>
         /// <response code="200">OK</response>
         [HttpGet]
@@ -113,20 +127,6 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult ServiceareasPost([FromBody]ServiceArea item)
         {
             return this._service.ServiceareasPostAsync(item);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of districts.</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        [HttpPost]
-        [Route("/api/serviceareas/bulk")]
-        [SwaggerOperation("ServiceareasBulkPost")]
-        public virtual IActionResult ServiceareasBulkPost([FromBody]ServiceArea[] items)
-        {
-            return this._service.ServiceareasBulkPostAsync(items);
         }
     }
 }

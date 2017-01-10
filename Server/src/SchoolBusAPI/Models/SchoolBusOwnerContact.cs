@@ -42,7 +42,9 @@ namespace SchoolBusAPI.Models
         /// <param name="Surname">The surname of the contact..</param>
         /// <param name="Role">The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list..</param>
         /// <param name="Notes">Notes about the contact..</param>
-        public SchoolBusOwnerContact(int Id, SchoolBusOwner SchoolBusOwner = null, string GivenName = null, string Surname = null, string Role = null, string Notes = null)
+        /// <param name="SchoolBusOwnerContactPhones">SchoolBusOwnerContactPhones.</param>
+        /// <param name="SchoolBusOwnerContactAddresses">SchoolBusOwnerContactAddresses.</param>
+        public SchoolBusOwnerContact(int Id, SchoolBusOwner SchoolBusOwner = null, string GivenName = null, string Surname = null, string Role = null, string Notes = null, List<SchoolBusOwnerContactPhone> SchoolBusOwnerContactPhones = null, List<SchoolBusOwnerContactAddress> SchoolBusOwnerContactAddresses = null)
         {
             
             this.Id = Id;
@@ -51,6 +53,8 @@ namespace SchoolBusAPI.Models
             this.Surname = Surname;
             this.Role = Role;
             this.Notes = Notes;
+            this.SchoolBusOwnerContactPhones = SchoolBusOwnerContactPhones;
+            this.SchoolBusOwnerContactAddresses = SchoolBusOwnerContactAddresses;
             
         }
 
@@ -95,6 +99,16 @@ namespace SchoolBusAPI.Models
         public string Notes { get; set; }
 
         /// <summary>
+        /// Gets or Sets SchoolBusOwnerContactPhones
+        /// </summary>
+        public List<SchoolBusOwnerContactPhone> SchoolBusOwnerContactPhones { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SchoolBusOwnerContactAddresses
+        /// </summary>
+        public List<SchoolBusOwnerContactAddress> SchoolBusOwnerContactAddresses { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -108,6 +122,8 @@ namespace SchoolBusAPI.Models
             sb.Append("  Surname: ").Append(Surname).Append("\n");
             sb.Append("  Role: ").Append(Role).Append("\n");
             sb.Append("  Notes: ").Append(Notes).Append("\n");
+            sb.Append("  SchoolBusOwnerContactPhones: ").Append(SchoolBusOwnerContactPhones).Append("\n");
+            sb.Append("  SchoolBusOwnerContactAddresses: ").Append(SchoolBusOwnerContactAddresses).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -148,7 +164,7 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -175,6 +191,16 @@ namespace SchoolBusAPI.Models
                     this.Notes == other.Notes ||
                     this.Notes != null &&
                     this.Notes.Equals(other.Notes)
+                ) && 
+                (
+                    this.SchoolBusOwnerContactPhones == other.SchoolBusOwnerContactPhones ||
+                    this.SchoolBusOwnerContactPhones != null &&
+                    this.SchoolBusOwnerContactPhones.SequenceEqual(other.SchoolBusOwnerContactPhones)
+                ) && 
+                (
+                    this.SchoolBusOwnerContactAddresses == other.SchoolBusOwnerContactAddresses ||
+                    this.SchoolBusOwnerContactAddresses != null &&
+                    this.SchoolBusOwnerContactAddresses.SequenceEqual(other.SchoolBusOwnerContactAddresses)
                 );
         }
 
@@ -212,6 +238,14 @@ namespace SchoolBusAPI.Models
                 if (this.Notes != null)
                 {
                     hash = hash * 59 + this.Notes.GetHashCode();
+                }
+                if (this.SchoolBusOwnerContactPhones != null)
+                {
+                    hash = hash * 59 + this.SchoolBusOwnerContactPhones.GetHashCode();
+                }
+                if (this.SchoolBusOwnerContactAddresses != null)
+                {
+                    hash = hash * 59 + this.SchoolBusOwnerContactAddresses.GetHashCode();
                 }
                 return hash;
             }
