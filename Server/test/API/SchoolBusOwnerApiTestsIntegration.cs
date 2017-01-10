@@ -103,6 +103,8 @@ namespace SchoolBusAPI.Test
             contactPhone.PhoneNumber = initialNumber;
             SchoolBusOwnerContactAddress contactAddress = new SchoolBusOwnerContactAddress();
             contactAddress.Addr1 = initialAddress;
+            contact.SchoolBusOwnerContactAddresses = new List<SchoolBusOwnerContactAddress>();
+            contact.SchoolBusOwnerContactPhones = new List<SchoolBusOwnerContactPhone>();
 
             contact.SchoolBusOwnerContactAddresses.Add(contactAddress);
             contact.SchoolBusOwnerContactPhones.Add(contactPhone);
