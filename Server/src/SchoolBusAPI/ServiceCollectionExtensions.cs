@@ -28,6 +28,7 @@ namespace SchoolBusAPI
         {
             services.AddTransient<ICityApiService, CityApiService>();
             services.AddTransient<ICurrentUserApiService, CurrentUserApiService>();
+            services.AddTransient<ICCWDataApiService, CCWDataApiService>();
             services.AddTransient<IDistrictApiService, DistrictApiService>();
             services.AddTransient<IGroupApiService, GroupApiService>();
             services.AddTransient<IInspectionApiService, InspectionApiService>();

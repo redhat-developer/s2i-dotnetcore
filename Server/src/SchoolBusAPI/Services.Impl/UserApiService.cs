@@ -43,6 +43,113 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a number of user groups</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult UsergroupsBulkPostAsync(GroupMembership[] items)
+        {
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (GroupMembership item in items)
+            {
+                // adjust the user
+                if (item.User != null)
+                {
+                    int user_id = item.User.Id;
+                    bool user_exists = _context.Users.Any(a => a.Id == user_id);
+                    if (user_exists)
+                    {
+                        User user = _context.Users.First(a => a.Id == user_id);
+                        item.User = user;
+                    }
+                }
+                // adjust the group
+                if (item.Group != null)
+                {
+                    int group_id = item.Group.Id;
+                    bool group_exists = _context.Groups.Any(a => a.Id == group_id);
+                    if (group_exists)
+                    {
+                        Group group = _context.Groups.First(a => a.Id == group_id);
+                        item.Group = group;
+                    }
+                }
+
+                var exists = _context.GroupMemberships.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.GroupMemberships.Update(item);
+                }
+                else
+                {
+                    _context.GroupMemberships.Add(item);
+                }
+            }
+
+            // Save the changes
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of user roles</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult UserrolesBulkPostAsync(UserRole[] items)
+        {
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (UserRole item in items)
+            {
+                // adjust the user
+                if (item.User != null)
+                {
+                    int user_id = item.User.Id;
+                    bool user_exists = _context.Users.Any(a => a.Id == user_id);
+                    if (user_exists)
+                    {
+                        User user = _context.Users.First(a => a.Id == user_id);
+                        item.User = user;
+                    }
+                }
+                // adjust the role
+                if (item.Role != null)
+                {
+                    int role_id = item.Role.Id;
+                    bool user_exists = _context.Roles.Any(a => a.Id == role_id);
+                    if (user_exists)
+                    {
+                        Role role = _context.Roles.First(a => a.Id == role_id);
+                        item.Role = role;
+                    }
+                }
+
+                var exists = _context.UserRoles.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.UserRoles.Update(item);
+                }
+                else
+                {
+                    _context.UserRoles.Add(item);
+                }
+            }
+
+            // Save the changes
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
+            
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Adds a number of users</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>

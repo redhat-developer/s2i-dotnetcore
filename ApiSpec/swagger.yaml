@@ -6,6 +6,141 @@ info:
   termsOfService: N/A
 basePath: /api
 paths:
+  /ccwdata:
+    get:
+      tags:
+        - CCWData
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CCWData'
+      deprecated: false
+    post:
+      tags:
+        - CCWData
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CCWData"
+      responses:
+        201:
+          description: CCWData created
+          headers:
+            Location:
+              description: A link to the CCWData
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/CCWData"
+  /ccwdata/bulk:
+    post:
+      tags:
+        - CCWData
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CCWData"
+      responses:
+        201:
+          description: CCWData created
+  /ccwdata/{id}:
+    get:
+      tags:
+        - CCWData
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/CCWData'
+        404:
+          description: CCWData not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of CCWData to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - CCWData
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/CCWData'
+        404:
+          description: CCWData not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of CCWData to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CCWData"
+  /ccwdata/{id}/delete:
+    post:
+      tags:
+        - CCWData
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: CCWData not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of CCWData to delete
+          required: true
+          type: integer
   /inspections:
     get:
       tags:
@@ -1872,6 +2007,120 @@ paths:
             type: array
             items:
               $ref: "#/definitions/GroupViewModel"
+    post:
+      tags:
+        - Group
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Group"
+      responses:
+        201:
+          description: Group created
+          headers:
+            Location:
+              description: A link to the Group
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/Group"
+  /groups/bulk:
+    post:
+      tags:
+        - Group
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Group"
+      responses:
+        201:
+          description: Groups created
+  /groups/{id}:
+    get:
+      description: Returns a Group
+      tags:
+        - Group
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Group to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Group'
+        404:
+          description: Group not found
+    put:
+      tags:
+        - Group
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Group to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Group"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Group"
+        404:
+          description: Group not found
+  /groups/{id}/delete:
+    post:
+      tags:
+        - Group
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Group to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Group not found
   /permissions:
     get:
       description: Returns a collection of permissions
@@ -2060,10 +2309,10 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/RoleViewModel"
+              $ref: "#/definitions/Role"
       responses:
         201:
-          description: Permissions created
+          description: Roles created
   /roles/{id}:
     get:
       tags:
@@ -2269,6 +2518,28 @@ paths:
               $ref: "#/definitions/UserRoleViewModel"
         404:
           description: Role not found
+  /rolepermissions/bulk:
+    post:
+      description: Bulk load of role permissions
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/RolePermission"
+      responses:
+        201:
+          description: Roles created
   /users:
     get:
       description: Returns all users
@@ -2662,6 +2933,46 @@ paths:
           description: id of User to fetch notifications for
           required: true
           type: integer
+  /usergroups/bulk:
+    post:
+      description: Adds a number of user groups
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembership"
+      responses:
+        200:
+          description: OK
+  /userroles/bulk:
+    post:
+      description: Adds a number of user roles
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserRole"
+      responses:
+        200:
+          description: OK
   /regions:
     get:
       description: Returns a list of available regions
@@ -3962,7 +4273,7 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      city:
+      name:
         type: string
         description: The name of the City
   Notification:

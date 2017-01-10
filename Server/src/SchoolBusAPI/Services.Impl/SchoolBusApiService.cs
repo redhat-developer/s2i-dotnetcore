@@ -43,14 +43,67 @@ namespace SchoolBusAPI.Services.Impl
         /// Creates a new school bus
         /// </summary>
         /// <remarks>The Location response-header field is used to redirect the recipient to a location other than the Request-URI for completion of the request or identification of a new resource. For 201 (Created) responses, the Location is that of the new resource which was created by the request.    The field value consists of a single absolute URI. </remarks>
-        /// <param name="body"></param>
+        /// <param name="item"></param>
         /// <response code="201">SchoolBus created</response>
 
-        public virtual IActionResult AddBusAsync (SchoolBus body)        
+        public virtual IActionResult AddBusAsync (SchoolBus item)        
         {
-            _context.SchoolBuss.Add(body);
+
+            // adjust school bus owner
+
+            if (item.SchoolBusOwner != null)
+            {
+                int school_bus_owner_id = item.SchoolBusOwner.Id;
+                bool school_bus_owner_exists = _context.SchoolBusOwners.Any(a => a.Id == school_bus_owner_id);
+                if (school_bus_owner_exists)
+                {
+                    SchoolBusOwner school_bus_owner = _context.SchoolBusOwners.First(a => a.Id == school_bus_owner_id);
+                    item.SchoolBusOwner = school_bus_owner;
+                }
+            }
+
+            // adjust service area.
+
+            if (item.ServiceArea != null)
+            {
+                int service_area_id = item.ServiceArea.Id;
+                bool service_area_exists = _context.ServiceAreas.Any(a => a.Id == service_area_id);
+                if (service_area_exists)
+                {
+                    ServiceArea service_area = _context.ServiceAreas.First(a => a.Id == service_area_id);
+                    item.ServiceArea = service_area;
+                }
+            }
+
+            // adjust school district
+
+            if (item.SchoolBusDistrict != null)
+            {
+                int schoolbus_district_id = item.SchoolBusDistrict.Id;
+                bool schoolbus_district_exists = _context.SchoolDistricts.Any(a => a.Id == schoolbus_district_id);
+                if (schoolbus_district_exists)
+                {
+                    SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolbus_district_id);
+                    item.SchoolBusDistrict = school_district;
+                }
+            }
+
+            // adjust home city
+
+            if (item.HomeTerminalCity != null)
+            {
+                int city_id = item.HomeTerminalCity.Id;
+                bool city_exists = _context.Cities.Any(a => a.Id == city_id);
+                if (city_exists)
+                {
+                    City city = _context.Cities.First(a => a.Id == city_id);
+                    item.HomeTerminalCity = city;
+                }
+            }
+
+            _context.SchoolBuss.Add(item);
             _context.SaveChanges();
-            return new ObjectResult(body);            
+            return new ObjectResult(item);            
         }
         /// <summary>
         /// Creates several school buses
