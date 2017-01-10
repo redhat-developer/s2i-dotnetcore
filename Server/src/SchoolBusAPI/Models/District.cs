@@ -84,7 +84,7 @@ namespace SchoolBusAPI.Models
         public Region Region { get; set; }
 
         [ForeignKey("Region")]
-        public int? RegionRefId { get; set; }
+        public int RegionRefId { get; set; }
 
         /// <summary>
         /// The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS
