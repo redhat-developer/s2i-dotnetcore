@@ -20,12 +20,11 @@ var MultiMenu = React.createClass({
 var MultiDropdown = React.createClass({
   propTypes: {
     items: React.PropTypes.array.isRequired,
-    title: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
     id: React.PropTypes.string,
     className: React.PropTypes.string,
     selectedIds: React.PropTypes.array,
     onChange: React.PropTypes.func,
-    emptyTitle: React.PropTypes.string,
     showMaxItems: React.PropTypes.number,
   },
 
@@ -48,7 +47,7 @@ var MultiDropdown = React.createClass({
     var num = selectedIds.length;
 
     if(num === 0) {
-      return this.props.emptyTitle || 'Select one or more items';
+      return this.props.placeholder || 'Select one or more items';
     } else if(num > this.state.MAX_ITEMS_FOR_TITLE) {
       return `(${num}) selected`;
     } else {
