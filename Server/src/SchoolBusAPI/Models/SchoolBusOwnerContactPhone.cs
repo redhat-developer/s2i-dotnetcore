@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
@@ -75,6 +76,9 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets SchoolBusOwnerContact
         /// </summary>
         public SchoolBusOwnerContact SchoolBusOwnerContact { get; set; }
+
+        [ForeignKey("SchoolBusOwnerContact")]
+        public int? SchoolBusOwnerContactRefId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

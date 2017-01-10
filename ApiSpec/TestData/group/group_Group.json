@@ -1,0 +1,17 @@
+[
+    {
+        "description": "The group of AVIs - Inspectors.",
+        "id": "101",
+        "name": "Inspector"
+    },
+    {
+        "description": "The group of AVI Managers.",
+        "id": "102",
+        "name": "Manager"
+    },
+    {
+        "description": "Users in the system not part of the other groups.",
+        "id": "103",
+        "name": "Other"
+    }
+]

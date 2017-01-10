@@ -32,6 +32,13 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="items"></param>
+        /// <response code="201">Permissions created</response>
+        IActionResult RolesBulkPostAsync(Role[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns a collection of roles</remarks>
         /// <response code="200">OK</response>
         IActionResult RolesGetAsync();
@@ -63,12 +70,22 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a permissions to a role</remarks>
+        /// <param name="id">id of Role to update</param>
+        /// <param name="item"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Role not found</response>
+        IActionResult RolesIdPermissionsPostAsync(int id, Permission[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Updates the permissions for a role</remarks>
         /// <param name="id">id of Role to update</param>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        IActionResult RolesIdPermissionsPutAsync(int id, PermissionViewModel[] items);
+        IActionResult RolesIdPermissionsPutAsync(int id, Permission[] items);
 
         /// <summary>
         /// 

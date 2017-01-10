@@ -84,12 +84,22 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Add to the active set of groups for a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        IActionResult UsersIdGroupsPostAsync(int id, GroupMembership[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Updates the active set of groups for a user</remarks>
         /// <param name="id">id of User to update</param>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdGroupsPutAsync(int id, GroupMembershipViewModel[] items);
+        IActionResult UsersIdGroupsPutAsync(int id, GroupMembership[] items);
 
         /// <summary>
         /// 

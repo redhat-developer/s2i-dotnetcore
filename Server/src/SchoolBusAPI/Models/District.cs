@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
@@ -81,6 +82,9 @@ namespace SchoolBusAPI.Models
         /// <value>The region in which the District is found.</value>
         [MetaDataExtension (Description = "The region in which the District is found.")]
         public Region Region { get; set; }
+
+        [ForeignKey("Region")]
+        public int? RegionRefId { get; set; }
 
         /// <summary>
         /// The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS

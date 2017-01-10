@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
@@ -68,10 +69,16 @@ namespace SchoolBusAPI.Models
         /// </summary>
         public Group Group { get; set; }
 
+        [ForeignKey("Group")]
+        public int? GroupRefId { get; set; }
+
         /// <summary>
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
+
+        [ForeignKey("User")]
+        public int? UserRefId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

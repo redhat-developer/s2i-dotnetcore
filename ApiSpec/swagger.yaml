@@ -1056,7 +1056,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/NotificationEvent"       
+            $ref: "#/definitions/NotificationEvent"
   /notificationevents/{id}/delete:
     post:
       tags:
@@ -1254,50 +1254,6 @@ paths:
         - name: id
           in: path
           description: id of SchoolBusOwner to fetch notes for
-          required: true
-          type: integer
-  /schoolbusowners/{id}/contactphones:
-    get:
-      description: Returns phone contacts for a particular SchoolBusOwner
-      tags:
-        - SchoolBusOwner
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/SchoolBusOwnerContactPhone'
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwner to fetch contact phone for
-          required: true
-          type: integer
-  /schoolbusowners/{id}/contactaddresses:
-    get:
-      description: Returns address contacts for a particular SchoolBusOwner
-      tags:
-        - SchoolBusOwner
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/SchoolBusOwnerContactAddress'
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwner to fetch contact address for
           required: true
           type: integer
   /schoolbusownernotes:
@@ -1705,6 +1661,50 @@ paths:
           description: id of SchoolBusOwnerContact to delete
           required: true
           type: integer
+  /schoolbusownercontacts/{id}/contactphones:
+    get:
+      description: Returns phone contacts for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwnerContact
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerContactPhone'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch contact phone for
+          required: true
+          type: integer
+  /schoolbusownercontacts/{id}/contactaddresses:
+    get:
+      description: Returns address contacts for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwnerContact
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerContactAddress'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch contact address for
+          required: true
+          type: integer
   /schoolbusownerhistory:
      get:
       tags:
@@ -1933,7 +1933,7 @@ paths:
               $ref: "#/definitions/Permission"
       responses:
         201:
-          description: Permissions created              
+          description: Permissions created
   /permissions/{id}:
     get:
       description: Returns a permission
@@ -2001,7 +2001,7 @@ paths:
         200:
           description: OK
         404:
-          description: Permission not found                         
+          description: Permission not found
   /roles:
     get:
       description: Returns a collection of roles
@@ -2063,7 +2063,7 @@ paths:
               $ref: "#/definitions/RoleViewModel"
       responses:
         201:
-          description: Permissions created   
+          description: Permissions created
   /roles/{id}:
     get:
       tags:
@@ -2175,7 +2175,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Permission"      
+              $ref: "#/definitions/Permission"
       responses:
         200:
           description: OK
@@ -2205,7 +2205,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Permission"      
+            $ref: "#/definitions/Permission"
       responses:
         200:
           description: OK
@@ -3366,21 +3366,21 @@ definitions:
         description: Enumerated type of Status - Inactive, Active, Archived
       isOutOfProvince:
         type: boolean
-      location:
+      ServiceArea:
         $ref: '#/definitions/ServiceArea'
-      busLocationAddr1:
+      homeTerminalAddr1:
         type: string
         description: Address 1 of physical location of the School Bus.
-      busLocationAddr2:
+      homeTerminalAddr2:
         type: string
         description: Address 2 of physical location of the School Bus.
-      busLocationCity:
+      homeTerminalCity:
         $ref: '#/definitions/City'
         description: City of physical location of the School Bus.
-      busLocationProv:
+      homeTerminalProvince:
         type: string
         description: Province of physical location of the School Bus - free form.
-      busLocationPostCode:
+      homeTerminalPostalCode:
         type: string
         description: Postal Code of physical location of the School Bus.
       restrictions:
@@ -3584,6 +3584,14 @@ definitions:
       notes:
         type: string
         description: Notes about the contact.
+      schoolBusOwnerContactPhones:
+        type: array
+        items:
+          $ref: '#/definitions/SchoolBusOwnerContactPhone'
+      schoolBusOwnerContactAddresses:
+        type: array
+        items:
+          $ref: '#/definitions/SchoolBusOwnerContactAddress'
   SchoolBusOwnerContactPhone:
     type: object
     required:
@@ -4218,7 +4226,7 @@ definitions:
       surname:
         type: string
         x-chance-type: name
-      fullName:        
+      fullName:
         type: string
       districtName:
         type: string
@@ -4230,13 +4238,13 @@ definitions:
         type: integer
       dueNextMonthInspections:
         format: int32
-        type: integer                
+        type: integer
   UserDetailsViewModel:
     type: object
     x-codegen-viewmodel: true
     required:
       - id
-      - active 
+      - active
     properties:
       id:
         format: int32

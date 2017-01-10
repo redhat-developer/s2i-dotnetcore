@@ -77,11 +77,13 @@ namespace SchoolBusAPI.Test
         /// </summary>
 		public async void TestSchoolbusOwners()
 		{
-            // now create a school bus owner record
+            string initialName = "InitialName";
+            string changedName = "ChangedName";
 
+            // now create a school bus owner record
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusowners");
             SchoolBusOwner schoolBusOwner = new SchoolBusOwner();
-            
+            schoolBusOwner.Name = initialName;
             var jsonString = schoolBusOwner.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
@@ -96,10 +98,10 @@ namespace SchoolBusAPI.Test
             // get the id
             var id = schoolBusOwner.Id;
 
-            // make a change.    
+            // make a change.   
+            schoolBusOwner.Name = changedName;
 
             // now do an update.
-
             request = new HttpRequestMessage(HttpMethod.Put, "/api/schoolbusowners/" + id);
             request.Content = new StringContent(schoolBusOwner.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
@@ -113,7 +115,9 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
             schoolBusOwner = JsonConvert.DeserializeObject<SchoolBusOwner>(jsonString);
-            
+
+            Assert.Equal(changedName, schoolBusOwner.Name);
+
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusowners/" + id + "/delete");
             response = await _client.SendAsync(request);

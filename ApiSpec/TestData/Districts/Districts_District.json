@@ -1,0 +1,132 @@
+[
+    {
+        "endDate": null,
+        "id": "1",
+        "ministryDistrict": "1",
+        "name": "Lower Mainland",
+        "region": {
+            "id": "1"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "2",
+        "ministryDistrict": "2",
+        "name": "Vancouver Island",
+        "region": {
+            "id": "1"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "3",
+        "ministryDistrict": "3",
+        "name": "Rocky Mountain",
+        "region": {
+            "id": "2"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "4",
+        "ministryDistrict": "4",
+        "name": "West Kootenay",
+        "region": {
+            "id": "2"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "5",
+        "ministryDistrict": "5",
+        "name": "Okanagan-Shuswap",
+        "region": {
+            "id": "2"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "6",
+        "ministryDistrict": "6",
+        "name": "Thompson-Nicola",
+        "region": {
+            "id": "2"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "7",
+        "ministryDistrict": "7",
+        "name": "Cariboo",
+        "region": {
+            "id": "2"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "8",
+        "ministryDistrict": "8",
+        "name": "Peace",
+        "region": {
+            "id": "3"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "9",
+        "ministryDistrict": "9",
+        "name": "Fort George",
+        "region": {
+            "id": "3"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "10",
+        "ministryDistrict": "10",
+        "name": "Bulkley-Stikine",
+        "region": {
+            "id": "3"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "11",
+        "ministryDistrict": "11",
+        "name": "Skeena",
+        "region": {
+            "id": "3"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "12",
+        "ministryDistrict": "99",
+        "name": "NON-BC",
+        "region": {
+            "id": "4"
+        },
+        "startDate": "2009-01-01"
+    },
+    {
+        "endDate": null,
+        "id": "13",
+        "ministryDistrict": "999",
+        "name": "Unknown",
+        "region": {
+            "id": "5"
+        },
+        "startDate": "2009-01-01"
+    }
+]
