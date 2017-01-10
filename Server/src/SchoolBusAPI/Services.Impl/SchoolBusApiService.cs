@@ -67,6 +67,31 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (SchoolBus item in items)
             {
+                // adjust service area.
+
+                if (item.ServiceArea != null)
+                {
+                    int service_area_id = item.ServiceArea.Id;
+                    bool service_area_exists = _context.ServiceAreas.Any(a => a.Id == service_area_id);
+                    if (service_area_exists)
+                    {
+                        ServiceArea service_area = _context.ServiceAreas.First(a => a.Id == service_area_id);
+                        item.ServiceArea = service_area;
+                    }
+                }
+
+                // adjust school district
+
+                if (item.SchoolBusDistrict != null)
+                {
+                    int schoolbus_district_id = item.SchoolBusDistrict.Id;
+                    bool schoolbus_district_exists = _context.SchoolDistricts.Any(a => a.Id == schoolbus_district_id);
+                    if (schoolbus_district_exists)
+                    {
+                        SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolbus_district_id);
+                        item.SchoolBusDistrict = school_district;
+                    }
+                }
                 var exists = _context.SchoolBuss.Any(a => a.Id == item.Id);
                 if (exists)
                 {
