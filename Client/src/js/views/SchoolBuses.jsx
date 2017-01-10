@@ -44,6 +44,7 @@ var SchoolBuses = React.createClass({
   getInitialState() {
     return {
       loading: false,
+      selectedIds: [],
     };
   },
 
@@ -58,11 +59,19 @@ var SchoolBuses = React.createClass({
     });
   },
 
+  serviceAreaChanged(selectedIds) {
+    this.setState({
+      selectedIds: selectedIds,
+    });
+  },
+
   render: function() {
+    var serviceAreas = _.sortBy(this.props.serviceAreas, 'name');
+
     return <div id="school-buses">
       <PageHeader>School Buses</PageHeader>
 
-      <MultiDropdown id="service-area-dropdown" title="Service Areas" lookup={ this.props.serviceAreas } />
+      <MultiDropdown id="service-area-dropdown" title="Service Areas" items={ serviceAreas } onChange={this.serviceAreaChanged} />
 
       {(() => {
         if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }

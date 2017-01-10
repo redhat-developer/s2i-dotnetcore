@@ -1,0 +1,33 @@
+.multi-dropdown {
+  .dropdown-menu {
+    padding: 10px;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+  }
+
+  .multi-dropdown-controls {
+    width: 300px;
+
+    input[type="text"] {
+      float: left;
+      width: 200px;
+    }
+
+    .checkbox {
+      float: right;
+      text-align: right;
+      width: 100px;
+      white-space: nowrap;
+    }
+  }
+}
