@@ -53,7 +53,24 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (ServiceArea item in items)
             {
-                _context.ServiceAreas.Add(item);
+                // avoid inserting a District if possible.
+                int district_id = item.District.Id;
+                var exists = _context.Districts.Any(a => a.Id == district_id);
+                if (exists)
+                {
+                    District district = _context.Districts.First(a => a.Id == district_id);
+                    item.District = district;
+                }
+
+                exists = _context.ServiceAreas.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.ServiceAreas.Update(item);
+                }
+                else
+                {
+                    _context.ServiceAreas.Add(item);
+                }                
             }
             // Save the changes
             _context.SaveChanges();

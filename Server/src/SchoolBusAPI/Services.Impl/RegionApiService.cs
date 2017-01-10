@@ -54,7 +54,15 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (Region item in items)
             {
-                _context.Regions.Add(item);
+                var exists = _context.Regions.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Regions.Update(item);
+                }
+                else
+                {
+                    _context.Regions.Add(item);
+                }                    
             }
             // Save the changes
             _context.SaveChanges();
