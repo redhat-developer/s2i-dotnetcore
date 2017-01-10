@@ -119,10 +119,10 @@ export function jsonRequest(path, options) {
   options.headers = Object.assign(options.headers || {}, jsonHeaders);
 
   return request(path, options).then(xhr => {
-    if(xhr.status === 204) {
+    if (xhr.status === 204) {
       return;
     } else {
-      return JSON.parse(xhr.responseText);
+      return xhr.responseText ? JSON.parse(xhr.responseText) : null;
     }
   }).catch(err => {
     if(err instanceof HttpError) {
