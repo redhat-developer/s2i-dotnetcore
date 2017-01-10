@@ -10,6 +10,7 @@
     "Microsoft.AspNetCore.Mvc": "1.1.0",
     "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.1.0",
     "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.1.0",
+    "Microsoft.AspNetCore.Proxy": "0.2.0",
     "Microsoft.AspNetCore.Rewrite": "1.0.0",
     "Microsoft.AspNetCore.Routing": "1.1.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",

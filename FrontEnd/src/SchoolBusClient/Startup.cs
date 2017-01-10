@@ -1,32 +1,11 @@
-/*
- * REST API Documentation for Schoolbus
- *
- * API Sample
- *
- * OpenAPI spec version: v1
- * 
- * 
- */
-
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml.XPath;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
-using Swashbuckle.Swagger.Model;
-using Swashbuckle.SwaggerGen.Annotations;
-using Microsoft.EntityFrameworkCore;
-using SchoolBusClient.Handlers;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using SchoolBusClient.Handlers;
+using System.IO;
 
 namespace SchoolBusClient
 {
@@ -47,16 +26,16 @@ namespace SchoolBusClient
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-  
-    
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
             services.AddMvc();
+
             // Allow access to the Configuration object
             services.AddSingleton<IConfiguration>(Configuration);
-
+            services.Configure<ApiServerOptions>(Configuration.GetSection("ApiServerUri"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,11 +47,9 @@ namespace SchoolBusClient
 			//if (env.IsDevelopment())
 			//{
 				app.UseDeveloperExceptionPage();
-			//}
-			
-			
+            //}
+
             app.UseMvc();
-            
             app.UseDefaultFiles();
 
             string webFileFolder = Path.Combine(Directory.GetCurrentDirectory(), @"src/dist");
@@ -86,11 +63,7 @@ namespace SchoolBusClient
                 });
             }
 
-
-
-            app.UseProxyServer(Configuration);
-
-
+            app.UseApiProxyServer();
         }
     }
 }
