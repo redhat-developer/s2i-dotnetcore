@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "2714 Russell Avenue",
+        "addr2": null,
+        "city": "Langley",
+        "postalCode": "V4X 1J7",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "3056 Quayside Dr",
+        "addr2": null,
+        "city": "New Westminster",
+        "postalCode": "V3M 6A1",
+        "province": "BC",
+        "type": "Field Office"
+    }
+]

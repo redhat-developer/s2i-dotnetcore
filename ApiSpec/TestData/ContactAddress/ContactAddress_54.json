@@ -1,0 +1,34 @@
+[
+    {
+        "addr1": "4764 Jade St",
+        "addr2": null,
+        "city": "Richmond",
+        "postalCode": "V7E 2E4",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "4283 Burdett Avenue",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 1L6",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "4347 Blanshard",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 2H9",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2277 James Street",
+        "addr2": null,
+        "city": "Aldergrove",
+        "postalCode": "V5G 4S4",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]
