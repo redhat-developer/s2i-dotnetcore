@@ -1,9 +1,33 @@
 [
     {
-        "addr1": "4436 Quayside Dr",
+        "addr1": "34 Alaska Hwy",
         "addr2": null,
-        "city": "New Westminster",
-        "postalCode": "V3M 6A1",
+        "city": "Chetwynd",
+        "postalCode": "V0C 1J0",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "3815 Burdett Avenue",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 1B2",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "3795 Burdett Avenue",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8Y 1Y7",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "3356 Wallace Street",
+        "addr2": null,
+        "city": "Nanaimo",
+        "postalCode": "V9R 3A8",
         "province": "BC",
         "type": "Bus Yard"
     }

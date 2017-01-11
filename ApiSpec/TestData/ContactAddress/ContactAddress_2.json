@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "1231 Stum Lake Road",
+        "addr1": "907 Nootka Street",
         "addr2": null,
-        "city": "Horsefly",
-        "postalCode": "V0L 1L0",
+        "city": "Vancouver",
+        "postalCode": "V5M 3M5",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

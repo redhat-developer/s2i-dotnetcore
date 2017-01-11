@@ -1,18 +1,10 @@
 [
     {
-        "addr1": "4216 Robson St",
+        "addr1": "365 Old Spallumcheen Rd",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 3K9",
+        "city": "Hope",
+        "postalCode": "V0X 1L0",
         "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "806 Coldstream Avenue",
-        "addr2": null,
-        "city": "Vernon",
-        "postalCode": "V1T 6N1",
-        "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

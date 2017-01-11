@@ -1,14 +1,22 @@
 [
     {
-        "addr1": "2031 Blind Bay Road",
+        "addr1": "1004 Robson St",
         "addr2": null,
-        "city": "Sicamous",
-        "postalCode": "V0E 2V0",
+        "city": "Vancouver",
+        "postalCode": "V6B 3K9",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "4359 Yoho Valley Road",
+        "addr2": null,
+        "city": "Spillimacheen",
+        "postalCode": "V0A 1P0",
         "province": "BC",
         "type": "Field Office"
     },
     {
-        "addr1": "4537 St George Street",
+        "addr1": "2519 St George Street",
         "addr2": null,
         "city": "Vancouver",
         "postalCode": "V5T 1Z7",

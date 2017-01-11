@@ -1,17 +1,9 @@
 [
     {
-        "addr1": "3815 Burdett Avenue",
+        "addr1": "2882 Carlson Road",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1B2",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "1323 Cordova Street",
-        "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
+        "city": "Prince George",
+        "postalCode": "V2L 5E5",
         "province": "BC",
         "type": "Bus Yard"
     }

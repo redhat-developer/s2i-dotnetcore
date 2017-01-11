@@ -1,9 +1,17 @@
 [
     {
-        "addr1": "2076 James Street",
+        "addr1": "365 Old Spallumcheen Rd",
         "addr2": null,
-        "city": "Aldergrove",
-        "postalCode": "V5G 4S4",
+        "city": "Hope",
+        "postalCode": "V0X 1L0",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "4347 Blanshard",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 2H9",
         "province": "BC",
         "type": "Headquarters"
     }

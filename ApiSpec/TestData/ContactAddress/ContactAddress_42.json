@@ -1,34 +1,42 @@
 [
     {
-        "addr1": "735 Wallace Street",
+        "addr1": "1019 Hardy Street",
         "addr2": null,
-        "city": "Nanaimo",
-        "postalCode": "V9R 3A8",
+        "city": "Kelowna",
+        "postalCode": "V1Y 8H2",
         "province": "BC",
         "type": "Bus Yard"
     },
     {
-        "addr1": "4201 Jade St",
+        "addr1": "2881 Alaska Hwy",
         "addr2": null,
-        "city": "West Vancouver",
-        "postalCode": "V7V 1Y8",
+        "city": "Fort Nelson",
+        "postalCode": "V0C 1C0",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "4536 Brew Creek Rd",
+        "addr2": null,
+        "city": "Port Hardy",
+        "postalCode": "V0N 2P0",
         "province": "BC",
         "type": "Headquarters"
     },
     {
-        "addr1": "3760 Keith Road",
+        "addr1": "4403 Brew Creek Rd",
         "addr2": null,
-        "city": "North Vancouver",
-        "postalCode": "V5T 2C1",
+        "city": "Whistler",
+        "postalCode": "V0N 1B0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     },
     {
-        "addr1": "396 Quayside Dr",
+        "addr1": "3273 Kinchant St",
         "addr2": null,
-        "city": "New Westminster",
-        "postalCode": "V3M 6A1",
+        "city": "Sardis",
+        "postalCode": "V2R 1C8",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]
