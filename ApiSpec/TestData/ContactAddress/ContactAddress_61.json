@@ -1,26 +1,10 @@
 [
     {
-        "addr1": "127 Coldstream Avenue",
+        "addr1": "3420 Burdett Avenue",
         "addr2": null,
-        "city": "Vernon",
-        "postalCode": "V1T 6N1",
+        "city": "Victoria",
+        "postalCode": "V8W IE9",
         "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "2383 Brew Creek Rd",
-        "addr2": null,
-        "city": "Whistler",
-        "postalCode": "V0N 1B0",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "2814 Scotts Lane",
-        "addr2": null,
-        "city": "Youbou",
-        "postalCode": "V0R 3E0",
-        "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

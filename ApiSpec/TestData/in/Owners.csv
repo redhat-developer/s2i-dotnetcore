@@ -1,22 +1,22 @@
 File,name,id,status,dateCreated,primaryContactRefId,!serviceArea,serviceAreaRefId
-SBOwner,Edwards & Co,101,Archive,2014-01-24,1,Nicola,14
-SBOwner,"Wilson's Transportion, Inc.",102,Active,2013-06-07,2,East Kootenay,11
-SBOwner,School District 61,103,Active,2007-10-30,4,Central Cariboo,17
-SBOwner,SMUS,104,Active,2006-10-04,6,Nicola,14
-SBOwner,School District 62,105,Active,2015-05-22,8,Central Cariboo,17
-SBOwner,JC Kingston Transportation,106,Active,2011-08-29,10,Skeena,26
-SBOwner,BC Transit School Bus,107,Active,2004-05-12,12,North Peace,22
-SBOwner,Ferries Transit,108,Active,2005-11-08,13,North  Island,3
-SBOwner,Jones Transportation,109,Active,2008-08-25,15,North  Island,3
-SBOwner,"SB School Bus, Inc.",110,Active,2010-03-27,18,South Cariboo,16
-SBOwner,School District 64,111,Active,2010-07-13,20,Bulkley - Nass,25
-SBOwner,Service Merchandise,112,Active,2012-10-21,24,North Coast,27
-SBOwner,Lionel Playworld,113,Active,2005-04-12,25,South Okanagan,8
-SBOwner,Sandy's,114,Active,2006-10-08,26,Nechako,23
-SBOwner,Stratacard,115,Active,2004-10-12,27,Bulkley - Nass,25
-SBOwner,Gamma Gas,116,Active,2007-01-14,28,East Kootenay,11
-SBOwner,J. Brannam,117,Active,2003-11-28,34,Skeena,26
-SBOwner,Success Is Yours,118,Active,2013-06-11,39,Skeena,26
+SBOwner,Edwards & Co,101,Archive,2011-04-04,1,South Cariboo,16
+SBOwner,"Wilson's Transportion, Inc.",102,Active,2007-07-05,5,Okanagan - Shuswap,13
+SBOwner,School District 61,103,Active,2010-04-16,11,North Coast,27
+SBOwner,SMUS,104,Active,2016-01-22,13,Central Kootenay,10
+SBOwner,School District 62,105,Active,2006-10-03,14,Sunshine Coast,5
+SBOwner,JC Kingston Transportation,106,Active,2013-07-19,15,Sunshine Coast,5
+SBOwner,BC Transit School Bus,107,Active,2016-05-26,16,Nechako,23
+SBOwner,Ferries Transit,108,Active,2006-10-23,19,Fort George,19
+SBOwner,Jones Transportation,109,Active,2008-04-10,20,Central  Island,2
+SBOwner,"SB School Bus, Inc.",110,Active,2006-08-03,25,North Cariboo,18
+SBOwner,School District 64,111,Active,2014-08-16,30,South Peace,21
+SBOwner,Service Merchandise,112,Active,2008-08-18,32,Lakes,24
+SBOwner,Lionel Playworld,113,Active,2004-10-13,34,South Cariboo,16
+SBOwner,Sandy's,114,Active,2010-07-19,36,East Kootenay,11
+SBOwner,Stratacard,115,Active,2010-05-09,43,North  Island,3
+SBOwner,Gamma Gas,116,Active,2015-08-01,45,North Coast,27
+SBOwner,J. Brannam,117,Active,2008-10-03,46,North Peace,22
+SBOwner,Success Is Yours,118,Active,2015-01-10,53,South Okanagan,8
 -,,,,,,,
 -,,,,,,,
 -,,,,,,,

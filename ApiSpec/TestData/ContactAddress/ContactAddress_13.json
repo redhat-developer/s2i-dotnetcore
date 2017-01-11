@@ -1,9 +1,9 @@
 [
     {
-        "addr1": "1710 Yoho Valley Road",
+        "addr1": "1004 Robson St",
         "addr2": null,
-        "city": "Golden",
-        "postalCode": "V0A 1H0",
+        "city": "Vancouver",
+        "postalCode": "V6B 3K9",
         "province": "BC",
         "type": "Bus Yard"
     }

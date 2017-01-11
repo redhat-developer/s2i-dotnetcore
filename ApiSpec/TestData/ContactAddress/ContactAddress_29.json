@@ -1,17 +1,17 @@
 [
     {
-        "addr1": "3924 Roger Street",
+        "addr1": "2549 James Street",
         "addr2": null,
-        "city": "Duncan",
-        "postalCode": "V9L 1P1",
+        "city": "Burnaby",
+        "postalCode": "V5G 4W7",
         "province": "BC",
         "type": "Field Office"
     },
     {
-        "addr1": "684 Roger Street",
+        "addr1": "1654 Roger Street",
         "addr2": null,
-        "city": "Duncan",
-        "postalCode": "V9L 1P1",
+        "city": "Courtenay",
+        "postalCode": "V9N 2J6",
         "province": "BC",
         "type": "Headquarters"
     }

@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "2183 Kinchant St",
+        "addr1": "2824 Hastings Street",
         "addr2": null,
-        "city": "Prince George",
-        "postalCode": "V2N 2S6",
+        "city": "Vancouver",
+        "postalCode": "V6C 1B4",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

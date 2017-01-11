@@ -1,10 +1,18 @@
 [
     {
-        "addr1": "1719 Blind Bay Road",
+        "addr1": "2261 Blanshard",
         "addr2": null,
-        "city": "Vavenby",
-        "postalCode": "V0E 3A0",
+        "city": "Victoria",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "104 Roger Street",
+        "addr2": null,
+        "city": "Comox",
+        "postalCode": "V9N 6A1",
+        "province": "BC",
+        "type": "Headquarters"
     }
 ]

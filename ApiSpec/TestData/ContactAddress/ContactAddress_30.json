@@ -1,18 +1,26 @@
 [
     {
-        "addr1": "4764 Jade St",
+        "addr1": "1696 Alaska Hwy",
         "addr2": null,
-        "city": "Richmond",
-        "postalCode": "V7E 2E4",
+        "city": "Fort Nelson",
+        "postalCode": "V0C 1C0",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     },
     {
-        "addr1": "3924 Roger Street",
+        "addr1": "1028 Glover Road",
         "addr2": null,
-        "city": "Duncan",
-        "postalCode": "V9L 1P1",
+        "city": "Langley",
+        "postalCode": "V3A 1Z3",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "1369 Tolmie St",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6M 1Y8",
+        "province": "BC",
+        "type": "Field Office"
     }
 ]

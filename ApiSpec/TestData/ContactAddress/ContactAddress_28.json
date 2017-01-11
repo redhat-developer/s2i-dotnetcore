@@ -1,10 +1,26 @@
 [
     {
-        "addr1": "1140 Sixth Street",
+        "addr1": "2262 Burdett Avenue",
         "addr2": null,
-        "city": "New Westminister",
-        "postalCode": "V3L 3C1",
+        "city": "Victoria",
+        "postalCode": "V8Z 2J8",
         "province": "BC",
         "type": "Bus Yard"
+    },
+    {
+        "addr1": "3643 Robson St",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6B 3K9",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "4359 Yoho Valley Road",
+        "addr2": null,
+        "city": "Spillimacheen",
+        "postalCode": "V0A 1P0",
+        "province": "BC",
+        "type": "Field Office"
     }
 ]

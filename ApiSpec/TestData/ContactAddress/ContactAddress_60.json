@@ -1,9 +1,25 @@
 [
     {
-        "addr1": "4112 Burdett Avenue",
+        "addr1": "4283 Burdett Avenue",
         "addr2": null,
         "city": "Victoria",
-        "postalCode": "V8W 1B2",
+        "postalCode": "V8W 1L6",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "3418 Brew Creek Rd",
+        "addr2": null,
+        "city": "Port Hardy",
+        "postalCode": "V0N 2P0",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "4536 Brew Creek Rd",
+        "addr2": null,
+        "city": "Port Hardy",
+        "postalCode": "V0N 2P0",
         "province": "BC",
         "type": "Field Office"
     }

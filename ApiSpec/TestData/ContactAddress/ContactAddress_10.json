@@ -1,10 +1,18 @@
 [
     {
-        "addr1": "1004 Robson St",
+        "addr1": "1323 Cordova Street",
         "addr2": null,
         "city": "Vancouver",
-        "postalCode": "V6B 3K9",
+        "postalCode": "V6B 1E1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "510 Burdett Avenue",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 1B2",
+        "province": "BC",
+        "type": "Bus Yard"
     }
 ]

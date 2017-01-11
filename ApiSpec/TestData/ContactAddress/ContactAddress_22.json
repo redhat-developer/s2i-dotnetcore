@@ -1,17 +1,9 @@
 [
     {
-        "addr1": "4283 Burdett Avenue",
+        "addr1": "2031 Blind Bay Road",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1L6",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "2558 Glover Road",
-        "addr2": null,
-        "city": "Coquitlam",
-        "postalCode": "V3J 4S1",
+        "city": "Sicamous",
+        "postalCode": "V0E 2V0",
         "province": "BC",
         "type": "Bus Yard"
     }

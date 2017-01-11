@@ -1,17 +1,9 @@
 [
     {
-        "addr1": "2956 Shaughnessy St",
+        "addr1": "3618 Queens Bay",
         "addr2": null,
-        "city": "Port Coquitlam",
-        "postalCode": "V3C 4S7",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "2824 Hastings Street",
-        "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6C 1B4",
+        "city": "Salmo",
+        "postalCode": "V0G 1Z0",
         "province": "BC",
         "type": "Bus Yard"
     }

@@ -1,18 +1,10 @@
 [
     {
-        "addr1": "4528 Nootka Street",
+        "addr1": "2644 102nd Avenue",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V5M 3M5",
+        "city": "Cranbrook",
+        "postalCode": "V1C 2R9",
         "province": "BC",
         "type": "Field Office"
-    },
-    {
-        "addr1": "3600 Cordova Street",
-        "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
-        "province": "BC",
-        "type": "Bus Yard"
     }
 ]

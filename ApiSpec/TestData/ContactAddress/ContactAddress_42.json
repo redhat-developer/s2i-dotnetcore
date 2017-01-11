@@ -1,18 +1,34 @@
 [
     {
-        "addr1": "2867 Blanshard",
+        "addr1": "735 Wallace Street",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 2H9",
+        "city": "Nanaimo",
+        "postalCode": "V9R 3A8",
         "province": "BC",
         "type": "Bus Yard"
     },
     {
-        "addr1": "4764 Jade St",
+        "addr1": "4201 Jade St",
         "addr2": null,
-        "city": "Richmond",
-        "postalCode": "V7E 2E4",
+        "city": "West Vancouver",
+        "postalCode": "V7V 1Y8",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "3760 Keith Road",
+        "addr2": null,
+        "city": "North Vancouver",
+        "postalCode": "V5T 2C1",
         "province": "BC",
         "type": "Bus Yard"
+    },
+    {
+        "addr1": "396 Quayside Dr",
+        "addr2": null,
+        "city": "New Westminster",
+        "postalCode": "V3M 6A1",
+        "province": "BC",
+        "type": "Field Office"
     }
 ]

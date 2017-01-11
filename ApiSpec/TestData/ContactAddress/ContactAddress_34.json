@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "232 Cordova Street",
+        "addr1": "104 Roger Street",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
+        "city": "Comox",
+        "postalCode": "V9N 6A1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

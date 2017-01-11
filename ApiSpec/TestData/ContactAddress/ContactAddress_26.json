@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "232 Cordova Street",
+        "addr1": "3356 Wallace Street",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
+        "city": "Nanaimo",
+        "postalCode": "V9R 3A8",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]
