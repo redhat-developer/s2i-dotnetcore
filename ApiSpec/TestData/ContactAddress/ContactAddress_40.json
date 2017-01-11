@@ -1,18 +1,10 @@
 [
     {
-        "addr1": "4136 Glover Road",
+        "addr1": "1547 Roger Street",
         "addr2": null,
-        "city": "Langley",
-        "postalCode": "V3A 4P6",
+        "city": "Port Alberni",
+        "postalCode": "V9Y 4M8",
         "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "3854 Glover Road",
-        "addr2": null,
-        "city": "Langley",
-        "postalCode": "V3A 4P6",
-        "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

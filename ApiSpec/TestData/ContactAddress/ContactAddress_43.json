@@ -1,9 +1,17 @@
 [
     {
-        "addr1": "3832 Roger Street",
+        "addr1": "2031 Blind Bay Road",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V9B 1X2",
+        "city": "Sicamous",
+        "postalCode": "V0E 2V0",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "4537 St George Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V5T 1Z7",
         "province": "BC",
         "type": "Bus Yard"
     }

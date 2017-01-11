@@ -1,9 +1,9 @@
 [
     {
-        "addr1": "101 Shaughnessy St",
+        "addr1": "2714 Russell Avenue",
         "addr2": null,
-        "city": "Port Coquitlam",
-        "postalCode": "V3C 4S7",
+        "city": "Langley",
+        "postalCode": "V4X 1J7",
         "province": "BC",
         "type": "Bus Yard"
     }

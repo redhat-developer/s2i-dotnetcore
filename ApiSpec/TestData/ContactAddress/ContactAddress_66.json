@@ -1,9 +1,25 @@
 [
     {
-        "addr1": "1888 Findlay Creek Road",
+        "addr1": "223 Brew Creek Rd",
         "addr2": null,
-        "city": "Grasmere",
-        "postalCode": "V0B 1R0",
+        "city": "Whistler",
+        "postalCode": "V0N 1B0",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "1028 Glover Road",
+        "addr2": null,
+        "city": "Langley",
+        "postalCode": "V3A 1Z3",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "2919 Old Spallumcheen Rd",
+        "addr2": null,
+        "city": "Atlin",
+        "postalCode": "V0W 1A0",
         "province": "BC",
         "type": "Bus Yard"
     }

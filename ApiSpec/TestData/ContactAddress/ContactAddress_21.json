@@ -1,57 +1,17 @@
 [
     {
-        "addr1": "3795 Burdett Avenue",
+        "addr1": "3967 Queens Bay",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8Y 1Y7",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "1719 Blind Bay Road",
-        "addr2": null,
-        "city": "Vavenby",
-        "postalCode": "V0E 3A0",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "727 Glover Road",
-        "addr2": null,
-        "city": "Langley",
-        "postalCode": "V3A 4P6",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "914 Yoho Valley Road",
-        "addr2": null,
-        "city": "Invermere",
-        "postalCode": "V0A 1K0",
+        "city": "Fauquier",
+        "postalCode": "V0G 1K0",
         "province": "BC",
         "type": "Field Office"
     },
     {
-        "addr1": "4112 Burdett Avenue",
+        "addr1": "2558 Glover Road",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1B2",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "2644 102nd Avenue",
-        "addr2": null,
-        "city": "Cranbrook",
-        "postalCode": "V1C 2R9",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "2578 Glover Road",
-        "addr2": null,
-        "city": "Fort Langley",
-        "postalCode": "V3A 6X5",
+        "city": "Coquitlam",
+        "postalCode": "V3J 4S1",
         "province": "BC",
         "type": "Headquarters"
     }

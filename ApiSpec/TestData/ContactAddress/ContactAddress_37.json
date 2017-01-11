@@ -1,10 +1,50 @@
 [
     {
-        "addr1": "4638 Robson St",
+        "addr1": "34 Alaska Hwy",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 3K9",
+        "city": "Chetwynd",
+        "postalCode": "V0C 1J0",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "608 Jade St",
+        "addr2": null,
+        "city": "Richmond",
+        "postalCode": "V7E 2E4",
         "province": "BC",
         "type": "Bus Yard"
+    },
+    {
+        "addr1": "4173 James Street",
+        "addr2": null,
+        "city": "Burnaby",
+        "postalCode": "V5G 4W7",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2657 Wellington Ave",
+        "addr2": null,
+        "city": "Chilliwack",
+        "postalCode": "V2P 2M1",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "4305 Essendene Avenue",
+        "addr2": null,
+        "city": "Abbotsford",
+        "postalCode": "V2S 2H7",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "4537 St George Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V5T 1Z7",
+        "province": "BC",
+        "type": "Headquarters"
     }
 ]

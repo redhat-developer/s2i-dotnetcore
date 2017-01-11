@@ -1,26 +1,26 @@
 [
     {
-        "addr1": "510 Burdett Avenue",
+        "addr1": "3746 Noble Rd",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1B2",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "4761 King George Hwy",
-        "addr2": null,
-        "city": "Surrey",
-        "postalCode": "V3W 4E3",
+        "city": "Cortes Island",
+        "postalCode": "V0P 1T0",
         "province": "BC",
         "type": "Headquarters"
     },
     {
-        "addr1": "2310 Mesa Vista Drive",
+        "addr1": "3246 Alaska Hwy",
         "addr2": null,
-        "city": "Boston Bar",
-        "postalCode": "V0K 1C0",
+        "city": "Fort Nelson",
+        "postalCode": "V0C 1C0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "3618 Queens Bay",
+        "addr2": null,
+        "city": "Salmo",
+        "postalCode": "V0G 1Z0",
+        "province": "BC",
+        "type": "Bus Yard"
     }
 ]

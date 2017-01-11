@@ -1,0 +1,2646 @@
+[
+    {
+        "city": "100 Mile House",
+        "id": "1"
+    },
+    {
+        "city": "108 Mile House",
+        "id": "2"
+    },
+    {
+        "city": "150 Mile House",
+        "id": "3"
+    },
+    {
+        "city": "70 Mile House",
+        "id": "4"
+    },
+    {
+        "city": "Abbotsford",
+        "id": "5"
+    },
+    {
+        "city": "Adams Lake",
+        "id": "6"
+    },
+    {
+        "city": "Agassiz",
+        "id": "7"
+    },
+    {
+        "city": "Ahousat",
+        "id": "8"
+    },
+    {
+        "city": "Ainsworth Hot Springs",
+        "id": "9"
+    },
+    {
+        "city": "Aiyansh",
+        "id": "10"
+    },
+    {
+        "city": "Albert Canyon",
+        "id": "11"
+    },
+    {
+        "city": "Albion",
+        "id": "12"
+    },
+    {
+        "city": "Aldergrove",
+        "id": "13"
+    },
+    {
+        "city": "Alert Bay",
+        "id": "14"
+    },
+    {
+        "city": "Alexis Creek",
+        "id": "15"
+    },
+    {
+        "city": "Alice Arm",
+        "id": "16"
+    },
+    {
+        "city": "Alkali Lake",
+        "id": "17"
+    },
+    {
+        "city": "Altona",
+        "id": "18"
+    },
+    {
+        "city": "Alyansh",
+        "id": "19"
+    },
+    {
+        "city": "Anaham",
+        "id": "20"
+    },
+    {
+        "city": "Anaheim",
+        "id": "21"
+    },
+    {
+        "city": "Anahim Lake",
+        "id": "22"
+    },
+    {
+        "city": "Anglemont",
+        "id": "23"
+    },
+    {
+        "city": "Anmore",
+        "id": "24"
+    },
+    {
+        "city": "Applegrove",
+        "id": "25"
+    },
+    {
+        "city": "Argenta",
+        "id": "26"
+    },
+    {
+        "city": "Armstrong",
+        "id": "27"
+    },
+    {
+        "city": "Arras",
+        "id": "28"
+    },
+    {
+        "city": "Arrow Park",
+        "id": "29"
+    },
+    {
+        "city": "Ashcroft",
+        "id": "30"
+    },
+    {
+        "city": "Aspen Grove",
+        "id": "31"
+    },
+    {
+        "city": "Athalmer",
+        "id": "32"
+    },
+    {
+        "city": "Atlin",
+        "id": "33"
+    },
+    {
+        "city": "Avola",
+        "id": "34"
+    },
+    {
+        "city": "Baldonnel",
+        "id": "35"
+    },
+    {
+        "city": "Baldy Hughes",
+        "id": "36"
+    },
+    {
+        "city": "Balfour",
+        "id": "37"
+    },
+    {
+        "city": "Bamfield",
+        "id": "38"
+    },
+    {
+        "city": "Barkerville",
+        "id": "39"
+    },
+    {
+        "city": "Barnston Island",
+        "id": "40"
+    },
+    {
+        "city": "Barriere",
+        "id": "41"
+    },
+    {
+        "city": "Bear Cove",
+        "id": "42"
+    },
+    {
+        "city": "Beaton",
+        "id": "43"
+    },
+    {
+        "city": "Beatton River",
+        "id": "44"
+    },
+    {
+        "city": "Beaver Cove",
+        "id": "45"
+    },
+    {
+        "city": "Beaverdell",
+        "id": "46"
+    },
+    {
+        "city": "Belcarra",
+        "id": "47"
+    },
+    {
+        "city": "Bella Bella",
+        "id": "48"
+    },
+    {
+        "city": "Bella Coola",
+        "id": "49"
+    },
+    {
+        "city": "Bellingham",
+        "id": "50"
+    },
+    {
+        "city": "Big Bar Creek",
+        "id": "51"
+    },
+    {
+        "city": "Big Bay",
+        "id": "52"
+    },
+    {
+        "city": "Big Lake Ranch",
+        "id": "53"
+    },
+    {
+        "city": "Big White",
+        "id": "54"
+    },
+    {
+        "city": "Birch Island",
+        "id": "55"
+    },
+    {
+        "city": "Birken",
+        "id": "56"
+    },
+    {
+        "city": "Black Creek",
+        "id": "57"
+    },
+    {
+        "city": "Blackpool",
+        "id": "58"
+    },
+    {
+        "city": "Blaine",
+        "id": "59"
+    },
+    {
+        "city": "Blind Bay",
+        "id": "60"
+    },
+    {
+        "city": "Blue River",
+        "id": "61"
+    },
+    {
+        "city": "Boat Basin",
+        "id": "62"
+    },
+    {
+        "city": "Bogota",
+        "id": "63"
+    },
+    {
+        "city": "Boston Bar",
+        "id": "64"
+    },
+    {
+        "city": "Boswell",
+        "id": "65"
+    },
+    {
+        "city": "Bouchie Lake",
+        "id": "66"
+    },
+    {
+        "city": "Boundary Bay",
+        "id": "67"
+    },
+    {
+        "city": "Bowen Island",
+        "id": "68"
+    },
+    {
+        "city": "Bowser",
+        "id": "69"
+    },
+    {
+        "city": "Brackendale",
+        "id": "70"
+    },
+    {
+        "city": "Bralorne",
+        "id": "71"
+    },
+    {
+        "city": "Brentwood Bay",
+        "id": "72"
+    },
+    {
+        "city": "Bridesville",
+        "id": "73"
+    },
+    {
+        "city": "Bridge Lake",
+        "id": "74"
+    },
+    {
+        "city": "Brighouse",
+        "id": "75"
+    },
+    {
+        "city": "Brisco",
+        "id": "76"
+    },
+    {
+        "city": "Britannia Beach",
+        "id": "77"
+    },
+    {
+        "city": "Bucking Horse",
+        "id": "78"
+    },
+    {
+        "city": "Buckley Bay",
+        "id": "79"
+    },
+    {
+        "city": "Buffalo Creek",
+        "id": "80"
+    },
+    {
+        "city": "Buick",
+        "id": "81"
+    },
+    {
+        "city": "Burnaby",
+        "id": "82"
+    },
+    {
+        "city": "Burns Lake",
+        "id": "83"
+    },
+    {
+        "city": "Burton",
+        "id": "84"
+    },
+    {
+        "city": "Cache Creek",
+        "id": "85"
+    },
+    {
+        "city": "Campbell River",
+        "id": "86"
+    },
+    {
+        "city": "Canal Flats",
+        "id": "87"
+    },
+    {
+        "city": "Canim Lake",
+        "id": "88"
+    },
+    {
+        "city": "Canoe",
+        "id": "89"
+    },
+    {
+        "city": "Canyon",
+        "id": "90"
+    },
+    {
+        "city": "Canyon City",
+        "id": "91"
+    },
+    {
+        "city": "Carmi",
+        "id": "92"
+    },
+    {
+        "city": "Carson",
+        "id": "93"
+    },
+    {
+        "city": "Cascade",
+        "id": "94"
+    },
+    {
+        "city": "Cassiar",
+        "id": "95"
+    },
+    {
+        "city": "Castlegar",
+        "id": "96"
+    },
+    {
+        "city": "Cawston",
+        "id": "97"
+    },
+    {
+        "city": "Cecil Lake",
+        "id": "98"
+    },
+    {
+        "city": "Cedar",
+        "id": "99"
+    },
+    {
+        "city": "Celista",
+        "id": "100"
+    },
+    {
+        "city": "Central Saanich",
+        "id": "101"
+    },
+    {
+        "city": "Chapman Creek",
+        "id": "102"
+    },
+    {
+        "city": "Charlie Lake",
+        "id": "103"
+    },
+    {
+        "city": "Chase",
+        "id": "104"
+    },
+    {
+        "city": "Cheekye",
+        "id": "105"
+    },
+    {
+        "city": "Chemainus",
+        "id": "106"
+    },
+    {
+        "city": "Cherryville",
+        "id": "107"
+    },
+    {
+        "city": "Chetwynd",
+        "id": "108"
+    },
+    {
+        "city": "Chezacut",
+        "id": "109"
+    },
+    {
+        "city": "Chilanko Forks",
+        "id": "110"
+    },
+    {
+        "city": "Chilliwack",
+        "id": "111"
+    },
+    {
+        "city": "Chopaka",
+        "id": "112"
+    },
+    {
+        "city": "Christina Lake",
+        "id": "113"
+    },
+    {
+        "city": "Clayhurst",
+        "id": "114"
+    },
+    {
+        "city": "Clearbrook",
+        "id": "115"
+    },
+    {
+        "city": "Clearwater",
+        "id": "116"
+    },
+    {
+        "city": "Clinton",
+        "id": "117"
+    },
+    {
+        "city": "Cloverdale",
+        "id": "118"
+    },
+    {
+        "city": "Coal Harbour",
+        "id": "119"
+    },
+    {
+        "city": "Coalmont",
+        "id": "120"
+    },
+    {
+        "city": "Cobble Hill",
+        "id": "121"
+    },
+    {
+        "city": "Coldstream",
+        "id": "122"
+    },
+    {
+        "city": "Colwood",
+        "id": "123"
+    },
+    {
+        "city": "Comox",
+        "id": "124"
+    },
+    {
+        "city": "Coombs",
+        "id": "125"
+    },
+    {
+        "city": "Coquitlam",
+        "id": "126"
+    },
+    {
+        "city": "Corbin",
+        "id": "127"
+    },
+    {
+        "city": "Cordova Bay",
+        "id": "128"
+    },
+    {
+        "city": "Courtenay",
+        "id": "129"
+    },
+    {
+        "city": "Cowichan Bay",
+        "id": "130"
+    },
+    {
+        "city": "Craigellachie",
+        "id": "131"
+    },
+    {
+        "city": "Cranberry Junction",
+        "id": "132"
+    },
+    {
+        "city": "Cranbrook",
+        "id": "133"
+    },
+    {
+        "city": "Crawford Bay",
+        "id": "134"
+    },
+    {
+        "city": "Crescent Valley",
+        "id": "135"
+    },
+    {
+        "city": "Creston",
+        "id": "136"
+    },
+    {
+        "city": "Crofton",
+        "id": "137"
+    },
+    {
+        "city": "Croydon Station",
+        "id": "138"
+    },
+    {
+        "city": "Cultus Lake",
+        "id": "139"
+    },
+    {
+        "city": "Cumberland",
+        "id": "140"
+    },
+    {
+        "city": "D Arcy",
+        "id": "141"
+    },
+    {
+        "city": "Darfield",
+        "id": "142"
+    },
+    {
+        "city": "Darrell Bay",
+        "id": "143"
+    },
+    {
+        "city": "Dawson Creek",
+        "id": "144"
+    },
+    {
+        "city": "Dawson Landing",
+        "id": "145"
+    },
+    {
+        "city": "Dease Lake",
+        "id": "146"
+    },
+    {
+        "city": "Delta",
+        "id": "147"
+    },
+    {
+        "city": "Denman Island",
+        "id": "148"
+    },
+    {
+        "city": "Dewdney",
+        "id": "149"
+    },
+    {
+        "city": "Dog Creek",
+        "id": "150"
+    },
+    {
+        "city": "Donald Station",
+        "id": "151"
+    },
+    {
+        "city": "Douglas",
+        "id": "152"
+    },
+    {
+        "city": "Douglas Lake",
+        "id": "153"
+    },
+    {
+        "city": "Duncan",
+        "id": "154"
+    },
+    {
+        "city": "Dunster",
+        "id": "155"
+    },
+    {
+        "city": "Eagle Bay",
+        "id": "156"
+    },
+    {
+        "city": "Eagle Creek",
+        "id": "157"
+    },
+    {
+        "city": "Earls Cove",
+        "id": "158"
+    },
+    {
+        "city": "Edgewater",
+        "id": "159"
+    },
+    {
+        "city": "Egmont",
+        "id": "160"
+    },
+    {
+        "city": "Elkford",
+        "id": "161"
+    },
+    {
+        "city": "Elko",
+        "id": "162"
+    },
+    {
+        "city": "Endako",
+        "id": "163"
+    },
+    {
+        "city": "Enderby",
+        "id": "164"
+    },
+    {
+        "city": "Engen",
+        "id": "165"
+    },
+    {
+        "city": "Erickson",
+        "id": "166"
+    },
+    {
+        "city": "Errington",
+        "id": "167"
+    },
+    {
+        "city": "Esquimalt",
+        "id": "168"
+    },
+    {
+        "city": "Everett",
+        "id": "169"
+    },
+    {
+        "city": "Fairmont Hot Springs",
+        "id": "170"
+    },
+    {
+        "city": "Falkland",
+        "id": "171"
+    },
+    {
+        "city": "False Bay",
+        "id": "172"
+    },
+    {
+        "city": "Fanny Bay",
+        "id": "173"
+    },
+    {
+        "city": "Farmington",
+        "id": "174"
+    },
+    {
+        "city": "Fauquier",
+        "id": "175"
+    },
+    {
+        "city": "Fernie",
+        "id": "176"
+    },
+    {
+        "city": "Field",
+        "id": "177"
+    },
+    {
+        "city": "Firvale",
+        "id": "178"
+    },
+    {
+        "city": "Flathead",
+        "id": "179"
+    },
+    {
+        "city": "Forest Grove",
+        "id": "180"
+    },
+    {
+        "city": "Fort Babine",
+        "id": "181"
+    },
+    {
+        "city": "Fort Fraser",
+        "id": "182"
+    },
+    {
+        "city": "Fort Langley",
+        "id": "183"
+    },
+    {
+        "city": "Fort Nelson",
+        "id": "184"
+    },
+    {
+        "city": "Fort St. James",
+        "id": "185"
+    },
+    {
+        "city": "Fort St. John",
+        "id": "186"
+    },
+    {
+        "city": "Fort Steele",
+        "id": "187"
+    },
+    {
+        "city": "Francois Lake",
+        "id": "188"
+    },
+    {
+        "city": "Fraser Lake",
+        "id": "189"
+    },
+    {
+        "city": "Fraser Mills",
+        "id": "190"
+    },
+    {
+        "city": "French Creek",
+        "id": "191"
+    },
+    {
+        "city": "Fruitvale",
+        "id": "192"
+    },
+    {
+        "city": "Fulford Harbour",
+        "id": "193"
+    },
+    {
+        "city": "Gabriola Island",
+        "id": "194"
+    },
+    {
+        "city": "Galloway",
+        "id": "195"
+    },
+    {
+        "city": "Ganges",
+        "id": "196"
+    },
+    {
+        "city": "Garden Bay",
+        "id": "197"
+    },
+    {
+        "city": "Garibaldi Highlands",
+        "id": "198"
+    },
+    {
+        "city": "Genelle",
+        "id": "199"
+    },
+    {
+        "city": "Gibsons",
+        "id": "200"
+    },
+    {
+        "city": "Gibsons Landing",
+        "id": "201"
+    },
+    {
+        "city": "Gillies Bay",
+        "id": "202"
+    },
+    {
+        "city": "Glade",
+        "id": "203"
+    },
+    {
+        "city": "Glenora",
+        "id": "204"
+    },
+    {
+        "city": "Gold Bridge",
+        "id": "205"
+    },
+    {
+        "city": "Gold River",
+        "id": "206"
+    },
+    {
+        "city": "Golden",
+        "id": "207"
+    },
+    {
+        "city": "Goldstream",
+        "id": "208"
+    },
+    {
+        "city": "Good Hope",
+        "id": "209"
+    },
+    {
+        "city": "Goodlow",
+        "id": "210"
+    },
+    {
+        "city": "Grand Forks",
+        "id": "211"
+    },
+    {
+        "city": "Granilse",
+        "id": "212"
+    },
+    {
+        "city": "Granite Bay",
+        "id": "213"
+    },
+    {
+        "city": "Grasmere",
+        "id": "214"
+    },
+    {
+        "city": "Grassy Plains",
+        "id": "215"
+    },
+    {
+        "city": "Gravelle",
+        "id": "216"
+    },
+    {
+        "city": "Gray Creek",
+        "id": "217"
+    },
+    {
+        "city": "Green Cove",
+        "id": "218"
+    },
+    {
+        "city": "Greenville",
+        "id": "219"
+    },
+    {
+        "city": "Greenwood",
+        "id": "220"
+    },
+    {
+        "city": "Grindrod",
+        "id": "221"
+    },
+    {
+        "city": "Groundbirch",
+        "id": "222"
+    },
+    {
+        "city": "Gulf Islands",
+        "id": "223"
+    },
+    {
+        "city": "Hagensborg",
+        "id": "224"
+    },
+    {
+        "city": "Halfmoon Bay",
+        "id": "225"
+    },
+    {
+        "city": "Hanceville",
+        "id": "226"
+    },
+    {
+        "city": "Haney",
+        "id": "227"
+    },
+    {
+        "city": "Harrison Hot Springs",
+        "id": "228"
+    },
+    {
+        "city": "Harrison Mills",
+        "id": "229"
+    },
+    {
+        "city": "Hartley Bay",
+        "id": "230"
+    },
+    {
+        "city": "Hazelton",
+        "id": "231"
+    },
+    {
+        "city": "Hedley",
+        "id": "232"
+    },
+    {
+        "city": "Heffley Creek",
+        "id": "233"
+    },
+    {
+        "city": "Hendrix Lake",
+        "id": "234"
+    },
+    {
+        "city": "Heriot Bay",
+        "id": "235"
+    },
+    {
+        "city": "Hixon",
+        "id": "236"
+    },
+    {
+        "city": "Holberg",
+        "id": "237"
+    },
+    {
+        "city": "Honeymoon Bay",
+        "id": "238"
+    },
+    {
+        "city": "Hope",
+        "id": "239"
+    },
+    {
+        "city": "Hornby Island",
+        "id": "240"
+    },
+    {
+        "city": "Horseshoe Bay",
+        "id": "241"
+    },
+    {
+        "city": "Horsfly",
+        "id": "242"
+    },
+    {
+        "city": "Houston",
+        "id": "243"
+    },
+    {
+        "city": "Howser",
+        "id": "244"
+    },
+    {
+        "city": "Hudsons Hope",
+        "id": "245"
+    },
+    {
+        "city": "Huntingdon",
+        "id": "246"
+    },
+    {
+        "city": "Invermere",
+        "id": "247"
+    },
+    {
+        "city": "Irvines Landing",
+        "id": "248"
+    },
+    {
+        "city": "Iskut",
+        "id": "249"
+    },
+    {
+        "city": "Isle Pierre",
+        "id": "250"
+    },
+    {
+        "city": "Jaffray",
+        "id": "251"
+    },
+    {
+        "city": "Jesmond",
+        "id": "252"
+    },
+    {
+        "city": "Johnsons Landing",
+        "id": "253"
+    },
+    {
+        "city": "Jordon River",
+        "id": "254"
+    },
+    {
+        "city": "Juskatla",
+        "id": "255"
+    },
+    {
+        "city": "Kaleden",
+        "id": "256"
+    },
+    {
+        "city": "Kamloops",
+        "id": "257"
+    },
+    {
+        "city": "Kaslo",
+        "id": "258"
+    },
+    {
+        "city": "Keats Landing",
+        "id": "259"
+    },
+    {
+        "city": "Keefers",
+        "id": "260"
+    },
+    {
+        "city": "Kelowna",
+        "id": "261"
+    },
+    {
+        "city": "Kelsey Bay",
+        "id": "262"
+    },
+    {
+        "city": "Kemano",
+        "id": "263"
+    },
+    {
+        "city": "Kent",
+        "id": "264"
+    },
+    {
+        "city": "Kent",
+        "id": "265"
+    },
+    {
+        "city": "Keremeos",
+        "id": "266"
+    },
+    {
+        "city": "Kersley",
+        "id": "267"
+    },
+    {
+        "city": "Kettle Valley",
+        "id": "268"
+    },
+    {
+        "city": "Killiney Beach",
+        "id": "269"
+    },
+    {
+        "city": "Kilodnan",
+        "id": "270"
+    },
+    {
+        "city": "Kimberley",
+        "id": "271"
+    },
+    {
+        "city": "Kimsquit",
+        "id": "272"
+    },
+    {
+        "city": "Kincolith",
+        "id": "273"
+    },
+    {
+        "city": "Kingcome Inlet",
+        "id": "274"
+    },
+    {
+        "city": "Kingsgate",
+        "id": "275"
+    },
+    {
+        "city": "Kispiox",
+        "id": "276"
+    },
+    {
+        "city": "Kitamaat Village",
+        "id": "277"
+    },
+    {
+        "city": "Kitchener",
+        "id": "278"
+    },
+    {
+        "city": "Kitimat",
+        "id": "279"
+    },
+    {
+        "city": "Kitkatla",
+        "id": "280"
+    },
+    {
+        "city": "Kitwanga",
+        "id": "281"
+    },
+    {
+        "city": "Kleena Kleene",
+        "id": "282"
+    },
+    {
+        "city": "Klemtu",
+        "id": "283"
+    },
+    {
+        "city": "Knutsford",
+        "id": "284"
+    },
+    {
+        "city": "Kokish",
+        "id": "285"
+    },
+    {
+        "city": "Kootenay Bay",
+        "id": "286"
+    },
+    {
+        "city": "Kuper Island",
+        "id": "287"
+    },
+    {
+        "city": "Kyuquot",
+        "id": "288"
+    },
+    {
+        "city": "Lac La Hache",
+        "id": "289"
+    },
+    {
+        "city": "Lac Le Jeune",
+        "id": "290"
+    },
+    {
+        "city": "Ladner",
+        "id": "291"
+    },
+    {
+        "city": "Ladysmith",
+        "id": "292"
+    },
+    {
+        "city": "Lake Country",
+        "id": "293"
+    },
+    {
+        "city": "Lake Cowichan",
+        "id": "294"
+    },
+    {
+        "city": "Lake Errock",
+        "id": "295"
+    },
+    {
+        "city": "Lakesle",
+        "id": "296"
+    },
+    {
+        "city": "Langford",
+        "id": "297"
+    },
+    {
+        "city": "Langley",
+        "id": "298"
+    },
+    {
+        "city": "Lantzville",
+        "id": "299"
+    },
+    {
+        "city": "Lavington",
+        "id": "300"
+    },
+    {
+        "city": "Lazo",
+        "id": "301"
+    },
+    {
+        "city": "Leech Town",
+        "id": "302"
+    },
+    {
+        "city": "Lejac",
+        "id": "303"
+    },
+    {
+        "city": "Leo Creek",
+        "id": "304"
+    },
+    {
+        "city": "Liard River",
+        "id": "305"
+    },
+    {
+        "city": "Likely",
+        "id": "306"
+    },
+    {
+        "city": "Lillooet",
+        "id": "307"
+    },
+    {
+        "city": "Lions Bay",
+        "id": "308"
+    },
+    {
+        "city": "Lister",
+        "id": "309"
+    },
+    {
+        "city": "Little Fort",
+        "id": "310"
+    },
+    {
+        "city": "Little River",
+        "id": "311"
+    },
+    {
+        "city": "Logan Lake",
+        "id": "312"
+    },
+    {
+        "city": "Lone Butte",
+        "id": "313"
+    },
+    {
+        "city": "Lone Prairie",
+        "id": "314"
+    },
+    {
+        "city": "Long Harbour",
+        "id": "315"
+    },
+    {
+        "city": "Longworth",
+        "id": "316"
+    },
+    {
+        "city": "Louis Creek",
+        "id": "317"
+    },
+    {
+        "city": "Lower Nicola",
+        "id": "318"
+    },
+    {
+        "city": "Lower Post",
+        "id": "319"
+    },
+    {
+        "city": "Lumby",
+        "id": "320"
+    },
+    {
+        "city": "Lund",
+        "id": "321"
+    },
+    {
+        "city": "Lynden",
+        "id": "322"
+    },
+    {
+        "city": "Lytton",
+        "id": "323"
+    },
+    {
+        "city": "Mackenzie",
+        "id": "324"
+    },
+    {
+        "city": "Madeira Park",
+        "id": "325"
+    },
+    {
+        "city": "Magna Bay",
+        "id": "326"
+    },
+    {
+        "city": "Mahood Falls",
+        "id": "327"
+    },
+    {
+        "city": "Malahat",
+        "id": "328"
+    },
+    {
+        "city": "Manning Park",
+        "id": "329"
+    },
+    {
+        "city": "Manson Creek",
+        "id": "330"
+    },
+    {
+        "city": "Mansons Landing",
+        "id": "331"
+    },
+    {
+        "city": "Maple Ridge",
+        "id": "332"
+    },
+    {
+        "city": "Mara",
+        "id": "333"
+    },
+    {
+        "city": "Marguerite",
+        "id": "334"
+    },
+    {
+        "city": "Massett",
+        "id": "335"
+    },
+    {
+        "city": "Matsqui",
+        "id": "336"
+    },
+    {
+        "city": "Mcbride",
+        "id": "337"
+    },
+    {
+        "city": "Mcleese Lake",
+        "id": "338"
+    },
+    {
+        "city": "Mcleod Lake",
+        "id": "339"
+    },
+    {
+        "city": "Mclure",
+        "id": "340"
+    },
+    {
+        "city": "Meadow Creek",
+        "id": "341"
+    },
+    {
+        "city": "Merritt",
+        "id": "342"
+    },
+    {
+        "city": "Merville",
+        "id": "343"
+    },
+    {
+        "city": "Mesachie Lake",
+        "id": "344"
+    },
+    {
+        "city": "Metchosin",
+        "id": "345"
+    },
+    {
+        "city": "Mica Creek",
+        "id": "346"
+    },
+    {
+        "city": "Michel",
+        "id": "347"
+    },
+    {
+        "city": "Midway",
+        "id": "348"
+    },
+    {
+        "city": "Mill Bay",
+        "id": "349"
+    },
+    {
+        "city": "Milnes Landing",
+        "id": "350"
+    },
+    {
+        "city": "Minstrel Island",
+        "id": "351"
+    },
+    {
+        "city": "Miracle Beach",
+        "id": "352"
+    },
+    {
+        "city": "Mirror Lake",
+        "id": "353"
+    },
+    {
+        "city": "Mission",
+        "id": "354"
+    },
+    {
+        "city": "Moberly Lake",
+        "id": "355"
+    },
+    {
+        "city": "Montague Harbour",
+        "id": "356"
+    },
+    {
+        "city": "Monte Creek",
+        "id": "357"
+    },
+    {
+        "city": "Monte Lake",
+        "id": "358"
+    },
+    {
+        "city": "Montrose",
+        "id": "359"
+    },
+    {
+        "city": "Moose Heights",
+        "id": "360"
+    },
+    {
+        "city": "Moresby Camp",
+        "id": "361"
+    },
+    {
+        "city": "Moricetown",
+        "id": "362"
+    },
+    {
+        "city": "Mount Currie",
+        "id": "363"
+    },
+    {
+        "city": "Mount Vernon",
+        "id": "364"
+    },
+    {
+        "city": "Moyie",
+        "id": "365"
+    },
+    {
+        "city": "Muncho Lake",
+        "id": "366"
+    },
+    {
+        "city": "Nahmint",
+        "id": "367"
+    },
+    {
+        "city": "Nakusp",
+        "id": "368"
+    },
+    {
+        "city": "Namu",
+        "id": "369"
+    },
+    {
+        "city": "Nanaimo",
+        "id": "370"
+    },
+    {
+        "city": "Nanoose Bay",
+        "id": "371"
+    },
+    {
+        "city": "Naramata",
+        "id": "372"
+    },
+    {
+        "city": "Nass Camp",
+        "id": "373"
+    },
+    {
+        "city": "Natal",
+        "id": "374"
+    },
+    {
+        "city": "Nazko",
+        "id": "375"
+    },
+    {
+        "city": "Needles",
+        "id": "376"
+    },
+    {
+        "city": "Nelson",
+        "id": "377"
+    },
+    {
+        "city": "Nelson Forks",
+        "id": "378"
+    },
+    {
+        "city": "Nelway",
+        "id": "379"
+    },
+    {
+        "city": "Nemaiah Valley",
+        "id": "380"
+    },
+    {
+        "city": "New Aiyansh",
+        "id": "381"
+    },
+    {
+        "city": "New Brighton",
+        "id": "382"
+    },
+    {
+        "city": "New Denver",
+        "id": "383"
+    },
+    {
+        "city": "New Hazelton",
+        "id": "384"
+    },
+    {
+        "city": "New Westminster",
+        "id": "385"
+    },
+    {
+        "city": "Newgate",
+        "id": "386"
+    },
+    {
+        "city": "Newton",
+        "id": "387"
+    },
+    {
+        "city": "Nicola",
+        "id": "388"
+    },
+    {
+        "city": "Nimpo Lake",
+        "id": "389"
+    },
+    {
+        "city": "Nitnat",
+        "id": "390"
+    },
+    {
+        "city": "Noralee",
+        "id": "391"
+    },
+    {
+        "city": "North Bend",
+        "id": "392"
+    },
+    {
+        "city": "North Cowichan",
+        "id": "393"
+    },
+    {
+        "city": "North Pine",
+        "id": "394"
+    },
+    {
+        "city": "North Saanich",
+        "id": "395"
+    },
+    {
+        "city": "North Vancouver",
+        "id": "396"
+    },
+    {
+        "city": "Nukko Lake",
+        "id": "397"
+    },
+    {
+        "city": "Oak Bay",
+        "id": "398"
+    },
+    {
+        "city": "Ocean Falls",
+        "id": "399"
+    },
+    {
+        "city": "Okanagan Centre",
+        "id": "400"
+    },
+    {
+        "city": "Okanagan Falls",
+        "id": "401"
+    },
+    {
+        "city": "Oliver",
+        "id": "402"
+    },
+    {
+        "city": "Olympia",
+        "id": "403"
+    },
+    {
+        "city": "Oona River",
+        "id": "404"
+    },
+    {
+        "city": "Ootsa Lake",
+        "id": "405"
+    },
+    {
+        "city": "Osoyoos",
+        "id": "406"
+    },
+    {
+        "city": "Otter Bay",
+        "id": "407"
+    },
+    {
+        "city": "Oyama",
+        "id": "408"
+    },
+    {
+        "city": "Panorama Resort",
+        "id": "409"
+    },
+    {
+        "city": "Parksville",
+        "id": "410"
+    },
+    {
+        "city": "Parson",
+        "id": "411"
+    },
+    {
+        "city": "Paterson",
+        "id": "412"
+    },
+    {
+        "city": "Pavillion",
+        "id": "413"
+    },
+    {
+        "city": "Peachland",
+        "id": "414"
+    },
+    {
+        "city": "Pemberton",
+        "id": "415"
+    },
+    {
+        "city": "Pender Harbor",
+        "id": "416"
+    },
+    {
+        "city": "Penny",
+        "id": "417"
+    },
+    {
+        "city": "Penticton",
+        "id": "418"
+    },
+    {
+        "city": "Philips Arm",
+        "id": "419"
+    },
+    {
+        "city": "Pinantan Lake",
+        "id": "420"
+    },
+    {
+        "city": "Pink Mountain",
+        "id": "421"
+    },
+    {
+        "city": "Pitt Meadows",
+        "id": "422"
+    },
+    {
+        "city": "Pleasant Camp",
+        "id": "423"
+    },
+    {
+        "city": "Port Alberni",
+        "id": "424"
+    },
+    {
+        "city": "Port Alice",
+        "id": "425"
+    },
+    {
+        "city": "Port Angeles",
+        "id": "426"
+    },
+    {
+        "city": "Port Clemente",
+        "id": "427"
+    },
+    {
+        "city": "Port Coquitlam",
+        "id": "428"
+    },
+    {
+        "city": "Port Edward",
+        "id": "429"
+    },
+    {
+        "city": "Port Essington",
+        "id": "430"
+    },
+    {
+        "city": "Port Hardy",
+        "id": "431"
+    },
+    {
+        "city": "Port Kells",
+        "id": "432"
+    },
+    {
+        "city": "Port Mcneill",
+        "id": "433"
+    },
+    {
+        "city": "Port Mellon",
+        "id": "434"
+    },
+    {
+        "city": "Port Moody",
+        "id": "435"
+    },
+    {
+        "city": "Port Neville",
+        "id": "436"
+    },
+    {
+        "city": "Port Renfrew",
+        "id": "437"
+    },
+    {
+        "city": "Port Simpson",
+        "id": "438"
+    },
+    {
+        "city": "Pounce Coupe",
+        "id": "439"
+    },
+    {
+        "city": "Powell River",
+        "id": "440"
+    },
+    {
+        "city": "Prespatou",
+        "id": "441"
+    },
+    {
+        "city": "Prince George",
+        "id": "442"
+    },
+    {
+        "city": "Prince Rupert",
+        "id": "443"
+    },
+    {
+        "city": "Princeton",
+        "id": "444"
+    },
+    {
+        "city": "Pritchard",
+        "id": "445"
+    },
+    {
+        "city": "Procter",
+        "id": "446"
+    },
+    {
+        "city": "Progress",
+        "id": "447"
+    },
+    {
+        "city": "Prophet River",
+        "id": "448"
+    },
+    {
+        "city": "Qualicum",
+        "id": "449"
+    },
+    {
+        "city": "Quathiaski Cove",
+        "id": "450"
+    },
+    {
+        "city": "Quatsino",
+        "id": "451"
+    },
+    {
+        "city": "Queen Charlotte",
+        "id": "452"
+    },
+    {
+        "city": "Quesnel",
+        "id": "453"
+    },
+    {
+        "city": "Quilchena",
+        "id": "454"
+    },
+    {
+        "city": "Radium",
+        "id": "455"
+    },
+    {
+        "city": "Radium Hot Springs",
+        "id": "456"
+    },
+    {
+        "city": "Red Rock",
+        "id": "457"
+    },
+    {
+        "city": "Redmond",
+        "id": "458"
+    },
+    {
+        "city": "Redpass Junction",
+        "id": "459"
+    },
+    {
+        "city": "Redstone",
+        "id": "460"
+    },
+    {
+        "city": "Refuge Cove",
+        "id": "461"
+    },
+    {
+        "city": "Reid Lake",
+        "id": "462"
+    },
+    {
+        "city": "Remac",
+        "id": "463"
+    },
+    {
+        "city": "Revelstoke",
+        "id": "464"
+    },
+    {
+        "city": "Richmond",
+        "id": "465"
+    },
+    {
+        "city": "Riondel",
+        "id": "466"
+    },
+    {
+        "city": "Riske Creek",
+        "id": "467"
+    },
+    {
+        "city": "Rivers Inlet",
+        "id": "468"
+    },
+    {
+        "city": "Roberts Creek",
+        "id": "469"
+    },
+    {
+        "city": "Robson",
+        "id": "470"
+    },
+    {
+        "city": "Rock Bay",
+        "id": "471"
+    },
+    {
+        "city": "Rock Creek",
+        "id": "472"
+    },
+    {
+        "city": "Rogers Pass",
+        "id": "473"
+    },
+    {
+        "city": "Rolla",
+        "id": "474"
+    },
+    {
+        "city": "Roosville",
+        "id": "475"
+    },
+    {
+        "city": "Rose Prairie",
+        "id": "476"
+    },
+    {
+        "city": "Rosedale",
+        "id": "477"
+    },
+    {
+        "city": "Rossland",
+        "id": "478"
+    },
+    {
+        "city": "Royston",
+        "id": "479"
+    },
+    {
+        "city": "Rutland",
+        "id": "480"
+    },
+    {
+        "city": "Rykerts",
+        "id": "481"
+    },
+    {
+        "city": "Saanich",
+        "id": "482"
+    },
+    {
+        "city": "Saanichton",
+        "id": "483"
+    },
+    {
+        "city": "Salmo",
+        "id": "484"
+    },
+    {
+        "city": "Salmon Arm",
+        "id": "485"
+    },
+    {
+        "city": "Saltery Bay",
+        "id": "486"
+    },
+    {
+        "city": "San Josef",
+        "id": "487"
+    },
+    {
+        "city": "Sanca",
+        "id": "488"
+    },
+    {
+        "city": "Sandspit",
+        "id": "489"
+    },
+    {
+        "city": "Santos",
+        "id": "490"
+    },
+    {
+        "city": "Sao Paulo",
+        "id": "491"
+    },
+    {
+        "city": "Saratoga Beach",
+        "id": "492"
+    },
+    {
+        "city": "Sardis",
+        "id": "493"
+    },
+    {
+        "city": "Sarita",
+        "id": "494"
+    },
+    {
+        "city": "Saturna",
+        "id": "495"
+    },
+    {
+        "city": "Savary Island",
+        "id": "496"
+    },
+    {
+        "city": "Savona",
+        "id": "497"
+    },
+    {
+        "city": "Sayward",
+        "id": "498"
+    },
+    {
+        "city": "Scotch Creek",
+        "id": "499"
+    },
+    {
+        "city": "Seal Cove",
+        "id": "500"
+    },
+    {
+        "city": "Seattle",
+        "id": "501"
+    },
+    {
+        "city": "Sechelt",
+        "id": "502"
+    },
+    {
+        "city": "Seton Portage",
+        "id": "503"
+    },
+    {
+        "city": "Sewell Inlet",
+        "id": "504"
+    },
+    {
+        "city": "Seymour Arm",
+        "id": "505"
+    },
+    {
+        "city": "Shalalth",
+        "id": "506"
+    },
+    {
+        "city": "Shawnigan Lake",
+        "id": "507"
+    },
+    {
+        "city": "Shearwater",
+        "id": "508"
+    },
+    {
+        "city": "Shelley",
+        "id": "509"
+    },
+    {
+        "city": "Shelter Bay",
+        "id": "510"
+    },
+    {
+        "city": "Sherbrooke",
+        "id": "511"
+    },
+    {
+        "city": "Shoreacres",
+        "id": "512"
+    },
+    {
+        "city": "Shuswap",
+        "id": "513"
+    },
+    {
+        "city": "Shutty Bench",
+        "id": "514"
+    },
+    {
+        "city": "Sicamous",
+        "id": "515"
+    },
+    {
+        "city": "Sidney",
+        "id": "516"
+    },
+    {
+        "city": "Sikanni Chief",
+        "id": "517"
+    },
+    {
+        "city": "Silver Creek",
+        "id": "518"
+    },
+    {
+        "city": "Silverton",
+        "id": "519"
+    },
+    {
+        "city": "Simoon Sound",
+        "id": "520"
+    },
+    {
+        "city": "Sinclair Mills",
+        "id": "521"
+    },
+    {
+        "city": "Sirdar",
+        "id": "522"
+    },
+    {
+        "city": "Skidegate",
+        "id": "523"
+    },
+    {
+        "city": "Skookumchuck",
+        "id": "524"
+    },
+    {
+        "city": "Slocan",
+        "id": "525"
+    },
+    {
+        "city": "Slocan Park",
+        "id": "526"
+    },
+    {
+        "city": "Smith River",
+        "id": "527"
+    },
+    {
+        "city": "Smithers",
+        "id": "528"
+    },
+    {
+        "city": "Smithers Landing",
+        "id": "529"
+    },
+    {
+        "city": "Snug Cove",
+        "id": "530"
+    },
+    {
+        "city": "Soda Creek",
+        "id": "531"
+    },
+    {
+        "city": "Sointula",
+        "id": "532"
+    },
+    {
+        "city": "Sooke",
+        "id": "533"
+    },
+    {
+        "city": "Sorrento",
+        "id": "534"
+    },
+    {
+        "city": "South Fort George",
+        "id": "535"
+    },
+    {
+        "city": "South Hazelton",
+        "id": "536"
+    },
+    {
+        "city": "South Pender",
+        "id": "537"
+    },
+    {
+        "city": "South Slocan",
+        "id": "538"
+    },
+    {
+        "city": "South Wellington",
+        "id": "539"
+    },
+    {
+        "city": "Southbank",
+        "id": "540"
+    },
+    {
+        "city": "Spallumcheen",
+        "id": "541"
+    },
+    {
+        "city": "Sparwood",
+        "id": "542"
+    },
+    {
+        "city": "Spences Bridge",
+        "id": "543"
+    },
+    {
+        "city": "Spillimacheen",
+        "id": "544"
+    },
+    {
+        "city": "Spokane",
+        "id": "545"
+    },
+    {
+        "city": "Springhouse",
+        "id": "546"
+    },
+    {
+        "city": "Sproat Lake",
+        "id": "547"
+    },
+    {
+        "city": "Spuzzum",
+        "id": "548"
+    },
+    {
+        "city": "Squamish",
+        "id": "549"
+    },
+    {
+        "city": "Squilax",
+        "id": "550"
+    },
+    {
+        "city": "Stewardson Inlet",
+        "id": "551"
+    },
+    {
+        "city": "Stewart",
+        "id": "552"
+    },
+    {
+        "city": "Stikine",
+        "id": "553"
+    },
+    {
+        "city": "Stoner",
+        "id": "554"
+    },
+    {
+        "city": "Strathnaver",
+        "id": "555"
+    },
+    {
+        "city": "Stuart Island",
+        "id": "556"
+    },
+    {
+        "city": "Stuie",
+        "id": "557"
+    },
+    {
+        "city": "Sturdies Bay",
+        "id": "558"
+    },
+    {
+        "city": "Sullivan Bay",
+        "id": "559"
+    },
+    {
+        "city": "Sumas",
+        "id": "560"
+    },
+    {
+        "city": "Summerland",
+        "id": "561"
+    },
+    {
+        "city": "Summit Lake",
+        "id": "562"
+    },
+    {
+        "city": "Sunset Prairie",
+        "id": "563"
+    },
+    {
+        "city": "Surge Narrows",
+        "id": "564"
+    },
+    {
+        "city": "Surrey",
+        "id": "565"
+    },
+    {
+        "city": "Swartz Bay",
+        "id": "566"
+    },
+    {
+        "city": "Sydney",
+        "id": "567"
+    },
+    {
+        "city": "Ta Ta Creek",
+        "id": "568"
+    },
+    {
+        "city": "Tachie",
+        "id": "569"
+    },
+    {
+        "city": "Tacoma",
+        "id": "570"
+    },
+    {
+        "city": "Tadanac",
+        "id": "571"
+    },
+    {
+        "city": "Taghum",
+        "id": "572"
+    },
+    {
+        "city": "Tahala",
+        "id": "573"
+    },
+    {
+        "city": "Tahsis",
+        "id": "574"
+    },
+    {
+        "city": "Takla Landing",
+        "id": "575"
+    },
+    {
+        "city": "Takysie Lake",
+        "id": "576"
+    },
+    {
+        "city": "Tappen",
+        "id": "577"
+    },
+    {
+        "city": "Tatalrose",
+        "id": "578"
+    },
+    {
+        "city": "Tatla Lake",
+        "id": "579"
+    },
+    {
+        "city": "Tatlayoko Lake",
+        "id": "580"
+    },
+    {
+        "city": "Taylor",
+        "id": "581"
+    },
+    {
+        "city": "Tchesinkut Lake",
+        "id": "582"
+    },
+    {
+        "city": "Telegraph Cove",
+        "id": "583"
+    },
+    {
+        "city": "Telegraph Creek",
+        "id": "584"
+    },
+    {
+        "city": "Telkwa",
+        "id": "585"
+    },
+    {
+        "city": "Terrace",
+        "id": "586"
+    },
+    {
+        "city": "Tete Jaune Cache",
+        "id": "587"
+    },
+    {
+        "city": "Thetis Island",
+        "id": "588"
+    },
+    {
+        "city": "Thompson Sound",
+        "id": "589"
+    },
+    {
+        "city": "Three Valley",
+        "id": "590"
+    },
+    {
+        "city": "Thrums",
+        "id": "591"
+    },
+    {
+        "city": "Tlell",
+        "id": "592"
+    },
+    {
+        "city": "Toad River",
+        "id": "593"
+    },
+    {
+        "city": "Toba",
+        "id": "594"
+    },
+    {
+        "city": "Tofino",
+        "id": "595"
+    },
+    {
+        "city": "Tomslake",
+        "id": "596"
+    },
+    {
+        "city": "Topley",
+        "id": "597"
+    },
+    {
+        "city": "Topley Landing",
+        "id": "598"
+    },
+    {
+        "city": "Trail",
+        "id": "599"
+    },
+    {
+        "city": "Tranquille",
+        "id": "600"
+    },
+    {
+        "city": "Trout Lake",
+        "id": "601"
+    },
+    {
+        "city": "Trutch",
+        "id": "602"
+    },
+    {
+        "city": "Tsawwassen",
+        "id": "603"
+    },
+    {
+        "city": "Tsay Keh Dene",
+        "id": "604"
+    },
+    {
+        "city": "Tulameen",
+        "id": "605"
+    },
+    {
+        "city": "Tulsequah",
+        "id": "606"
+    },
+    {
+        "city": "Tumbler Ridge",
+        "id": "607"
+    },
+    {
+        "city": "Tupper",
+        "id": "608"
+    },
+    {
+        "city": "Ucluelet",
+        "id": "609"
+    },
+    {
+        "city": "Ulrich",
+        "id": "610"
+    },
+    {
+        "city": "Union Bay",
+        "id": "611"
+    },
+    {
+        "city": "Upper Fraser",
+        "id": "612"
+    },
+    {
+        "city": "Usk",
+        "id": "613"
+    },
+    {
+        "city": "Valemont",
+        "id": "614"
+    },
+    {
+        "city": "Valleyview",
+        "id": "615"
+    },
+    {
+        "city": "Vananda",
+        "id": "616"
+    },
+    {
+        "city": "Vancouver",
+        "id": "617"
+    },
+    {
+        "city": "Vancouver",
+        "id": "618"
+    },
+    {
+        "city": "Vanderhoof",
+        "id": "619"
+    },
+    {
+        "city": "Vavenby",
+        "id": "620"
+    },
+    {
+        "city": "Vedder Crossing",
+        "id": "621"
+    },
+    {
+        "city": "Vernon",
+        "id": "622"
+    },
+    {
+        "city": "Vesuvius",
+        "id": "623"
+    },
+    {
+        "city": "Victoria",
+        "id": "624"
+    },
+    {
+        "city": "View Royal",
+        "id": "625"
+    },
+    {
+        "city": "Village Bay",
+        "id": "626"
+    },
+    {
+        "city": "Waglisla",
+        "id": "627"
+    },
+    {
+        "city": "Walachin",
+        "id": "628"
+    },
+    {
+        "city": "Walla Walla",
+        "id": "629"
+    },
+    {
+        "city": "Waneta",
+        "id": "630"
+    },
+    {
+        "city": "Wardner",
+        "id": "631"
+    },
+    {
+        "city": "Ware",
+        "id": "632"
+    },
+    {
+        "city": "Warfield",
+        "id": "633"
+    },
+    {
+        "city": "Wasa",
+        "id": "634"
+    },
+    {
+        "city": "Watson Lake",
+        "id": "635"
+    },
+    {
+        "city": "Wells",
+        "id": "636"
+    },
+    {
+        "city": "West Vancouver",
+        "id": "637"
+    },
+    {
+        "city": "Westbank",
+        "id": "638"
+    },
+    {
+        "city": "Westbridge",
+        "id": "639"
+    },
+    {
+        "city": "Westwold",
+        "id": "640"
+    },
+    {
+        "city": "Whalley",
+        "id": "641"
+    },
+    {
+        "city": "Whistler",
+        "id": "642"
+    },
+    {
+        "city": "White Rock",
+        "id": "643"
+    },
+    {
+        "city": "Williams Lake",
+        "id": "644"
+    },
+    {
+        "city": "Willow River",
+        "id": "645"
+    },
+    {
+        "city": "Windermere",
+        "id": "646"
+    },
+    {
+        "city": "Winfield",
+        "id": "647"
+    },
+    {
+        "city": "Winlaw",
+        "id": "648"
+    },
+    {
+        "city": "Winter Harbour",
+        "id": "649"
+    },
+    {
+        "city": "Wonowon",
+        "id": "650"
+    },
+    {
+        "city": "Woodfibre",
+        "id": "651"
+    },
+    {
+        "city": "Woy Woy",
+        "id": "652"
+    },
+    {
+        "city": "Wycliffe",
+        "id": "653"
+    },
+    {
+        "city": "Wynndel",
+        "id": "654"
+    },
+    {
+        "city": "Yahk",
+        "id": "655"
+    },
+    {
+        "city": "Yakima",
+        "id": "656"
+    },
+    {
+        "city": "Yale",
+        "id": "657"
+    },
+    {
+        "city": "Yarrow",
+        "id": "658"
+    },
+    {
+        "city": "Ymir",
+        "id": "659"
+    },
+    {
+        "city": "Youbou",
+        "id": "660"
+    },
+    {
+        "city": "Zeballos",
+        "id": "661"
+    }
+]

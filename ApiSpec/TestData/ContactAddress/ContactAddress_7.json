@@ -1,9 +1,25 @@
 [
     {
-        "addr1": "1115 Shaughnessy St",
+        "addr1": "4580 Hastings Street",
         "addr2": null,
-        "city": "Port Coquitlam",
-        "postalCode": "V3C 4S7",
+        "city": "Vancouver",
+        "postalCode": "V6C 1B4",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "2261 Blanshard",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 2H9",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "104 Roger Street",
+        "addr2": null,
+        "city": "Comox",
+        "postalCode": "V9N 6A1",
         "province": "BC",
         "type": "Bus Yard"
     }

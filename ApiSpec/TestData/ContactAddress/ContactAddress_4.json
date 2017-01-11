@@ -1,10 +1,18 @@
 [
     {
-        "addr1": "2487 Kinchant St",
+        "addr1": "1234 Tolmie St",
         "addr2": null,
-        "city": "Kamloops",
-        "postalCode": "V2S 5R8",
+        "city": "Vancouver",
+        "postalCode": "V6M 1Y8",
         "province": "BC",
         "type": "Bus Yard"
+    },
+    {
+        "addr1": "1696 Alaska Hwy",
+        "addr2": null,
+        "city": "Fort Nelson",
+        "postalCode": "V0C 1C0",
+        "province": "BC",
+        "type": "Field Office"
     }
 ]

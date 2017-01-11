@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "1115 Shaughnessy St",
+        "addr1": "4283 Burdett Avenue",
         "addr2": null,
-        "city": "Port Coquitlam",
-        "postalCode": "V3C 4S7",
+        "city": "Victoria",
+        "postalCode": "V8W 1L6",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]
