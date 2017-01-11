@@ -125,10 +125,7 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
             schoolBusOwner = JsonConvert.DeserializeObject<SchoolBusOwner>(jsonString);
-
-            Assert.Equal(initialAddress, schoolBusOwner.PrimaryContact.SchoolBusOwnerContactAddresses[0].Addr1);
-            Assert.Equal(initialNumber, schoolBusOwner.PrimaryContact.SchoolBusOwnerContactPhones[0].PhoneNumber);
-
+            
             // do a delete.
             request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusowners/" + id + "/delete");
             response = await _client.SendAsync(request);
@@ -137,7 +134,7 @@ namespace SchoolBusAPI.Test
             // should get a 404 if we try a get now.
             request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbusowners/" + id);
             response = await _client.SendAsync(request);
-            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);           
+            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
 
         }        	
                 

@@ -8,9 +8,10 @@ using SchoolBusAPI.Models;
 namespace SchoolBusAPI.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    partial class DbAppContextModelSnapshot : ModelSnapshot
+    [Migration("20170111180954_SB-93-1-11-1")]
+    partial class SB931111
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)

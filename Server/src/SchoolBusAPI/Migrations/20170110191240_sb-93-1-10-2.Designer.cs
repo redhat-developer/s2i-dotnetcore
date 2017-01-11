@@ -8,9 +8,10 @@ using SchoolBusAPI.Models;
 namespace SchoolBusAPI.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    partial class DbAppContextModelSnapshot : ModelSnapshot
+    [Migration("20170110191240_sb-93-1-10-2")]
+    partial class sb931102
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -144,8 +145,8 @@ namespace SchoolBusAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("CITY_ID");
 
-                    b.Property<string>("Name")
-                        .HasColumnName("NAME");
+                    b.Property<string>("_City")
+                        .HasColumnName("_CITY");
 
                     b.HasKey("Id");
 
@@ -763,12 +764,6 @@ namespace SchoolBusAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("SCHOOL_DISTRICT_ID");
-
-                    b.Property<string>("Name")
-                        .HasColumnName("NAME");
-
-                    b.Property<string>("ShortName")
-                        .HasColumnName("SHORT_NAME");
 
                     b.HasKey("Id");
 

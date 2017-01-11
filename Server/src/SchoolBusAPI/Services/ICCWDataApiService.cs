@@ -26,54 +26,52 @@ namespace SchoolBusAPI.Services
     /// <summary>
     /// 
     /// </summary>
-    public interface IGroupApiService
+    public interface ICCWDataApiService
     {
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="items"></param>
-        /// <response code="201">Groups created</response>
-        IActionResult GroupsBulkPostAsync(Group[] items);
+        /// <response code="201">CCWData created</response>
+        IActionResult CcwdataBulkPostAsync(CCWData[] items);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a collection of groups</remarks>
         /// <response code="200">OK</response>
-        IActionResult GroupsGetAsync();
+        IActionResult CcwdataGetAsync();
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id">id of Group to delete</param>
+        /// <param name="id">id of CCWData to delete</param>
         /// <response code="200">OK</response>
-        /// <response code="404">Group not found</response>
-        IActionResult GroupsIdDeletePostAsync(int id);
+        /// <response code="404">CCWData not found</response>
+        IActionResult CcwdataIdDeletePostAsync(int id);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a Group</remarks>
-        /// <param name="id">id of Group to fetch</param>
+        /// <param name="id">id of CCWData to fetch</param>
         /// <response code="200">OK</response>
-        /// <response code="404">Group not found</response>
-        IActionResult GroupsIdGetAsync(int id);
+        /// <response code="404">CCWData not found</response>
+        IActionResult CcwdataIdGetAsync(int id);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id">id of Group to update</param>
+        /// <param name="id">id of CCWData to fetch</param>
         /// <param name="item"></param>
         /// <response code="200">OK</response>
-        /// <response code="404">Group not found</response>
-        IActionResult GroupsIdPutAsync(int id, Group item);
+        /// <response code="404">CCWData not found</response>
+        IActionResult CcwdataIdPutAsync(int id, CCWData item);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="item"></param>
-        /// <response code="201">Group created</response>
-        IActionResult GroupsPostAsync(Group item);
+        /// <response code="201">CCWData created</response>
+        IActionResult CcwdataPostAsync(CCWData item);
     }
 }

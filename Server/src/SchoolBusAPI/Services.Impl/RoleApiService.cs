@@ -40,6 +40,59 @@ namespace SchoolBusAPI.Services.Impl
             _context = context;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Bulk load of role permissions</remarks>
+        /// <param name="items"></param>
+        /// <response code="201">Roles created</response>
+        public IActionResult RolepermissionsBulkPostAsync(RolePermission[] items)
+        {
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (RolePermission item in items)
+            {
+                // adjust the role
+                if (item.Role != null)
+                {
+                    int role_id = item.Role.Id;
+                    bool role_exists = _context.Roles.Any(a => a.Id == role_id);
+                    if (role_exists)
+                    {
+                        Role role = _context.Roles.First(a => a.Id == role_id);
+                        item.Role = role;
+                    }
+                }
+
+                // adjust the permission
+                if (item.Permission != null)
+                {
+                    int permission_id = item.Permission.Id;
+                    bool permission_exists = _context.Permissions.Any(a => a.Id == permission_id);
+                    if (permission_exists)
+                    {
+                        Permission permission = _context.Permissions.First(a => a.Id == permission_id);
+                        item.Permission = permission;
+                    }
+                }
+
+                var exists = _context.RolePermissions.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.RolePermissions.Update(item);
+                }
+                else
+                {
+                    _context.RolePermissions.Add(item);
+                }
+            }
+            // Save the changes
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
+
 
         /// <summary>
         /// 
@@ -211,16 +264,13 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Updates the permissions for a role</remarks>
+        /// <remarks>Adds permissions to a role</remarks>
         /// <param name="id">id of Role to update</param>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
         public virtual IActionResult RolesIdPermissionsPostAsync(int id, Permission[] items)
         {
-
-            // first check that the role id is valid.
-
             using (var txn = _context.BeginTransaction())
             {
                 // Eager loading of related data
@@ -251,15 +301,7 @@ namespace SchoolBusAPI.Services.Impl
                     }
                     role.AddPermission(permToAdd);
                 }
-
-                // Permissions to remove
-                List<RolePermission> permissionsToRemove = role.RolePermissions.Where(x => !permissionCodes.Contains(x.Permission.Code)).ToList();
-                foreach (RolePermission perm in permissionsToRemove)
-                {
-                    role.RemovePermission(perm.Permission);
-                    _context.RolePermissions.Remove(perm);
-                }
-
+                
                 _context.Roles.Update(role);
                 _context.SaveChanges();
                 txn.Commit();
@@ -270,7 +312,7 @@ namespace SchoolBusAPI.Services.Impl
                 var result = dbPermissions.Select(x => x.ToViewModel()).ToList();
                 return new ObjectResult(result);
             }
-        }
+        }        
 
 
         /// <summary>
