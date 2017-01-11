@@ -47,12 +47,18 @@ namespace SchoolBusClient.Handlers
             get
             {
                 ProxyOptions options = null;
-                if (_configuration["MIDDLEWARE_NAME"] != null)
+                string apiServerUri = _configuration["MIDDLEWARE_NAME"];
+                if (apiServerUri != null)
                 {
+                    string[] apiServerUriParts = apiServerUri.Split(':');
+                    string host = apiServerUriParts[0];
+                    string port = apiServerUriParts.Length > 1 ? apiServerUriParts[1] : null;
+
                     options = new ProxyOptions()
                     {
                         Scheme = "http",
-                        Host = _configuration["MIDDLEWARE_NAME"]
+                        Host = host,
+                        Port = port
                     };
                 }
                 else
