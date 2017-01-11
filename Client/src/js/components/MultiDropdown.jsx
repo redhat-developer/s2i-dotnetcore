@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, FormControl, Checkbox } from 'react-bootstrap';
+import { Well, Dropdown, FormControl, Checkbox } from 'react-bootstrap';
 import RootCloseWrapper from 'react-overlays/lib/RootCloseWrapper';
 
 import _ from 'lodash';
@@ -28,6 +28,7 @@ var MultiDropdown = React.createClass({
     placeholder: React.PropTypes.string,
     id: React.PropTypes.string,
     className: React.PropTypes.string,
+    fieldName: React.PropTypes.string,
     selectedIds: React.PropTypes.array,
     onChange: React.PropTypes.func,
     showMaxItems: React.PropTypes.number,
@@ -37,6 +38,7 @@ var MultiDropdown = React.createClass({
     var selectedIds = this.props.selectedIds || [];
     var items = this.props.items || [];
     var title = this.buildTitle(selectedIds);
+    var fieldName = this.props.fieldName || 'name';
 
     return {
       items: items,
@@ -45,6 +47,7 @@ var MultiDropdown = React.createClass({
       filterTerm: '',
       MAX_ITEMS_FOR_TITLE: this.props.showMaxItems || MAX_ITEMS_FOR_TITLE,
       allSelected: selectedIds.length === items.length,
+      fieldName: fieldName,
     };
   },
 
@@ -56,7 +59,7 @@ var MultiDropdown = React.createClass({
     } else if(num > this.state.MAX_ITEMS_FOR_TITLE) {
       return `(${num}) selected`;
     } else {
-      return _.map(_.pickBy(this.props.items, item => selectedIds.includes(item.id)), 'name').join(', ');
+      return _.map(_.pickBy(this.props.items, item => selectedIds.includes(item.id)), this.state.fieldName).join(', ');
     }
   },
 
@@ -109,15 +112,17 @@ var MultiDropdown = React.createClass({
 
     if(this.state.filterTerm.length > 0) {
       items = _.filter(items, item => {
-        return item.name.toLowerCase().indexOf(this.state.filterTerm) !== -1;
+        return item[this.state.fieldName].toLowerCase().indexOf(this.state.filterTerm) !== -1;
       });
     }
 
-    return <Dropdown className={`multi-dropdown ${this.props.className || ''}`} id={ this.props.id} title={ this.state.title }>
+    return <Dropdown className={`multi-dropdown ${this.props.className || ''}`} id={ this.props.id } title={ this.state.title }>
       <Dropdown.Toggle title={this.state.title} />
       <MultiMenu bsRole="menu">
-        <FormControl type="text" placeholder="Search" onChange={this.filter} />
-        <Checkbox checked={this.state.allSelected} onChange={this.selectAll}>Select All</Checkbox>
+        <Well bsSize="small">
+          <FormControl type="text" placeholder="Search" onChange={this.filter} />
+          <Checkbox className="select-all" checked={this.state.allSelected} onChange={this.selectAll}>Select All</Checkbox>
+        </Well>
         {(() => {
           if(items.length > 0) {
             return <ul>
@@ -125,7 +130,7 @@ var MultiDropdown = React.createClass({
                 _.map(items, item => {
                   return <li key={ item.id }>
                     <Checkbox value={item.id} checked={this.state.selectedIds.includes(item.id)} onChange={this.itemSelected}>
-                      { item.name }
+                      { item[this.state.fieldName] }
                     </Checkbox>
                   </li>;
                 })

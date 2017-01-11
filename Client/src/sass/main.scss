@@ -12,24 +12,6 @@
   height: 100%;
 }
 
-#school-buses-search {
-  .search-label {
-    float: left;
-    margin-top: 7px;
-    margin-left: 12px;
-  }
-
-  #key-search-text {
-    margin-left: 6px;
-  }
-}
-
-#school-buses-utils {
-  .btn {
-    margin-left: 5px;
-  }
-}
-
 .nowrap {
   white-space: nowrap;
 }
@@ -58,10 +40,6 @@ button {
       border-color: white;
     }
   }
-}
-
-.dropdown-menu {
-  font-size: 13px;
 }
 
 @keyframes rotate {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
-import { ButtonToolbar, DropdownButton, MenuItem, Form, FormControl, Button, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, DropdownButton, MenuItem, Form, FormControl, ControlLabel, Button, Glyphicon, Checkbox } from 'react-bootstrap';
 
 import _ from 'lodash';
 import Moment from 'moment';
@@ -36,6 +36,19 @@ Hopefully the Date thing makes sense - but basically, if the user selects anythi
 I said in the JIRA let the server handle the conversion to From/To, but that's not crucial, as long as the Fav records the name of the date range.
 */
 
+const KEY_SEARCH_REGI = 'Regi';
+const KEY_SEARCH_VIN = 'VIN';
+const KEY_SEARCH_PLATE = 'Plate';
+
+const BEFORE_TODAY = 'Before Today';
+const BEFORE_END_OF_MONTH = 'Before End of Month';
+const BEFORE_END_OF_QUARTER = 'Before End of Quarter';
+const TODAY = 'Today';
+const THIS_MONTH = 'This Month';
+const NEXT_MONTH = 'Next Month';
+const THIS_QUARTER = 'This Quarter';
+const CUSTOM = 'Custom';
+
 var SchoolBuses = React.createClass({
   propTypes: {
     schoolBuses: React.PropTypes.object,
@@ -52,11 +65,19 @@ var SchoolBuses = React.createClass({
       selectedInspectorsIds: [],
       selectedCitiesIds: [],
       selectedSchoolDistrictsIds: [],
+      keySearchField: KEY_SEARCH_REGI,
+      nextInspection: BEFORE_END_OF_MONTH,
+      customFieldsClassName: 'hide',
+      hideInactive: true,
+      justReInspections: false,
     };
   },
 
   componentDidMount() {
-    this.fetch();
+    this.setState({ loading: true });
+    Api.getUsers().finally(() => {
+      this.fetch();
+    });
   },
 
   fetch(params) {
@@ -90,6 +111,31 @@ var SchoolBuses = React.createClass({
     });
   },
 
+  keySearchSelected(keyEvent) {
+    this.setState({
+      keySearchField: keyEvent,
+    });
+  },
+
+  nextInspectionSelected(keyEvent) {
+    this.setState({
+      nextInspection: keyEvent,
+      customFieldsClassName: keyEvent !== CUSTOM ? 'hide' : '',
+    });
+  },
+
+  hideInactiveSelected(e) {
+    this.setState({
+      hideInactive: e.target.checked,
+    });
+  },
+
+  justReInspectionsSelected(e) {
+    this.setState({
+      justReInspections: e.target.checked,
+    });
+  },
+
   render: function() {
     var serviceAreas = _.sortBy(this.props.serviceAreas, 'name');
     var inspectors = _.sortBy(this.props.inspectors, 'name');
@@ -101,21 +147,19 @@ var SchoolBuses = React.createClass({
         <Row>
           <Col md={10}>
             <ButtonToolbar id="school-buses-search">
-              <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas" items={ serviceAreas } onChange={this.serviceAreasChanged} showMaxItems={1} />
-              <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors" items={ inspectors } onChange={this.inspectorsChanged} showMaxItems={1} />
-              <MultiDropdown id="cities-dropdown" placeholder="Cities" items={ cities } onChange={this.citiesChanged} showMaxItems={1} />
-              <MultiDropdown id="school-districts-dropdown" placeholder="School Districts" items={ schoolDistricts } onChange={this.schoolDistrictsChanged} showMaxItems={1} />
+              <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas" items={ serviceAreas } onChange={ this.serviceAreasChanged } showMaxItems={ 2 } />
+              <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors" items={ inspectors } onChange={ this.inspectorsChanged } showMaxItems={ 2 } />
+              <MultiDropdown id="cities-dropdown" placeholder="Cities" items={ cities } onChange={ this.citiesChanged } showMaxItems={ 2 } />
+              <MultiDropdown id="school-districts-dropdown" placeholder="School Districts" items={ schoolDistricts } onChange={ this.schoolDistrictsChanged } showMaxItems={ 2 } />
               <div className="search-label">Key Search By:</div>
-              <DropdownButton id="school-buses-key-dropdown" title="Regi">
-                <MenuItem key="regi" eventKey="1">Regi</MenuItem>
-                <MenuItem key="win" eventKey="2">VIN</MenuItem>
-                <MenuItem key="place" eventKey="3">Plate</MenuItem>
+              <DropdownButton id="school-buses-key-dropdown" title={ this.state.keySearchField } onSelect={ this.keySearchSelected }>
+                <MenuItem key={ KEY_SEARCH_REGI } eventKey={ KEY_SEARCH_REGI }>{ KEY_SEARCH_REGI }</MenuItem>
+                <MenuItem key={ KEY_SEARCH_VIN } eventKey={ KEY_SEARCH_VIN }>{ KEY_SEARCH_VIN }</MenuItem>
+                <MenuItem key={ KEY_SEARCH_PLATE } eventKey={ KEY_SEARCH_PLATE }>{ KEY_SEARCH_PLATE }</MenuItem>
               </DropdownButton>
               <Form inline>
-                <FormControl id="key-search-text" type="text" placeholder="" />
+                <FormControl className="search-text" type="text" placeholder="" />
               </Form>
-              <div>
-              </div>
             </ButtonToolbar>
           </Col>
           <Col md={2}>
@@ -130,9 +174,30 @@ var SchoolBuses = React.createClass({
         </Row>
         <Row>
           <Col md={10}>
+            <ButtonToolbar id="school-buses-inspections">
+              <div className="search-label">Next Inspection:</div>
+              <DropdownButton id="school-buses-key-dropdown" title={ this.state.nextInspection } onSelect={ this.nextInspectionSelected }>
+                <MenuItem key={ BEFORE_TODAY } eventKey={ BEFORE_TODAY }>{ BEFORE_TODAY }</MenuItem>
+                <MenuItem key={ BEFORE_END_OF_MONTH } eventKey={ BEFORE_END_OF_MONTH }>{ BEFORE_END_OF_MONTH }</MenuItem>
+                <MenuItem key={ BEFORE_END_OF_QUARTER } eventKey={ BEFORE_END_OF_QUARTER }>{ BEFORE_END_OF_QUARTER }</MenuItem>
+                <MenuItem key={ TODAY } eventKey={ TODAY }>{ TODAY }</MenuItem>
+                <MenuItem key={ THIS_MONTH } eventKey={ THIS_MONTH }>{ THIS_MONTH }</MenuItem>
+                <MenuItem key={ NEXT_MONTH } eventKey={ NEXT_MONTH }>{ NEXT_MONTH }</MenuItem>
+                <MenuItem key={ THIS_QUARTER } eventKey={ THIS_QUARTER }>{ THIS_QUARTER }</MenuItem>
+                <MenuItem key={ CUSTOM } eventKey={ CUSTOM }>{ CUSTOM }</MenuItem>
+              </DropdownButton>
+              <Form inline className={ this.state.customFieldsClassName }>
+                <ControlLabel>From:</ControlLabel>
+                <FormControl className="search-text" type="text" placeholder="mm/dd/yyyy" />
+                <ControlLabel>To:</ControlLabel>
+                <FormControl className="search-text" type="text" placeholder="mm/dd/yyyy" />
+              </Form>
+              <Checkbox inline className="search-label" checked={ this.state.hideInactive } onChange={ this.hideInactiveSelected }>Hide Inactive</Checkbox>
+              <Checkbox inline className="search-label" checked={ this.state.justReInspections } onChange={ this.justReInspectionsSelected }>Just Re-Inspections</Checkbox>
+            </ButtonToolbar>
           </Col>
           <Col md={2}>
-            <Button className="pull-right">Search</Button>
+            <Button id="search" className="pull-right">Search</Button>
           </Col>
         </Row>
       </Well>
@@ -158,10 +223,11 @@ var SchoolBuses = React.createClass({
           {
             _.map(this.props.schoolBuses, (bus) => {
               var editPath = '#/school-buses/' + bus.id;
+              var ownerPath = '#/owners/' + bus.id;
               var inspectionDt = Moment(bus.nextInspectionDate);
               return <tr key={ bus.id } className={ bus.status != 'active' ? 'info' : null }>
                 <td><a href={ editPath }>{ bus.regi }</a></td>
-                <td><a href='#'>{ bus.schoolBusOwner }</a></td>
+                <td><a href={ ownerPath }>{ bus.schoolBusOwner }</a></td>
                 <td>{ bus.location }</td>
                 <td>{ bus.busLocationCity }, { bus.busLocationPostCode }</td>
                 <td></td>
@@ -181,15 +247,10 @@ var SchoolBuses = React.createClass({
 
 
 function mapStateToProps(state) {
-  var inspectors = {
-    1: { id: 1, name: 'Fred Smith' },
-    2: { id: 2, name: 'Joe Black' },
-  };
-
   return {
     schoolBuses: state.models.schoolBuses,
     serviceAreas: state.lookups.serviceAreas,
-    inspectors: inspectors,
+    inspectors: state.models.users,
     cities: state.lookups.cities,
     schoolDistricts: state.lookups.schoolDistricts,
   };

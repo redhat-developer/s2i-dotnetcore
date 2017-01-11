@@ -62,7 +62,7 @@ var UserManagement = React.createClass({
           {
             _.map(this.props.users, (user) => {
               return <tr key={ user.id } className={ !user.active ? 'info' : null }>
-                <td style={{ verticalAlign: 'middle' }}><strong>{ user.surname }, { user.givenName }</strong></td>
+                <td style={{ verticalAlign: 'middle' }}><strong>{ user.name }</strong></td>
                 <td style={{ verticalAlign: 'middle' }}>{ user.initials }</td>
                 <td style={{ textAlign: 'right' }}>
                   <Button onClick={ this.edit.bind(this, user) } style={{ marginRight: 10 }}><Glyphicon glyph="pencil" /> Edit</Button>

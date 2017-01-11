@@ -15,6 +15,17 @@ export function getUsers(params) {
     // Normalize the response
     var users = _.fromPairs(response.map(user => [ user.id, user ]));
 
+    // Add display fields
+    _.map(users, user => {
+      if (user.surname && user.givenName) {
+        user.name = user.surname + ', ' + user.givenName;
+      } else if (user.surname) {
+        user.name = user.surname;
+      } else {
+        user.name = user.givenName;
+      }
+    });
+
     store.dispatch({ type: 'UPDATE_USERS', users: users });
   });
 }
