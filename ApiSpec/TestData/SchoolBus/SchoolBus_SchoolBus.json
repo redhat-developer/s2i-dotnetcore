@@ -1,34 +1,36 @@
 [
     {
-        "VIN": "4UZABRCS08CY61111",
+        "VIN": "4UZABRCS08CY67533",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
         "homeTerminalPostalCode": "0",
         "homeTerminalProvince": "0",
-        "independentSchool": false,
+        "independentSchool": true,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "2",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-05-14",
-        "permitNumber": "29674",
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": "MAIMONIDES SCHOOL SOCIETY",
+        "nextInspection": "2017-06-19",
+        "permitNumber": "34740",
         "plate": "MNG 505",
-        "regi": "20164651",
+        "regi": "30467997",
         "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "schoolBusBodyType": "Mobility Aid",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
         "schoolBusDistrict": {
-            "id": "42"
+            "id": "11"
         },
-        "schoolBusOwner": "{ 'id': '108'}",
-        "schoolBusSeatingCapacity": "35",
-        "schoolBusUnitNumber": "29082",
+        "schoolBusOwner": "{ 'id': '115'}",
+        "schoolBusSeatingCapacity": "56",
+        "schoolBusUnitNumber": "46159",
         "serviceArea": {
-            "id": "18"
+            "id": "28"
         },
         "status": "Active"
     },
     {
-        "VIN": "1M8PDMTA7VP044048",
+        "VIN": "1M8PDMTA7VP046677",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
@@ -36,307 +38,119 @@
         "homeTerminalProvince": "0",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "1",
+        "mobilityAidCapacity": "0",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-02-06",
-        "permitNumber": "31232",
+        "nextInspection": "2017-10-09",
+        "permitNumber": "25412",
         "plate": "PLB 734",
-        "regi": "49467103",
-        "restrictions": null,
-        "schoolBusClass": "Class 2",
+        "regi": "27757687",
+        "restrictions": "Non-Scheduled Transportation Only",
+        "schoolBusBodyType": "Yellow and Black",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 2: Special Activity Bus",
         "schoolBusDistrict": {
-            "id": "32"
+            "id": "40"
         },
-        "schoolBusOwner": "{ 'id': '116'}",
-        "schoolBusSeatingCapacity": "9",
-        "schoolBusUnitNumber": "11239",
+        "schoolBusOwner": "{ 'id': '106'}",
+        "schoolBusSeatingCapacity": "58",
+        "schoolBusUnitNumber": "26357",
         "serviceArea": {
-            "id": "25"
+            "id": "1"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBHG31R7X1111807",
+        "VIN": "1GBHG31R7X1118798",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
         "homeTerminalPostalCode": "0",
         "homeTerminalProvince": "0",
         "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": "CATHOLIC PUBLIC SCHOOLS",
-        "nextInspection": "2017-06-28",
-        "permitNumber": "32732",
-        "plate": "NNR 799",
-        "regi": "21196904",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "48"
-        },
-        "schoolBusOwner": "{ 'id': '118'}",
-        "schoolBusSeatingCapacity": "79",
-        "schoolBusUnitNumber": "17051",
-        "serviceArea": {
-            "id": "23"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1BAANB7A7XF089174",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-08-14",
-        "permitNumber": "29472",
-        "plate": "NNN 110",
-        "regi": "16279075",
-        "restrictions": null,
-        "schoolBusClass": "Class 2",
-        "schoolBusDistrict": {
-            "id": "9"
-        },
-        "schoolBusOwner": "{ 'id': '107'}",
-        "schoolBusSeatingCapacity": "55",
-        "schoolBusUnitNumber": "11309",
-        "serviceArea": {
-            "id": "9"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1BAANB7A9XF089186",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": "Unit 100",
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": false,
         "isOutOfProvince": false,
         "mobilityAidCapacity": "1",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-01-04",
-        "permitNumber": "28032",
-        "plate": "VEX 466",
-        "regi": "24555684",
+        "nameOfIndependentSchool": "SJS ST JOHN'S SCHOOL",
+        "nextInspection": "2017-12-12",
+        "permitNumber": "27173",
+        "plate": "NNR 799",
+        "regi": "35853987",
         "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "schoolBusBodyType": "Other",
+        "schoolBusBodyTypeOther": "Other Bus Type",
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
         "schoolBusDistrict": {
-            "id": "2"
-        },
-        "schoolBusOwner": "{ 'id': '111'}",
-        "schoolBusSeatingCapacity": "69",
-        "schoolBusUnitNumber": "48132",
-        "serviceArea": {
-            "id": "30"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1HVBBAAN2XH205180",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": "WSA'NEC' SCHOOL BOARD",
-        "nextInspection": "2017-05-06",
-        "permitNumber": "37894",
-        "plate": "BKH 714",
-        "regi": "30140579",
-        "restrictions": null,
-        "schoolBusClass": "Class 2",
-        "schoolBusDistrict": {
-            "id": "48"
-        },
-        "schoolBusOwner": "{ 'id': '116'}",
-        "schoolBusSeatingCapacity": "4",
-        "schoolBusUnitNumber": "40213",
-        "serviceArea": {
             "id": "14"
         },
+        "schoolBusOwner": "{ 'id': '115'}",
+        "schoolBusSeatingCapacity": "82",
+        "schoolBusUnitNumber": "22394",
+        "serviceArea": {
+            "id": "4"
+        },
         "status": "Active"
     },
     {
-        "VIN": "4UZABRCS48CY67095",
+        "VIN": "1BAANB7A7XF087211",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "1",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-01-02",
-        "permitNumber": "31990",
-        "plate": "JHS 644",
-        "regi": "21316474",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
-        "schoolBusDistrict": {
-            "id": "23"
-        },
-        "schoolBusOwner": "{ 'id': '113'}",
-        "schoolBusSeatingCapacity": "63",
-        "schoolBusUnitNumber": "26649",
-        "serviceArea": {
-            "id": "8"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GJGG25V771156272",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-06-02",
-        "permitNumber": "26752",
-        "plate": "GCE 975",
-        "regi": "42061767",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
-        "schoolBusDistrict": {
-            "id": "3"
-        },
-        "schoolBusOwner": "{ 'id': '101'}",
-        "schoolBusSeatingCapacity": "13",
-        "schoolBusUnitNumber": "28027",
-        "serviceArea": {
-            "id": "30"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GJGG25V571169871",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": "Unit 100",
         "homeTerminalCity": "0",
         "homeTerminalPostalCode": "0",
         "homeTerminalProvince": "0",
         "independentSchool": true,
         "isOutOfProvince": false,
         "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": "OSOYOOS SECONDARY SCHOOL",
-        "nextInspection": "2017-12-24",
-        "permitNumber": "27157",
-        "plate": "TJR 794",
-        "regi": "12510864",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
+        "nameOfIndependentSchool": "CHOICE SCHOOL FOR GIFTED",
+        "nextInspection": "2017-01-01",
+        "permitNumber": "27295",
+        "plate": "NNN 110",
+        "regi": "18002505",
+        "restrictions": "Non-Scheduled Transportation Only",
+        "schoolBusBodyType": "Bus",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 2: Special Activity Bus",
         "schoolBusDistrict": {
             "id": "22"
         },
-        "schoolBusOwner": "{ 'id': '114'}",
-        "schoolBusSeatingCapacity": "77",
-        "schoolBusUnitNumber": "31749",
-        "serviceArea": {
-            "id": "15"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "4UZ3CFAC2XCB65577",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "2",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-06-01",
-        "permitNumber": "25595",
-        "plate": "LEE 402",
-        "regi": "18311949",
-        "restrictions": null,
-        "schoolBusClass": "Class 4",
-        "schoolBusDistrict": {
-            "id": "36"
-        },
         "schoolBusOwner": "{ 'id': '115'}",
-        "schoolBusSeatingCapacity": "49",
-        "schoolBusUnitNumber": "49788",
-        "serviceArea": {
-            "id": "14"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1BAAJCSH6XF082058",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "1",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-12-14",
-        "permitNumber": "35930",
-        "plate": "PSC 516",
-        "regi": "47607355",
-        "restrictions": null,
-        "schoolBusClass": "Class 4",
-        "schoolBusDistrict": {
-            "id": "25"
-        },
-        "schoolBusOwner": "{ 'id': '113'}",
-        "schoolBusSeatingCapacity": "70",
-        "schoolBusUnitNumber": "39791",
+        "schoolBusSeatingCapacity": "81",
+        "schoolBusUnitNumber": "44878",
         "serviceArea": {
             "id": "11"
         },
         "status": "Active"
     },
     {
-        "VIN": "1HVBBABN5XH205663",
+        "VIN": "1BAANB7A9XF087192",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
         "homeTerminalPostalCode": "0",
         "homeTerminalProvince": "0",
-        "independentSchool": false,
+        "independentSchool": true,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "3",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-03-06",
-        "permitNumber": "30295",
-        "plate": "KHZ 108",
-        "regi": "49043060",
+        "mobilityAidCapacity": "2",
+        "nameOfIndependentSchool": "COMBINED CHRISTIAN SCHOOL",
+        "nextInspection": "2017-10-24",
+        "permitNumber": "26732",
+        "plate": "VEX 466",
+        "regi": "35526489",
         "restrictions": null,
-        "schoolBusClass": "Class 4",
+        "schoolBusBodyType": "Bus",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
         "schoolBusDistrict": {
-            "id": "39"
+            "id": "16"
         },
-        "schoolBusOwner": "{ 'id': '101'}",
-        "schoolBusSeatingCapacity": "71",
-        "schoolBusUnitNumber": "28240",
+        "schoolBusOwner": "{ 'id': '103'}",
+        "schoolBusSeatingCapacity": "22",
+        "schoolBusUnitNumber": "11533",
         "serviceArea": {
             "id": "19"
         },
         "status": "Active"
     },
     {
-        "VIN": "1HVBBABP8YH202253",
+        "VIN": "1HVBBAAN2XH208542",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
@@ -344,111 +158,29 @@
         "homeTerminalProvince": "0",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "2",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-01-21",
-        "permitNumber": "37255",
-        "plate": "NLN 307",
-        "regi": "40494305",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "34"
-        },
-        "schoolBusOwner": "{ 'id': '106'}",
-        "schoolBusSeatingCapacity": "24",
-        "schoolBusUnitNumber": "17739",
-        "serviceArea": {
-            "id": "29"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBHG31F6X1079579",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": true,
-        "isOutOfProvince": false,
         "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": "NANAIMO CHRISTIAN SCHOOL",
-        "nextInspection": "2017-11-11",
-        "permitNumber": "38051",
-        "plate": "XES 635",
-        "regi": "13361241",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-03-08",
+        "permitNumber": "34939",
+        "plate": "BKH 714",
+        "regi": "47755039",
         "restrictions": null,
-        "schoolBusClass": "Class 2",
+        "schoolBusBodyType": "Bus",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 3: Special Vehicle",
         "schoolBusDistrict": {
-            "id": "39"
-        },
-        "schoolBusOwner": "{ 'id': '113'}",
-        "schoolBusSeatingCapacity": "82",
-        "schoolBusUnitNumber": "17530",
-        "serviceArea": {
             "id": "10"
         },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBHG31F2X1078124",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-10-12",
-        "permitNumber": "36317",
-        "plate": "MPA 390",
-        "regi": "42934307",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
-        "schoolBusDistrict": {
-            "id": "3"
-        },
-        "schoolBusOwner": "{ 'id': '114'}",
-        "schoolBusSeatingCapacity": "4",
-        "schoolBusUnitNumber": "20710",
-        "serviceArea": {
-            "id": "5"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBHG31F2X1111798",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-07-30",
-        "permitNumber": "34110",
-        "plate": "TJJ 517",
-        "regi": "28002413",
-        "restrictions": null,
-        "schoolBusClass": "Class 2",
-        "schoolBusDistrict": {
-            "id": "7"
-        },
-        "schoolBusOwner": "{ 'id': '118'}",
-        "schoolBusSeatingCapacity": "31",
-        "schoolBusUnitNumber": "30008",
+        "schoolBusOwner": "{ 'id': '104'}",
+        "schoolBusSeatingCapacity": "71",
+        "schoolBusUnitNumber": "48262",
         "serviceArea": {
             "id": "15"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBHG31F0X1113958",
+        "VIN": "4UZABRCS48CY62158",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
@@ -456,57 +188,31 @@
         "homeTerminalProvince": "0",
         "independentSchool": true,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "3",
+        "mobilityAidCapacity": "1",
         "nameOfIndependentSchool": "CHOICE SCHOOL FOR GIFTED",
-        "nextInspection": "2017-01-28",
-        "permitNumber": "33370",
-        "plate": "MWJ 920",
-        "regi": "28594882",
+        "nextInspection": "2017-05-18",
+        "permitNumber": "34477",
+        "plate": "JHS 644",
+        "regi": "23328358",
         "restrictions": null,
-        "schoolBusClass": "Class 4",
+        "schoolBusBodyType": "Yellow and Black",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 3: Special Vehicle",
         "schoolBusDistrict": {
-            "id": "16"
+            "id": "2"
         },
-        "schoolBusOwner": "{ 'id': '105'}",
-        "schoolBusSeatingCapacity": "28",
-        "schoolBusUnitNumber": "27705",
+        "schoolBusOwner": "{ 'id': '115'}",
+        "schoolBusSeatingCapacity": "19",
+        "schoolBusUnitNumber": "24726",
         "serviceArea": {
-            "id": "20"
+            "id": "1"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBHG31F2X1117713",
+        "VIN": "1GJGG25V771158324",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "4",
-        "nameOfIndependentSchool": "SJS ST JOHN'S SCHOOL",
-        "nextInspection": "2017-04-10",
-        "permitNumber": "34163",
-        "plate": "SSR 601",
-        "regi": "28757956",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "39"
-        },
-        "schoolBusOwner": "{ 'id': '111'}",
-        "schoolBusSeatingCapacity": "54",
-        "schoolBusUnitNumber": "41296",
-        "serviceArea": {
-            "id": "7"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBHG31F8X1118015",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": "Unit 100",
         "homeTerminalCity": "0",
         "homeTerminalPostalCode": "0",
         "homeTerminalProvince": "0",
@@ -514,25 +220,27 @@
         "isOutOfProvince": false,
         "mobilityAidCapacity": "0",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-10-12",
-        "permitNumber": "29966",
-        "plate": "VTC 949",
-        "regi": "45127842",
+        "nextInspection": "2017-09-08",
+        "permitNumber": "39283",
+        "plate": "GCE 975",
+        "regi": "34468938",
         "restrictions": null,
-        "schoolBusClass": "Class 2",
+        "schoolBusBodyType": "Van",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 3: Special Vehicle",
         "schoolBusDistrict": {
-            "id": "42"
+            "id": "16"
         },
-        "schoolBusOwner": "{ 'id': '111'}",
-        "schoolBusSeatingCapacity": "83",
-        "schoolBusUnitNumber": "12506",
+        "schoolBusOwner": "{ 'id': '103'}",
+        "schoolBusSeatingCapacity": "19",
+        "schoolBusUnitNumber": "39113",
         "serviceArea": {
             "id": "21"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBJG31F9X1155603",
+        "VIN": "1GJGG25V571162835",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
@@ -540,55 +248,29 @@
         "homeTerminalProvince": "0",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "0",
+        "mobilityAidCapacity": "3",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-07-24",
-        "permitNumber": "31508",
-        "plate": "TNC 450",
-        "regi": "40838990",
-        "restrictions": null,
-        "schoolBusClass": "Class 4",
+        "nextInspection": "2017-01-10",
+        "permitNumber": "32840",
+        "plate": "TJR 794",
+        "regi": "16470176",
+        "restrictions": "Non-Scheduled Transportation Only",
+        "schoolBusBodyType": "Yellow and Black",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 2: Special Activity Bus",
         "schoolBusDistrict": {
-            "id": "44"
+            "id": "28"
         },
-        "schoolBusOwner": "{ 'id': '117'}",
-        "schoolBusSeatingCapacity": "69",
-        "schoolBusUnitNumber": "23449",
+        "schoolBusOwner": "{ 'id': '106'}",
+        "schoolBusSeatingCapacity": "80",
+        "schoolBusUnitNumber": "23693",
         "serviceArea": {
-            "id": "15"
+            "id": "14"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBJG31F5X1158554",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": false,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": null,
-        "nextInspection": "2017-11-03",
-        "permitNumber": "38825",
-        "plate": "TJK 988",
-        "regi": "46583468",
-        "restrictions": null,
-        "schoolBusClass": "Class 2",
-        "schoolBusDistrict": {
-            "id": "3"
-        },
-        "schoolBusOwner": "{ 'id': '102'}",
-        "schoolBusSeatingCapacity": "40",
-        "schoolBusUnitNumber": "38364",
-        "serviceArea": {
-            "id": "23"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "1GBJG31F8X1151675",
+        "VIN": "4UZ3CFAC2XCB64776",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": "Unit 100",
         "homeTerminalCity": "0",
@@ -596,27 +278,89 @@
         "homeTerminalProvince": "0",
         "independentSchool": true,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "3",
-        "nameOfIndependentSchool": "YORK HOUSE SCHOOL SOCIETY",
-        "nextInspection": "2017-11-16",
-        "permitNumber": "36295",
-        "plate": "PKR 253",
-        "regi": "40535222",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "mobilityAidCapacity": "5",
+        "nameOfIndependentSchool": "BODWELL HIGH SCHOOL INC",
+        "nextInspection": "2017-12-09",
+        "permitNumber": "37185",
+        "plate": "LEE 402",
+        "regi": "11516547",
+        "restrictions": "Non-Scheduled Transportation Only",
+        "schoolBusBodyType": "Mobility Aid",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 2: Special Activity Bus",
         "schoolBusDistrict": {
-            "id": "28"
+            "id": "29"
         },
-        "schoolBusOwner": "{ 'id': '103'}",
-        "schoolBusSeatingCapacity": "54",
-        "schoolBusUnitNumber": "35614",
+        "schoolBusOwner": "{ 'id': '108'}",
+        "schoolBusSeatingCapacity": "4",
+        "schoolBusUnitNumber": "22470",
         "serviceArea": {
-            "id": "6"
+            "id": "20"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBJG31F3X1159306",
+        "VIN": "1BAAJCSH6XF089147",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-03-03",
+        "permitNumber": "34312",
+        "plate": "PSC 516",
+        "regi": "46390216",
+        "restrictions": null,
+        "schoolBusBodyType": "Bus",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 3: Special Vehicle",
+        "schoolBusDistrict": {
+            "id": "45"
+        },
+        "schoolBusOwner": "{ 'id': '104'}",
+        "schoolBusSeatingCapacity": "80",
+        "schoolBusUnitNumber": "21067",
+        "serviceArea": {
+            "id": "24"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1HVBBABN5XH208283",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-02-28",
+        "permitNumber": "31061",
+        "plate": "KHZ 108",
+        "regi": "32612230",
+        "restrictions": null,
+        "schoolBusBodyType": "Van",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
+        "schoolBusDistrict": {
+            "id": "33"
+        },
+        "schoolBusOwner": "{ 'id': '118'}",
+        "schoolBusSeatingCapacity": "50",
+        "schoolBusUnitNumber": "11143",
+        "serviceArea": {
+            "id": "30"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1HVBBABP8YH204230",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": "Unit 100",
         "homeTerminalCity": "0",
@@ -624,27 +368,29 @@
         "homeTerminalProvince": "0",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "5",
+        "mobilityAidCapacity": "0",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-07-31",
-        "permitNumber": "25885",
-        "plate": "VJA 211",
-        "regi": "33084529",
+        "nextInspection": "2017-04-02",
+        "permitNumber": "35001",
+        "plate": "NLN 307",
+        "regi": "28159052",
         "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "schoolBusBodyType": "Mobility Aid",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
         "schoolBusDistrict": {
-            "id": "3"
+            "id": "37"
         },
-        "schoolBusOwner": "{ 'id': '105'}",
-        "schoolBusSeatingCapacity": "7",
-        "schoolBusUnitNumber": "34736",
+        "schoolBusOwner": "{ 'id': '115'}",
+        "schoolBusSeatingCapacity": "77",
+        "schoolBusUnitNumber": "34331",
         "serviceArea": {
-            "id": "3"
+            "id": "27"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GBJG31F1X1156454",
+        "VIN": "1GBHG31F6X1076058",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
@@ -652,27 +398,59 @@
         "homeTerminalProvince": "0",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "2",
+        "mobilityAidCapacity": "0",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-05-28",
-        "permitNumber": "32079",
-        "plate": "VNN 705",
-        "regi": "45372574",
+        "nextInspection": "2017-11-15",
+        "permitNumber": "29960",
+        "plate": "XES 635",
+        "regi": "48349182",
         "restrictions": null,
-        "schoolBusClass": "Class 1",
+        "schoolBusBodyType": "Coach Bus",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 3: Special Vehicle",
         "schoolBusDistrict": {
             "id": "31"
         },
-        "schoolBusOwner": "{ 'id': '114'}",
-        "schoolBusSeatingCapacity": "21",
-        "schoolBusUnitNumber": "34700",
+        "schoolBusOwner": "{ 'id': '108'}",
+        "schoolBusSeatingCapacity": "10",
+        "schoolBusUnitNumber": "17813",
         "serviceArea": {
-            "id": "6"
+            "id": "3"
         },
         "status": "Active"
     },
     {
-        "VIN": "1GAHG39R1X1143381",
+        "VIN": "1GBHG31F2X1076042",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": true,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": "VALLEY CHRISTIAN SCHOOL",
+        "nextInspection": "2017-09-30",
+        "permitNumber": "28536",
+        "plate": "MPA 390",
+        "regi": "23733445",
+        "restrictions": null,
+        "schoolBusBodyType": "Other",
+        "schoolBusBodyTypeOther": "Other Bus Type",
+        "schoolBusClass": "Type 3: Special Vehicle",
+        "schoolBusDistrict": {
+            "id": "3"
+        },
+        "schoolBusOwner": "{ 'id': '111'}",
+        "schoolBusSeatingCapacity": "64",
+        "schoolBusUnitNumber": "39544",
+        "serviceArea": {
+            "id": "24"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBHG31F2X1112459",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
@@ -680,27 +458,29 @@
         "homeTerminalProvince": "0",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "2",
+        "mobilityAidCapacity": "0",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-09-23",
-        "permitNumber": "35721",
-        "plate": "KPM 250",
-        "regi": "33015584",
+        "nextInspection": "2017-05-21",
+        "permitNumber": "37825",
+        "plate": "TJJ 517",
+        "regi": "25579905",
         "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "schoolBusBodyType": "Van",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
         "schoolBusDistrict": {
-            "id": "4"
+            "id": "44"
         },
-        "schoolBusOwner": "{ 'id': '115'}",
-        "schoolBusSeatingCapacity": "10",
-        "schoolBusUnitNumber": "34982",
+        "schoolBusOwner": "{ 'id': '105'}",
+        "schoolBusSeatingCapacity": "75",
+        "schoolBusUnitNumber": "46458",
         "serviceArea": {
-            "id": "18"
+            "id": "24"
         },
         "status": "Active"
     },
     {
-        "VIN": "1FDXE47S4XHB18113",
+        "VIN": "1GBHG31F0X1115479",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
@@ -710,25 +490,87 @@
         "isOutOfProvince": false,
         "mobilityAidCapacity": "4",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-04-05",
-        "permitNumber": "29402",
-        "plate": "TKW 525",
-        "regi": "48247634",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
+        "nextInspection": "2017-01-16",
+        "permitNumber": "30350",
+        "plate": "MWJ 920",
+        "regi": "30148560",
+        "restrictions": "Non-Scheduled Transportation Only",
+        "schoolBusBodyType": "Yellow and Black",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 2: Special Activity Bus",
         "schoolBusDistrict": {
-            "id": "11"
+            "id": "27"
         },
-        "schoolBusOwner": "{ 'id': '112'}",
-        "schoolBusSeatingCapacity": "77",
-        "schoolBusUnitNumber": "11449",
+        "schoolBusOwner": "{ 'id': '118'}",
+        "schoolBusSeatingCapacity": "36",
+        "schoolBusUnitNumber": "27838",
         "serviceArea": {
-            "id": "7"
+            "id": "26"
         },
         "status": "Active"
     },
     {
-        "VIN": "1HVBBAAN3XH245476",
+        "VIN": "1GBHG31F2X1111205",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "4",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-06-30",
+        "permitNumber": "39394",
+        "plate": "SSR 601",
+        "regi": "11878738",
+        "restrictions": "Non-Scheduled Transportation Only",
+        "schoolBusBodyType": "Other",
+        "schoolBusBodyTypeOther": "Other Bus Type",
+        "schoolBusClass": "Type 2: Special Activity Bus",
+        "schoolBusDistrict": {
+            "id": "22"
+        },
+        "schoolBusOwner": "{ 'id': '108'}",
+        "schoolBusSeatingCapacity": "66",
+        "schoolBusUnitNumber": "37448",
+        "serviceArea": {
+            "id": "25"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBHG31F8X1118489",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-01-29",
+        "permitNumber": "30114",
+        "plate": "VTC 949",
+        "regi": "16955115",
+        "restrictions": "Non-Scheduled Transportation Only",
+        "schoolBusBodyType": "Mobility Aid",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 2: Special Activity Bus",
+        "schoolBusDistrict": {
+            "id": "29"
+        },
+        "schoolBusOwner": "{ 'id': '107'}",
+        "schoolBusSeatingCapacity": "63",
+        "schoolBusUnitNumber": "14651",
+        "serviceArea": {
+            "id": "10"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBJG31F9X1157879",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": "Unit 100",
         "homeTerminalCity": "0",
@@ -737,82 +579,28 @@
         "independentSchool": true,
         "isOutOfProvince": false,
         "mobilityAidCapacity": "0",
-        "nameOfIndependentSchool": "MEADOWRIDGE SCHOOL SOCIET",
-        "nextInspection": "2017-12-14",
-        "permitNumber": "35883",
-        "plate": "LTA 599",
-        "regi": "37044540",
+        "nameOfIndependentSchool": "ST GEORGE'S SCHOOL",
+        "nextInspection": "2017-12-03",
+        "permitNumber": "27186",
+        "plate": "TNC 450",
+        "regi": "40549778",
         "restrictions": null,
-        "schoolBusClass": "Class 2",
+        "schoolBusBodyType": "Other",
+        "schoolBusBodyTypeOther": "Other Bus Type",
+        "schoolBusClass": "Type 3: Special Vehicle",
         "schoolBusDistrict": {
-            "id": "10"
-        },
-        "schoolBusOwner": "{ 'id': '105'}",
-        "schoolBusSeatingCapacity": "0",
-        "schoolBusUnitNumber": "36251",
-        "serviceArea": {
             "id": "14"
         },
-        "status": "Active"
-    },
-    {
-        "VIN": "1BABNBXA9YF095512",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "3",
-        "nameOfIndependentSchool": "SHAWNIGAN LAKE SCHOOL",
-        "nextInspection": "2017-10-02",
-        "permitNumber": "33220",
-        "plate": "HBM 344",
-        "regi": "47180703",
-        "restrictions": null,
-        "schoolBusClass": "Class 1",
-        "schoolBusDistrict": {
-            "id": "37"
-        },
-        "schoolBusOwner": "{ 'id': '101'}",
-        "schoolBusSeatingCapacity": "28",
-        "schoolBusUnitNumber": "22295",
+        "schoolBusOwner": "{ 'id': '109'}",
+        "schoolBusSeatingCapacity": "44",
+        "schoolBusUnitNumber": "11189",
         "serviceArea": {
-            "id": "9"
+            "id": "18"
         },
         "status": "Active"
     },
     {
-        "VIN": "2PCH3349071717732",
-        "homeTerminalAddr1": "0",
-        "homeTerminalAddr2": null,
-        "homeTerminalCity": "0",
-        "homeTerminalPostalCode": "0",
-        "homeTerminalProvince": "0",
-        "independentSchool": true,
-        "isOutOfProvince": false,
-        "mobilityAidCapacity": "2",
-        "nameOfIndependentSchool": "MAIMONIDES SCHOOL SOCIETY",
-        "nextInspection": "2017-10-12",
-        "permitNumber": "25738",
-        "plate": "THJ 509",
-        "regi": "46078285",
-        "restrictions": null,
-        "schoolBusClass": "Class 3",
-        "schoolBusDistrict": {
-            "id": "20"
-        },
-        "schoolBusOwner": "{ 'id': '112'}",
-        "schoolBusSeatingCapacity": "60",
-        "schoolBusUnitNumber": "29923",
-        "serviceArea": {
-            "id": "30"
-        },
-        "status": "Active"
-    },
-    {
-        "VIN": "2PCH3349971711442",
+        "VIN": "1GBJG31F5X1158465",
         "homeTerminalAddr1": "0",
         "homeTerminalAddr2": null,
         "homeTerminalCity": "0",
@@ -820,22 +608,294 @@
         "homeTerminalProvince": "0",
         "independentSchool": false,
         "isOutOfProvince": false,
-        "mobilityAidCapacity": "2",
+        "mobilityAidCapacity": "0",
         "nameOfIndependentSchool": null,
-        "nextInspection": "2017-06-21",
-        "permitNumber": "29966",
-        "plate": "MAM 873",
-        "regi": "20180805",
+        "nextInspection": "2017-03-07",
+        "permitNumber": "36328",
+        "plate": "TJK 988",
+        "regi": "16103732",
         "restrictions": null,
-        "schoolBusClass": "Class 1",
+        "schoolBusBodyType": "Van",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
         "schoolBusDistrict": {
-            "id": "19"
+            "id": "2"
         },
-        "schoolBusOwner": "{ 'id': '102'}",
-        "schoolBusSeatingCapacity": "41",
-        "schoolBusUnitNumber": "43650",
+        "schoolBusOwner": "{ 'id': '103'}",
+        "schoolBusSeatingCapacity": "46",
+        "schoolBusUnitNumber": "34851",
+        "serviceArea": {
+            "id": "28"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBJG31F8X1153027",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-03-12",
+        "permitNumber": "29391",
+        "plate": "PKR 253",
+        "regi": "43808869",
+        "restrictions": null,
+        "schoolBusBodyType": "Mobility Aid",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 3: Special Vehicle",
+        "schoolBusDistrict": {
+            "id": "10"
+        },
+        "schoolBusOwner": "{ 'id': '106'}",
+        "schoolBusSeatingCapacity": "37",
+        "schoolBusUnitNumber": "37963",
+        "serviceArea": {
+            "id": "23"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBJG31F3X1159827",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "1",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-08-22",
+        "permitNumber": "36533",
+        "plate": "VJA 211",
+        "regi": "39746889",
+        "restrictions": null,
+        "schoolBusBodyType": "Other",
+        "schoolBusBodyTypeOther": "Other Bus Type",
+        "schoolBusClass": "Type 3: Special Vehicle",
+        "schoolBusDistrict": {
+            "id": "38"
+        },
+        "schoolBusOwner": "{ 'id': '113'}",
+        "schoolBusSeatingCapacity": "14",
+        "schoolBusUnitNumber": "27109",
+        "serviceArea": {
+            "id": "8"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GBJG31F1X1152780",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-07-22",
+        "permitNumber": "35190",
+        "plate": "VNN 705",
+        "regi": "22523552",
+        "restrictions": null,
+        "schoolBusBodyType": "Other",
+        "schoolBusBodyTypeOther": "Other Bus Type",
+        "schoolBusClass": "Type 3: Special Vehicle",
+        "schoolBusDistrict": {
+            "id": "21"
+        },
+        "schoolBusOwner": "{ 'id': '109'}",
+        "schoolBusSeatingCapacity": "79",
+        "schoolBusUnitNumber": "23190",
         "serviceArea": {
             "id": "16"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1GAHG39R1X1141347",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-11-07",
+        "permitNumber": "27086",
+        "plate": "KPM 250",
+        "regi": "44949939",
+        "restrictions": null,
+        "schoolBusBodyType": "Coach Bus",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
+        "schoolBusDistrict": {
+            "id": "39"
+        },
+        "schoolBusOwner": "{ 'id': '112'}",
+        "schoolBusSeatingCapacity": "19",
+        "schoolBusUnitNumber": "24317",
+        "serviceArea": {
+            "id": "9"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1FDXE47S4XHB16263",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "4",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-09-05",
+        "permitNumber": "26862",
+        "plate": "TKW 525",
+        "regi": "49829430",
+        "restrictions": null,
+        "schoolBusBodyType": "Mobility Aid",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
+        "schoolBusDistrict": {
+            "id": "47"
+        },
+        "schoolBusOwner": "{ 'id': '104'}",
+        "schoolBusSeatingCapacity": "65",
+        "schoolBusUnitNumber": "33755",
+        "serviceArea": {
+            "id": "6"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1HVBBAAN3XH248305",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-10-31",
+        "permitNumber": "33778",
+        "plate": "LTA 599",
+        "regi": "20154053",
+        "restrictions": "Non-Scheduled Transportation Only",
+        "schoolBusBodyType": "Yellow and Black",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 2: Special Activity Bus",
+        "schoolBusDistrict": {
+            "id": "38"
+        },
+        "schoolBusOwner": "{ 'id': '114'}",
+        "schoolBusSeatingCapacity": "51",
+        "schoolBusUnitNumber": "40945",
+        "serviceArea": {
+            "id": "30"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "1BABNBXA9YF091694",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": true,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": "SHAWNIGAN LAKE SCHOOL (LS",
+        "nextInspection": "2017-06-07",
+        "permitNumber": "34085",
+        "plate": "HBM 344",
+        "regi": "17234129",
+        "restrictions": null,
+        "schoolBusBodyType": "Yellow and Black",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 3: Special Vehicle",
+        "schoolBusDistrict": {
+            "id": "35"
+        },
+        "schoolBusOwner": "{ 'id': '116'}",
+        "schoolBusSeatingCapacity": "58",
+        "schoolBusUnitNumber": "42133",
+        "serviceArea": {
+            "id": "1"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "2PCH3349071711177",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-04-06",
+        "permitNumber": "31656",
+        "plate": "THJ 509",
+        "regi": "14945008",
+        "restrictions": null,
+        "schoolBusBodyType": "Yellow and Black",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 1: Yellow and Black School Bus",
+        "schoolBusDistrict": {
+            "id": "39"
+        },
+        "schoolBusOwner": "{ 'id': '108'}",
+        "schoolBusSeatingCapacity": "70",
+        "schoolBusUnitNumber": "37836",
+        "serviceArea": {
+            "id": "28"
+        },
+        "status": "Active"
+    },
+    {
+        "VIN": "2PCH3349971715724",
+        "homeTerminalAddr1": "0",
+        "homeTerminalAddr2": null,
+        "homeTerminalCity": "0",
+        "homeTerminalPostalCode": "0",
+        "homeTerminalProvince": "0",
+        "independentSchool": false,
+        "isOutOfProvince": false,
+        "mobilityAidCapacity": "0",
+        "nameOfIndependentSchool": null,
+        "nextInspection": "2017-02-07",
+        "permitNumber": "25552",
+        "plate": "MAM 873",
+        "regi": "49758979",
+        "restrictions": "Non-Scheduled Transportation Only",
+        "schoolBusBodyType": "Van",
+        "schoolBusBodyTypeOther": null,
+        "schoolBusClass": "Type 2: Special Activity Bus",
+        "schoolBusDistrict": {
+            "id": "1"
+        },
+        "schoolBusOwner": "{ 'id': '111'}",
+        "schoolBusSeatingCapacity": "43",
+        "schoolBusUnitNumber": "34726",
+        "serviceArea": {
+            "id": "20"
         },
         "status": "Active"
     }

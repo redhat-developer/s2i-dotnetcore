@@ -3716,6 +3716,12 @@ definitions:
       schoolBusClass:
         type: string
         description: The enumerated class of School Bus.
+      schoolBusBodyType:
+        type: string
+        description: The enumerated body type of the School Bus.
+      schoolBusBodyTypeOther:
+        type: string
+        description: The enumerated body type of the School Bus.
       schoolBusUnitNumber:
         type: string
         description: The unit number of the Bus as defined by the School Bus owner - freeform text.
@@ -4254,11 +4260,10 @@ definitions:
             min: 1
             max: 1000
       name:
-          format: string
+          type: string
           description:  The full name of the School District
-          x-chance-type: name
       shortName:
-          format: string
+          type: string
           description: A short name for the School District useful in some areas of the UI. Usually with format "SD 61".
   City:
     type: object

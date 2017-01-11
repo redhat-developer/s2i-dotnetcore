@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "4283 Burdett Avenue",
+        "addr1": "4761 King George Hwy",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1L6",
+        "city": "Surrey",
+        "postalCode": "V3W 4E3",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

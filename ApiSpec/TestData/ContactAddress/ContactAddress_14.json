@@ -1,10 +1,18 @@
 [
     {
-        "addr1": "2262 Burdett Avenue",
+        "addr1": "1696 Alaska Hwy",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8Z 2J8",
+        "city": "Fort Nelson",
+        "postalCode": "V0C 1C0",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "684 Roger Street",
+        "addr2": null,
+        "city": "Duncan",
+        "postalCode": "V9L 1P1",
+        "province": "BC",
+        "type": "Headquarters"
     }
 ]

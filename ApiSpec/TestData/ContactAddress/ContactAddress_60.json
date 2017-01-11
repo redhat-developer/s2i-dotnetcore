@@ -1,26 +1,18 @@
 [
     {
-        "addr1": "4283 Burdett Avenue",
+        "addr1": "1004 Robson St",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1L6",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "3418 Brew Creek Rd",
-        "addr2": null,
-        "city": "Port Hardy",
-        "postalCode": "V0N 2P0",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "4536 Brew Creek Rd",
-        "addr2": null,
-        "city": "Port Hardy",
-        "postalCode": "V0N 2P0",
+        "city": "Vancouver",
+        "postalCode": "V6B 3K9",
         "province": "BC",
         "type": "Field Office"
+    },
+    {
+        "addr1": "2076 James Street",
+        "addr2": null,
+        "city": "Aldergrove",
+        "postalCode": "V5G 4S4",
+        "province": "BC",
+        "type": "Bus Yard"
     }
 ]

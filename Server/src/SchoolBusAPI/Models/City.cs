@@ -37,12 +37,12 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="City" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="_City">The name of the City.</param>
-        public City(int Id, string _City = null)
+        /// <param name="Name">The name of the City.</param>
+        public City(int Id, string Name = null)
         {
             
             this.Id = Id;
-            this._City = _City;
+            this.Name = Name;
             
         }
 
@@ -58,7 +58,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The name of the City</value>
         [MetaDataExtension (Description = "The name of the City")]
-        public string _City { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -69,7 +69,7 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class City {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  _City: ").Append(_City).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -110,13 +110,13 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this._City == other._City ||
-                    this._City != null &&
-                    this._City.Equals(other._City)
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
                 );
         }
 
@@ -135,9 +135,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
                 }
-                if (this._City != null)
+                if (this.Name != null)
                 {
-                    hash = hash * 59 + this._City.GetHashCode();
+                    hash = hash * 59 + this.Name.GetHashCode();
                 }
                 return hash;
             }

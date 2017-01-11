@@ -1,9 +1,25 @@
 [
     {
-        "addr1": "2824 Hastings Street",
+        "addr1": "4357 Hastings Street",
         "addr2": null,
         "city": "Vancouver",
         "postalCode": "V6C 1B4",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "3561 Wellington Ave",
+        "addr2": null,
+        "city": "Chilliwack",
+        "postalCode": "V2P 2M1",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "4819 Wallace Street",
+        "addr2": null,
+        "city": "Nanaimo",
+        "postalCode": "V9R 3A8",
         "province": "BC",
         "type": "Bus Yard"
     }

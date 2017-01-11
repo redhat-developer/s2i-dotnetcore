@@ -1,9 +1,17 @@
 [
     {
-        "addr1": "47 Noble Rd",
+        "addr1": "1979 King George Hwy",
         "addr2": null,
-        "city": "Sayward",
-        "postalCode": "V0P 1R0",
+        "city": "Surrey",
+        "postalCode": "V3W 4E3",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "4580 Hastings Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6C 1B4",
         "province": "BC",
         "type": "Headquarters"
     }
