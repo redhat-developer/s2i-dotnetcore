@@ -1,18 +1,34 @@
 [
     {
-        "addr1": "2553 Holdom Avenue",
+        "addr1": "2824 Hastings Street",
         "addr2": null,
-        "city": "Surrey",
-        "postalCode": "V3T 4Y5",
+        "city": "Vancouver",
+        "postalCode": "V6C 1B4",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "4403 Brew Creek Rd",
+        "addr2": null,
+        "city": "Whistler",
+        "postalCode": "V0N 1B0",
         "province": "BC",
         "type": "Headquarters"
     },
     {
-        "addr1": "4764 Jade St",
+        "addr1": "1065 Sixth Street",
         "addr2": null,
-        "city": "Richmond",
-        "postalCode": "V7E 2E4",
+        "city": "New Westminster",
+        "postalCode": "V3L 3C1",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2824 Hastings Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6C 1B4",
+        "province": "BC",
+        "type": "Field Office"
     }
 ]

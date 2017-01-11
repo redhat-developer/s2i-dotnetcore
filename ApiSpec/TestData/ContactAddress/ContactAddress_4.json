@@ -1,17 +1,9 @@
 [
     {
-        "addr1": "1234 Tolmie St",
+        "addr1": "3600 Cordova Street",
         "addr2": null,
         "city": "Vancouver",
-        "postalCode": "V6M 1Y8",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "1696 Alaska Hwy",
-        "addr2": null,
-        "city": "Fort Nelson",
-        "postalCode": "V0C 1C0",
+        "postalCode": "V6B 1E1",
         "province": "BC",
         "type": "Field Office"
     }

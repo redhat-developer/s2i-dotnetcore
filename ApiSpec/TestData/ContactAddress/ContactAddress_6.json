@@ -1,18 +1,18 @@
 [
     {
-        "addr1": "2261 Blanshard",
+        "addr1": "3121 Blanshard",
         "addr2": null,
         "city": "Victoria",
         "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     },
     {
-        "addr1": "104 Roger Street",
+        "addr1": "2191 Blind Bay Road",
         "addr2": null,
-        "city": "Comox",
-        "postalCode": "V9N 6A1",
+        "city": "Clearwater",
+        "postalCode": "V0E 1N0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

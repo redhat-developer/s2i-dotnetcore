@@ -1,17 +1,9 @@
 [
     {
-        "addr1": "2549 James Street",
+        "addr1": "396 Quayside Dr",
         "addr2": null,
-        "city": "Burnaby",
-        "postalCode": "V5G 4W7",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "1654 Roger Street",
-        "addr2": null,
-        "city": "Courtenay",
-        "postalCode": "V9N 2J6",
+        "city": "New Westminster",
+        "postalCode": "V3M 6A1",
         "province": "BC",
         "type": "Headquarters"
     }

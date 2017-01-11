@@ -1,10 +1,18 @@
 [
     {
-        "addr1": "3053 Brew Creek Rd",
+        "addr1": "2120 Burdett Avenue",
         "addr2": null,
-        "city": "D'arcy",
-        "postalCode": "V0N 1L0",
+        "city": "Victoria",
+        "postalCode": "V8W 1L6",
         "province": "BC",
         "type": "Bus Yard"
+    },
+    {
+        "addr1": "1719 Blind Bay Road",
+        "addr2": null,
+        "city": "Vavenby",
+        "postalCode": "V0E 3A0",
+        "province": "BC",
+        "type": "Headquarters"
     }
 ]

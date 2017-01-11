@@ -1,18 +1,10 @@
 [
     {
-        "addr1": "232 Cordova Street",
+        "addr1": "1654 Roger Street",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
+        "city": "Courtenay",
+        "postalCode": "V9N 2J6",
         "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "1356 Old Spallumcheen Rd",
-        "addr2": null,
-        "city": "Yarrow",
-        "postalCode": "V0X 2A0",
-        "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

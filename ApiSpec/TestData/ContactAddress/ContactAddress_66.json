@@ -1,26 +1,26 @@
 [
     {
-        "addr1": "223 Brew Creek Rd",
+        "addr1": "4347 Blanshard",
         "addr2": null,
-        "city": "Whistler",
-        "postalCode": "V0N 1B0",
+        "city": "Victoria",
+        "postalCode": "V8W 2H9",
         "province": "BC",
         "type": "Bus Yard"
     },
     {
-        "addr1": "1028 Glover Road",
+        "addr1": "4536 Brew Creek Rd",
         "addr2": null,
-        "city": "Langley",
-        "postalCode": "V3A 1Z3",
+        "city": "Port Hardy",
+        "postalCode": "V0N 2P0",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     },
     {
-        "addr1": "2919 Old Spallumcheen Rd",
+        "addr1": "3711 Stum Lake Road",
         "addr2": null,
-        "city": "Atlin",
-        "postalCode": "V0W 1A0",
+        "city": "Riske Creek",
+        "postalCode": "V0L 1T0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]
