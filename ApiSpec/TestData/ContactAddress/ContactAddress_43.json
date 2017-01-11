@@ -1,0 +1,26 @@
+[
+    {
+        "addr1": "1004 Robson St",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6B 3K9",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "4359 Yoho Valley Road",
+        "addr2": null,
+        "city": "Spillimacheen",
+        "postalCode": "V0A 1P0",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "2519 St George Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V5T 1Z7",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]

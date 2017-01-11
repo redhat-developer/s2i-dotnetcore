@@ -1,0 +1,26 @@
+[
+    {
+        "addr1": "2578 Glover Road",
+        "addr2": null,
+        "city": "Fort Langley",
+        "postalCode": "V3A 6X5",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "3924 Roger Street",
+        "addr2": null,
+        "city": "Duncan",
+        "postalCode": "V9L 1P1",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "907 Nootka Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V5M 3M5",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]

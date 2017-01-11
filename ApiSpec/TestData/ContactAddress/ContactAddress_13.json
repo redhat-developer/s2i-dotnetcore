@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "2553 Holdom Avenue",
+        "addr2": null,
+        "city": "Surrey",
+        "postalCode": "V3T 4Y5",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "735 Blanshard",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W 2H9",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]

@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "2031 Blind Bay Road",
+        "addr2": null,
+        "city": "Sicamous",
+        "postalCode": "V0E 2V0",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "2824 Hastings Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6C 1B4",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]

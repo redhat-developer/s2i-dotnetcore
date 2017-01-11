@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "1004 Robson St",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6B 3K9",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "2076 James Street",
+        "addr2": null,
+        "city": "Aldergrove",
+        "postalCode": "V5G 4S4",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]

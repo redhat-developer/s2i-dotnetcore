@@ -37,10 +37,14 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolDistrict" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        public SchoolDistrict(int Id)
+        /// <param name="Name">The full name of the School District.</param>
+        /// <param name="ShortName">A short name for the School District useful in some areas of the UI. Usually with format \&quot;SD 61\&quot;..</param>
+        public SchoolDistrict(int Id, string Name = null, string ShortName = null)
         {
             
             this.Id = Id;
+            this.Name = Name;
+            this.ShortName = ShortName;
             
         }
 
@@ -52,6 +56,20 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// The full name of the School District
+        /// </summary>
+        /// <value>The full name of the School District</value>
+        [MetaDataExtension (Description = "The full name of the School District")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// A short name for the School District useful in some areas of the UI. Usually with format \"SD 61\".
+        /// </summary>
+        /// <value>A short name for the School District useful in some areas of the UI. Usually with format \"SD 61\".</value>
+        [MetaDataExtension (Description = "A short name for the School District useful in some areas of the UI. Usually with format &quot;SD 61&quot;.")]
+        public string ShortName { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -60,6 +78,8 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolDistrict {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  ShortName: ").Append(ShortName).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -102,6 +122,16 @@ namespace SchoolBusAPI.Models
                     this.Id == other.Id ||
                     this.Id != null &&
                     this.Id.Equals(other.Id)
+                ) && 
+                (
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
+                ) && 
+                (
+                    this.ShortName == other.ShortName ||
+                    this.ShortName != null &&
+                    this.ShortName.Equals(other.ShortName)
                 );
         }
 
@@ -119,6 +149,14 @@ namespace SchoolBusAPI.Models
                 if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
+                }
+                if (this.Name != null)
+                {
+                    hash = hash * 59 + this.Name.GetHashCode();
+                }
+                if (this.ShortName != null)
+                {
+                    hash = hash * 59 + this.ShortName.GetHashCode();
                 }
                 return hash;
             }

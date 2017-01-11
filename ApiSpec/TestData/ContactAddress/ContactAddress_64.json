@@ -1,0 +1,10 @@
+[
+    {
+        "addr1": "1234 Tolmie St",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6M 1Y8",
+        "province": "BC",
+        "type": "Field Office"
+    }
+]
