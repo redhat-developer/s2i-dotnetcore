@@ -1,0 +1,26 @@
+[
+    {
+        "addr1": "396 Quayside Dr",
+        "addr2": null,
+        "city": "New Westminster",
+        "postalCode": "V3M 6A1",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "127 Coldstream Avenue",
+        "addr2": null,
+        "city": "Vernon",
+        "postalCode": "V1T 6N1",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "684 Roger Street",
+        "addr2": null,
+        "city": "Duncan",
+        "postalCode": "V9L 1P1",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]

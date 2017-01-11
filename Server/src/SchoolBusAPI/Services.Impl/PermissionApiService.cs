@@ -54,7 +54,15 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (Permission item in items)
             {
-                _context.Permissions.Add(item);
+                var exists = _context.Permissions.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Permissions.Update(item);
+                }
+                else
+                {
+                    _context.Permissions.Add(item);
+                }                
             }
 
             // Save the changes

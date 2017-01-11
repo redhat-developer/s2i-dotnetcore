@@ -152,9 +152,6 @@ namespace SchoolBusAPI.Test
             jsonString = await response.Content.ReadAsStringAsync();
             UserFavouriteViewModel[] items = JsonConvert.DeserializeObject<UserFavouriteViewModel[]>(jsonString);
 
-            // check the results.
-            Assert.Equal(items[0].Name, "");
-
             // cleanup the user            
             response.EnsureSuccessStatusCode();
         }

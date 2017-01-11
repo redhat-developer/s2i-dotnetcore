@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "3967 Queens Bay",
+        "addr2": null,
+        "city": "Fauquier",
+        "postalCode": "V0G 1K0",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "2558 Glover Road",
+        "addr2": null,
+        "city": "Coquitlam",
+        "postalCode": "V3J 4S1",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]

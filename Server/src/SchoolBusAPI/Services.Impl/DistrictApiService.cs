@@ -53,7 +53,24 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (District item in items)
             {
-                _context.Districts.Add(item);
+                // avoid inserting a Region if possible.
+                int region_id = item.Region.Id;
+                var exists = _context.Regions.Any(a => a.Id == region_id);
+                if (exists)
+                {
+                    Region region = _context.Regions.First(a => a.Id == region_id);
+                    item.Region = region;
+                }
+
+                exists = _context.Districts.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Districts.Update(item);
+                }
+                else
+                {
+                    _context.Districts.Add(item);
+                }               
             }
             // Save the changes
             _context.SaveChanges();
@@ -165,6 +182,14 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult DistrictsPostAsync(District body)
         {
+            // adjust region
+            int region_id = body.Region.Id;
+            var exists = _context.Regions.Any(a => a.Id == region_id);
+            if (exists)
+            {
+                Region region = _context.Regions.First(a => a.Id == region_id);
+                body.Region = region;
+            }
             _context.Districts.Add(body);
             _context.SaveChanges();
             return new ObjectResult(body);

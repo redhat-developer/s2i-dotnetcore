@@ -32,8 +32,16 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Bulk load of role permissions</remarks>
         /// <param name="items"></param>
-        /// <response code="201">Permissions created</response>
+        /// <response code="201">Roles created</response>
+        IActionResult RolepermissionsBulkPostAsync(RolePermission[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="items"></param>
+        /// <response code="201">Roles created</response>
         IActionResult RolesBulkPostAsync(Role[] items);
 
         /// <summary>

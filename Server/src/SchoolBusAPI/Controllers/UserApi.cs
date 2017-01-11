@@ -43,6 +43,34 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a number of user groups</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/usergroups/bulk")]
+        [SwaggerOperation("UsergroupsBulkPost")]
+        public virtual IActionResult UsergroupsBulkPost([FromBody]GroupMembership[] items)
+        {
+            return this._service.UsergroupsBulkPostAsync(items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of user roles</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/userroles/bulk")]
+        [SwaggerOperation("UserrolesBulkPost")]
+        public virtual IActionResult UserrolesBulkPost([FromBody]UserRole[] items)
+        {
+            return this._service.UserrolesBulkPostAsync(items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Adds a number of users</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
@@ -130,6 +158,23 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult UsersIdGroupsGet([FromRoute]int id)
         {
             return this._service.UsersIdGroupsGetAsync(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Add to the active set of groups for a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        [HttpPost]
+        [Route("/api/users/{id}/groups")]
+        [SwaggerOperation("UsersIdGroupsPost")]
+        [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
+        public virtual IActionResult UsersIdGroupsPost([FromRoute]int id, [FromBody]GroupMembership[] items)
+        {
+            return this._service.UsersIdGroupsPostAsync(id, items);
         }
 
         /// <summary>

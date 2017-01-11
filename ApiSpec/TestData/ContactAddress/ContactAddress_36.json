@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "4173 James Street",
+        "addr2": null,
+        "city": "Burnaby",
+        "postalCode": "V5G 4W7",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "2383 Brew Creek Rd",
+        "addr2": null,
+        "city": "Whistler",
+        "postalCode": "V0N 1B0",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]

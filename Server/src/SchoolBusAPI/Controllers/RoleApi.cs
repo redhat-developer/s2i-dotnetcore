@@ -43,8 +43,22 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Bulk load of role permissions</remarks>
         /// <param name="items"></param>
-        /// <response code="201">Permissions created</response>
+        /// <response code="201">Roles created</response>
+        [HttpPost]
+        [Route("/api/rolepermissions/bulk")]
+        [SwaggerOperation("RolepermissionsBulkPost")]
+        public virtual IActionResult RolepermissionsBulkPost([FromBody]RolePermission[] items)
+        {
+            return this._service.RolepermissionsBulkPostAsync(items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="items"></param>
+        /// <response code="201">Roles created</response>
         [HttpPost]
         [Route("/api/roles/bulk")]
         [SwaggerOperation("RolesBulkPost")]
@@ -122,7 +136,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/roles/{id}/permissions")]
         [SwaggerOperation("RolesIdPermissionsPost")]
-        [SwaggerResponse(200, type: typeof(List<Permission>))]
+        [SwaggerResponse(200, type: typeof(List<PermissionViewModel>))]
         public virtual IActionResult RolesIdPermissionsPost([FromRoute]int id, [FromBody]Permission[] items)
         {
             return this._service.RolesIdPermissionsPostAsync(id, items);
