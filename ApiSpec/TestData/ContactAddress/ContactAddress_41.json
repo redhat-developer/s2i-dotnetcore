@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "4216 Robson St",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6B 3K9",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "806 Coldstream Avenue",
+        "addr2": null,
+        "city": "Vernon",
+        "postalCode": "V1T 6N1",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]

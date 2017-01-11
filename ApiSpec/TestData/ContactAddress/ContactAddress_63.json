@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "3420 Burdett Avenue",
+        "addr2": null,
+        "city": "Victoria",
+        "postalCode": "V8W IE9",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2162 King George Hwy",
+        "addr2": null,
+        "city": "Surrey",
+        "postalCode": "V3W 4E3",
+        "province": "BC",
+        "type": "Field Office"
+    }
+]

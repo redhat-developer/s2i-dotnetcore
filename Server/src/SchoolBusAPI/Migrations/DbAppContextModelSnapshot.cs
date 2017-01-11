@@ -481,7 +481,7 @@ namespace SchoolBusAPI.Migrations
                     b.Property<int?>("SchoolBusDistrictRefId")
                         .HasColumnName("SCHOOL_BUS_DISTRICT_REF_ID");
 
-                    b.Property<int?>("SchoolBusOwnerRefId")
+                    b.Property<int>("SchoolBusOwnerRefId")
                         .HasColumnName("SCHOOL_BUS_OWNER_REF_ID");
 
                     b.Property<int?>("SchoolBusSeatingCapacity")
@@ -959,7 +959,8 @@ namespace SchoolBusAPI.Migrations
 
                     b.HasOne("SchoolBusAPI.Models.SchoolBusOwner", "SchoolBusOwner")
                         .WithMany()
-                        .HasForeignKey("SchoolBusOwnerRefId");
+                        .HasForeignKey("SchoolBusOwnerRefId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SchoolBusAPI.Models.ServiceArea", "ServiceArea")
                         .WithMany()

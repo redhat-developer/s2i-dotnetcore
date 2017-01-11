@@ -32,6 +32,22 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a number of user groups</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        IActionResult UsergroupsBulkPostAsync(GroupMembership[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of user roles</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        IActionResult UserrolesBulkPostAsync(UserRole[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Adds a number of users</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>

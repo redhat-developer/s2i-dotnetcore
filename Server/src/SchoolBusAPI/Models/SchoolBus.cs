@@ -125,7 +125,7 @@ namespace SchoolBusAPI.Models
         public SchoolBusOwner SchoolBusOwner { get; set; }
 
         [ForeignKey("SchoolBusOwner")]
-        public int? SchoolBusOwnerRefId { get; set; }
+        public int SchoolBusOwnerRefId { get; set; }
 
 
         /// <summary>

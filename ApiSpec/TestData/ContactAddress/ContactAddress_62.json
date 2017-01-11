@@ -1,0 +1,58 @@
+[
+    {
+        "addr1": "4136 Glover Road",
+        "addr2": null,
+        "city": "Langley",
+        "postalCode": "V3A 4P6",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "1231 Stum Lake Road",
+        "addr2": null,
+        "city": "Horsefly",
+        "postalCode": "V0L 1L0",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "2956 Shaughnessy St",
+        "addr2": null,
+        "city": "Port Coquitlam",
+        "postalCode": "V3C 4S7",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "4834 Queens Bay",
+        "addr2": null,
+        "city": "Castlegar",
+        "postalCode": "V0G 2G0",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "223 Brew Creek Rd",
+        "addr2": null,
+        "city": "Whistler",
+        "postalCode": "V0N 1B0",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "4834 Queens Bay",
+        "addr2": null,
+        "city": "Castlegar",
+        "postalCode": "V0G 2G0",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "4528 Nootka Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V5M 3M5",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "addr1": "4359 Yoho Valley Road",
+        "addr2": null,
+        "city": "Spillimacheen",
+        "postalCode": "V0A 1P0",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "4216 Robson St",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6B 3K9",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "896 Roger Street",
+        "addr2": null,
+        "city": "Nanaimo",
+        "postalCode": "V9R 5H9",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]
