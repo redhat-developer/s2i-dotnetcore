@@ -51,6 +51,12 @@ var MultiDropdown = React.createClass({
     };
   },
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.items !== this.state.items) {
+      this.setState({ items: nextProps.items || [] });
+    }
+  },
+
   buildTitle(selectedIds) {
     var num = selectedIds.length;
 
