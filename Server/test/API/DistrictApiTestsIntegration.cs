@@ -61,22 +61,38 @@ namespace SchoolBusAPI.Test
 		/// <summary>
         /// Integration test for Districts
         /// </summary>
-		public async void TestDistrictsGet()
+		public async void TestDistricts()
 		{
             string initialName = "InitialName";
             string changedName = "ChangedName";
 
-            // first test the POST.
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/districts");
+            // create a temporary region.
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/regions");
+            request.Content = new StringContent("{'name':'TestRegion'}", Encoding.UTF8, "application/json");
+
+            var response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            string jsonString = await response.Content.ReadAsStringAsync();
+
+            Region region = JsonConvert.DeserializeObject<Region>(jsonString);
+            // get the id
+            var region_id = region.Id;
+
+            // test the POST.
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/districts");
 
             // create a new object.
             District district = new District();
+            district.Id = 0;
             district.Name = initialName;
-            string jsonString = district.ToJson();
+            district.Region = region;
+            jsonString = district.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
-            var response = await _client.SendAsync(request);
+            response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // parse as JSON.
@@ -113,6 +129,17 @@ namespace SchoolBusAPI.Test
 
             // should get a 404 if we try a get now.
             request = new HttpRequestMessage(HttpMethod.Get, "/api/districts/" + id);
+            response = await _client.SendAsync(request);
+            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
+
+
+            // delete the region.
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/regions/" + region_id + "/delete");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // should get a 404 if we try a get now.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/regions/" + region_id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
         }		

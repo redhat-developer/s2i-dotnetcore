@@ -182,6 +182,14 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult DistrictsPostAsync(District body)
         {
+            // adjust region
+            int region_id = body.Region.Id;
+            var exists = _context.Regions.Any(a => a.Id == region_id);
+            if (exists)
+            {
+                Region region = _context.Regions.First(a => a.Id == region_id);
+                body.Region = region;
+            }
             _context.Districts.Add(body);
             _context.SaveChanges();
             return new ObjectResult(body);
