@@ -216,7 +216,12 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult GetAllBusesAsync ()        
         {
-            var result = _context.SchoolBuss.ToList();
+            var result = _context.SchoolBuss
+                .Include (x => x.HomeTerminalCity)
+                .Include(x => x.SchoolBusDistrict)
+                .Include(x => x.SchoolBusOwner)
+                .Include(x => x.ServiceArea)                
+                .ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -392,7 +397,12 @@ namespace SchoolBusAPI.Services.Impl
         {
 
             // Eager loading of related data
-            var data = _context.SchoolBuss.Select(x => x); ;
+            var data = _context.SchoolBuss
+                .Include(x => x.HomeTerminalCity)
+                .Include(x => x.SchoolBusDistrict)
+                .Include(x => x.SchoolBusOwner)
+                .Include(x => x.ServiceArea)
+                .Select(x => x); 
           
             if (serviceareas != null)
             {
