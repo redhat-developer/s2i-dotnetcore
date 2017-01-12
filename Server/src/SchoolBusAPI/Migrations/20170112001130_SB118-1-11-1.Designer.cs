@@ -8,9 +8,10 @@ using SchoolBusAPI.Models;
 namespace SchoolBusAPI.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    partial class DbAppContextModelSnapshot : ModelSnapshot
+    [Migration("20170112001130_SB118-1-11-1")]
+    partial class SB1181111
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -484,11 +485,11 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("SchoolBusClass")
                         .HasColumnName("SCHOOL_BUS_CLASS");
 
-                    b.Property<int?>("SchoolBusDistrictRefId")
-                        .HasColumnName("SCHOOL_BUS_DISTRICT_REF_ID");
+                    b.Property<int?>("SchoolBusDistrictId")
+                        .HasColumnName("SCHOOL_BUS_DISTRICT_ID");
 
-                    b.Property<int>("SchoolBusOwnerRefId")
-                        .HasColumnName("SCHOOL_BUS_OWNER_REF_ID");
+                    b.Property<int?>("SchoolBusOwnerId")
+                        .HasColumnName("SCHOOL_BUS_OWNER_ID");
 
                     b.Property<int?>("SchoolBusSeatingCapacity")
                         .HasColumnName("SCHOOL_BUS_SEATING_CAPACITY");
@@ -496,8 +497,8 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("SchoolBusUnitNumber")
                         .HasColumnName("SCHOOL_BUS_UNIT_NUMBER");
 
-                    b.Property<int?>("ServiceAreaRefId")
-                        .HasColumnName("SERVICE_AREA_REF_ID");
+                    b.Property<int?>("ServiceAreaId")
+                        .HasColumnName("SERVICE_AREA_ID");
 
                     b.Property<string>("Status")
                         .HasColumnName("STATUS");
@@ -509,11 +510,11 @@ namespace SchoolBusAPI.Migrations
 
                     b.HasIndex("HomeTerminalCityId");
 
-                    b.HasIndex("SchoolBusDistrictRefId");
+                    b.HasIndex("SchoolBusDistrictId");
 
-                    b.HasIndex("SchoolBusOwnerRefId");
+                    b.HasIndex("SchoolBusOwnerId");
 
-                    b.HasIndex("ServiceAreaRefId");
+                    b.HasIndex("ServiceAreaId");
 
                     b.ToTable("SBI_SCHOOL_BUS");
                 });
@@ -967,16 +968,15 @@ namespace SchoolBusAPI.Migrations
 
                     b.HasOne("SchoolBusAPI.Models.SchoolDistrict", "SchoolBusDistrict")
                         .WithMany()
-                        .HasForeignKey("SchoolBusDistrictRefId");
+                        .HasForeignKey("SchoolBusDistrictId");
 
                     b.HasOne("SchoolBusAPI.Models.SchoolBusOwner", "SchoolBusOwner")
                         .WithMany()
-                        .HasForeignKey("SchoolBusOwnerRefId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SchoolBusOwnerId");
 
                     b.HasOne("SchoolBusAPI.Models.ServiceArea", "ServiceArea")
                         .WithMany()
-                        .HasForeignKey("ServiceAreaRefId");
+                        .HasForeignKey("ServiceAreaId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusAttachment", b =>
