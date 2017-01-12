@@ -120,5 +120,24 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">Not Found</response>
         IActionResult SchoolbusesIdPutAsync(int id, SchoolBus item);
+
+        /// <summary>
+        /// Searches school buses
+        /// </summary>
+        /// <remarks>Used for the search schoolbus page.</remarks>
+        /// <param name="serviceareas">Service areas (array of id numbers)</param>
+        /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
+        /// <param name="cities">Cities (array of id numbers)</param>
+        /// <param name="schooldistricts">School Districts (array of id numbers)</param>
+        /// <param name="owner"></param>
+        /// <param name="regi">ICBC Regi Number</param>
+        /// <param name="vin">VIN</param>
+        /// <param name="plate">License Plate String</param>
+        /// <param name="includeInactive">True if Inactive schoolbuses will be returned</param>
+        /// <param name="onlyReInspections">If true, only buses that need a re-inspection will be returned</param>
+        /// <param name="startDate">Inspection start date</param>
+        /// <param name="endDate">Inspection end date</param>
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusesSearchGetAsync(int?[] serviceareas, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate);
     }
 }
