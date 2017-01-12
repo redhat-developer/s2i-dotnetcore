@@ -52,8 +52,14 @@ var MultiDropdown = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.items !== this.state.items) {
-      this.setState({ items: nextProps.items || [] });
+    if (nextProps.items !== this.props.items) {
+      var items = nextProps.items || [];
+      var title = this.buildTitle(this.state.selectedIds);
+
+      this.setState({
+        items: items,
+        title: title,
+      });
     }
   },
 

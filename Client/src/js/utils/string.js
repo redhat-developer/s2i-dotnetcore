@@ -5,3 +5,19 @@ export function dasherize(str) {
 export function plural(num, singular, plural) {
   return num === 1 ? singular : plural;
 }
+
+export function concat(a, b, sep) {
+  if (!sep) { sep = ' '; }
+  if (a && b) { return `${a}${sep}${b}`; }
+  if (a) { return a; }
+  if (b) { return b; }
+  return '';
+}
+
+export function firstLastName(first, last) {
+  return concat(first, last);
+}
+
+export function lastFirstName(last, first) {
+  return concat(last, first, ', ');
+}

@@ -14,7 +14,8 @@ import * as Api from '../api';
 var UserManagement = React.createClass({
   propTypes: {
     currentUser : React.PropTypes.object,
-    users       : React.PropTypes.object,
+    users : React.PropTypes.object,
+    router : React.PropTypes.object,
   },
 
   getInitialState() {
@@ -34,12 +35,14 @@ var UserManagement = React.createClass({
     });
   },
 
-  edit() {
-    console.debug('edit user!');
+  edit(user) {
+    this.props.router.push({
+      pathname: 'user-management/' + user.id,
+    });
   },
 
-  delete() {
-    console.debug('delete user!');
+  delete(user) {
+    console.debug(`delete ${user.name}!`);
   },
 
   render() {
@@ -62,7 +65,7 @@ var UserManagement = React.createClass({
           {
             _.map(this.props.users, (user) => {
               return <tr key={ user.id } className={ !user.active ? 'info' : null }>
-                <td style={{ verticalAlign: 'middle' }}><strong>{ user.name }</strong></td>
+                <td style={{ verticalAlign: 'middle' }}><strong>{ user.surname }, { user.givenName }</strong></td>
                 <td style={{ verticalAlign: 'middle' }}>{ user.initials }</td>
                 <td style={{ textAlign: 'right' }}>
                   <Button onClick={ this.edit.bind(this, user) } style={{ marginRight: 10 }}><Glyphicon glyph="pencil" /> Edit</Button>

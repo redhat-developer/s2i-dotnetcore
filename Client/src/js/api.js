@@ -1,5 +1,6 @@
 import store from './store';
 import {ApiRequest} from './utils/http';
+import {lastFirstName} from './utils/string';
 
 import _ from 'lodash';
 
@@ -17,16 +18,21 @@ export function getUsers(params) {
 
     // Add display fields
     _.map(users, user => {
-      if (user.surname && user.givenName) {
-        user.name = user.surname + ', ' + user.givenName;
-      } else if (user.surname) {
-        user.name = user.surname;
-      } else {
-        user.name = user.givenName;
-      }
+      user.name = lastFirstName(user.surname, user.givenName);
     });
 
     store.dispatch({ type: 'UPDATE_USERS', users: users });
+  });
+}
+
+export function getUser(userId) {
+  return new ApiRequest(`/users/${userId}`).get().then(response => {
+    var user = response;
+
+    // Add display fields
+    user.name = lastFirstName(user.surname, user.givenName);
+
+    store.dispatch({ type: 'UPDATE_USER', user: user });
   });
 }
 
@@ -36,6 +42,66 @@ export function getSchoolBuses(params) {
     var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
 
     store.dispatch({ type: 'UPDATE_BUSES', schoolBuses: schoolBuses });
+  });
+}
+
+export function getSchoolBus(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}`).get().then(response => {
+    var schoolBus = response;
+
+    store.dispatch({ type: 'UPDATE_BUS', schoolBus: schoolBus });
+  });
+}
+
+export function getSchoolBusAttachments(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/attachments`).get().then(response => {
+    // Normalize the response
+    var schoolBusAttachments = _.fromPairs(response.map(attachment => [ attachment.id, attachment ]));
+
+    store.dispatch({ type: 'UPDATE_BUS_ATTACHMENTS', schoolBusAttachments: schoolBusAttachments });
+  });
+}
+
+export function getSchoolBusCCW(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/ccwdata`).get().then(response => {
+    var schoolBusCCW = response || {};
+
+    store.dispatch({ type: 'UPDATE_BUS_CCW', schoolBusCCW: schoolBusCCW });
+  });
+}
+
+export function getSchoolBusHistories(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/history`).get().then(response => {
+    // Normalize the response
+    var schoolBusHistories = _.fromPairs(response.map(history => [ history.id, history ]));
+
+    store.dispatch({ type: 'UPDATE_BUS_HISTORIES', schoolBusHistories: schoolBusHistories });
+  });
+}
+
+export function getSchoolBusInspections(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/inspections`).get().then(response => {
+    // Normalize the response
+    var schoolBusInspections = _.fromPairs(response.map(inspection => [ inspection.id, inspection ]));
+
+    store.dispatch({ type: 'UPDATE_BUS_INSPECTIONS', schoolBusInspections: schoolBusInspections });
+  });
+}
+
+export function getSchoolBusNotes(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/notes`).get().then(response => {
+    // Normalize the response
+    var schoolBusNotes = _.fromPairs(response.map(note => [ note.id, note ]));
+
+    store.dispatch({ type: 'UPDATE_BUS_NOTES', schoolBusNotes: schoolBusNotes });
+  });
+}
+
+export function getOwner(ownerId) {
+  return new ApiRequest(`/schoolbusowners/${ownerId}`).get().then(response => {
+    var owner = response;
+
+    store.dispatch({ type: 'UPDATE_OWNER', owner: owner });
   });
 }
 

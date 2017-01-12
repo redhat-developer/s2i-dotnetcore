@@ -4,10 +4,10 @@ import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton, MenuItem, Form, FormControl, ControlLabel, Button, Glyphicon, Checkbox } from 'react-bootstrap';
 
 import _ from 'lodash';
-import Moment from 'moment';
 
 import Spinner from '../components/Spinner.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
+import { formatDateTime } from '../utils/date';
 
 import * as Api from '../api';
 
@@ -136,7 +136,13 @@ var SchoolBuses = React.createClass({
     });
   },
 
-  render: function() {
+  search() {
+    this.fetch({
+
+    });
+  },
+
+  render() {
     var serviceAreas = _.sortBy(this.props.serviceAreas, 'name');
     var inspectors = _.sortBy(this.props.inspectors, 'name');
     var cities = _.sortBy(this.props.cities, 'name');
@@ -150,7 +156,7 @@ var SchoolBuses = React.createClass({
               <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas" items={ serviceAreas } onChange={ this.serviceAreasChanged } showMaxItems={ 2 } />
               <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors" items={ inspectors } onChange={ this.inspectorsChanged } showMaxItems={ 2 } />
               <MultiDropdown id="cities-dropdown" placeholder="Cities" items={ cities } onChange={ this.citiesChanged } showMaxItems={ 2 } />
-              <MultiDropdown id="school-districts-dropdown" placeholder="School Districts" items={ schoolDistricts } onChange={ this.schoolDistrictsChanged } showMaxItems={ 2 } />
+              <MultiDropdown id="school-districts-dropdown" placeholder="School Districts" items={ schoolDistricts } fieldName="shortName" onChange={ this.schoolDistrictsChanged } showMaxItems={ 2 } />
               <div className="search-label">Key Search By:</div>
               <DropdownButton id="school-buses-key-dropdown" title={ this.state.keySearchField } onSelect={ this.keySearchSelected }>
                 <MenuItem key={ KEY_SEARCH_REGI } eventKey={ KEY_SEARCH_REGI }>{ KEY_SEARCH_REGI }</MenuItem>
@@ -197,7 +203,7 @@ var SchoolBuses = React.createClass({
             </ButtonToolbar>
           </Col>
           <Col md={2}>
-            <Button id="search" className="pull-right">Search</Button>
+            <Button id="search" onClick={ this.search } className="pull-right">Search</Button>
           </Col>
         </Row>
       </Well>
@@ -223,17 +229,17 @@ var SchoolBuses = React.createClass({
           {
             _.map(this.props.schoolBuses, (bus) => {
               var editPath = '#/school-buses/' + bus.id;
-              var ownerPath = '#/owners/' + bus.id;
-              var inspectionDt = Moment(bus.nextInspectionDate);
-              return <tr key={ bus.id } className={ bus.status != 'active' ? 'info' : null }>
+              var ownerPath = '#/owners/' + (bus.schoolBusOwner ? bus.schoolBusOwner.id : '');
+
+              return <tr key={ bus.id } className={ bus.status != 'Active' ? 'info' : null }>
                 <td><a href={ editPath }>{ bus.regi }</a></td>
-                <td><a href={ ownerPath }>{ bus.schoolBusOwner }</a></td>
+                <td><a href={ ownerPath }>{ bus.schoolBusOwner ? bus.schoolBusOwner.name : '' }</a></td>
                 <td>{ bus.location }</td>
                 <td>{ bus.busLocationCity }, { bus.busLocationPostCode }</td>
-                <td></td>
+                <td>{ bus.schoolBusUnitNumber }</td>
                 <td>{ bus.permitNumber }</td>
-                <td>{ inspectionDt.format('MM/DD/YYYY') }</td>
-                <td></td>
+                <td>{ formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY') }</td>
+                <td>{ bus.inspectorName }</td>
               </tr>;
             })
           }
