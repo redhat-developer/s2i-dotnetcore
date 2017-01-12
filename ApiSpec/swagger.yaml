@@ -324,6 +324,85 @@ paths:
               format: url
           schema:
             $ref: "#/definitions/SchoolBus"
+  /schoolbuses/search:
+    get:
+      summary: Searches school buses
+      description:
+        Used for the search schoolbus page.
+      tags:
+        - SchoolBus
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: serviceareas
+          in: query
+          description: Service areas (array of id numbers)
+          collectionFormat: multi
+          type: array                             
+          items:
+            type: integer
+        - name: inspectors
+          in: query
+          description: Assigned School Bus Inspectors (array of id numbers)
+          type: array          
+          items:
+              type: integer
+        - name: cities
+          in: query
+          description: Cities (array of id numbers)
+          type: array          
+          items:
+              type: integer
+        - name: schooldistricts
+          in: query
+          description: School Districts (array of id numbers)
+          type: array          
+          items:
+              type: integer        
+        - name: owner
+          in: query
+          type: integer
+        - name: regi
+          in: query
+          description: ICBC Regi Number
+          type: string
+        - name: vin
+          in: query
+          description: VIN
+          type: string
+        - name: plate
+          in: query
+          description: License Plate String
+          type: string
+        - name: includeInactive
+          in: query
+          description: True if Inactive schoolbuses will be returned
+          type: boolean
+        - name: onlyReInspections
+          in: query
+          description: If true, only buses that need a re-inspection will be returned
+          type: boolean
+        - name: startDate
+          description: Inspection start date
+          in: query
+          type: string
+          format: date-time
+        - name: endDate
+          description: Inspection end date
+          in: query
+          type: string
+          format: date-time
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBus"
   /schoolbuses/bulk:
     post:
       summary: Creates several school buses

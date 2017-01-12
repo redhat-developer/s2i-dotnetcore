@@ -68,7 +68,10 @@ namespace SchoolBusAPI.Test
 
             // create a temporary region.
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/regions");
-            request.Content = new StringContent("{'name':'TestRegion'}", Encoding.UTF8, "application/json");
+            Region region = new Region();
+            region.Name = initialName;
+
+            request.Content = new StringContent(region.ToJson(), Encoding.UTF8, "application/json");
 
             var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
@@ -76,7 +79,7 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             string jsonString = await response.Content.ReadAsStringAsync();
 
-            Region region = JsonConvert.DeserializeObject<Region>(jsonString);
+            region = JsonConvert.DeserializeObject<Region>(jsonString);
             // get the id
             var region_id = region.Id;
 

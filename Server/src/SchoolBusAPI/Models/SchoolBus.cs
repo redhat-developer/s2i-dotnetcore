@@ -58,10 +58,12 @@ namespace SchoolBusAPI.Models
         /// <param name="IsIndependentSchool">True if the School Bus is associated with an Independent School. If true, the name of the Independent School should be in the companion field..</param>
         /// <param name="NameOfIndependentSchool">The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false..</param>
         /// <param name="SchoolBusClass">The enumerated class of School Bus..</param>
+        /// <param name="SchoolBusBodyType">The enumerated body type of the School Bus..</param>
+        /// <param name="SchoolBusBodyTypeOther">The enumerated body type of the School Bus..</param>
         /// <param name="SchoolBusUnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
         /// <param name="SchoolBusSeatingCapacity">The maximum number of passengers in the bus based on the specific use of the bus. For example, the same 2-per seat / 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children, 3 per seat..</param>
         /// <param name="MobilityAidCapacity">The number of mobility aid passenger seats in the bus..</param>
-        public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea ServiceArea = null, string HomeTerminalAddr1 = null, string HomeTerminalAddr2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string Restrictions = null, DateTime? NextInspectionDate = null, string NextInspectionType = null, SchoolDistrict SchoolBusDistrict = null, bool? IsIndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null)
+        public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea ServiceArea = null, string HomeTerminalAddr1 = null, string HomeTerminalAddr2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string Restrictions = null, DateTime? NextInspectionDate = null, string NextInspectionType = null, SchoolDistrict SchoolBusDistrict = null, bool? IsIndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusBodyType = null, string SchoolBusBodyTypeOther = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null)
         {
             
             this.Id = Id;
@@ -85,6 +87,8 @@ namespace SchoolBusAPI.Models
             this.IsIndependentSchool = IsIndependentSchool;
             this.NameOfIndependentSchool = NameOfIndependentSchool;
             this.SchoolBusClass = SchoolBusClass;
+            this.SchoolBusBodyType = SchoolBusBodyType;
+            this.SchoolBusBodyTypeOther = SchoolBusBodyTypeOther;
             this.SchoolBusUnitNumber = SchoolBusUnitNumber;
             this.SchoolBusSeatingCapacity = SchoolBusSeatingCapacity;
             this.MobilityAidCapacity = MobilityAidCapacity;
@@ -126,7 +130,6 @@ namespace SchoolBusAPI.Models
 
         [ForeignKey("SchoolBusOwner")]
         public int SchoolBusOwnerRefId { get; set; }
-
 
         /// <summary>
         /// The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.
@@ -243,6 +246,20 @@ namespace SchoolBusAPI.Models
         public string SchoolBusClass { get; set; }
 
         /// <summary>
+        /// The enumerated body type of the School Bus.
+        /// </summary>
+        /// <value>The enumerated body type of the School Bus.</value>
+        [MetaDataExtension (Description = "The enumerated body type of the School Bus.")]
+        public string SchoolBusBodyType { get; set; }
+
+        /// <summary>
+        /// The enumerated body type of the School Bus.
+        /// </summary>
+        /// <value>The enumerated body type of the School Bus.</value>
+        [MetaDataExtension (Description = "The enumerated body type of the School Bus.")]
+        public string SchoolBusBodyTypeOther { get; set; }
+
+        /// <summary>
         /// The unit number of the Bus as defined by the School Bus owner - freeform text.
         /// </summary>
         /// <value>The unit number of the Bus as defined by the School Bus owner - freeform text.</value>
@@ -292,6 +309,8 @@ namespace SchoolBusAPI.Models
             sb.Append("  IsIndependentSchool: ").Append(IsIndependentSchool).Append("\n");
             sb.Append("  NameOfIndependentSchool: ").Append(NameOfIndependentSchool).Append("\n");
             sb.Append("  SchoolBusClass: ").Append(SchoolBusClass).Append("\n");
+            sb.Append("  SchoolBusBodyType: ").Append(SchoolBusBodyType).Append("\n");
+            sb.Append("  SchoolBusBodyTypeOther: ").Append(SchoolBusBodyTypeOther).Append("\n");
             sb.Append("  SchoolBusUnitNumber: ").Append(SchoolBusUnitNumber).Append("\n");
             sb.Append("  SchoolBusSeatingCapacity: ").Append(SchoolBusSeatingCapacity).Append("\n");
             sb.Append("  MobilityAidCapacity: ").Append(MobilityAidCapacity).Append("\n");
@@ -439,6 +458,16 @@ namespace SchoolBusAPI.Models
                     this.SchoolBusClass.Equals(other.SchoolBusClass)
                 ) && 
                 (
+                    this.SchoolBusBodyType == other.SchoolBusBodyType ||
+                    this.SchoolBusBodyType != null &&
+                    this.SchoolBusBodyType.Equals(other.SchoolBusBodyType)
+                ) && 
+                (
+                    this.SchoolBusBodyTypeOther == other.SchoolBusBodyTypeOther ||
+                    this.SchoolBusBodyTypeOther != null &&
+                    this.SchoolBusBodyTypeOther.Equals(other.SchoolBusBodyTypeOther)
+                ) && 
+                (
                     this.SchoolBusUnitNumber == other.SchoolBusUnitNumber ||
                     this.SchoolBusUnitNumber != null &&
                     this.SchoolBusUnitNumber.Equals(other.SchoolBusUnitNumber)
@@ -549,6 +578,14 @@ namespace SchoolBusAPI.Models
                 if (this.SchoolBusClass != null)
                 {
                     hash = hash * 59 + this.SchoolBusClass.GetHashCode();
+                }
+                if (this.SchoolBusBodyType != null)
+                {
+                    hash = hash * 59 + this.SchoolBusBodyType.GetHashCode();
+                }
+                if (this.SchoolBusBodyTypeOther != null)
+                {
+                    hash = hash * 59 + this.SchoolBusBodyTypeOther.GetHashCode();
                 }
                 if (this.SchoolBusUnitNumber != null)
                 {

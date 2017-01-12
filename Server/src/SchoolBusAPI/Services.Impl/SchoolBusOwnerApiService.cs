@@ -74,7 +74,16 @@ namespace SchoolBusAPI.Services.Impl
                         SchoolBusOwnerContact contact = _context.SchoolBusOwnerContacts.First(a => a.Id == primary_contact_id);
                         item.PrimaryContact = contact;
                     }
+                    else
+                    {
+                        return new ObjectResult("ERROR - Primary contact with an id of " + primary_contact_id + " does not exist, for record id " + item.Id);
+                    }
                 }
+                else
+                {
+                    return new ObjectResult("ERROR - Primary contact is null.");
+                }
+
                 var exists = _context.SchoolBusOwners.Any(a => a.Id == item.Id);
                 if (exists)
                 {
