@@ -2,6 +2,7 @@ import Promise from 'bluebird';
 import store from '../store';
 import _ from 'lodash';
 
+const ROOT_API_PREFIX = location.pathname === '/' ? '' : location.pathname.split('/').slice(0, -1).join('/');
 
 var numRequestsInFlight = 0;
 
@@ -134,7 +135,7 @@ export function jsonRequest(path, options) {
 
 
 export function ApiRequest(path) {
-  this.path = `/api/${path}`.replace('//', '/'); // remove double slashes
+  this.path = `${ROOT_API_PREFIX}/api/${path}`.replace('//', '/'); // remove double slashes
 }
 
 ApiRequest.prototype.get = function apiGet(params) {

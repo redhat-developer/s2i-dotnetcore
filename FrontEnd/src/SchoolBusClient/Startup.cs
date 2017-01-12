@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using SchoolBusClient.Handlers;
+using System;
 using System.IO;
 
 namespace SchoolBusClient
@@ -52,9 +53,13 @@ namespace SchoolBusClient
             app.UseMvc();
             app.UseDefaultFiles();
 
-            string webFileFolder = Path.Combine(Directory.GetCurrentDirectory(), @"src/dist");
+            string webFileFolder = Directory.GetCurrentDirectory();
+            webFileFolder = webFileFolder + Path.DirectorySeparatorChar + "src"+ Path.DirectorySeparatorChar + "dist";
+
+            Console.WriteLine("Web root is " +  webFileFolder);
+
             // Only serve up static files if they exist.
-            if (File.Exists(webFileFolder))
+            if (Directory.Exists(webFileFolder))
             {
                 app.UseFileServer(new FileServerOptions()
                 {
