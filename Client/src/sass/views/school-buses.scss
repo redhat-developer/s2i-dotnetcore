@@ -1,0 +1,77 @@
+#school-buses-search {
+  .search-label {
+    float: left;
+    margin-top: 7px;
+    margin-left: 12px;
+  }
+
+  .search-text {
+    width: 100px;
+    margin-left: 6px;
+  }
+}
+
+#school-buses-key-dropdown ~ .dropdown-menu {
+  min-width: 80px;
+}
+
+#school-buses-utils {
+  .btn {
+    margin-left: 5px;
+  }
+}
+
+#school-buses-inspections {
+  margin-top: 16px;
+
+  .search-label {
+    float: left;
+    margin-top: 7px;
+    margin-left: 12px;
+  }
+
+  form {
+    label {
+      font-weight: normal;
+      margin-left: 12px;
+    }
+
+    .checkbox {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .search-text {
+    width: 100px;
+    margin-left: 6px;
+  }
+}
+
+#search {
+  margin-top: 16px;
+}
+
+#school-buses-detail {
+  .well {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .label {
+    font-size: 100%;
+    margin-right: 5px;
+  }
+
+  button {
+    margin-left: 5px;
+  }
+
+  h4 {
+    font-weight: 600;
+  }
+
+  strong {
+    font-weight: 400;
+  }
+}

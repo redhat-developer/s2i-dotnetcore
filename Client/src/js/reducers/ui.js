@@ -31,15 +31,7 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
         requests: { error: action.error },
       };
       break;
-
-    case 'TEST_COUNT':
-      newState = { testingStoreCount: action.count };
-      break;
-
-    case 'TEST_COUNT2':
-      newState = { testingStoreCount2: action.count };
-      break;
   }
 
-  return Object.assign({}, state, newState);
+  return { ...state, ...newState };
 }

@@ -701,7 +701,7 @@
         "host": "${APPLICATION_DOMAIN}",		
         "to": {
           "kind": "Service",
-          "name": "${RPROXY_NAME}"
+          "app": "${RPROXY_NAME}"
 		},
 		"tls": {
             "termination": "edge"

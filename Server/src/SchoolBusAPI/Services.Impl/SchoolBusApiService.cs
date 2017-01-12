@@ -216,7 +216,12 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult GetAllBusesAsync ()        
         {
-            var result = _context.SchoolBuss.ToList();
+            var result = _context.SchoolBuss
+                .Include (x => x.HomeTerminalCity)
+                .Include(x => x.SchoolBusDistrict)
+                .Include(x => x.SchoolBusOwner)
+                .Include(x => x.ServiceArea)                
+                .ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -369,6 +374,111 @@ namespace SchoolBusAPI.Services.Impl
                 // record not found
                 return new StatusCodeResult(404);
             }
+        }
+
+        /// <summary>
+        /// Searches school buses
+        /// </summary>
+        /// <remarks>Used for the search schoolbus page.</remarks>
+        /// <param name="serviceareas">Service areas (array of id numbers)</param>
+        /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
+        /// <param name="cities">Cities (array of id numbers)</param>
+        /// <param name="schooldistricts">School Districts (array of id numbers)</param>
+        /// <param name="owner"></param>
+        /// <param name="regi">ICBC Regi Number</param>
+        /// <param name="vin">VIN</param>
+        /// <param name="plate">License Plate String</param>
+        /// <param name="includeInactive">True if Inactive schoolbuses will be returned</param>
+        /// <param name="onlyReInspections">If true, only buses that need a re-inspection will be returned</param>
+        /// <param name="startDate">Inspection start date</param>
+        /// <param name="endDate">Inspection end date</param>
+        /// <response code="200">OK</response>
+        public IActionResult SchoolbusesSearchGetAsync(int?[] serviceareas, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate)
+        {
+
+            // Eager loading of related data
+            var data = _context.SchoolBuss
+                .Include(x => x.HomeTerminalCity)
+                .Include(x => x.SchoolBusDistrict)
+                .Include(x => x.SchoolBusOwner)
+                .Include(x => x.ServiceArea)
+                .Select(x => x); 
+          
+            if (serviceareas != null)
+            {
+                foreach (int? servicearea in serviceareas)
+                {
+                    if (servicearea != null)
+                    {
+                        data = data.Where(x => x.ServiceArea.Id == servicearea);
+                    }                    
+                }                
+            }
+
+            if (inspectors != null)
+            {
+                // no inspectors yet.
+            }
+
+            if (cities != null)
+            {
+                foreach (int? city in cities)
+                {
+                    if (city != null)
+                    {
+                        data = data.Where(x => x.HomeTerminalCity.Id == city);
+                    }
+                }
+            }
+
+            if (schooldistricts != null)
+            {
+                foreach (int? schooldistrict in schooldistricts)
+                {
+                    if (schooldistrict != null)
+                    {
+                        data = data.Where(x => x.SchoolBusDistrict.Id == schooldistrict);
+                    }
+                }
+            }
+
+            if (owner != null)
+            {
+                data = data.Where(x => x.SchoolBusOwner.Id == owner);
+            }
+
+            if (regi != null)
+            {
+                data = data.Where(x => x.Regi == regi);
+            }
+
+            if (vin != null)
+            {
+                data = data.Where(x => x.VIN == vin);
+            }
+
+            if (includeInactive == null)
+            {
+                data = data.Where(x => x.Status == "Active");
+            }
+
+            if (onlyReInspections != null)
+            {
+                data = data.Where(x => x.NextInspectionType == "Re-inspection");
+            }
+            
+            if (startDate != null)
+            {
+                data = data.Where(x => x.NextInspectionDate >= startDate);
+            }
+
+            if (endDate != null)
+            {
+                data = data.Where(x => x.NextInspectionDate >= endDate);
+            }
+
+            var result = data.ToList();
+            return new ObjectResult(result);
         }
     }
 }

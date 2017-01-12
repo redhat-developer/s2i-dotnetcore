@@ -17,7 +17,7 @@ var Home = React.createClass({
           <h2>You have <a href="#/school-buses">{this.props.currentUser.dueNextMonthInspections}</a> inspections coming due in the next month</h2>
         </Col>
         <Col md={4}>
-          [insert legal image here]
+
         </Col>
       </Row>
     </div>;
