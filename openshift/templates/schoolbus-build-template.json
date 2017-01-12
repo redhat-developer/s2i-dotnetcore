@@ -13,7 +13,72 @@
     "template": "schoolbus-builds"
   },
   "objects": [
-  
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "base-centos7",
+        "generation": 2,
+        "creationTimestamp": null,
+        "labels": {
+            "template": "moti-dotnetcore-builds"
+        },
+        "annotations": {
+            "openshift.io/image.dockerRepositoryCheck": "2016-12-13T21:35:23Z"
+        }
+    },
+    "spec": {
+        "dockerImageRepository": "openshift/base-centos7",
+        "tags": [
+            {
+                "name": "latest",
+                "annotations": null,
+				"from": {
+                    "kind": "DockerImage",
+                    "name": "openshift/base-centos7:latest"
+                },
+                "generation": 2,
+                "importPolicy": {}
+            }
+        ]
+    },
+    "status": {
+        "dockerImageRepository": ""
+    }
+},  
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "dotnet",
+        "generation": 2,
+        "creationTimestamp": null,
+        "labels": {
+            "template": "moti-dotnetcore-builds"
+        },
+        "annotations": {
+            "openshift.io/image.dockerRepositoryCheck": "2016-12-13T21:35:23Z"
+        }
+    },
+    "spec": {
+        "dockerImageRepository": "microsoft/dotnet",
+        "tags": [
+            {
+                "name": "latest",
+                "annotations": null,
+				"from": {
+                    "kind": "DockerImage",
+                    "name": "microsoft/dotnet:1.1.0-sdk-projectjson"
+                },
+                "generation": 2,
+                "importPolicy": {}
+            }
+        ]
+    },
+    "status": {
+        "dockerImageRepository": ""
+    }
+},  
 {
     "kind": "ImageStream",
     "apiVersion": "v1",
@@ -104,9 +169,31 @@
                         }
                     }                    
                 ]
-            }
-        
+            }       
 },
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "s2i-nginx",
+        "generation": 1,
+        "creationTimestamp": null
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "${DEPLOYMENT_TYPE}",
+                "annotations": null,
+                "generation": null,
+                "importPolicy": {}
+            }
+
+        ]
+    },
+    "status": {    
+    }
+},
+
 {
     "kind": "ImageStream",
     "apiVersion": "v1",
@@ -195,8 +282,111 @@
     "status": {    
     }
 },
-
-
+{
+    "kind": "BuildConfig",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "s2i-nginx",
+        "creationTimestamp": null,
+        "labels": {
+            "app": "s2i-nginx"
+        },
+        "annotations": {
+            "openshift.io/generated-by": "OpenShiftNewApp"
+        }
+    },
+    "spec": {
+        "triggers": [
+            {
+                "type": "ConfigChange"
+            },
+            {
+                "type": "ImageChange",
+                "imageChange": {}
+            }
+        ],
+        "runPolicy": "Serial",
+        "source": {
+            "type": "Git",
+            "git": {
+                "uri": "https://github.com/BCDevOps/s2i-nginx.git"
+            }
+        },
+        "strategy": {
+            "type": "Docker",
+            "dockerStrategy": {
+                "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "base-centos7:latest"
+                }
+            }
+        },
+        "output": {
+            "to": {
+                "kind": "ImageStreamTag",
+                "name": "s2i-nginx:latest"
+            }
+        },
+        "resources": {},
+        "postCommit": {},
+        "nodeSelector": null
+    },
+    "status": {
+        "lastVersion": 0
+    }
+},
+{
+    "kind": "BuildConfig",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${RPROXY_NAME}",
+        "creationTimestamp": null,
+        "labels": {
+            "app": "${RPROXY_NAME}"
+        }
+    },
+    "spec": {
+        "triggers": [
+            {
+                "type": "ImageChange",
+                "imageChange": {}
+            },
+            {
+                "type": "ConfigChange"
+            }
+        ],
+        "runPolicy": "Serial",
+        "source": {
+            "type": "Git",
+            "git": {
+                "uri": "${SRC_REPO}"
+            },
+            "contextDir": "/SiteMinder-Proxy"
+        },
+        "strategy": {
+            "type": "Source",
+            "sourceStrategy": {
+                "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "s2i-nginx:latest"
+                }                
+            }
+        },
+        "output": {
+            "to": {
+                "kind": "ImageStreamTag",
+        "namespace": "tran-schoolbus-tools",
+                "name": "${RPROXY_NAME}:${DEPLOYMENT_TYPE}"
+            }
+        },
+        "resources": {},
+        "postCommit": {},
+        "nodeSelector": null
+    },
+    "status": {
+        "lastVersion": 0
+    }
+},
 {
     "kind": "BuildConfig",
     "apiVersion": "v1",
@@ -355,6 +545,28 @@
       }
   },
   {
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${RPROXY_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "${DEPLOYMENT_TYPE}",
+                "annotations": null,
+                "generation": null,
+                "importPolicy": {}
+            }
+
+        ]
+    },
+    "status": {    
+    }
+},  
+  {
     "kind": "BuildConfig",
     "apiVersion": "v1",
     "metadata": {
@@ -405,7 +617,203 @@
     "status": {
         "lastVersion": 0
     }
-}],
+},
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${EDITOR_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "${EDITOR_NAME}",
+                "annotations": null,
+                "generation": null,
+                "importPolicy": {}
+            }
+
+        ]
+    },
+    "status": {    
+    }
+},
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${MOCKSERVER_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "${MOCKSERVER_NAME}",
+                "annotations": null,
+                "generation": null,
+                "importPolicy": {}
+            }
+
+        ]
+    },
+    "status": {    
+    }
+},
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${SCHEMASPY_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "${SCHEMASPY_NAME}",
+                "annotations": null,
+                "generation": null,
+                "importPolicy": {}
+            }
+
+        ]
+    },
+    "status": {    
+    }
+},
+{
+	"kind": "BuildConfig",
+	"apiVersion": "v1",
+	"metadata": {
+		"name": "${EDITOR_NAME}",
+		"creationTimestamp": null,
+		"labels": {
+			"app": "${EDITOR_NAME}",
+			"buildconfig": "${EDITOR_NAME}"                    
+		}                  
+	},
+	"spec": {                
+		"source": {
+			"type": "Git",
+			"git": {
+				"uri": "https://github.com/bcgov/Swagger-Editor.git"
+			}
+		},
+		"strategy": {
+			"type": "Docker"
+		},
+		"output": {
+			"to": {
+				"kind": "ImageStreamTag",
+				"name": "${EDITOR_NAME}:latest"
+			}
+		},
+		"resources": {},
+		"postCommit": {},
+		"nodeSelector": null,
+		"triggers": [
+			{
+				"type": "ConfigChange"
+			},
+			{
+				"type": "ImageChange",
+				"imageChange": {}
+			}
+		]
+	},
+	"status": {                
+	}            
+},
+{
+	"kind": "BuildConfig",
+	"apiVersion": "v1",
+	"metadata": {
+		"name": "${MOCKSERVER_NAME}",
+		"creationTimestamp": null,
+		"labels": {
+			"app": "${MOCKSERVER_NAME}",
+			"buildconfig": "${MOCKSERVER_NAME}"                    
+		}                  
+	},
+	"spec": {                
+		"source": {
+			"type": "Git",
+			"git": {
+				"uri": "https://github.com/bcgov/Mock-Server.git"
+			}
+		},
+		"strategy": {
+			"type": "Docker"
+		},
+		"output": {
+			"to": {
+				"kind": "ImageStreamTag",
+				"name": "${MOCKSERVER_NAME}:latest"
+			}
+		},
+		"resources": {},
+		"postCommit": {},
+		"nodeSelector": null,
+		"triggers": [
+			{
+				"type": "ConfigChange"
+			},
+			{
+				"type": "ImageChange",
+				"imageChange": {}
+			}
+		]
+	},
+	"status": {                
+	}            
+},
+{
+	"kind": "BuildConfig",
+	"apiVersion": "v1",
+	"metadata": {
+		"name": "${SCHEMASPY_NAME}",
+		"creationTimestamp": null,
+		"labels": {
+			"app": "${SCHEMASPY_NAME}",
+			"buildconfig": "${SCHEMASPY_NAME}"                    
+		}                  
+	},
+	"spec": {                
+		"source": {
+			"type": "Git",
+			"git": {
+				"uri": "https://github.com/bcgov/SchemaSpy.git"
+			}
+		},
+		"strategy": {
+			"type": "Docker"
+		},
+		"output": {
+			"to": {
+				"kind": "ImageStreamTag",
+				"name": "${SCHEMASPY_NAME}:latest"
+			}
+		},
+		"resources": {},
+		"postCommit": {},
+		"nodeSelector": null,
+		"triggers": [
+			{
+				"type": "ConfigChange"
+			},
+			{
+				"type": "ImageChange",
+				"imageChange": {}
+			}
+		]
+	},
+	"status": {                
+	}            
+}
+],
   "parameters": [
     {
       "name": "APPLICATION_NAME",
@@ -442,6 +850,13 @@
       "required": true,
       "value": "server"
     },
+	{
+      "name": "RPROXY_NAME",
+      "displayName": "Reverse Proxy Name (SiteMinder)",
+      "description": "The name assigned to the objects used as a SiteMinder entry point (or Reverse Proxy).  Typcially this is an NGINX instance.",
+      "required": true,
+      "value": "cerberus"
+    },
     {
       "name": "DEPLOYMENT_TYPE",
       "displayName": "Deployment Type",
@@ -455,6 +870,27 @@
       "description": "The source repository to use for the builds.",
       "required": true,
       "value": "https://github.com/bcgov/schoolbus.git"
+    },
+	{
+      "name": "EDITOR_NAME",
+      "displayName": "Swagger Editor Name",
+      "description": "The name assigned to all of the swagger editor objects defined in this template.",
+      "required": true,
+      "value": "editor"
+    },
+	{
+      "name": "MOCKSERVER_NAME",
+      "displayName": "Mock Server Name",
+      "description": "The name assigned to all of the mock server objects defined in this template.",
+      "required": true,
+      "value": "mock"
+    },
+	{
+      "name": "SCHEMASPY_NAME",
+      "displayName": "Schema Spy Name",
+      "description": "The name assigned to all of the schema spy objects defined in this template.",
+      "required": true,
+      "value": "schema-spy"
     }
   ]
 }
