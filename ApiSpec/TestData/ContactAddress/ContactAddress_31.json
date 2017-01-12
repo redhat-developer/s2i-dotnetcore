@@ -1,34 +1,10 @@
 [
     {
-        "addr1": "2824 Hastings Street",
+        "addr1": "4256 Kinchant St",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6C 1B4",
+        "city": "Williams Lake",
+        "postalCode": "V2G 1C4",
         "province": "BC",
         "type": "Headquarters"
-    },
-    {
-        "addr1": "914 Yoho Valley Road",
-        "addr2": null,
-        "city": "Invermere",
-        "postalCode": "V0A 1K0",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "127 Coldstream Avenue",
-        "addr2": null,
-        "city": "Vernon",
-        "postalCode": "V1T 6N1",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "608 Jade St",
-        "addr2": null,
-        "city": "Richmond",
-        "postalCode": "V7E 2E4",
-        "province": "BC",
-        "type": "Field Office"
     }
 ]

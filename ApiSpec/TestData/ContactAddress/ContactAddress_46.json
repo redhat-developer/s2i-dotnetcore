@@ -1,33 +1,9 @@
 [
     {
-        "addr1": "2031 Blind Bay Road",
+        "addr1": "1323 Cordova Street",
         "addr2": null,
-        "city": "Sicamous",
-        "postalCode": "V0E 2V0",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "3694 Lake City Way",
-        "addr2": null,
-        "city": "Burnaby",
-        "postalCode": "V5A 2Z6",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "2565 Tchesinkut Lake Rd",
-        "addr2": null,
-        "city": "Mcbride",
-        "postalCode": "V0J 2E0",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "1696 Alaska Hwy",
-        "addr2": null,
-        "city": "Fort Nelson",
-        "postalCode": "V0C 1C0",
+        "city": "Vancouver",
+        "postalCode": "V6B 1E1",
         "province": "BC",
         "type": "Field Office"
     }

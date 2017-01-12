@@ -144,8 +144,8 @@ namespace SchoolBusAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("CITY_ID");
 
-                    b.Property<string>("_City")
-                        .HasColumnName("_CITY");
+                    b.Property<string>("Name")
+                        .HasColumnName("NAME");
 
                     b.HasKey("Id");
 
@@ -475,6 +475,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Restrictions")
                         .HasColumnName("RESTRICTIONS");
 
+                    b.Property<string>("SchoolBusBodyType")
+                        .HasColumnName("SCHOOL_BUS_BODY_TYPE");
+
+                    b.Property<string>("SchoolBusBodyTypeOther")
+                        .HasColumnName("SCHOOL_BUS_BODY_TYPE_OTHER");
+
                     b.Property<string>("SchoolBusClass")
                         .HasColumnName("SCHOOL_BUS_CLASS");
 
@@ -763,6 +769,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("SCHOOL_DISTRICT_ID");
+
+                    b.Property<string>("Name")
+                        .HasColumnName("NAME");
+
+                    b.Property<string>("ShortName")
+                        .HasColumnName("SHORT_NAME");
 
                     b.HasKey("Id");
 

@@ -1,9 +1,25 @@
 [
     {
+        "addr1": "1004 Robson St",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6B 3K9",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
         "addr1": "2644 102nd Avenue",
         "addr2": null,
         "city": "Cranbrook",
         "postalCode": "V1C 2R9",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2383 Brew Creek Rd",
+        "addr2": null,
+        "city": "Whistler",
+        "postalCode": "V0N 1B0",
         "province": "BC",
         "type": "Field Office"
     }

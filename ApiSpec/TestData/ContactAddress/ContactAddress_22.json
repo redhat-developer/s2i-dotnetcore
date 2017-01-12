@@ -1,10 +1,18 @@
 [
     {
-        "addr1": "2031 Blind Bay Road",
+        "addr1": "3618 Queens Bay",
         "addr2": null,
-        "city": "Sicamous",
-        "postalCode": "V0E 2V0",
+        "city": "Salmo",
+        "postalCode": "V0G 1Z0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
+    },
+    {
+        "addr1": "830 Hardy Street",
+        "addr2": null,
+        "city": "Kelowna",
+        "postalCode": "V1Y 8H2",
+        "province": "BC",
+        "type": "Field Office"
     }
 ]

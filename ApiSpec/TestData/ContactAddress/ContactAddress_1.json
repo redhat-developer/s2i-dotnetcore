@@ -1,10 +1,18 @@
 [
     {
-        "addr1": "3618 Queens Bay",
+        "addr1": "1234 Tolmie St",
         "addr2": null,
-        "city": "Salmo",
-        "postalCode": "V0G 1Z0",
+        "city": "Vancouver",
+        "postalCode": "V6M 1Y8",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2913 Blind Bay Road",
+        "addr2": null,
+        "city": "Blue River",
+        "postalCode": "V0E 1J0",
+        "province": "BC",
+        "type": "Field Office"
     }
 ]

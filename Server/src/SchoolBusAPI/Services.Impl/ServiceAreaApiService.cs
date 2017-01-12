@@ -84,7 +84,9 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult ServiceareasGetAsync()
         {
-            var result = _context.ServiceAreas.ToList();
+            var result = _context.ServiceAreas
+                .Include(x => x.District.Region)
+                .ToList();
             return new ObjectResult(result);
         }
 
@@ -127,7 +129,10 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.ServiceAreas.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.ServiceAreas.First(a => a.Id == id);
+                var result = _context.ServiceAreas
+                    .Where(a => a.Id == id)
+                    .Include(a => a.District.Region)
+                    .FirstOrDefault();
                 return new ObjectResult(result);
             }
             else

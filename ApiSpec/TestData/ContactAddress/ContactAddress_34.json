@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "104 Roger Street",
+        "addr1": "2076 James Street",
         "addr2": null,
-        "city": "Comox",
-        "postalCode": "V9N 6A1",
+        "city": "Aldergrove",
+        "postalCode": "V5G 4S4",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

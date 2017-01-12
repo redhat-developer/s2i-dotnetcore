@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "727 Glover Road",
+        "addr1": "1234 Tolmie St",
         "addr2": null,
-        "city": "Langley",
-        "postalCode": "V3A 4P6",
+        "city": "Vancouver",
+        "postalCode": "V6M 1Y8",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

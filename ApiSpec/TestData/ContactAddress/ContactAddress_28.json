@@ -1,26 +1,42 @@
 [
     {
-        "addr1": "2262 Burdett Avenue",
+        "addr1": "3711 Stum Lake Road",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8Z 2J8",
+        "city": "Riske Creek",
+        "postalCode": "V0L 1T0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     },
     {
-        "addr1": "3643 Robson St",
+        "addr1": "3815 Burdett Avenue",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 3K9",
+        "city": "Victoria",
+        "postalCode": "V8W 1B2",
         "province": "BC",
         "type": "Headquarters"
     },
     {
-        "addr1": "4359 Yoho Valley Road",
+        "addr1": "4403 Brew Creek Rd",
         "addr2": null,
-        "city": "Spillimacheen",
-        "postalCode": "V0A 1P0",
+        "city": "Whistler",
+        "postalCode": "V0N 1B0",
         "province": "BC",
         "type": "Field Office"
+    },
+    {
+        "addr1": "616 Scotts Lane",
+        "addr2": null,
+        "city": "Okanagan Mission",
+        "postalCode": "V0R 1S0",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "3100 Shaughnessy St",
+        "addr2": null,
+        "city": "Port Coquitlam",
+        "postalCode": "V3C 4S7",
+        "province": "BC",
+        "type": "Headquarters"
     }
 ]

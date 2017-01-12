@@ -1,26 +1,10 @@
 [
     {
-        "addr1": "4580 Hastings Street",
+        "addr1": "1065 Sixth Street",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6C 1B4",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "2261 Blanshard",
-        "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 2H9",
+        "city": "New Westminster",
+        "postalCode": "V3L 3C1",
         "province": "BC",
         "type": "Headquarters"
-    },
-    {
-        "addr1": "104 Roger Street",
-        "addr2": null,
-        "city": "Comox",
-        "postalCode": "V9N 6A1",
-        "province": "BC",
-        "type": "Bus Yard"
     }
 ]

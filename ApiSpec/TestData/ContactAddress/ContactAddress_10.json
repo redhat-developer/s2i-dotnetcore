@@ -1,18 +1,10 @@
 [
     {
-        "addr1": "1323 Cordova Street",
+        "addr1": "3694 Lake City Way",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
+        "city": "Burnaby",
+        "postalCode": "V5A 2Z6",
         "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "510 Burdett Avenue",
-        "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1B2",
-        "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

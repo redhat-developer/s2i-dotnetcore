@@ -1,25 +1,9 @@
 [
     {
-        "addr1": "1696 Alaska Hwy",
+        "addr1": "332 Burdett Avenue",
         "addr2": null,
-        "city": "Fort Nelson",
-        "postalCode": "V0C 1C0",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "1028 Glover Road",
-        "addr2": null,
-        "city": "Langley",
-        "postalCode": "V3A 1Z3",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "1369 Tolmie St",
-        "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6M 1Y8",
+        "city": "Victoria",
+        "postalCode": "V8W 1B2",
         "province": "BC",
         "type": "Field Office"
     }

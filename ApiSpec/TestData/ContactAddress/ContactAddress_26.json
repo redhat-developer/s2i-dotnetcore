@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "3356 Wallace Street",
+        "addr1": "3420 Burdett Avenue",
         "addr2": null,
-        "city": "Nanaimo",
-        "postalCode": "V9R 3A8",
+        "city": "Victoria",
+        "postalCode": "V8W IE9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

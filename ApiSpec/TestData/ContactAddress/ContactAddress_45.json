@@ -1,17 +1,9 @@
 [
     {
-        "addr1": "3711 Stum Lake Road",
+        "addr1": "2262 Burdett Avenue",
         "addr2": null,
-        "city": "Riske Creek",
-        "postalCode": "V0L 1T0",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "4173 James Street",
-        "addr2": null,
-        "city": "Burnaby",
-        "postalCode": "V5G 4W7",
+        "city": "Victoria",
+        "postalCode": "V8Z 2J8",
         "province": "BC",
         "type": "Headquarters"
     }

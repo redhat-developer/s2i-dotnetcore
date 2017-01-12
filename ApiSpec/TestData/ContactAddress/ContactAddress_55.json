@@ -1,18 +1,26 @@
 [
     {
-        "addr1": "3746 Noble Rd",
+        "addr1": "2578 Glover Road",
         "addr2": null,
-        "city": "Cortes Island",
-        "postalCode": "V0P 1T0",
+        "city": "Fort Langley",
+        "postalCode": "V3A 6X5",
         "province": "BC",
         "type": "Field Office"
     },
     {
-        "addr1": "3600 Cordova Street",
+        "addr1": "3924 Roger Street",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
+        "city": "Duncan",
+        "postalCode": "V9L 1P1",
         "province": "BC",
         "type": "Headquarters"
+    },
+    {
+        "addr1": "907 Nootka Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V5M 3M5",
+        "province": "BC",
+        "type": "Bus Yard"
     }
 ]
