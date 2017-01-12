@@ -1,0 +1,48 @@
+.multi-dropdown {
+  .dropdown-toggle {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-right: 22px;
+
+    .caret {
+      position: absolute;
+      top: 50%;
+      margin-top: -3px;
+      right: 10px;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 0px;
+
+    ul {
+      margin: 0px;
+      padding: 0px 7px;
+      list-style: none;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    .well-sm {
+      padding: 7px 7px 0px;
+      margin: 0px;
+      border-radius: 2px;
+    }
+
+    .checkbox {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .select-all {
+      label {
+        font-weight: 600;
+      }
+    }
+  }
+}

@@ -262,15 +262,3 @@ gulp.task('deploy:copy', function() {
 });
 
 gulp.task('deploy', gulp.series('deploy:setprod', 'build:complete', 'deploy:clean', 'deploy:copy'/*, 'deploy:commit'*/));
-
-
-/* Cleanup */
-
-// Trap SIGINT from ctrl-c. Needed to properly kill gulp + watch when run inside Docker
-function shutdown() {
-  console.log('\nStopping dev environment...');
-  server.stop();
-  setTimeout(function() { process.exit(0); }, 500);
-}
-
-process.once('SIGINT', shutdown);

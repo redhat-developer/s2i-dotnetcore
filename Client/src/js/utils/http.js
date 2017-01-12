@@ -34,13 +34,12 @@ HttpError.prototype = Object.create(Error.prototype, {
 });
 
 
-export const ApiError = function(msg, method, path, status, json, traceId) {
+export const ApiError = function(msg, method, path, status, html) {
   this.message = msg || '';
   this.method = method;
   this.path = path;
   this.status = status || null;
-  this.json = json;
-  this.traceId = traceId || null;
+  this.html = html;
 };
 
 ApiError.prototype = Object.create(Error.prototype, {
@@ -119,15 +118,14 @@ export function jsonRequest(path, options) {
   options.headers = Object.assign(options.headers || {}, jsonHeaders);
 
   return request(path, options).then(xhr => {
-    if(xhr.status === 204) {
+    if (xhr.status === 204) {
       return;
     } else {
-      return JSON.parse(xhr.responseText);
+      return xhr.responseText ? JSON.parse(xhr.responseText) : null;
     }
   }).catch(err => {
     if(err instanceof HttpError) {
-      var data = JSON.parse(err.body);
-      throw new ApiError(`API ${err.method} ${err.path} failed (${err.status}) "${data.error}"`, err.method, err.path, err.status, data, data.traceId);
+      throw new ApiError(`API ${err.method} ${err.path} failed (${err.status})`, err.method, err.path, err.status, err.body);
     } else {
       throw err;
     }
