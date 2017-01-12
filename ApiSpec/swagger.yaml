@@ -3773,6 +3773,9 @@ definitions:
       homeTerminalPostalCode:
         type: string
         description: Postal Code of physical location of the School Bus.
+      homeTerminalComment:
+        type: string
+        description: A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection
       restrictions:
         type: string
         description: Text of any restrictions to be printed on the school bus permit.
@@ -4174,6 +4177,9 @@ definitions:
         type: string
         format: date-time
         description: The date the inspection was conducted.
+      inspectionType:
+        type: string
+        description: The type of the inspection - enumerated type of Annual or Re-inspection, pulled from the School Bus record at the time the inspection record is created
       inspectionResult:
         type: string
         description: The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.
