@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class SchoolBusOwnerContactAddress : IEquatable<SchoolBusOwnerContactAddress>
     {
         /// <summary>
@@ -44,8 +47,7 @@ namespace SchoolBusAPI.Models
         /// <param name="City">The City of the address..</param>
         /// <param name="Province">The Province of the address..</param>
         /// <param name="PostalCode">The postal code of the address..</param>
-        /// <param name="SchoolBusOwnerContact">SchoolBusOwnerContact.</param>
-        public SchoolBusOwnerContactAddress(int Id, string Type = null, string Addr1 = null, string Addr2 = null, string City = null, string Province = null, string PostalCode = null, SchoolBusOwnerContact SchoolBusOwnerContact = null)
+        public SchoolBusOwnerContactAddress(int Id, string Type = null, string Addr1 = null, string Addr2 = null, string City = null, string Province = null, string PostalCode = null)
         {
             
             this.Id = Id;
@@ -162,7 +164,6 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -208,10 +209,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.Type != null)
                 {
                     hash = hash * 59 + this.Type.GetHashCode();

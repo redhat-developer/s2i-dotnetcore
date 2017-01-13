@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class District : IEquatable<District>
     {
         /// <summary>
@@ -154,7 +157,6 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -195,10 +197,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.MinistryDistrictID != null)
                 {
                     hash = hash * 59 + this.MinistryDistrictID.GetHashCode();

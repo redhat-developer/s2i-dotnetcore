@@ -44,8 +44,14 @@ namespace SchoolBusAPI.Mappings
         public static RolePermissionViewModel ToViewModel(this RolePermission model)
         {
             var dto = new RolePermissionViewModel();
-            dto.PermissionId = model.Permission.Id;
-            dto.RoleId = model.Role.Id;
+            if (model.Permission != null)
+            {
+                dto.PermissionId = model.Permission.Id;
+            }                        
+            if (model.Role != null)
+            {
+                dto.RoleId = model.Role.Id;
+            }
             dto.Id = model.Id;
             return dto;
         }

@@ -3914,6 +3914,10 @@ definitions:
         format: int32
         readOnly: true
         description: The calculated count of the number of School Buses associated with this School Bus Owner
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/SchoolBusOwnerContact'         
   SchoolBusOwnerAttachment:
     type: object
     required:
@@ -3969,8 +3973,6 @@ definitions:
         x-type-options:
           min: 1
           max: 1000
-      schoolBusOwner:
-        $ref: '#/definitions/SchoolBusOwner'
       givenName:
         type: string
         description: The given name of the contact.
@@ -4009,8 +4011,6 @@ definitions:
       phoneNumber:
         type: string
         description: The phone number of the contact. Entered as free form to support a range of formats.
-      schoolBusOwnerContact:
-          $ref: '#/definitions/SchoolBusOwnerContact'
   SchoolBusOwnerContactAddress:
     type: object
     required:
@@ -4041,8 +4041,6 @@ definitions:
       postalCode:
         type: string
         description: The postal code of the address.
-      schoolBusOwnerContact:
-          $ref: '#/definitions/SchoolBusOwnerContact'
   SchoolBusOwnerHistory:
     type: object
     required:

@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// Information about the users of the system.
     /// </summary>
+        [MetaDataExtension (Description = "Information about the users of the system.")]
+
+
     public partial class User : IEquatable<User>
     {
         /// <summary>
@@ -182,13 +186,11 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    
+                    this.Id == other.Id ||                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Active == other.Active ||
-                    this.Active != null &&
+                    this.Active == other.Active ||                    
                     this.Active.Equals(other.Active)
                 ) && 
                 (
@@ -249,14 +251,10 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
-                if (this.Active != null)
-                {
-                    hash = hash * 59 + this.Active.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+
+                hash = hash * 59 + this.Active.GetHashCode();
+                
                 if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();

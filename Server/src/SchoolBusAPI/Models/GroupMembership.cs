@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class GroupMembership : IEquatable<GroupMembership>
     {
         /// <summary>
@@ -69,16 +72,10 @@ namespace SchoolBusAPI.Models
         /// </summary>
         public Group Group { get; set; }
 
-        [ForeignKey("Group")]
-        public int? GroupRefId { get; set; }
-
         /// <summary>
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
-
-        [ForeignKey("User")]
-        public int? UserRefId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -132,12 +129,10 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
                     this.Active == other.Active ||
-                    this.Active != null &&
                     this.Active.Equals(other.Active)
                 ) && 
                 (
@@ -167,10 +162,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
                 }
-                if (this.Active != null)
-                {
-                    hash = hash * 59 + this.Active.GetHashCode();
-                }
+
+                hash = hash * 59 + this.Active.GetHashCode();
+
                 if (this.Group != null)
                 {
                     hash = hash * 59 + this.Group.GetHashCode();

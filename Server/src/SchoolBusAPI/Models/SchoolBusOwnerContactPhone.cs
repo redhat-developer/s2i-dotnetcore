@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class SchoolBusOwnerContactPhone : IEquatable<SchoolBusOwnerContactPhone>
     {
         /// <summary>
@@ -40,7 +43,6 @@ namespace SchoolBusAPI.Models
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="Type">The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list..</param>
         /// <param name="PhoneNumber">The phone number of the contact. Entered as free form to support a range of formats..</param>
-        /// <param name="SchoolBusOwnerContact">SchoolBusOwnerContact.</param>
         public SchoolBusOwnerContactPhone(int Id, string Type = null, string PhoneNumber = null)
         {
             
@@ -70,7 +72,6 @@ namespace SchoolBusAPI.Models
         /// <value>The phone number of the contact. Entered as free form to support a range of formats.</value>
         [MetaDataExtension (Description = "The phone number of the contact. Entered as free form to support a range of formats.")]
         public string PhoneNumber { get; set; }
-        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -120,17 +121,17 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return
+            return 
                 (
                     this.Id == other.Id ||
-
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) &&
+                ) && 
                 (
                     this.Type == other.Type ||
                     this.Type != null &&
                     this.Type.Equals(other.Type)
-                ) &&
+                ) && 
                 (
                     this.PhoneNumber == other.PhoneNumber ||
                     this.PhoneNumber != null &&
@@ -149,10 +150,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.Type != null)
                 {
                     hash = hash * 59 + this.Type.GetHashCode();
@@ -160,8 +159,7 @@ namespace SchoolBusAPI.Models
                 if (this.PhoneNumber != null)
                 {
                     hash = hash * 59 + this.PhoneNumber.GetHashCode();
-                };
-                
+                }
                 return hash;
             }
         }

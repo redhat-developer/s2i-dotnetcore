@@ -103,6 +103,14 @@ namespace SchoolBusAPI.Models
                 tableName = ((TableAttribute)tableAttrsArray[0]).Name;
             }
 
+            //  get the table description
+            var tableExtAttrs = tableType.GetTypeInfo().GetCustomAttributes(typeof(MetaDataExtension), false);
+            var tableExtAttrssArray = tableExtAttrs.ToArray<Attribute>();
+            if (tableExtAttrssArray.Length > 0)
+            {
+                SetTableDescription(tableName, ((MetaDataExtension)tableExtAttrssArray[0]).Description);
+
+            }
 
             foreach (Property entityProperty in entityType.GetProperties().OfType<Property>())
             {
@@ -132,6 +140,19 @@ namespace SchoolBusAPI.Models
         {
             // Postgres has the COMMENT command to update a description.
             string query = "COMMENT ON COLUMN \"" + tableName + "\".\"" + columnName + "\" IS '" + description.Replace("'", "\'") + "'";
+            context.Database.ExecuteSqlCommand(query);
+        }
+
+        /// <summary>
+        /// Set a column comment
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="description"></param>
+        private void SetTableDescription(string tableName, string description)
+        {
+            // Postgres has the COMMENT command to update a description.
+            string query = "COMMENT ON TABLE \"" + tableName + "\" IS '" + description.Replace("'", "\'") + "'";
             context.Database.ExecuteSqlCommand(query);
         }
 

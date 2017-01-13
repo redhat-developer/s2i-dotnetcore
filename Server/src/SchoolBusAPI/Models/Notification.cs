@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class Notification : IEquatable<Notification>
     {
         /// <summary>
@@ -80,9 +83,8 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets Event2
         /// </summary>
         public NotificationEvent Event2 { get; set; }
-
         [ForeignKey("Event2")]
-        public int? EventRef2Id { get; set; }
+        public int? Event2RefId { get; set; }
 
         /// <summary>
         /// Gets or Sets HasBeenViewed
@@ -113,7 +115,6 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
-
         [ForeignKey("User")]
         public int? UserRefId { get; set; }
 
@@ -174,7 +175,7 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (

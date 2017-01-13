@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class SchoolBusOwner : IEquatable<SchoolBusOwner>
     {
         /// <summary>
@@ -45,7 +48,8 @@ namespace SchoolBusAPI.Models
         /// <param name="ServiceArea">The District to which this School Bus is affliated..</param>
         /// <param name="NextInspectionDate">The calculated next inspection date from across the School Buses associated with this School Bus Owner.</param>
         /// <param name="NumberOfBuses">The calculated count of the number of School Buses associated with this School Bus Owner.</param>
-        public SchoolBusOwner(int Id, string Name = null, string Status = null, DateTime? DateCreated = null, SchoolBusOwnerContact PrimaryContact = null, ServiceArea ServiceArea = null, DateTime? NextInspectionDate = null, int? NumberOfBuses = null)
+        /// <param name="Contacts">Contacts.</param>
+        public SchoolBusOwner(int Id, string Name = null, string Status = null, DateTime? DateCreated = null, SchoolBusOwnerContact PrimaryContact = null, ServiceArea ServiceArea = null, DateTime? NextInspectionDate = null, int? NumberOfBuses = null, List<SchoolBusOwnerContact> Contacts = null)
         {
             
             this.Id = Id;
@@ -56,6 +60,7 @@ namespace SchoolBusAPI.Models
             this.ServiceArea = ServiceArea;
             this.NextInspectionDate = NextInspectionDate;
             this.NumberOfBuses = NumberOfBuses;
+            this.Contacts = Contacts;
             
         }
 
@@ -122,6 +127,11 @@ namespace SchoolBusAPI.Models
         public int? NumberOfBuses { get; set; }
 
         /// <summary>
+        /// Gets or Sets Contacts
+        /// </summary>
+        public List<SchoolBusOwnerContact> Contacts { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -137,6 +147,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  ServiceArea: ").Append(ServiceArea).Append("\n");
             sb.Append("  NextInspectionDate: ").Append(NextInspectionDate).Append("\n");
             sb.Append("  NumberOfBuses: ").Append(NumberOfBuses).Append("\n");
+            sb.Append("  Contacts: ").Append(Contacts).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -177,7 +188,6 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -214,6 +224,11 @@ namespace SchoolBusAPI.Models
                     this.NumberOfBuses == other.NumberOfBuses ||
                     this.NumberOfBuses != null &&
                     this.NumberOfBuses.Equals(other.NumberOfBuses)
+                ) && 
+                (
+                    this.Contacts == other.Contacts ||
+                    this.Contacts != null &&
+                    this.Contacts.SequenceEqual(other.Contacts)
                 );
         }
 
@@ -259,6 +274,10 @@ namespace SchoolBusAPI.Models
                 if (this.NumberOfBuses != null)
                 {
                     hash = hash * 59 + this.NumberOfBuses.GetHashCode();
+                }
+                if (this.Contacts != null)
+                {
+                    hash = hash * 59 + this.Contacts.GetHashCode();
                 }
                 return hash;
             }
