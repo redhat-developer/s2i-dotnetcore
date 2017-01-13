@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4357 Hastings Street",
+        "addr1": "2714 Russell Avenue",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Langley",
         "id": "200065",
-        "postalCode": "V6C 1B4",
+        "postalCode": "V4X 1J7",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

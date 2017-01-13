@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2120 Burdett Avenue",
+        "addr1": "2031 Blind Bay Road",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Sicamous",
         "id": "200021",
-        "postalCode": "V8W 1L6",
+        "postalCode": "V0E 2V0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

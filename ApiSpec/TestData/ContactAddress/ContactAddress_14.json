@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2913 Blind Bay Road",
+        "addr1": "830 Hardy Street",
         "addr2": null,
-        "city": "Blue River",
+        "city": "Kelowna",
         "id": "200013",
-        "postalCode": "V0E 1J0",
+        "postalCode": "V1Y 8H2",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

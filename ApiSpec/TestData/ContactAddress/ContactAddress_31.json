@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4528 Nootka Street",
+        "addr1": "1140 Sixth Street",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "New Westminister",
         "id": "200030",
-        "postalCode": "V5M 3M5",
+        "postalCode": "V3L 3C1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2487 Kinchant St",
+        "addr1": "2882 Carlson Road",
         "addr2": null,
-        "city": "Kamloops",
+        "city": "Prince George",
         "id": "200068",
-        "postalCode": "V2S 5R8",
+        "postalCode": "V2L 5E5",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

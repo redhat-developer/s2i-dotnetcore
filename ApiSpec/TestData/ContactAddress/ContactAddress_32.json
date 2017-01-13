@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "127 Coldstream Avenue",
+        "addr1": "4600 Roger Street",
         "addr2": null,
-        "city": "Vernon",
+        "city": "Nanaimo",
         "id": "200031",
-        "postalCode": "V1T 6N1",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

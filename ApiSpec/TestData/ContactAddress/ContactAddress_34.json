@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1028 Glover Road",
+        "addr1": "616 Scotts Lane",
         "addr2": null,
-        "city": "Langley",
+        "city": "Okanagan Mission",
         "id": "200033",
-        "postalCode": "V3A 1Z3",
+        "postalCode": "V0R 1S0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

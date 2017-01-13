@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2277 James Street",
+        "addr1": "2714 Russell Avenue",
         "addr2": null,
-        "city": "Aldergrove",
+        "city": "Langley",
         "id": "200017",
-        "postalCode": "V5G 4S4",
+        "postalCode": "V4X 1J7",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]
