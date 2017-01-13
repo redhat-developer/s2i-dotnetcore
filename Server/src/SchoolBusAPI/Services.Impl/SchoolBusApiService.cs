@@ -494,7 +494,7 @@ namespace SchoolBusAPI.Services.Impl
 
                 if (endDate != null)
                 {
-                    data = data.Where(x => x.NextInspectionDate >= endDate);
+                    data = data.Where(x => x.NextInspectionDate <= endDate);
                 }
 
             }
