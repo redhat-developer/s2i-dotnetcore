@@ -1,17 +1,10 @@
 [
     {
-        "addr1": "1979 King George Hwy",
+        "addr1": "34 Alaska Hwy",
         "addr2": null,
-        "city": "Surrey",
-        "postalCode": "V3W 4E3",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "4580 Hastings Street",
-        "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6C 1B4",
+        "city": "Chetwynd",
+        "id": "200010",
+        "postalCode": "V0C 1J0",
         "province": "BC",
         "type": "Headquarters"
     }

@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "396 Quayside Dr",
+        "addr1": "896 Roger Street",
         "addr2": null,
-        "city": "New Westminster",
-        "postalCode": "V3M 6A1",
+        "city": "Nanaimo",
+        "id": "200028",
+        "postalCode": "V9R 5H9",
         "province": "BC",
         "type": "Headquarters"
     }

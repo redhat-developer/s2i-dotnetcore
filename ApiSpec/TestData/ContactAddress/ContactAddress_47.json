@@ -1,25 +1,10 @@
 [
     {
-        "addr1": "2553 Holdom Avenue",
+        "addr1": "608 Jade St",
         "addr2": null,
-        "city": "Surrey",
-        "postalCode": "V3T 4Y5",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "4436 Quayside Dr",
-        "addr2": null,
-        "city": "New Westminster",
-        "postalCode": "V3M 6A1",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "4819 Wallace Street",
-        "addr2": null,
-        "city": "Nanaimo",
-        "postalCode": "V9R 3A8",
+        "city": "Richmond",
+        "id": "200046",
+        "postalCode": "V7E 2E4",
         "province": "BC",
         "type": "Headquarters"
     }

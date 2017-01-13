@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "4256 Kinchant St",
+        "addr1": "4528 Nootka Street",
         "addr2": null,
-        "city": "Williams Lake",
-        "postalCode": "V2G 1C4",
+        "city": "Vancouver",
+        "id": "200030",
+        "postalCode": "V5M 3M5",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

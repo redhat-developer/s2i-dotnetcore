@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "3600 Cordova Street",
+        "addr1": "3109 Wellington Ave",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
+        "city": "Chilliwack",
+        "id": "200003",
+        "postalCode": "V2P 2M1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

@@ -1,71 +1,71 @@
-File,ownerId,!Name,!id,givenName,surname,role,notes,!phone1,!phone1Type,!phone2,!phone2Type,schoolBusContactPhone,schoolBusContactAddress
-Contact,101,44,1,Todd,Daniels,Assistant,This is a note,250-731-5024,Cell,,Yard,"[ {'type': 'Cell',  'phoneNumber': '250-731-5024' } ]","rg:dataset('ContactAddress.csv','1')"
-Contact,101,122,2,Charles,Garcia,Assistant,rg:None,250-746-0545,Yard,,Cell,"[ {'type': 'Yard',  'phoneNumber': '250-746-0545' } ]","rg:dataset('ContactAddress.csv','2')"
-Contact,102,145,3,Anita,Lozano,Owner,rg:None,250-344-7155,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '250-344-7155' } ]","rg:dataset('ContactAddress.csv','3')"
-Contact,102,51,4,Timothy,McCullough,Driver,rg:None,250-826-0194,Work,,Yard,"[ {'type': 'Work',  'phoneNumber': '250-826-0194' } ]","rg:dataset('ContactAddress.csv','4')"
-Contact,102,43,5,Antonio,Mitchell,Driver,This is a note,250-651-0742,Yard,,Work,"[ {'type': 'Yard',  'phoneNumber': '250-651-0742' } ]","rg:dataset('ContactAddress.csv','5')"
-Contact,103,13,6,Harry,Solomon,Assistant,rg:None,250-282-6217,Yard,250-282-8490,Cell,"[ {'type': 'Yard',  'phoneNumber': '250-282-6217' },{'type': 'Cell',  'phoneNumber': '250-282-8490' } ]","rg:dataset('ContactAddress.csv','6')"
-Contact,103,35,7,Robert,Hunt,Supervisor,rg:None,250-423-0364,Cell,,Cell,"[ {'type': 'Cell',  'phoneNumber': '250-423-0364' } ]","rg:dataset('ContactAddress.csv','7')"
-Contact,104,13,8,Harry,Solomon,Mechanic,rg:None,250-282-6217,Yard,250-282-3093,Work,"[ {'type': 'Yard',  'phoneNumber': '250-282-6217' },{'type': 'Work',  'phoneNumber': '250-282-3093' } ]","rg:dataset('ContactAddress.csv','8')"
-Contact,104,128,9,Travis,Jackson,Assistant,rg:None,604-472-0286,Yard,,Cell,"[ {'type': 'Yard',  'phoneNumber': '604-472-0286' } ]","rg:dataset('ContactAddress.csv','9')"
-Contact,104,9,10,Albert,Mills,Supervisor,This is a note,250-762-1075,Work,250-762-3826,Work,"[ {'type': 'Work',  'phoneNumber': '250-762-1075' },{'type': 'Work',  'phoneNumber': '250-762-3826' } ]","rg:dataset('ContactAddress.csv','10')"
-Contact,105,116,11,Emma,Baylor,Supervisor,rg:None,604-925-0310,Work,,Cell,"[ {'type': 'Work',  'phoneNumber': '604-925-0310' } ]","rg:dataset('ContactAddress.csv','11')"
-Contact,105,30,12,Nichole,Mitchell,Owner,rg:None,250-745-8192,Work,,Work,"[ {'type': 'Work',  'phoneNumber': '250-745-8192' } ]","rg:dataset('ContactAddress.csv','12')"
-Contact,105,59,13,Alice,Bill,Owner,rg:None,604-830-6510,Work,,Yard,"[ {'type': 'Work',  'phoneNumber': '604-830-6510' } ]","rg:dataset('ContactAddress.csv','13')"
-Contact,105,41,14,William,Perreault,Supervisor,This is a note,604-280-1127,Cell,,Work,"[ {'type': 'Cell',  'phoneNumber': '604-280-1127' } ]","rg:dataset('ContactAddress.csv','14')"
-Contact,105,72,15,Dianna,Cook,Assistant,rg:None,250-260-5412,Work,,Work,"[ {'type': 'Work',  'phoneNumber': '250-260-5412' } ]","rg:dataset('ContactAddress.csv','15')"
-Contact,106,118,16,Robert,Anderson,Owner,rg:None,250-792-3179,Work,,Yard,"[ {'type': 'Work',  'phoneNumber': '250-792-3179' } ]","rg:dataset('ContactAddress.csv','16')"
-Contact,106,102,17,Thomas,Mills,Owner,rg:None,250-572-2948,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '250-572-2948' } ]","rg:dataset('ContactAddress.csv','17')"
-Contact,107,29,18,Nancy,Foley,Supervisor,This is a note,604-614-7032,Yard,,Cell,"[ {'type': 'Yard',  'phoneNumber': '604-614-7032' } ]","rg:dataset('ContactAddress.csv','18')"
-Contact,107,117,19,Mary,Pointer,rg:None,This is a note,250-969-0438,Yard,250-969-4668,Cell,"[ {'type': 'Yard',  'phoneNumber': '250-969-0438' },{'type': 'Cell',  'phoneNumber': '250-969-4668' } ]","rg:dataset('ContactAddress.csv','19')"
-Contact,107,89,20,Amanda,Perkins,Owner,rg:None,778-881-0796,Yard,,Cell,"[ {'type': 'Yard',  'phoneNumber': '778-881-0796' } ]","rg:dataset('ContactAddress.csv','20')"
-Contact,108,82,21,Louie,Gust,Supervisor,This is a note,250-968-6960,Work,,Yard,"[ {'type': 'Work',  'phoneNumber': '250-968-6960' } ]","rg:dataset('ContactAddress.csv','21')"
-Contact,108,31,22,Ricky,Nestor,Driver,This is a note,778-228-2363,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '778-228-2363' } ]","rg:dataset('ContactAddress.csv','22')"
-Contact,108,109,23,Rita,Ison,Driver,rg:None,604-688-0056,Work,604-688-6008,Cell,"[ {'type': 'Work',  'phoneNumber': '604-688-0056' },{'type': 'Cell',  'phoneNumber': '604-688-6008' } ]","rg:dataset('ContactAddress.csv','23')"
-Contact,108,22,24,Bill,Finley,Assistant,rg:None,250-858-1942,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '250-858-1942' } ]","rg:dataset('ContactAddress.csv','24')"
-Contact,109,88,25,Tangela,Townsend,Mechanic,rg:None,250-732-0946,Work,,Work,"[ {'type': 'Work',  'phoneNumber': '250-732-0946' } ]","rg:dataset('ContactAddress.csv','25')"
-Contact,110,44,26,Todd,Daniels,Driver,This is a note,250-731-5024,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '250-731-5024' } ]","rg:dataset('ContactAddress.csv','26')"
-Contact,110,9,27,Albert,Mills,Assistant,This is a note,250-762-1075,Work,,Work,"[ {'type': 'Work',  'phoneNumber': '250-762-1075' } ]","rg:dataset('ContactAddress.csv','27')"
-Contact,110,41,28,William,Perreault,Driver,rg:None,604-280-1127,Cell,604-280-5215,Yard,"[ {'type': 'Cell',  'phoneNumber': '604-280-1127' },{'type': 'Yard',  'phoneNumber': '604-280-5215' } ]","rg:dataset('ContactAddress.csv','28')"
-Contact,110,115,29,Richard,Kline,Mechanic,This is a note,250-357-1332,Cell,,Work,"[ {'type': 'Cell',  'phoneNumber': '250-357-1332' } ]","rg:dataset('ContactAddress.csv','29')"
-Contact,111,58,30,Ben,Spear,Driver,rg:None,250-885-8043,Cell,,Yard,"[ {'type': 'Cell',  'phoneNumber': '250-885-8043' } ]","rg:dataset('ContactAddress.csv','30')"
-Contact,111,143,31,John,Shaffer,rg:None,rg:None,604-932-1761,Cell,,Yard,"[ {'type': 'Cell',  'phoneNumber': '604-932-1761' } ]","rg:dataset('ContactAddress.csv','31')"
-Contact,111,67,32,Michael,Pack,Supervisor,This is a note,250-476-9160,Work,,Yard,"[ {'type': 'Work',  'phoneNumber': '250-476-9160' } ]","rg:dataset('ContactAddress.csv','32')"
-Contact,111,53,33,Pauline,Benfield,rg:None,rg:None,250-269-2963,Yard,,Work,"[ {'type': 'Yard',  'phoneNumber': '250-269-2963' } ]","rg:dataset('ContactAddress.csv','33')"
-Contact,112,105,34,Anita,Fernandez,Assistant,rg:None,250-783-6772,Cell,,Work,"[ {'type': 'Cell',  'phoneNumber': '250-783-6772' } ]","rg:dataset('ContactAddress.csv','34')"
-Contact,113,32,35,Dorothy,Fisher,Supervisor,rg:None,778-839-6472,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '778-839-6472' } ]","rg:dataset('ContactAddress.csv','35')"
-Contact,113,6,36,Gayle,York,Assistant,rg:None,250-935-6749,Work,,Cell,"[ {'type': 'Work',  'phoneNumber': '250-935-6749' } ]","rg:dataset('ContactAddress.csv','36')"
-Contact,114,62,37,Margaret,Roberts,rg:None,This is a note,604-204-5042,Work,,Work,"[ {'type': 'Work',  'phoneNumber': '604-204-5042' } ]","rg:dataset('ContactAddress.csv','37')"
-Contact,114,64,38,Morgan,Snider,Driver,rg:None,604-862-3218,Cell,,Cell,"[ {'type': 'Cell',  'phoneNumber': '604-862-3218' } ]","rg:dataset('ContactAddress.csv','38')"
-Contact,115,15,39,Michael,Wilkerson,rg:None,rg:None,250-668-9856,Yard,,Work,"[ {'type': 'Yard',  'phoneNumber': '250-668-9856' } ]","rg:dataset('ContactAddress.csv','39')"
-Contact,116,76,40,Marilyn,Wright,Owner,This is a note,250-383-7975,Yard,250-383-3387,Cell,"[ {'type': 'Yard',  'phoneNumber': '250-383-7975' },{'type': 'Cell',  'phoneNumber': '250-383-3387' } ]","rg:dataset('ContactAddress.csv','40')"
-Contact,116,93,41,Eleanor,Ballesteros,Mechanic,rg:None,250-659-5830,Yard,,Work,"[ {'type': 'Yard',  'phoneNumber': '250-659-5830' } ]","rg:dataset('ContactAddress.csv','41')"
-Contact,116,141,42,Derrick,Key,Supervisor,rg:None,604-472-8005,Work,,Cell,"[ {'type': 'Work',  'phoneNumber': '604-472-8005' } ]","rg:dataset('ContactAddress.csv','42')"
-Contact,116,89,43,Amanda,Perkins,Assistant,rg:None,778-881-0796,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '778-881-0796' } ]","rg:dataset('ContactAddress.csv','43')"
-Contact,116,129,44,Sue,Shores,Mechanic,rg:None,604-961-2980,Yard,,Work,"[ {'type': 'Yard',  'phoneNumber': '604-961-2980' } ]","rg:dataset('ContactAddress.csv','44')"
-Contact,117,123,45,Wayne,Anderson,Owner,This is a note,604-939-0629,Work,,Yard,"[ {'type': 'Work',  'phoneNumber': '604-939-0629' } ]","rg:dataset('ContactAddress.csv','45')"
-Contact,118,74,46,Clarence,McKenzie,rg:None,rg:None,250-756-7281,Cell,,Cell,"[ {'type': 'Cell',  'phoneNumber': '250-756-7281' } ]","rg:dataset('ContactAddress.csv','46')"
-Contact,-,107,47,Jeanne,Huskins,Owner,This is a note,250-314-8445,Work,,Yard,"[ {'type': 'Work',  'phoneNumber': '250-314-8445' } ]","rg:dataset('ContactAddress.csv','47')"
-Contact,-,69,48,Darlene,Garcia,Supervisor,rg:None,604-266-2345,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '604-266-2345' } ]","rg:dataset('ContactAddress.csv','48')"
-Contact,-,129,49,Sue,Shores,Supervisor,rg:None,604-961-2980,Work,,Cell,"[ {'type': 'Work',  'phoneNumber': '604-961-2980' } ]","rg:dataset('ContactAddress.csv','49')"
-Contact,-,128,50,Travis,Jackson,Owner,rg:None,604-472-0286,Work,,Yard,"[ {'type': 'Work',  'phoneNumber': '604-472-0286' } ]","rg:dataset('ContactAddress.csv','50')"
-Contact,-,95,51,Ty,Coats,rg:None,rg:None,604-988-5640,Yard,604-988-7058,Work,"[ {'type': 'Yard',  'phoneNumber': '604-988-5640' },{'type': 'Work',  'phoneNumber': '604-988-7058' } ]","rg:dataset('ContactAddress.csv','51')"
-Contact,-,139,52,Cynthia,Smith,Assistant,This is a note,250-243-0497,Cell,,Cell,"[ {'type': 'Cell',  'phoneNumber': '250-243-0497' } ]","rg:dataset('ContactAddress.csv','52')"
-Contact,-,62,53,Margaret,Roberts,Supervisor,rg:None,604-204-5042,Work,,Yard,"[ {'type': 'Work',  'phoneNumber': '604-204-5042' } ]","rg:dataset('ContactAddress.csv','53')"
-Contact,-,73,54,Tommy,Laboy,Supervisor,rg:None,778-867-2691,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '778-867-2691' } ]","rg:dataset('ContactAddress.csv','54')"
-Contact,-,79,55,Joseph,Jones,rg:None,rg:None,250-631-4643,Cell,,Cell,"[ {'type': 'Cell',  'phoneNumber': '250-631-4643' } ]","rg:dataset('ContactAddress.csv','55')"
-Contact,-,59,56,Alice,Bill,Supervisor,This is a note,604-830-6510,Cell,604-830-9036,Cell,"[ {'type': 'Cell',  'phoneNumber': '604-830-6510' },{'type': 'Cell',  'phoneNumber': '604-830-9036' } ]","rg:dataset('ContactAddress.csv','56')"
-Contact,-,109,57,Rita,Ison,Assistant,rg:None,604-688-0056,Work,604-688-5502,Yard,"[ {'type': 'Work',  'phoneNumber': '604-688-0056' },{'type': 'Yard',  'phoneNumber': '604-688-5502' } ]","rg:dataset('ContactAddress.csv','57')"
-Contact,-,48,58,Norman,Owens,rg:None,rg:None,250-306-2422,Work,,Cell,"[ {'type': 'Work',  'phoneNumber': '250-306-2422' } ]","rg:dataset('ContactAddress.csv','58')"
-Contact,-,33,59,Bruce,Welsh,Supervisor,rg:None,250-962-7752,Yard,250-962-2978,Work,"[ {'type': 'Yard',  'phoneNumber': '250-962-7752' },{'type': 'Work',  'phoneNumber': '250-962-2978' } ]","rg:dataset('ContactAddress.csv','59')"
-Contact,-,1,60,GivenName,Surname,rg:None,rg:None,TelephoneNumber,Cell,,Cell,"[ {'type': 'Cell',  'phoneNumber': 'TelephoneNumber' } ]","rg:dataset('ContactAddress.csv','60')"
-Contact,-,47,61,Bruce,Knuth,Driver,rg:None,250-949-8320,Cell,,Cell,"[ {'type': 'Cell',  'phoneNumber': '250-949-8320' } ]","rg:dataset('ContactAddress.csv','61')"
-Contact,-,30,62,Nichole,Mitchell,Owner,rg:None,250-745-8192,Yard,,Cell,"[ {'type': 'Yard',  'phoneNumber': '250-745-8192' } ]","rg:dataset('ContactAddress.csv','62')"
-Contact,-,123,63,Wayne,Anderson,Owner,rg:None,604-939-0629,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '604-939-0629' } ]","rg:dataset('ContactAddress.csv','63')"
-Contact,-,4,64,Clayton,McCullough,Mechanic,rg:None,604-867-8081,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '604-867-8081' } ]","rg:dataset('ContactAddress.csv','64')"
-Contact,-,11,65,Michael,Washington,Driver,rg:None,604-702-5984,Work,,Work,"[ {'type': 'Work',  'phoneNumber': '604-702-5984' } ]","rg:dataset('ContactAddress.csv','65')"
-Contact,-,57,66,Dorothy,Petit,Assistant,rg:None,867-333-4517,Yard,,Yard,"[ {'type': 'Yard',  'phoneNumber': '867-333-4517' } ]","rg:dataset('ContactAddress.csv','66')"
-Contact,-,28,67,Cletus,Hill,Supervisor,rg:None,778-288-6748,Work,,Cell,"[ {'type': 'Work',  'phoneNumber': '778-288-6748' } ]","rg:dataset('ContactAddress.csv','67')"
-Contact,-,22,68,Bill,Finley,Assistant,rg:None,250-858-1942,Yard,,Work,"[ {'type': 'Yard',  'phoneNumber': '250-858-1942' } ]","rg:dataset('ContactAddress.csv','68')"
-Contact,-,111,69,Juan,Clifton,Driver,rg:None,250-369-7389,Work,,Cell,"[ {'type': 'Work',  'phoneNumber': '250-369-7389' } ]","rg:dataset('ContactAddress.csv','69')"
-Contact,-,46,70,Esteban,Zavala,Mechanic,rg:None,250-412-4504,Cell,,Cell,"[ {'type': 'Cell',  'phoneNumber': '250-412-4504' } ]","rg:dataset('ContactAddress.csv','70')"
+File,id,!ownerId,schoolBusOwner,!Name,givenName,surname,role,notes,!phone1,!phone1Type,!phone2,!phone2Type,schoolBusOwnerContactPhones,schoolBusOwnerContactAddresses,!nullID
+Contact,200000,200000,rg:{'id':'200000'},64,Morgan,Snider,Driver,rg:None,604-862-3218,Cell,,Yard,"rg:[ {'id':'200000', 'type': 'Cell',  'phoneNumber': '604-862-3218' } ]","rg:dataset('ContactAddress.csv','1')",1
+Contact,200001,200001,rg:{'id':'200001'},22,Bill,Finley,Owner,This is a note,250-858-1942,Work,,Cell,"rg:[ {'id':'200001', 'type': 'Work',  'phoneNumber': '250-858-1942' } ]","rg:dataset('ContactAddress.csv','2')",2
+Contact,200002,200001,rg:{'id':'200001'},96,Claudine,Henry,rg:None,This is a note,250-885-6704,Cell,,Yard,"rg:[ {'id':'200002', 'type': 'Cell',  'phoneNumber': '250-885-6704' } ]","rg:dataset('ContactAddress.csv','3')",3
+Contact,200003,200001,rg:{'id':'200001'},3,Judy,Holbert,Owner,rg:None,604-902-3027,Yard,,Yard,"rg:[ {'id':'200003', 'type': 'Yard',  'phoneNumber': '604-902-3027' } ]","rg:dataset('ContactAddress.csv','4')",4
+Contact,200004,200002,rg:{'id':'200002'},19,Joshua,Bjork,Supervisor,rg:None,250-764-6277,Cell,,Work,"rg:[ {'id':'200004', 'type': 'Cell',  'phoneNumber': '250-764-6277' } ]","rg:dataset('ContactAddress.csv','5')",5
+Contact,200005,200002,rg:{'id':'200002'},51,Timothy,McCullough,Owner,rg:None,250-826-0194,Yard,,Work,"rg:[ {'id':'200005', 'type': 'Yard',  'phoneNumber': '250-826-0194' } ]","rg:dataset('ContactAddress.csv','6')",6
+Contact,200006,200002,rg:{'id':'200002'},6,Gayle,York,Supervisor,rg:None,250-935-6749,Yard,,Work,"rg:[ {'id':'200006', 'type': 'Yard',  'phoneNumber': '250-935-6749' } ]","rg:dataset('ContactAddress.csv','7')",7
+Contact,200007,200002,rg:{'id':'200002'},97,Mary,Saephan,Supervisor,rg:None,250-882-6070,Yard,,Cell,"rg:[ {'id':'200007', 'type': 'Yard',  'phoneNumber': '250-882-6070' } ]","rg:dataset('ContactAddress.csv','8')",8
+Contact,200008,200003,rg:{'id':'200003'},36,Stephanie,Young,Supervisor,rg:None,604-824-5554,Cell,,Yard,"rg:[ {'id':'200008', 'type': 'Cell',  'phoneNumber': '604-824-5554' } ]","rg:dataset('ContactAddress.csv','9')",9
+Contact,200009,200004,rg:{'id':'200004'},117,Mary,Pointer,Mechanic,rg:None,250-969-0438,Yard,,Cell,"rg:[ {'id':'200009', 'type': 'Yard',  'phoneNumber': '250-969-0438' } ]","rg:dataset('ContactAddress.csv','10')",10
+Contact,200010,200005,rg:{'id':'200005'},126,Steve,Brantley,Mechanic,rg:None,604-949-6562,Yard,,Yard,"rg:[ {'id':'200010', 'type': 'Yard',  'phoneNumber': '604-949-6562' } ]","rg:dataset('ContactAddress.csv','11')",11
+Contact,200011,200006,rg:{'id':'200006'},128,Travis,Jackson,Assistant,rg:None,604-472-0286,Work,,Yard,"rg:[ {'id':'200011', 'type': 'Work',  'phoneNumber': '604-472-0286' } ]","rg:dataset('ContactAddress.csv','12')",12
+Contact,200012,200006,rg:{'id':'200006'},66,Joseph,Womack,Supervisor,rg:None,250-216-0951,Work,,Cell,"rg:[ {'id':'200012', 'type': 'Work',  'phoneNumber': '250-216-0951' } ]","rg:dataset('ContactAddress.csv','13')",13
+Contact,200013,200006,rg:{'id':'200006'},142,Alma,Huerta,Mechanic,This is a note,604-598-4904,Cell,,Work,"rg:[ {'id':'200013', 'type': 'Cell',  'phoneNumber': '604-598-4904' } ]","rg:dataset('ContactAddress.csv','14')",14
+Contact,200014,200007,rg:{'id':'200007'},81,Darryl,Delaney,Mechanic,rg:None,604-942-1232,Yard,,Yard,"rg:[ {'id':'200014', 'type': 'Yard',  'phoneNumber': '604-942-1232' } ]","rg:dataset('ContactAddress.csv','15')",15
+Contact,200015,200008,rg:{'id':'200008'},76,Marilyn,Wright,rg:None,rg:None,250-383-7975,Yard,,Work,"rg:[ {'id':'200015', 'type': 'Yard',  'phoneNumber': '250-383-7975' } ]","rg:dataset('ContactAddress.csv','16')",16
+Contact,200016,200008,rg:{'id':'200008'},92,Pearl,Rice,Assistant,rg:None,604-871-8799,Yard,,Work,"rg:[ {'id':'200016', 'type': 'Yard',  'phoneNumber': '604-871-8799' } ]","rg:dataset('ContactAddress.csv','17')",17
+Contact,200017,200008,rg:{'id':'200008'},30,Nichole,Mitchell,rg:None,This is a note,250-745-8192,Yard,250-745-2875,Yard,"rg:[ {'id':'200017', 'type': 'Yard',  'phoneNumber': '250-745-8192' },{'type': 'Yard',  'phoneNumber': '250-745-2875' } ]","rg:dataset('ContactAddress.csv','18')",18
+Contact,200018,200008,rg:{'id':'200008'},35,Robert,Hunt,Owner,rg:None,250-423-0364,Yard,,Cell,"rg:[ {'id':'200018', 'type': 'Yard',  'phoneNumber': '250-423-0364' } ]","rg:dataset('ContactAddress.csv','19')",19
+Contact,200019,200008,rg:{'id':'200008'},120,Renaldo,Gerber,Mechanic,rg:None,250-779-3169,Work,,Work,"rg:[ {'id':'200019', 'type': 'Work',  'phoneNumber': '250-779-3169' } ]","rg:dataset('ContactAddress.csv','20')",20
+Contact,200020,200008,rg:{'id':'200008'},56,Edna,Fitz,Driver,rg:None,250-415-1488,Work,,Work,"rg:[ {'id':'200020', 'type': 'Work',  'phoneNumber': '250-415-1488' } ]","rg:dataset('ContactAddress.csv','21')",21
+Contact,200021,200008,rg:{'id':'200008'},86,Thomas,England,Supervisor,rg:None,604-530-5394,Cell,,Yard,"rg:[ {'id':'200021', 'type': 'Cell',  'phoneNumber': '604-530-5394' } ]","rg:dataset('ContactAddress.csv','22')",22
+Contact,200022,200009,rg:{'id':'200009'},126,Steve,Brantley,Assistant,rg:None,604-949-6562,Cell,,Yard,"rg:[ {'id':'200022', 'type': 'Cell',  'phoneNumber': '604-949-6562' } ]","rg:dataset('ContactAddress.csv','23')",23
+Contact,200023,200010,rg:{'id':'200010'},66,Joseph,Womack,Driver,rg:None,250-216-0951,Cell,,Yard,"rg:[ {'id':'200023', 'type': 'Cell',  'phoneNumber': '250-216-0951' } ]","rg:dataset('ContactAddress.csv','24')",24
+Contact,200024,200010,rg:{'id':'200010'},141,Derrick,Key,rg:None,rg:None,604-472-8005,Work,,Work,"rg:[ {'id':'200024', 'type': 'Work',  'phoneNumber': '604-472-8005' } ]","rg:dataset('ContactAddress.csv','25')",25
+Contact,200025,200010,rg:{'id':'200010'},135,Brandon,Smith,Driver,rg:None,250-356-1413,Work,,Yard,"rg:[ {'id':'200025', 'type': 'Work',  'phoneNumber': '250-356-1413' } ]","rg:dataset('ContactAddress.csv','26')",26
+Contact,200026,200010,rg:{'id':'200010'},89,Amanda,Perkins,Assistant,rg:None,778-881-0796,Yard,,Work,"rg:[ {'id':'200026', 'type': 'Yard',  'phoneNumber': '778-881-0796' } ]","rg:dataset('ContactAddress.csv','27')",27
+Contact,200027,200010,rg:{'id':'200010'},90,Helen,Machado,Supervisor,rg:None,250-845-6937,Cell,,Yard,"rg:[ {'id':'200027', 'type': 'Cell',  'phoneNumber': '250-845-6937' } ]","rg:dataset('ContactAddress.csv','28')",28
+Contact,200028,200010,rg:{'id':'200010'},120,Renaldo,Gerber,Supervisor,rg:None,250-779-3169,Cell,,Yard,"rg:[ {'id':'200028', 'type': 'Cell',  'phoneNumber': '250-779-3169' } ]","rg:dataset('ContactAddress.csv','29')",29
+Contact,200029,200010,rg:{'id':'200010'},50,Laree,Knoll,Mechanic,rg:None,604-798-1909,Cell,,Work,"rg:[ {'id':'200029', 'type': 'Cell',  'phoneNumber': '604-798-1909' } ]","rg:dataset('ContactAddress.csv','30')",30
+Contact,200030,200010,rg:{'id':'200010'},34,Alma,Sterling,Supervisor,This is a note,250-265-8522,Work,,Cell,"rg:[ {'id':'200030', 'type': 'Work',  'phoneNumber': '250-265-8522' } ]","rg:dataset('ContactAddress.csv','31')",31
+Contact,200031,200010,rg:{'id':'200010'},89,Amanda,Perkins,rg:None,rg:None,778-881-0796,Work,,Cell,"rg:[ {'id':'200031', 'type': 'Work',  'phoneNumber': '778-881-0796' } ]","rg:dataset('ContactAddress.csv','32')",32
+Contact,200032,200010,rg:{'id':'200010'},37,Wilma,Urbanski,rg:None,rg:None,250-360-5236,Yard,,Work,"rg:[ {'id':'200032', 'type': 'Yard',  'phoneNumber': '250-360-5236' } ]","rg:dataset('ContactAddress.csv','33')",33
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,

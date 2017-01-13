@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "1065 Sixth Street",
+        "addr1": "4600 Roger Street",
         "addr2": null,
-        "city": "New Westminster",
-        "postalCode": "V3L 3C1",
+        "city": "Nanaimo",
+        "id": "200006",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

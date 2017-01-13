@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "1696 Alaska Hwy",
+        "addr1": "2913 Blind Bay Road",
         "addr2": null,
-        "city": "Fort Nelson",
-        "postalCode": "V0C 1C0",
+        "city": "Blue River",
+        "id": "200013",
+        "postalCode": "V0E 1J0",
         "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "684 Roger Street",
-        "addr2": null,
-        "city": "Duncan",
-        "postalCode": "V9L 1P1",
-        "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

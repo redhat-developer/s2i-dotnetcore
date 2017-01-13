@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "2120 Burdett Avenue",
+        "addr1": "1593 102nd Avenue",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1L6",
+        "city": "Fort St John",
+        "id": "200051",
+        "postalCode": "V1J 3Y7",
         "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "1719 Blind Bay Road",
-        "addr2": null,
-        "city": "Vavenby",
-        "postalCode": "V0E 3A0",
-        "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

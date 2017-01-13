@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "3121 Blanshard",
+        "addr1": "3644 Roger Street",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 2H9",
+        "city": "Nanaimo",
+        "id": "200005",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "2191 Blind Bay Road",
-        "addr2": null,
-        "city": "Clearwater",
-        "postalCode": "V0E 1N0",
-        "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

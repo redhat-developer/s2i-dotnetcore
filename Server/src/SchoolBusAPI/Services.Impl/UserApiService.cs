@@ -261,8 +261,18 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdGroupsGetAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                // Not Found
+                return new StatusCodeResult(404);
+            }
+
+            var data = _context.GroupMemberships
+                .Where(x => x.User.Id == user.Id)
+                .ToList();
+
+            return new ObjectResult(data);
         }
 
         /// <summary>
@@ -356,8 +366,18 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdRolesGetAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                // Not Found
+                return new StatusCodeResult(404);
+            }
+
+            var data = _context.UserRoles
+                .Where(x => x.User.Id == user.Id)
+                .ToList();
+
+            return new ObjectResult(data);
         }
 
         /// <summary>

@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "1234 Tolmie St",
+        "addr1": "1730 Jade St",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6M 1Y8",
+        "city": "West Vancouver",
+        "id": "200000",
+        "postalCode": "V7T 2W4",
         "province": "BC",
         "type": "Headquarters"
-    },
-    {
-        "addr1": "2913 Blind Bay Road",
-        "addr2": null,
-        "city": "Blue River",
-        "postalCode": "V0E 1J0",
-        "province": "BC",
-        "type": "Field Office"
     }
 ]

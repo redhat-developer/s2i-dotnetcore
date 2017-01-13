@@ -41,13 +41,12 @@ namespace SchoolBusAPI.Models
         /// <param name="Type">The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list..</param>
         /// <param name="PhoneNumber">The phone number of the contact. Entered as free form to support a range of formats..</param>
         /// <param name="SchoolBusOwnerContact">SchoolBusOwnerContact.</param>
-        public SchoolBusOwnerContactPhone(int Id, string Type = null, string PhoneNumber = null, SchoolBusOwnerContact SchoolBusOwnerContact = null)
+        public SchoolBusOwnerContactPhone(int Id, string Type = null, string PhoneNumber = null)
         {
             
             this.Id = Id;
             this.Type = Type;
             this.PhoneNumber = PhoneNumber;
-            this.SchoolBusOwnerContact = SchoolBusOwnerContact;
             
         }
 
@@ -71,14 +70,7 @@ namespace SchoolBusAPI.Models
         /// <value>The phone number of the contact. Entered as free form to support a range of formats.</value>
         [MetaDataExtension (Description = "The phone number of the contact. Entered as free form to support a range of formats.")]
         public string PhoneNumber { get; set; }
-
-        /// <summary>
-        /// Gets or Sets SchoolBusOwnerContact
-        /// </summary>
-        public SchoolBusOwnerContact SchoolBusOwnerContact { get; set; }
-
-        [ForeignKey("SchoolBusOwnerContact")]
-        public int? SchoolBusOwnerContactRefId { get; set; }
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -91,7 +83,6 @@ namespace SchoolBusAPI.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  PhoneNumber: ").Append(PhoneNumber).Append("\n");
-            sb.Append("  SchoolBusOwnerContact: ").Append(SchoolBusOwnerContact).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -129,26 +120,21 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return
                 (
                     this.Id == other.Id ||
-                    
+
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&
                 (
                     this.Type == other.Type ||
                     this.Type != null &&
                     this.Type.Equals(other.Type)
-                ) && 
+                ) &&
                 (
                     this.PhoneNumber == other.PhoneNumber ||
                     this.PhoneNumber != null &&
                     this.PhoneNumber.Equals(other.PhoneNumber)
-                ) && 
-                (
-                    this.SchoolBusOwnerContact == other.SchoolBusOwnerContact ||
-                    this.SchoolBusOwnerContact != null &&
-                    this.SchoolBusOwnerContact.Equals(other.SchoolBusOwnerContact)
                 );
         }
 
@@ -174,11 +160,8 @@ namespace SchoolBusAPI.Models
                 if (this.PhoneNumber != null)
                 {
                     hash = hash * 59 + this.PhoneNumber.GetHashCode();
-                }
-                if (this.SchoolBusOwnerContact != null)
-                {
-                    hash = hash * 59 + this.SchoolBusOwnerContact.GetHashCode();
-                }
+                };
+                
                 return hash;
             }
         }

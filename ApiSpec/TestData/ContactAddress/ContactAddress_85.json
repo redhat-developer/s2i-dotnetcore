@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "4580 Hastings Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "postalCode": "V6C 1B4",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "1654 Roger Street",
+        "addr2": null,
+        "city": "Courtenay",
+        "postalCode": "V9N 2J6",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]

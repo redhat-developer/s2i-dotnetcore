@@ -53,7 +53,27 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (SchoolBusOwnerContact item in items)
             {
-                var exists = _context.SchoolBusOwners.Any(a => a.Id == item.Id);
+                // adjust SchoolBusOwner
+                if (item.SchoolBusOwner != null)
+                {
+                    int schoolbusowner_id = item.SchoolBusOwner.Id;
+                    var schoolbusowner_exists = _context.SchoolBusOwners.Any(a => a.Id == schoolbusowner_id);
+                    if (schoolbusowner_exists)
+                    {
+                        SchoolBusOwner owner = _context.SchoolBusOwners.First(a => a.Id == schoolbusowner_id);
+                        item.SchoolBusOwner = owner;
+                    }
+                    else
+                    {
+                        return new ObjectResult("ERROR - Primary contact with an id of " + schoolbusowner_id + " does not exist, for record id " + item.Id);
+                    }
+                }
+                else
+                {
+                    return new ObjectResult("ERROR - School Bus Owner is null.");
+                }
+
+                var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == item.Id);
                 if (exists)
                 {
                     _context.SchoolBusOwnerContacts.Update(item);

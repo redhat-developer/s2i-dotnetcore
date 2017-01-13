@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "3420 Burdett Avenue",
+        "addr1": "4879 Roger Street",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W IE9",
+        "city": "Nanaimo",
+        "id": "200025",
+        "postalCode": "V9R 5H4",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

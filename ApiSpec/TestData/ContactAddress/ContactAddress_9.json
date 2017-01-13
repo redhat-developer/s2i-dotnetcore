@@ -1,17 +1,10 @@
 [
     {
-        "addr1": "4600 Roger Street",
+        "addr1": "332 Burdett Avenue",
         "addr2": null,
-        "city": "Nanaimo",
-        "postalCode": "V9R 5H9",
-        "province": "BC",
-        "type": "Bus Yard"
-    },
-    {
-        "addr1": "1019 Hardy Street",
-        "addr2": null,
-        "city": "Kelowna",
-        "postalCode": "V1Y 8H2",
+        "city": "Victoria",
+        "id": "200008",
+        "postalCode": "V8W 1B2",
         "province": "BC",
         "type": "Bus Yard"
     }

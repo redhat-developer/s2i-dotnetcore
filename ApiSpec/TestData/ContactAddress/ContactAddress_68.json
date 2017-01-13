@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "2657 Wellington Ave",
+        "addr1": "2191 Blind Bay Road",
         "addr2": null,
-        "city": "Chilliwack",
-        "postalCode": "V2P 2M1",
+        "city": "Clearwater",
+        "id": "200067",
+        "postalCode": "V0E 1N0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

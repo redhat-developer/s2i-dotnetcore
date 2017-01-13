@@ -254,7 +254,7 @@ namespace SchoolBusAPI.Test
 
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
-            PermissionViewModel[] rolePermissionsResponse = JsonConvert.DeserializeObject<PermissionViewModel[]>(jsonString);
+            Permission[] rolePermissionsResponse = JsonConvert.DeserializeObject<Permission[]>(jsonString);
 
             Assert.Equal(permission.Code, rolePermissionsResponse[0].Code);
             Assert.Equal(permission.Name, rolePermissionsResponse[0].Name);

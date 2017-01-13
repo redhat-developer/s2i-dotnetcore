@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "914 Yoho Valley Road",
+        "addr1": "2162 King George Hwy",
         "addr2": null,
-        "city": "Invermere",
-        "postalCode": "V0A 1K0",
+        "city": "Surrey",
+        "id": "200050",
+        "postalCode": "V3W 4E3",
         "province": "BC",
         "type": "Bus Yard"
     }

@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "4879 Roger Street",
+        "addr1": "3967 Queens Bay",
         "addr2": null,
-        "city": "Nanaimo",
-        "postalCode": "V9R 5H4",
+        "city": "Fauquier",
+        "id": "200002",
+        "postalCode": "V0G 1K0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

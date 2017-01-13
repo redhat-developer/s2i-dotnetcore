@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "1654 Roger Street",
+        "addr1": "2120 Burdett Avenue",
         "addr2": null,
-        "city": "Courtenay",
-        "postalCode": "V9N 2J6",
+        "city": "Victoria",
+        "id": "200026",
+        "postalCode": "V8W 1L6",
         "province": "BC",
         "type": "Headquarters"
     }
