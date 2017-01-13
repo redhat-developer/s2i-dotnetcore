@@ -7,7 +7,7 @@ EXPOSE 8080
 ENV DOTNET_CORE_VERSION=1.1
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
-    HOME=/opt/app-root/src \
+    HOME=/opt/app-root \
     PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
@@ -64,7 +64,7 @@ RUN cd /opt/app-root/src && mkdir cache-warmup && \
     cd .. && \
     rm -rf cache-warmup && \
     rm -rf /tmp/NuGetScratch && \
-    find .nuget -name '*.cs' -exec rm '{}' \;
+    find ${HOME}/.nuget -name '*.cs' -exec rm '{}' \;
 
 # Switch back to root for changing dir ownership/permissions
 USER 0
@@ -85,7 +85,9 @@ ENV BASH_ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
     ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
     PROMPT_COMMAND=". ${CONTAINER_SCRIPTS_PATH}/etc/scl_enable"
 
-# Directory with the sources is set as the working directory. Set it to ${HOME}
+# Directory with the sources is set as the working directory. This should
+# be a folder outside $HOME as this might cause issues when compiling sources.
+# See https://github.com/redhat-developer/s2i-dotnetcore/issues/28
 WORKDIR /opt/app-root/src
 
 # Run container by default as user with id 1001 (default)
