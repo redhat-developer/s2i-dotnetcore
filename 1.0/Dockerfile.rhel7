@@ -55,16 +55,12 @@ ENV NUGET_XMLDOC_MODE=skip
 #   Move to the proper command to do this once https://github.com/dotnet/cli/issues/3692 is fixed.
 # - Removal of /tmp/NuGetScratch is needed due to:
 #   https://github.com/NuGet/Home/issues/2793
-# - Work around corefx issue 12758 where some C# source files are included
-#   in nuget packages. See:
-#   https://github.com/dotnet/corefx/issues/12758
 RUN cd /opt/app-root/src && mkdir cache-warmup && \
     cd cache-warmup && \
     scl enable rh-dotnetcore10 -- dotnet new && \
     cd .. && \
     rm -rf cache-warmup && \
-    rm -rf /tmp/NuGetScratch && \
-    find ${HOME}/.nuget -name '*.cs' -exec rm '{}' \;
+    rm -rf /tmp/NuGetScratch
 
 # Switch back to root for changing dir ownership/permissions
 USER 0
