@@ -457,12 +457,12 @@ namespace SchoolBusAPI.Services.Impl
                 data = data.Where(x => x.VIN == vin);
             }
 
-            if (includeInactive == null)
+            if (includeInactive == null || (includeInactive != null && includeInactive == false))
             {
                 data = data.Where(x => x.Status == "Active");
             }
 
-            if (onlyReInspections != null)
+            if (onlyReInspections != null && onlyReInspections==true)
             {
                 data = data.Where(x => x.NextInspectionType == "Re-inspection");
             }
