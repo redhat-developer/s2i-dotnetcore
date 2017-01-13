@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4357 Hastings Street",
+        "addr1": "1710 Yoho Valley Road",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Golden",
         "id": "200022",
-        "postalCode": "V6C 1B4",
+        "postalCode": "V0A 1H0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

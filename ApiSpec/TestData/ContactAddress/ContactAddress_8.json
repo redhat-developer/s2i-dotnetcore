@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1140 Sixth Street",
+        "addr1": "3854 Glover Road",
         "addr2": null,
-        "city": "New Westminister",
+        "city": "Langley",
         "id": "200007",
-        "postalCode": "V3L 3C1",
+        "postalCode": "V3A 4P6",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

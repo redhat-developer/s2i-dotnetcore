@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2519 St George Street",
+        "addr1": "936 Coldstream Avenue",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Vernon",
         "id": "200024",
-        "postalCode": "V5T 1Z7",
+        "postalCode": "V1T 6N1",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

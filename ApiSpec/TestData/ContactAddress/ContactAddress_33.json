@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4256 Kinchant St",
+        "addr1": "2956 Shaughnessy St",
         "addr2": null,
-        "city": "Williams Lake",
+        "city": "Port Coquitlam",
         "id": "200032",
-        "postalCode": "V2G 1C4",
+        "postalCode": "V3C 4S7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

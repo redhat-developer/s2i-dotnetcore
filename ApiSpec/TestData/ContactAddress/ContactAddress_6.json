@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3644 Roger Street",
+        "addr1": "4283 Burdett Avenue",
         "addr2": null,
-        "city": "Nanaimo",
+        "city": "Victoria",
         "id": "200005",
-        "postalCode": "V9R 5H9",
+        "postalCode": "V8W 1L6",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

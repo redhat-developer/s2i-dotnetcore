@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3832 Roger Street",
+        "addr1": "2162 King George Hwy",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Surrey",
         "id": "200020",
-        "postalCode": "V9B 1X2",
+        "postalCode": "V3W 4E3",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

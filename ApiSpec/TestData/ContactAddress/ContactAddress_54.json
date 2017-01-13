@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1710 Yoho Valley Road",
+        "addr1": "3121 Blanshard",
         "addr2": null,
-        "city": "Golden",
+        "city": "Victoria",
         "id": "200053",
-        "postalCode": "V0A 1H0",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

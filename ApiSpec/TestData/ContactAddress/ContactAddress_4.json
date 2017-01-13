@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3109 Wellington Ave",
+        "addr1": "3795 Burdett Avenue",
         "addr2": null,
-        "city": "Chilliwack",
+        "city": "Victoria",
         "id": "200003",
-        "postalCode": "V2P 2M1",
+        "postalCode": "V8Y 1Y7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]
