@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "2426 Cordova Street",
+        "addr1": "616 Scotts Lane",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
+        "city": "Okanagan Mission",
+        "id": "200043",
+        "postalCode": "V0R 1S0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

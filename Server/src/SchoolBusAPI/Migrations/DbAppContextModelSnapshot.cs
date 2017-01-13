@@ -691,15 +691,15 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Province")
                         .HasColumnName("PROVINCE");
 
-                    b.Property<int?>("SchoolBusOwnerContactRefId")
-                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_REF_ID");
+                    b.Property<int?>("SchoolBusOwnerContactId")
+                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_ID");
 
                     b.Property<string>("Type")
                         .HasColumnName("TYPE");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolBusOwnerContactRefId");
+                    b.HasIndex("SchoolBusOwnerContactId");
 
                     b.ToTable("SBI_SCHOOL_BUS_OWNER_CONTACT_ADDRESS");
                 });
@@ -713,15 +713,15 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnName("PHONE_NUMBER");
 
-                    b.Property<int?>("SchoolBusOwnerContactRefId")
-                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_REF_ID");
+                    b.Property<int?>("SchoolBusOwnerContactId")
+                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_ID");
 
                     b.Property<string>("Type")
                         .HasColumnName("TYPE");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolBusOwnerContactRefId");
+                    b.HasIndex("SchoolBusOwnerContactId");
 
                     b.ToTable("SBI_SCHOOL_BUS_OWNER_CONTACT_PHONE");
                 });
@@ -1027,16 +1027,16 @@ namespace SchoolBusAPI.Migrations
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContactAddress", b =>
                 {
-                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
+                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact")
                         .WithMany("SchoolBusOwnerContactAddresses")
-                        .HasForeignKey("SchoolBusOwnerContactRefId");
+                        .HasForeignKey("SchoolBusOwnerContactId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContactPhone", b =>
                 {
-                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
+                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact")
                         .WithMany("SchoolBusOwnerContactPhones")
-                        .HasForeignKey("SchoolBusOwnerContactRefId");
+                        .HasForeignKey("SchoolBusOwnerContactId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerHistory", b =>

@@ -1,24 +1,19 @@
-File,name,id,status,dateCreated,primaryContactRefId,!serviceArea,serviceAreaRefId
-SBOwner,Edwards & Co,101,Archive,2011-06-06,1,Bulkley - Nass,25
-SBOwner,"Wilson's Transportion, Inc.",102,Active,2005-06-09,2,North Coast,27
-SBOwner,School District 61,103,Active,2006-04-20,3,Skeena,26
-SBOwner,SMUS,104,Active,2008-08-05,4,NON-BC,29
-SBOwner,School District 62,105,Active,2009-03-01,5,Bulkley - Nass,25
-SBOwner,JC Kingston Transportation,106,Active,2009-02-12,9,Lower Mainland,6
-SBOwner,BC Transit School Bus,107,Active,2011-03-23,11,South Okanagan,8
-SBOwner,Ferries Transit,108,Active,2012-04-03,14,East Kootenay,11
-SBOwner,Jones Transportation,109,Active,2005-12-10,16,Skeena,26
-SBOwner,"SB School Bus, Inc.",110,Active,2005-07-21,17,Lakes,24
-SBOwner,School District 64,111,Active,2012-04-13,19,Skeena,26
-SBOwner,Service Merchandise,112,Active,2004-01-04,23,Nicola,14
-SBOwner,Lionel Playworld,113,Active,2011-12-15,25,Skeena,26
-SBOwner,Sandy's,114,Active,2015-09-07,26,Central Kootenay,10
-SBOwner,Stratacard,115,Active,2015-05-30,28,Stikine,28
-SBOwner,Gamma Gas,116,Active,2004-07-23,29,North Coast,27
-SBOwner,J. Brannam,117,Active,2010-07-08,33,South Peace,21
-SBOwner,Success Is Yours,118,Active,2004-06-04,35,Fort George,19
--,,,,,,,
--,,,,,,,
--,,,,,,,
--,,,,,,,
--,,,,,,,
+File,name,id,status,dateCreated,primaryContact,!primaryContactID,!serviceAreaName,!serviceAreaId,serviceArea
+SBOwner,Edwards & Co,200000,Archive,2014-12-31,rg:{'id':'96'},96,South Cariboo,200015,rg:{'id':'200015'}
+SBOwner,"Wilson's Transportion, Inc.",200001,Active,2016-06-08,rg:{'id':'146'},146,South Island,200000,rg:{'id':'200000'}
+SBOwner,School District 61,200002,Active,2011-12-31,rg:{'id':'149'},149,East Kootenay,200010,rg:{'id':'200010'}
+SBOwner,SMUS,200003,Active,2007-06-08,rg:{'id':'69'},69,Central Kootenay,200009,rg:{'id':'200009'}
+SBOwner,School District 62,200004,Active,2015-10-08,rg:{'id':'29'},29,South Okanagan,200007,rg:{'id':'200007'}
+SBOwner,JC Kingston Transportation,200005,Active,2011-08-21,rg:{'id':'150'},150,South Island,200000,rg:{'id':'200000'}
+SBOwner,BC Transit School Bus,200006,Active,2008-12-22,rg:{'id':'76'},76,Bulkley - Nass,200024,rg:{'id':'200024'}
+SBOwner,Ferries Transit,200007,Active,2014-04-12,rg:{'id':'15'},15,Stikine,200027,rg:{'id':'200027'}
+SBOwner,Jones Transportation,200008,Active,2003-05-31,rg:{'id':'26'},26,North Cariboo,200017,rg:{'id':'200017'}
+SBOwner,"SB School Bus, Inc.",200009,Active,2012-07-13,rg:{'id':'10'},10,Howe Sound,200003,rg:{'id':'200003'}
+SBOwner,School District 64,200010,Active,2008-08-07,rg:{'id':'2'},2,Thompson,200014,rg:{'id':'200014'}
+SBOwner,Service Merchandise,200011,Active,2004-03-12,rg:{'id':'108'},108,Central Kootenay,200009,rg:{'id':'200009'}
+SBOwner,Lionel Playworld,200012,Active,2005-06-01,rg:{'id':'50'},50,South Peace,200020,rg:{'id':'200020'}
+SBOwner,Sandy's,200013,Active,2016-04-26,rg:{'id':'80'},80,East Kootenay,200010,rg:{'id':'200010'}
+SBOwner,Stratacard,200014,Active,2011-08-09,rg:{'id':'98'},98,Central Kootenay,200009,rg:{'id':'200009'}
+SBOwner,Gamma Gas,200015,Active,2011-08-27,rg:{'id':'144'},144,South Island,200000,rg:{'id':'200000'}
+SBOwner,J. Brannam,200016,Active,2013-05-31,rg:{'id':'102'},102,Skeena,200025,rg:{'id':'200025'}
+SBOwner,Success Is Yours,200017,Active,2013-06-17,rg:{'id':'33'},33,North Coast,200026,rg:{'id':'200026'}

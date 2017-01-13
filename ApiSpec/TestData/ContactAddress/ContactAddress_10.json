@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "3694 Lake City Way",
+        "addr1": "2383 Brew Creek Rd",
         "addr2": null,
-        "city": "Burnaby",
-        "postalCode": "V5A 2Z6",
+        "city": "Whistler",
+        "id": "200009",
+        "postalCode": "V0N 1B0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

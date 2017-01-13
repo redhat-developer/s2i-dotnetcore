@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "1234 Tolmie St",
+        "addr1": "2558 Glover Road",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6M 1Y8",
+        "city": "Coquitlam",
+        "id": "200063",
+        "postalCode": "V3J 4S1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

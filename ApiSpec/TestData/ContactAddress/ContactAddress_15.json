@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "914 Yoho Valley Road",
+        "addr1": "735 Blanshard",
         "addr2": null,
-        "city": "Invermere",
-        "postalCode": "V0A 1K0",
+        "city": "Victoria",
+        "id": "200014",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

@@ -1,0 +1,11 @@
+[
+    {
+        "addr1": "4537 St George Street",
+        "addr2": null,
+        "city": "Vancouver",
+        "id": "200005",
+        "postalCode": "V5T 1Z7",
+        "province": "BC",
+        "type": "Bus Yard"
+    }
+]

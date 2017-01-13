@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "3924 Roger Street",
+        "addr1": "4357 Hastings Street",
         "addr2": null,
-        "city": "Duncan",
-        "postalCode": "V9L 1P1",
+        "city": "Vancouver",
+        "id": "200022",
+        "postalCode": "V6C 1B4",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

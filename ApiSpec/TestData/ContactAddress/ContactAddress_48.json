@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "3832 Roger Street",
+        "addr1": "1019 Hardy Street",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V9B 1X2",
+        "city": "Kelowna",
+        "id": "200047",
+        "postalCode": "V1Y 8H2",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

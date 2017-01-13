@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "2882 Carlson Road",
+        "addr1": "4305 Essendene Avenue",
         "addr2": null,
-        "city": "Prince George",
-        "postalCode": "V2L 5E5",
+        "city": "Abbotsford",
+        "id": "200018",
+        "postalCode": "V2S 2H7",
         "province": "BC",
         "type": "Bus Yard"
     }

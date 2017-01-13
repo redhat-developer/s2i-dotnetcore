@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "3109 Wellington Ave",
+        "addr1": "1710 Yoho Valley Road",
         "addr2": null,
-        "city": "Chilliwack",
-        "postalCode": "V2P 2M1",
+        "city": "Golden",
+        "id": "200053",
+        "postalCode": "V0A 1H0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

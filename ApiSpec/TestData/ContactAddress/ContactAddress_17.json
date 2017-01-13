@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "4359 Yoho Valley Road",
+        "addr1": "830 Hardy Street",
         "addr2": null,
-        "city": "Spillimacheen",
-        "postalCode": "V0A 1P0",
+        "city": "Kelowna",
+        "id": "200016",
+        "postalCode": "V1Y 8H2",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

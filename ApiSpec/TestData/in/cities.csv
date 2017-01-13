@@ -1,662 +1,662 @@
 File,name,id
-city,100 Mile House,1
-city,108 Mile House,2
-city,150 Mile House,3
-city,70 Mile House,4
-city,Abbotsford,5
-city,Adams Lake,6
-city,Agassiz,7
-city,Ahousat,8
-city,Ainsworth Hot Springs,9
-city,Aiyansh,10
-city,Albert Canyon,11
-city,Albion,12
-city,Aldergrove,13
-city,Alert Bay,14
-city,Alexis Creek,15
-city,Alice Arm,16
-city,Alkali Lake,17
-city,Altona,18
-city,Alyansh,19
-city,Anaham,20
-city,Anaheim,21
-city,Anahim Lake,22
-city,Anglemont,23
-city,Anmore,24
-city,Applegrove,25
-city,Argenta,26
-city,Armstrong,27
-city,Arras,28
-city,Arrow Park,29
-city,Ashcroft,30
-city,Aspen Grove,31
-city,Athalmer,32
-city,Atlin,33
-city,Avola,34
-city,Baldonnel,35
-city,Baldy Hughes,36
-city,Balfour,37
-city,Bamfield,38
-city,Barkerville,39
-city,Barnston Island,40
-city,Barriere,41
-city,Bear Cove,42
-city,Beaton,43
-city,Beatton River,44
-city,Beaver Cove,45
-city,Beaverdell,46
-city,Belcarra,47
-city,Bella Bella,48
-city,Bella Coola,49
-city,Bellingham,50
-city,Big Bar Creek,51
-city,Big Bay,52
-city,Big Lake Ranch,53
-city,Big White,54
-city,Birch Island,55
-city,Birken,56
-city,Black Creek,57
-city,Blackpool,58
-city,Blaine,59
-city,Blind Bay,60
-city,Blue River,61
-city,Boat Basin,62
-city,Bogota,63
-city,Boston Bar,64
-city,Boswell,65
-city,Bouchie Lake,66
-city,Boundary Bay,67
-city,Bowen Island,68
-city,Bowser,69
-city,Brackendale,70
-city,Bralorne,71
-city,Brentwood Bay,72
-city,Bridesville,73
-city,Bridge Lake,74
-city,Brighouse,75
-city,Brisco,76
-city,Britannia Beach,77
-city,Bucking Horse,78
-city,Buckley Bay,79
-city,Buffalo Creek,80
-city,Buick,81
-city,Burnaby,82
-city,Burns Lake,83
-city,Burton,84
-city,Cache Creek,85
-city,Campbell River,86
-city,Canal Flats,87
-city,Canim Lake,88
-city,Canoe,89
-city,Canyon,90
-city,Canyon City,91
-city,Carmi,92
-city,Carson,93
-city,Cascade,94
-city,Cassiar,95
-city,Castlegar,96
-city,Cawston,97
-city,Cecil Lake,98
-city,Cedar,99
-city,Celista,100
-city,Central Saanich,101
-city,Chapman Creek,102
-city,Charlie Lake,103
-city,Chase,104
-city,Cheekye,105
-city,Chemainus,106
-city,Cherryville,107
-city,Chetwynd,108
-city,Chezacut,109
-city,Chilanko Forks,110
-city,Chilliwack,111
-city,Chopaka,112
-city,Christina Lake,113
-city,Clayhurst,114
-city,Clearbrook,115
-city,Clearwater,116
-city,Clinton,117
-city,Cloverdale,118
-city,Coal Harbour,119
-city,Coalmont,120
-city,Cobble Hill,121
-city,Coldstream,122
-city,Colwood,123
-city,Comox,124
-city,Coombs,125
-city,Coquitlam,126
-city,Corbin,127
-city,Cordova Bay,128
-city,Courtenay,129
-city,Cowichan Bay,130
-city,Craigellachie,131
-city,Cranberry Junction,132
-city,Cranbrook,133
-city,Crawford Bay,134
-city,Crescent Valley,135
-city,Creston,136
-city,Crofton,137
-city,Croydon Station,138
-city,Cultus Lake,139
-city,Cumberland,140
-city,D Arcy,141
-city,Darfield,142
-city,Darrell Bay,143
-city,Dawson Creek,144
-city,Dawson Landing,145
-city,Dease Lake,146
-city,Delta,147
-city,Denman Island,148
-city,Dewdney,149
-city,Dog Creek,150
-city,Donald Station,151
-city,Douglas,152
-city,Douglas Lake,153
-city,Duncan,154
-city,Dunster,155
-city,Eagle Bay,156
-city,Eagle Creek,157
-city,Earls Cove,158
-city,Edgewater,159
-city,Egmont,160
-city,Elkford,161
-city,Elko,162
-city,Endako,163
-city,Enderby,164
-city,Engen,165
-city,Erickson,166
-city,Errington,167
-city,Esquimalt,168
-city,Everett,169
-city,Fairmont Hot Springs,170
-city,Falkland,171
-city,False Bay,172
-city,Fanny Bay,173
-city,Farmington,174
-city,Fauquier,175
-city,Fernie,176
-city,Field,177
-city,Firvale,178
-city,Flathead,179
-city,Forest Grove,180
-city,Fort Babine,181
-city,Fort Fraser,182
-city,Fort Langley,183
-city,Fort Nelson,184
-city,Fort St. James,185
-city,Fort St. John,186
-city,Fort Steele,187
-city,Francois Lake,188
-city,Fraser Lake,189
-city,Fraser Mills,190
-city,French Creek,191
-city,Fruitvale,192
-city,Fulford Harbour,193
-city,Gabriola Island,194
-city,Galloway,195
-city,Ganges,196
-city,Garden Bay,197
-city,Garibaldi Highlands,198
-city,Genelle,199
-city,Gibsons,200
-city,Gibsons Landing,201
-city,Gillies Bay,202
-city,Glade,203
-city,Glenora,204
-city,Gold Bridge,205
-city,Gold River,206
-city,Golden,207
-city,Goldstream,208
-city,Good Hope,209
-city,Goodlow,210
-city,Grand Forks,211
-city,Granilse,212
-city,Granite Bay,213
-city,Grasmere,214
-city,Grassy Plains,215
-city,Gravelle,216
-city,Gray Creek,217
-city,Green Cove,218
-city,Greenville,219
-city,Greenwood,220
-city,Grindrod,221
-city,Groundbirch,222
-city,Gulf Islands,223
-city,Hagensborg,224
-city,Halfmoon Bay,225
-city,Hanceville,226
-city,Haney,227
-city,Harrison Hot Springs,228
-city,Harrison Mills,229
-city,Hartley Bay,230
-city,Hazelton,231
-city,Hedley,232
-city,Heffley Creek,233
-city,Hendrix Lake,234
-city,Heriot Bay,235
-city,Hixon,236
-city,Holberg,237
-city,Honeymoon Bay,238
-city,Hope,239
-city,Hornby Island,240
-city,Horseshoe Bay,241
-city,Horsfly,242
-city,Houston,243
-city,Howser,244
-city,Hudsons Hope,245
-city,Huntingdon,246
-city,Invermere,247
-city,Irvines Landing,248
-city,Iskut,249
-city,Isle Pierre,250
-city,Jaffray,251
-city,Jesmond,252
-city,Johnsons Landing,253
-city,Jordon River,254
-city,Juskatla,255
-city,Kaleden,256
-city,Kamloops,257
-city,Kaslo,258
-city,Keats Landing,259
-city,Keefers,260
-city,Kelowna,261
-city,Kelsey Bay,262
-city,Kemano,263
-city,Kent,264
-city,Kent,265
-city,Keremeos,266
-city,Kersley,267
-city,Kettle Valley,268
-city,Killiney Beach,269
-city,Kilodnan,270
-city,Kimberley,271
-city,Kimsquit,272
-city,Kincolith,273
-city,Kingcome Inlet,274
-city,Kingsgate,275
-city,Kispiox,276
-city,Kitamaat Village,277
-city,Kitchener,278
-city,Kitimat,279
-city,Kitkatla,280
-city,Kitwanga,281
-city,Kleena Kleene,282
-city,Klemtu,283
-city,Knutsford,284
-city,Kokish,285
-city,Kootenay Bay,286
-city,Kuper Island,287
-city,Kyuquot,288
-city,Lac La Hache,289
-city,Lac Le Jeune,290
-city,Ladner,291
-city,Ladysmith,292
-city,Lake Country,293
-city,Lake Cowichan,294
-city,Lake Errock,295
-city,Lakesle,296
-city,Langford,297
-city,Langley,298
-city,Lantzville,299
-city,Lavington,300
-city,Lazo,301
-city,Leech Town,302
-city,Lejac,303
-city,Leo Creek,304
-city,Liard River,305
-city,Likely,306
-city,Lillooet,307
-city,Lions Bay,308
-city,Lister,309
-city,Little Fort,310
-city,Little River,311
-city,Logan Lake,312
-city,Lone Butte,313
-city,Lone Prairie,314
-city,Long Harbour,315
-city,Longworth,316
-city,Louis Creek,317
-city,Lower Nicola,318
-city,Lower Post,319
-city,Lumby,320
-city,Lund,321
-city,Lynden,322
-city,Lytton,323
-city,Mackenzie,324
-city,Madeira Park,325
-city,Magna Bay,326
-city,Mahood Falls,327
-city,Malahat,328
-city,Manning Park,329
-city,Manson Creek,330
-city,Mansons Landing,331
-city,Maple Ridge,332
-city,Mara,333
-city,Marguerite,334
-city,Massett,335
-city,Matsqui,336
-city,Mcbride,337
-city,Mcleese Lake,338
-city,Mcleod Lake,339
-city,Mclure,340
-city,Meadow Creek,341
-city,Merritt,342
-city,Merville,343
-city,Mesachie Lake,344
-city,Metchosin,345
-city,Mica Creek,346
-city,Michel,347
-city,Midway,348
-city,Mill Bay,349
-city,Milnes Landing,350
-city,Minstrel Island,351
-city,Miracle Beach,352
-city,Mirror Lake,353
-city,Mission,354
-city,Moberly Lake,355
-city,Montague Harbour,356
-city,Monte Creek,357
-city,Monte Lake,358
-city,Montrose,359
-city,Moose Heights,360
-city,Moresby Camp,361
-city,Moricetown,362
-city,Mount Currie,363
-city,Mount Vernon,364
-city,Moyie,365
-city,Muncho Lake,366
-city,Nahmint,367
-city,Nakusp,368
-city,Namu,369
-city,Nanaimo,370
-city,Nanoose Bay,371
-city,Naramata,372
-city,Nass Camp,373
-city,Natal,374
-city,Nazko,375
-city,Needles,376
-city,Nelson,377
-city,Nelson Forks,378
-city,Nelway,379
-city,Nemaiah Valley,380
-city,New Aiyansh,381
-city,New Brighton,382
-city,New Denver,383
-city,New Hazelton,384
-city,New Westminster,385
-city,Newgate,386
-city,Newton,387
-city,Nicola,388
-city,Nimpo Lake,389
-city,Nitnat,390
-city,Noralee,391
-city,North Bend,392
-city,North Cowichan,393
-city,North Pine,394
-city,North Saanich,395
-city,North Vancouver,396
-city,Nukko Lake,397
-city,Oak Bay,398
-city,Ocean Falls,399
-city,Okanagan Centre,400
-city,Okanagan Falls,401
-city,Oliver,402
-city,Olympia,403
-city,Oona River,404
-city,Ootsa Lake,405
-city,Osoyoos,406
-city,Otter Bay,407
-city,Oyama,408
-city,Panorama Resort,409
-city,Parksville,410
-city,Parson,411
-city,Paterson,412
-city,Pavillion,413
-city,Peachland,414
-city,Pemberton,415
-city,Pender Harbor,416
-city,Penny,417
-city,Penticton,418
-city,Philips Arm,419
-city,Pinantan Lake,420
-city,Pink Mountain,421
-city,Pitt Meadows,422
-city,Pleasant Camp,423
-city,Port Alberni,424
-city,Port Alice,425
-city,Port Angeles,426
-city,Port Clemente,427
-city,Port Coquitlam,428
-city,Port Edward,429
-city,Port Essington,430
-city,Port Hardy,431
-city,Port Kells,432
-city,Port Mcneill,433
-city,Port Mellon,434
-city,Port Moody,435
-city,Port Neville,436
-city,Port Renfrew,437
-city,Port Simpson,438
-city,Pounce Coupe,439
-city,Powell River,440
-city,Prespatou,441
-city,Prince George,442
-city,Prince Rupert,443
-city,Princeton,444
-city,Pritchard,445
-city,Procter,446
-city,Progress,447
-city,Prophet River,448
-city,Qualicum,449
-city,Quathiaski Cove,450
-city,Quatsino,451
-city,Queen Charlotte,452
-city,Quesnel,453
-city,Quilchena,454
-city,Radium,455
-city,Radium Hot Springs,456
-city,Red Rock,457
-city,Redmond,458
-city,Redpass Junction,459
-city,Redstone,460
-city,Refuge Cove,461
-city,Reid Lake,462
-city,Remac,463
-city,Revelstoke,464
-city,Richmond,465
-city,Riondel,466
-city,Riske Creek,467
-city,Rivers Inlet,468
-city,Roberts Creek,469
-city,Robson,470
-city,Rock Bay,471
-city,Rock Creek,472
-city,Rogers Pass,473
-city,Rolla,474
-city,Roosville,475
-city,Rose Prairie,476
-city,Rosedale,477
-city,Rossland,478
-city,Royston,479
-city,Rutland,480
-city,Rykerts,481
-city,Saanich,482
-city,Saanichton,483
-city,Salmo,484
-city,Salmon Arm,485
-city,Saltery Bay,486
-city,San Josef,487
-city,Sanca,488
-city,Sandspit,489
-city,Santos,490
-city,Sao Paulo,491
-city,Saratoga Beach,492
-city,Sardis,493
-city,Sarita,494
-city,Saturna,495
-city,Savary Island,496
-city,Savona,497
-city,Sayward,498
-city,Scotch Creek,499
-city,Seal Cove,500
-city,Seattle,501
-city,Sechelt,502
-city,Seton Portage,503
-city,Sewell Inlet,504
-city,Seymour Arm,505
-city,Shalalth,506
-city,Shawnigan Lake,507
-city,Shearwater,508
-city,Shelley,509
-city,Shelter Bay,510
-city,Sherbrooke,511
-city,Shoreacres,512
-city,Shuswap,513
-city,Shutty Bench,514
-city,Sicamous,515
-city,Sidney,516
-city,Sikanni Chief,517
-city,Silver Creek,518
-city,Silverton,519
-city,Simoon Sound,520
-city,Sinclair Mills,521
-city,Sirdar,522
-city,Skidegate,523
-city,Skookumchuck,524
-city,Slocan,525
-city,Slocan Park,526
-city,Smith River,527
-city,Smithers,528
-city,Smithers Landing,529
-city,Snug Cove,530
-city,Soda Creek,531
-city,Sointula,532
-city,Sooke,533
-city,Sorrento,534
-city,South Fort George,535
-city,South Hazelton,536
-city,South Pender,537
-city,South Slocan,538
-city,South Wellington,539
-city,Southbank,540
-city,Spallumcheen,541
-city,Sparwood,542
-city,Spences Bridge,543
-city,Spillimacheen,544
-city,Spokane,545
-city,Springhouse,546
-city,Sproat Lake,547
-city,Spuzzum,548
-city,Squamish,549
-city,Squilax,550
-city,Stewardson Inlet,551
-city,Stewart,552
-city,Stikine,553
-city,Stoner,554
-city,Strathnaver,555
-city,Stuart Island,556
-city,Stuie,557
-city,Sturdies Bay,558
-city,Sullivan Bay,559
-city,Sumas,560
-city,Summerland,561
-city,Summit Lake,562
-city,Sunset Prairie,563
-city,Surge Narrows,564
-city,Surrey,565
-city,Swartz Bay,566
-city,Sydney,567
-city,Ta Ta Creek,568
-city,Tachie,569
-city,Tacoma,570
-city,Tadanac,571
-city,Taghum,572
-city,Tahala,573
-city,Tahsis,574
-city,Takla Landing,575
-city,Takysie Lake,576
-city,Tappen,577
-city,Tatalrose,578
-city,Tatla Lake,579
-city,Tatlayoko Lake,580
-city,Taylor,581
-city,Tchesinkut Lake,582
-city,Telegraph Cove,583
-city,Telegraph Creek,584
-city,Telkwa,585
-city,Terrace,586
-city,Tete Jaune Cache,587
-city,Thetis Island,588
-city,Thompson Sound,589
-city,Three Valley,590
-city,Thrums,591
-city,Tlell,592
-city,Toad River,593
-city,Toba,594
-city,Tofino,595
-city,Tomslake,596
-city,Topley,597
-city,Topley Landing,598
-city,Trail,599
-city,Tranquille,600
-city,Trout Lake,601
-city,Trutch,602
-city,Tsawwassen,603
-city,Tsay Keh Dene,604
-city,Tulameen,605
-city,Tulsequah,606
-city,Tumbler Ridge,607
-city,Tupper,608
-city,Ucluelet,609
-city,Ulrich,610
-city,Union Bay,611
-city,Upper Fraser,612
-city,Usk,613
-city,Valemont,614
-city,Valleyview,615
-city,Vananda,616
-city,Vancouver,617
-city,Vancouver,618
-city,Vanderhoof,619
-city,Vavenby,620
-city,Vedder Crossing,621
-city,Vernon,622
-city,Vesuvius,623
-city,Victoria,624
-city,View Royal,625
-city,Village Bay,626
-city,Waglisla,627
-city,Walachin,628
-city,Walla Walla,629
-city,Waneta,630
-city,Wardner,631
-city,Ware,632
-city,Warfield,633
-city,Wasa,634
-city,Watson Lake,635
-city,Wells,636
-city,West Vancouver,637
-city,Westbank,638
-city,Westbridge,639
-city,Westwold,640
-city,Whalley,641
-city,Whistler,642
-city,White Rock,643
-city,Williams Lake,644
-city,Willow River,645
-city,Windermere,646
-city,Winfield,647
-city,Winlaw,648
-city,Winter Harbour,649
-city,Wonowon,650
-city,Woodfibre,651
-city,Woy Woy,652
-city,Wycliffe,653
-city,Wynndel,654
-city,Yahk,655
-city,Yakima,656
-city,Yale,657
-city,Yarrow,658
-city,Ymir,659
-city,Youbou,660
-city,Zeballos,661
+city,100 Mile House,200000
+city,108 Mile House,200001
+city,150 Mile House,200002
+city,70 Mile House,200003
+city,Abbotsford,200004
+city,Adams Lake,200005
+city,Agassiz,200006
+city,Ahousat,200007
+city,Ainsworth Hot Springs,200008
+city,Aiyansh,200009
+city,Albert Canyon,200010
+city,Albion,200011
+city,Aldergrove,200012
+city,Alert Bay,200013
+city,Alexis Creek,200014
+city,Alice Arm,200015
+city,Alkali Lake,200016
+city,Altona,200017
+city,Alyansh,200018
+city,Anaham,200019
+city,Anaheim,200020
+city,Anahim Lake,200021
+city,Anglemont,200022
+city,Anmore,200023
+city,Applegrove,200024
+city,Argenta,200025
+city,Armstrong,200026
+city,Arras,200027
+city,Arrow Park,200028
+city,Ashcroft,200029
+city,Aspen Grove,200030
+city,Athalmer,200031
+city,Atlin,200032
+city,Avola,200033
+city,Baldonnel,200034
+city,Baldy Hughes,200035
+city,Balfour,200036
+city,Bamfield,200037
+city,Barkerville,200038
+city,Barnston Island,200039
+city,Barriere,200040
+city,Bear Cove,200041
+city,Beaton,200042
+city,Beatton River,200043
+city,Beaver Cove,200044
+city,Beaverdell,200045
+city,Belcarra,200046
+city,Bella Bella,200047
+city,Bella Coola,200048
+city,Bellingham,200049
+city,Big Bar Creek,200050
+city,Big Bay,200051
+city,Big Lake Ranch,200052
+city,Big White,200053
+city,Birch Island,200054
+city,Birken,200055
+city,Black Creek,200056
+city,Blackpool,200057
+city,Blaine,200058
+city,Blind Bay,200059
+city,Blue River,200060
+city,Boat Basin,200061
+city,Bogota,200062
+city,Boston Bar,200063
+city,Boswell,200064
+city,Bouchie Lake,200065
+city,Boundary Bay,200066
+city,Bowen Island,200067
+city,Bowser,200068
+city,Brackendale,200069
+city,Bralorne,200070
+city,Brentwood Bay,200071
+city,Bridesville,200072
+city,Bridge Lake,200073
+city,Brighouse,200074
+city,Brisco,200075
+city,Britannia Beach,200076
+city,Bucking Horse,200077
+city,Buckley Bay,200078
+city,Buffalo Creek,200079
+city,Buick,200080
+city,Burnaby,200081
+city,Burns Lake,200082
+city,Burton,200083
+city,Cache Creek,200084
+city,Campbell River,200085
+city,Canal Flats,200086
+city,Canim Lake,200087
+city,Canoe,200088
+city,Canyon,200089
+city,Canyon City,200090
+city,Carmi,200091
+city,Carson,200092
+city,Cascade,200093
+city,Cassiar,200094
+city,Castlegar,200095
+city,Cawston,200096
+city,Cecil Lake,200097
+city,Cedar,200098
+city,Celista,200099
+city,Central Saanich,200100
+city,Chapman Creek,200101
+city,Charlie Lake,200102
+city,Chase,200103
+city,Cheekye,200104
+city,Chemainus,200105
+city,Cherryville,200106
+city,Chetwynd,200107
+city,Chezacut,200108
+city,Chilanko Forks,200109
+city,Chilliwack,200110
+city,Chopaka,200111
+city,Christina Lake,200112
+city,Clayhurst,200113
+city,Clearbrook,200114
+city,Clearwater,200115
+city,Clinton,200116
+city,Cloverdale,200117
+city,Coal Harbour,200118
+city,Coalmont,200119
+city,Cobble Hill,200120
+city,Coldstream,200121
+city,Colwood,200122
+city,Comox,200123
+city,Coombs,200124
+city,Coquitlam,200125
+city,Corbin,200126
+city,Cordova Bay,200127
+city,Courtenay,200128
+city,Cowichan Bay,200129
+city,Craigellachie,200130
+city,Cranberry Junction,200131
+city,Cranbrook,200132
+city,Crawford Bay,200133
+city,Crescent Valley,200134
+city,Creston,200135
+city,Crofton,200136
+city,Croydon Station,200137
+city,Cultus Lake,200138
+city,Cumberland,200139
+city,D Arcy,200140
+city,Darfield,200141
+city,Darrell Bay,200142
+city,Dawson Creek,200143
+city,Dawson Landing,200144
+city,Dease Lake,200145
+city,Delta,200146
+city,Denman Island,200147
+city,Dewdney,200148
+city,Dog Creek,200149
+city,Donald Station,200150
+city,Douglas,200151
+city,Douglas Lake,200152
+city,Duncan,200153
+city,Dunster,200154
+city,Eagle Bay,200155
+city,Eagle Creek,200156
+city,Earls Cove,200157
+city,Edgewater,200158
+city,Egmont,200159
+city,Elkford,200160
+city,Elko,200161
+city,Endako,200162
+city,Enderby,200163
+city,Engen,200164
+city,Erickson,200165
+city,Errington,200166
+city,Esquimalt,200167
+city,Everett,200168
+city,Fairmont Hot Springs,200169
+city,Falkland,200170
+city,False Bay,200171
+city,Fanny Bay,200172
+city,Farmington,200173
+city,Fauquier,200174
+city,Fernie,200175
+city,Field,200176
+city,Firvale,200177
+city,Flathead,200178
+city,Forest Grove,200179
+city,Fort Babine,200180
+city,Fort Fraser,200181
+city,Fort Langley,200182
+city,Fort Nelson,200183
+city,Fort St. James,200184
+city,Fort St. John,200185
+city,Fort Steele,200186
+city,Francois Lake,200187
+city,Fraser Lake,200188
+city,Fraser Mills,200189
+city,French Creek,200190
+city,Fruitvale,200191
+city,Fulford Harbour,200192
+city,Gabriola Island,200193
+city,Galloway,200194
+city,Ganges,200195
+city,Garden Bay,200196
+city,Garibaldi Highlands,200197
+city,Genelle,200198
+city,Gibsons,200199
+city,Gibsons Landing,200200
+city,Gillies Bay,200201
+city,Glade,200202
+city,Glenora,200203
+city,Gold Bridge,200204
+city,Gold River,200205
+city,Golden,200206
+city,Goldstream,200207
+city,Good Hope,200208
+city,Goodlow,200209
+city,Grand Forks,200210
+city,Granilse,200211
+city,Granite Bay,200212
+city,Grasmere,200213
+city,Grassy Plains,200214
+city,Gravelle,200215
+city,Gray Creek,200216
+city,Green Cove,200217
+city,Greenville,200218
+city,Greenwood,200219
+city,Grindrod,200220
+city,Groundbirch,200221
+city,Gulf Islands,200222
+city,Hagensborg,200223
+city,Halfmoon Bay,200224
+city,Hanceville,200225
+city,Haney,200226
+city,Harrison Hot Springs,200227
+city,Harrison Mills,200228
+city,Hartley Bay,200229
+city,Hazelton,200230
+city,Hedley,200231
+city,Heffley Creek,200232
+city,Hendrix Lake,200233
+city,Heriot Bay,200234
+city,Hixon,200235
+city,Holberg,200236
+city,Honeymoon Bay,200237
+city,Hope,200238
+city,Hornby Island,200239
+city,Horseshoe Bay,200240
+city,Horsfly,200241
+city,Houston,200242
+city,Howser,200243
+city,Hudsons Hope,200244
+city,Huntingdon,200245
+city,Invermere,200246
+city,Irvines Landing,200247
+city,Iskut,200248
+city,Isle Pierre,200249
+city,Jaffray,200250
+city,Jesmond,200251
+city,Johnsons Landing,200252
+city,Jordon River,200253
+city,Juskatla,200254
+city,Kaleden,200255
+city,Kamloops,200256
+city,Kaslo,200257
+city,Keats Landing,200258
+city,Keefers,200259
+city,Kelowna,200260
+city,Kelsey Bay,200261
+city,Kemano,200262
+city,Kent,200263
+city,Kent,200264
+city,Keremeos,200265
+city,Kersley,200266
+city,Kettle Valley,200267
+city,Killiney Beach,200268
+city,Kilodnan,200269
+city,Kimberley,200270
+city,Kimsquit,200271
+city,Kincolith,200272
+city,Kingcome Inlet,200273
+city,Kingsgate,200274
+city,Kispiox,200275
+city,Kitamaat Village,200276
+city,Kitchener,200277
+city,Kitimat,200278
+city,Kitkatla,200279
+city,Kitwanga,200280
+city,Kleena Kleene,200281
+city,Klemtu,200282
+city,Knutsford,200283
+city,Kokish,200284
+city,Kootenay Bay,200285
+city,Kuper Island,200286
+city,Kyuquot,200287
+city,Lac La Hache,200288
+city,Lac Le Jeune,200289
+city,Ladner,200290
+city,Ladysmith,200291
+city,Lake Country,200292
+city,Lake Cowichan,200293
+city,Lake Errock,200294
+city,Lakesle,200295
+city,Langford,200296
+city,Langley,200297
+city,Lantzville,200298
+city,Lavington,200299
+city,Lazo,200300
+city,Leech Town,200301
+city,Lejac,200302
+city,Leo Creek,200303
+city,Liard River,200304
+city,Likely,200305
+city,Lillooet,200306
+city,Lions Bay,200307
+city,Lister,200308
+city,Little Fort,200309
+city,Little River,200310
+city,Logan Lake,200311
+city,Lone Butte,200312
+city,Lone Prairie,200313
+city,Long Harbour,200314
+city,Longworth,200315
+city,Louis Creek,200316
+city,Lower Nicola,200317
+city,Lower Post,200318
+city,Lumby,200319
+city,Lund,200320
+city,Lynden,200321
+city,Lytton,200322
+city,Mackenzie,200323
+city,Madeira Park,200324
+city,Magna Bay,200325
+city,Mahood Falls,200326
+city,Malahat,200327
+city,Manning Park,200328
+city,Manson Creek,200329
+city,Mansons Landing,200330
+city,Maple Ridge,200331
+city,Mara,200332
+city,Marguerite,200333
+city,Massett,200334
+city,Matsqui,200335
+city,Mcbride,200336
+city,Mcleese Lake,200337
+city,Mcleod Lake,200338
+city,Mclure,200339
+city,Meadow Creek,200340
+city,Merritt,200341
+city,Merville,200342
+city,Mesachie Lake,200343
+city,Metchosin,200344
+city,Mica Creek,200345
+city,Michel,200346
+city,Midway,200347
+city,Mill Bay,200348
+city,Milnes Landing,200349
+city,Minstrel Island,200350
+city,Miracle Beach,200351
+city,Mirror Lake,200352
+city,Mission,200353
+city,Moberly Lake,200354
+city,Montague Harbour,200355
+city,Monte Creek,200356
+city,Monte Lake,200357
+city,Montrose,200358
+city,Moose Heights,200359
+city,Moresby Camp,200360
+city,Moricetown,200361
+city,Mount Currie,200362
+city,Mount Vernon,200363
+city,Moyie,200364
+city,Muncho Lake,200365
+city,Nahmint,200366
+city,Nakusp,200367
+city,Namu,200368
+city,Nanaimo,200369
+city,Nanoose Bay,200370
+city,Naramata,200371
+city,Nass Camp,200372
+city,Natal,200373
+city,Nazko,200374
+city,Needles,200375
+city,Nelson,200376
+city,Nelson Forks,200377
+city,Nelway,200378
+city,Nemaiah Valley,200379
+city,New Aiyansh,200380
+city,New Brighton,200381
+city,New Denver,200382
+city,New Hazelton,200383
+city,New Westminster,200384
+city,Newgate,200385
+city,Newton,200386
+city,Nicola,200387
+city,Nimpo Lake,200388
+city,Nitnat,200389
+city,Noralee,200390
+city,North Bend,200391
+city,North Cowichan,200392
+city,North Pine,200393
+city,North Saanich,200394
+city,North Vancouver,200395
+city,Nukko Lake,200396
+city,Oak Bay,200397
+city,Ocean Falls,200398
+city,Okanagan Centre,200399
+city,Okanagan Falls,200400
+city,Oliver,200401
+city,Olympia,200402
+city,Oona River,200403
+city,Ootsa Lake,200404
+city,Osoyoos,200405
+city,Otter Bay,200406
+city,Oyama,200407
+city,Panorama Resort,200408
+city,Parksville,200409
+city,Parson,200410
+city,Paterson,200411
+city,Pavillion,200412
+city,Peachland,200413
+city,Pemberton,200414
+city,Pender Harbor,200415
+city,Penny,200416
+city,Penticton,200417
+city,Philips Arm,200418
+city,Pinantan Lake,200419
+city,Pink Mountain,200420
+city,Pitt Meadows,200421
+city,Pleasant Camp,200422
+city,Port Alberni,200423
+city,Port Alice,200424
+city,Port Angeles,200425
+city,Port Clemente,200426
+city,Port Coquitlam,200427
+city,Port Edward,200428
+city,Port Essington,200429
+city,Port Hardy,200430
+city,Port Kells,200431
+city,Port Mcneill,200432
+city,Port Mellon,200433
+city,Port Moody,200434
+city,Port Neville,200435
+city,Port Renfrew,200436
+city,Port Simpson,200437
+city,Pounce Coupe,200438
+city,Powell River,200439
+city,Prespatou,200440
+city,Prince George,200441
+city,Prince Rupert,200442
+city,Princeton,200443
+city,Pritchard,200444
+city,Procter,200445
+city,Progress,200446
+city,Prophet River,200447
+city,Qualicum,200448
+city,Quathiaski Cove,200449
+city,Quatsino,200450
+city,Queen Charlotte,200451
+city,Quesnel,200452
+city,Quilchena,200453
+city,Radium,200454
+city,Radium Hot Springs,200455
+city,Red Rock,200456
+city,Redmond,200457
+city,Redpass Junction,200458
+city,Redstone,200459
+city,Refuge Cove,200460
+city,Reid Lake,200461
+city,Remac,200462
+city,Revelstoke,200463
+city,Richmond,200464
+city,Riondel,200465
+city,Riske Creek,200466
+city,Rivers Inlet,200467
+city,Roberts Creek,200468
+city,Robson,200469
+city,Rock Bay,200470
+city,Rock Creek,200471
+city,Rogers Pass,200472
+city,Rolla,200473
+city,Roosville,200474
+city,Rose Prairie,200475
+city,Rosedale,200476
+city,Rossland,200477
+city,Royston,200478
+city,Rutland,200479
+city,Rykerts,200480
+city,Saanich,200481
+city,Saanichton,200482
+city,Salmo,200483
+city,Salmon Arm,200484
+city,Saltery Bay,200485
+city,San Josef,200486
+city,Sanca,200487
+city,Sandspit,200488
+city,Santos,200489
+city,Sao Paulo,200490
+city,Saratoga Beach,200491
+city,Sardis,200492
+city,Sarita,200493
+city,Saturna,200494
+city,Savary Island,200495
+city,Savona,200496
+city,Sayward,200497
+city,Scotch Creek,200498
+city,Seal Cove,200499
+city,Seattle,200500
+city,Sechelt,200501
+city,Seton Portage,200502
+city,Sewell Inlet,200503
+city,Seymour Arm,200504
+city,Shalalth,200505
+city,Shawnigan Lake,200506
+city,Shearwater,200507
+city,Shelley,200508
+city,Shelter Bay,200509
+city,Sherbrooke,200510
+city,Shoreacres,200511
+city,Shuswap,200512
+city,Shutty Bench,200513
+city,Sicamous,200514
+city,Sidney,200515
+city,Sikanni Chief,200516
+city,Silver Creek,200517
+city,Silverton,200518
+city,Simoon Sound,200519
+city,Sinclair Mills,200520
+city,Sirdar,200521
+city,Skidegate,200522
+city,Skookumchuck,200523
+city,Slocan,200524
+city,Slocan Park,200525
+city,Smith River,200526
+city,Smithers,200527
+city,Smithers Landing,200528
+city,Snug Cove,200529
+city,Soda Creek,200530
+city,Sointula,200531
+city,Sooke,200532
+city,Sorrento,200533
+city,South Fort George,200534
+city,South Hazelton,200535
+city,South Pender,200536
+city,South Slocan,200537
+city,South Wellington,200538
+city,Southbank,200539
+city,Spallumcheen,200540
+city,Sparwood,200541
+city,Spences Bridge,200542
+city,Spillimacheen,200543
+city,Spokane,200544
+city,Springhouse,200545
+city,Sproat Lake,200546
+city,Spuzzum,200547
+city,Squamish,200548
+city,Squilax,200549
+city,Stewardson Inlet,200550
+city,Stewart,200551
+city,Stikine,200552
+city,Stoner,200553
+city,Strathnaver,200554
+city,Stuart Island,200555
+city,Stuie,200556
+city,Sturdies Bay,200557
+city,Sullivan Bay,200558
+city,Sumas,200559
+city,Summerland,200560
+city,Summit Lake,200561
+city,Sunset Prairie,200562
+city,Surge Narrows,200563
+city,Surrey,200564
+city,Swartz Bay,200565
+city,Sydney,200566
+city,Ta Ta Creek,200567
+city,Tachie,200568
+city,Tacoma,200569
+city,Tadanac,200570
+city,Taghum,200571
+city,Tahala,200572
+city,Tahsis,200573
+city,Takla Landing,200574
+city,Takysie Lake,200575
+city,Tappen,200576
+city,Tatalrose,200577
+city,Tatla Lake,200578
+city,Tatlayoko Lake,200579
+city,Taylor,200580
+city,Tchesinkut Lake,200581
+city,Telegraph Cove,200582
+city,Telegraph Creek,200583
+city,Telkwa,200584
+city,Terrace,200585
+city,Tete Jaune Cache,200586
+city,Thetis Island,200587
+city,Thompson Sound,200588
+city,Three Valley,200589
+city,Thrums,200590
+city,Tlell,200591
+city,Toad River,200592
+city,Toba,200593
+city,Tofino,200594
+city,Tomslake,200595
+city,Topley,200596
+city,Topley Landing,200597
+city,Trail,200598
+city,Tranquille,200599
+city,Trout Lake,200600
+city,Trutch,200601
+city,Tsawwassen,200602
+city,Tsay Keh Dene,200603
+city,Tulameen,200604
+city,Tulsequah,200605
+city,Tumbler Ridge,200606
+city,Tupper,200607
+city,Ucluelet,200608
+city,Ulrich,200609
+city,Union Bay,200610
+city,Upper Fraser,200611
+city,Usk,200612
+city,Valemont,200613
+city,Valleyview,200614
+city,Vananda,200615
+city,Vancouver,200616
+city,Vancouver,200617
+city,Vanderhoof,200618
+city,Vavenby,200619
+city,Vedder Crossing,200620
+city,Vernon,200621
+city,Vesuvius,200622
+city,Victoria,200623
+city,View Royal,200624
+city,Village Bay,200625
+city,Waglisla,200626
+city,Walachin,200627
+city,Walla Walla,200628
+city,Waneta,200629
+city,Wardner,200630
+city,Ware,200631
+city,Warfield,200632
+city,Wasa,200633
+city,Watson Lake,200634
+city,Wells,200635
+city,West Vancouver,200636
+city,Westbank,200637
+city,Westbridge,200638
+city,Westwold,200639
+city,Whalley,200640
+city,Whistler,200641
+city,White Rock,200642
+city,Williams Lake,200643
+city,Willow River,200644
+city,Windermere,200645
+city,Winfield,200646
+city,Winlaw,200647
+city,Winter Harbour,200648
+city,Wonowon,200649
+city,Woodfibre,200650
+city,Woy Woy,200651
+city,Wycliffe,200652
+city,Wynndel,200653
+city,Yahk,200654
+city,Yakima,200655
+city,Yale,200656
+city,Yarrow,200657
+city,Ymir,200658
+city,Youbou,200659
+city,Zeballos,200660

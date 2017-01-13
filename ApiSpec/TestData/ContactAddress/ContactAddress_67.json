@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "4297 Queens Bay",
+        "addr1": "4283 Burdett Avenue",
         "addr2": null,
-        "city": "Nakusp",
-        "postalCode": "V0G 1R0",
+        "city": "Victoria",
+        "id": "200066",
+        "postalCode": "V8W 1L6",
         "province": "BC",
         "type": "Field Office"
     }

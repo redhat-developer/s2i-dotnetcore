@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "3618 Queens Bay",
+        "addr1": "2120 Burdett Avenue",
         "addr2": null,
-        "city": "Salmo",
-        "postalCode": "V0G 1Z0",
+        "city": "Victoria",
+        "id": "200021",
+        "postalCode": "V8W 1L6",
         "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "830 Hardy Street",
-        "addr2": null,
-        "city": "Kelowna",
-        "postalCode": "V1Y 8H2",
-        "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "4904 Robson St",
+        "addr1": "2549 James Street",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 3K9",
+        "city": "Burnaby",
+        "id": "200036",
+        "postalCode": "V5G 4W7",
         "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "232 Cordova Street",
-        "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
-        "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

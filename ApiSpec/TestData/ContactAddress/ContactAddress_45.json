@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "2262 Burdett Avenue",
+        "addr1": "2956 Shaughnessy St",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8Z 2J8",
+        "city": "Port Coquitlam",
+        "id": "200044",
+        "postalCode": "V3C 4S7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]
