@@ -7,16 +7,16 @@ export function dateIsBetween(date, startDate, endDate) {
 }
 
 export function formatDateTime(dateTime, format) {
-  if (!dateTime) { return ''; }
   var dt = Moment(dateTime);
-  if (!dt) { return ''; }
+  if (!dt || !dt.isValid()) { return ''; }
+  if (!format) { format = 'YYYY-MM-DDThh:mm:ss'; }
   return dt.format(format);
 }
 
 export function daysFromToday(dateTime) {
-  if (!dateTime) { return ''; }
   var dt = Moment(dateTime);
-  if (!dt) { return 0; }
+  if (!dt || !dt.isValid()) { return 0; }
   var now = Moment();
   return dt.diff(now, 'days');
 }
+

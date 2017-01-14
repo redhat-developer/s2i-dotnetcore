@@ -1,6 +1,8 @@
 import store from './store';
-import {ApiRequest} from './utils/http';
-import {lastFirstName} from './utils/string';
+
+import { formatDateTime } from './utils/date';
+import { ApiRequest } from './utils/http';
+import { lastFirstName, concat } from './utils/string';
 
 import _ from 'lodash';
 
@@ -33,6 +35,23 @@ export function getUser(userId) {
     user.name = lastFirstName(user.surname, user.givenName);
 
     store.dispatch({ type: 'UPDATE_USER', user: user });
+  });
+}
+
+export function searchSchoolBuses(params) {
+  return new ApiRequest('/schoolbuses/search').get(params).then(response => {
+    // Normalize the response
+    var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
+
+    // Add display fields
+    _.map(schoolBuses, bus => {
+      bus.ownerName = bus.schoolBusOwner ? bus.schoolBusOwner.name : '';
+      bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
+      bus.homeTerminal = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
+      bus.nextInspectionDate = formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY');
+    });
+
+    store.dispatch({ type: 'UPDATE_BUSES', schoolBuses: schoolBuses });
   });
 }
 

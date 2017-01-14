@@ -38,7 +38,7 @@ var OwnersDetail = React.createClass({
       {(() => {
         if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
-        return <h2>Editing { this.props.owner.name }</h2>;
+        return <h2>Viewing { this.props.owner.name }</h2>;
       })()}
 
     </div>;

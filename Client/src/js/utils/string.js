@@ -21,3 +21,11 @@ export function firstLastName(first, last) {
 export function lastFirstName(last, first) {
   return concat(last, first, ', ');
 }
+
+export function isBlank(str) {
+  return str.trim().length === 0;
+}
+
+export function notBlank(str) {
+  return str.trim().length > 0;
+}
