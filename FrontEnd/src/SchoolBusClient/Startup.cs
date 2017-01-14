@@ -36,7 +36,35 @@ namespace SchoolBusClient
 
             // Allow access to the Configuration object
             services.AddSingleton<IConfiguration>(Configuration);
-            services.Configure<ApiProxyServerOptions>(Configuration.GetSection("ApiProxyServer"));
+            // Save this for later
+            // services.Configure<ApiProxyServerOptions>(Configuration.GetSection("ApiProxyServer"));
+            services.Configure<ApiProxyServerOptions>(ConfigureApiProxyServerOptions);
+        }
+
+
+        // ToDo:
+        // - Replace MIDDLEWARE_NAME environment variable with variables the can be used with ApiServerOptions:
+        // -- ApiProxyServer:Scheme
+        // -- ApiProxyServer:Host
+        // -- ApiProxyServer:Port
+        // - Remove use of IConfiguration and MIDDLEWARE_NAME environment variable 
+        private void ConfigureApiProxyServerOptions(ApiProxyServerOptions options)
+        {
+            ApiProxyServerOptions defaultConfig = Configuration.GetSection("ApiProxyServer").Get<ApiProxyServerOptions>();
+            options.Host = defaultConfig.Host;
+            options.Port = defaultConfig.Port;
+            options.Scheme = defaultConfig.Scheme;
+
+            string apiServerUri = Configuration["MIDDLEWARE_NAME"];
+            if (apiServerUri != null)
+            {
+                string[] apiServerUriParts = apiServerUri.Split(':');
+                string host = apiServerUriParts[0];
+                string port = apiServerUriParts.Length > 1 ? apiServerUriParts[1] : "80";
+                options.Scheme = "http";
+                options.Host = host;
+                options.Port = port;
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,5 +8,6 @@ Add these Jenkins plug-ins:
 - Environment Injector Plugin
 - GitHub plugin
 - Job Configuration History Plugin
+- Promoted Builds Plugin
 
 Install all plug-in updates.

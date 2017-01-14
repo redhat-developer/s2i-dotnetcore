@@ -1,4 +1,4 @@
-﻿namespace SchoolBusClient.Handlers
+﻿namespace SchoolBusClient
 {
     public class ApiProxyServerOptions
     {
