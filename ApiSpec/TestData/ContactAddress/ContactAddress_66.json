@@ -1,26 +1,11 @@
 [
     {
-        "addr1": "4347 Blanshard",
+        "addr1": "2714 Russell Avenue",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 2H9",
+        "city": "Langley",
+        "id": "200065",
+        "postalCode": "V4X 1J7",
         "province": "BC",
         "type": "Bus Yard"
-    },
-    {
-        "addr1": "4536 Brew Creek Rd",
-        "addr2": null,
-        "city": "Port Hardy",
-        "postalCode": "V0N 2P0",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "3711 Stum Lake Road",
-        "addr2": null,
-        "city": "Riske Creek",
-        "postalCode": "V0L 1T0",
-        "province": "BC",
-        "type": "Headquarters"
     }
 ]

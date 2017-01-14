@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "907 Nootka Street",
+        "addr1": "3273 Kinchant St",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V5M 3M5",
+        "city": "Sardis",
+        "id": "200001",
+        "postalCode": "V2R 1C8",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

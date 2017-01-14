@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "1730 Jade St",
+        "addr1": "3694 Lake City Way",
         "addr2": null,
-        "city": "West Vancouver",
-        "postalCode": "V7T 2W4",
+        "city": "Burnaby",
+        "id": "200057",
+        "postalCode": "V5A 2Z6",
         "province": "BC",
         "type": "Bus Yard"
     }

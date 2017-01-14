@@ -52,8 +52,8 @@ namespace SchoolBusAPI.Services.Impl
                 return new BadRequestResult();
             }
             foreach (SchoolBusOwnerContact item in items)
-            {
-                var exists = _context.SchoolBusOwners.Any(a => a.Id == item.Id);
+            {                
+                var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == item.Id);
                 if (exists)
                 {
                     _context.SchoolBusOwnerContacts.Update(item);

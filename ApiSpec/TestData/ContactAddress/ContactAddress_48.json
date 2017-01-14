@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "3832 Roger Street",
+        "addr1": "4397 Burdett Avenue",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V9B 1X2",
+        "city": "Terrace",
+        "id": "200047",
+        "postalCode": "V8G 1S2",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

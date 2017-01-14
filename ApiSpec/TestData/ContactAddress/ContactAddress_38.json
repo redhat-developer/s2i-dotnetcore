@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "4359 Yoho Valley Road",
+        "addr1": "2714 Russell Avenue",
         "addr2": null,
-        "city": "Spillimacheen",
-        "postalCode": "V0A 1P0",
+        "city": "Langley",
+        "id": "200037",
+        "postalCode": "V4X 1J7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

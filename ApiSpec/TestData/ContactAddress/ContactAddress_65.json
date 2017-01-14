@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "2183 Kinchant St",
+        "addr1": "2867 Blanshard",
         "addr2": null,
-        "city": "Prince George",
-        "postalCode": "V2N 2S6",
+        "city": "Victoria",
+        "id": "200064",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

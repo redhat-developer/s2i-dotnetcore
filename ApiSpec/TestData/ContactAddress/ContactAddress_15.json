@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "914 Yoho Valley Road",
+        "addr1": "1696 Alaska Hwy",
         "addr2": null,
-        "city": "Invermere",
-        "postalCode": "V0A 1K0",
+        "city": "Fort Nelson",
+        "id": "200014",
+        "postalCode": "V0C 1C0",
         "province": "BC",
         "type": "Bus Yard"
     }

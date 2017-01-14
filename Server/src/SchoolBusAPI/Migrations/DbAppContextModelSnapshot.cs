@@ -220,17 +220,17 @@ namespace SchoolBusAPI.Migrations
                     b.Property<bool>("Active")
                         .HasColumnName("ACTIVE");
 
-                    b.Property<int?>("GroupRefId")
-                        .HasColumnName("GROUP_REF_ID");
+                    b.Property<int?>("GroupId")
+                        .HasColumnName("GROUP_ID");
 
-                    b.Property<int?>("UserRefId")
-                        .HasColumnName("USER_REF_ID");
+                    b.Property<int?>("UserId")
+                        .HasColumnName("USER_ID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupRefId");
+                    b.HasIndex("GroupId");
 
-                    b.HasIndex("UserRefId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("SBI_GROUP_MEMBERSHIP");
                 });
@@ -246,6 +246,9 @@ namespace SchoolBusAPI.Migrations
 
                     b.Property<string>("InspectionResult")
                         .HasColumnName("INSPECTION_RESULT");
+
+                    b.Property<string>("InspectionType")
+                        .HasColumnName("INSPECTION_TYPE");
 
                     b.Property<int?>("InspectorRefId")
                         .HasColumnName("INSPECTOR_REF_ID");
@@ -277,8 +280,8 @@ namespace SchoolBusAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("NOTIFICATION_ID");
 
-                    b.Property<int?>("EventRef2Id")
-                        .HasColumnName("EVENT_REF2_ID");
+                    b.Property<int?>("Event2RefId")
+                        .HasColumnName("EVENT2_REF_ID");
 
                     b.Property<int?>("EventRefId")
                         .HasColumnName("EVENT_REF_ID");
@@ -303,7 +306,7 @@ namespace SchoolBusAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventRef2Id");
+                    b.HasIndex("Event2RefId");
 
                     b.HasIndex("EventRefId");
 
@@ -409,17 +412,17 @@ namespace SchoolBusAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ROLE_PERMISSION_ID");
 
-                    b.Property<int?>("PermissionRefId")
-                        .HasColumnName("PERMISSION_REF_ID");
+                    b.Property<int?>("PermissionId")
+                        .HasColumnName("PERMISSION_ID");
 
-                    b.Property<int?>("RoleRefId")
-                        .HasColumnName("ROLE_REF_ID");
+                    b.Property<int?>("RoleId")
+                        .HasColumnName("ROLE_ID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PermissionRefId");
+                    b.HasIndex("PermissionId");
 
-                    b.HasIndex("RoleRefId");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("SBI_ROLE_PERMISSION");
                 });
@@ -438,6 +441,9 @@ namespace SchoolBusAPI.Migrations
 
                     b.Property<int?>("HomeTerminalCityId")
                         .HasColumnName("HOME_TERMINAL_CITY_ID");
+
+                    b.Property<string>("HomeTerminalComment")
+                        .HasColumnName("HOME_TERMINAL_COMMENT");
 
                     b.Property<string>("HomeTerminalPostalCode")
                         .HasColumnName("HOME_TERMINAL_POSTAL_CODE");
@@ -549,12 +555,12 @@ namespace SchoolBusAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("SCHOOL_BUS_HISTORY_ID");
 
-                    b.Property<int?>("SchoolBusRefId")
-                        .HasColumnName("SCHOOL_BUS_REF_ID");
+                    b.Property<int?>("SchoolBusId")
+                        .HasColumnName("SCHOOL_BUS_ID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolBusRefId");
+                    b.HasIndex("SchoolBusId");
 
                     b.ToTable("SBI_SCHOOL_BUS_HISTORY");
                 });
@@ -657,15 +663,15 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Role")
                         .HasColumnName("ROLE");
 
-                    b.Property<int?>("SchoolBusOwnerRefId")
-                        .HasColumnName("SCHOOL_BUS_OWNER_REF_ID");
+                    b.Property<int?>("SchoolBusOwnerId")
+                        .HasColumnName("SCHOOL_BUS_OWNER_ID");
 
                     b.Property<string>("Surname")
                         .HasColumnName("SURNAME");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolBusOwnerRefId");
+                    b.HasIndex("SchoolBusOwnerId");
 
                     b.ToTable("SBI_SCHOOL_BUS_OWNER_CONTACT");
                 });
@@ -691,15 +697,15 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Province")
                         .HasColumnName("PROVINCE");
 
-                    b.Property<int?>("SchoolBusOwnerContactRefId")
-                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_REF_ID");
+                    b.Property<int?>("SchoolBusOwnerContactId")
+                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_ID");
 
                     b.Property<string>("Type")
                         .HasColumnName("TYPE");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolBusOwnerContactRefId");
+                    b.HasIndex("SchoolBusOwnerContactId");
 
                     b.ToTable("SBI_SCHOOL_BUS_OWNER_CONTACT_ADDRESS");
                 });
@@ -713,15 +719,15 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnName("PHONE_NUMBER");
 
-                    b.Property<int?>("SchoolBusOwnerContactRefId")
-                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_REF_ID");
+                    b.Property<int?>("SchoolBusOwnerContactId")
+                        .HasColumnName("SCHOOL_BUS_OWNER_CONTACT_ID");
 
                     b.Property<string>("Type")
                         .HasColumnName("TYPE");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolBusOwnerContactRefId");
+                    b.HasIndex("SchoolBusOwnerContactId");
 
                     b.ToTable("SBI_SCHOOL_BUS_OWNER_CONTACT_PHONE");
                 });
@@ -908,11 +914,11 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.HasOne("SchoolBusAPI.Models.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupRefId");
+                        .HasForeignKey("GroupId");
 
                     b.HasOne("SchoolBusAPI.Models.User", "User")
                         .WithMany("GroupMemberships")
-                        .HasForeignKey("UserRefId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.Inspection", b =>
@@ -930,7 +936,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.HasOne("SchoolBusAPI.Models.NotificationEvent", "Event2")
                         .WithMany()
-                        .HasForeignKey("EventRef2Id");
+                        .HasForeignKey("Event2RefId");
 
                     b.HasOne("SchoolBusAPI.Models.NotificationEvent", "Event")
                         .WithMany()
@@ -952,11 +958,11 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.HasOne("SchoolBusAPI.Models.Permission", "Permission")
                         .WithMany()
-                        .HasForeignKey("PermissionRefId");
+                        .HasForeignKey("PermissionId");
 
                     b.HasOne("SchoolBusAPI.Models.Role", "Role")
                         .WithMany("RolePermissions")
-                        .HasForeignKey("RoleRefId");
+                        .HasForeignKey("RoleId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBus", b =>
@@ -990,7 +996,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     b.HasOne("SchoolBusAPI.Models.SchoolBus", "SchoolBus")
                         .WithMany()
-                        .HasForeignKey("SchoolBusRefId");
+                        .HasForeignKey("SchoolBusId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusNote", b =>
@@ -1020,23 +1026,23 @@ namespace SchoolBusAPI.Migrations
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContact", b =>
                 {
-                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwner", "SchoolBusOwner")
-                        .WithMany()
-                        .HasForeignKey("SchoolBusOwnerRefId");
+                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwner")
+                        .WithMany("Contacts")
+                        .HasForeignKey("SchoolBusOwnerId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContactAddress", b =>
                 {
-                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
+                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact")
                         .WithMany("SchoolBusOwnerContactAddresses")
-                        .HasForeignKey("SchoolBusOwnerContactRefId");
+                        .HasForeignKey("SchoolBusOwnerContactId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerContactPhone", b =>
                 {
-                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact", "SchoolBusOwnerContact")
+                    b.HasOne("SchoolBusAPI.Models.SchoolBusOwnerContact")
                         .WithMany("SchoolBusOwnerContactPhones")
-                        .HasForeignKey("SchoolBusOwnerContactRefId");
+                        .HasForeignKey("SchoolBusOwnerContactId");
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.SchoolBusOwnerHistory", b =>

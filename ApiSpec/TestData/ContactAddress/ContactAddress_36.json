@@ -1,34 +1,11 @@
 [
     {
-        "addr1": "2882 Carlson Road",
+        "addr1": "2553 Holdom Avenue",
         "addr2": null,
-        "city": "Prince George",
-        "postalCode": "V2L 5E5",
+        "city": "Surrey",
+        "id": "200035",
+        "postalCode": "V3T 4Y5",
         "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "1719 Blind Bay Road",
-        "addr2": null,
-        "city": "Vavenby",
-        "postalCode": "V0E 3A0",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "3760 Keith Road",
-        "addr2": null,
-        "city": "North Vancouver",
-        "postalCode": "V5T 2C1",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "3561 Wellington Ave",
-        "addr2": null,
-        "city": "Chilliwack",
-        "postalCode": "V2P 2M1",
-        "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "3924 Roger Street",
+        "addr1": "1710 Yoho Valley Road",
         "addr2": null,
-        "city": "Duncan",
-        "postalCode": "V9L 1P1",
+        "city": "Golden",
+        "id": "200022",
+        "postalCode": "V0A 1H0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

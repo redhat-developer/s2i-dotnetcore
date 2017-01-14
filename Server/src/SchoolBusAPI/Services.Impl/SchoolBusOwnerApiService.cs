@@ -84,6 +84,26 @@ namespace SchoolBusAPI.Services.Impl
                     return new ObjectResult("ERROR - Primary contact is null.");
                 }
 
+                // adjust Service Area.
+                if (item.ServiceArea != null)
+                {
+                    int servicearea_id = item.ServiceArea.Id;
+                    var servicearea_exists = _context.ServiceAreas.Any(a => a.Id == servicearea_id);
+                    if (servicearea_exists)
+                    {
+                        ServiceArea servicearea = _context.ServiceAreas.First(a => a.Id == servicearea_id);
+                        item.ServiceArea = servicearea;
+                    }
+                    else
+                    {
+                        return new ObjectResult("ERROR - Service area with an id of " + servicearea_id + " does not exist, for record id " + item.Id);
+                    }
+                }
+                else
+                {
+                    return new ObjectResult("ERROR - Primary contact is null.");
+                }
+
                 var exists = _context.SchoolBusOwners.Any(a => a.Id == item.Id);
                 if (exists)
                 {
@@ -143,7 +163,14 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusOwnerContactAddresss.Where(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
+                List<SchoolBusOwnerContactAddress> result = new List<SchoolBusOwnerContactAddress>();
+                var owner = _context.SchoolBusOwners.Where(a => a.Id == id).First();
+                var contacts = owner.Contacts;
+                foreach (SchoolBusOwnerContact contact in contacts)
+                {
+                    // merge the lists
+                    result = result.Concat ( contact.SchoolBusOwnerContactAddresses).ToList();
+                }
                 return new ObjectResult(result);
             }
             else
@@ -164,8 +191,15 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusOwnerContactPhones.Where(a => a.SchoolBusOwnerContact.SchoolBusOwner.Id == id);
-                return new ObjectResult(result);
+                List<SchoolBusOwnerContactPhone> result = new List<SchoolBusOwnerContactPhone>();
+                var owner = _context.SchoolBusOwners.Where(a => a.Id == id).First();
+                var contacts = owner.Contacts;
+                foreach (SchoolBusOwnerContact contact in contacts)
+                {
+                    // merge the lists
+                    result = result.Concat(contact.SchoolBusOwnerContactPhones).ToList();
+                }
+                return new ObjectResult(result);                
             }
             else
             {

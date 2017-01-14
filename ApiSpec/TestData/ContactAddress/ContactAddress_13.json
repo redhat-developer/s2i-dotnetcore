@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "2553 Holdom Avenue",
+        "addr1": "270 Queens Bay",
         "addr2": null,
-        "city": "Surrey",
-        "postalCode": "V3T 4Y5",
+        "city": "Nakusp",
+        "id": "200012",
+        "postalCode": "V0G 1R0",
         "province": "BC",
         "type": "Field Office"
-    },
-    {
-        "addr1": "735 Blanshard",
-        "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 2H9",
-        "province": "BC",
-        "type": "Bus Yard"
     }
 ]

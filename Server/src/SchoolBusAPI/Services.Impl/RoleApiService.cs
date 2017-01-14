@@ -149,7 +149,12 @@ namespace SchoolBusAPI.Services.Impl
                 // Not Found
                 return new StatusCodeResult(404);
             }
-
+            // remove associated role permission records
+            var itemsToRemove = _context.RolePermissions.Where(x => x.Role.Id == role.Id);
+            foreach (var item in itemsToRemove)
+            {
+                _context.RolePermissions.Remove(item);
+            }
             _context.Roles.Remove(role);
             _context.SaveChanges();
             return new ObjectResult(role.ToViewModel());

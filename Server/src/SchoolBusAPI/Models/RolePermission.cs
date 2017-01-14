@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class RolePermission : IEquatable<RolePermission>
     {
         /// <summary>
@@ -61,16 +64,10 @@ namespace SchoolBusAPI.Models
         /// </summary>
         public Role Role { get; set; }
 
-        [ForeignKey("Role")]
-        public int? RoleRefId { get; set; }
-
         /// <summary>
         /// Gets or Sets Permission
         /// </summary>
         public Permission Permission { get; set; }
-
-        [ForeignKey("Permission")]
-        public int? PermissionRefId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -123,7 +120,6 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -149,10 +145,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.Role != null)
                 {
                     hash = hash * 59 + this.Role.GetHashCode();

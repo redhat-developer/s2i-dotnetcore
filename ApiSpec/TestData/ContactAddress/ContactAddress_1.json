@@ -1,17 +1,10 @@
 [
     {
-        "addr1": "1234 Tolmie St",
+        "addr1": "907 Nootka Street",
         "addr2": null,
         "city": "Vancouver",
-        "postalCode": "V6M 1Y8",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "2913 Blind Bay Road",
-        "addr2": null,
-        "city": "Blue River",
-        "postalCode": "V0E 1J0",
+        "id": "200000",
+        "postalCode": "V5M 3M5",
         "province": "BC",
         "type": "Field Office"
     }

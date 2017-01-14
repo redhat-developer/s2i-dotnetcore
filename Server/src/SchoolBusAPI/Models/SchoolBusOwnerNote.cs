@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class SchoolBusOwnerNote : IEquatable<SchoolBusOwnerNote>
     {
         /// <summary>
@@ -130,8 +133,7 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    
+                    this.Id == other.Id ||                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -162,10 +164,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.IsNoLongerRelevant != null)
                 {
                     hash = hash * 59 + this.IsNoLongerRelevant.GetHashCode();

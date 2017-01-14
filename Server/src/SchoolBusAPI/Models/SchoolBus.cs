@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// The School Bus entity, including only information that is of specific interest to the School Bus inspector and not tracked in other systems such as ICBC or NSC
     /// </summary>
+        [MetaDataExtension (Description = "The School Bus entity, including only information that is of specific interest to the School Bus inspector and not tracked in other systems such as ICBC or NSC")]
+
+
     public partial class SchoolBus : IEquatable<SchoolBus>
     {
         /// <summary>
@@ -51,6 +54,7 @@ namespace SchoolBusAPI.Models
         /// <param name="HomeTerminalCity">City of physical location of the School Bus..</param>
         /// <param name="HomeTerminalProvince">Province of physical location of the School Bus - free form..</param>
         /// <param name="HomeTerminalPostalCode">Postal Code of physical location of the School Bus..</param>
+        /// <param name="HomeTerminalComment">A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection.</param>
         /// <param name="Restrictions">Text of any restrictions to be printed on the school bus permit..</param>
         /// <param name="NextInspectionDate">The next inspection date for this School Bus. Set at the time an inspection is set..</param>
         /// <param name="NextInspectionType">An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass/Fail status of the most recent inspection..</param>
@@ -63,7 +67,7 @@ namespace SchoolBusAPI.Models
         /// <param name="SchoolBusUnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
         /// <param name="SchoolBusSeatingCapacity">The maximum number of passengers in the bus based on the specific use of the bus. For example, the same 2-per seat / 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children, 3 per seat..</param>
         /// <param name="MobilityAidCapacity">The number of mobility aid passenger seats in the bus..</param>
-        public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea ServiceArea = null, string HomeTerminalAddr1 = null, string HomeTerminalAddr2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string Restrictions = null, DateTime? NextInspectionDate = null, string NextInspectionType = null, SchoolDistrict SchoolBusDistrict = null, bool? IsIndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusBodyType = null, string SchoolBusBodyTypeOther = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null)
+        public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea ServiceArea = null, string HomeTerminalAddr1 = null, string HomeTerminalAddr2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string Restrictions = null, DateTime? NextInspectionDate = null, string NextInspectionType = null, SchoolDistrict SchoolBusDistrict = null, bool? IsIndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusBodyType = null, string SchoolBusBodyTypeOther = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null)
         {
             
             this.Id = Id;
@@ -80,6 +84,7 @@ namespace SchoolBusAPI.Models
             this.HomeTerminalCity = HomeTerminalCity;
             this.HomeTerminalProvince = HomeTerminalProvince;
             this.HomeTerminalPostalCode = HomeTerminalPostalCode;
+            this.HomeTerminalComment = HomeTerminalComment;
             this.Restrictions = Restrictions;
             this.NextInspectionDate = NextInspectionDate;
             this.NextInspectionType = NextInspectionType;
@@ -127,7 +132,6 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets SchoolBusOwner
         /// </summary>
         public SchoolBusOwner SchoolBusOwner { get; set; }
-
         [ForeignKey("SchoolBusOwner")]
         public int SchoolBusOwnerRefId { get; set; }
 
@@ -154,9 +158,9 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets ServiceArea
         /// </summary>
         public ServiceArea ServiceArea { get; set; }
-
         [ForeignKey("ServiceArea")]
         public int? ServiceAreaRefId { get; set; }
+
 
         /// <summary>
         /// Address 1 of physical location of the School Bus.
@@ -194,6 +198,13 @@ namespace SchoolBusAPI.Models
         public string HomeTerminalPostalCode { get; set; }
 
         /// <summary>
+        /// A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection
+        /// </summary>
+        /// <value>A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection</value>
+        [MetaDataExtension (Description = "A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection")]
+        public string HomeTerminalComment { get; set; }
+
+        /// <summary>
         /// Text of any restrictions to be printed on the school bus permit.
         /// </summary>
         /// <value>Text of any restrictions to be printed on the school bus permit.</value>
@@ -220,7 +231,6 @@ namespace SchoolBusAPI.Models
         /// <value>The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.</value>
         [MetaDataExtension (Description = "The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.")]
         public SchoolDistrict SchoolBusDistrict { get; set; }
-
         [ForeignKey("SchoolBusDistrict")]
         public int? SchoolBusDistrictRefId { get; set; }
 
@@ -302,6 +312,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  HomeTerminalCity: ").Append(HomeTerminalCity).Append("\n");
             sb.Append("  HomeTerminalProvince: ").Append(HomeTerminalProvince).Append("\n");
             sb.Append("  HomeTerminalPostalCode: ").Append(HomeTerminalPostalCode).Append("\n");
+            sb.Append("  HomeTerminalComment: ").Append(HomeTerminalComment).Append("\n");
             sb.Append("  Restrictions: ").Append(Restrictions).Append("\n");
             sb.Append("  NextInspectionDate: ").Append(NextInspectionDate).Append("\n");
             sb.Append("  NextInspectionType: ").Append(NextInspectionType).Append("\n");
@@ -353,8 +364,7 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    this.Id != null &&
+                    this.Id == other.Id ||                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -421,6 +431,11 @@ namespace SchoolBusAPI.Models
                     this.HomeTerminalPostalCode == other.HomeTerminalPostalCode ||
                     this.HomeTerminalPostalCode != null &&
                     this.HomeTerminalPostalCode.Equals(other.HomeTerminalPostalCode)
+                ) && 
+                (
+                    this.HomeTerminalComment == other.HomeTerminalComment ||
+                    this.HomeTerminalComment != null &&
+                    this.HomeTerminalComment.Equals(other.HomeTerminalComment)
                 ) && 
                 (
                     this.Restrictions == other.Restrictions ||
@@ -495,10 +510,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.Regi != null)
                 {
                     hash = hash * 59 + this.Regi.GetHashCode();
@@ -550,6 +563,10 @@ namespace SchoolBusAPI.Models
                 if (this.HomeTerminalPostalCode != null)
                 {
                     hash = hash * 59 + this.HomeTerminalPostalCode.GetHashCode();
+                }
+                if (this.HomeTerminalComment != null)
+                {
+                    hash = hash * 59 + this.HomeTerminalComment.GetHashCode();
                 }
                 if (this.Restrictions != null)
                 {

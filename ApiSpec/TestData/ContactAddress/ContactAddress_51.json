@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "914 Yoho Valley Road",
+        "addr1": "365 Old Spallumcheen Rd",
         "addr2": null,
-        "city": "Invermere",
-        "postalCode": "V0A 1K0",
+        "city": "Hope",
+        "id": "200050",
+        "postalCode": "V0X 1L0",
         "province": "BC",
         "type": "Bus Yard"
     }

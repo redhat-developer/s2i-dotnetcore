@@ -1,25 +1,10 @@
 [
     {
-        "addr1": "4357 Hastings Street",
+        "addr1": "3758 Mesa Vista Drive",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6C 1B4",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "3561 Wellington Ave",
-        "addr2": null,
-        "city": "Chilliwack",
-        "postalCode": "V2P 2M1",
-        "province": "BC",
-        "type": "Field Office"
-    },
-    {
-        "addr1": "4819 Wallace Street",
-        "addr2": null,
-        "city": "Nanaimo",
-        "postalCode": "V9R 3A8",
+        "city": "Spences Bridge",
+        "id": "200034",
+        "postalCode": "V0K 2L0",
         "province": "BC",
         "type": "Bus Yard"
     }

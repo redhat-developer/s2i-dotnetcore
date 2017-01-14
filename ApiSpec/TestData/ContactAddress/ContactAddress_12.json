@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "2183 Kinchant St",
+        "addr1": "2882 Carlson Road",
         "addr2": null,
         "city": "Prince George",
-        "postalCode": "V2N 2S6",
+        "id": "200011",
+        "postalCode": "V2L 5E5",
         "province": "BC",
         "type": "Bus Yard"
-    },
-    {
-        "addr1": "3815 Burdett Avenue",
-        "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1B2",
-        "province": "BC",
-        "type": "Headquarters"
     }
 ]

@@ -402,79 +402,101 @@ namespace SchoolBusAPI.Services.Impl
                 .Include(x => x.SchoolBusDistrict)
                 .Include(x => x.SchoolBusOwner)
                 .Include(x => x.ServiceArea)
-                .Select(x => x); 
-          
-            if (serviceareas != null)
-            {
-                foreach (int? servicearea in serviceareas)
-                {
-                    if (servicearea != null)
-                    {
-                        data = data.Where(x => x.ServiceArea.Id == servicearea);
-                    }                    
-                }                
-            }
+                .Select(x => x);
 
-            if (inspectors != null)
-            {
-                // no inspectors yet.
-            }
+            bool keySearch = false;
 
-            if (cities != null)
-            {
-                foreach (int? city in cities)
-                {
-                    if (city != null)
-                    {
-                        data = data.Where(x => x.HomeTerminalCity.Id == city);
-                    }
-                }
-            }
-
-            if (schooldistricts != null)
-            {
-                foreach (int? schooldistrict in schooldistricts)
-                {
-                    if (schooldistrict != null)
-                    {
-                        data = data.Where(x => x.SchoolBusDistrict.Id == schooldistrict);
-                    }
-                }
-            }
-
-            if (owner != null)
-            {
-                data = data.Where(x => x.SchoolBusOwner.Id == owner);
-            }
+            // do key search fields first.
 
             if (regi != null)
             {
                 data = data.Where(x => x.Regi == regi);
+                keySearch = true;
             }
 
             if (vin != null)
             {
                 data = data.Where(x => x.VIN == vin);
+                keySearch = true;
             }
 
-            if (includeInactive == null)
+            if (plate != null)
             {
-                data = data.Where(x => x.Status == "Active");
+                data = data.Where(x => x.Plate == plate);
+                keySearch = true;
             }
 
-            if (onlyReInspections != null)
+            // only search other fields if a key search was not done.
+            if (!keySearch)
             {
-                data = data.Where(x => x.NextInspectionType == "Re-inspection");
-            }
-            
-            if (startDate != null)
-            {
-                data = data.Where(x => x.NextInspectionDate >= startDate);
-            }
+                if (serviceareas != null)
+                {
+                    foreach (int? servicearea in serviceareas)
+                    {
+                        if (servicearea != null)
+                        {
+                            data = data.Where(x => x.ServiceArea.Id == servicearea);
+                        }
+                    }
+                }
 
-            if (endDate != null)
-            {
-                data = data.Where(x => x.NextInspectionDate >= endDate);
+                if (inspectors != null)
+                {
+                    // no inspectors yet.
+                }
+
+                if (cities != null)
+                {
+                    foreach (int? city in cities)
+                    {
+                        if (city != null)
+                        {
+                            data = data.Where(x => x.HomeTerminalCity.Id == city);
+                        }
+                    }
+                }
+
+                if (schooldistricts != null)
+                {
+                    foreach (int? schooldistrict in schooldistricts)
+                    {
+                        if (schooldistrict != null)
+                        {
+                            data = data.Where(x => x.SchoolBusDistrict.Id == schooldistrict);
+                        }
+                    }
+                }
+
+                if (owner != null)
+                {
+                    data = data.Where(x => x.SchoolBusOwner.Id == owner);
+                }
+
+                if (includeInactive == null)
+                {
+                    data = data.Where(x => x.Status == "Active");
+                }
+
+                if (includeInactive == null || (includeInactive != null && includeInactive == false))
+                {
+                    data = data.Where(x => x.Status == "Active");
+                }
+
+                if (onlyReInspections != null && onlyReInspections == true)
+                {
+                    data = data.Where(x => x.NextInspectionType == "Re-inspection");
+                }
+
+                if (startDate != null)
+                {
+                    data = data.Where(x => x.NextInspectionDate >= startDate);
+                }
+
+                if (endDate != null)
+                {
+                    data = data.Where(x => x.NextInspectionDate <= endDate);
+                }
+
             }
 
             var result = data.ToList();

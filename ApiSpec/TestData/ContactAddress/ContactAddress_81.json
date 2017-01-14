@@ -1,0 +1,26 @@
+[
+    {
+        "addr1": "3162 Findlay Creek Road",
+        "addr2": null,
+        "city": "Elko",
+        "postalCode": "V0B 1J0",
+        "province": "BC",
+        "type": "Field Office"
+    },
+    {
+        "addr1": "2644 102nd Avenue",
+        "addr2": null,
+        "city": "Cranbrook",
+        "postalCode": "V1C 2R9",
+        "province": "BC",
+        "type": "Bus Yard"
+    },
+    {
+        "addr1": "1231 Stum Lake Road",
+        "addr2": null,
+        "city": "Horsefly",
+        "postalCode": "V0L 1L0",
+        "province": "BC",
+        "type": "Field Office"
+    }
+]

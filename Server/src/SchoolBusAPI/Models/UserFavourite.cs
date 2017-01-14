@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.
     /// </summary>
+        [MetaDataExtension (Description = "User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.")]
+
+
     public partial class UserFavourite : IEquatable<UserFavourite>
     {
         /// <summary>
@@ -137,8 +141,7 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    
+                    this.Id == other.Id ||                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -174,10 +177,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();

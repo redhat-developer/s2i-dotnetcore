@@ -17,13 +17,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class SchoolBusOwnerContact : IEquatable<SchoolBusOwnerContact>
     {
         /// <summary>
@@ -38,18 +40,16 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolBusOwnerContact" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
         /// <param name="GivenName">The given name of the contact..</param>
         /// <param name="Surname">The surname of the contact..</param>
         /// <param name="Role">The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list..</param>
         /// <param name="Notes">Notes about the contact..</param>
         /// <param name="SchoolBusOwnerContactPhones">SchoolBusOwnerContactPhones.</param>
         /// <param name="SchoolBusOwnerContactAddresses">SchoolBusOwnerContactAddresses.</param>
-        public SchoolBusOwnerContact(int Id, SchoolBusOwner SchoolBusOwner = null, string GivenName = null, string Surname = null, string Role = null, string Notes = null, List<SchoolBusOwnerContactPhone> SchoolBusOwnerContactPhones = null, List<SchoolBusOwnerContactAddress> SchoolBusOwnerContactAddresses = null)
+        public SchoolBusOwnerContact(int Id, string GivenName = null, string Surname = null, string Role = null, string Notes = null, List<SchoolBusOwnerContactPhone> SchoolBusOwnerContactPhones = null, List<SchoolBusOwnerContactAddress> SchoolBusOwnerContactAddresses = null)
         {
             
             this.Id = Id;
-            this.SchoolBusOwner = SchoolBusOwner;
             this.GivenName = GivenName;
             this.Surname = Surname;
             this.Role = Role;
@@ -65,14 +65,6 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or Sets SchoolBusOwner
-        /// </summary>
-        public SchoolBusOwner SchoolBusOwner { get; set; }
-
-        [ForeignKey("SchoolBusOwner")]
-        public int? SchoolBusOwnerRefId { get; set; }
 
         /// <summary>
         /// The given name of the contact.
@@ -121,7 +113,6 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolBusOwnerContact {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
             sb.Append("  Surname: ").Append(Surname).Append("\n");
             sb.Append("  Role: ").Append(Role).Append("\n");
@@ -168,13 +159,7 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) && 
-                (
-                    this.SchoolBusOwner == other.SchoolBusOwner ||
-                    this.SchoolBusOwner != null &&
-                    this.SchoolBusOwner.Equals(other.SchoolBusOwner)
                 ) && 
                 (
                     this.GivenName == other.GivenName ||
@@ -219,14 +204,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
-                if (this.SchoolBusOwner != null)
-                {
-                    hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();

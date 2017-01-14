@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "2120 Burdett Avenue",
+        "addr1": "1477 Hastings Street",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 1L6",
+        "city": "Vancouver",
+        "id": "200004",
+        "postalCode": "V6C 1B4",
         "province": "BC",
         "type": "Field Office"
     }

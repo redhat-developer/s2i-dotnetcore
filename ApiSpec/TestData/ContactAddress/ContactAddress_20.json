@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "365 Old Spallumcheen Rd",
+        "addr1": "2578 Glover Road",
         "addr2": null,
-        "city": "Hope",
-        "postalCode": "V0X 1L0",
+        "city": "Fort Langley",
+        "id": "200019",
+        "postalCode": "V3A 6X5",
         "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "4347 Blanshard",
-        "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W 2H9",
-        "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

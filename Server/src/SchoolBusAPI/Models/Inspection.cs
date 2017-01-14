@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class Inspection : IEquatable<Inspection>
     {
         /// <summary>
@@ -41,17 +44,19 @@ namespace SchoolBusAPI.Models
         /// <param name="SchoolBus">SchoolBus.</param>
         /// <param name="Inspector">Defaults for a new inspection to the current user, but can be changed as needed..</param>
         /// <param name="InspectionDate">The date the inspection was conducted..</param>
+        /// <param name="InspectionType">The type of the inspection - enumerated type of Annual or Re-inspection, pulled from the School Bus record at the time the inspection record is created.</param>
         /// <param name="InspectionResult">The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here..</param>
         /// <param name="Notes">A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application..</param>
         /// <param name="Restrictions">The \&quot;Restrictions\&quot; text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page..</param>
         /// <param name="RIPInspectionId">The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details..</param>
-        public Inspection(int Id, SchoolBus SchoolBus = null, User Inspector = null, DateTime? InspectionDate = null, string InspectionResult = null, string Notes = null, string Restrictions = null, string RIPInspectionId = null)
+        public Inspection(int Id, SchoolBus SchoolBus = null, User Inspector = null, DateTime? InspectionDate = null, string InspectionType = null, string InspectionResult = null, string Notes = null, string Restrictions = null, string RIPInspectionId = null)
         {
             
             this.Id = Id;
             this.SchoolBus = SchoolBus;
             this.Inspector = Inspector;
             this.InspectionDate = InspectionDate;
+            this.InspectionType = InspectionType;
             this.InspectionResult = InspectionResult;
             this.Notes = Notes;
             this.Restrictions = Restrictions;
@@ -70,7 +75,6 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets SchoolBus
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
-
         [ForeignKey("SchoolBus")]
         public int? SchoolBusRefId { get; set; }
 
@@ -80,7 +84,6 @@ namespace SchoolBusAPI.Models
         /// <value>Defaults for a new inspection to the current user, but can be changed as needed.</value>
         [MetaDataExtension (Description = "Defaults for a new inspection to the current user, but can be changed as needed.")]
         public User Inspector { get; set; }
-
         [ForeignKey("Inspector")]
         public int? InspectorRefId { get; set; }
 
@@ -90,6 +93,13 @@ namespace SchoolBusAPI.Models
         /// <value>The date the inspection was conducted.</value>
         [MetaDataExtension (Description = "The date the inspection was conducted.")]
         public DateTime? InspectionDate { get; set; }
+
+        /// <summary>
+        /// The type of the inspection - enumerated type of Annual or Re-inspection, pulled from the School Bus record at the time the inspection record is created
+        /// </summary>
+        /// <value>The type of the inspection - enumerated type of Annual or Re-inspection, pulled from the School Bus record at the time the inspection record is created</value>
+        [MetaDataExtension (Description = "The type of the inspection - enumerated type of Annual or Re-inspection, pulled from the School Bus record at the time the inspection record is created")]
+        public string InspectionType { get; set; }
 
         /// <summary>
         /// The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.
@@ -131,6 +141,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  SchoolBus: ").Append(SchoolBus).Append("\n");
             sb.Append("  Inspector: ").Append(Inspector).Append("\n");
             sb.Append("  InspectionDate: ").Append(InspectionDate).Append("\n");
+            sb.Append("  InspectionType: ").Append(InspectionType).Append("\n");
             sb.Append("  InspectionResult: ").Append(InspectionResult).Append("\n");
             sb.Append("  Notes: ").Append(Notes).Append("\n");
             sb.Append("  Restrictions: ").Append(Restrictions).Append("\n");
@@ -175,7 +186,6 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -192,6 +202,11 @@ namespace SchoolBusAPI.Models
                     this.InspectionDate == other.InspectionDate ||
                     this.InspectionDate != null &&
                     this.InspectionDate.Equals(other.InspectionDate)
+                ) && 
+                (
+                    this.InspectionType == other.InspectionType ||
+                    this.InspectionType != null &&
+                    this.InspectionType.Equals(other.InspectionType)
                 ) && 
                 (
                     this.InspectionResult == other.InspectionResult ||
@@ -226,10 +241,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                                
                 if (this.SchoolBus != null)
                 {
                     hash = hash * 59 + this.SchoolBus.GetHashCode();
@@ -241,6 +254,10 @@ namespace SchoolBusAPI.Models
                 if (this.InspectionDate != null)
                 {
                     hash = hash * 59 + this.InspectionDate.GetHashCode();
+                }
+                if (this.InspectionType != null)
+                {
+                    hash = hash * 59 + this.InspectionType.GetHashCode();
                 }
                 if (this.InspectionResult != null)
                 {

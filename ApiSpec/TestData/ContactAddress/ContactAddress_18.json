@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "34 Alaska Hwy",
+        "addr1": "2714 Russell Avenue",
         "addr2": null,
-        "city": "Chetwynd",
-        "postalCode": "V0C 1J0",
+        "city": "Langley",
+        "id": "200017",
+        "postalCode": "V4X 1J7",
         "province": "BC",
         "type": "Headquarters"
     }

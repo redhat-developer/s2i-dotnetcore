@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// The history of updates made to a School Bus. Exact format of the history TBD.
     /// </summary>
+        [MetaDataExtension (Description = "The history of updates made to a School Bus. Exact format of the history TBD.")]
+
+
     public partial class SchoolBusHistory : IEquatable<SchoolBusHistory>
     {
         /// <summary>
@@ -58,9 +61,6 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets SchoolBus
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
-
-        [ForeignKey("SchoolBus")]
-        public int? SchoolBusRefId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -111,8 +111,7 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    
+                    this.Id == other.Id ||                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -133,10 +132,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.SchoolBus != null)
                 {
                     hash = hash * 59 + this.SchoolBus.GetHashCode();

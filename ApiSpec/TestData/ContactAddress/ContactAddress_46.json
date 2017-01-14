@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "1323 Cordova Street",
+        "addr1": "2714 Russell Avenue",
         "addr2": null,
-        "city": "Vancouver",
-        "postalCode": "V6B 1E1",
+        "city": "Langley",
+        "id": "200045",
+        "postalCode": "V4X 1J7",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

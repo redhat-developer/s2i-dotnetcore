@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "2913 Blind Bay Road",
+        "addr1": "1719 Blind Bay Road",
         "addr2": null,
-        "city": "Blue River",
-        "postalCode": "V0E 1J0",
+        "city": "Vavenby",
+        "id": "200023",
+        "postalCode": "V0E 3A0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

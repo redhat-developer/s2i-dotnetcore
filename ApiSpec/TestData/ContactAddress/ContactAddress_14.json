@@ -1,18 +1,11 @@
 [
     {
-        "addr1": "1696 Alaska Hwy",
+        "addr1": "830 Hardy Street",
         "addr2": null,
-        "city": "Fort Nelson",
-        "postalCode": "V0C 1C0",
+        "city": "Kelowna",
+        "id": "200013",
+        "postalCode": "V1Y 8H2",
         "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "684 Roger Street",
-        "addr2": null,
-        "city": "Duncan",
-        "postalCode": "V9L 1P1",
-        "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

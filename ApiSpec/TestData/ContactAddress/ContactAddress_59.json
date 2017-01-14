@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "1231 Stum Lake Road",
+        "addr1": "365 Old Spallumcheen Rd",
         "addr2": null,
-        "city": "Horsefly",
-        "postalCode": "V0L 1L0",
+        "city": "Hope",
+        "id": "200058",
+        "postalCode": "V0X 1L0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

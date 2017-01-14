@@ -1,146 +1,206 @@
 [
     {
-        "dateCreated": "2010-05-05",
-        "id": "101",
+        "dateCreated": "2006-04-14",
+        "id": "200000",
         "name": "Edwards & Co",
-        "primaryContactRefId": "1",
-        "serviceAreaRefId": "27",
+        "primaryContact": {
+            "id": "40"
+        },
+        "serviceArea": {
+            "id": "200019"
+        },
         "status": "Archive"
     },
     {
-        "dateCreated": "2010-01-07",
-        "id": "102",
+        "dateCreated": "2012-07-27",
+        "id": "200001",
         "name": "Wilson's Transportion, Inc.",
-        "primaryContactRefId": "2",
-        "serviceAreaRefId": "10",
+        "primaryContact": {
+            "id": "124"
+        },
+        "serviceArea": {
+            "id": "200018"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2009-06-14",
-        "id": "103",
+        "dateCreated": "2012-12-18",
+        "id": "200002",
         "name": "School District 61",
-        "primaryContactRefId": "4",
-        "serviceAreaRefId": "6",
+        "primaryContact": {
+            "id": "53"
+        },
+        "serviceArea": {
+            "id": "200004"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2006-06-21",
-        "id": "104",
+        "dateCreated": "2016-05-22",
+        "id": "200003",
         "name": "SMUS",
-        "primaryContactRefId": "6",
-        "serviceAreaRefId": "20",
+        "primaryContact": {
+            "id": "92"
+        },
+        "serviceArea": {
+            "id": "200012"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2006-12-09",
-        "id": "105",
+        "dateCreated": "2015-07-11",
+        "id": "200004",
         "name": "School District 62",
-        "primaryContactRefId": "7",
-        "serviceAreaRefId": "11",
+        "primaryContact": {
+            "id": "32"
+        },
+        "serviceArea": {
+            "id": "200027"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2012-10-11",
-        "id": "106",
+        "dateCreated": "2005-07-24",
+        "id": "200005",
         "name": "JC Kingston Transportation",
-        "primaryContactRefId": "9",
-        "serviceAreaRefId": "21",
+        "primaryContact": {
+            "id": "130"
+        },
+        "serviceArea": {
+            "id": "200017"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2006-06-07",
-        "id": "107",
+        "dateCreated": "2006-10-18",
+        "id": "200006",
         "name": "BC Transit School Bus",
-        "primaryContactRefId": "11",
-        "serviceAreaRefId": "19",
+        "primaryContact": {
+            "id": "111"
+        },
+        "serviceArea": {
+            "id": "200020"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2008-09-04",
-        "id": "108",
+        "dateCreated": "2005-05-09",
+        "id": "200007",
         "name": "Ferries Transit",
-        "primaryContactRefId": "15",
-        "serviceAreaRefId": "13",
+        "primaryContact": {
+            "id": "22"
+        },
+        "serviceArea": {
+            "id": "200015"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2014-11-24",
-        "id": "109",
+        "dateCreated": "2011-12-21",
+        "id": "200008",
         "name": "Jones Transportation",
-        "primaryContactRefId": "20",
-        "serviceAreaRefId": "23",
+        "primaryContact": {
+            "id": "150"
+        },
+        "serviceArea": {
+            "id": "200020"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2010-12-05",
-        "id": "110",
+        "dateCreated": "2005-12-09",
+        "id": "200009",
         "name": "SB School Bus, Inc.",
-        "primaryContactRefId": "23",
-        "serviceAreaRefId": "16",
+        "primaryContact": {
+            "id": "80"
+        },
+        "serviceArea": {
+            "id": "200016"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2014-12-07",
-        "id": "111",
+        "dateCreated": "2012-11-11",
+        "id": "200010",
         "name": "School District 64",
-        "primaryContactRefId": "26",
-        "serviceAreaRefId": "2",
+        "primaryContact": {
+            "id": "38"
+        },
+        "serviceArea": {
+            "id": "200000"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2010-08-13",
-        "id": "112",
+        "dateCreated": "2007-03-27",
+        "id": "200011",
         "name": "Service Merchandise",
-        "primaryContactRefId": "31",
-        "serviceAreaRefId": "16",
+        "primaryContact": {
+            "id": "87"
+        },
+        "serviceArea": {
+            "id": "200025"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2016-02-25",
-        "id": "113",
+        "dateCreated": "2004-02-19",
+        "id": "200012",
         "name": "Lionel Playworld",
-        "primaryContactRefId": "32",
-        "serviceAreaRefId": "4",
+        "primaryContact": "#N/A",
+        "serviceArea": {
+            "id": "200011"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2004-02-01",
-        "id": "114",
+        "dateCreated": "2006-01-10",
+        "id": "200013",
         "name": "Sandy's",
-        "primaryContactRefId": "33",
-        "serviceAreaRefId": "24",
+        "primaryContact": "#N/A",
+        "serviceArea": {
+            "id": "200024"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2005-07-27",
-        "id": "115",
+        "dateCreated": "2013-11-23",
+        "id": "200014",
         "name": "Stratacard",
-        "primaryContactRefId": "39",
-        "serviceAreaRefId": "6",
+        "primaryContact": "#N/A",
+        "serviceArea": {
+            "id": "200027"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2014-04-16",
-        "id": "116",
+        "dateCreated": "2013-02-10",
+        "id": "200015",
         "name": "Gamma Gas",
-        "primaryContactRefId": "42",
-        "serviceAreaRefId": "14",
+        "primaryContact": "#N/A",
+        "serviceArea": {
+            "id": "200018"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2012-04-21",
-        "id": "117",
+        "dateCreated": "2008-12-03",
+        "id": "200016",
         "name": "J. Brannam",
-        "primaryContactRefId": "47",
-        "serviceAreaRefId": "12",
+        "primaryContact": "#N/A",
+        "serviceArea": {
+            "id": "200001"
+        },
         "status": "Active"
     },
     {
-        "dateCreated": "2008-05-10",
-        "id": "118",
+        "dateCreated": "2008-03-01",
+        "id": "200017",
         "name": "Success Is Yours",
-        "primaryContactRefId": "55",
-        "serviceAreaRefId": "1",
+        "primaryContact": "#N/A",
+        "serviceArea": {
+            "id": "200028"
+        },
         "status": "Active"
     }
 ]

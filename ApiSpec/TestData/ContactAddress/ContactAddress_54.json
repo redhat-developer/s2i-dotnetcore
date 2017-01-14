@@ -1,9 +1,10 @@
 [
     {
-        "addr1": "3109 Wellington Ave",
+        "addr1": "3121 Blanshard",
         "addr2": null,
-        "city": "Chilliwack",
-        "postalCode": "V2P 2M1",
+        "city": "Victoria",
+        "id": "200053",
+        "postalCode": "V8W 2H9",
         "province": "BC",
         "type": "Headquarters"
     }

@@ -1,25 +1,10 @@
 [
     {
-        "addr1": "2553 Holdom Avenue",
+        "addr1": "1888 Findlay Creek Road",
         "addr2": null,
-        "city": "Surrey",
-        "postalCode": "V3T 4Y5",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "4436 Quayside Dr",
-        "addr2": null,
-        "city": "New Westminster",
-        "postalCode": "V3M 6A1",
-        "province": "BC",
-        "type": "Headquarters"
-    },
-    {
-        "addr1": "4819 Wallace Street",
-        "addr2": null,
-        "city": "Nanaimo",
-        "postalCode": "V9R 3A8",
+        "city": "Grasmere",
+        "id": "200046",
+        "postalCode": "V0B 1R0",
         "province": "BC",
         "type": "Headquarters"
     }

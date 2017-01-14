@@ -1,138 +1,71 @@
-File,!Name,type,addr1,addr2,city,province,postalCode
-1,145,Headquarters,1710 Yoho Valley Road,rg:None,Golden,BC,V0A 1H0
-2,146,Bus Yard,2824 Hastings Street,rg:None,Vancouver,BC,V6C 1B4
-3,40,Headquarters,3832 Roger Street,rg:None,Victoria,BC,V9B 1X2
-3,124,Bus Yard,1231 Stum Lake Road,rg:None,Horsefly,BC,V0L 1L0
-4,126,Headquarters,101 Shaughnessy St,rg:None,Port Coquitlam,BC,V3C 4S7
-5,60,Headquarters,1234 Tolmie St,rg:None,Vancouver,BC,V6M 1Y8
-5,137,Field Office,3053 Brew Creek Rd,rg:None,D'arcy,BC,V0N 1L0
-5,113,Headquarters,4904 Robson St,rg:None,Vancouver,BC,V6B 3K9
-5,107,Field Office,998 McGill Road,rg:None,Kamloops,BC,V2C 5R8
-5,149,Bus Yard,806 Coldstream Avenue,rg:None,Vernon,BC,V1T 6N1
-6,61,Field Office,3056 Quayside Dr,rg:None,New Westminster,BC,V3M 6A1
-7,135,Field Office,3121 Blanshard,rg:None,Victoria,BC,V8W 2H9
-8,147,Headquarters,1356 Old Spallumcheen Rd,rg:None,Yarrow,BC,V0X 2A0
-9,53,Headquarters,3967 Queens Bay,rg:None,Fauquier,BC,V0G 1K0
-10,67,Headquarters,4923 Stum Lake Road,rg:None,Tatla Lake,BC,V0L 1V0
-10,126,Bus Yard,101 Shaughnessy St,rg:None,Port Coquitlam,BC,V3C 4S7
-11,56,Headquarters,3815 Burdett Avenue,rg:None,Victoria,BC,V8W 1B2
-11,120,Headquarters,959 Haaglund Rd,rg:None,Lower Post,BC,V0H 0H0
-11,72,Bus Yard,936 Coldstream Avenue,rg:None,Vernon,BC,V1T 6N1
-11,51,Field Office,830 Hardy Street,rg:None,Kelowna,BC,V1Y 8H2
-12,84,Bus Yard,2031 Blind Bay Road,rg:None,Sicamous,BC,V0E 2V0
-13,84,Bus Yard,2031 Blind Bay Road,rg:None,Sicamous,BC,V0E 2V0
-14,7,Bus Yard,3617 Essendene Avenue,rg:None,Abbotsford,BC,V2S 2H7
-15,54,Headquarters,4357 Hastings Street,rg:None,Vancouver,BC,V6C 1B4
-16,121,Field Office,900 Tchesinkut Lake Rd,rg:None,Burns Lake,BC,V0J 1E0
-17,132,Bus Yard,4600 Roger Street,rg:None,Nanaimo,BC,V9R 5H9
-17,99,Bus Yard,1730 Jade St,rg:None,West Vancouver,BC,V7T 2W4
-18,83,Bus Yard,2913 Blind Bay Road,rg:None,Blue River,BC,V0E 1J0
-19,135,Headquarters,3121 Blanshard,rg:None,Victoria,BC,V8W 2H9
-19,89,Headquarters,1477 Hastings Street,rg:None,Vancouver,BC,V6C 1B4
-20,64,Field Office,1140 Sixth Street,rg:None,New Westminister,BC,V3L 3C1
-21,81,Headquarters,2956 Shaughnessy St,rg:None,Port Coquitlam,BC,V3C 4S7
-21,83,Headquarters,2913 Blind Bay Road,rg:None,Blue River,BC,V0E 1J0
-21,85,Headquarters,2076 James Street,rg:None,Aldergrove,BC,V5G 4S4
-21,27,Bus Yard,2890 Burdett Avenue,rg:None,Victoria,BC,V8Y 1Y7
-22,87,Field Office,3109 Wellington Ave,rg:None,Chilliwack,BC,V2P 2M1
-22,126,Bus Yard,101 Shaughnessy St,rg:None,Port Coquitlam,BC,V3C 4S7
-22,7,Bus Yard,3617 Essendene Avenue,rg:None,Abbotsford,BC,V2S 2H7
-23,150,Bus Yard,4256 Kinchant St,rg:None,Williams Lake,BC,V2G 1C4
-23,134,Field Office,2487 Kinchant St,rg:None,Kamloops,BC,V2S 5R8
-23,123,Bus Yard,2558 Glover Road,rg:None,Coquitlam,BC,V3J 4S1
-24,108,Field Office,2714 Russell Avenue,rg:None,Langley,BC,V4X 1J7
-24,34,Bus Yard,4297 Queens Bay,rg:None,Nakusp,BC,V0G 1R0
-25,36,Field Office,3273 Kinchant St,rg:None,Sardis,BC,V2R 1C8
-25,66,Field Office,510 Burdett Avenue,rg:None,Victoria,BC,V8W 1B2
-26,59,Headquarters,2549 James Street,rg:None,Burnaby,BC,V5G 4W7
-26,44,Headquarters,1547 Roger Street,rg:None,Port Alberni,BC,V9Y 4M8
-26,142,Headquarters,2162 King George Hwy,rg:None,Surrey,BC,V3W 4E3
-26,70,Bus Yard,1166 Blanshard,rg:None,Victoria,BC,V8W 2H9
-27,5,Field Office,3795 Burdett Avenue,rg:None,Victoria,BC,V8Y 1Y7
-28,43,Headquarters,2919 Old Spallumcheen Rd,rg:None,Atlin,BC,V0W 1A0
-29,76,Headquarters,4347 Blanshard,rg:None,Victoria,BC,V8W 2H9
-29,28,Headquarters,1323 Cordova Street,rg:None,Vancouver,BC,V6B 1E1
-29,34,Bus Yard,4297 Queens Bay,rg:None,Nakusp,BC,V0G 1R0
-30,106,Field Office,4879 Roger Street,rg:None,Nanaimo,BC,V9R 5H4
-30,80,Field Office,4112 Burdett Avenue,rg:None,Victoria,BC,V8W 1B2
-30,55,Headquarters,1967 Findlay Creek Road,rg:None,Fernie,BC,V0B 1M1
-31,38,Field Office,4216 Robson St,rg:None,Vancouver,BC,V6B 3K9
-31,88,Headquarters,2420 Roger Street,rg:None,Duncan,BC,V9L 1E5
-32,85,Field Office,2076 James Street,rg:None,Aldergrove,BC,V5G 4S4
-33,70,Headquarters,1166 Blanshard,rg:None,Victoria,BC,V8W 2H9
-34,58,Bus Yard,4283 Burdett Avenue,rg:None,Victoria,BC,V8W 1L6
-34,49,Headquarters,896 Roger Street,rg:None,Nanaimo,BC,V9R 5H9
-34,17,Bus Yard,2553 Holdom Avenue,rg:None,Surrey,BC,V3T 4Y5
-35,75,Headquarters,4305 Essendene Avenue,rg:None,Abbotsford,BC,V2S 2H7
-36,117,Field Office,3418 Brew Creek Rd,rg:None,Port Hardy,BC,V0N 2P0
-37,57,Field Office,3246 Alaska Hwy,rg:None,Fort Nelson,BC,V0C 1C0
-37,78,Headquarters,2578 Glover Road,rg:None,Fort Langley,BC,V3A 6X5
-38,95,Bus Yard,3760 Keith Road,rg:None,North Vancouver,BC,V5T 2C1
-39,71,Field Office,4526 Glover Road,rg:None,Coquitlam,BC,V3J 4S1
-40,101,Headquarters,3643 Robson St,rg:None,Vancouver,BC,V6B 3K9
-40,148,Field Office,3854 Glover Road,rg:None,Langley,BC,V3A 4P6
-41,118,Headquarters,104 Roger Street,rg:None,Comox,BC,V9N 6A1
-42,66,Headquarters,510 Burdett Avenue,rg:None,Victoria,BC,V8W 1B2
-42,21,Field Office,1065 Sixth Street,rg:None,New Westminster,BC,V3L 3C1
-43,109,Headquarters,1198 Cardero St,rg:None,Vancouver,BC,S4P 3Y2
-44,3,Bus Yard,223 Brew Creek Rd,rg:None,Whistler,BC,V0N 1B0
-45,124,Field Office,1231 Stum Lake Road,rg:None,Horsefly,BC,V0L 1L0
-46,33,Bus Yard,2183 Kinchant St,rg:None,Prince George,BC,V2N 2S6
-46,11,Field Office,3561 Wellington Ave,rg:None,Chilliwack,BC,V2P 2M1
-46,39,Headquarters,3162 Findlay Creek Road,rg:None,Elko,BC,V0B 1J0
-46,147,Bus Yard,1356 Old Spallumcheen Rd,rg:None,Yarrow,BC,V0X 2A0
-47,124,Headquarters,1231 Stum Lake Road,rg:None,Horsefly,BC,V0L 1L0
-47,26,Field Office,4359 Yoho Valley Road,rg:None,Spillimacheen,BC,V0A 1P0
-48,145,Field Office,1710 Yoho Valley Road,rg:None,Golden,BC,V0A 1H0
-48,16,Bus Yard,4173 James Street,rg:None,Burnaby,BC,V5G 4W7
-49,70,Headquarters,1166 Blanshard,rg:None,Victoria,BC,V8W 2H9
-50,39,Headquarters,3162 Findlay Creek Road,rg:None,Elko,BC,V0B 1J0
-51,59,Field Office,2549 James Street,rg:None,Burnaby,BC,V5G 4W7
-51,86,Bus Yard,1028 Glover Road,rg:None,Langley,BC,V3A 1Z3
-51,3,Headquarters,223 Brew Creek Rd,rg:None,Whistler,BC,V0N 1B0
-52,15,Headquarters,3356 Wallace Street,rg:None,Nanaimo,BC,V9R 3A8
-52,79,Bus Yard,4397 Burdett Avenue,rg:None,Terrace,BC,V8G 1S2
-53,30,Field Office,2814 Scotts Lane,rg:None,Youbou,BC,V0R 3E0
-53,77,Field Office,4819 Wallace Street,rg:None,Nanaimo,BC,V9R 3A8
-54,80,Field Office,4112 Burdett Avenue,rg:None,Victoria,BC,V8W 1B2
-54,72,Bus Yard,936 Coldstream Avenue,rg:None,Vernon,BC,V1T 6N1
-55,103,Bus Yard,2881 Alaska Hwy,rg:None,Fort Nelson,BC,V0C 1C0
-56,113,Bus Yard,4904 Robson St,rg:None,Vancouver,BC,V6B 3K9
-57,52,Headquarters,4580 Hastings Street,rg:None,Vancouver,BC,V6C 1B4
-58,113,Field Office,4904 Robson St,rg:None,Vancouver,BC,V6B 3K9
-58,149,Bus Yard,806 Coldstream Avenue,rg:None,Vernon,BC,V1T 6N1
-58,117,Bus Yard,3418 Brew Creek Rd,rg:None,Port Hardy,BC,V0N 2P0
-58,84,Field Office,2031 Blind Bay Road,rg:None,Sicamous,BC,V0E 2V0
-59,77,Bus Yard,4819 Wallace Street,rg:None,Nanaimo,BC,V9R 3A8
-59,78,Field Office,2578 Glover Road,rg:None,Fort Langley,BC,V3A 6X5
-60,6,Field Office,3746 Noble Rd,rg:None,Cortes Island,BC,V0P 1T0
-60,5,Field Office,3795 Burdett Avenue,rg:None,Victoria,BC,V8Y 1Y7
-60,84,Headquarters,2031 Blind Bay Road,rg:None,Sicamous,BC,V0E 2V0
-61,55,Headquarters,1967 Findlay Creek Road,rg:None,Fernie,BC,V0B 1M1
-61,24,Bus Yard,4136 Glover Road,rg:None,Langley,BC,V3A 4P6
-62,22,Field Office,2261 Blanshard,rg:None,Victoria,BC,V8W 2H9
-63,71,Headquarters,4526 Glover Road,rg:None,Coquitlam,BC,V3J 4S1
-63,70,Bus Yard,1166 Blanshard,rg:None,Victoria,BC,V8W 2H9
-64,114,Field Office,1654 Roger Street,rg:None,Courtenay,BC,V9N 2J6
-65,113,Headquarters,4904 Robson St,rg:None,Vancouver,BC,V6B 3K9
-65,105,Field Office,1593 102nd Avenue,rg:None,Fort St John,BC,V1J 3Y7
-66,82,Bus Yard,2565 Tchesinkut Lake Rd,rg:None,Mcbride,BC,V0J 2E0
-66,5,Field Office,3795 Burdett Avenue,rg:None,Victoria,BC,V8Y 1Y7
-66,10,Field Office,1004 Robson St,rg:None,Vancouver,BC,V6B 3K9
-67,64,Headquarters,1140 Sixth Street,rg:None,New Westminister,BC,V3L 3C1
-67,5,Headquarters,3795 Burdett Avenue,rg:None,Victoria,BC,V8Y 1Y7
-68,116,Headquarters,4201 Jade St,rg:None,West Vancouver,BC,V7V 1Y8
-69,46,Headquarters,3420 Burdett Avenue,rg:None,Victoria,BC,V8W IE9
-70,60,Field Office,1234 Tolmie St,rg:None,Vancouver,BC,V6M 1Y8
--,25,Field Office,735 Wallace Street,rg:None,Nanaimo,BC,V9R 3A8
--,141,Bus Yard,3100 Shaughnessy St,rg:None,Port Coquitlam,BC,V3C 4S7
--,118,Bus Yard,104 Roger Street,rg:None,Comox,BC,V9N 6A1
--,33,Headquarters,2183 Kinchant St,rg:None,Prince George,BC,V2N 2S6
--,72,Field Office,936 Coldstream Avenue,rg:None,Vernon,BC,V1T 6N1
--,122,Bus Yard,684 Roger Street,rg:None,Duncan,BC,V9L 1P1
--,30,Bus Yard,2814 Scotts Lane,rg:None,Youbou,BC,V0R 3E0
--,42,Field Office,2191 Blind Bay Road,rg:None,Clearwater,BC,V0E 1N0
--,81,Headquarters,2956 Shaughnessy St,rg:None,Port Coquitlam,BC,V3C 4S7
--,75,Bus Yard,4305 Essendene Avenue,rg:None,Abbotsford,BC,V2S 2H7
--,66,Bus Yard,510 Burdett Avenue,rg:None,Victoria,BC,V8W 1B2
--,143,Field Office,4403 Brew Creek Rd,rg:None,Whistler,BC,V0N 1B0
+File,!Name,id,type,addr1,addr2,city,province,postalCode
+1,31,200000,Field Office,907 Nootka Street,rg:None,Vancouver,BC,V5M 3M5
+2,36,200001,Bus Yard,3273 Kinchant St,rg:None,Sardis,BC,V2R 1C8
+3,14,200002,Field Office,4764 Jade St,rg:None,Richmond,BC,V7E 2E4
+4,5,200003,Bus Yard,3795 Burdett Avenue,rg:None,Victoria,BC,V8Y 1Y7
+5,89,200004,Field Office,1477 Hastings Street,rg:None,Vancouver,BC,V6C 1B4
+6,58,200005,Field Office,4283 Burdett Avenue,rg:None,Victoria,BC,V8W 1L6
+7,13,200006,Headquarters,47 Noble Rd,rg:None,Sayward,BC,V0P 1R0
+8,148,200007,Headquarters,3854 Glover Road,rg:None,Langley,BC,V3A 4P6
+9,10,200008,Field Office,1004 Robson St,rg:None,Vancouver,BC,V6B 3K9
+10,99,200009,Field Office,1730 Jade St,rg:None,West Vancouver,BC,V7T 2W4
+11,146,200010,Headquarters,2824 Hastings Street,rg:None,Vancouver,BC,V6C 1B4
+12,104,200011,Bus Yard,2882 Carlson Road,rg:None,Prince George,BC,V2L 5E5
+13,111,200012,Field Office,270 Queens Bay,rg:None,Nakusp,BC,V0G 1R0
+14,51,200013,Field Office,830 Hardy Street,rg:None,Kelowna,BC,V1Y 8H2
+15,63,200014,Bus Yard,1696 Alaska Hwy,rg:None,Fort Nelson,BC,V0C 1C0
+16,66,200015,Headquarters,510 Burdett Avenue,rg:None,Victoria,BC,V8W 1B2
+17,69,200016,Field Office,1369 Tolmie St,rg:None,Vancouver,BC,V6M 1Y8
+18,108,200017,Headquarters,2714 Russell Avenue,rg:None,Langley,BC,V4X 1J7
+19,100,200018,Bus Yard,4638 Robson St,rg:None,Vancouver,BC,V6B 3K9
+20,78,200019,Field Office,2578 Glover Road,rg:None,Fort Langley,BC,V3A 6X5
+21,142,200020,Bus Yard,2162 King George Hwy,rg:None,Surrey,BC,V3W 4E3
+22,84,200021,Bus Yard,2031 Blind Bay Road,rg:None,Sicamous,BC,V0E 2V0
+23,145,200022,Field Office,1710 Yoho Valley Road,rg:None,Golden,BC,V0A 1H0
+24,140,200023,Field Office,1719 Blind Bay Road,rg:None,Vavenby,BC,V0E 3A0
+25,72,200024,Headquarters,936 Coldstream Avenue,rg:None,Vernon,BC,V1T 6N1
+26,41,200025,Headquarters,3239 Cardero St,rg:None,Vancouver,BC,S4P 3Y2
+27,23,200026,Field Office,4761 King George Hwy,rg:None,Surrey,BC,V3W 4E3
+28,79,200027,Field Office,4397 Burdett Avenue,rg:None,Terrace,BC,V8G 1S2
+29,137,200028,Field Office,3053 Brew Creek Rd,rg:None,D'arcy,BC,V0N 1L0
+30,37,200029,Headquarters,735 Blanshard,rg:None,Victoria,BC,V8W 2H9
+31,64,200030,Headquarters,1140 Sixth Street,rg:None,New Westminister,BC,V3L 3C1
+32,132,200031,Bus Yard,4600 Roger Street,rg:None,Nanaimo,BC,V9R 5H9
+33,81,200032,Bus Yard,2956 Shaughnessy St,rg:None,Port Coquitlam,BC,V3C 4S7
+34,19,200033,Headquarters,616 Scotts Lane,rg:None,Okanagan Mission,BC,V0R 1S0
+35,130,200034,Bus Yard,3758 Mesa Vista Drive,rg:None,Spences Bridge,BC,V0K 2L0
+36,17,200035,Bus Yard,2553 Holdom Avenue,rg:None,Surrey,BC,V3T 4Y5
+37,46,200036,Headquarters,3420 Burdett Avenue,rg:None,Victoria,BC,V8W IE9
+38,108,200037,Bus Yard,2714 Russell Avenue,rg:None,Langley,BC,V4X 1J7
+39,31,200038,Bus Yard,907 Nootka Street,rg:None,Vancouver,BC,V5M 3M5
+40,93,200039,Field Office,3711 Stum Lake Road,rg:None,Riske Creek,BC,V0L 1T0
+41,48,200040,Field Office,127 Coldstream Avenue,rg:None,Vernon,BC,V1T 6N1
+42,83,200041,Field Office,2913 Blind Bay Road,rg:None,Blue River,BC,V0E 1J0
+43,55,200042,Field Office,1967 Findlay Creek Road,rg:None,Fernie,BC,V0B 1M1
+44,82,200043,Bus Yard,2565 Tchesinkut Lake Rd,rg:None,Mcbride,BC,V0J 2E0
+45,113,200044,Headquarters,4904 Robson St,rg:None,Vancouver,BC,V6B 3K9
+46,108,200045,Headquarters,2714 Russell Avenue,rg:None,Langley,BC,V4X 1J7
+47,110,200046,Headquarters,1888 Findlay Creek Road,rg:None,Grasmere,BC,V0B 1R0
+48,79,200047,Field Office,4397 Burdett Avenue,rg:None,Terrace,BC,V8G 1S2
+49,105,200048,Bus Yard,1593 102nd Avenue,rg:None,Fort St John,BC,V1J 3Y7
+50,118,200049,Field Office,104 Roger Street,rg:None,Comox,BC,V9N 6A1
+51,12,200050,Bus Yard,365 Old Spallumcheen Rd,rg:None,Hope,BC,V0X 1L0
+52,147,200051,Headquarters,1356 Old Spallumcheen Rd,rg:None,Yarrow,BC,V0X 2A0
+53,145,200052,Headquarters,1710 Yoho Valley Road,rg:None,Golden,BC,V0A 1H0
+54,135,200053,Headquarters,3121 Blanshard,rg:None,Victoria,BC,V8W 2H9
+55,20,200054,Bus Yard,3690 Findlay Creek Road,rg:None,Fairmont Hot Springs,BC,V0B 1L0
+56,81,200055,Headquarters,2956 Shaughnessy St,rg:None,Port Coquitlam,BC,V3C 4S7
+57,4,200056,Field Office,2310 Mesa Vista Drive,rg:None,Boston Bar,BC,V0K 1C0
+58,73,200057,Bus Yard,3694 Lake City Way,rg:None,Burnaby,BC,V5A 2Z6
+59,12,200058,Bus Yard,365 Old Spallumcheen Rd,rg:None,Hope,BC,V0X 1L0
+60,123,200059,Bus Yard,2558 Glover Road,rg:None,Coquitlam,BC,V3J 4S1
+61,40,200060,Bus Yard,3832 Roger Street,rg:None,Victoria,BC,V9B 1X2
+62,113,200061,Bus Yard,4904 Robson St,rg:None,Vancouver,BC,V6B 3K9
+63,113,200062,Headquarters,4904 Robson St,rg:None,Vancouver,BC,V6B 3K9
+64,13,200063,Field Office,47 Noble Rd,rg:None,Sayward,BC,V0P 1R0
+65,91,200064,Headquarters,2867 Blanshard,rg:None,Victoria,BC,V8W 2H9
+66,108,200065,Bus Yard,2714 Russell Avenue,rg:None,Langley,BC,V4X 1J7
+67,104,200066,Field Office,2882 Carlson Road,rg:None,Prince George,BC,V2L 5E5
+68,22,200067,Headquarters,2261 Blanshard,rg:None,Victoria,BC,V8W 2H9
+69,104,200068,Headquarters,2882 Carlson Road,rg:None,Prince George,BC,V2L 5E5
+70,90,200069,Bus Yard,2038 Tchesinkut Lake Rd,rg:None,Houston,BC,V0J 1Z0

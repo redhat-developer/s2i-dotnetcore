@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "332 Burdett Avenue",
+        "addr1": "735 Blanshard",
         "addr2": null,
         "city": "Victoria",
-        "postalCode": "V8W 1B2",
+        "id": "200029",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

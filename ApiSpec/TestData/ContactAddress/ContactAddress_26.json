@@ -1,10 +1,11 @@
 [
     {
-        "addr1": "3420 Burdett Avenue",
+        "addr1": "3239 Cardero St",
         "addr2": null,
-        "city": "Victoria",
-        "postalCode": "V8W IE9",
+        "city": "Vancouver",
+        "id": "200025",
+        "postalCode": "S4P 3Y2",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]
