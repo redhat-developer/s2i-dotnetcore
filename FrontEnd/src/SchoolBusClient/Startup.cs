@@ -1,32 +1,12 @@
-/*
- * REST API Documentation for Schoolbus
- *
- * API Sample
- *
- * OpenAPI spec version: v1
- * 
- * 
- */
-
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml.XPath;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
-using Swashbuckle.Swagger.Model;
-using Swashbuckle.SwaggerGen.Annotations;
-using Microsoft.EntityFrameworkCore;
-using SchoolBusClient.Handlers;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using SchoolBusClient.Handlers;
+using System;
+using System.IO;
 
 namespace SchoolBusClient
 {
@@ -47,16 +27,44 @@ namespace SchoolBusClient
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-  
-    
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
             services.AddMvc();
+
             // Allow access to the Configuration object
             services.AddSingleton<IConfiguration>(Configuration);
+            // Save this for later
+            // services.Configure<ApiProxyServerOptions>(Configuration.GetSection("ApiProxyServer"));
+            services.Configure<ApiProxyServerOptions>(ConfigureApiProxyServerOptions);
+        }
 
+
+        // ToDo:
+        // - Replace MIDDLEWARE_NAME environment variable with variables the can be used with ApiServerOptions:
+        // -- ApiProxyServer:Scheme
+        // -- ApiProxyServer:Host
+        // -- ApiProxyServer:Port
+        // - Remove use of IConfiguration and MIDDLEWARE_NAME environment variable 
+        private void ConfigureApiProxyServerOptions(ApiProxyServerOptions options)
+        {
+            ApiProxyServerOptions defaultConfig = Configuration.GetSection("ApiProxyServer").Get<ApiProxyServerOptions>();
+            options.Host = defaultConfig.Host;
+            options.Port = defaultConfig.Port;
+            options.Scheme = defaultConfig.Scheme;
+
+            string apiServerUri = Configuration["MIDDLEWARE_NAME"];
+            if (apiServerUri != null)
+            {
+                string[] apiServerUriParts = apiServerUri.Split(':');
+                string host = apiServerUriParts[0];
+                string port = apiServerUriParts.Length > 1 ? apiServerUriParts[1] : "80";
+                options.Scheme = "http";
+                options.Host = host;
+                options.Port = port;
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,21 +76,27 @@ namespace SchoolBusClient
 			//if (env.IsDevelopment())
 			//{
 				app.UseDeveloperExceptionPage();
-			//}
-			
-			
+            //}
+
             app.UseMvc();
-            
             app.UseDefaultFiles();
-            app.UseFileServer(new FileServerOptions()
-			{
-				FileProvider = new PhysicalFileProvider(
-					Path.Combine(Directory.GetCurrentDirectory(), @"src/dist"))
-			});
 
-            app.UseProxyServer(Configuration);
+            string webFileFolder = Directory.GetCurrentDirectory();
+            webFileFolder = webFileFolder + Path.DirectorySeparatorChar + "src"+ Path.DirectorySeparatorChar + "dist";
 
+            Console.WriteLine("Web root is " +  webFileFolder);
 
+            // Only serve up static files if they exist.
+            if (Directory.Exists(webFileFolder))
+            {
+                app.UseFileServer(new FileServerOptions()
+                {
+                    // first see if the production folder is present.                
+                    FileProvider = new PhysicalFileProvider(webFileFolder)
+                });
+            }
+
+            app.UseApiProxyServer();
         }
     }
 }

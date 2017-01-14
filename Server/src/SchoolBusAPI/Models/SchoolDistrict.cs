@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// A list of School Districts in the Province of BC. Authoritative source to be determined.
     /// </summary>
+        [MetaDataExtension (Description = "A list of School Districts in the Province of BC. Authoritative source to be determined.")]
+
+
     public partial class SchoolDistrict : IEquatable<SchoolDistrict>
     {
         /// <summary>
@@ -37,12 +41,14 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolDistrict" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Region">Region.</param>
-        public SchoolDistrict(int Id, Region Region = null)
+        /// <param name="Name">The full name of the School District.</param>
+        /// <param name="ShortName">A short name for the School District useful in some areas of the UI. Usually with format \&quot;SD 61\&quot;..</param>
+        public SchoolDistrict(int Id, string Name = null, string ShortName = null)
         {
             
             this.Id = Id;
-            this.Region = Region;
+            this.Name = Name;
+            this.ShortName = ShortName;
             
         }
 
@@ -54,9 +60,18 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets Region
+        /// The full name of the School District
         /// </summary>
-        public Region Region { get; set; }
+        /// <value>The full name of the School District</value>
+        [MetaDataExtension (Description = "The full name of the School District")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// A short name for the School District useful in some areas of the UI. Usually with format \"SD 61\".
+        /// </summary>
+        /// <value>A short name for the School District useful in some areas of the UI. Usually with format \"SD 61\".</value>
+        [MetaDataExtension (Description = "A short name for the School District useful in some areas of the UI. Usually with format &quot;SD 61&quot;.")]
+        public string ShortName { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -67,7 +82,8 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolDistrict {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Region: ").Append(Region).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  ShortName: ").Append(ShortName).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -108,13 +124,17 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Region == other.Region ||
-                    this.Region != null &&
-                    this.Region.Equals(other.Region)
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
+                ) && 
+                (
+                    this.ShortName == other.ShortName ||
+                    this.ShortName != null &&
+                    this.ShortName.Equals(other.ShortName)
                 );
         }
 
@@ -129,13 +149,15 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
+                hash = hash * 59 + this.Id.GetHashCode();
+                
+                if (this.Name != null)
                 {
-                    hash = hash * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Name.GetHashCode();
                 }
-                if (this.Region != null)
+                if (this.ShortName != null)
                 {
-                    hash = hash * 59 + this.Region.GetHashCode();
+                    hash = hash * 59 + this.ShortName.GetHashCode();
                 }
                 return hash;
             }

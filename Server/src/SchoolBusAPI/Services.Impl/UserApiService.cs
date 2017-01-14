@@ -43,25 +43,133 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Adds a number of users</remarks>
+        /// <remarks>Adds a number of user groups</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
-        public virtual IActionResult UsersBulkPostAsync(UserViewModel[] items)
+        public virtual IActionResult UsergroupsBulkPostAsync(GroupMembership[] items)
         {
             if (items == null)
             {
                 return new BadRequestResult();
             }
-            foreach (UserViewModel item in items)
+            foreach (GroupMembership item in items)
             {
-                var user = new User();
-                user.Active = item.Active;
-                user.Email = item.Email;
-                user.GivenName = item.GivenName;
-                user.Initials = item.Initials;
-                user.Surname = item.Surname;
+                // adjust the user
+                if (item.User != null)
+                {
+                    int user_id = item.User.Id;
+                    bool user_exists = _context.Users.Any(a => a.Id == user_id);
+                    if (user_exists)
+                    {
+                        User user = _context.Users.First(a => a.Id == user_id);
+                        item.User = user;
+                    }
+                }
+                // adjust the group
+                if (item.Group != null)
+                {
+                    int group_id = item.Group.Id;
+                    bool group_exists = _context.Groups.Any(a => a.Id == group_id);
+                    if (group_exists)
+                    {
+                        Group group = _context.Groups.First(a => a.Id == group_id);
+                        item.Group = group;
+                    }
+                }
 
-                _context.Users.Add(user);
+                var exists = _context.GroupMemberships.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.GroupMemberships.Update(item);
+                }
+                else
+                {
+                    _context.GroupMemberships.Add(item);
+                }
+            }
+
+            // Save the changes
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of user roles</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult UserrolesBulkPostAsync(UserRole[] items)
+        {
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (UserRole item in items)
+            {
+                // adjust the user
+                if (item.User != null)
+                {
+                    int user_id = item.User.Id;
+                    bool user_exists = _context.Users.Any(a => a.Id == user_id);
+                    if (user_exists)
+                    {
+                        User user = _context.Users.First(a => a.Id == user_id);
+                        item.User = user;
+                    }
+                }
+                // adjust the role
+                if (item.Role != null)
+                {
+                    int role_id = item.Role.Id;
+                    bool user_exists = _context.Roles.Any(a => a.Id == role_id);
+                    if (user_exists)
+                    {
+                        Role role = _context.Roles.First(a => a.Id == role_id);
+                        item.Role = role;
+                    }
+                }
+
+                var exists = _context.UserRoles.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.UserRoles.Update(item);
+                }
+                else
+                {
+                    _context.UserRoles.Add(item);
+                }
+            }
+
+            // Save the changes
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
+            
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of users</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult UsersBulkPostAsync(User[] items)
+        {
+            if (items == null)
+            {
+                return new BadRequestResult();
+            }
+            foreach (User item in items)
+            {
+                var exists = _context.Users.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Users.Update(item);
+                }
+                else
+                {
+                    _context.Users.Add(item);
+                }                
             }
 
             // Save the changes
@@ -88,7 +196,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdDeleteAsync(int id)
+        public virtual IActionResult UsersIdDeletePostAsync(int id)
         {
             var user = _context.Users.FirstOrDefault(x => x.Id == id);
             if (user == null)
@@ -96,7 +204,10 @@ namespace SchoolBusAPI.Services.Impl
                 // Not Found
                 return new StatusCodeResult(404);
             }
-
+            // remove any user role associations.            
+            var toRemove = _context.UserRoles.Where(x => x.User.Id == id ).ToList();
+            toRemove.ForEach(x => _context.UserRoles.Remove(x));
+            
             _context.Users.Remove(user);
             _context.SaveChanges();
             return new ObjectResult(user.ToViewModel());
@@ -111,6 +222,14 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdFavouritesGetAsync(int id)
         {
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                // Not Found
+                return new StatusCodeResult(404);
+            }
+            // TODO adjust UserFavourites model such that we can query to find a user's favourites.
+            // var result = _context.UserFavourites.Select(x => x.x.ToViewModel()).ToList();
             var result = "";
             return new ObjectResult(result);
         }
@@ -142,8 +261,18 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdGroupsGetAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                // Not Found
+                return new StatusCodeResult(404);
+            }
+
+            var data = _context.GroupMemberships
+                .Where(x => x.User.Id == user.Id)
+                .ToList();
+
+            return new ObjectResult(data);
         }
 
         /// <summary>
@@ -154,7 +283,21 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdGroupsPutAsync(int id, GroupMembershipViewModel[] items)
+        public virtual IActionResult UsersIdGroupsPutAsync(int id, GroupMembership[] items)
+        {
+            var result = "";
+            return new ObjectResult(result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a user to groups</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        public virtual IActionResult UsersIdGroupsPostAsync(int id, GroupMembership[] items)
         {
             var result = "";
             return new ObjectResult(result);
@@ -223,8 +366,18 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdRolesGetAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                // Not Found
+                return new StatusCodeResult(404);
+            }
+
+            var data = _context.UserRoles
+                .Where(x => x.User.Id == user.Id)
+                .ToList();
+
+            return new ObjectResult(data);
         }
 
         /// <summary>
@@ -260,19 +413,12 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks>Create new user</remarks>
         /// <param name="item"></param>
         /// <response code="201">User created</response>
-        public virtual IActionResult UsersPostAsync(UserViewModel item)
-        {
-            var user = new User();
-            user.Active = item.Active;
-            user.Email = item.Email;
-            user.GivenName = item.GivenName;
-            user.Initials = item.Initials;
-            user.Surname = item.Surname;
-
+        public virtual IActionResult UsersPostAsync(User item)
+        {            
             // Save changes
-            _context.Users.Add(user);
+            _context.Users.Add(item);
             _context.SaveChanges();
-            return new ObjectResult(user.ToViewModel());
+            return new ObjectResult(item);
         }
     }
 }

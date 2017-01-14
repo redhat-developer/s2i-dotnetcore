@@ -1,8 +1,8 @@
 {
-  "title": "Front End",
+  "title": "Schoolbus Frontend Server",
   "version": "1.0.0-*",
-  "copyright": "SchoolBusClient",
-  "description": "SchoolBusClient",
+  "copyright": "Copyright© 2017, Province of British Columbia.",
+  "description": "The Frontend server for the schoolbus inspection application.",
   "dependencies": {
     "Microsoft.AspNetCore.Antiforgery": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
@@ -10,6 +10,7 @@
     "Microsoft.AspNetCore.Mvc": "1.1.0",
     "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.1.0",
     "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.1.0",
+    "Microsoft.AspNetCore.Proxy": "0.2.0",
     "Microsoft.AspNetCore.Rewrite": "1.0.0",
     "Microsoft.AspNetCore.Routing": "1.1.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
@@ -30,6 +31,7 @@
     "Microsoft.Extensions.Logging.Debug": "1.1.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0",
     "Npgsql.EntityFrameworkCore.PostgreSQL": "1.1.0",
+    "SchoolBusCommon": "1.0.0-*",
     "SonarAnalyzer.CSharp": "1.20.0",
     "Swashbuckle.SwaggerGen": "6.0.0-beta901",
     "Swashbuckle.SwaggerUi": "6.0.0-beta901",

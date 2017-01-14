@@ -1,0 +1,19 @@
+File,name,id,status,dateCreated,primaryContact,!primaryContactID,!serviceAreaName,!serviceAreaId,serviceArea
+SBOwner,Edwards & Co,200000,Archive,2006-04-14,rg:{'id':'40'},40,Robson,200019,rg:{'id':'200019'}
+SBOwner,"Wilson's Transportion, Inc.",200001,Active,2012-07-27,rg:{'id':'124'},124,Fort George,200018,rg:{'id':'200018'}
+SBOwner,School District 61,200002,Active,2012-12-18,rg:{'id':'53'},53,Sunshine Coast,200004,rg:{'id':'200004'}
+SBOwner,SMUS,200003,Active,2016-05-22,rg:{'id':'92'},92,Okanagan - Shuswap,200012,rg:{'id':'200012'}
+SBOwner,School District 62,200004,Active,2015-07-11,rg:{'id':'32'},32,Stikine,200027,rg:{'id':'200027'}
+SBOwner,JC Kingston Transportation,200005,Active,2005-07-24,rg:{'id':'130'},130,North Cariboo,200017,rg:{'id':'200017'}
+SBOwner,BC Transit School Bus,200006,Active,2006-10-18,rg:{'id':'111'},111,South Peace,200020,rg:{'id':'200020'}
+SBOwner,Ferries Transit,200007,Active,2005-05-09,rg:{'id':'22'},22,South Cariboo,200015,rg:{'id':'200015'}
+SBOwner,Jones Transportation,200008,Active,2011-12-21,rg:{'id':'150'},150,South Peace,200020,rg:{'id':'200020'}
+SBOwner,"SB School Bus, Inc.",200009,Active,2005-12-09,rg:{'id':'80'},80,Central Cariboo,200016,rg:{'id':'200016'}
+SBOwner,School District 64,200010,Active,2012-11-11,rg:{'id':'38'},38,South Island,200000,rg:{'id':'200000'}
+SBOwner,Service Merchandise,200011,Active,2007-03-27,rg:{'id':'87'},87,Skeena,200025,rg:{'id':'200025'}
+SBOwner,Lionel Playworld,200012,Active,2004-02-19,#N/A,#N/A,Selkirk,200011,rg:{'id':'200011'}
+SBOwner,Sandy's,200013,Active,2006-01-10,#N/A,#N/A,Bulkley - Nass,200024,rg:{'id':'200024'}
+SBOwner,Stratacard,200014,Active,2013-11-23,#N/A,#N/A,Stikine,200027,rg:{'id':'200027'}
+SBOwner,Gamma Gas,200015,Active,2013-02-10,#N/A,#N/A,Fort George,200018,rg:{'id':'200018'}
+SBOwner,J. Brannam,200016,Active,2008-12-03,#N/A,#N/A,Central  Island,200001,rg:{'id':'200001'}
+SBOwner,Success Is Yours,200017,Active,2008-03-01,#N/A,#N/A,NON-BC,200028,rg:{'id':'200028'}

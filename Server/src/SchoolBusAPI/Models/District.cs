@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class District : IEquatable<District>
     {
         /// <summary>
@@ -81,6 +85,9 @@ namespace SchoolBusAPI.Models
         /// <value>The region in which the District is found.</value>
         [MetaDataExtension (Description = "The region in which the District is found.")]
         public Region Region { get; set; }
+
+        [ForeignKey("Region")]
+        public int RegionRefId { get; set; }
 
         /// <summary>
         /// The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS
@@ -150,7 +157,6 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -191,10 +197,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.MinistryDistrictID != null)
                 {
                     hash = hash * 59 + this.MinistryDistrictID.GetHashCode();

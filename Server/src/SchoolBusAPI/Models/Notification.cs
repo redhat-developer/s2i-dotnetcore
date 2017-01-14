@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class Notification : IEquatable<Notification>
     {
         /// <summary>
@@ -72,10 +76,15 @@ namespace SchoolBusAPI.Models
         /// </summary>
         public NotificationEvent Event { get; set; }
 
+        [ForeignKey("Event")]
+        public int? EventRefId { get; set; }
+
         /// <summary>
         /// Gets or Sets Event2
         /// </summary>
         public NotificationEvent Event2 { get; set; }
+        [ForeignKey("Event2")]
+        public int? Event2RefId { get; set; }
 
         /// <summary>
         /// Gets or Sets HasBeenViewed
@@ -106,6 +115,8 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
+        [ForeignKey("User")]
+        public int? UserRefId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

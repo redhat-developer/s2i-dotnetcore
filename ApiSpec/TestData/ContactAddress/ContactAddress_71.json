@@ -1,0 +1,18 @@
+[
+    {
+        "addr1": "4761 King George Hwy",
+        "addr2": null,
+        "city": "Surrey",
+        "postalCode": "V3W 4E3",
+        "province": "BC",
+        "type": "Headquarters"
+    },
+    {
+        "addr1": "2031 Blind Bay Road",
+        "addr2": null,
+        "city": "Sicamous",
+        "postalCode": "V0E 2V0",
+        "province": "BC",
+        "type": "Headquarters"
+    }
+]

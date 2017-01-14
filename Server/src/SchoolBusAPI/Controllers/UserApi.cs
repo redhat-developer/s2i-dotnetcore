@@ -43,13 +43,41 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a number of user groups</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/usergroups/bulk")]
+        [SwaggerOperation("UsergroupsBulkPost")]
+        public virtual IActionResult UsergroupsBulkPost([FromBody]GroupMembership[] items)
+        {
+            return this._service.UsergroupsBulkPostAsync(items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of user roles</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/userroles/bulk")]
+        [SwaggerOperation("UserrolesBulkPost")]
+        public virtual IActionResult UserrolesBulkPost([FromBody]UserRole[] items)
+        {
+            return this._service.UserrolesBulkPostAsync(items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Adds a number of users</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         [HttpPost]
         [Route("/api/users/bulk")]
         [SwaggerOperation("UsersBulkPost")]
-        public virtual IActionResult UsersBulkPost([FromBody]UserViewModel[] items)
+        public virtual IActionResult UsersBulkPost([FromBody]User[] items)
         {
             return this._service.UsersBulkPostAsync(items);
         }
@@ -76,12 +104,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        [HttpDelete]
-        [Route("/api/users/{id}")]
-        [SwaggerOperation("UsersIdDelete")]
-        public virtual IActionResult UsersIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/users/{id}/delete")]
+        [SwaggerOperation("UsersIdDeletePost")]
+        public virtual IActionResult UsersIdDeletePost([FromRoute]int id)
         {
-            return this._service.UsersIdDeleteAsync(id);
+            return this._service.UsersIdDeletePostAsync(id);
         }
 
         /// <summary>
@@ -135,6 +163,23 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Add to the active set of groups for a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        [HttpPost]
+        [Route("/api/users/{id}/groups")]
+        [SwaggerOperation("UsersIdGroupsPost")]
+        [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
+        public virtual IActionResult UsersIdGroupsPost([FromRoute]int id, [FromBody]GroupMembership[] items)
+        {
+            return this._service.UsersIdGroupsPostAsync(id, items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Updates the active set of groups for a user</remarks>
         /// <param name="id">id of User to update</param>
         /// <param name="items"></param>
@@ -144,7 +189,7 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/users/{id}/groups")]
         [SwaggerOperation("UsersIdGroupsPut")]
         [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
-        public virtual IActionResult UsersIdGroupsPut([FromRoute]int id, [FromBody]GroupMembershipViewModel[] items)
+        public virtual IActionResult UsersIdGroupsPut([FromRoute]int id, [FromBody]GroupMembership[] items)
         {
             return this._service.UsersIdGroupsPutAsync(id, items);
         }
@@ -255,8 +300,8 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/users")]
         [SwaggerOperation("UsersPost")]
-        [SwaggerResponse(200, type: typeof(UserViewModel))]
-        public virtual IActionResult UsersPost([FromBody]UserViewModel item)
+        [SwaggerResponse(200, type: typeof(User))]
+        public virtual IActionResult UsersPost([FromBody]User item)
         {
             return this._service.UsersPostAsync(item);
         }

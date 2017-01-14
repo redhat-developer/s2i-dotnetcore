@@ -17,34 +17,35 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services.Impl
-{
+{ 
     /// <summary>
     /// 
     /// </summary>
     public class CurrentUserApiService : ICurrentUserApiService
     {
+
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public CurrentUserApiService(DbAppContext context)
+        public CurrentUserApiService (DbAppContext context)
         {
             _context = context;
         }
-
+	
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>Get the currently logged in user</remarks>
         /// <response code="200">OK</response>
-        public virtual IActionResult UsersCurrentGetAsync()
+
+        public virtual IActionResult UsersCurrentGetAsync ()        
         {
             var result = new CurrentUserViewModel();
             // get the name for the current logged in user
@@ -56,7 +57,7 @@ namespace SchoolBusAPI.Services.Impl
             result.DistrictName = "Victoria";
             result.ScheduledInspections = 3;
 
-            // TODO get the number of inspections available for the current logged in user
+            // get the number of inspections available for the current logged in user
 
             return new ObjectResult(result);
         }

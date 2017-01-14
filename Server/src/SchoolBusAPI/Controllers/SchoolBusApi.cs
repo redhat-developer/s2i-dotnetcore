@@ -136,12 +136,12 @@ namespace SchoolBusAPI.Controllers
         /// <param name="id">id of SchoolBus to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
-        [HttpDelete]
-        [Route("/api/schoolbuses/{id}")]
-        [SwaggerOperation("SchoolbusesIdDelete")]
-        public virtual IActionResult SchoolbusesIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/schoolbuses/{id}/delete")]
+        [SwaggerOperation("SchoolbusesIdDeletePost")]
+        public virtual IActionResult SchoolbusesIdDeletePost([FromRoute]int id)
         {
-            return this._service.SchoolbusesIdDeleteAsync(id);
+            return this._service.SchoolbusesIdDeletePostAsync(id);
         }
 
         /// <summary>
@@ -205,6 +205,32 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult SchoolbusesIdPut([FromRoute]int id, [FromBody]SchoolBus item)
         {
             return this._service.SchoolbusesIdPutAsync(id, item);
+        }
+
+        /// <summary>
+        /// Searches school buses
+        /// </summary>
+        /// <remarks>Used for the search schoolbus page.</remarks>
+        /// <param name="serviceareas">Service areas (array of id numbers)</param>
+        /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
+        /// <param name="cities">Cities (array of id numbers)</param>
+        /// <param name="schooldistricts">School Districts (array of id numbers)</param>
+        /// <param name="owner"></param>
+        /// <param name="regi">ICBC Regi Number</param>
+        /// <param name="vin">VIN</param>
+        /// <param name="plate">License Plate String</param>
+        /// <param name="includeInactive">True if Inactive schoolbuses will be returned</param>
+        /// <param name="onlyReInspections">If true, only buses that need a re-inspection will be returned</param>
+        /// <param name="startDate">Inspection start date</param>
+        /// <param name="endDate">Inspection end date</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/schoolbuses/search")]
+        [SwaggerOperation("SchoolbusesSearchGet")]
+        [SwaggerResponse(200, type: typeof(List<SchoolBus>))]
+        public virtual IActionResult SchoolbusesSearchGet([FromQuery]int?[] serviceareas, [FromQuery]int?[] inspectors, [FromQuery]int?[] cities, [FromQuery]int?[] schooldistricts, [FromQuery]int? owner, [FromQuery]string regi, [FromQuery]string vin, [FromQuery]string plate, [FromQuery]bool? includeInactive, [FromQuery]bool? onlyReInspections, [FromQuery]DateTime? startDate, [FromQuery]DateTime? endDate)
+        {
+            return this._service.SchoolbusesSearchGetAsync(serviceareas, inspectors, cities, schooldistricts, owner, regi, vin, plate, includeInactive, onlyReInspections, startDate, endDate);
         }
     }
 }

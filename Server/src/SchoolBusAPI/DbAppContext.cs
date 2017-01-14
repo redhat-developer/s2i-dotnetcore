@@ -28,7 +28,6 @@ namespace SchoolBusAPI.Models
         DbSet<Inspection> Inspections { get; set; }
         DbSet<Notification> Notifications { get; set; }
         DbSet<NotificationEvent> NotificationEvents { get; set; }
-        DbSet<NotificationViewModel> NotificationViewModels { get; set; }
         DbSet<Permission> Permissions { get; set; }
         DbSet<Region> Regions { get; set; }
         DbSet<Role> Roles { get; set; }
@@ -47,8 +46,7 @@ namespace SchoolBusAPI.Models
         DbSet<SchoolDistrict> SchoolDistricts { get; set; }
         DbSet<ServiceArea> ServiceAreas { get; set; }
         DbSet<User> Users { get; set; }
-        DbSet<UserFavourite> UserFavourites { get; set; }
-        DbSet<UserFavouriteViewModel> UserFavouriteViewModels { get; set; }
+        DbSet<UserFavourite> UserFavourites { get; set; }        
         DbSet<UserRole> UserRoles { get; set; }
 
         /// <summary>
@@ -91,7 +89,6 @@ namespace SchoolBusAPI.Models
         public virtual DbSet<Inspection> Inspections { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<NotificationEvent> NotificationEvents { get; set; }
-        public virtual DbSet<NotificationViewModel> NotificationViewModels { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -111,10 +108,7 @@ namespace SchoolBusAPI.Models
         public virtual DbSet<ServiceArea> ServiceAreas { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserFavourite> UserFavourites { get; set; }
-        public virtual DbSet<UserFavouriteViewModel> UserFavouriteViewModels { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
-
-        // public DbSet<Classname> Classname { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }        
 
         /// <summary>
         /// Starts a new transaction.

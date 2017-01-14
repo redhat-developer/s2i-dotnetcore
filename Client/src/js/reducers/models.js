@@ -1,42 +1,57 @@
-const TEST_USERS = {
-  users : [{
-    userId                  : 1,
-    firstName               : 'Rob',
-    lastName                : 'Chamberlin',
-    fullName                : 'Rob Chamberlin',
-    districtName            : 'Cariboo',
-    overdueInspections      : 0,
-    scheduledReinspections  : 5,
-    dueNextMonthInspections : 22,
-  },{
-    userId                  : 2,
-    firstName               : 'Tom',
-    lastName                : 'Higgins',
-    fullName                : 'Tom Higgins',
-    districtName            : 'Cariboo',
-    overdueInspections      : 2,
-    scheduledReinspections  : 6,
-    dueNextMonthInspections : 18,
-  }],
+const DEFAULT_MODELS = {
+  users: {},
+  user: {},
+
+  schoolBuses: {},
+  schoolBus: {},
+  schoolBusAttachments: {},
+  schoolBusCCW: {},
+  schoolBusHistories: {},
+  schoolBusInspections: {},
+  schoolBusNotes: {},
+
+  owners: {},
+  owner: {},
 };
 
-const DEFAULT_STATE = {
-  users : [],
-};
-
-export default function modelsReducer(state = DEFAULT_STATE, action) {
-  var newState = {};
-
+export default function modelsReducer(state = DEFAULT_MODELS, action) {
   switch(action.type) {
     // Users
     case 'UPDATE_USERS':
-      newState = Object.assign({}, state, action.users);
-      break;
+      return { ...state, users: action.users };
 
-    case 'TEST_USERS':
-      newState = Object.assign({}, state, TEST_USERS);
-      break;
+    case 'UPDATE_USER':
+      return { ...state, user: action.user };
+
+    // Buses
+    case 'UPDATE_BUSES':
+      return { ...state, schoolBuses: action.schoolBuses };
+
+    case 'UPDATE_BUS':
+      return { ...state, schoolBus: action.schoolBus };
+
+    case 'UPDATE_BUS_ATTACHMENTS':
+      return { ...state, schoolBusAttachments: action.schoolBusAttachments };
+
+    case 'UPDATE_BUS_CCW':
+      return { ...state, schoolBusCCW: action.schoolBusCCW };
+
+    case 'UPDATE_BUS_HISTORIES':
+      return { ...state, schoolBusHistories: action.schoolBusHistories };
+
+    case 'UPDATE_BUS_INSPECTIONS':
+      return { ...state, schoolBusInspections: action.schoolBusInspections };
+
+    case 'UPDATE_BUS_NOTES':
+      return { ...state, schoolBusNotes: action.schoolBusNotes };
+
+    // Owners
+    case 'UPDATE_OWNERS':
+      return { ...state, owners: action.owners };
+
+    case 'UPDATE_OWNER':
+      return { ...state, owner: action.owner };
   }
 
-  return Object.assign({}, state, newState);
+  return state;
 }

@@ -69,15 +69,45 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns address contacts for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch contact address for</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/schoolbusownercontacts/{id}/contactaddresses")]
+        [SwaggerOperation("SchoolbusownercontactsIdContactaddressesGet")]
+        [SwaggerResponse(200, type: typeof(List<SchoolBusOwnerContactAddress>))]
+        public virtual IActionResult SchoolbusownercontactsIdContactaddressesGet([FromRoute]int id)
+        {
+            return this._service.SchoolbusownercontactsIdContactaddressesGetAsync(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns phone contacts for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch contact phone for</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/schoolbusownercontacts/{id}/contactphones")]
+        [SwaggerOperation("SchoolbusownercontactsIdContactphonesGet")]
+        [SwaggerResponse(200, type: typeof(List<SchoolBusOwnerContactPhone>))]
+        public virtual IActionResult SchoolbusownercontactsIdContactphonesGet([FromRoute]int id)
+        {
+            return this._service.SchoolbusownercontactsIdContactphonesGetAsync(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id">id of SchoolBusOwnerContact to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerContact not found</response>
-        [HttpDelete]
-        [Route("/api/schoolbusownercontacts/{id}")]
-        [SwaggerOperation("SchoolbusownercontactsIdDelete")]
-        public virtual IActionResult SchoolbusownercontactsIdDelete([FromRoute]int id)
+        [HttpPost]
+        [Route("/api/schoolbusownercontacts/{id}/delete")]
+        [SwaggerOperation("SchoolbusownercontactsIdDeletePost")]
+        public virtual IActionResult SchoolbusownercontactsIdDeletePost([FromRoute]int id)
         {
-            return this._service.SchoolbusownercontactsIdDeleteAsync(id);
+            return this._service.SchoolbusownercontactsIdDeletePostAsync(id);
         }
 
         /// <summary>

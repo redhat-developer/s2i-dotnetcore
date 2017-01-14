@@ -43,6 +43,19 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="items"></param>
+        /// <response code="201">Permissions created</response>
+        [HttpPost]
+        [Route("/api/permissions/bulk")]
+        [SwaggerOperation("PermissionsBulkPost")]
+        public virtual IActionResult PermissionsBulkPost([FromBody]Permission[] items)
+        {
+            return this._service.PermissionsBulkPostAsync(items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns a collection of permissions</remarks>
         /// <response code="200">OK</response>
         [HttpGet]
@@ -52,6 +65,66 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult PermissionsGet()
         {
             return this._service.PermissionsGetAsync();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">id of Permission to delete</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Permission not found</response>
+        [HttpPost]
+        [Route("/api/permissions/{id}/delete")]
+        [SwaggerOperation("PermissionsIdDeletePost")]
+        public virtual IActionResult PermissionsIdDeletePost([FromRoute]int id)
+        {
+            return this._service.PermissionsIdDeletePostAsync(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a permission</remarks>
+        /// <param name="id">id of Permission to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Permission not found</response>
+        [HttpGet]
+        [Route("/api/permissions/{id}")]
+        [SwaggerOperation("PermissionsIdGet")]
+        [SwaggerResponse(200, type: typeof(PermissionViewModel))]
+        public virtual IActionResult PermissionsIdGet([FromRoute]int id)
+        {
+            return this._service.PermissionsIdGetAsync(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">id of Permission to update</param>
+        /// <param name="item"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Permission not found</response>
+        [HttpPut]
+        [Route("/api/permissions/{id}")]
+        [SwaggerOperation("PermissionsIdPut")]
+        [SwaggerResponse(200, type: typeof(PermissionViewModel))]
+        public virtual IActionResult PermissionsIdPut([FromRoute]int id, [FromBody]PermissionViewModel item)
+        {
+            return this._service.PermissionsIdPutAsync(id, item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <response code="201">Permission created</response>
+        [HttpPost]
+        [Route("/api/permissions")]
+        [SwaggerOperation("PermissionsPost")]
+        [SwaggerResponse(200, type: typeof(Permission))]
+        public virtual IActionResult PermissionsPost([FromBody]Permission item)
+        {
+            return this._service.PermissionsPostAsync(item);
         }
     }
 }

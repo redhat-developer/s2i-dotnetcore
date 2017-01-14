@@ -49,9 +49,10 @@ namespace SchoolBusAPI.Models
                 foreach (var entityProperty in entityType.GetProperties())
                 {
                     // Special case for the primary key.
+                    // Primary key has a prefix of the table name, excluding the application prefix.
                     if (entityProperty.Name != null && entityProperty.Name.ToLowerInvariant().Equals("id"))
                     {
-                        entityProperty.Relational().ColumnName = entityType.Relational().TableName + "_ID";
+                        entityProperty.Relational().ColumnName = ConvertName(entityType.ClrType.Name) + "_ID";
                     }
                     else
                     {

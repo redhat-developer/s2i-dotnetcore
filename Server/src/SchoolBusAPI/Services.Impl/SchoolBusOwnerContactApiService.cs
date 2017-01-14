@@ -17,24 +17,23 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services.Impl
-{
+{ 
     /// <summary>
     /// 
     /// </summary>
     public class SchoolBusOwnerContactApiService : ISchoolBusOwnerContactApiService
     {
+
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusOwnerContactApiService(DbAppContext context)
+        public SchoolBusOwnerContactApiService (DbAppContext context)
         {
             _context = context;
         }
@@ -42,40 +41,41 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
+
         /// <param name="items"></param>
         /// <response code="201">SchoolBusOwnerContacts created</response>
-        public virtual IActionResult SchoolbusownercontactsBulkPostAsync(SchoolBusOwnerContact[] items)
+
+        public virtual IActionResult SchoolbusownercontactsBulkPostAsync (SchoolBusOwnerContact[] items)        
         {
             if (items == null)
             {
                 return new BadRequestResult();
             }
             foreach (SchoolBusOwnerContact item in items)
-            {
-                _context.SchoolBusOwnerContacts.Add(item);
+            {                
+                var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.SchoolBusOwnerContacts.Update(item);
+                }
+                else
+                {
+                    _context.SchoolBusOwnerContacts.Add(item);
+                }                
             }
             // Save the changes
             _context.SaveChanges();
             return new NoContentResult();
         }
-
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        public virtual IActionResult SchoolbusownercontactsGetAsync()
-        {
-            var result = "";
-            return new ObjectResult(result);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         /// <param name="id">id of SchoolBusOwnerContact to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerContact not found</response>
-        public virtual IActionResult SchoolbusownercontactsIdDeleteAsync(int id)
+
+        public virtual IActionResult SchoolbusownercontactsIdDeletePostAsync (int id)        
         {
             var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == id);
             if (exists)
@@ -95,14 +95,15 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
-
         /// <summary>
         /// 
         /// </summary>
+        
         /// <param name="id">id of SchoolBusOwnerContact to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwnerContact not found</response>
-        public virtual IActionResult SchoolbusownercontactsIdGetAsync(int id)
+
+        public virtual IActionResult SchoolbusownercontactsIdGetAsync (int id)        
         {
             var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == id);
             if (exists)
@@ -120,24 +121,27 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id">id of SchoolBusOwnerContact to fetch</param>
-        /// <param name="item"></param>
         /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusOwnerContact not found</response>
-        public virtual IActionResult SchoolbusownercontactsIdPutAsync(int id, SchoolBusOwnerContact item)
+        public virtual IActionResult SchoolbusownercontactsGetAsync()
+        {
+            var result = _context.SchoolBusOwnerContacts.ToList();
+            return new ObjectResult(result);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns address contacts for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch contact address for</param>
+        /// <response code="200">OK</response>
+        public IActionResult SchoolbusownercontactsIdContactaddressesGetAsync(int id)
         {
             var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == id);
             if (exists)
             {
-                var dbItem = _context.SchoolBusOwnerContacts.First(a => a.Id == id);
-                if (dbItem != null)
-                {
-                    dbItem.SchoolBusOwner = item.SchoolBusOwner;                    
-                    _context.SchoolBusOwnerContacts.Update(dbItem);
-                    // Save the changes
-                    _context.SaveChanges();
-                }
-                return new ObjectResult(dbItem);
+                var result = _context.SchoolBusOwnerContacts.First(a => a.Id == id);
+                return new ObjectResult(result.SchoolBusOwnerContactAddresses.ToList());
             }
             else
             {
@@ -149,13 +153,62 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="item"></param>
-        /// <response code="201">SchoolBusOwnerContact created</response>
-        public virtual IActionResult SchoolbusownercontactsPostAsync(SchoolBusOwnerContact item)
+        /// <remarks>Returns phone contacts for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch contact phone for</param>
+        /// <response code="200">OK</response>
+        public IActionResult SchoolbusownercontactsIdContactphonesGetAsync(int id)
         {
-            _context.SchoolBusOwnerContacts.Add(item);
+            var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = _context.SchoolBusOwnerContacts.First(a => a.Id == id);
+                return new ObjectResult(result.SchoolBusOwnerContactAddresses.ToList());
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        /// <param name="id">id of SchoolBusOwnerContact to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBusOwnerContact not found</response>
+
+        public virtual IActionResult SchoolbusownercontactsIdPutAsync (int id, SchoolBusOwnerContact body)        
+        {
+            var exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == id);
+            if (exists && id == body.Id)
+            {
+                _context.SchoolBusOwnerContacts.Update(body);
+                // Save the changes
+                _context.SaveChanges();
+                
+                return new ObjectResult(body);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        public virtual IActionResult SchoolbusownercontactsPostAsync(SchoolBusOwnerContact body)
+        {
+            _context.SchoolBusOwnerContacts.Add(body);
             _context.SaveChanges();
-            return new ObjectResult(item);
+            return new ObjectResult(body);
         }
     }
 }

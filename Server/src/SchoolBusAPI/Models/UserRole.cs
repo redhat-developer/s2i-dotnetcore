@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class UserRole : IEquatable<UserRole>
     {
         /// <summary>
@@ -132,13 +136,11 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    this.Id != null &&
+                    this.Id == other.Id ||                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
                     this.EffectiveDate == other.EffectiveDate ||
-                    this.EffectiveDate != null &&
                     this.EffectiveDate.Equals(other.EffectiveDate)
                 ) && 
                 (
@@ -169,14 +171,10 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
-                if (this.EffectiveDate != null)
-                {
-                    hash = hash * 59 + this.EffectiveDate.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
+                hash = hash * 59 + this.EffectiveDate.GetHashCode();
+                
                 if (this.ExpiryDate != null)
                 {
                     hash = hash * 59 + this.ExpiryDate.GetHashCode();

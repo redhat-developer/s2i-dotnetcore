@@ -5,13 +5,16 @@ using System.Threading.Tasks;
 
 namespace SchoolBusAPI.Models
 {
+    /// <summary>
+    /// Utility class used for the column comment (description) feature
+    /// </summary>
     public class MetaDataExtension : Attribute
     {
-        private string _description;
+
         /// <summary>
         /// The PostgreSQL Comment.  Used for columns with entity framework. 
         /// </summary>
-        public virtual string Description { get { return _description; } set { _description = value; } }
-    
+        public virtual string Description { get; set; }
+
     }
 }

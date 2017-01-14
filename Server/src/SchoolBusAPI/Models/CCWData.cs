@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls.
     /// </summary>
+        [MetaDataExtension (Description = "Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls.")]
+
+
     public partial class CCWData : IEquatable<CCWData>
     {
         /// <summary>
@@ -44,7 +48,7 @@ namespace SchoolBusAPI.Models
         /// <param name="ICBCCVIPDecal">ICBCCVIPDecal.</param>
         /// <param name="ICBCFleetUnitNo">ICBCFleetUnitNo.</param>
         /// <param name="ICBCGrossVehicleWeight">ICBCGrossVehicleWeight.</param>
-        /// <param name="ICBCMICBCake">ICBCMICBCake.</param>
+        /// <param name="ICBCMake">ICBCMake.</param>
         /// <param name="ICBCBody">ICBCBody.</param>
         /// <param name="ICBCRebuiltStatus">ICBCRebuiltStatus.</param>
         /// <param name="ICBCCVIPExpiry">ICBCCVIPExpiry.</param>
@@ -74,7 +78,7 @@ namespace SchoolBusAPI.Models
         /// <param name="NSCPolicyExpiryDate">NSCPolicyExpiryDate.</param>
         /// <param name="NSCPolicyStatus">NSCPolicyStatus.</param>
         /// <param name="NSCPlateDecal">NSCPlateDecal.</param>
-        public CCWData(int Id, string ICBCRegi = null, int? ICBCModelYear = null, string ICBCVehicleType = null, string ICBCRateClass = null, string ICBCCVIPDecal = null, int? ICBCFleetUnitNo = null, int? ICBCGrossVehicleWeight = null, string ICBCMICBCake = null, string ICBCBody = null, string ICBCRebuiltStatus = null, DateTime? ICBCCVIPExpiry = null, int? ICBCNetWt = null, string ICBCModel = null, string ICBCFuel = null, int? ICBCSeatingCapacity = null, string ICBCColour = null, string ICBCNotesAndOrders = null, DateTime? ICBCOrderedOn = null, string ICBCRegOwnerName = null, string ICBCRegOwnerAddr1 = null, string ICBCRegOwnerAddr2 = null, string ICBCRegOwnerCity = null, string ICBCRegOwnerProv = null, string ICBCRegOwnerPostalCode = null, string ICBCRegOwnerStatus = null, string ICBCRegOwnerRODL = null, string ICBCRegOwnerPool = null, string NSCClientNum = null, string NSCCarrierName = null, string NSCCarrierConditions = null, string NSCCarrierSafetyRating = null, string NSCPolicyNumber = null, DateTime? NSCPolicyEffectiveDate = null, DateTime? NSCPolicyStatusDate = null, DateTime? NSCPolicyExpiryDate = null, string NSCPolicyStatus = null, string NSCPlateDecal = null)
+        public CCWData(int Id, string ICBCRegi = null, int? ICBCModelYear = null, string ICBCVehicleType = null, string ICBCRateClass = null, string ICBCCVIPDecal = null, int? ICBCFleetUnitNo = null, int? ICBCGrossVehicleWeight = null, string ICBCMake = null, string ICBCBody = null, string ICBCRebuiltStatus = null, DateTime? ICBCCVIPExpiry = null, int? ICBCNetWt = null, string ICBCModel = null, string ICBCFuel = null, int? ICBCSeatingCapacity = null, string ICBCColour = null, string ICBCNotesAndOrders = null, DateTime? ICBCOrderedOn = null, string ICBCRegOwnerName = null, string ICBCRegOwnerAddr1 = null, string ICBCRegOwnerAddr2 = null, string ICBCRegOwnerCity = null, string ICBCRegOwnerProv = null, string ICBCRegOwnerPostalCode = null, string ICBCRegOwnerStatus = null, string ICBCRegOwnerRODL = null, string ICBCRegOwnerPool = null, string NSCClientNum = null, string NSCCarrierName = null, string NSCCarrierConditions = null, string NSCCarrierSafetyRating = null, string NSCPolicyNumber = null, DateTime? NSCPolicyEffectiveDate = null, DateTime? NSCPolicyStatusDate = null, DateTime? NSCPolicyExpiryDate = null, string NSCPolicyStatus = null, string NSCPlateDecal = null)
         {
             
             this.Id = Id;
@@ -85,7 +89,7 @@ namespace SchoolBusAPI.Models
             this.ICBCCVIPDecal = ICBCCVIPDecal;
             this.ICBCFleetUnitNo = ICBCFleetUnitNo;
             this.ICBCGrossVehicleWeight = ICBCGrossVehicleWeight;
-            this.ICBCMICBCake = ICBCMICBCake;
+            this.ICBCMake = ICBCMake;
             this.ICBCBody = ICBCBody;
             this.ICBCRebuiltStatus = ICBCRebuiltStatus;
             this.ICBCCVIPExpiry = ICBCCVIPExpiry;
@@ -165,9 +169,9 @@ namespace SchoolBusAPI.Models
         public int? ICBCGrossVehicleWeight { get; set; }
 
         /// <summary>
-        /// Gets or Sets ICBCMICBCake
+        /// Gets or Sets ICBCMake
         /// </summary>
-        public string ICBCMICBCake { get; set; }
+        public string ICBCMake { get; set; }
 
         /// <summary>
         /// Gets or Sets ICBCBody
@@ -330,7 +334,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  ICBCCVIPDecal: ").Append(ICBCCVIPDecal).Append("\n");
             sb.Append("  ICBCFleetUnitNo: ").Append(ICBCFleetUnitNo).Append("\n");
             sb.Append("  ICBCGrossVehicleWeight: ").Append(ICBCGrossVehicleWeight).Append("\n");
-            sb.Append("  ICBCMICBCake: ").Append(ICBCMICBCake).Append("\n");
+            sb.Append("  ICBCMake: ").Append(ICBCMake).Append("\n");
             sb.Append("  ICBCBody: ").Append(ICBCBody).Append("\n");
             sb.Append("  ICBCRebuiltStatus: ").Append(ICBCRebuiltStatus).Append("\n");
             sb.Append("  ICBCCVIPExpiry: ").Append(ICBCCVIPExpiry).Append("\n");
@@ -399,8 +403,7 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    this.Id != null &&
+                    this.Id == other.Id ||                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -439,9 +442,9 @@ namespace SchoolBusAPI.Models
                     this.ICBCGrossVehicleWeight.Equals(other.ICBCGrossVehicleWeight)
                 ) && 
                 (
-                    this.ICBCMICBCake == other.ICBCMICBCake ||
-                    this.ICBCMICBCake != null &&
-                    this.ICBCMICBCake.Equals(other.ICBCMICBCake)
+                    this.ICBCMake == other.ICBCMake ||
+                    this.ICBCMake != null &&
+                    this.ICBCMake.Equals(other.ICBCMake)
                 ) && 
                 (
                     this.ICBCBody == other.ICBCBody ||
@@ -601,10 +604,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.ICBCRegi != null)
                 {
                     hash = hash * 59 + this.ICBCRegi.GetHashCode();
@@ -633,9 +634,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.ICBCGrossVehicleWeight.GetHashCode();
                 }
-                if (this.ICBCMICBCake != null)
+                if (this.ICBCMake != null)
                 {
-                    hash = hash * 59 + this.ICBCMICBCake.GetHashCode();
+                    hash = hash * 59 + this.ICBCMake.GetHashCode();
                 }
                 if (this.ICBCBody != null)
                 {

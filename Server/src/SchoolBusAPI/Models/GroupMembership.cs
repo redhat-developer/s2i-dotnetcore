@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class GroupMembership : IEquatable<GroupMembership>
     {
         /// <summary>
@@ -125,12 +129,10 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
                     this.Active == other.Active ||
-                    this.Active != null &&
                     this.Active.Equals(other.Active)
                 ) && 
                 (
@@ -160,10 +162,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
                 }
-                if (this.Active != null)
-                {
-                    hash = hash * 59 + this.Active.GetHashCode();
-                }
+
+                hash = hash * 59 + this.Active.GetHashCode();
+
                 if (this.Group != null)
                 {
                     hash = hash * 59 + this.Group.GetHashCode();

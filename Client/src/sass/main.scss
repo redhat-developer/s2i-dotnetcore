@@ -1,6 +1,7 @@
 @import "gov3";
 @import "init";
 @import "header";
+@import "components/all";
 @import "views/all";
 
 #app {
@@ -41,11 +42,11 @@ button {
   }
 }
 
-.dropdown-menu {
-  font-size: 13px;
-}
-
 @keyframes rotate {
   0%    { transform: rotate(0deg); }
   100%  { transform: rotate(360deg); }
+}
+
+th {
+  text-align: left;
 }

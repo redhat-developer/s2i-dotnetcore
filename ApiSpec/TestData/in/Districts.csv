@@ -1,0 +1,14 @@
+File,!Region,region,ministryDistrict,name,startDate,endDate,id
+District,South Coast,rg:{ 'id': '200000'},1,Lower Mainland,2009-01-01,rg:None,200000
+District,South Coast,rg:{ 'id': '200000'},2,Vancouver Island,2009-01-01,rg:None,200001
+District,Southern Interior,rg:{ 'id': '200001'},3,Rocky Mountain,2009-01-01,rg:None,200002
+District,Southern Interior,rg:{ 'id': '200001'},4,West Kootenay,2009-01-01,rg:None,200003
+District,Southern Interior,rg:{ 'id': '200001'},5,Okanagan-Shuswap,2009-01-01,rg:None,200004
+District,Southern Interior,rg:{ 'id': '200001'},6,Thompson-Nicola,2009-01-01,rg:None,200005
+District,Southern Interior,rg:{ 'id': '200001'},7,Cariboo,2009-01-01,rg:None,200006
+District,Northern,rg:{ 'id': '200002'},8,Peace,2009-01-01,rg:None,200007
+District,Northern,rg:{ 'id': '200002'},9,Fort George,2009-01-01,rg:None,200008
+District,Northern,rg:{ 'id': '200002'},10,Bulkley-Stikine,2009-01-01,rg:None,200009
+District,Northern,rg:{ 'id': '200002'},11,Skeena,2009-01-01,rg:None,200010
+District,NON-BC,rg:{ 'id': '200003'},99,NON-BC,2009-01-01,rg:None,200011
+District,Unknown,rg:{ 'id': '200004'},999,Unknown,2009-01-01,rg:None,200012

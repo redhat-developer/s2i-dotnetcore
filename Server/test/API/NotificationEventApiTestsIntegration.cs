@@ -95,7 +95,7 @@ namespace SchoolBusAPI.Test
             notificationEvent = JsonConvert.DeserializeObject<NotificationEvent>(jsonString);
 
             // do a delete.
-            request = new HttpRequestMessage(HttpMethod.Delete, "/api/notificationevents/" + id);
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/notificationevents/" + id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 

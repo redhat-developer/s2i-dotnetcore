@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class SchoolBusOwnerContactPhone : IEquatable<SchoolBusOwnerContactPhone>
     {
         /// <summary>
@@ -39,14 +43,12 @@ namespace SchoolBusAPI.Models
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="Type">The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list..</param>
         /// <param name="PhoneNumber">The phone number of the contact. Entered as free form to support a range of formats..</param>
-        /// <param name="SchoolBusOwnerContact">SchoolBusOwnerContact.</param>
-        public SchoolBusOwnerContactPhone(int Id, string Type = null, string PhoneNumber = null, SchoolBusOwnerContact SchoolBusOwnerContact = null)
+        public SchoolBusOwnerContactPhone(int Id, string Type = null, string PhoneNumber = null)
         {
             
             this.Id = Id;
             this.Type = Type;
             this.PhoneNumber = PhoneNumber;
-            this.SchoolBusOwnerContact = SchoolBusOwnerContact;
             
         }
 
@@ -72,11 +74,6 @@ namespace SchoolBusAPI.Models
         public string PhoneNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets SchoolBusOwnerContact
-        /// </summary>
-        public SchoolBusOwnerContact SchoolBusOwnerContact { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -87,7 +84,6 @@ namespace SchoolBusAPI.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  PhoneNumber: ").Append(PhoneNumber).Append("\n");
-            sb.Append("  SchoolBusOwnerContact: ").Append(SchoolBusOwnerContact).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -140,11 +136,6 @@ namespace SchoolBusAPI.Models
                     this.PhoneNumber == other.PhoneNumber ||
                     this.PhoneNumber != null &&
                     this.PhoneNumber.Equals(other.PhoneNumber)
-                ) && 
-                (
-                    this.SchoolBusOwnerContact == other.SchoolBusOwnerContact ||
-                    this.SchoolBusOwnerContact != null &&
-                    this.SchoolBusOwnerContact.Equals(other.SchoolBusOwnerContact)
                 );
         }
 
@@ -159,10 +150,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.Type != null)
                 {
                     hash = hash * 59 + this.Type.GetHashCode();
@@ -170,10 +159,6 @@ namespace SchoolBusAPI.Models
                 if (this.PhoneNumber != null)
                 {
                     hash = hash * 59 + this.PhoneNumber.GetHashCode();
-                }
-                if (this.SchoolBusOwnerContact != null)
-                {
-                    hash = hash * 59 + this.SchoolBusOwnerContact.GetHashCode();
                 }
                 return hash;
             }

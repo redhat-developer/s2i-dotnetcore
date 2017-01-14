@@ -48,7 +48,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of NotificationEvent to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">NotificationEvent not found</response>
-        IActionResult NotificationeventsIdDeleteAsync(int id);
+        IActionResult NotificationeventsIdDeletePostAsync(int id);
 
         /// <summary>
         /// 

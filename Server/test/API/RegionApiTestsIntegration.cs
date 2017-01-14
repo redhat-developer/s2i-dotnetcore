@@ -96,19 +96,14 @@ namespace SchoolBusAPI.Test
 
             // compare the name, should match.
             Assert.Equal(region.Name, testChangeName);      
-
-            // get cities for the region.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/regions/" + id + "/cities");
-            response = await _client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-
-            // get local areas for the region.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/regions/" + id + "/localareas");
+            
+            // get districts for the region.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/regions/" + id + "/districts");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // do a delete.
-            request = new HttpRequestMessage(HttpMethod.Delete, "/api/regions/" + id);
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/regions/" + id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 

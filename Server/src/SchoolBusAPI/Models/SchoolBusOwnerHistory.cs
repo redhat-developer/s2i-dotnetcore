@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// The history of updates made to a School Bus. Exact format of the history TBD.
     /// </summary>
+        [MetaDataExtension (Description = "The history of updates made to a School Bus. Exact format of the history TBD.")]
+
+
     public partial class SchoolBusOwnerHistory : IEquatable<SchoolBusOwnerHistory>
     {
         /// <summary>
@@ -57,6 +61,9 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets SchoolBusOwner
         /// </summary>
         public SchoolBusOwner SchoolBusOwner { get; set; }
+
+        [ForeignKey("SchoolBusOwner")]
+        public int? SchoolBusOwnerRefId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -107,8 +114,7 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||
-                    this.Id != null &&
+                    this.Id == other.Id ||                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -129,10 +135,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.SchoolBusOwner != null)
                 {
                     hash = hash * 59 + this.SchoolBusOwner.GetHashCode();

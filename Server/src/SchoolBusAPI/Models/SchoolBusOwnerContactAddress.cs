@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class SchoolBusOwnerContactAddress : IEquatable<SchoolBusOwnerContactAddress>
     {
         /// <summary>
@@ -43,8 +47,7 @@ namespace SchoolBusAPI.Models
         /// <param name="City">The City of the address..</param>
         /// <param name="Province">The Province of the address..</param>
         /// <param name="PostalCode">The postal code of the address..</param>
-        /// <param name="SchoolBusOwnerContact">SchoolBusOwnerContact.</param>
-        public SchoolBusOwnerContactAddress(int Id, string Type = null, string Addr1 = null, string Addr2 = null, string City = null, string Province = null, string PostalCode = null, SchoolBusOwnerContact SchoolBusOwnerContact = null)
+        public SchoolBusOwnerContactAddress(int Id, string Type = null, string Addr1 = null, string Addr2 = null, string City = null, string Province = null, string PostalCode = null)
         {
             
             this.Id = Id;
@@ -54,7 +57,6 @@ namespace SchoolBusAPI.Models
             this.City = City;
             this.Province = Province;
             this.PostalCode = PostalCode;
-            this.SchoolBusOwnerContact = SchoolBusOwnerContact;
             
         }
 
@@ -108,11 +110,6 @@ namespace SchoolBusAPI.Models
         public string PostalCode { get; set; }
 
         /// <summary>
-        /// Gets or Sets SchoolBusOwnerContact
-        /// </summary>
-        public SchoolBusOwnerContact SchoolBusOwnerContact { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -127,7 +124,6 @@ namespace SchoolBusAPI.Models
             sb.Append("  City: ").Append(City).Append("\n");
             sb.Append("  Province: ").Append(Province).Append("\n");
             sb.Append("  PostalCode: ").Append(PostalCode).Append("\n");
-            sb.Append("  SchoolBusOwnerContact: ").Append(SchoolBusOwnerContact).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -168,7 +164,6 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -200,11 +195,6 @@ namespace SchoolBusAPI.Models
                     this.PostalCode == other.PostalCode ||
                     this.PostalCode != null &&
                     this.PostalCode.Equals(other.PostalCode)
-                ) && 
-                (
-                    this.SchoolBusOwnerContact == other.SchoolBusOwnerContact ||
-                    this.SchoolBusOwnerContact != null &&
-                    this.SchoolBusOwnerContact.Equals(other.SchoolBusOwnerContact)
                 );
         }
 
@@ -219,10 +209,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.Type != null)
                 {
                     hash = hash * 59 + this.Type.GetHashCode();
@@ -246,10 +234,6 @@ namespace SchoolBusAPI.Models
                 if (this.PostalCode != null)
                 {
                     hash = hash * 59 + this.PostalCode.GetHashCode();
-                }
-                if (this.SchoolBusOwnerContact != null)
-                {
-                    hash = hash * 59 + this.SchoolBusOwnerContact.GetHashCode();
                 }
                 return hash;
             }

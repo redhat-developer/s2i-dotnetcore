@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class ServiceArea : IEquatable<ServiceArea>
     {
         /// <summary>
@@ -39,7 +43,7 @@ namespace SchoolBusAPI.Models
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="MinistryServiceAreaID">The Ministry ID for the Service Area.</param>
         /// <param name="Name">The name of the Service Area.</param>
-        /// <param name="Region">The district in which the Service Area is found..</param>
+        /// <param name="District">The district in which the Service Area is found..</param>
         /// <param name="StartDate">The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
         /// <param name="EndDate">The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
         public ServiceArea(int Id, int? MinistryServiceAreaID = null, string Name = null, District District = null, DateTime? StartDate = null, DateTime? EndDate = null)
@@ -107,7 +111,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  MinistryServiceAreaID: ").Append(MinistryServiceAreaID).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Region: ").Append(District).Append("\n");
+            sb.Append("  District: ").Append(District).Append("\n");
             sb.Append("  StartDate: ").Append(StartDate).Append("\n");
             sb.Append("  EndDate: ").Append(EndDate).Append("\n");
             sb.Append("}\n");
@@ -150,7 +154,6 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -191,10 +194,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+
                 if (this.MinistryServiceAreaID != null)
                 {
                     hash = hash * 59 + this.MinistryServiceAreaID.GetHashCode();

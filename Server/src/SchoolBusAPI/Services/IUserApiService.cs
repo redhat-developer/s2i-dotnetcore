@@ -32,10 +32,26 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Adds a number of user groups</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        IActionResult UsergroupsBulkPostAsync(GroupMembership[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a number of user roles</remarks>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        IActionResult UserrolesBulkPostAsync(UserRole[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Adds a number of users</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
-        IActionResult UsersBulkPostAsync(UserViewModel[] items);
+        IActionResult UsersBulkPostAsync(User[] items);
 
         /// <summary>
         /// 
@@ -52,7 +68,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdDeleteAsync(int id);
+        IActionResult UsersIdDeletePostAsync(int id);
 
         /// <summary>
         /// 
@@ -84,12 +100,22 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Add to the active set of groups for a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        IActionResult UsersIdGroupsPostAsync(int id, GroupMembership[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Updates the active set of groups for a user</remarks>
         /// <param name="id">id of User to update</param>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdGroupsPutAsync(int id, GroupMembershipViewModel[] items);
+        IActionResult UsersIdGroupsPutAsync(int id, GroupMembership[] items);
 
         /// <summary>
         /// 
@@ -152,6 +178,6 @@ namespace SchoolBusAPI.Services
         /// <remarks>Create new user</remarks>
         /// <param name="item"></param>
         /// <response code="201">User created</response>
-        IActionResult UsersPostAsync(UserViewModel item);
+        IActionResult UsersPostAsync(User item);
     }
 }

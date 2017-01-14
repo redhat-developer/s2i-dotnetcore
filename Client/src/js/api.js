@@ -1,31 +1,153 @@
 import store from './store';
 import {ApiRequest} from './utils/http';
+import {lastFirstName} from './utils/string';
 
-const TESTING = true;
+import _ from 'lodash';
 
-
-export function test(/*testId*/) {
-  return new ApiRequest('/test').get().then(response => {
-    store.dispatch({ type: 'TEST_COUNT', count: response.count });
-  });
-}
 
 export function getCurrentUser() {
-  if (TESTING) { return store.dispatch({ type: 'TEST_USER' }); }
-
   return new ApiRequest('/users/current').get().then(response => {
-    store.dispatch({ type: 'UPDATE_USER', user: response });
+    store.dispatch({ type: 'UPDATE_CURRENT_USER', user: response });
   });
 }
 
-export function getUsers(regionId, cityId, localAreaId) {
-  if (TESTING) { return store.dispatch({ type: 'TEST_USERS' }); }
+export function getUsers(params) {
+  return new ApiRequest('/users').get(params).then(response => {
+    // Normalize the response
+    var users = _.fromPairs(response.map(user => [ user.id, user ]));
 
-  return new ApiRequest('/users').get({
-    regionId    : regionId,
-    cityId      : cityId,
-    localAreaId : localAreaId,
-  }).then(response => {
-    store.dispatch({ type: 'UPDATE_USERS', users: response });
+    // Add display fields
+    _.map(users, user => {
+      user.name = lastFirstName(user.surname, user.givenName);
+    });
+
+    store.dispatch({ type: 'UPDATE_USERS', users: users });
+  });
+}
+
+export function getUser(userId) {
+  return new ApiRequest(`/users/${userId}`).get().then(response => {
+    var user = response;
+
+    // Add display fields
+    user.name = lastFirstName(user.surname, user.givenName);
+
+    store.dispatch({ type: 'UPDATE_USER', user: user });
+  });
+}
+
+export function getSchoolBuses(params) {
+  return new ApiRequest('/schoolbuses').get(params).then(response => {
+    // Normalize the response
+    var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
+
+    store.dispatch({ type: 'UPDATE_BUSES', schoolBuses: schoolBuses });
+  });
+}
+
+export function getSchoolBus(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}`).get().then(response => {
+    var schoolBus = response;
+
+    store.dispatch({ type: 'UPDATE_BUS', schoolBus: schoolBus });
+  });
+}
+
+export function getSchoolBusAttachments(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/attachments`).get().then(response => {
+    // Normalize the response
+    var schoolBusAttachments = _.fromPairs(response.map(attachment => [ attachment.id, attachment ]));
+
+    store.dispatch({ type: 'UPDATE_BUS_ATTACHMENTS', schoolBusAttachments: schoolBusAttachments });
+  });
+}
+
+export function getSchoolBusCCW(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/ccwdata`).get().then(response => {
+    var schoolBusCCW = response || {};
+
+    store.dispatch({ type: 'UPDATE_BUS_CCW', schoolBusCCW: schoolBusCCW });
+  });
+}
+
+export function getSchoolBusHistories(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/history`).get().then(response => {
+    // Normalize the response
+    var schoolBusHistories = _.fromPairs(response.map(history => [ history.id, history ]));
+
+    store.dispatch({ type: 'UPDATE_BUS_HISTORIES', schoolBusHistories: schoolBusHistories });
+  });
+}
+
+export function getSchoolBusInspections(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/inspections`).get().then(response => {
+    // Normalize the response
+    var schoolBusInspections = _.fromPairs(response.map(inspection => [ inspection.id, inspection ]));
+
+    store.dispatch({ type: 'UPDATE_BUS_INSPECTIONS', schoolBusInspections: schoolBusInspections });
+  });
+}
+
+export function getSchoolBusNotes(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/notes`).get().then(response => {
+    // Normalize the response
+    var schoolBusNotes = _.fromPairs(response.map(note => [ note.id, note ]));
+
+    store.dispatch({ type: 'UPDATE_BUS_NOTES', schoolBusNotes: schoolBusNotes });
+  });
+}
+
+export function getOwner(ownerId) {
+  return new ApiRequest(`/schoolbusowners/${ownerId}`).get().then(response => {
+    var owner = response;
+
+    store.dispatch({ type: 'UPDATE_OWNER', owner: owner });
+  });
+}
+
+// Look Ups
+
+export function getCities() {
+  return new ApiRequest('/cities').get().then(response => {
+    // Normalize the response
+    var cities = _.fromPairs(response.map(city => [ city.id, city ]));
+
+    store.dispatch({ type: 'UPDATE_CITIES', cities: cities });
+  });
+}
+
+export function getDistricts() {
+  return new ApiRequest('/districts').get().then(response => {
+    // Normalize the response
+    var districts = _.fromPairs(response.map(district => [ district.id, district ]));
+
+    store.dispatch({ type: 'UPDATE_DISTRICTS', districts: districts });
+  });
+}
+
+export function getRegions() {
+  return new ApiRequest('/regions').get().then(response => {
+    // Normalize the response
+    var regions = _.fromPairs(response.map(region => [ region.id, region ]));
+
+    store.dispatch({ type: 'UPDATE_REGIONS', regions: regions });
+  });
+}
+
+export function getSchoolDistricts() {
+  return new ApiRequest('/schooldistricts').get().then(response => {
+    // Normalize the response
+    var schoolDistricts = _.fromPairs(response.map(schoolDistrict => [ schoolDistrict.id, schoolDistrict ]));
+
+    store.dispatch({ type: 'UPDATE_SCHOOL_DISTRICTS', schoolDistricts: schoolDistricts });
+  });
+}
+
+export function getServiceAreas() {
+  return new ApiRequest('/serviceareas').get().then(response => {
+    // Normalize the response
+    var serviceAreas = _.fromPairs(response.map(serviceArea => [ serviceArea.id, serviceArea ]));
+
+    store.dispatch({ type: 'UPDATE_SERVICE_AREAS', serviceAreas: serviceAreas });
   });
 }

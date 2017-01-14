@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap';
 
 var RolesPermissions = React.createClass({
   propTypes: {
@@ -9,11 +9,7 @@ var RolesPermissions = React.createClass({
 
   render: function() {
     return <div id="roles-permissions">
-      <Row>
-        <Col md={8}>
-          <h1>Roles and Permissions</h1>
-        </Col>
-      </Row>
+      <PageHeader>Roles and Permissions</PageHeader>
     </div>;
   },
 });
