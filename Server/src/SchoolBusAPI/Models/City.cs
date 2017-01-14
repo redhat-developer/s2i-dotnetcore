@@ -17,12 +17,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// A list of cities in BC. Authoritative source to be determined.
     /// </summary>
+        [MetaDataExtension (Description = "A list of cities in BC. Authoritative source to be determined.")]
+
+
     public partial class City : IEquatable<City>
     {
         /// <summary>
@@ -110,7 +114,6 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -131,10 +134,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                hash = hash * 59 + this.Id.GetHashCode();
+                
                 if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();

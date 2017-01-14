@@ -163,8 +163,15 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var data = _context.SchoolBusOwnerContacts.Where(a => a.SchoolBusOwner.Id == id).First();
-                return new ObjectResult(data.SchoolBusOwnerContactAddresses.ToList());
+                List<SchoolBusOwnerContactAddress> result = new List<SchoolBusOwnerContactAddress>();
+                var owner = _context.SchoolBusOwners.Where(a => a.Id == id).First();
+                var contacts = owner.Contacts;
+                foreach (SchoolBusOwnerContact contact in contacts)
+                {
+                    // merge the lists
+                    result = result.Concat ( contact.SchoolBusOwnerContactAddresses).ToList();
+                }
+                return new ObjectResult(result);
             }
             else
             {
@@ -184,8 +191,15 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var data = _context.SchoolBusOwnerContacts.Where(a => a.SchoolBusOwner.Id == id).First();
-                return new ObjectResult(data.SchoolBusOwnerContactPhones.ToList());
+                List<SchoolBusOwnerContactPhone> result = new List<SchoolBusOwnerContactPhone>();
+                var owner = _context.SchoolBusOwners.Where(a => a.Id == id).First();
+                var contacts = owner.Contacts;
+                foreach (SchoolBusOwnerContact contact in contacts)
+                {
+                    // merge the lists
+                    result = result.Concat(contact.SchoolBusOwnerContactPhones).ToList();
+                }
+                return new ObjectResult(result);                
             }
             else
             {

@@ -24,6 +24,9 @@ namespace SchoolBusAPI.Models
     /// <summary>
     /// 
     /// </summary>
+
+
+
     public partial class NotificationEvent : IEquatable<NotificationEvent>
     {
         /// <summary>
@@ -93,7 +96,6 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets SchoolBus
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
-
         [ForeignKey("SchoolBus")]
         public int? SchoolBusRefId { get; set; }
 
@@ -152,7 +154,7 @@ namespace SchoolBusAPI.Models
             return 
                 (
                     this.Id == other.Id ||
-                    
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (

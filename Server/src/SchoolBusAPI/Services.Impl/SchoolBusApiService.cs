@@ -427,7 +427,7 @@ namespace SchoolBusAPI.Services.Impl
             }
 
             // only search other fields if a key search was not done.
-            if (! keySearch)
+            if (!keySearch)
             {
                 if (serviceareas != null)
                 {
@@ -477,7 +477,12 @@ namespace SchoolBusAPI.Services.Impl
                     data = data.Where(x => x.Status == "Active");
                 }
 
-                if (onlyReInspections != null)
+                if (includeInactive == null || (includeInactive != null && includeInactive == false))
+                {
+                    data = data.Where(x => x.Status == "Active");
+                }
+
+                if (onlyReInspections != null && onlyReInspections == true)
                 {
                     data = data.Where(x => x.NextInspectionType == "Re-inspection");
                 }
@@ -489,7 +494,7 @@ namespace SchoolBusAPI.Services.Impl
 
                 if (endDate != null)
                 {
-                    data = data.Where(x => x.NextInspectionDate >= endDate);
+                    data = data.Where(x => x.NextInspectionDate <= endDate);
                 }
 
             }
