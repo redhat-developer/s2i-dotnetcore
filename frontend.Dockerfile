@@ -9,8 +9,10 @@ ENV LTTNG_UST_REGISTER_TIMEOUT 0
 COPY Common /app/Common
 COPY FrontEnd /app/FrontEnd
 
-WORKDIR /app/FrontEnd/src/SchoolBusClient/
+WORKDIR /app/Common/src/SchoolBusCommon
+RUN dotnet restore
 
+WORKDIR /app/FrontEnd/src/SchoolBusClient/
 RUN dotnet restore
 
 ENV ASPNETCORE_ENVIRONMENT Staging
