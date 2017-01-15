@@ -24,6 +24,7 @@ using Swashbuckle.Swagger.Model;
 using Swashbuckle.SwaggerGen.Annotations;
 using Microsoft.EntityFrameworkCore;
 using SchoolBusAPI.Models;
+using System.Text;
 
 namespace SchoolBusAPI
 {
@@ -53,10 +54,9 @@ namespace SchoolBusAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // Add database context
-            string connectionString = "Host=" + Configuration["DATABASE_SERVICE_NAME"] + "; Username=" + Configuration["POSTGRESQL_USER"] + "; Password=" + Configuration["POSTGRESQL_PASSWORD"] + "; Database=" + Configuration["POSTGRESQL_DATABASE"];
-            services.AddDbContext<DbAppContext>(
-                opts => opts.UseNpgsql(connectionString)
-            );
+            // - Pattern should be using Configuration.GetConnectionString("Schoolbus") directly; see GetConnectionString for more details.
+            services.AddDbContext<DbAppContext>(options =>
+                options.UseNpgsql(GetConnectionString()));
 
             // Add framework services.
             services.AddMvc()
@@ -89,6 +89,34 @@ namespace SchoolBusAPI
             services.RegisterApplicationServices();
         }
 
+        // ToDo:
+        // - Replace the individual environment variables with one that naturally works with the configuration provider and how connection strings work.
+        // -- For instance:
+        // --- ConnectionStrings:Schoolbus or ConnectionStrings__Schoolbus
+        // -- This way the configuration provider is performing all of the lifting and the connection string can be retrieved in a single consistent manner.
+        private string GetConnectionString()
+        {
+            string connectionString = string.Empty;
+
+            string host = Configuration["DATABASE_SERVICE_NAME"];
+            string username = Configuration["POSTGRESQL_USER"];
+            string password = Configuration["POSTGRESQL_PASSWORD"];
+            string database = Configuration["POSTGRESQL_DATABASE"];
+
+            if(string.IsNullOrEmpty(host) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(database))
+            {
+                // When things get cleaned up properly, this is the only call we'll have to make.
+                connectionString = Configuration.GetConnectionString("Schoolbus");
+            }
+            else
+            {
+                // Environment variables override all other settings; same behaviour as the configuration provider when things get cleaned up. 
+                connectionString = $"Host={host};Username={username};Password={password};Database={database};";
+            }
+
+            return connectionString;
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
@@ -100,31 +128,51 @@ namespace SchoolBusAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            // migrate database
-
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                // get the application's database context
-                DbContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
-
-                Console.WriteLine("Migrating database");
-                // do any pending migrations
-                context.Database.Migrate();
-
-                // populate the column comments.  Comments are the PGSQL column descriptions
-                DbCommentsUpdater<DbAppContext> updater = new DbCommentsUpdater<DbAppContext>((DbAppContext)context);
-                updater.UpdateDatabaseDescriptions();
-
-            }
-
             app.UseMvc();
-
-
             app.UseDefaultFiles();
             app.UseStaticFiles();
-
             app.UseSwagger();
             app.UseSwaggerUi();
+
+            TryMigrateDatabase(app, loggerFactory);
+        }
+
+        // TODO:
+        // - Should database migration be done here; in Startup?
+        private void TryMigrateDatabase(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        {
+            ILogger log = loggerFactory.CreateLogger(typeof(Startup));
+            log.LogInformation("Attempting to migrate the database ...");
+
+            try
+            {
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    log.LogInformation("Fetching the application's database context ...");
+                    DbContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
+
+                    log.LogInformation("Migrating the database ...");
+                    context.Database.Migrate();
+                    log.LogInformation("The database migration complete.");
+
+                    log.LogInformation("Updating the databse documentation ...");
+                    DbCommentsUpdater<DbAppContext> updater = new DbCommentsUpdater<DbAppContext>((DbAppContext)context);
+                    updater.UpdateDatabaseDescriptions();
+                    log.LogInformation("The database documentation has been updated.");
+                }
+
+                log.LogInformation("All database migration activities are complete.");
+            }
+            catch (Exception e)
+            {
+                StringBuilder msg = new StringBuilder();
+                msg.AppendLine("The database migration failed!");
+                msg.AppendLine("The database may not be available and the application will not function as expected.");
+                msg.AppendLine("Please ensure a database is available and the connection string is correct.");
+                msg.AppendLine("If you are running in a development environment, ensure your test database and server configuraiotn match the project's default connection string.");
+
+                log.LogCritical(new EventId(-1, "Database Migration Failed"), e, msg.ToString());
+            }
         }
     }
 }
