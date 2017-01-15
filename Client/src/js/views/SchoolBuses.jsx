@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
-import { ButtonToolbar, DropdownButton, MenuItem, Button, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, DropdownButton, MenuItem, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { Form, FormGroup, FormControl, ControlLabel, InputGroup, Checkbox } from 'react-bootstrap';
 
 import _ from 'lodash';
@@ -15,28 +15,9 @@ import MultiDropdown from '../components/MultiDropdown.jsx';
 import { notBlank } from '../utils/string';
 
 /*
-Some notes on the searching:
-
-* Service Area, Inspector, Cities, School District should be a multi-select - list with text search
-* Key Search options are "Regi", "VIN" and "Plate" and correspond to those values from the SB table.
-* Owner searching is allowed, but not driven by this screen.  The API needs to support it so that if a user clicks on their count of buses, the list of active buses for that Owner is returned.
-* Date Range is based on just "Next Inspection"
-** "Select Range" in UI is for named ranges (e.g. "Custom", "This Month", "Next Month", "This Quarter" etc.)
-** Only show the From/To date fields if "Custom" is selected.
-** Leave it to the server to convert so Favs can use the named range
-** Need to include "Before Today" and "Before End of Month" and "Before End of Quarter" to include overdue inspections
-** Could be others, but I don't see any likely candidates
 * System default should be:
 ** If user is an inspector, Inspector == Current User else not used
 ** If the user is not an inspector, Service Areas in home district, else not used
-** Next Inspection Date - "Before the End of the Month"
-** Hide Inactive is checked
-
-Logic: OR the values within a field, AND between fields.
-
-Hopefully the Date thing makes sense - but basically, if the user selects anything other than "Custom", the Fav needs to save the Text selected (e.g. "Next Month"), not the specific dates.  That's the only way that Fav is useful.
-
-I said in the JIRA let the server handle the conversion to From/To, but that's not crucial, as long as the Fav records the name of the date range.
 */
 
 const KEY_SEARCH_REGI = 'Regi';
@@ -289,78 +270,76 @@ var SchoolBuses = React.createClass({
       <Well id="school-buses-bar" bsSize="small" className="clearfix">
         <Row>
           <Col md={11}>
-            <ButtonToolbar id="school-buses-search">
-              <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas"
-                items={ serviceAreas } selectedIds={ this.state.selectedServiceAreasIds } onChange={ this.serviceAreasChanged } showMaxItems={ 2 } />
-              <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors"
-                items={ inspectors } selectedIds={ this.state.selectedInspectorsIds } onChange={ this.inspectorsChanged } showMaxItems={ 2 } />
-              <MultiDropdown id="cities-dropdown" placeholder="Cities"
-                items={ cities } selectedIds={ this.state.selectedCitiesIds } onChange={ this.citiesChanged } showMaxItems={ 2 } />
-              <MultiDropdown id="school-districts-dropdown" placeholder="School Districts"
-                items={ schoolDistricts } selectedIds={ this.state.selectedSchoolDistrictsIds } fieldName="shortName" onChange={ this.schoolDistrictsChanged } showMaxItems={ 2 } />
-              <div className="search-label">Key Search By:</div>
-              <DropdownButton id="school-buses-key-dropdown" title={ this.state.keySearchField } onSelect={ this.keySearchSelected }>
-                <MenuItem key={ KEY_SEARCH_REGI } eventKey={ KEY_SEARCH_REGI }>{ KEY_SEARCH_REGI }</MenuItem>
-                <MenuItem key={ KEY_SEARCH_VIN } eventKey={ KEY_SEARCH_VIN }>{ KEY_SEARCH_VIN }</MenuItem>
-                <MenuItem key={ KEY_SEARCH_PLATE } eventKey={ KEY_SEARCH_PLATE }>{ KEY_SEARCH_PLATE }</MenuItem>
-              </DropdownButton>
+            <Row>
               <Form inline>
-                <FormControl className="search-text" type="text" value={ this.state.searchText } onChange={ this.searchTextChanged } />
+                <ButtonToolbar id="school-buses-search">
+                  <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas"
+                    items={ serviceAreas } selectedIds={ this.state.selectedServiceAreasIds } onChange={ this.serviceAreasChanged } showMaxItems={ 2 } />
+                  <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors"
+                    items={ inspectors } selectedIds={ this.state.selectedInspectorsIds } onChange={ this.inspectorsChanged } showMaxItems={ 2 } />
+                  <MultiDropdown id="cities-dropdown" placeholder="Cities"
+                    items={ cities } selectedIds={ this.state.selectedCitiesIds } onChange={ this.citiesChanged } showMaxItems={ 2 } />
+                  <MultiDropdown id="school-districts-dropdown" placeholder="School Districts"
+                    items={ schoolDistricts } selectedIds={ this.state.selectedSchoolDistrictsIds } fieldName="shortName" onChange={ this.schoolDistrictsChanged } showMaxItems={ 2 } />
+                  <InputGroup id="school-buses-key-search">
+                    <DropdownButton id="school-buses-key-dropdown" componentClass={InputGroup.Button} title={ this.state.keySearchField } onSelect={ this.keySearchSelected }>
+                      <MenuItem key={ KEY_SEARCH_REGI } eventKey={ KEY_SEARCH_REGI }>{ KEY_SEARCH_REGI }</MenuItem>
+                      <MenuItem key={ KEY_SEARCH_VIN } eventKey={ KEY_SEARCH_VIN }>{ KEY_SEARCH_VIN }</MenuItem>
+                      <MenuItem key={ KEY_SEARCH_PLATE } eventKey={ KEY_SEARCH_PLATE }>{ KEY_SEARCH_PLATE }</MenuItem>
+                    </DropdownButton>
+                    <FormControl type="text" value={ this.state.searchText } onChange={ this.searchTextChanged } />
+                  </InputGroup>
+                </ButtonToolbar>
               </Form>
-            </ButtonToolbar>
+            </Row>
+            <Row>
+              <ButtonToolbar id="school-buses-inspections">
+                <DropdownButton id="school-buses-inspection-dropdown" title={ this.state.nextInspection } onSelect={ this.nextInspectionSelected }>
+                  <MenuItem key={ BEFORE_TODAY } eventKey={ BEFORE_TODAY }>{ BEFORE_TODAY }</MenuItem>
+                  <MenuItem key={ BEFORE_END_OF_MONTH } eventKey={ BEFORE_END_OF_MONTH }>{ BEFORE_END_OF_MONTH }</MenuItem>
+                  <MenuItem key={ BEFORE_END_OF_QUARTER } eventKey={ BEFORE_END_OF_QUARTER }>{ BEFORE_END_OF_QUARTER }</MenuItem>
+                  <MenuItem key={ TODAY } eventKey={ TODAY }>{ TODAY }</MenuItem>
+                  <MenuItem key={ THIS_MONTH } eventKey={ THIS_MONTH }>{ THIS_MONTH }</MenuItem>
+                  <MenuItem key={ NEXT_MONTH } eventKey={ NEXT_MONTH }>{ NEXT_MONTH }</MenuItem>
+                  <MenuItem key={ THIS_QUARTER } eventKey={ THIS_QUARTER }>{ THIS_QUARTER }</MenuItem>
+                  <MenuItem key={ CUSTOM } eventKey={ CUSTOM }>{ CUSTOM }&hellip;</MenuItem>
+                </DropdownButton>
+                <Form inline>
+                  <span className={ this.state.nextInspection !== CUSTOM ? 'hide' : '' }>
+                    <ControlLabel>From:</ControlLabel>
+                    <InputGroup>
+                      <FormControl className="search-text" type="text" placeholder="mm/dd/yyyy" value={ this.state.startDate } onChange={ this.startDateChanged } />
+                      <InputGroup.Button>
+                        <Button><Glyphicon glyph="calendar" title="start date" /></Button>
+                      </InputGroup.Button>
+                    </InputGroup>
+                    <ControlLabel>To:</ControlLabel>
+                    <InputGroup>
+                      <FormControl className="search-text" type="text" placeholder="mm/dd/yyyy" value={ this.state.endDate } onChange={ this.endDateChanged } />
+                      <InputGroup.Button>
+                        <Button><Glyphicon glyph="calendar" title="end date" /></Button>
+                      </InputGroup.Button>
+                    </InputGroup>
+                  </span>
+                </Form>
+                <Checkbox inline checked={ this.state.hideInactive } onChange={ this.hideInactiveSelected }>Hide Inactive</Checkbox>
+                <Checkbox inline checked={ this.state.justReInspections } onChange={ this.justReInspectionsSelected }>Just Re-Inspections</Checkbox>
+                <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
+              </ButtonToolbar>
+            </Row>
           </Col>
           <Col md={1}>
-            <div id="school-buses-buttons" className="pull-right">
-              <Button><Glyphicon glyph="envelope" title="E-mail" /></Button>
-              <Button><Glyphicon glyph="print" title="Print" /></Button>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={11}>
-            <ButtonToolbar id="school-buses-inspections">
-              <div className="search-label">Next Inspection:</div>
-              <DropdownButton id="school-buses-key-dropdown" title={ this.state.nextInspection } onSelect={ this.nextInspectionSelected }>
-                <MenuItem key={ BEFORE_TODAY } eventKey={ BEFORE_TODAY }>{ BEFORE_TODAY }</MenuItem>
-                <MenuItem key={ BEFORE_END_OF_MONTH } eventKey={ BEFORE_END_OF_MONTH }>{ BEFORE_END_OF_MONTH }</MenuItem>
-                <MenuItem key={ BEFORE_END_OF_QUARTER } eventKey={ BEFORE_END_OF_QUARTER }>{ BEFORE_END_OF_QUARTER }</MenuItem>
-                <MenuItem key={ TODAY } eventKey={ TODAY }>{ TODAY }</MenuItem>
-                <MenuItem key={ THIS_MONTH } eventKey={ THIS_MONTH }>{ THIS_MONTH }</MenuItem>
-                <MenuItem key={ NEXT_MONTH } eventKey={ NEXT_MONTH }>{ NEXT_MONTH }</MenuItem>
-                <MenuItem key={ THIS_QUARTER } eventKey={ THIS_QUARTER }>{ THIS_QUARTER }</MenuItem>
-                <MenuItem key={ CUSTOM } eventKey={ CUSTOM }>{ CUSTOM }&hellip;</MenuItem>
-              </DropdownButton>
-              <Form inline className={ this.state.nextInspection !== CUSTOM ? 'hide' : '' }>
-                <FormGroup>
-                  <ControlLabel>From:</ControlLabel>
-                  <InputGroup>
-                    <FormControl className="search-text" type="text" placeholder="mm/dd/yyyy" value={ this.state.startDate } onChange={ this.startDateChanged } />
-                    <InputGroup.Button>
-                      <Button><Glyphicon glyph="calendar" title="start date" /></Button>
-                    </InputGroup.Button>
-                  </InputGroup>
-                </FormGroup>
-                <FormGroup>
-                  <ControlLabel>To:</ControlLabel>
-                  <InputGroup>
-                    <FormControl className="search-text" type="text" placeholder="mm/dd/yyyy" value={ this.state.endDate } onChange={ this.endDateChanged } />
-                    <InputGroup.Button>
-                      <Button><Glyphicon glyph="calendar" title="end date" /></Button>
-                    </InputGroup.Button>
-                  </InputGroup>
-                </FormGroup>
-              </Form>
-              <Checkbox inline className="search-label" checked={ this.state.hideInactive } onChange={ this.hideInactiveSelected }>Hide Inactive</Checkbox>
-              <Checkbox inline className="search-label" checked={ this.state.justReInspections } onChange={ this.justReInspectionsSelected }>Just Re-Inspections</Checkbox>
-              <Button id="search" onClick={ this.fetch }>Search</Button>
-            </ButtonToolbar>
-          </Col>
-          <Col md={1}>
-            <div id="school-buses-faves" className="pull-right">
-              <DropdownButton id="school-buses-faves-dropdown" title="Faves">
+            <Row id="school-buses-buttons">
+              <ButtonGroup>
+                <Button><Glyphicon glyph="envelope" title="E-mail" /></Button>
+                <Button><Glyphicon glyph="print" title="Print" /></Button>
+              </ButtonGroup>
+            </Row>
+            <Row id="school-buses-faves">
+              <DropdownButton id="school-buses-faves-dropdown" pullRight title="Faves">
                 <MenuItem key="1" eventKey="1" disabled>No favourites</MenuItem>
               </DropdownButton>
-            </div>
+            </Row>
           </Col>
         </Row>
       </Well>
