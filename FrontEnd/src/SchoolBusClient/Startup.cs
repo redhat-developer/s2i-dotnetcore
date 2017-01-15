@@ -51,9 +51,12 @@ namespace SchoolBusClient
         private void ConfigureApiProxyServerOptions(ApiProxyServerOptions options)
         {
             ApiProxyServerOptions defaultConfig = Configuration.GetSection("ApiProxyServer").Get<ApiProxyServerOptions>();
-            options.Host = defaultConfig.Host;
-            options.Port = defaultConfig.Port;
-            options.Scheme = defaultConfig.Scheme;
+            if (defaultConfig != null)
+            {
+                options.Host = defaultConfig.Host;
+                options.Port = defaultConfig.Port;
+                options.Scheme = defaultConfig.Scheme;
+            }
 
             string apiServerUri = Configuration["MIDDLEWARE_NAME"];
             if (apiServerUri != null)
