@@ -9,99 +9,109 @@ if %1.==. (
 )
 
 set GitHubAccountName=%1
+set BuildTemplate=schoolbus-build-template.json
+set DeploymentTemplate=schoolbus-deployment-template.json
+
+set BuildConfiguration=build-configuration.json
+set DeploymentConfiguration=deployment-configuration.json
+
+set ToolsProjectName=tran-schoolbus-tools
+set DevProjectName=tran-schoolbus-dev
+set TestProjectName=tran-schoolbus-test
+set ProdProjectName=tran-schoolbus-prod
+
+set SourceFileBase=https://raw.githubusercontent.com/%GitHubAccountName%/schoolbus/master/openshift/templates/
+set SourceRepository=https://github.com/%GitHubAccountName%/schoolbus.git
+set GitRef=master
+
+REM set SourceFileBase=C:\schoolbus\openshift\templates\
+REM set SourceRepository=https://github.com/%GitHubAccountName%/schoolbus.git
+REM set GitRef=OpenShift_Scripts
  
 :Start
 echo =============================================================================
 echo Creating projects ...
 echo =============================================================================
-echo Creating tran-schoolbus-tools ...
-oc new-project tran-schoolbus-tools --display-name="Schoolbus (tools)" --description="Ministry of Transportation Schoolbus Inspection System (tools)"
+echo Creating %ToolsProjectName% ...
+oc new-project %ToolsProjectName% --display-name="Schoolbus (tools)" --description="Ministry of Transportation Schoolbus Inspection System (tools)"
 
-echo Creating tran-schoolbus-dev ...
-oc new-project tran-schoolbus-dev --display-name="Schoolbus (dev)" --description="Ministry of Transportation Schoolbus Inspection System (dev)"
+echo Creating %DevProjectName% ...
+oc new-project %DevProjectName% --display-name="Schoolbus (dev)" --description="Ministry of Transportation Schoolbus Inspection System (dev)"
 
-echo Creating tran-schoolbus-test ...
-oc new-project tran-schoolbus-test --display-name="Schoolbus (test)" --description="Ministry of Transportation Schoolbus Inspection System (test)"
+echo Creating %TestProjectName% ...
+oc new-project %TestProjectName% --display-name="Schoolbus (test)" --description="Ministry of Transportation Schoolbus Inspection System (test)"
 
-echo Creating tran-schoolbus-prod ...
-oc new-project tran-schoolbus-prod --display-name="Schoolbus (prod)" --description="Ministry of Transportation Schoolbus Inspection System (prod)"
-
-REM Import required image(s) into the tools project
-echo =============================================================================
-echo Configuring the tools project ...
-echo =============================================================================
-oc project tran-schoolbus-tools
-
-echo Importing dotnet image ...
-oc import-image dotnet --from=docker.io/microsoft/dotnet:1.1.0-sdk-projectjson --confirm
+echo Creating %ProdProjectName% ...
+oc new-project %ProdProjectName% --display-name="Schoolbus (prod)" --description="Ministry of Transportation Schoolbus Inspection System (prod)"
 
 echo =============================================================================
 echo Granting the deployment projects access to the images in the tools project ...
 echo =============================================================================
-echo Granting access to tran-schoolbus-dev ...
-oc policy add-role-to-user system:image-puller system:serviceaccount:tran-schoolbus-dev:default -n tran-schoolbus-tools
+echo Granting access to %DevProjectName% ...
+oc policy add-role-to-user system:image-puller system:serviceaccount:%DevProjectName%:default -n %ToolsProjectName%
 
-echo Granting access to tran-schoolbus-test ...
-oc policy add-role-to-user system:image-puller system:serviceaccount:tran-schoolbus-test:default -n tran-schoolbus-tools
+echo Granting access to %TestProjectName% ...
+oc policy add-role-to-user system:image-puller system:serviceaccount:%TestProjectName%:default -n %ToolsProjectName%
 
-echo Granting access to tran-schoolbus-prod ...
-oc policy add-role-to-user system:image-puller system:serviceaccount:tran-schoolbus-prod:default -n tran-schoolbus-tools
+echo Granting access to %ProdProjectName% ...
+oc policy add-role-to-user system:image-puller system:serviceaccount:%ProdProjectName%:default -n %ToolsProjectName%
 
 echo =============================================================================
 echo Configuring builds ...
 echo =============================================================================
-oc project tran-schoolbus-tools
+oc project %ToolsProjectName%
 
 echo Parsing the build template ...
 oc process ^
--f https://raw.githubusercontent.com/%GitHubAccountName%/schoolbus/master/openshift/templates/schoolbus-build-template.json ^
--p SRC_REPO=https://github.com/%GitHubAccountName%/schoolbus.git ^
- > schoolbus-build.json
+-f %SourceFileBase%%BuildTemplate% ^
+-p SRC_REPO=%SourceRepository% ^
+-p GIT_REFERENCE=%GitRef% ^
+ > %BuildConfiguration%
 
 echo Processing the build template ...
-oc create -f schoolbus-build.json
+oc create -f %BuildConfiguration%
 
 echo =============================================================================
 echo Configuring dev deployments ...
 echo =============================================================================
-oc project tran-schoolbus-dev
+oc project %DevProjectName%
 
 echo Parsing the build template ...
 oc process ^
--f https://raw.githubusercontent.com/%GitHubAccountName%/schoolbus/master/openshift/templates/schoolbus-deployment-template-emptydir.json ^
+-f %SourceFileBase%%DeploymentTemplate% ^
 -p APP_DEPLOYMENT_TAG=dev ^
- > schoolbus-deployment-dev-emptydir.json
+ > %DeploymentConfiguration%
 
 echo Processing the build template ...
-oc create -f schoolbus-deployment-dev-emptydir.json 
+oc create -f %DeploymentConfiguration% 
 
 echo =============================================================================
 echo Configuring test deployments ...
 echo =============================================================================
-oc project tran-schoolbus-test
+oc project %TestProjectName%
 
 echo Parsing the build template ...
 oc process ^
--f https://raw.githubusercontent.com/%GitHubAccountName%/schoolbus/master/openshift/templates/schoolbus-deployment-template-emptydir.json ^
+-f %SourceFileBase%%DeploymentTemplate% ^
 -p APP_DEPLOYMENT_TAG=test ^
- > schoolbus-deployment-test-emptydir.json
+ > %DeploymentConfiguration%
 
 echo Processing the build template ...
-oc create -f schoolbus-deployment-test-emptydir.json 
+oc create -f %DeploymentConfiguration% 
 
 echo =============================================================================
 echo Configuring prod deployments ...
 echo =============================================================================
-oc project tran-schoolbus-prod
+oc project %ProdProjectName%
 
 echo Parsing the build template ...
 oc process ^
--f https://raw.githubusercontent.com/%GitHubAccountName%/schoolbus/master/openshift/templates/schoolbus-deployment-template-emptydir.json ^
+-f %SourceFileBase%%DeploymentTemplate% ^
 -p APP_DEPLOYMENT_TAG=prod ^
- > schoolbus-deployment-prod-emptydir.json
+ > %DeploymentConfiguration%
 
 echo Processing the build template ...
-oc create -f schoolbus-deployment-prod-emptydir.json 
+oc create -f %DeploymentConfiguration%
 
 GOTO End1
 
