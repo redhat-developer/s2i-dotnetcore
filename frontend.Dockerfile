@@ -19,6 +19,6 @@ ENV ASPNETCORE_ENVIRONMENT Staging
 ENV ASPNETCORE_URLS http://*:8080
 EXPOSE 8080
 
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o /app/out
 WORKDIR /app
 ENTRYPOINT ["dotnet", "/app/out/SchoolBusClient.dll"]
