@@ -1,10 +1,9 @@
 const DEFAULT_STATE = {
-  testingStoreCount: 0,
-  testingStoreCount2: 0,
   requests: {
     waiting: false,
     error: null,
   },
+  schoolBuses: {},
 };
 
 export default function uiReducer(state = DEFAULT_STATE, action) {
@@ -12,25 +11,18 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
 
   switch(action.type) {
     case 'REQUESTS_BEGIN':
-      newState = {
-        requests: {
-          waiting: true,
-          error: null,
-        },
-      };
-      break;
+      return { ...state, requests: {
+        waiting: true,
+        error: null,
+      }};
 
     case 'REQUESTS_END':
-      newState = {
-        requests: { waiting: false },
-      };
-      break;
+      return { ...state, requests: {
+        waiting: false,
+      }};
 
-    case 'REQUEST_ERROR':
-      newState = {
-        requests: { error: action.error },
-      };
-      break;
+    case 'UPDATE_BUSES_UI':
+      return { ...state, schoolBuses: action.schoolBuses };
   }
 
   return { ...state, ...newState };

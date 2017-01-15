@@ -37,22 +37,27 @@ var MultiDropdown = React.createClass({
   getInitialState() {
     var selectedIds = this.props.selectedIds || [];
     var items = this.props.items || [];
-    var title = this.buildTitle(selectedIds);
     var fieldName = this.props.fieldName || 'name';
 
     return {
       items: items,
       selectedIds: selectedIds,
-      title: title,
+      title: '',
       filterTerm: '',
-      MAX_ITEMS_FOR_TITLE: this.props.showMaxItems || MAX_ITEMS_FOR_TITLE,
+      maxItemsForTitle: this.props.showMaxItems || MAX_ITEMS_FOR_TITLE,
       allSelected: selectedIds.length === items.length,
       fieldName: fieldName,
     };
   },
 
+  componentDidMount() {
+    // Have to wait until state is ready before initializing title.
+    var title = this.buildTitle(this.state.selectedIds);
+    this.setState({ title: title });
+  },
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.items !== this.props.items) {
+    if (!_.isEqual(nextProps.items, this.props.items)) {
       var items = nextProps.items || [];
       var title = this.buildTitle(this.state.selectedIds);
 
@@ -66,9 +71,9 @@ var MultiDropdown = React.createClass({
   buildTitle(selectedIds) {
     var num = selectedIds.length;
 
-    if(num === 0) {
+    if (num === 0) {
       return this.props.placeholder || 'Select one or more items';
-    } else if(num > this.state.MAX_ITEMS_FOR_TITLE) {
+    } else if (num > this.state.maxItemsForTitle) {
       return `(${num}) selected`;
     } else {
       return _.map(_.pickBy(this.props.items, item => selectedIds.includes(item.id)), this.state.fieldName).join(', ');
@@ -91,7 +96,7 @@ var MultiDropdown = React.createClass({
       allSelected: selectedIds.length === this.state.items.length,
     });
 
-    this.sendSelectedIds(selectedIds);
+    this.sendSelected(selectedIds);
   },
 
   selectAll(e) {
@@ -103,10 +108,10 @@ var MultiDropdown = React.createClass({
       title: this.buildTitle(selectedIds),
     });
 
-    this.sendSelectedIds(selectedIds);
+    this.sendSelected(selectedIds);
   },
 
-  sendSelectedIds(selectedIds) {
+  sendSelected(selectedIds) {
     var selected = this.state.items.filter(item => selectedIds.includes(item.id));
     if(this.props.onChange) {
       this.props.onChange(selected);
