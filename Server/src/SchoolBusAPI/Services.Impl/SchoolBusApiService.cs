@@ -200,7 +200,12 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBuss.First(a => a.Id == id);
+                var result = _context.SchoolBuss
+                    .Include(x => x.HomeTerminalCity)
+                    .Include(x => x.SchoolBusDistrict)
+                    .Include(x => x.SchoolBusOwner.PrimaryContact)
+                    .Include(x => x.ServiceArea.District.Region)
+                    .First(a => a.Id == id);
                 return new ObjectResult(result);
             }
             else
@@ -217,10 +222,10 @@ namespace SchoolBusAPI.Services.Impl
         public virtual IActionResult GetAllBusesAsync ()        
         {
             var result = _context.SchoolBuss
-                .Include (x => x.HomeTerminalCity)
+                .Include(x => x.HomeTerminalCity)
                 .Include(x => x.SchoolBusDistrict)
-                .Include(x => x.SchoolBusOwner)
-                .Include(x => x.ServiceArea)                
+                .Include(x => x.SchoolBusOwner.PrimaryContact)
+                .Include(x => x.ServiceArea.District.Region)                
                 .ToList();
             return new ObjectResult(result);
         }
@@ -400,8 +405,9 @@ namespace SchoolBusAPI.Services.Impl
             var data = _context.SchoolBuss
                 .Include(x => x.HomeTerminalCity)
                 .Include(x => x.SchoolBusDistrict)
-                .Include(x => x.SchoolBusOwner)
-                .Include(x => x.ServiceArea)
+                .Include(x => x.SchoolBusOwner.PrimaryContact)
+                .Include(x => x.ServiceArea.District.Region)
+
                 .Select(x => x);
 
             bool keySearch = false;
