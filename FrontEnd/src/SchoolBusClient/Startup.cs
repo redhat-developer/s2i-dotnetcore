@@ -36,11 +36,11 @@ namespace SchoolBusClient
 
             // Allow access to the Configuration object
             services.AddSingleton<IConfiguration>(Configuration);
-            // Save this for later
+            
+            // Save this for later:
             // services.Configure<ApiProxyServerOptions>(Configuration.GetSection("ApiProxyServer"));
             services.Configure<ApiProxyServerOptions>(ConfigureApiProxyServerOptions);
         }
-
 
         // ToDo:
         // - Replace MIDDLEWARE_NAME environment variable with variables the can be used with ApiServerOptions:

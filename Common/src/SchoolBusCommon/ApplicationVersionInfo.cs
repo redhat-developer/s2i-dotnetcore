@@ -7,6 +7,7 @@ namespace SchoolBusCommon
         public string Title { get; set; }
         public string Description { get; set; }
         public string Copyright { get; set; }
+        public string Commit { get; set; }
         public string FileVersion { get; set; }
         public string FileCreationTime { get; set; }
         public string InformationalVersion { get; set; }
