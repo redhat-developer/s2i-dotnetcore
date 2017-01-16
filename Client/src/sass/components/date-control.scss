@@ -1,0 +1,20 @@
+@import "../../node_modules/react-datepicker/dist/react-datepicker";
+
+.date-control {
+
+  .react-datepicker__input-container {
+    display: inline;
+  }
+
+  label {
+    float: left;
+    margin-top: 7px;
+    margin-left: 7px;
+    font-weight: normal;
+  }
+
+  .form-control {
+    width: 100px !important;
+    margin-left: 5px;
+  }
+}
