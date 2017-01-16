@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2882 Carlson Road",
+        "addr1": "608 Jade St",
         "addr2": null,
-        "city": "Prince George",
+        "city": "Richmond",
         "id": "200068",
-        "postalCode": "V2L 5E5",
+        "postalCode": "V7E 2E4",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

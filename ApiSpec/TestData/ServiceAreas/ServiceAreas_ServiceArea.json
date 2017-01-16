@@ -7,7 +7,7 @@
         "id": "200000",
         "ministryServiceArea": "1",
         "name": "South Island",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -17,7 +17,7 @@
         "id": "200001",
         "ministryServiceArea": "2",
         "name": "Central  Island",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -27,7 +27,7 @@
         "id": "200002",
         "ministryServiceArea": "3",
         "name": "North  Island",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -37,7 +37,7 @@
         "id": "200003",
         "ministryServiceArea": "4",
         "name": "Howe Sound",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -47,7 +47,7 @@
         "id": "200004",
         "ministryServiceArea": "5",
         "name": "Sunshine Coast",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -57,7 +57,7 @@
         "id": "200005",
         "ministryServiceArea": "6",
         "name": "Lower Mainland",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -67,7 +67,7 @@
         "id": "200006",
         "ministryServiceArea": "7",
         "name": "Fraser Valley",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -77,7 +77,7 @@
         "id": "200007",
         "ministryServiceArea": "8",
         "name": "South Okanagan",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -87,7 +87,7 @@
         "id": "200008",
         "ministryServiceArea": "9",
         "name": "Kootenay Boundary",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -97,7 +97,7 @@
         "id": "200009",
         "ministryServiceArea": "10",
         "name": "Central Kootenay",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -107,7 +107,7 @@
         "id": "200010",
         "ministryServiceArea": "11",
         "name": "East Kootenay",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -117,7 +117,7 @@
         "id": "200011",
         "ministryServiceArea": "12",
         "name": "Selkirk",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -127,7 +127,7 @@
         "id": "200012",
         "ministryServiceArea": "13",
         "name": "Okanagan - Shuswap",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -137,7 +137,7 @@
         "id": "200013",
         "ministryServiceArea": "14",
         "name": "Nicola",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -147,7 +147,7 @@
         "id": "200014",
         "ministryServiceArea": "15",
         "name": "Thompson",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -157,7 +157,7 @@
         "id": "200015",
         "ministryServiceArea": "16",
         "name": "South Cariboo",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -167,7 +167,7 @@
         "id": "200016",
         "ministryServiceArea": "17",
         "name": "Central Cariboo",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -177,7 +177,7 @@
         "id": "200017",
         "ministryServiceArea": "18",
         "name": "North Cariboo",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -187,7 +187,7 @@
         "id": "200018",
         "ministryServiceArea": "19",
         "name": "Fort George",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -197,7 +197,7 @@
         "id": "200019",
         "ministryServiceArea": "20",
         "name": "Robson",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -207,7 +207,7 @@
         "id": "200020",
         "ministryServiceArea": "21",
         "name": "South Peace",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -217,7 +217,7 @@
         "id": "200021",
         "ministryServiceArea": "22",
         "name": "North Peace",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -227,7 +227,7 @@
         "id": "200022",
         "ministryServiceArea": "23",
         "name": "Nechako",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -237,7 +237,7 @@
         "id": "200023",
         "ministryServiceArea": "24",
         "name": "Lakes",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -247,7 +247,7 @@
         "id": "200024",
         "ministryServiceArea": "25",
         "name": "Bulkley - Nass",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -257,7 +257,7 @@
         "id": "200025",
         "ministryServiceArea": "26",
         "name": "Skeena",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -267,7 +267,7 @@
         "id": "200026",
         "ministryServiceArea": "27",
         "name": "North Coast",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -277,7 +277,7 @@
         "id": "200027",
         "ministryServiceArea": "28",
         "name": "Stikine",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -287,7 +287,7 @@
         "id": "200028",
         "ministryServiceArea": "99",
         "name": "NON-BC",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "district": {
@@ -297,6 +297,6 @@
         "id": "200029",
         "ministryServiceArea": "999",
         "name": "Unknown",
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2956 Shaughnessy St",
+        "addr1": "4600 Roger Street",
         "addr2": null,
-        "city": "Port Coquitlam",
+        "city": "Nanaimo",
         "id": "200055",
-        "postalCode": "V3C 4S7",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4761 King George Hwy",
+        "addr1": "2882 Carlson Road",
         "addr2": null,
-        "city": "Surrey",
+        "city": "Prince George",
         "id": "200026",
-        "postalCode": "V3W 4E3",
+        "postalCode": "V2L 5E5",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

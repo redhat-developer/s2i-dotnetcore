@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3854 Glover Road",
+        "addr1": "3924 Roger Street",
         "addr2": null,
-        "city": "Langley",
+        "city": "Duncan",
         "id": "200007",
-        "postalCode": "V3A 4P6",
+        "postalCode": "V9L 1P1",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

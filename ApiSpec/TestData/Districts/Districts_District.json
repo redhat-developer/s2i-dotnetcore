@@ -7,7 +7,7 @@
         "region": {
             "id": "200000"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -17,7 +17,7 @@
         "region": {
             "id": "200000"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -27,7 +27,7 @@
         "region": {
             "id": "200001"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -37,7 +37,7 @@
         "region": {
             "id": "200001"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -47,7 +47,7 @@
         "region": {
             "id": "200001"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -57,7 +57,7 @@
         "region": {
             "id": "200001"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -67,7 +67,7 @@
         "region": {
             "id": "200001"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -77,7 +77,7 @@
         "region": {
             "id": "200002"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -87,7 +87,7 @@
         "region": {
             "id": "200002"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -97,7 +97,7 @@
         "region": {
             "id": "200002"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -107,7 +107,7 @@
         "region": {
             "id": "200002"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -117,7 +117,7 @@
         "region": {
             "id": "200003"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     },
     {
         "endDate": null,
@@ -127,6 +127,6 @@
         "region": {
             "id": "200004"
         },
-        "startDate": "2009-01-01"
+        "startDate": "1/1/2009"
     }
 ]
