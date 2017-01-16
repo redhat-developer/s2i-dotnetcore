@@ -268,7 +268,7 @@ namespace SchoolBusAPI.Services.Impl
                 SchoolBus schoolbus = _context.SchoolBuss.Where(a => a.Id == id).First();
                 string regi = schoolbus.Regi;                
                 // get CCW data for this bus.
-                var result = _context.CCWDatas.Where(a => a.ICBCRegi == regi);
+                var result = _context.CCWDatas.Where(a => a.ICBCRegi == regi).First();
                 return new ObjectResult(result);
             }
             else
