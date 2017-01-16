@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "104 Roger Street",
+        "addr1": "616 Scotts Lane",
         "addr2": null,
-        "city": "Comox",
+        "city": "Okanagan Mission",
         "id": "200049",
-        "postalCode": "V9N 6A1",
+        "postalCode": "V0R 1S0",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "907 Nootka Street",
+        "addr1": "1967 Findlay Creek Road",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Fernie",
         "id": "200000",
-        "postalCode": "V5M 3M5",
+        "postalCode": "V0B 1M1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

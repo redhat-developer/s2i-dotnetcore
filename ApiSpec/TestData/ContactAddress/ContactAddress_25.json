@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "936 Coldstream Avenue",
+        "addr1": "232 Cordova Street",
         "addr2": null,
-        "city": "Vernon",
+        "city": "Vancouver",
         "id": "200024",
-        "postalCode": "V1T 6N1",
+        "postalCode": "V6B 1E1",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "510 Burdett Avenue",
+        "addr1": "3246 Alaska Hwy",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Fort Nelson",
         "id": "200015",
-        "postalCode": "V8W 1B2",
+        "postalCode": "V0C 1C0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

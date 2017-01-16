@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "270 Queens Bay",
+        "addr1": "4600 Roger Street",
         "addr2": null,
-        "city": "Nakusp",
+        "city": "Nanaimo",
         "id": "200012",
-        "postalCode": "V0G 1R0",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

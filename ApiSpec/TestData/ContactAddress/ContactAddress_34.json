@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "616 Scotts Lane",
+        "addr1": "2553 Holdom Avenue",
         "addr2": null,
-        "city": "Okanagan Mission",
+        "city": "Surrey",
         "id": "200033",
-        "postalCode": "V0R 1S0",
+        "postalCode": "V3T 4Y5",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

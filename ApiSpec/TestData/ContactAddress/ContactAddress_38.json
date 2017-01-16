@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2714 Russell Avenue",
+        "addr1": "104 Roger Street",
         "addr2": null,
-        "city": "Langley",
+        "city": "Comox",
         "id": "200037",
-        "postalCode": "V4X 1J7",
+        "postalCode": "V9N 6A1",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

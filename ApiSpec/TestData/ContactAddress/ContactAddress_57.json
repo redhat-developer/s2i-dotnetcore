@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2310 Mesa Vista Drive",
+        "addr1": "2657 Wellington Ave",
         "addr2": null,
-        "city": "Boston Bar",
+        "city": "Chilliwack",
         "id": "200056",
-        "postalCode": "V0K 1C0",
+        "postalCode": "V2P 2M1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

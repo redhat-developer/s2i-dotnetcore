@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2956 Shaughnessy St",
+        "addr1": "104 Roger Street",
         "addr2": null,
-        "city": "Port Coquitlam",
+        "city": "Comox",
         "id": "200032",
-        "postalCode": "V3C 4S7",
+        "postalCode": "V9N 6A1",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

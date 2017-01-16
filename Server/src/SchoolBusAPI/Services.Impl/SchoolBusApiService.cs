@@ -197,7 +197,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult FindBusByIdAsync (int id)        
         {
-            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
                 var result = _context.SchoolBuss
@@ -239,7 +239,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdAttachmentsGetAsync (int id)        
         {
-            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
                 var result = _context.SchoolBusAttachments.Where(a => a.SchoolBus.Id == id);
@@ -261,9 +261,22 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdCcwdataGetAsync (int id)        
         {
-            // TODO: need to fix the model for CCWData
-            var result = "";
-            return new ObjectResult(result);
+            // validate the bus id            
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                SchoolBus schoolbus = _context.SchoolBuss.Where(a => a.Id == id).First();
+                string regi = schoolbus.Regi;                
+                // get CCW data for this bus.
+                var result = _context.CCWDatas.Where(a => a.ICBCRegi == regi);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+
         }
         /// <summary>
         /// 
@@ -275,7 +288,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdDeletePostAsync (int id)        
         {
-            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
                 var item = _context.SchoolBuss.First(a => a.Id == id);
@@ -302,7 +315,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdHistoryGetAsync (int id)        
         {
-            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
                 var result = _context.SchoolBusHistorys.Where(a => a.SchoolBus.Id == id);
@@ -324,7 +337,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdNotesGetAsync (int id)        
         {
-            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
                 var result = _context.SchoolBusNotes.Where(a => a.SchoolBus.Id == id);
@@ -346,7 +359,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdPutAsync (int id, SchoolBus body)        
         {
-            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists && id == body.Id)
             {
                 _context.SchoolBuss.Update(body);                
@@ -368,7 +381,7 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusesIdInspectionsGetAsync(int id)
         {
-            var exists = _context.SchoolBuss.Any(a => a.Id == id);
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
                 var items = _context.Inspections.Where(a => a.SchoolBus.Id == id);

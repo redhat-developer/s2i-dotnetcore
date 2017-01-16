@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1477 Hastings Street",
+        "addr1": "2657 Wellington Ave",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Chilliwack",
         "id": "200004",
-        "postalCode": "V6C 1B4",
+        "postalCode": "V2P 2M1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]
