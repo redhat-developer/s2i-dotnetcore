@@ -4,7 +4,9 @@
 @import "components/all";
 @import "views/all";
 
-@import "../../node_modules/react-datetime/css/react-datetime";
+html {
+  font-size: 14px;
+}
 
 #app {
   height: 100%;

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton, MenuItem, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
-import { Form, FormGroup, FormControl, ControlLabel, InputGroup, Checkbox } from 'react-bootstrap';
+import { Form, FormControl, InputGroup, Checkbox } from 'react-bootstrap';
 
 import _ from 'lodash';
 import Moment from 'moment';
@@ -12,12 +12,20 @@ import store from '../store';
 
 import Spinner from '../components/Spinner.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
+import DateControl from '../components/DateControl.jsx';
+
 import { notBlank } from '../utils/string';
 
 /*
 * System default should be:
 ** If user is an inspector, Inspector == Current User else not used
 ** If the user is not an inspector, Service Areas in home district, else not used
+
+TODO:
+
+* Badges on Next Inspection
+* Faves
+* Print / Email
 */
 
 const KEY_SEARCH_REGI = 'Regi';
@@ -220,15 +228,15 @@ var SchoolBuses = React.createClass({
     });
   },
 
-  startDateChanged(e) {
+  startDateChanged(date) {
     this.updateState({
-      startDate: e.target.value,
+      startDate: date,
     });
   },
 
-  endDateChanged(e) {
+  endDateChanged(date) {
     this.updateState({
-      endDate: e.target.value,
+      endDate: date,
     });
   },
 
@@ -304,24 +312,10 @@ var SchoolBuses = React.createClass({
                   <MenuItem key={ THIS_QUARTER } eventKey={ THIS_QUARTER }>{ THIS_QUARTER }</MenuItem>
                   <MenuItem key={ CUSTOM } eventKey={ CUSTOM }>{ CUSTOM }&hellip;</MenuItem>
                 </DropdownButton>
-                <Form inline>
-                  <span className={ this.state.nextInspection !== CUSTOM ? 'hide' : '' }>
-                    <ControlLabel>From:</ControlLabel>
-                    <InputGroup>
-                      <FormControl className="search-text" type="text" placeholder="mm/dd/yyyy" value={ this.state.startDate } onChange={ this.startDateChanged } />
-                      <InputGroup.Button>
-                        <Button><Glyphicon glyph="calendar" title="start date" /></Button>
-                      </InputGroup.Button>
-                    </InputGroup>
-                    <ControlLabel>To:</ControlLabel>
-                    <InputGroup>
-                      <FormControl className="search-text" type="text" placeholder="mm/dd/yyyy" value={ this.state.endDate } onChange={ this.endDateChanged } />
-                      <InputGroup.Button>
-                        <Button><Glyphicon glyph="calendar" title="end date" /></Button>
-                      </InputGroup.Button>
-                    </InputGroup>
-                  </span>
-                </Form>
+                <span className={ this.state.nextInspection !== CUSTOM ? 'hide' : '' }>
+                  <DateControl date={ this.state.startDate } onChange={ this.startDateChanged } placeholder="mm/dd/yyyy" label="From:" title="start date"/>
+                  <DateControl date={ this.state.endDate } onChange={ this.endDateChanged } placeholder="mm/dd/yyyy" label="To:" title="end date"/>
+                </span>
                 <Checkbox inline checked={ this.state.hideInactive } onChange={ this.hideInactiveSelected }>Hide Inactive</Checkbox>
                 <Checkbox inline checked={ this.state.justReInspections } onChange={ this.justReInspectionsSelected }>Just Re-Inspections</Checkbox>
                 <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
