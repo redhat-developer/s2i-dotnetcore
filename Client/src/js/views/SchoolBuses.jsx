@@ -20,6 +20,12 @@ import { notBlank } from '../utils/string';
 * System default should be:
 ** If user is an inspector, Inspector == Current User else not used
 ** If the user is not an inspector, Service Areas in home district, else not used
+
+TODO:
+
+* Badges on Next Inspection
+* Faves
+* Print / Email
 */
 
 const KEY_SEARCH_REGI = 'Regi';
