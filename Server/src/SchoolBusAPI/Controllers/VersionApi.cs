@@ -10,6 +10,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SchoolBusAPI.Models;
 using SchoolBusCommon;
 using System.Reflection;
@@ -19,11 +20,24 @@ namespace SchoolBusAPI.Controllers
     [Route("api")]
     public class VersionApiController : Controller
     {
-        private readonly DbContext _context;
+        // Hack in the git commit id.
+        private const string _commitKey = "OPENSHIFT_BUILD_COMMIT";
 
-        public VersionApiController(DbAppContext context)
+        private readonly DbContext _context;
+        private readonly IConfiguration _configuration;
+
+        public VersionApiController(IConfiguration configuration, DbAppContext context)
         {
+            _configuration = configuration;
             _context = context;
+        }
+
+        private string CommitId
+        {
+            get
+            {
+                return _configuration[_commitKey];
+            }
         }
 
         [HttpGet]
@@ -53,7 +67,7 @@ namespace SchoolBusAPI.Controllers
         private ApplicationVersionInfo GetApplicationVersionInfo()
         {
             Assembly assembly = this.GetType().GetTypeInfo().Assembly;
-            return assembly.GetApplicationVersionInfo();
+            return assembly.GetApplicationVersionInfo(this.CommitId);
         }
 
         private DatabaseVersionInfo GetDatabaseVersionInfo()

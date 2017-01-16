@@ -38,13 +38,14 @@ namespace SchoolBusCommon
             return info;
         }
 
-        public static ApplicationVersionInfo GetApplicationVersionInfo(this Assembly assembly)
+        public static ApplicationVersionInfo GetApplicationVersionInfo(this Assembly assembly, string commit = null)
         {
             ApplicationVersionInfo info = new ApplicationVersionInfo()
             {
                 Name = assembly.GetName().Name,
                 Version = assembly.GetName().Version.ToString(),
                 Copyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright,
+                Commit = commit,
                 Description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>().Description,
                 FileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version,
                 FileCreationTime = assembly.GetCreationTime().ToString("MMMM dd, yyyy HH:mm:ss"),

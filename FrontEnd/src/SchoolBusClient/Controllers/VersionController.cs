@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SchoolBusCommon;
@@ -12,17 +13,42 @@ namespace SchoolBusClient.Controllers
     [Route("schoolbus/version")]
     public class VersionController : Controller
     {
-        private readonly Uri _apiServerUri;
+        // Hack in the git commit id.
+        private const string _commitKey = "OPENSHIFT_BUILD_COMMIT";
 
-        public VersionController(IOptions<ApiProxyServerOptions> apiServerOptions)
+        private readonly Uri _apiServerUri;
+        private readonly IConfiguration _configuration;
+
+        public VersionController(IConfiguration configuration, IOptions<ApiProxyServerOptions> apiServerOptions)
         {
+            _configuration = configuration;
             _apiServerUri = apiServerOptions.Value.ToUri();
+        }
+
+        private string CommitId
+        {
+            get
+            {
+                return _configuration[_commitKey];
+            }
         }
 
         [HttpGet]
         public virtual IActionResult GetVersion()
         {
-            ProductVersionInfo version = GetVersion<ProductVersionInfo>("/api/version");
+            ProductVersionInfo version = null;
+
+            try
+            {
+                version = GetVersion<ProductVersionInfo>("/api/version");
+            }
+            catch { }
+
+            if(version == null)
+            {
+                version = new ProductVersionInfo();
+            }
+
             version.ApplicationVersions.Add(GetApplicationVersionInfo());
             return Ok(version);
         }
@@ -38,8 +64,7 @@ namespace SchoolBusClient.Controllers
         private ApplicationVersionInfo GetApplicationVersionInfo()
         {
             Assembly assembly = this.GetType().GetTypeInfo().Assembly;
-            return assembly.GetApplicationVersionInfo();
+            return assembly.GetApplicationVersionInfo(this.CommitId);
         }
-
     }
 }
