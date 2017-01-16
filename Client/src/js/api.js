@@ -1,6 +1,6 @@
 import store from './store';
 
-import { formatDateTime } from './utils/date';
+import { formatDateTime, isOverdue } from './utils/date';
 import { ApiRequest } from './utils/http';
 import { lastFirstName, concat } from './utils/string';
 
@@ -49,6 +49,7 @@ export function searchSchoolBuses(params) {
       bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
       bus.homeTerminal = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
       bus.nextInspectionDate = formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY');
+      bus.isOverdue = isOverdue(bus.nextInspectionDate);
     });
 
     store.dispatch({ type: 'UPDATE_BUSES', schoolBuses: schoolBuses });

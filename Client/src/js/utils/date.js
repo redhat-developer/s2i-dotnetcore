@@ -19,3 +19,7 @@ export function daysFromToday(dateTime) {
   var now = Moment();
   return dt.diff(now, 'days');
 }
+
+export function isOverdue(dateTime) {
+  return daysFromToday(dateTime) < 0;
+}

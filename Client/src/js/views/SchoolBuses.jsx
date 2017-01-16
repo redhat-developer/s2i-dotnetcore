@@ -10,9 +10,10 @@ import Moment from 'moment';
 import * as Api from '../api';
 import store from '../store';
 
-import Spinner from '../components/Spinner.jsx';
-import MultiDropdown from '../components/MultiDropdown.jsx';
+import BadgeLabel from '../components/BadgeLabel.jsx';
 import DateControl from '../components/DateControl.jsx';
+import MultiDropdown from '../components/MultiDropdown.jsx';
+import Spinner from '../components/Spinner.jsx';
 
 import { notBlank } from '../utils/string';
 
@@ -23,7 +24,6 @@ import { notBlank } from '../utils/string';
 
 TODO:
 
-* Badges on Next Inspection
 * Faves
 * Print / Email
 */
@@ -312,10 +312,14 @@ var SchoolBuses = React.createClass({
                   <MenuItem key={ THIS_QUARTER } eventKey={ THIS_QUARTER }>{ THIS_QUARTER }</MenuItem>
                   <MenuItem key={ CUSTOM } eventKey={ CUSTOM }>{ CUSTOM }&hellip;</MenuItem>
                 </DropdownButton>
-                <span className={ this.state.nextInspection !== CUSTOM ? 'hide' : '' }>
-                  <DateControl date={ this.state.startDate } onChange={ this.startDateChanged } placeholder="mm/dd/yyyy" label="From:" title="start date"/>
-                  <DateControl date={ this.state.endDate } onChange={ this.endDateChanged } placeholder="mm/dd/yyyy" label="To:" title="end date"/>
-                </span>
+                {(() => {
+                  if (this.state.nextInspection === CUSTOM) {
+                    return <span>
+                      <DateControl date={ this.state.startDate } onChange={ this.startDateChanged } placeholder="mm/dd/yyyy" label="From:" title="start date"/>
+                      <DateControl date={ this.state.endDate } onChange={ this.endDateChanged } placeholder="mm/dd/yyyy" label="To:" title="end date"/>
+                    </span>;
+                  }
+                })()}
                 <Checkbox inline checked={ this.state.hideInactive } onChange={ this.hideInactiveSelected }>Hide Inactive</Checkbox>
                 <Checkbox inline checked={ this.state.justReInspections } onChange={ this.justReInspectionsSelected }>Just Re-Inspections</Checkbox>
                 <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
@@ -381,7 +385,18 @@ var SchoolBuses = React.createClass({
                 <td>{ bus.homeTerminal }</td>
                 <td>{ bus.schoolBusUnitNumber }</td>
                 <td>{ bus.permitNumber }</td>
-                <td>{ bus.nextInspectionDate }</td>
+                <td>{ bus.nextInspectionDate }
+                  {(() => {
+                    if (bus.nextInspectionType === 'reinspection') {
+                      return <BadgeLabel bsStyle="info">R</BadgeLabel>;
+                    }
+                  })()}
+                  {(() => {
+                    if (bus.isOverdue) {
+                      return <BadgeLabel bsStyle="danger">!</BadgeLabel>;
+                    }
+                  })()}
+                </td>
                 <td>{ bus.inspectorName }</td>
               </tr>;
             })
