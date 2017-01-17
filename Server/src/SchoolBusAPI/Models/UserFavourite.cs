@@ -44,15 +44,15 @@ namespace SchoolBusAPI.Models
         /// <param name="Name">The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed..</param>
         /// <param name="Value">The settings saved by the user. In general, a UI defined chunk of json that stores the settings in place when the user created the favourite..</param>
         /// <param name="IsDefault">True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite, a system-wide default is invoked. On return to the context within a session, the last parameters used are reapplied..</param>
-        /// <param name="FavouriteContextType">FavouriteContextType.</param>
-        public UserFavourite(int Id, string Name = null, string Value = null, bool? IsDefault = null, FavouriteContextType FavouriteContextType = null)
+        /// <param name="Type">The type of Favourite.</param>
+        public UserFavourite(int Id, string Name = null, string Value = null, bool? IsDefault = null, string Type = null)
         {
             
             this.Id = Id;
             this.Name = Name;
             this.Value = Value;
             this.IsDefault = IsDefault;
-            this.FavouriteContextType = FavouriteContextType;
+            this.Type = Type;
             
         }
 
@@ -85,9 +85,11 @@ namespace SchoolBusAPI.Models
         public bool? IsDefault { get; set; }
 
         /// <summary>
-        /// Gets or Sets FavouriteContextType
+        /// The type of Favourite
         /// </summary>
-        public FavouriteContextType FavouriteContextType { get; set; }
+        /// <value>The type of Favourite</value>
+        [MetaDataExtension (Description = "The type of Favourite")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -101,7 +103,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("  IsDefault: ").Append(IsDefault).Append("\n");
-            sb.Append("  FavouriteContextType: ").Append(FavouriteContextType).Append("\n");
+            sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -141,7 +143,8 @@ namespace SchoolBusAPI.Models
 
             return 
                 (
-                    this.Id == other.Id ||                    
+                    this.Id == other.Id ||
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -160,9 +163,9 @@ namespace SchoolBusAPI.Models
                     this.IsDefault.Equals(other.IsDefault)
                 ) && 
                 (
-                    this.FavouriteContextType == other.FavouriteContextType ||
-                    this.FavouriteContextType != null &&
-                    this.FavouriteContextType.Equals(other.FavouriteContextType)
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 );
         }
 
@@ -177,8 +180,10 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                hash = hash * 59 + this.Id.GetHashCode();
-                
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }
                 if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
@@ -191,9 +196,9 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.IsDefault.GetHashCode();
                 }
-                if (this.FavouriteContextType != null)
+                if (this.Type != null)
                 {
-                    hash = hash * 59 + this.FavouriteContextType.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 }
                 return hash;
             }

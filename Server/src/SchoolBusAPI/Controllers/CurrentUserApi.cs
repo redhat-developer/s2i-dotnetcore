@@ -43,6 +43,65 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Removes all of the current user&#39;s favourites</remarks>
+        /// <response code="200">OK</response>
+        [HttpPost]
+        [Route("/api/users/current/favourites/delete")]
+        [SwaggerOperation("UsersCurrentFavouritesDeletePost")]
+        public virtual IActionResult UsersCurrentFavouritesDeletePost()
+        {
+            return this._service.UsersCurrentFavouritesDeletePostAsync();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Create new favourite for the current user</remarks>
+        /// <param name="item"></param>
+        /// <response code="201">UserFavourite created</response>
+        [HttpPost]
+        [Route("/api/users/current/favourites")]
+        [SwaggerOperation("UsersCurrentFavouritesPost")]
+        [SwaggerResponse(200, type: typeof(UserFavourite))]
+        public virtual IActionResult UsersCurrentFavouritesPost([FromBody]UserFavourite item)
+        {
+            return this._service.UsersCurrentFavouritesPostAsync(item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Updates a favourite</remarks>
+        /// <param name="item"></param>
+        /// <response code="201">UserFavourite created</response>
+        [HttpPut]
+        [Route("/api/users/current/favourites")]
+        [SwaggerOperation("UsersCurrentFavouritesPut")]
+        [SwaggerResponse(200, type: typeof(UserFavourite))]
+        public virtual IActionResult UsersCurrentFavouritesPut([FromBody]UserFavourite item)
+        {
+            return this._service.UsersCurrentFavouritesPutAsync(item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a user&#39;s favourites of a given type.  If type is empty, returns all.</remarks>
+        /// <param name="type">type of favourite to return</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        [HttpGet]
+        [Route("/api/users/current/favourites/{type}")]
+        [SwaggerOperation("UsersCurrentFavouritesTypeGet")]
+        [SwaggerResponse(200, type: typeof(List<UserFavourite>))]
+        public virtual IActionResult UsersCurrentFavouritesTypeGet([FromRoute]string type)
+        {
+            return this._service.UsersCurrentFavouritesTypeGetAsync(type);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Get the currently logged in user</remarks>
         /// <response code="200">OK</response>
         [HttpGet]
