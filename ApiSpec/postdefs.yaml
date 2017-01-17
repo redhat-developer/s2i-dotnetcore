@@ -1,0 +1,302 @@
+  GroupMembership:
+    type: object
+    required:
+      - id
+      - active
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+        x-type-options:
+          min: 1
+          max: 1000
+      active:
+        type: boolean
+      group:
+        $ref: '#/definitions/Group'
+      user:
+        $ref: '#/definitions/User'
+  UserViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - id
+      - active
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      givenName:
+        type: string
+        x-chance-type: name
+      surname:
+        type: string
+        x-chance-type: name
+      initials:
+        type: string
+      email:
+        type: string
+        x-chance-type: email
+      active:
+        type: boolean
+  CurrentUserViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    properties:
+      givenName:
+        type: string
+        x-chance-type: name
+      surname:
+        type: string
+        x-chance-type: name
+      fullName:
+        type: string
+      districtName:
+        type: string
+      overdueInspections:
+        format: int32
+        type: integer
+      scheduledInspections:
+        format: int32
+        type: integer
+      dueNextMonthInspections:
+        format: int32
+        type: integer
+  UserDetailsViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - id
+      - active
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      givenName:
+        type: string
+        x-chance-type: name
+      surname:
+        type: string
+        x-chance-type: name
+      initials:
+        type: string
+      email:
+        type: string
+        x-chance-type: email
+      active:
+        type: boolean
+      permissions:
+        type: array
+        items:
+          $ref: '#/definitions/PermissionViewModel'
+  UserRoleViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - effectiveDate
+      - userId
+      - roleId
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      effectiveDate:
+        type: string
+        format: date-time
+      expiryDate:
+        type: string
+        format: date-time
+      userId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      roleId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+  RoleViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - id
+      - name
+      - description
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      name:
+        type: string
+        x-chance-type: name
+      description:
+        type: string
+        x-chance-type: sentence
+  RolePermissionViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - roleId
+      - permissionId
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      roleId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      permissionId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+  PermissionViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - code
+      - name
+      - description
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+        x-chance-type: name
+      description:
+        type: string
+        x-chance-type: sentence
+  GroupMembershipViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - active
+      - userId
+      - groupId
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      active:
+        type: boolean
+      groupId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      userId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+  GroupViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - name
+      - description
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      name:
+        type: string
+        x-chance-type: name
+      description:
+        type: string
+        x-chance-type: sentence
+  UserFavouriteViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+      name:
+        type: string
+        description:  Context Name
+        x-chance-type: name
+      value:
+        type: string
+        description:  Saved search
+        x-chance-type: word
+      isDefault:
+        type: boolean
+      favouriteContextTypeId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
+  NotificationViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    properties:
+      id:
+          format: int32
+          type: integer
+          x-type-options:
+            min: 1
+            max: 1000
+      eventId:
+          format: int32
+          type: integer
+          x-type-options:
+            min: 1
+            max: 1000
+      event2Id:
+          format: int32
+          type: integer
+          x-type-options:
+            min: 1
+            max: 1000
+      hasBeenViewed:
+        type: boolean
+      isWatchNotification:
+        type: boolean
+      isExpired:
+        type: boolean
+      isAllDay:
+        type: boolean
+      priorityCode:
+        type: string
+      userId:
+          format: int32
+          type: integer
+          x-type-options:
+            min: 1
+            max: 1000
