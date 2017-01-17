@@ -1,0 +1,3724 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: REST API Documentation for the MOTI School Bus Application
+  description: The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
+  termsOfService: N/A
+basePath: /api
+paths:
+  /ccwdata:
+    get:
+      tags:
+        - CCWData
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CCWData'
+      deprecated: false
+    post:
+      tags:
+        - CCWData
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CCWData"
+      responses:
+        201:
+          description: CCWData created
+          headers:
+            Location:
+              description: A link to the CCWData
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/CCWData"
+  /ccwdata/bulk:
+    post:
+      tags:
+        - CCWData
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CCWData"
+      responses:
+        201:
+          description: CCWData created
+  /ccwdata/{id}:
+    get:
+      tags:
+        - CCWData
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/CCWData'
+        404:
+          description: CCWData not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of CCWData to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - CCWData
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/CCWData'
+        404:
+          description: CCWData not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of CCWData to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CCWData"
+  /ccwdata/{id}/delete:
+    post:
+      tags:
+        - CCWData
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: CCWData not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of CCWData to delete
+          required: true
+          type: integer
+  /inspections:
+    get:
+      tags:
+        - Inspection
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Inspection'
+      deprecated: false
+    post:
+      tags:
+        - Inspection
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Inspection"
+      responses:
+        201:
+          description: Inspection created
+          headers:
+            Location:
+              description: A link to the Inspection
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/Inspection"
+  /inspections/bulk:
+    post:
+      tags:
+        - Inspection
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Inspection"
+      responses:
+        201:
+          description: Inspections created
+  /inspections/{id}:
+    get:
+      tags:
+        - Inspection
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Inspection'
+        404:
+          description: Inspection not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of Inspection to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - Inspection
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Inspection'
+        404:
+          description: Inspection not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of Inspection to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Inspection"
+  /inspections/{id}/delete:
+    post:
+      tags:
+        - Inspection
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: Inspection not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of Inspection to delete
+          required: true
+          type: integer
+  /schoolbuses:
+    get:
+      summary: Returns a collection of school buses
+      description: ""
+      operationId: GetAllBuses
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBus"
+    post:
+      summary: Creates a new school bus
+      description: |
+        The Location response-header field is used to redirect the recipient to a location other than the Request-URI for completion of the request or identification of a new resource. For 201 (Created) responses, the Location is that of the new resource which was created by the request.
+          The field value consists of a single absolute URI.
+      operationId: AddBus
+      tags:
+        - SchoolBus
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBus"
+      responses:
+        201:
+          description: SchoolBus created
+          headers:
+            Location:
+              description: A link to the SchoolBus
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBus"
+  /schoolbuses/search:
+    get:
+      summary: Searches school buses
+      description:
+        Used for the search schoolbus page.
+      tags:
+        - SchoolBus
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: serviceareas
+          in: query
+          description: Service areas (array of id numbers)
+          collectionFormat: multi
+          type: array
+          items:
+            type: integer
+        - name: inspectors
+          in: query
+          description: Assigned School Bus Inspectors (array of id numbers)
+          type: array
+          items:
+              type: integer
+        - name: cities
+          in: query
+          description: Cities (array of id numbers)
+          type: array
+          items:
+              type: integer
+        - name: schooldistricts
+          in: query
+          description: School Districts (array of id numbers)
+          type: array
+          items:
+              type: integer
+        - name: owner
+          in: query
+          type: integer
+        - name: regi
+          in: query
+          description: ICBC Regi Number
+          type: string
+        - name: vin
+          in: query
+          description: VIN
+          type: string
+        - name: plate
+          in: query
+          description: License Plate String
+          type: string
+        - name: includeInactive
+          in: query
+          description: True if Inactive schoolbuses will be returned
+          type: boolean
+        - name: onlyReInspections
+          in: query
+          description: If true, only buses that need a re-inspection will be returned
+          type: boolean
+        - name: startDate
+          description: Inspection start date
+          in: query
+          type: string
+          format: date-time
+        - name: endDate
+          description: Inspection end date
+          in: query
+          type: string
+          format: date-time
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBus"
+  /schoolbuses/bulk:
+    post:
+      summary: Creates several school buses
+      description:
+        Used for bulk creation of schoolbus records.
+      operationId: AddSchoolBusBulk
+      tags:
+        - SchoolBus
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBus"
+      responses:
+        201:
+          description: SchoolBus items created
+  /schoolbuses/{id}:
+    get:
+      summary: Returns a single school bus object
+      description: ""
+      operationId: FindBusById
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: Id of SchoolBus to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/SchoolBus"
+        404:
+          description: Not Found
+    put:
+      summary: Updates a single school bus object
+      description: ""
+      tags:
+        - SchoolBus
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: Id of SchoolBus to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBus"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/SchoolBus"
+        404:
+          description: Not Found
+  /schoolbuses/{id}/delete:
+    post:
+      tags:
+        - SchoolBus
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBus not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to delete
+          required: true
+          type: integer
+  /schoolbuses/{id}/inspections:
+    get:
+      tags:
+        - SchoolBus
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Inspection'
+        "404":
+          description: SchoolBus not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to fetch Inspections for
+          required: true
+          type: integer
+  /schoolbuses/{id}/notes:
+    get:
+      description: Returns notes for a particular SchoolBus.
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusNote'
+        "404":
+           description: SchoolBus not found
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to fetch notes for
+          required: true
+          type: integer
+  /schoolbuses/{id}/attachments:
+    get:
+      description: Returns attachments for a particular SchoolBus
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusAttachment'
+        "404":
+           description: SchoolBus not found
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to fetch attachments for
+          required: true
+          type: integer
+  /schoolbuses/{id}/history:
+    get:
+      description: Returns History for a particular SchoolBus
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusHistory'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to fetch SchoolBusHistory for
+          required: true
+          type: integer
+  /schoolbuses/{id}/ccwdata:
+    get:
+      description: Returns CCWData for a particular Schoolbus
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CCWData'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to fetch CCWData for
+          required: true
+          type: integer
+  /schoolbusnotes:
+     get:
+      tags:
+        - SchoolBusNote
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusNote'
+      deprecated: false
+     post:
+      tags:
+        - SchoolBusNote
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusNote"
+      responses:
+        201:
+          description: SchoolBusNote created
+          headers:
+            Location:
+              description: A link to the SchoolBusNote
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBusNote"
+  /schoolbusnotes/bulk:
+    post:
+      tags:
+        - SchoolBusNote
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusNote"
+      responses:
+        201:
+          description: SchoolBusNotes created
+  /schoolbusnotes/{id}:
+    get:
+      tags:
+        - SchoolBusNote
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusNote'
+        404:
+          description: SchoolBusNote not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusNote to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - SchoolBusNote
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusNote'
+        404:
+          description: SchoolBusNote not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusNote to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusNote"
+  /schoolbusnotes/{id}/delete:
+    post:
+      tags:
+        - SchoolBusNote
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBusNote not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusNote to delete
+          required: true
+          type: integer
+  /schoolbusattachments:
+     get:
+      tags:
+        - SchoolBusAttachment
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusAttachment'
+      deprecated: false
+     post:
+      tags:
+        - SchoolBusAttachment
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusAttachment"
+      responses:
+        201:
+          description: SchoolBusAttachment created
+          headers:
+            Location:
+              description: A link to the SchoolBusAttachment
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBusAttachment"
+  /schoolbusattachments/bulk:
+    post:
+      tags:
+        - SchoolBusAttachment
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusAttachment"
+      responses:
+        201:
+          description: SchoolBusAttachments created
+  /schoolbusattachments/{id}:
+    get:
+      tags:
+        - SchoolBusAttachment
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusAttachment'
+        404:
+          description: SchoolBusAttachment not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusAttachment to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - SchoolBusAttachment
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusAttachment'
+        404:
+          description: SchoolBusAttachment not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusAttachment to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusAttachment"
+  /schoolbusattachments/{id}/delete:
+    post:
+      tags:
+        - SchoolBusAttachment
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBusAttachment not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusAttachment to delete
+          required: true
+          type: integer
+  /schoolbushistories:
+     get:
+      tags:
+        - SchoolBusHistory
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusHistory'
+      deprecated: false
+     post:
+      tags:
+        - SchoolBusHistory
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusHistory"
+      responses:
+        201:
+          description: SchoolBusHistory created
+          headers:
+            Location:
+              description: A link to the SchoolBusHistory
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBusHistory"
+  /schoolbushistories/bulk:
+    post:
+      tags:
+        - SchoolBusHistory
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusHistory"
+      responses:
+        201:
+          description: SchoolBusHistories created
+  /schoolbushistories/{id}:
+    get:
+      tags:
+        - SchoolBusHistory
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusHistory'
+        404:
+          description: SchoolBusHistory not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusHistory to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - SchoolBusHistory
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusHistory'
+        404:
+          description: SchoolBusHistory not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusHistory to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusHistory"
+  /schoolbushistories/{id}/delete:
+    post:
+      tags:
+        - SchoolBusHistory
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBusHistory not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusHistory to delete
+          required: true
+          type: integer
+  /notifications:
+     get:
+      tags:
+        - Notification
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Notification'
+      deprecated: false
+     post:
+      tags:
+        - Notification
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Notification"
+      responses:
+        201:
+          description: Notification created
+          headers:
+            Location:
+              description: A link to the Notification
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/Notification"
+  /notifications/bulk:
+    post:
+      tags:
+        - Notification
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Notification"
+      responses:
+        201:
+          description: Notifications created
+  /notifications/{id}:
+    get:
+      tags:
+        - Notification
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Notification'
+        404:
+          description: Notification not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of Notification to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - Notification
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Notification'
+        404:
+          description: Notification not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of Notification to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Notification"
+  /notifications/{id}/delete:
+    post:
+      tags:
+        - Notification
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: Notification not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of Notification to delete
+          required: true
+          type: integer
+  /notificationevents:
+     get:
+      tags:
+        - NotificationEvent
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/NotificationEvent'
+      deprecated: false
+     post:
+      tags:
+        - NotificationEvent
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/NotificationEvent"
+      responses:
+        201:
+          description: NotificationEvent created
+          headers:
+            Location:
+              description: A link to the NotificationEvent
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/NotificationEvent"
+  /notificationevents/bulk:
+    post:
+      tags:
+        - NotificationEvent
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/NotificationEvent"
+      responses:
+        201:
+          description: NotificationEvents created
+  /notificationevents/{id}:
+    get:
+      tags:
+        - NotificationEvent
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/NotificationEvent'
+        404:
+          description: NotificationEvent not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of NotificationEvent to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - NotificationEvent
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/NotificationEvent'
+        404:
+          description: NotificationEvent not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of NotificationEvent to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/NotificationEvent"
+  /notificationevents/{id}/delete:
+    post:
+      tags:
+        - NotificationEvent
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: NotificationEvent not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of NotificationEvent to delete
+          required: true
+          type: integer
+  /schoolbusowners:
+    get:
+      tags:
+        - SchoolBusOwner
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwner'
+      deprecated: false
+    post:
+      tags:
+        - SchoolBusOwner
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwner"
+      responses:
+        201:
+          description: SchoolBusOwner created
+          headers:
+            Location:
+              description: A link to the SchoolBusOwner
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBusOwner"
+  /schoolbusowners/bulk:
+    post:
+      tags:
+        - SchoolBusOwner
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusOwner"
+      responses:
+        201:
+          description: SchoolBusOwners created
+  /schoolbusowners/{id}:
+    get:
+      description: Returns a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwner'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - SchoolBusOwner
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwner'
+        404:
+          description: SchoolBusOwner not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwner"
+  /schoolbusowners/{id}/delete:
+    post:
+      tags:
+        - SchoolBusOwner
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBusOwner not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to delete
+          required: true
+          type: integer
+  /schoolbusowners/{id}/attachments:
+    get:
+      description: Returns attachments for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerAttachment'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch attachments for
+          required: true
+          type: integer
+  /schoolbusowners/{id}/notes:
+    get:
+      description: Returns notes for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerNote'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch notes for
+          required: true
+          type: integer
+  /schoolbusownernotes:
+     get:
+      tags:
+        - SchoolBusOwnerNote
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerNote'
+      deprecated: false
+     post:
+      tags:
+        - SchoolBusOwnerNote
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerNote"
+      responses:
+        201:
+          description: SchoolBusOwnerNote created
+          headers:
+            Location:
+              description: A link to the SchoolBusOwnerNote
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerNote"
+  /schoolbusownernotes/bulk:
+    post:
+      tags:
+        - SchoolBusOwnerNote
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusOwnerNote"
+      responses:
+        201:
+          description: SchoolBusOwnerNotes created
+  /schoolbusownernotes/{id}:
+    get:
+      tags:
+        - SchoolBusOwnerNote
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerNote'
+        404:
+          description: SchoolBusOwnerNote not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerNote to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - SchoolBusOwnerNote
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerNote'
+        404:
+          description: SchoolBusOwnerNote not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerNote to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerNote"
+  /schoolbusownernotes/{id}/delete:
+    post:
+      tags:
+        - SchoolBusOwnerNote
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBusOwnerNote not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerNote to delete
+          required: true
+          type: integer
+  /schoolbusownerattachments:
+     get:
+      tags:
+        - SchoolBusOwnerAttachment
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerAttachment'
+      deprecated: false
+     post:
+      tags:
+        - SchoolBusOwnerAttachment
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerAttachment"
+      responses:
+        201:
+          description: SchoolBusOwnerAttachment created
+          headers:
+            Location:
+              description: A link to the SchoolBusOwnerAttachment
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerAttachment"
+  /schoolbusownerattachments/bulk:
+    post:
+      tags:
+        - SchoolBusOwnerAttachment
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusOwnerAttachment"
+      responses:
+        201:
+          description: SchoolBusOwnerAttachments created
+  /schoolbusownerattachments/{id}:
+    get:
+      tags:
+        - SchoolBusOwnerAttachment
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerAttachment'
+        404:
+          description: SchoolBusOwnerAttachment not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerAttachment to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - SchoolBusOwnerAttachment
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerAttachment'
+        404:
+          description: SchoolBusOwnerAttachment not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerAttachment to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerAttachment"
+  /schoolbusownerattachments/{id}/delete:
+    post:
+      tags:
+        - SchoolBusOwnerAttachment
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBusOwnerAttachment not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerAttachment to delete
+          required: true
+          type: integer
+  /schoolbusownercontacts:
+     get:
+      tags:
+        - SchoolBusOwnerContact
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerContact'
+      deprecated: false
+     post:
+      tags:
+        - SchoolBusOwnerContact
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerContact"
+      responses:
+        201:
+          description: SchoolBusOwnerContact created
+          headers:
+            Location:
+              description: A link to the SchoolBusOwnerContact
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerContact"
+  /schoolbusownercontacts/bulk:
+    post:
+      tags:
+        - SchoolBusOwnerContact
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusOwnerContact"
+      responses:
+        201:
+          description: SchoolBusOwnerContacts created
+  /schoolbusownercontacts/{id}:
+    get:
+      tags:
+        - SchoolBusOwnerContact
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerContact'
+        404:
+          description: SchoolBusOwnerContact not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerContact to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - SchoolBusOwnerContact
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerContact'
+        404:
+          description: SchoolBusOwnerContact not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerContact to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerContact"
+  /schoolbusownercontacts/{id}/delete:
+    post:
+      tags:
+        - SchoolBusOwnerContact
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBusOwnerContact not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerContact to delete
+          required: true
+          type: integer
+  /schoolbusownercontacts/{id}/contactphones:
+    get:
+      description: Returns phone contacts for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwnerContact
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerContactPhone'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch contact phone for
+          required: true
+          type: integer
+  /schoolbusownercontacts/{id}/contactaddresses:
+    get:
+      description: Returns address contacts for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwnerContact
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerContactAddress'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch contact address for
+          required: true
+          type: integer
+  /schoolbusownerhistory:
+     get:
+      tags:
+        - SchoolBusOwnerHistory
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerHistory'
+      deprecated: false
+     post:
+      tags:
+        - SchoolBusOwnerHistory
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerHistory"
+      responses:
+        201:
+          description: SchoolBusOwnerHistory created
+          headers:
+            Location:
+              description: A link to the SchoolBusOwnerHistory
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerHistory"
+  /schoolbusownerhistory/bulk:
+    post:
+      tags:
+        - SchoolBusOwnerHistory
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusOwnerHistory"
+      responses:
+        201:
+          description: SchoolBusOwnerHistories created
+  /schoolbusownerhistory/{id}:
+    get:
+      tags:
+        - SchoolBusOwnerHistory
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerAttachment'
+        404:
+          description: SchoolBusOwnerHistory not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerHistory to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - SchoolBusOwnerHistory
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBusOwnerHistory'
+        404:
+          description: SchoolBusOwnerHistory not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerHistory to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolBusOwnerHistory"
+  /schoolbusownerhistory/{id}/delete:
+    post:
+      tags:
+        - SchoolBusOwnerHistory
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: SchoolBusOwnerHistory not found
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwnerHistory to delete
+          required: true
+          type: integer
+  /favouritecontexttypes:
+    get:
+      description: Returns list of available FavouriteContextTypes
+      tags:
+        - SchoolBusOwner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FavouriteContextType'
+  /groups:
+    get:
+      description: Returns a collection of groups
+      tags:
+        - Group
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupViewModel"
+    post:
+      tags:
+        - Group
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Group"
+      responses:
+        201:
+          description: Group created
+          headers:
+            Location:
+              description: A link to the Group
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/Group"
+  /groups/bulk:
+    post:
+      tags:
+        - Group
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Group"
+      responses:
+        201:
+          description: Groups created
+  /groups/{id}:
+    get:
+      description: Returns a Group
+      tags:
+        - Group
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Group to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Group'
+        404:
+          description: Group not found
+    put:
+      tags:
+        - Group
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Group to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Group"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Group"
+        404:
+          description: Group not found
+  /groups/{id}/delete:
+    post:
+      tags:
+        - Group
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Group to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Group not found
+  /permissions:
+    get:
+      description: Returns a collection of permissions
+      tags:
+        - Permission
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PermissionViewModel"
+    post:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Permission"
+      responses:
+        201:
+          description: Permission created
+          headers:
+            Location:
+              description: A link to the Permission
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/Permission"
+  /permissions/bulk:
+    post:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Permission"
+      responses:
+        201:
+          description: Permissions created
+  /permissions/{id}:
+    get:
+      description: Returns a permission
+      tags:
+        - Permission
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Permission to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/PermissionViewModel'
+        404:
+          description: Permission not found
+    put:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Permission to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/PermissionViewModel"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/PermissionViewModel"
+        404:
+          description: Permission not found
+  /permissions/{id}/delete:
+    post:
+      tags:
+        - Permission
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Permission to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Permission not found
+  /roles:
+    get:
+      description: Returns a collection of roles
+      tags:
+        - Role
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/RoleViewModel"
+    post:
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/RoleViewModel"
+      responses:
+        201:
+          description: Role created
+          headers:
+            Location:
+              description: A link to the Role
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/RoleViewModel"
+  /roles/bulk:
+    post:
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Role"
+      responses:
+        201:
+          description: Roles created
+  /roles/{id}:
+    get:
+      tags:
+        - Role
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/RoleViewModel'
+        404:
+          description: Role not found
+    put:
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/RoleViewModel"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/RoleViewModel"
+        404:
+          description: Role not found
+  /roles/{id}/delete:
+    post:
+      tags:
+        - Role
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Role not found
+  /roles/{id}/permissions:
+    get:
+      description: Get all the permissions for a role
+      tags:
+        - Role
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PermissionViewModel"
+    put:
+      description: Updates the permissions for a role
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to update
+          required: true
+          type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Permission"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PermissionViewModel"
+        404:
+          description: Role not found
+    post:
+      description: Adds a permissions to a role
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Permission"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PermissionViewModel"
+        404:
+          description: Role not found
+  /roles/{id}/users:
+    get:
+      description: Gets all the users for a role
+      tags:
+        - Role
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserRoleViewModel"
+    put:
+      description: Updates the users for a role
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Role to update
+          required: true
+          type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserRoleViewModel"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserRoleViewModel"
+        404:
+          description: Role not found
+  /rolepermissions/bulk:
+    post:
+      description: Bulk load of role permissions
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/RolePermission"
+      responses:
+        201:
+          description: Roles created
+  /users:
+    get:
+      description: Returns all users
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserViewModel"
+        404:
+           description: User not found
+    post:
+      description: Create new user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        201:
+          description: User created
+          headers:
+            Location:
+              description: A link to the User
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/User"
+  /users/current:
+    get:
+      description: Get the currently logged in user
+      tags:
+        - CurrentUser
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/CurrentUserViewModel"
+  /users/bulk:
+    post:
+      description: Adds a number of users
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+      responses:
+        200:
+          description: OK
+  /users/{id}:
+    get:
+      description: Returns data for a particular user
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/UserViewModel"
+        404:
+           description: User not found
+    put:
+      description: Updates a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserViewModel"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/UserViewModel"
+        404:
+          description: User not found
+  /users/{id}/delete:
+    post:
+      description: Deletes a user
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: User not found
+  /users/{id}/roles:
+    get:
+      description: Returns the roles for a user
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserRoleViewModel"
+        404:
+           description: User not found
+    post:
+      description: Adds a role to a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserRoleViewModel"
+      responses:
+        201:
+          description: Role created for user
+          headers:
+            Location:
+              description: A link to the User Role
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/UserRoleViewModel"
+    put:
+      description: Updates the roles for a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserRoleViewModel"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserRoleViewModel"
+        404:
+          description: User not found
+  /users/{id}/permissions:
+    get:
+      description: Returns the set of permissions for a user
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PermissionViewModel"
+        404:
+           description: User not found
+  /users/{id}/groups:
+    get:
+      description: Returns all groups that a user is a member of
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembershipViewModel"
+        404:
+           description: User not found
+    put:
+      description: Updates the active set of groups for a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembership"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembershipViewModel"
+        404:
+          description: User not found
+    post:
+      description: Add to the active set of groups for a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembership"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembershipViewModel"
+        404:
+          description: User not found
+  /users/{id}/favourites:
+    get:
+      description: Returns a user's favourites of a given context type
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserFavouriteViewModel"
+        "404":
+           description: User not found
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch favorites for
+          required: true
+          type: integer
+  /users/{id}/notifications:
+    get:
+      description: Returns a user's notifications
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/NotificationViewModel"
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch notifications for
+          required: true
+          type: integer
+  /usergroups/bulk:
+    post:
+      description: Adds a number of user groups
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupMembership"
+      responses:
+        200:
+          description: OK
+  /userroles/bulk:
+    post:
+      description: Adds a number of user roles
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserRole"
+      responses:
+        200:
+          description: OK
+  /regions:
+    get:
+      description: Returns a list of available regions
+      tags:
+        - Region
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Region'
+    post:
+      description: Adds a region
+      tags:
+        - Region
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Region"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Region'
+  /regions/bulk:
+    post:
+      description: Adds a number of regions.
+      tags:
+        - Region
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Region"
+      responses:
+        '200':
+          description: OK
+  /regions/{id}:
+    get:
+      description: Returns a specific region
+      tags:
+        - Region
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Region'
+      parameters:
+        - name: id
+          in: path
+          description: id of Regions to fetch
+          required: true
+          type: integer
+    put:
+      description: Updates a region
+      tags:
+        - Region
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Region to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Region"
+      responses:
+        200:
+          description: OK
+        404:
+          description: Region not found
+  /regions/{id}/delete:
+    post:
+      description: Deletes a region
+      tags:
+        - Region
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Region to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Region not found
+  /regions/{id}/districts:
+    get:
+      description: Returns the districts for a specific region
+      tags:
+        - Region
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/District'
+      parameters:
+        - name: id
+          in: path
+          description: id of Region for which to fetch the Districts
+          required: true
+          type: integer
+  /districts:
+    get:
+      description: Returns a list of available districts
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/District'
+    post:
+      description: Adds a district
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/District"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/District'
+  /districts/bulk:
+    post:
+      description: Adds a number of districts.
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/District"
+      responses:
+        '200':
+          description: OK
+  /districts/{id}:
+    get:
+      description: Returns a specific district
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/District'
+      parameters:
+        - name: id
+          in: path
+          description: id of Districts to fetch
+          required: true
+          type: integer
+    put:
+      description: Updates a district
+      tags:
+        - District
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of District to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/District"
+      responses:
+        200:
+          description: OK
+        404:
+          description: District not found
+  /districts/{id}/delete:
+    post:
+      description: Deletes a district
+      tags:
+        - District
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of District to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: District not found
+  /districts/{id}/serviceareas:
+    get:
+      description: Returns the Service Areas for a specific region
+      tags:
+        - District
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceArea'
+      parameters:
+        - name: id
+          in: path
+          description: id of District for which to fetch the ServiceAreas
+          required: true
+          type: integer
+  /serviceareas:
+    get:
+      description: Returns a list of available districts
+      tags:
+        - ServiceArea
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceArea'
+    post:
+      description: Adds a Service Area
+      tags:
+        - ServiceArea
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceArea"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceArea'
+  /serviceareas/bulk:
+    post:
+      description: Adds a number of districts.
+      tags:
+        - ServiceArea
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ServiceArea"
+      responses:
+        '200':
+          description: OK
+  /serviceareas/{id}:
+    get:
+      description: Returns a specific Service Area
+      tags:
+        - ServiceArea
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ServiceArea'
+      parameters:
+        - name: id
+          in: path
+          description: id of Service Area to fetch
+          required: true
+          type: integer
+    put:
+      description: Updates a Service Area
+      tags:
+        - ServiceArea
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Service Area to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceArea"
+      responses:
+        200:
+          description: OK
+        404:
+          description: Service Area not found
+  /serviceareas/{id}/delete:
+    post:
+      description: Deletes a Service Area
+      tags:
+        - ServiceArea
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Service Area to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Service Area not found
+  /cities:
+    get:
+      description: Returns a list of cities
+      tags:
+        - City
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/City'
+    post:
+      description: Adds a City
+      tags:
+        - City
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/City"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/City'
+  /cities/bulk:
+    post:
+      description: Adds a number of cities
+      tags:
+        - City
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/City"
+      responses:
+        '200':
+          description: OK
+  /cities/{id}:
+    get:
+      description: Returns a specific City by ID
+      tags:
+        - City
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/City'
+      parameters:
+        - name: id
+          in: path
+          description: id of City to fetch
+          required: true
+          type: integer
+    put:
+      description: Updates a City
+      tags:
+        - City
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of City to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/City"
+      responses:
+        200:
+          description: OK
+        404:
+          description: City not found
+  /cities/{id}/delete:
+    post:
+      description: Deletes a City
+      tags:
+        - City
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of City to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: City not found
+
+  /schooldistricts:
+    get:
+      description: Returns a list of available schooldistricts
+      tags:
+        - SchoolDistrict
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolDistrict'
+    post:
+      description: Adds a school district
+      tags:
+        - SchoolDistrict
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolDistrict"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolDistrict'
+  /schooldistricts/bulk:
+    post:
+      description: Adds a number of school districts.
+      tags:
+        - SchoolDistrict
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolDistrict"
+      responses:
+        '200':
+          description: OK
+  /schooldistricts/{id}:
+    get:
+      description: Returns a specific school district
+      tags:
+        - SchoolDistrict
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolDistrict'
+      parameters:
+        - name: id
+          in: path
+          description: id of School Districts to fetch
+          required: true
+          type: integer
+    put:
+      description: Updates a school district
+      tags:
+        - SchoolDistrict
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of School District to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SchoolDistrict"
+      responses:
+        200:
+          description: OK
+        404:
+          description: School District not found
+  /schooldistricts/{id}/delete:
+    post:
+      description: Deletes a School District
+      tags:
+        - SchoolDistrict
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of School District to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: School District not found
