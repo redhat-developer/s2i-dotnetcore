@@ -184,7 +184,7 @@
                                     },
                                     {
                                         "name": "ASPNETCORE_URLS",
-                                        "value": "https://*:8080"
+                                        "value": "http://*:8080"
                                     },
                                     {
                                         "name": "DOTNET_STARTUP_PROJECT",
