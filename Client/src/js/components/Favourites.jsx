@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, ButtonToolbar, Button, Modal } from 'react-bootstrap';
+import { Alert, Dropdown, ButtonToolbar, Button, Modal } from 'react-bootstrap';
 import { Form, FormGroup, FormControl, HelpBlock, ControlLabel, Checkbox } from 'react-bootstrap';
 import { Col, Glyphicon } from 'react-bootstrap';
 
@@ -122,6 +122,15 @@ var Favourites = React.createClass({
   },
 
   saveFavourite(favourite) {
+    // Make sure there's only one default
+    if (favourite.isDefault) {
+      var oldDefault = _.find(this.state.favourites, (fave) => { return fave.isDefault; });
+      if (oldDefault && (favourite.id !== oldDefault.id)) {
+        oldDefault.isDefault = false;
+        Api.updateFavourite(oldDefault);
+      }
+    }
+
     if (favourite.id) {
       Api.updateFavourite(favourite);
     } else {
@@ -157,30 +166,30 @@ var Favourites = React.createClass({
           <Button onClick={ this.addFavourite }>Favourite Current Selection</Button>
         </div>
         {(() => {
-          if (Object.keys(this.state.favourites).length > 0) {
-            return <ul>
-              {
-                _.map(this.state.favourites, (favourite) => {
-                  return <li key={ favourite.id }>
-                    <Col md={1}>
-                      { favourite.isDefault ? <Glyphicon glyph="star" /> : '' }
-                    </Col>
-                    <Col md={8}>
-                      <a onClick={ this.selectFavourite.bind(this, favourite) }>{ favourite.name }</a>
-                    </Col>
-                    <Col md={3}>
-                      <ButtonToolbar>
-                        <Button bsSize="xsmall" onClick={ this.editFavourite.bind(this, favourite) }><Glyphicon glyph="edit" /></Button>
-                        <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm params={ favourite } onConfirm={ this.deleteFavourite }/> }>
-                          <Button bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
-                        </OverlayTrigger>
-                      </ButtonToolbar>
-                    </Col>
-                  </li>;
-                })
-              }
-            </ul>;
-          }
+          if (Object.keys(this.state.favourites).length === 0) { return <Alert bsStyle="success" style={{ marginBottom: 0 }}>No favourites</Alert>; }
+
+          return <ul>
+            {
+              _.map(this.state.favourites, (favourite) => {
+                return <li key={ favourite.id }>
+                  <Col md={1}>
+                    { favourite.isDefault ? <Glyphicon glyph="star" /> : '' }
+                  </Col>
+                  <Col md={8}>
+                    <a onClick={ this.selectFavourite.bind(this, favourite) }>{ favourite.name }</a>
+                  </Col>
+                  <Col md={3}>
+                    <ButtonToolbar>
+                      <Button bsSize="xsmall" onClick={ this.editFavourite.bind(this, favourite) }><Glyphicon glyph="edit" /></Button>
+                      <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm params={ favourite } onConfirm={ this.deleteFavourite }/> }>
+                        <Button bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
+                      </OverlayTrigger>
+                    </ButtonToolbar>
+                  </Col>
+                </li>;
+              })
+            }
+          </ul>;
         })()}
       </RootCloseMenu>
       { this.state.showEditDialog ?
