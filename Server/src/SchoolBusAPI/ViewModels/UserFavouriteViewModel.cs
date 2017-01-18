@@ -42,13 +42,13 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="Value">Saved search.</param>
         /// <param name="IsDefault">IsDefault.</param>
         /// <param name="FavouriteContextTypeId">FavouriteContextTypeId.</param>
-        public UserFavouriteViewModel(int Id, string Name = null, string Value = null, bool? IsDefault = null, int? FavouriteContextTypeId = null)
+        public UserFavouriteViewModel(int Id, string Name = null, string Value = null, bool? IsDefault = null, string Type = null)
         {
             this.Id = Id;
             this.Name = Name;
             this.Value = Value;
             this.IsDefault = IsDefault;
-            this.FavouriteContextTypeId = FavouriteContextTypeId;
+            this.Type = Type;
             
         }
 
@@ -83,8 +83,8 @@ namespace SchoolBusAPI.ViewModels
         /// <summary>
         /// Gets or Sets FavouriteContextTypeId
         /// </summary>
-        [DataMember(Name="favouriteContextTypeId")]
-        public int? FavouriteContextTypeId { get; set; }
+        [DataMember(Name="type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -98,7 +98,7 @@ namespace SchoolBusAPI.ViewModels
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("  IsDefault: ").Append(IsDefault).Append("\n");
-            sb.Append("  FavouriteContextTypeId: ").Append(FavouriteContextTypeId).Append("\n");
+            sb.Append("  FavouriteContextTypeId: ").Append(Type).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -138,8 +138,7 @@ namespace SchoolBusAPI.ViewModels
 
             return 
                 (
-                    this.Id == other.Id ||
-                    this.Id != null &&
+                    this.Id == other.Id ||                    
                     this.Id.Equals(other.Id)
                 ) && 
                 (
@@ -158,9 +157,9 @@ namespace SchoolBusAPI.ViewModels
                     this.IsDefault.Equals(other.IsDefault)
                 ) && 
                 (
-                    this.FavouriteContextTypeId == other.FavouriteContextTypeId ||
-                    this.FavouriteContextTypeId != null &&
-                    this.FavouriteContextTypeId.Equals(other.FavouriteContextTypeId)
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 );
         }
 
@@ -191,9 +190,9 @@ namespace SchoolBusAPI.ViewModels
                 {
                     hash = hash * 59 + this.IsDefault.GetHashCode();
                 }
-                if (this.FavouriteContextTypeId != null)
+                if (this.Type != null)
                 {
-                    hash = hash * 59 + this.FavouriteContextTypeId.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 }
                 return hash;
             }

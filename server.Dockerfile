@@ -7,11 +7,11 @@ ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 ENV LTTNG_UST_REGISTER_TIMEOUT 0
 
 COPY Common /app/Common
-COPY Server /app/Server
 
 WORKDIR /app/Common/src/SchoolBusCommon
 RUN dotnet restore
 
+COPY Server /app/Server
 WORKDIR /app/Server/src/SchoolBusAPI/
 RUN dotnet restore
 

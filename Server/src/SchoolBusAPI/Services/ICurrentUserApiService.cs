@@ -32,6 +32,38 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Removes all of the current user&#39;s favourites</remarks>
+        /// <response code="200">OK</response>
+        IActionResult UsersCurrentFavouritesDeletePostAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Create new favourite for the current user</remarks>
+        /// <param name="item"></param>
+        /// <response code="201">UserFavourite created</response>
+        IActionResult UsersCurrentFavouritesPostAsync(UserFavourite item);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Updates a favourite</remarks>
+        /// <param name="item"></param>
+        /// <response code="201">UserFavourite created</response>
+        IActionResult UsersCurrentFavouritesPutAsync(UserFavourite item);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a user&#39;s favourites of a given type.  If type is empty, returns all.</remarks>
+        /// <param name="type">type of favourite to return</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        IActionResult UsersCurrentFavouritesTypeGetAsync(string type);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Get the currently logged in user</remarks>
         /// <response code="200">OK</response>
         IActionResult UsersCurrentGetAsync();
