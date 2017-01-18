@@ -352,7 +352,7 @@ var SchoolBuses = React.createClass({
 
       {(() => {
         if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-        if (Object.keys(this.props.schoolBuses).length === 0) { return <Alert bsStyle="info">No school buses</Alert>; }
+        if (Object.keys(this.props.schoolBuses).length === 0) { return <Alert bsStyle="success">No school buses</Alert>; }
 
         var schoolBuses = _.sortBy(this.props.schoolBuses, this.state.sortField);
         if (this.state.sortDesc) {

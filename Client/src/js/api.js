@@ -76,14 +76,14 @@ export function updateFavourite(favourite) {
     store.dispatch({ type: 'UPDATE_FAVOURITE', favourite: favourite });
   });
 }
-export function deleteFavourite(favourite) {
-  console.debug(favourite);
-  // return new ApiRequest('/users/current/favourites/delete').post(favourite).then(response => {
-  //   // Normalize the response
-  //   var favourite = _.fromPairs([[ response.id, response ]]);
 
-  //   store.dispatch({ type: 'DELETE_FAVOURITE', favourite: favourite });
-  // });
+export function deleteFavourite(favourite) {
+  return new ApiRequest(`/users/current/favourites/${favourite.id}/delete`).post(favourite).then(response => {
+    // Normalize the response
+    var favourite = _.fromPairs([[ response.id, response ]]);
+
+    store.dispatch({ type: 'DELETE_FAVOURITE', favourite: favourite });
+  });
 }
 
 ////////////////////
