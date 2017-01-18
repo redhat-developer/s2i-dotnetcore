@@ -2054,22 +2054,6 @@ paths:
           description: id of SchoolBusOwnerHistory to delete
           required: true
           type: integer
-  /favouritecontexttypes:
-    get:
-      description: Returns list of available FavouriteContextTypes
-      tags:
-        - SchoolBusOwner
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/FavouriteContextType'
   /groups:
     get:
       description: Returns a collection of groups
@@ -2677,6 +2661,95 @@ paths:
           description: OK
           schema:
             $ref: "#/definitions/CurrentUserViewModel"
+  /users/current/favourites:
+    put:
+      description: Updates a favourite
+      tags:
+        - CurrentUser
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserFavourite"
+      responses:
+        201:
+          description: UserFavourite created
+          headers:
+            Location:
+              description: A link to the UserFavourite
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/UserFavourite"            
+    post:
+      description: Create new favourite for the current user
+      tags:
+        - CurrentUser
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserFavourite"
+      responses:
+        201:
+          description: UserFavourite created
+          headers:
+            Location:
+              description: A link to the UserFavourite
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/UserFavourite"
+  /users/current/favourites/{type}:
+    get:
+      description: Returns a user's favourites of a given type.  If type is empty, returns all.
+      tags:
+        - CurrentUser
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserFavourite"
+        "404":
+           description: User not found
+      parameters:
+        - name: type
+          in: path
+          description: type of favourite to return
+          required: false
+          type: string
+  /users/current/favourites/delete:
+    post:
+      description: Removes all of the current user's favourites
+      tags:
+        - CurrentUser
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
   /users/bulk:
     post:
       description: Adds a number of users
@@ -2965,31 +3038,7 @@ paths:
             items:
               $ref: "#/definitions/GroupMembershipViewModel"
         404:
-          description: User not found
-  /users/{id}/favourites:
-    get:
-      description: Returns a user's favourites of a given context type
-      tags:
-        - User
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserFavouriteViewModel"
-        "404":
-           description: User not found
-      parameters:
-        - name: id
-          in: path
-          description: id of User to fetch favorites for
-          required: true
-          type: integer
+          description: User not found  
   /users/{id}/notifications:
     get:
       description: Returns a user's notifications
@@ -4190,24 +4239,7 @@ definitions:
         description: The "Restrictions" text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page.
       RIPInspectionId:
         type: string
-        description: The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.
-  FavouriteContextType:
-    type: object
-    required:
-      - id
-    description: The name for a place in the UI where per user settings can be stored - for example, the School Bus search screen, School Bus Owner search screen, etc.
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-        x-type-options:
-          min: 1
-          max: 1000
-      name:
-        type: string
-        description:  Context Name known by the UI.
-        x-chance-type: name
+        description: The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.  
   UserFavourite:
     type: object
     required:
@@ -4231,8 +4263,10 @@ definitions:
       isDefault:
         type: boolean
         description: True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite, a system-wide default is invoked. On return to the context within a session, the last parameters used are reapplied.
-      favouriteContextType:
-        $ref: '#/definitions/FavouriteContextType'
+      type:
+        type: string
+        description:  The type of Favourite
+      
   Region:
     type: object
     required:

@@ -87,7 +87,7 @@ namespace SchoolBusAPI.Mappings
         public static UserFavouriteViewModel ToViewModel(this UserFavourite model)
         {
             var dto = new UserFavouriteViewModel();
-            dto.FavouriteContextTypeId = model.FavouriteContextType.Id;
+            dto.Type = model.Type;
             dto.IsDefault = model.IsDefault;
             dto.Name = model.Name;
             dto.Value = model.Value;

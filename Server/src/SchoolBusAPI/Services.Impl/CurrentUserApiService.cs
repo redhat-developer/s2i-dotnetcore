@@ -38,7 +38,92 @@ namespace SchoolBusAPI.Services.Impl
         {
             _context = context;
         }
-	
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Removes all of the current user&#39;s favourites</remarks>
+        /// <response code="200">OK</response>
+        public virtual IActionResult UsersCurrentFavouritesDeletePostAsync()
+        {
+            var data = _context.UserFavourites.Select(x => x);
+            // TODO only select the current user's data.  
+            foreach (var item in data)
+            {
+                _context.UserFavourites.Remove(item);
+            }
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Create new favourite for the current user</remarks>
+        /// <param name="item"></param>
+        /// <response code="201">UserFavourite created</response>
+        public virtual IActionResult UsersCurrentFavouritesPostAsync(UserFavourite item)
+        {
+            bool exists = _context.UserFavourites.Any(a => a.Id == item.Id);
+            if (exists)
+            {
+                _context.UserFavourites.Update(item);
+                // Save the changes
+                _context.SaveChanges();
+                return new ObjectResult(item);
+            }
+            else
+            {
+                // record not found. add the record.
+                _context.UserFavourites.Add(item);
+                // Save the changes
+                _context.SaveChanges();
+                return new ObjectResult(item);
+            }
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Updates a favourite</remarks>
+        /// <param name="item"></param>
+        /// <response code="201">UserFavourite created</response>
+        public virtual IActionResult UsersCurrentFavouritesPutAsync(UserFavourite item)
+        {
+            bool exists = _context.UserFavourites.Any(a => a.Id == item.Id);
+            if (exists)
+            {
+                _context.UserFavourites.Update(item);
+                // Save the changes
+                _context.SaveChanges();
+                return new ObjectResult(item);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns a user&#39;s favourites of a given type.  If type is empty, returns all.</remarks>
+        /// <param name="type">type of favourite to return</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        public virtual IActionResult UsersCurrentFavouritesTypeGetAsync(string type)
+        {
+            var data = _context.UserFavourites.Select(x => x);
+            if (type != null)
+            {
+                data = data.Where( x => x.Type == type);
+            }
+            
+            return new ObjectResult(data.ToList());
+        }
+
         /// <summary>
         /// 
         /// </summary>
