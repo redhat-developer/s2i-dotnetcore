@@ -7,18 +7,21 @@ ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 ENV LTTNG_UST_REGISTER_TIMEOUT 0
 
 COPY Common /app/Common
-COPY FrontEnd /app/FrontEnd
-
 WORKDIR /app/Common/src/SchoolBusCommon
 RUN dotnet restore
 
+COPY FrontEnd/src/SchoolBusClient/SchoolBusFrontEnd.xproj /app/FrontEnd/src/SchoolBusClient/
+COPY FrontEnd/src/SchoolBusClient/project.json /app/FrontEnd/src/SchoolBusClient/
+
 WORKDIR /app/FrontEnd/src/SchoolBusClient/
 RUN dotnet restore
+
+COPY FrontEnd /app/FrontEnd
 
 ENV ASPNETCORE_ENVIRONMENT Staging
 ENV ASPNETCORE_URLS http://*:8080
 EXPOSE 8080
 
 RUN dotnet publish -c Release -o /app/out
-WORKDIR /app
+WORKDIR /app/out
 ENTRYPOINT ["dotnet", "/app/out/SchoolBusClient.dll"]
