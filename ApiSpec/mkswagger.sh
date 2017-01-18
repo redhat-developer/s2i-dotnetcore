@@ -1,14 +1,14 @@
 #!/bin/bash
 
+prj=SBI
+
 if [ -z "$2" ]; then
 	echo Error: not enough args
-	echo Usage: $0 projectID files...
-	echo Concatonates files into swagger.yaml file, copying the previous of swagger.yaml.bck
+	echo Usage: $0 files...
+	echo Concatonates files into the ${prj}swagger.yaml file, copying the previous version of ${PRJ}swagger.yaml.bck
 	exit 1
 fi
 
-prj=$1
-shift
 out=${prj}swagger.yaml
 bck=${out}.bck
 
