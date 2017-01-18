@@ -2738,9 +2738,9 @@ paths:
           description: type of favourite to return
           required: false
           type: string
-  /users/current/favourites/delete:
+  /users/current/favourites/{id}/delete:
     post:
-      description: Removes all of the current user's favourites
+      description: Removes a specific user favourite
       tags:
         - CurrentUser
       produces:
@@ -2750,6 +2750,12 @@ paths:
       responses:
         '200':
           description: OK
+      parameters:
+        - name: id
+          in: path
+          description: id of Favourite to delete
+          required: true
+          type: integer      
   /users/bulk:
     post:
       description: Adds a number of users

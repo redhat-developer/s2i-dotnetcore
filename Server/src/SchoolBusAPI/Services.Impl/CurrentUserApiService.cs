@@ -42,19 +42,28 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Removes all of the current user&#39;s favourites</remarks>
+        /// <remarks>Removes a specific user favourite</remarks>
+        /// <param name="id">id of Favourite to delete</param>
         /// <response code="200">OK</response>
-        public virtual IActionResult UsersCurrentFavouritesDeletePostAsync()
+        public virtual IActionResult UsersCurrentFavouritesIdDeletePostAsync(int id)
         {
-            var data = _context.UserFavourites.Select(x => x);
-            // TODO only select the current user's data.  
-            foreach (var item in data)
+            bool exists = _context.UserFavourites.Any(a => a.Id == id);
+            if (exists)
             {
+                var item = _context.UserFavourites.First(a => a.Id == id);
+
                 _context.UserFavourites.Remove(item);
+                // Save the changes
+                _context.SaveChanges();
+                return new ObjectResult(item);
             }
-            _context.SaveChanges();
-            return new NoContentResult();
-        }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+            
+        }        
 
         /// <summary>
         /// 

@@ -43,14 +43,15 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Removes all of the current user&#39;s favourites</remarks>
+        /// <remarks>Removes a specific user favourite</remarks>
+        /// <param name="id">id of Favourite to delete</param>
         /// <response code="200">OK</response>
         [HttpPost]
-        [Route("/api/users/current/favourites/delete")]
-        [SwaggerOperation("UsersCurrentFavouritesDeletePost")]
-        public virtual IActionResult UsersCurrentFavouritesDeletePost()
+        [Route("/api/users/current/favourites/{id}/delete")]
+        [SwaggerOperation("UsersCurrentFavouritesIdDeletePost")]
+        public virtual IActionResult UsersCurrentFavouritesIdDeletePost([FromRoute]int id)
         {
-            return this._service.UsersCurrentFavouritesDeletePostAsync();
+            return this._service.UsersCurrentFavouritesIdDeletePostAsync(id);
         }
 
         /// <summary>
