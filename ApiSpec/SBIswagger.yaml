@@ -4448,25 +4448,6 @@ definitions:
         type: string
       description:
         type: string
-  GroupMembership:
-    type: object
-    required:
-      - id
-      - active
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-        x-type-options:
-          min: 1
-          max: 1000
-      active:
-        type: boolean
-      group:
-        $ref: '#/definitions/Group'
-      user:
-        $ref: '#/definitions/User'
   UserViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -4750,4 +4731,5 @@ definitions:
           x-type-options:
             min: 1
             max: 1000
+
 securityDefinitions: {}
