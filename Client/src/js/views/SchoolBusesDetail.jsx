@@ -176,64 +176,64 @@ var SchoolBusesDetail = React.createClass({
               return <div id="school-buses-data">
                 <Row>
                   <Col md={4} className="text-right"><strong>Area:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.serviceAreaName }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.serviceAreaName }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Inspector:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.inspectorName }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.inspectorName }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Home Terminal:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.homeTerminalAddrs }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.homeTerminalAddrs }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>City, Prov:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.homeTerminalCityProv }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.homeTerminalCityProv }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Postal Code:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.homeTerminalPostalCode }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.homeTerminalPostalCode }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Desription:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.homeTerminalComment }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.homeTerminalComment }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>School Bus Class:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.schoolBusClass }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.schoolBusClass }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Restrictions:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.restrictions }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.restrictions }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>School District:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.districtName }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.districtName }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Independent School:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}><Checkbox checked={ bus.isIndependentSchool } disabled></Checkbox></Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}><Checkbox checked={ bus.isIndependentSchool } disabled></Checkbox></Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Unit Number:</strong></Col>
-                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.schoolBusUnitNumber }</Col>
+                  <Col md={7} style={{ paddingLeft: 5 }}>{ bus.schoolBusUnitNumber }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Seating Capacity:</strong></Col>
-                  <Col md={1} style={{ marginLeft: 5 }}>{ bus.schoolBusSeatingCapacity }</Col>
+                  <Col md={1} style={{ paddingLeft: 5 }}>{ bus.schoolBusSeatingCapacity }</Col>
                   <Col md={4} className="text-right"><strong>Mobile Aid Capacity:</strong></Col>
-                  <Col md={1} style={{ marginLeft: 5 }}>{ bus.mobilityAidCapacity }</Col>
+                  <Col md={1} style={{ paddingLeft: 5 }}>{ bus.mobilityAidCapacity }</Col>
                   <Col md={2}></Col>
                 </Row>
               </div>;
@@ -287,19 +287,19 @@ var SchoolBusesDetail = React.createClass({
               return <div id="school-buses-policy">
                 <Row>
                   <Col md={2} className="text-right"><strong>Policy #:</strong></Col>
-                  <Col md={2} style={{ marginLeft: 5 }}>{ ccw.nscPolicyNumber }</Col>
+                  <Col md={2} style={{ paddingLeft: 5 }}>{ ccw.nscPolicyNumber }</Col>
                   <Col md={2} className="text-right"><strong>Status Date:</strong></Col>
-                  <Col md={2} style={{ marginLeft: 5 }}>{ formatDateTime(ccw.nscPolicyStatusDate, 'YYYY-MMM-DD') }</Col>
+                  <Col md={2} style={{ paddingLeft: 5 }}>{ formatDateTime(ccw.nscPolicyStatusDate, 'YYYY-MMM-DD') }</Col>
                   <Col md={2} className="text-right"><strong>Is:</strong></Col>
-                  <Col md={2} style={{ marginLeft: 5 }}>{ ccw.nscPolicyStatus }</Col>
+                  <Col md={2} style={{ paddingLeft: 5 }}>{ ccw.nscPolicyStatus }</Col>
                 </Row>
                 <Row>
                   <Col md={2} className="text-right"><strong>Effective Date:</strong></Col>
-                  <Col md={2} style={{ marginLeft: 5 }}>{ formatDateTime(ccw.nscPolicyEffectiveDate, 'YYYY-MMM-DD') }</Col>
+                  <Col md={2} style={{ paddingLeft: 5 }}>{ formatDateTime(ccw.nscPolicyEffectiveDate, 'YYYY-MMM-DD') }</Col>
                   <Col md={2} className="text-right"><strong>Expiry Date:</strong></Col>
-                  <Col md={2} style={{ marginLeft: 5 }}>{ formatDateTime(ccw.nscPolicyExpiryDate, 'YYYY-MMM-DD') }</Col>
+                  <Col md={2} style={{ paddingLeft: 5 }}>{ formatDateTime(ccw.nscPolicyExpiryDate, 'YYYY-MMM-DD') }</Col>
                   <Col md={2} className="text-right"><strong>Plate Decal #:</strong></Col>
-                  <Col md={2} style={{ marginLeft: 5 }}>{ ccw.nscPlateDecal }</Col>
+                  <Col md={2} style={{ paddingLeft: 5 }}>{ ccw.nscPlateDecal }</Col>
                 </Row>
               </div>;
             })()}
@@ -319,13 +319,13 @@ var SchoolBusesDetail = React.createClass({
               return <div id="school-buses-icbc-owner">
                 <Row>
                   <Col md={2} className="text-right"><strong>Owner:</strong></Col>
-                  <Col md={6} style={{ marginLeft: 5 }}>{ ccw.icbcRegOwnerName }</Col>
+                  <Col md={6} style={{ paddingLeft: 5 }}>{ ccw.icbcRegOwnerName }</Col>
                   <Col md={2} className="text-right"><strong>Is:</strong></Col>
-                  <Col md={2} style={{ marginLeft: 5 }}>{ ccw.icbcRegOwnerStatus }</Col>
+                  <Col md={2} style={{ paddingLeft: 5 }}>{ ccw.icbcRegOwnerStatus }</Col>
                 </Row>
                 <Row>
                   <Col md={2} className="text-right"><strong>Address:</strong></Col>
-                  <Col md={6} style={{ marginLeft: 5 }}>{(() => {
+                  <Col md={6} style={{ paddingLeft: 5 }}>{(() => {
                     if (ccw.icbcRegOwnerAddr1 && ccw.icbcRegOwnerAddr2 && city) {
                       return <div>{ ccw.icbcRegOwnerAddr1 }<br />{ ccw.icbcRegOwnerAddr2 }<br />{ city }</div>;
                     }
@@ -338,7 +338,7 @@ var SchoolBusesDetail = React.createClass({
                     return <div>{ ccw.icbcRegOwnerAddr1 }{ ccw.icbcRegOwnerAddr2 }</div>;
                   })()}</Col>
                   <Col md={2} className="text-right"><strong>RODL:<br />POOL:</strong></Col>
-                  <Col md={2} style={{ marginLeft: 5 }}>{ ccw.icbcRegOwnerStatus }<br />{ ccw.icbcRegOwnerRODL }</Col>
+                  <Col md={2} style={{ paddingLeft: 5 }}>{ ccw.icbcRegOwnerStatus }<br />{ ccw.icbcRegOwnerRODL }</Col>
                 </Row>
               </div>;
             })()}
@@ -353,19 +353,19 @@ var SchoolBusesDetail = React.createClass({
               return <div id="school-buses-nsc">
                 <Row>
                   <Col md={4} className="text-right"><strong>NSC #:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ ccw.nscClientNum }</Col>
+                  <Col md={8} style={{ paddingLeft: 5 }}>{ ccw.nscClientNum }</Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Carrier Name:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ ccw.nscCarrierName }</Col>
+                  <Col md={8} style={{ paddingLeft: 5 }}>{ ccw.nscCarrierName }</Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Carrier Conditions:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ ccw.nscCarrierConditions }</Col>
+                  <Col md={8} style={{ paddingLeft: 5 }}>{ ccw.nscCarrierConditions }</Col>
                 </Row>
                 <Row>
                   <Col md={4} className="text-right"><strong>Carrier Safety Rating:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ ccw.nscCarrierSafetyRating }</Col>
+                  <Col md={8} style={{ paddingLeft: 5 }}>{ ccw.nscCarrierSafetyRating }</Col>
                 </Row>
               </div>;
             })()}
@@ -384,62 +384,62 @@ var SchoolBusesDetail = React.createClass({
                   <Col md={6}>
                    <Row>
                       <Col md={3} className="text-right"><strong>Year:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcModelYear }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcModelYear }</Col>
                       <Col md={3} className="text-right"><strong>GVW:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcGrossVehicleWeight }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcGrossVehicleWeight }</Col>
                     </Row>
                     <Row>
                       <Col md={3} className="text-right"><strong>Vehicle Type:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcVehicleType }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcVehicleType }</Col>
                       <Col md={3} className="text-right"><strong>Make:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcMake }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcMake }</Col>
                     </Row>
                     <Row>
                       <Col md={3} className="text-right"><strong>Rate Class:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcRateClass }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcRateClass }</Col>
                       <Col md={3} className="text-right"><strong>Body:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcBody }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcBody }</Col>
                     </Row>
                     <Row>
                       <Col md={3} className="text-right"><strong>CVIP Decal:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbccvipDecal }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbccvipDecal }</Col>
                       <Col md={3} className="text-right"><strong>Rebuilt Status:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcRebuiltStatus }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcRebuiltStatus }</Col>
                     </Row>
                     <Row>
                       <Col md={3} className="text-right"><strong>Fleet Unit #:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcFleetUnitNo }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcFleetUnitNo }</Col>
                       <Col md={3} className="text-right"><strong>CVIP Expiry:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ formatDateTime(ccw.icbccvipExpiry, 'YYYY-MMM-DD') }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ formatDateTime(ccw.icbccvipExpiry, 'YYYY-MMM-DD') }</Col>
                     </Row>
                   </Col>
                   <Col md={6}>
                     <Row>
                       <Col md={3} className="text-right"><strong>Net Wt:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcNetWt }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcNetWt }</Col>
                       <Col md={6}></Col>
                     </Row>
                     <Row>
                       <Col md={3} className="text-right"><strong>Model:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcModel }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcModel }</Col>
                       <Col md={3} className="text-right"><strong>Colour:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcColour }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcColour }</Col>
                     </Row>
                     <Row>
                       <Col md={3} className="text-right"><strong>Fuel:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcFuel }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcFuel }</Col>
                       <Col md={6}></Col>
                     </Row>
                     <Row>
                       <Col md={3} className="text-right"><strong>Seating Capacity:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcSeatingCapacity }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcSeatingCapacity }</Col>
                       <Col md={6}></Col>
                     </Row>
                     <Row>
                       <Col md={3} className="text-right"><strong>N&amp;O:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ ccw.icbcNotesAndOrders }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ ccw.icbcNotesAndOrders }</Col>
                       <Col md={3} className="text-right"><strong>Ordered On:</strong></Col>
-                      <Col md={3} style={{ marginLeft: 5 }}>{ formatDateTime(ccw.icbcOrderedOn, 'YYYY-MMM-DD') }</Col>
+                      <Col md={3} style={{ paddingLeft: 5 }}>{ formatDateTime(ccw.icbcOrderedOn, 'YYYY-MMM-DD') }</Col>
                     </Row>
                   </Col>
                 </Row>
