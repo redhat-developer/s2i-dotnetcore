@@ -338,7 +338,7 @@ var SchoolBusesDetail = React.createClass({
                     return <div>{ ccw.icbcRegOwnerAddr1 }{ ccw.icbcRegOwnerAddr2 }</div>;
                   })()}</Col>
                   <Col md={2} className="text-right"><strong>RODL:<br />POOL:</strong></Col>
-                  <Col md={2} style={{ paddingLeft: 5 }}>{ ccw.icbcRegOwnerStatus }<br />{ ccw.icbcRegOwnerRODL }</Col>
+                  <Col md={2} style={{ paddingLeft: 5 }}>{ ccw.icbcRegOwnerRODL }<br />{ ccw.icbcRegOwnerPool }</Col>
                 </Row>
               </div>;
             })()}
