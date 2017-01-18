@@ -1,26 +1,11 @@
 import React from 'react';
 import { Well, Dropdown, FormControl, Checkbox } from 'react-bootstrap';
-import RootCloseWrapper from 'react-overlays/lib/RootCloseWrapper';
+
+import RootCloseMenu from './RootCloseMenu.jsx';
 
 import _ from 'lodash';
 
 const MAX_ITEMS_FOR_TITLE = 3;
-
-var MultiMenu = React.createClass({
-  propTypes: {
-    open: React.PropTypes.bool,
-    onClose: React.PropTypes.func,
-    children: React.PropTypes.node,
-  },
-
-  render() {
-    return <RootCloseWrapper disabled={!this.props.open} onRootClose={this.props.onClose}>
-      <div className="dropdown-menu">
-        {this.props.children}
-      </div>
-    </RootCloseWrapper>;
-  },
-});
 
 var MultiDropdown = React.createClass({
   propTypes: {
@@ -63,6 +48,13 @@ var MultiDropdown = React.createClass({
 
       this.setState({
         items: items,
+        title: title,
+      });
+    } else if (!_.isEqual(nextProps.selectedIds, this.props.selectedIds)) {
+      title = this.buildTitle(nextProps.selectedIds);
+
+      this.setState({
+        selectedIds: nextProps.selectedIds,
         title: title,
       });
     }
@@ -135,7 +127,7 @@ var MultiDropdown = React.createClass({
 
     return <Dropdown className={`multi-dropdown ${this.props.className || ''}`} id={ this.props.id } title={ this.state.title }>
       <Dropdown.Toggle title={this.state.title} />
-      <MultiMenu bsRole="menu">
+      <RootCloseMenu bsRole="menu">
         <Well bsSize="small">
           <FormControl type="text" placeholder="Search" onChange={this.filter} />
           <Checkbox className="select-all" checked={this.state.allSelected} onChange={this.selectAll}>Select All</Checkbox>
@@ -155,7 +147,7 @@ var MultiDropdown = React.createClass({
             </ul>;
           }
         })()}
-      </MultiMenu>
+      </RootCloseMenu>
     </Dropdown>;
   },
 });

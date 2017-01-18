@@ -1,4 +1,6 @@
 #school-buses-key-search {
+  margin-left: 5px;
+
   .dropdown-menu {
     min-width: 70px;
   }
@@ -23,10 +25,10 @@
 #school-buses-faves {
   float: right;
   margin-top: 10px;
+}
 
-  .btn {
-    width: 79px;
-  }
+#school-buses-faves-dropdown {
+  width: 79px;
 }
 
 #school-buses-inspections {

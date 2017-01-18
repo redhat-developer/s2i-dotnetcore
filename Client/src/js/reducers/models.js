@@ -1,6 +1,10 @@
+import _ from 'lodash';
+
 const DEFAULT_MODELS = {
   users: {},
   user: {},
+
+  favourites: {},
 
   schoolBuses: {},
   schoolBus: {},
@@ -22,6 +26,19 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
 
     case 'UPDATE_USER':
       return { ...state, user: action.user };
+
+    // Favourites
+    case 'UPDATE_FAVOURITES':
+      return { ...state, favourites: action.favourites };
+
+    case 'ADD_FAVOURITE':
+      return { ...state, favourites: { ...state.favourites, ...action.favourite } };
+
+    case 'UPDATE_FAVOURITE':
+      return { ...state, favourites: { ...state.favourites, ...action.favourite } };
+
+    case 'DELETE_FAVOURITE':
+      return { ...state, favourites: _.omit(state.favourites, [action.favourite.id]) };
 
     // Buses
     case 'UPDATE_BUSES':

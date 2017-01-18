@@ -12,20 +12,21 @@ import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
 import DateControl from '../components/DateControl.jsx';
+import Favourites from '../components/Favourites.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 import { notBlank } from '../utils/string';
 
 /*
+
 * System default should be:
 ** If user is an inspector, Inspector == Current User else not used
 ** If the user is not an inspector, Service Areas in home district, else not used
 
 TODO:
-
-* Faves
 * Print / Email
+
 */
 
 const KEY_SEARCH_REGI = 'Regi';
@@ -50,6 +51,7 @@ var SchoolBuses = React.createClass({
     inspectors: React.PropTypes.object,
     cities: React.PropTypes.object,
     schoolDistricts: React.PropTypes.object,
+    favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
   },
@@ -58,17 +60,19 @@ var SchoolBuses = React.createClass({
     return {
       loading: false,
 
-      selectedServiceAreasIds: this.props.search.selectedServiceAreasIds || [],
-      selectedInspectorsIds: this.props.search.selectedInspectorsIds || [],
-      selectedCitiesIds: this.props.search.selectedCitiesIds || [],
-      selectedSchoolDistrictsIds: this.props.search.selectedSchoolDistrictsIds || [],
-      keySearchField: this.props.search.keySearchField || KEY_SEARCH_REGI,
-      searchText: this.props.search.searchText || '',
-      nextInspection: this.props.search.nextInspection || BEFORE_END_OF_MONTH,
-      startDate: this.props.search.startDate || '',
-      endDate: this.props.search.endDate || '',
-      hideInactive: this.props.search.hideInactive !== false,
-      justReInspections: this.props.search.justReInspections === true,
+      search: {
+        selectedServiceAreasIds: this.props.search.selectedServiceAreasIds || [],
+        selectedInspectorsIds: this.props.search.selectedInspectorsIds || [],
+        selectedCitiesIds: this.props.search.selectedCitiesIds || [],
+        selectedSchoolDistrictsIds: this.props.search.selectedSchoolDistrictsIds || [],
+        keySearchField: this.props.search.keySearchField || KEY_SEARCH_REGI,
+        searchText: this.props.search.searchText || '',
+        nextInspection: this.props.search.nextInspection || BEFORE_END_OF_MONTH,
+        startDate: this.props.search.startDate || '',
+        endDate: this.props.search.endDate || '',
+        hideInactive: this.props.search.hideInactive !== false,
+        justReInspections: this.props.search.justReInspections === true,
+      },
 
       sortField: this.props.ui.sortField || DEFAULT_SORT_FIELD,
       sortDesc: this.props.ui.sortDesc === true,
@@ -76,38 +80,38 @@ var SchoolBuses = React.createClass({
   },
 
   buildSearchParams() {
-    if (notBlank(this.state.searchText)) {
-      switch (this.state.keySearchField) {
-        case KEY_SEARCH_REGI: return { regi: this.state.searchText };
-        case KEY_SEARCH_VIN: return { vin: this.state.searchText };
-        case KEY_SEARCH_PLATE: return { plate: this.state.searchText };
+    if (notBlank(this.state.search.searchText)) {
+      switch (this.state.search.keySearchField) {
+        case KEY_SEARCH_REGI: return { regi: this.state.search.searchText };
+        case KEY_SEARCH_VIN: return { vin: this.state.search.searchText };
+        case KEY_SEARCH_PLATE: return { plate: this.state.search.searchText };
         // Let this fall through if key search field is not set for some reason.
       }
     }
 
     var searchParams = {
-      includeInactive: !this.state.hideInactive,
-      onlyReInspections: this.state.justReInspections,
+      includeInactive: !this.state.search.hideInactive,
+      onlyReInspections: this.state.search.justReInspections,
     };
 
-    if (this.state.selectedServiceAreasIds.length > 0) {
-      searchParams.serviceareas = this.state.selectedServiceAreasIds;
+    if (this.state.search.selectedServiceAreasIds.length > 0) {
+      searchParams.serviceareas = this.state.search.selectedServiceAreasIds;
     }
-    if (this.state.selectedInspectorsIds.length > 0) {
-      searchParams.inspectors = this.state.selectedInspectorsIds;
+    if (this.state.search.selectedInspectorsIds.length > 0) {
+      searchParams.inspectors = this.state.search.selectedInspectorsIds;
     }
-    if (this.state.selectedCitiesIds.length > 0) {
-      searchParams.cities = this.state.selectedCitiesIds;
+    if (this.state.search.selectedCitiesIds.length > 0) {
+      searchParams.cities = this.state.search.selectedCitiesIds;
     }
-    if (this.state.selectedSchoolDistrictsIds.length > 0) {
-      searchParams.schooldistricts = this.state.selectedSchoolDistrictsIds;
+    if (this.state.search.selectedSchoolDistrictsIds.length > 0) {
+      searchParams.schooldistricts = this.state.search.selectedSchoolDistrictsIds;
     }
 
     var startDate;
     var endDate;
     var today = Moment();
 
-    switch (this.state.nextInspection) {
+    switch (this.state.search.nextInspection) {
       case BEFORE_TODAY:
         endDate = today.subtract(1, 'day');
         break;
@@ -134,8 +138,8 @@ var SchoolBuses = React.createClass({
         endDate = Moment(startDate).endOf('quarter');
         break;
       case CUSTOM:
-        startDate = Moment(this.state.startDate);
-        endDate = Moment(this.state.endDate);
+        startDate = Moment(this.state.search.startDate);
+        endDate = Moment(this.state.search.endDate);
         break;
     }
 
@@ -151,7 +155,18 @@ var SchoolBuses = React.createClass({
 
   componentDidMount() {
     this.setState({ loading: true });
-    Api.getUsers().finally(() => {
+
+    var usersPromise = Api.getUsers();
+    var favouritesPromise = Api.getFavourites('schoolBus');
+
+    Promise.all([usersPromise, favouritesPromise]).then(() => {
+      // If this is the first load, then look for a default favourite
+      if (!this.props.search.loaded) {
+        var favourite = _.find(this.props.favourites, (favourite) => { return favourite.isDefault; });
+        if (favourite) {
+          this.loadFavourite(favourite);
+        }
+      }
       this.fetch();
     });
   },
@@ -159,97 +174,92 @@ var SchoolBuses = React.createClass({
   fetch() {
     this.setState({ loading: true });
     Api.searchSchoolBuses(this.buildSearchParams()).finally(() => {
-
       this.setState({ loading: false });
     });
   },
 
-  updateState(state) {
-    this.setState(state, () =>{
-      store.dispatch({ type: 'UPDATE_BUSES_SEARCH', schoolBuses: {
-        selectedServiceAreasIds: this.state.selectedServiceAreasIds,
-        selectedInspectorsIds: this.state.selectedInspectorsIds,
-        selectedCitiesIds: this.state.selectedCitiesIds,
-        selectedSchoolDistrictsIds: this.state.selectedSchoolDistrictsIds,
-        keySearchField: this.state.keySearchField,
-        searchText: this.state.searchText,
-        nextInspection: this.state.nextInspection,
-        startDate: this.state.startDate,
-        endDate: this.state.endDate,
-        hideInactive: this.state.hideInactive,
-        justReInspections: this.state.justReInspections,
-      }});
+  updateSearchState(state) {
+    this.setState({ search: { ...this.state.search, ...state }}, () =>{
+      store.dispatch({ type: 'UPDATE_BUSES_SEARCH', schoolBuses: this.state.search });
     });
   },
 
   serviceAreasChanged(selected) {
     var selectedIds = _.map(selected, 'id');
-    this.updateState({
+    this.updateSearchState({
       selectedServiceAreasIds: selectedIds,
     });
   },
 
   inspectorsChanged(selected) {
     var selectedIds = _.map(selected, 'id');
-    this.updateState({
+    this.updateSearchState({
       selectedInspectorsIds: selectedIds,
     });
   },
 
   citiesChanged(selected) {
     var selectedIds = _.map(selected, 'id');
-    this.updateState({
+    this.updateSearchState({
       selectedCitiesIds: selectedIds,
     });
   },
 
   schoolDistrictsChanged(selected) {
     var selectedIds = _.map(selected, 'id');
-    this.updateState({
+    this.updateSearchState({
       selectedSchoolDistrictsIds: selectedIds,
     });
   },
 
   keySearchSelected(keyEvent) {
-    this.updateState({
+    this.updateSearchState({
       keySearchField: keyEvent,
     });
   },
 
   searchTextChanged(e) {
-    this.updateState({
+    this.updateSearchState({
       searchText: e.target.value,
     });
   },
 
   nextInspectionSelected(keyEvent) {
-    this.updateState({
+    this.updateSearchState({
       nextInspection: keyEvent,
     });
   },
 
   startDateChanged(date) {
-    this.updateState({
+    this.updateSearchState({
       startDate: date,
     });
   },
 
   endDateChanged(date) {
-    this.updateState({
+    this.updateSearchState({
       endDate: date,
     });
   },
 
   hideInactiveSelected(e) {
-    this.updateState({
+    this.updateSearchState({
       hideInactive: e.target.checked,
     });
   },
 
   justReInspectionsSelected(e) {
-    this.updateState({
+    this.updateSearchState({
       justReInspections: e.target.checked,
     });
+  },
+
+  saveFavourite(favourite) {
+    favourite.value = JSON.stringify(this.state.search);
+  },
+
+  loadFavourite(favourite) {
+    this.updateSearchState(JSON.parse(favourite.value));
   },
 
   sort(e) {
@@ -279,30 +289,30 @@ var SchoolBuses = React.createClass({
         <Row>
           <Col md={11}>
             <Row>
-              <Form inline>
-                <ButtonToolbar id="school-buses-search">
-                  <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas"
-                    items={ serviceAreas } selectedIds={ this.state.selectedServiceAreasIds } onChange={ this.serviceAreasChanged } showMaxItems={ 2 } />
-                  <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors"
-                    items={ inspectors } selectedIds={ this.state.selectedInspectorsIds } onChange={ this.inspectorsChanged } showMaxItems={ 2 } />
-                  <MultiDropdown id="cities-dropdown" placeholder="Cities"
-                    items={ cities } selectedIds={ this.state.selectedCitiesIds } onChange={ this.citiesChanged } showMaxItems={ 2 } />
-                  <MultiDropdown id="school-districts-dropdown" placeholder="School Districts"
-                    items={ schoolDistricts } selectedIds={ this.state.selectedSchoolDistrictsIds } fieldName="shortName" onChange={ this.schoolDistrictsChanged } showMaxItems={ 2 } />
+              <ButtonToolbar id="school-buses-search">
+                <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas"
+                  items={ serviceAreas } selectedIds={ this.state.search.selectedServiceAreasIds } onChange={ this.serviceAreasChanged } showMaxItems={ 2 } />
+                <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors"
+                  items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } onChange={ this.inspectorsChanged } showMaxItems={ 2 } />
+                <MultiDropdown id="cities-dropdown" placeholder="Cities"
+                  items={ cities } selectedIds={ this.state.search.selectedCitiesIds } onChange={ this.citiesChanged } showMaxItems={ 2 } />
+                <MultiDropdown id="school-districts-dropdown" placeholder="School Districts"
+                  items={ schoolDistricts } selectedIds={ this.state.search.selectedSchoolDistrictsIds } fieldName="shortName" onChange={ this.schoolDistrictsChanged } showMaxItems={ 2 } />
+                <Form inline>
                   <InputGroup id="school-buses-key-search">
-                    <DropdownButton id="school-buses-key-dropdown" componentClass={InputGroup.Button} title={ this.state.keySearchField } onSelect={ this.keySearchSelected }>
+                    <DropdownButton id="school-buses-key-dropdown" componentClass={InputGroup.Button} title={ this.state.search.keySearchField } onSelect={ this.keySearchSelected }>
                       <MenuItem key={ KEY_SEARCH_REGI } eventKey={ KEY_SEARCH_REGI }>{ KEY_SEARCH_REGI }</MenuItem>
                       <MenuItem key={ KEY_SEARCH_VIN } eventKey={ KEY_SEARCH_VIN }>{ KEY_SEARCH_VIN }</MenuItem>
                       <MenuItem key={ KEY_SEARCH_PLATE } eventKey={ KEY_SEARCH_PLATE }>{ KEY_SEARCH_PLATE }</MenuItem>
                     </DropdownButton>
-                    <FormControl type="text" value={ this.state.searchText } onChange={ this.searchTextChanged } />
+                    <FormControl type="text" value={ this.state.search.searchText } onChange={ this.searchTextChanged } />
                   </InputGroup>
-                </ButtonToolbar>
-              </Form>
+                </Form>
+              </ButtonToolbar>
             </Row>
             <Row>
               <ButtonToolbar id="school-buses-inspections">
-                <DropdownButton id="school-buses-inspection-dropdown" title={ this.state.nextInspection } onSelect={ this.nextInspectionSelected }>
+                <DropdownButton id="school-buses-inspection-dropdown" title={ this.state.search.nextInspection } onSelect={ this.nextInspectionSelected }>
                   <MenuItem key={ BEFORE_TODAY } eventKey={ BEFORE_TODAY }>{ BEFORE_TODAY }</MenuItem>
                   <MenuItem key={ BEFORE_END_OF_MONTH } eventKey={ BEFORE_END_OF_MONTH }>{ BEFORE_END_OF_MONTH }</MenuItem>
                   <MenuItem key={ BEFORE_END_OF_QUARTER } eventKey={ BEFORE_END_OF_QUARTER }>{ BEFORE_END_OF_QUARTER }</MenuItem>
@@ -313,15 +323,15 @@ var SchoolBuses = React.createClass({
                   <MenuItem key={ CUSTOM } eventKey={ CUSTOM }>{ CUSTOM }&hellip;</MenuItem>
                 </DropdownButton>
                 {(() => {
-                  if (this.state.nextInspection === CUSTOM) {
+                  if (this.state.search.nextInspection === CUSTOM) {
                     return <span>
-                      <DateControl date={ this.state.startDate } onChange={ this.startDateChanged } placeholder="mm/dd/yyyy" label="From:" title="start date"/>
-                      <DateControl date={ this.state.endDate } onChange={ this.endDateChanged } placeholder="mm/dd/yyyy" label="To:" title="end date"/>
+                      <DateControl date={ this.state.search.startDate } onChange={ this.startDateChanged } placeholder="mm/dd/yyyy" label="From:" title="start date"/>
+                      <DateControl date={ this.state.search.endDate } onChange={ this.endDateChanged } placeholder="mm/dd/yyyy" label="To:" title="end date"/>
                     </span>;
                   }
                 })()}
-                <Checkbox inline checked={ this.state.hideInactive } onChange={ this.hideInactiveSelected }>Hide Inactive</Checkbox>
-                <Checkbox inline checked={ this.state.justReInspections } onChange={ this.justReInspectionsSelected }>Just Re-Inspections</Checkbox>
+                <Checkbox inline checked={ this.state.search.hideInactive } onChange={ this.hideInactiveSelected }>Hide Inactive</Checkbox>
+                <Checkbox inline checked={ this.state.search.justReInspections } onChange={ this.justReInspectionsSelected }>Just Re-Inspections</Checkbox>
                 <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
               </ButtonToolbar>
             </Row>
@@ -334,9 +344,7 @@ var SchoolBuses = React.createClass({
               </ButtonGroup>
             </Row>
             <Row id="school-buses-faves">
-              <DropdownButton id="school-buses-faves-dropdown" pullRight title="Faves">
-                <MenuItem key="1" eventKey="1" disabled>No favourites</MenuItem>
-              </DropdownButton>
+              <Favourites id="school-buses-faves-dropdown" type="schoolBus" favourites={ this.props.favourites } onAdd={ this.saveFavourite } onSelect={ this.loadFavourite } pullRight />
             </Row>
           </Col>
         </Row>
@@ -386,16 +394,8 @@ var SchoolBuses = React.createClass({
                 <td>{ bus.schoolBusUnitNumber }</td>
                 <td>{ bus.permitNumber }</td>
                 <td>{ bus.nextInspectionDate }
-                  {(() => {
-                    if (bus.nextInspectionType === 'reinspection') {
-                      return <BadgeLabel bsStyle="info">R</BadgeLabel>;
-                    }
-                  })()}
-                  {(() => {
-                    if (bus.isOverdue) {
-                      return <BadgeLabel bsStyle="danger">!</BadgeLabel>;
-                    }
-                  })()}
+                  { bus.nextInspectionType === 'reinspection' ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
+                  { bus.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }
                 </td>
                 <td>{ bus.inspectorName }</td>
               </tr>;
@@ -417,6 +417,7 @@ function mapStateToProps(state) {
     inspectors: state.models.users,
     cities: state.lookups.cities,
     schoolDistricts: state.lookups.schoolDistricts,
+    favourites: state.models.favourites,
     search: state.search.schoolBuses,
     ui: state.ui.schoolBuses,
   };
