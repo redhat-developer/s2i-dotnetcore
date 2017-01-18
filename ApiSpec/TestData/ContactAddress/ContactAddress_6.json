@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1967 Findlay Creek Road",
+        "addr1": "1028 Glover Road",
         "addr2": null,
-        "city": "Fernie",
+        "city": "Langley",
         "id": "200005",
-        "postalCode": "V0B 1M1",
+        "postalCode": "V3A 1Z3",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3758 Mesa Vista Drive",
+        "addr1": "1019 Hardy Street",
         "addr2": null,
-        "city": "Spences Bridge",
+        "city": "Kelowna",
         "id": "200019",
-        "postalCode": "V0K 2L0",
+        "postalCode": "V1Y 8H2",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

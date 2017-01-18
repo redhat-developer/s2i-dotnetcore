@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3239 Cardero St",
+        "addr1": "806 Coldstream Avenue",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Vernon",
         "id": "200030",
-        "postalCode": "S4P 3Y2",
+        "postalCode": "V1T 6N1",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

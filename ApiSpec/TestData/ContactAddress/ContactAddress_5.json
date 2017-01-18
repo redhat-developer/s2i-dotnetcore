@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2657 Wellington Ave",
+        "addr1": "4600 Roger Street",
         "addr2": null,
-        "city": "Chilliwack",
+        "city": "Nanaimo",
         "id": "200004",
-        "postalCode": "V2P 2M1",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

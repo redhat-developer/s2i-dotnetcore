@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1710 Yoho Valley Road",
+        "addr1": "1547 Roger Street",
         "addr2": null,
-        "city": "Golden",
+        "city": "Port Alberni",
         "id": "200047",
-        "postalCode": "V0A 1H0",
+        "postalCode": "V9Y 4M8",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

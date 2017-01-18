@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4879 Roger Street",
+        "addr1": "1593 102nd Avenue",
         "addr2": null,
-        "city": "Nanaimo",
+        "city": "Fort St John",
         "id": "200054",
-        "postalCode": "V9R 5H4",
+        "postalCode": "V1J 3Y7",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

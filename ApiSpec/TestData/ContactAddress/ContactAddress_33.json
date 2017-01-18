@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "104 Roger Street",
+        "addr1": "1019 Hardy Street",
         "addr2": null,
-        "city": "Comox",
+        "city": "Kelowna",
         "id": "200032",
-        "postalCode": "V9N 6A1",
+        "postalCode": "V1Y 8H2",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

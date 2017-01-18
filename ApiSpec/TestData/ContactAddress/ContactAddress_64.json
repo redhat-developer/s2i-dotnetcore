@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "684 Roger Street",
+        "addr1": "4305 Essendene Avenue",
         "addr2": null,
-        "city": "Duncan",
+        "city": "Abbotsford",
         "id": "200063",
-        "postalCode": "V9L 1P1",
+        "postalCode": "V2S 2H7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

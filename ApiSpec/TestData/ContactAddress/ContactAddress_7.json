@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "896 Roger Street",
+        "addr1": "2310 Mesa Vista Drive",
         "addr2": null,
-        "city": "Nanaimo",
+        "city": "Boston Bar",
         "id": "200006",
-        "postalCode": "V9R 5H9",
+        "postalCode": "V0K 1C0",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

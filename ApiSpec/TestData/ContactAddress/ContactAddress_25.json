@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "232 Cordova Street",
+        "addr1": "2031 Blind Bay Road",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Sicamous",
         "id": "200024",
-        "postalCode": "V6B 1E1",
+        "postalCode": "V0E 2V0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

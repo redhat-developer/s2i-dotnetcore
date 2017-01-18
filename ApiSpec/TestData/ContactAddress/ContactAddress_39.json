@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1234 Tolmie St",
+        "addr1": "3600 Cordova Street",
         "addr2": null,
         "city": "Vancouver",
         "id": "200038",
-        "postalCode": "V6M 1Y8",
+        "postalCode": "V6B 1E1",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

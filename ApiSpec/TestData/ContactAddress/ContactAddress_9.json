@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1547 Roger Street",
+        "addr1": "4600 Roger Street",
         "addr2": null,
-        "city": "Port Alberni",
+        "city": "Nanaimo",
         "id": "200008",
-        "postalCode": "V9Y 4M8",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

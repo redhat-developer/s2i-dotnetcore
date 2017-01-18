@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2558 Glover Road",
+        "addr1": "3643 Robson St",
         "addr2": null,
-        "city": "Coquitlam",
+        "city": "Vancouver",
         "id": "200062",
-        "postalCode": "V3J 4S1",
+        "postalCode": "V6B 3K9",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

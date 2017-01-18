@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "599 Stum Lake Road",
+        "addr1": "4600 Roger Street",
         "addr2": null,
-        "city": "Beaver Valley",
+        "city": "Nanaimo",
         "id": "200045",
-        "postalCode": "V0L 1G0",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

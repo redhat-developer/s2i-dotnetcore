@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "104 Roger Street",
+        "addr1": "3644 Roger Street",
         "addr2": null,
-        "city": "Comox",
+        "city": "Nanaimo",
         "id": "200037",
-        "postalCode": "V9N 6A1",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

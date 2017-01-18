@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4136 Glover Road",
+        "addr1": "896 Roger Street",
         "addr2": null,
-        "city": "Langley",
+        "city": "Nanaimo",
         "id": "200060",
-        "postalCode": "V3A 4P6",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

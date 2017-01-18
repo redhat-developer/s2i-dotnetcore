@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "616 Scotts Lane",
+        "addr1": "2076 James Street",
         "addr2": null,
-        "city": "Okanagan Mission",
+        "city": "Aldergrove",
         "id": "200049",
-        "postalCode": "V0R 1S0",
+        "postalCode": "V5G 4S4",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

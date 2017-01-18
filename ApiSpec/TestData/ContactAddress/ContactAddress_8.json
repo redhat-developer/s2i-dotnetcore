@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3924 Roger Street",
+        "addr1": "365 Old Spallumcheen Rd",
         "addr2": null,
-        "city": "Duncan",
+        "city": "Hope",
         "id": "200007",
-        "postalCode": "V9L 1P1",
+        "postalCode": "V0X 1L0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

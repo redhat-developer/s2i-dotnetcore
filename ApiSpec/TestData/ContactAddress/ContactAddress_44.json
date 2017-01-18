@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4173 James Street",
+        "addr1": "3643 Robson St",
         "addr2": null,
-        "city": "Burnaby",
+        "city": "Vancouver",
         "id": "200043",
-        "postalCode": "V5G 4W7",
+        "postalCode": "V6B 3K9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

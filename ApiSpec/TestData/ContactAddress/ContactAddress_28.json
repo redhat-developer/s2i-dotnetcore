@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1979 King George Hwy",
+        "addr1": "936 Coldstream Avenue",
         "addr2": null,
-        "city": "Surrey",
+        "city": "Vernon",
         "id": "200027",
-        "postalCode": "V3W 4E3",
+        "postalCode": "V1T 6N1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2519 St George Street",
+        "addr1": "2867 Blanshard",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Victoria",
         "id": "200067",
-        "postalCode": "V5T 1Z7",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

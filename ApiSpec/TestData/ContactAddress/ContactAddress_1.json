@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1967 Findlay Creek Road",
+        "addr1": "4256 Kinchant St",
         "addr2": null,
-        "city": "Fernie",
+        "city": "Williams Lake",
         "id": "200000",
-        "postalCode": "V0B 1M1",
+        "postalCode": "V2G 1C4",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

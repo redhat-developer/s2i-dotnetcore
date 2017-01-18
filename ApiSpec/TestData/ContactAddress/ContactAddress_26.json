@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "729 Blanshard",
+        "addr1": "4305 Essendene Avenue",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Abbotsford",
         "id": "200025",
-        "postalCode": "V8W 2H9",
+        "postalCode": "V2S 2H7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]
