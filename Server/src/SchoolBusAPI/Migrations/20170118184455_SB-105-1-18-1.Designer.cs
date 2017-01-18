@@ -8,9 +8,10 @@ using SchoolBusAPI.Models;
 namespace SchoolBusAPI.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    partial class DbAppContextModelSnapshot : ModelSnapshot
+    [Migration("20170118184455_SB-105-1-18-1")]
+    partial class SB1051181
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -451,7 +452,7 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("HomeTerminalProvince")
                         .HasColumnName("HOME_TERMINAL_PROVINCE");
 
-                    b.Property<int?>("InspectorRefId")
+                    b.Property<int>("InspectorRefId")
                         .HasColumnName("INSPECTOR_REF_ID");
 
                     b.Property<bool?>("IsIndependentSchool")
@@ -976,7 +977,8 @@ namespace SchoolBusAPI.Migrations
 
                     b.HasOne("SchoolBusAPI.Models.User", "Inspector")
                         .WithMany()
-                        .HasForeignKey("InspectorRefId");
+                        .HasForeignKey("InspectorRefId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SchoolBusAPI.Models.SchoolDistrict", "SchoolBusDistrict")
                         .WithMany()
