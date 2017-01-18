@@ -69,7 +69,7 @@ var UserManagement = React.createClass({
                 <td style={{ verticalAlign: 'middle' }}>{ user.initials }</td>
                 <td style={{ textAlign: 'right' }}>
                   <Button onClick={ this.edit.bind(this, user) } style={{ marginRight: 10 }}><Glyphicon glyph="pencil" /> Edit</Button>
-                  <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm params={ user } onConfirm={ this.delete }/>}>
+                  <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm params={ user } onConfirm={ this.delete }/> }>
                     <Button><Glyphicon glyph="trash" /> Delete</Button>
                   </OverlayTrigger>
                 </td>

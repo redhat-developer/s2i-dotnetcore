@@ -7,11 +7,19 @@ import { lastFirstName, concat } from './utils/string';
 import _ from 'lodash';
 
 
+////////////////////
+// Current User
+////////////////////
+
 export function getCurrentUser() {
   return new ApiRequest('/users/current').get().then(response => {
     store.dispatch({ type: 'UPDATE_CURRENT_USER', user: response });
   });
 }
+
+////////////////////
+// Users
+////////////////////
 
 export function getUsers(params) {
   return new ApiRequest('/users').get(params).then(response => {
@@ -38,6 +46,50 @@ export function getUser(userId) {
   });
 }
 
+////////////////////
+// Favourites
+////////////////////
+
+export function getFavourites(type) {
+  return new ApiRequest(`/users/current/favourites/${type}`).get().then(response => {
+    // Normalize the response
+    var favourites = _.fromPairs(response.map(favourite => [ favourite.id, favourite ]));
+
+    store.dispatch({ type: 'UPDATE_FAVOURITES', favourites: favourites });
+  });
+}
+
+export function addFavourite(favourite) {
+  return new ApiRequest('/users/current/favourites').post(favourite).then(response => {
+    // Normalize the response
+    var favourite = _.fromPairs([[ response.id, response ]]);
+
+    store.dispatch({ type: 'ADD_FAVOURITE', favourite: favourite });
+  });
+}
+
+export function updateFavourite(favourite) {
+  return new ApiRequest('/users/current/favourites').put(favourite).then(response => {
+    // Normalize the response
+    var favourite = _.fromPairs([[ response.id, response ]]);
+
+    store.dispatch({ type: 'UPDATE_FAVOURITE', favourite: favourite });
+  });
+}
+export function deleteFavourite(favourite) {
+  console.debug(favourite);
+  // return new ApiRequest('/users/current/favourites/delete').post(favourite).then(response => {
+  //   // Normalize the response
+  //   var favourite = _.fromPairs([[ response.id, response ]]);
+
+  //   store.dispatch({ type: 'DELETE_FAVOURITE', favourite: favourite });
+  // });
+}
+
+////////////////////
+// School Buses
+////////////////////
+
 export function searchSchoolBuses(params) {
   return new ApiRequest('/schoolbuses/search').get(params).then(response => {
     // Normalize the response
@@ -48,8 +100,8 @@ export function searchSchoolBuses(params) {
       bus.ownerName = bus.schoolBusOwner ? bus.schoolBusOwner.name : '';
       bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
       bus.homeTerminal = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
-      bus.nextInspectionDate = formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY');
       bus.isOverdue = isOverdue(bus.nextInspectionDate);
+      bus.nextInspectionDate = formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY');
     });
 
     store.dispatch({ type: 'UPDATE_BUSES', schoolBuses: schoolBuses });
@@ -117,6 +169,10 @@ export function getSchoolBusNotes(schoolBusId) {
   });
 }
 
+////////////////////
+// Owners
+////////////////////
+
 export function getOwner(ownerId) {
   return new ApiRequest(`/schoolbusowners/${ownerId}`).get().then(response => {
     var owner = response;
@@ -125,7 +181,9 @@ export function getOwner(ownerId) {
   });
 }
 
+////////////////////
 // Look Ups
+////////////////////
 
 export function getCities() {
   return new ApiRequest('/cities').get().then(response => {
