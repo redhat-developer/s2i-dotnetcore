@@ -38,7 +38,7 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
       return { ...state, favourites: { ...state.favourites, ...action.favourite } };
 
     case 'DELETE_FAVOURITE':
-      return { ...state, favourites: _.omit(state.favourites, [action.favourite.id]) };
+      return { ...state, favourites: _.omit(state.favourites, [ action.id ]) };
 
     // Buses
     case 'UPDATE_BUSES':

@@ -78,11 +78,9 @@ export function updateFavourite(favourite) {
 }
 
 export function deleteFavourite(favourite) {
-  return new ApiRequest(`/users/current/favourites/${favourite.id}/delete`).post(favourite).then(response => {
-    // Normalize the response
-    var favourite = _.fromPairs([[ response.id, response ]]);
-
-    store.dispatch({ type: 'DELETE_FAVOURITE', favourite: favourite });
+  return new ApiRequest(`/users/current/favourites/${favourite.id}/delete`).post().then(response => {
+    // No needs to normalize, as we just want the id from the response.
+    store.dispatch({ type: 'DELETE_FAVOURITE', id: response.id });
   });
 }
 
