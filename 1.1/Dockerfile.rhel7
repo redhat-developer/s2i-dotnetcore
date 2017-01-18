@@ -89,6 +89,10 @@ WORKDIR /opt/app-root/src
 # Run container by default as user with id 1001 (default)
 USER 1001
 
+# By default, ASP.NET Core runs on port 5000. We configure it to match
+# the container port.
+ENV ASPNETCORE_URLS=http://*:8080
+
 ENTRYPOINT ["container-entrypoint"]
 
 # Set the default CMD to print the usage of the language image.

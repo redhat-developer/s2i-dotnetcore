@@ -49,7 +49,6 @@ namespace SampleApp
             // Launch webserver
             var host = new WebHostBuilder()
                 .UseKestrel()
-                .UseUrls("http://0.0.0.0:8080")
                 .UseStartup<Startup>()
                 .Build();
 

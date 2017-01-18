@@ -112,3 +112,8 @@ a `.s2i/environment` file inside your source code repository.
 
     Used to specify the list of projects or project folders to restore. This is
     passed to the `dotnet restore` invocation. Defaults to `.`.
+
+* **ASPNETCORE_URLS**
+
+    This variable is set to `http://*:8080` to configure ASP.NET Core to use the
+    port exposed by the image.
