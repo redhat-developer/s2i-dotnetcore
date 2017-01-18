@@ -22,7 +22,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/CCWData"
-      deprecated: false'
     post:
       tags:
         - CCWData
@@ -40,7 +39,7 @@ paths:
             $ref: "#/definitions/CCWData"
       responses:
         201:
-          description: CCWData record created
+          description: CCWData created
           headers:
             Location:
               description: A link to the CCWData
@@ -68,7 +67,7 @@ paths:
               $ref: "#/definitions/CCWData"
       responses:
         201:
-          description: CCWData records created
+          description: CCWData created
   /ccwdata/{id}:
     get:
       tags:
@@ -85,11 +84,10 @@ paths:
             $ref: "#/definitions/CCWData"
         404:
           description: CCWData not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of CCWData record to fetch
+          description: id of CCWData to fetch
           required: true
           type: integer
     put:
@@ -108,7 +106,6 @@ paths:
             $ref: "#/definitions/CCWData"
         404:
           description: CCWData not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -133,12 +130,11 @@ paths:
         200:
           description: OK
         404:
-          description: CCWData record not found
-      deprecated: false
+          description: CCWData not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of CCWData to delete
           required: true
           type: integer
   /inspections:
@@ -157,7 +153,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Inspection"
-      deprecated: false'
     post:
       tags:
         - Inspection
@@ -175,7 +170,7 @@ paths:
             $ref: "#/definitions/Inspection"
       responses:
         201:
-          description: Inspection record created
+          description: Inspection created
           headers:
             Location:
               description: A link to the Inspection
@@ -203,7 +198,7 @@ paths:
               $ref: "#/definitions/Inspection"
       responses:
         201:
-          description: Inspection records created
+          description: Inspection created
   /inspections/{id}:
     get:
       tags:
@@ -220,11 +215,10 @@ paths:
             $ref: "#/definitions/Inspection"
         404:
           description: Inspection not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of Inspection record to fetch
+          description: id of Inspection to fetch
           required: true
           type: integer
     put:
@@ -243,7 +237,6 @@ paths:
             $ref: "#/definitions/Inspection"
         404:
           description: Inspection not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -268,12 +261,11 @@ paths:
         200:
           description: OK
         404:
-          description: Inspection record not found
-      deprecated: false
+          description: Inspection not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of Inspection to delete
           required: true
           type: integer
   /schoolbuses:
@@ -292,7 +284,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBus"
-      deprecated: false'
     post:
       tags:
         - SchoolBus
@@ -310,7 +301,7 @@ paths:
             $ref: "#/definitions/SchoolBus"
       responses:
         201:
-          description: SchoolBus record created
+          description: SchoolBus created
           headers:
             Location:
               description: A link to the SchoolBus
@@ -338,7 +329,7 @@ paths:
               $ref: "#/definitions/SchoolBus"
       responses:
         201:
-          description: SchoolBus records created
+          description: SchoolBus created
   /schoolbuses/{id}:
     get:
       tags:
@@ -355,11 +346,10 @@ paths:
             $ref: "#/definitions/SchoolBus"
         404:
           description: SchoolBus not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolBus record to fetch
+          description: id of SchoolBus to fetch
           required: true
           type: integer
     put:
@@ -378,7 +368,6 @@ paths:
             $ref: "#/definitions/SchoolBus"
         404:
           description: SchoolBus not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -403,12 +392,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolBus record not found
-      deprecated: false
+          description: SchoolBus not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of SchoolBus to delete
           required: true
           type: integer
   /schoolbusnotes:
@@ -427,7 +415,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBusNote"
-      deprecated: false'
     post:
       tags:
         - SchoolBusNote
@@ -445,7 +432,7 @@ paths:
             $ref: "#/definitions/SchoolBusNote"
       responses:
         201:
-          description: SchoolBusNote record created
+          description: SchoolBusNote created
           headers:
             Location:
               description: A link to the SchoolBusNote
@@ -473,7 +460,7 @@ paths:
               $ref: "#/definitions/SchoolBusNote"
       responses:
         201:
-          description: SchoolBusNote records created
+          description: SchoolBusNote created
   /schoolbusnotes/{id}:
     get:
       tags:
@@ -490,11 +477,10 @@ paths:
             $ref: "#/definitions/SchoolBusNote"
         404:
           description: SchoolBusNote not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusNote record to fetch
+          description: id of SchoolBusNote to fetch
           required: true
           type: integer
     put:
@@ -513,7 +499,6 @@ paths:
             $ref: "#/definitions/SchoolBusNote"
         404:
           description: SchoolBusNote not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -538,12 +523,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolBusNote record not found
-      deprecated: false
+          description: SchoolBusNote not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of SchoolBusNote to delete
           required: true
           type: integer
   /schoolbusattachments:
@@ -562,7 +546,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBusAttachment"
-      deprecated: false'
     post:
       tags:
         - SchoolBusAttachment
@@ -580,7 +563,7 @@ paths:
             $ref: "#/definitions/SchoolBusAttachment"
       responses:
         201:
-          description: SchoolBusAttachment record created
+          description: SchoolBusAttachment created
           headers:
             Location:
               description: A link to the SchoolBusAttachment
@@ -608,7 +591,7 @@ paths:
               $ref: "#/definitions/SchoolBusAttachment"
       responses:
         201:
-          description: SchoolBusAttachment records created
+          description: SchoolBusAttachment created
   /schoolbusattachments/{id}:
     get:
       tags:
@@ -625,11 +608,10 @@ paths:
             $ref: "#/definitions/SchoolBusAttachment"
         404:
           description: SchoolBusAttachment not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusAttachment record to fetch
+          description: id of SchoolBusAttachment to fetch
           required: true
           type: integer
     put:
@@ -648,7 +630,6 @@ paths:
             $ref: "#/definitions/SchoolBusAttachment"
         404:
           description: SchoolBusAttachment not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -673,12 +654,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolBusAttachment record not found
-      deprecated: false
+          description: SchoolBusAttachment not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of SchoolBusAttachment to delete
           required: true
           type: integer
   /schoolbushistories:
@@ -697,7 +677,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBusHistory"
-      deprecated: false'
     post:
       tags:
         - SchoolBusHistory
@@ -715,7 +694,7 @@ paths:
             $ref: "#/definitions/SchoolBusHistory"
       responses:
         201:
-          description: SchoolBusHistory record created
+          description: SchoolBusHistory created
           headers:
             Location:
               description: A link to the SchoolBusHistory
@@ -743,7 +722,7 @@ paths:
               $ref: "#/definitions/SchoolBusHistory"
       responses:
         201:
-          description: SchoolBusHistory records created
+          description: SchoolBusHistory created
   /schoolbushistories/{id}:
     get:
       tags:
@@ -760,11 +739,10 @@ paths:
             $ref: "#/definitions/SchoolBusHistory"
         404:
           description: SchoolBusHistory not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusHistory record to fetch
+          description: id of SchoolBusHistory to fetch
           required: true
           type: integer
     put:
@@ -783,7 +761,6 @@ paths:
             $ref: "#/definitions/SchoolBusHistory"
         404:
           description: SchoolBusHistory not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -808,12 +785,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolBusHistory record not found
-      deprecated: false
+          description: SchoolBusHistory not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of SchoolBusHistory to delete
           required: true
           type: integer
   /notifications:
@@ -832,7 +808,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Notification"
-      deprecated: false'
     post:
       tags:
         - Notification
@@ -850,7 +825,7 @@ paths:
             $ref: "#/definitions/Notification"
       responses:
         201:
-          description: Notification record created
+          description: Notification created
           headers:
             Location:
               description: A link to the Notification
@@ -878,7 +853,7 @@ paths:
               $ref: "#/definitions/Notification"
       responses:
         201:
-          description: Notification records created
+          description: Notification created
   /notifications/{id}:
     get:
       tags:
@@ -895,11 +870,10 @@ paths:
             $ref: "#/definitions/Notification"
         404:
           description: Notification not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of Notification record to fetch
+          description: id of Notification to fetch
           required: true
           type: integer
     put:
@@ -918,7 +892,6 @@ paths:
             $ref: "#/definitions/Notification"
         404:
           description: Notification not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -943,12 +916,11 @@ paths:
         200:
           description: OK
         404:
-          description: Notification record not found
-      deprecated: false
+          description: Notification not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of Notification to delete
           required: true
           type: integer
   /notificationevents:
@@ -967,7 +939,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/NotificationEvent"
-      deprecated: false'
     post:
       tags:
         - NotificationEvent
@@ -985,7 +956,7 @@ paths:
             $ref: "#/definitions/NotificationEvent"
       responses:
         201:
-          description: NotificationEvent record created
+          description: NotificationEvent created
           headers:
             Location:
               description: A link to the NotificationEvent
@@ -1013,7 +984,7 @@ paths:
               $ref: "#/definitions/NotificationEvent"
       responses:
         201:
-          description: NotificationEvent records created
+          description: NotificationEvent created
   /notificationevents/{id}:
     get:
       tags:
@@ -1030,11 +1001,10 @@ paths:
             $ref: "#/definitions/NotificationEvent"
         404:
           description: NotificationEvent not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of NotificationEvent record to fetch
+          description: id of NotificationEvent to fetch
           required: true
           type: integer
     put:
@@ -1053,7 +1023,6 @@ paths:
             $ref: "#/definitions/NotificationEvent"
         404:
           description: NotificationEvent not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -1078,12 +1047,11 @@ paths:
         200:
           description: OK
         404:
-          description: NotificationEvent record not found
-      deprecated: false
+          description: NotificationEvent not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of NotificationEvent to delete
           required: true
           type: integer
   /schoolbusowners:
@@ -1102,7 +1070,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBusOwner"
-      deprecated: false'
     post:
       tags:
         - SchoolBusOwner
@@ -1120,7 +1087,7 @@ paths:
             $ref: "#/definitions/SchoolBusOwner"
       responses:
         201:
-          description: SchoolBusOwner record created
+          description: SchoolBusOwner created
           headers:
             Location:
               description: A link to the SchoolBusOwner
@@ -1148,7 +1115,7 @@ paths:
               $ref: "#/definitions/SchoolBusOwner"
       responses:
         201:
-          description: SchoolBusOwner records created
+          description: SchoolBusOwner created
   /schoolbusowners/{id}:
     get:
       tags:
@@ -1165,11 +1132,10 @@ paths:
             $ref: "#/definitions/SchoolBusOwner"
         404:
           description: SchoolBusOwner not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwner record to fetch
+          description: id of SchoolBusOwner to fetch
           required: true
           type: integer
     put:
@@ -1188,7 +1154,6 @@ paths:
             $ref: "#/definitions/SchoolBusOwner"
         404:
           description: SchoolBusOwner not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -1213,12 +1178,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolBusOwner record not found
-      deprecated: false
+          description: SchoolBusOwner not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of SchoolBusOwner to delete
           required: true
           type: integer
   /schoolbusownernotes:
@@ -1237,7 +1201,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBusOwnerNote"
-      deprecated: false'
     post:
       tags:
         - SchoolBusOwnerNote
@@ -1255,7 +1218,7 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerNote"
       responses:
         201:
-          description: SchoolBusOwnerNote record created
+          description: SchoolBusOwnerNote created
           headers:
             Location:
               description: A link to the SchoolBusOwnerNote
@@ -1283,7 +1246,7 @@ paths:
               $ref: "#/definitions/SchoolBusOwnerNote"
       responses:
         201:
-          description: SchoolBusOwnerNote records created
+          description: SchoolBusOwnerNote created
   /schoolbusownernotes/{id}:
     get:
       tags:
@@ -1300,11 +1263,10 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerNote"
         404:
           description: SchoolBusOwnerNote not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerNote record to fetch
+          description: id of SchoolBusOwnerNote to fetch
           required: true
           type: integer
     put:
@@ -1323,7 +1285,6 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerNote"
         404:
           description: SchoolBusOwnerNote not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -1348,12 +1309,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolBusOwnerNote record not found
-      deprecated: false
+          description: SchoolBusOwnerNote not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of SchoolBusOwnerNote to delete
           required: true
           type: integer
   /schoolbusownerattachments:
@@ -1372,7 +1332,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBusOwnerAttachment"
-      deprecated: false'
     post:
       tags:
         - SchoolBusOwnerAttachment
@@ -1390,7 +1349,7 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerAttachment"
       responses:
         201:
-          description: SchoolBusOwnerAttachment record created
+          description: SchoolBusOwnerAttachment created
           headers:
             Location:
               description: A link to the SchoolBusOwnerAttachment
@@ -1418,7 +1377,7 @@ paths:
               $ref: "#/definitions/SchoolBusOwnerAttachment"
       responses:
         201:
-          description: SchoolBusOwnerAttachment records created
+          description: SchoolBusOwnerAttachment created
   /schoolbusownerattachments/{id}:
     get:
       tags:
@@ -1435,11 +1394,10 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerAttachment"
         404:
           description: SchoolBusOwnerAttachment not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerAttachment record to fetch
+          description: id of SchoolBusOwnerAttachment to fetch
           required: true
           type: integer
     put:
@@ -1458,7 +1416,6 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerAttachment"
         404:
           description: SchoolBusOwnerAttachment not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -1483,12 +1440,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolBusOwnerAttachment record not found
-      deprecated: false
+          description: SchoolBusOwnerAttachment not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of SchoolBusOwnerAttachment to delete
           required: true
           type: integer
   /schoolbusownercontacts:
@@ -1507,7 +1463,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBusOwnerContact"
-      deprecated: false'
     post:
       tags:
         - SchoolBusOwnerContact
@@ -1525,7 +1480,7 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerContact"
       responses:
         201:
-          description: SchoolBusOwnerContact record created
+          description: SchoolBusOwnerContact created
           headers:
             Location:
               description: A link to the SchoolBusOwnerContact
@@ -1553,7 +1508,7 @@ paths:
               $ref: "#/definitions/SchoolBusOwnerContact"
       responses:
         201:
-          description: SchoolBusOwnerContact records created
+          description: SchoolBusOwnerContact created
   /schoolbusownercontacts/{id}:
     get:
       tags:
@@ -1570,11 +1525,10 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerContact"
         404:
           description: SchoolBusOwnerContact not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerContact record to fetch
+          description: id of SchoolBusOwnerContact to fetch
           required: true
           type: integer
     put:
@@ -1593,7 +1547,6 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerContact"
         404:
           description: SchoolBusOwnerContact not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -1618,12 +1571,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolBusOwnerContact record not found
-      deprecated: false
+          description: SchoolBusOwnerContact not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of SchoolBusOwnerContact to delete
           required: true
           type: integer
   /schoolbusownerhistory:
@@ -1642,7 +1594,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBusOwnerHistory"
-      deprecated: false'
     post:
       tags:
         - SchoolBusOwnerHistory
@@ -1660,7 +1611,7 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerHistory"
       responses:
         201:
-          description: SchoolBusOwnerHistory record created
+          description: SchoolBusOwnerHistory created
           headers:
             Location:
               description: A link to the SchoolBusOwnerHistory
@@ -1688,7 +1639,7 @@ paths:
               $ref: "#/definitions/SchoolBusOwnerHistory"
       responses:
         201:
-          description: SchoolBusOwnerHistory records created
+          description: SchoolBusOwnerHistory created
   /schoolbusownerhistory/{id}:
     get:
       tags:
@@ -1705,11 +1656,10 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerHistory"
         404:
           description: SchoolBusOwnerHistory not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerHistory record to fetch
+          description: id of SchoolBusOwnerHistory to fetch
           required: true
           type: integer
     put:
@@ -1728,7 +1678,6 @@ paths:
             $ref: "#/definitions/SchoolBusOwnerHistory"
         404:
           description: SchoolBusOwnerHistory not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -1753,417 +1702,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolBusOwnerHistory record not found
-      deprecated: false
+          description: SchoolBusOwnerHistory not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
-          required: true
-          type: integer
-  /schoolBusOwnerContactPhone:
-    get:
-      tags:
-        - SchoolBusOwnerContactPhone
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/SchoolBusOwnerContactPhone"
-      deprecated: false'
-    post:
-      tags:
-        - SchoolBusOwnerContactPhone
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactPhone"
-      responses:
-        201:
-          description: SchoolBusOwnerContactPhone record created
-          headers:
-            Location:
-              description: A link to the SchoolBusOwnerContactPhone
-              type: string
-              format: url
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactPhone"
-  /schoolBusOwnerContactPhone/bulk:
-    post:
-      tags:
-        - SchoolBusOwnerContactPhone
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/SchoolBusOwnerContactPhone"
-      responses:
-        201:
-          description: SchoolBusOwnerContactPhone records created
-  /schoolBusOwnerContactPhone/{id}:
-    get:
-      tags:
-        - SchoolBusOwnerContactPhone
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactPhone"
-        404:
-          description: SchoolBusOwnerContactPhone not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwnerContactPhone record to fetch
-          required: true
-          type: integer
-    put:
-      tags:
-        - SchoolBusOwnerContactPhone
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactPhone"
-        404:
-          description: SchoolBusOwnerContactPhone not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwnerContactPhone to fetch
-          required: true
-          type: integer
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactPhone"
-  /schoolBusOwnerContactPhone/{id}/delete:
-    post:
-      tags:
-        - SchoolBusOwnerContactPhone
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-        404:
-          description: SchoolBusOwnerContactPhone record not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of Owner record to delete
-          required: true
-          type: integer
-  /schoolBusOwnerContactAddress:
-    get:
-      tags:
-        - SchoolBusOwnerContactAddress
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/SchoolBusOwnerContactAddress"
-      deprecated: false'
-    post:
-      tags:
-        - SchoolBusOwnerContactAddress
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactAddress"
-      responses:
-        201:
-          description: SchoolBusOwnerContactAddress record created
-          headers:
-            Location:
-              description: A link to the SchoolBusOwnerContactAddress
-              type: string
-              format: url
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactAddress"
-  /schoolBusOwnerContactAddress/bulk:
-    post:
-      tags:
-        - SchoolBusOwnerContactAddress
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/SchoolBusOwnerContactAddress"
-      responses:
-        201:
-          description: SchoolBusOwnerContactAddress records created
-  /schoolBusOwnerContactAddress/{id}:
-    get:
-      tags:
-        - SchoolBusOwnerContactAddress
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactAddress"
-        404:
-          description: SchoolBusOwnerContactAddress not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwnerContactAddress record to fetch
-          required: true
-          type: integer
-    put:
-      tags:
-        - SchoolBusOwnerContactAddress
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactAddress"
-        404:
-          description: SchoolBusOwnerContactAddress not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwnerContactAddress to fetch
-          required: true
-          type: integer
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/SchoolBusOwnerContactAddress"
-  /schoolBusOwnerContactAddress/{id}/delete:
-    post:
-      tags:
-        - SchoolBusOwnerContactAddress
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-        404:
-          description: SchoolBusOwnerContactAddress record not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of Owner record to delete
-          required: true
-          type: integer
-  /favouritecontexttypes:
-    get:
-      tags:
-        - FavouriteContextType
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/FavouriteContextType"
-      deprecated: false'
-    post:
-      tags:
-        - FavouriteContextType
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/FavouriteContextType"
-      responses:
-        201:
-          description: FavouriteContextType record created
-          headers:
-            Location:
-              description: A link to the FavouriteContextType
-              type: string
-              format: url
-          schema:
-            $ref: "#/definitions/FavouriteContextType"
-  /favouritecontexttypes/bulk:
-    post:
-      tags:
-        - FavouriteContextType
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/FavouriteContextType"
-      responses:
-        201:
-          description: FavouriteContextType records created
-  /favouritecontexttypes/{id}:
-    get:
-      tags:
-        - FavouriteContextType
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/FavouriteContextType"
-        404:
-          description: FavouriteContextType not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of FavouriteContextType record to fetch
-          required: true
-          type: integer
-    put:
-      tags:
-        - FavouriteContextType
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/FavouriteContextType"
-        404:
-          description: FavouriteContextType not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of FavouriteContextType to fetch
-          required: true
-          type: integer
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/FavouriteContextType"
-  /favouritecontexttypes/{id}/delete:
-    post:
-      tags:
-        - FavouriteContextType
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-        404:
-          description: FavouriteContextType record not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of Owner record to delete
+          description: id of SchoolBusOwnerHistory to delete
           required: true
           type: integer
   /groups:
@@ -2182,7 +1725,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Group"
-      deprecated: false'
     post:
       tags:
         - Group
@@ -2200,7 +1742,7 @@ paths:
             $ref: "#/definitions/Group"
       responses:
         201:
-          description: Group record created
+          description: Group created
           headers:
             Location:
               description: A link to the Group
@@ -2228,7 +1770,7 @@ paths:
               $ref: "#/definitions/Group"
       responses:
         201:
-          description: Group records created
+          description: Group created
   /groups/{id}:
     get:
       tags:
@@ -2245,11 +1787,10 @@ paths:
             $ref: "#/definitions/Group"
         404:
           description: Group not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of Group record to fetch
+          description: id of Group to fetch
           required: true
           type: integer
     put:
@@ -2268,7 +1809,6 @@ paths:
             $ref: "#/definitions/Group"
         404:
           description: Group not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -2293,12 +1833,11 @@ paths:
         200:
           description: OK
         404:
-          description: Group record not found
-      deprecated: false
+          description: Group not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of Group to delete
           required: true
           type: integer
   /permissions:
@@ -2316,8 +1855,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Permission"
-      deprecated: false'
+              $ref: "#/definitions/PermissionViewModel"
     post:
       tags:
         - Permission
@@ -2332,17 +1870,17 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Permission"
+            $ref: "#/definitions/PermissionViewModel"
       responses:
         201:
-          description: Permission record created
+          description: Permission created
           headers:
             Location:
               description: A link to the Permission
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Permission"
+            $ref: "#/definitions/PermissionViewModel"
   /permissions/bulk:
     post:
       tags:
@@ -2360,10 +1898,10 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Permission"
+              $ref: "#/definitions/PermissionViewModel"
       responses:
         201:
-          description: Permission records created
+          description: Permission created
   /permissions/{id}:
     get:
       tags:
@@ -2377,14 +1915,13 @@ paths:
         200:
           description: OK
           schema:
-            $ref: "#/definitions/Permission"
+            $ref: "#/definitions/PermissionViewModel"
         404:
           description: Permission not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of Permission record to fetch
+          description: id of Permission to fetch
           required: true
           type: integer
     put:
@@ -2400,10 +1937,9 @@ paths:
         200:
           description: OK
           schema:
-            $ref: "#/definitions/Permission"
+            $ref: "#/definitions/PermissionViewModel"
         404:
           description: Permission not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -2414,7 +1950,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Permission"
+            $ref: "#/definitions/PermissionViewModel"
   /permissions/{id}/delete:
     post:
       tags:
@@ -2428,12 +1964,11 @@ paths:
         200:
           description: OK
         404:
-          description: Permission record not found
-      deprecated: false
+          description: Permission not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of Permission to delete
           required: true
           type: integer
   /roles:
@@ -2451,8 +1986,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Role"
-      deprecated: false'
+              $ref: "#/definitions/RoleViewModel"
     post:
       tags:
         - Role
@@ -2467,17 +2001,17 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Role"
+            $ref: "#/definitions/RoleViewModel"
       responses:
         201:
-          description: Role record created
+          description: Role created
           headers:
             Location:
               description: A link to the Role
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Role"
+            $ref: "#/definitions/RoleViewModel"
   /roles/bulk:
     post:
       tags:
@@ -2495,10 +2029,10 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Role"
+              $ref: "#/definitions/RoleViewModel"
       responses:
         201:
-          description: Role records created
+          description: Role created
   /roles/{id}:
     get:
       tags:
@@ -2512,14 +2046,13 @@ paths:
         200:
           description: OK
           schema:
-            $ref: "#/definitions/Role"
+            $ref: "#/definitions/RoleViewModel"
         404:
           description: Role not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of Role record to fetch
+          description: id of Role to fetch
           required: true
           type: integer
     put:
@@ -2535,10 +2068,9 @@ paths:
         200:
           description: OK
           schema:
-            $ref: "#/definitions/Role"
+            $ref: "#/definitions/RoleViewModel"
         404:
           description: Role not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -2549,7 +2081,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Role"
+            $ref: "#/definitions/RoleViewModel"
   /roles/{id}/delete:
     post:
       tags:
@@ -2563,19 +2095,18 @@ paths:
         200:
           description: OK
         404:
-          description: Role record not found
-      deprecated: false
+          description: Role not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of Role to delete
           required: true
           type: integer
 
   /rolepermissions/bulk:
     post:
       tags:
-        - RolePermission
+        - Role
       consumes:
         - application/json
       produces:
@@ -2589,10 +2120,11 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/rolepermissionss"
+              $ref: "#/definitions/RolePermission"
       responses:
         201:
-          description: rolepermissionss records created  /users:
+          description: Role created
+  /users:
     get:
       tags:
         - User
@@ -2607,8 +2139,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/User"
-      deprecated: false'
+              $ref: "#/definitions/UserViewModel"
     post:
       tags:
         - User
@@ -2623,17 +2154,17 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/UserViewModel"
       responses:
         201:
-          description: User record created
+          description: User created
           headers:
             Location:
               description: A link to the User
               type: string
               format: url
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/UserViewModel"
   /users/bulk:
     post:
       tags:
@@ -2651,10 +2182,10 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/User"
+              $ref: "#/definitions/UserViewModel"
       responses:
         201:
-          description: User records created
+          description: User created
   /users/{id}:
     get:
       tags:
@@ -2668,14 +2199,13 @@ paths:
         200:
           description: OK
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/UserViewModel"
         404:
           description: User not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of User record to fetch
+          description: id of User to fetch
           required: true
           type: integer
     put:
@@ -2691,10 +2221,9 @@ paths:
         200:
           description: OK
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/UserViewModel"
         404:
           description: User not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -2705,7 +2234,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/UserViewModel"
   /users/{id}/delete:
     post:
       tags:
@@ -2719,19 +2248,18 @@ paths:
         200:
           description: OK
         404:
-          description: User record not found
-      deprecated: false
+          description: User not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of User to delete
           required: true
           type: integer
 
   /usergroups/bulk:
     post:
       tags:
-        - 
+        - User
       consumes:
         - application/json
       produces:
@@ -2745,14 +2273,15 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/usergroupss"
+              $ref: "#/definitions/GroupMembership"
       responses:
         201:
-          description: usergroupss records created
+          description: User created
+
   /userroles/bulk:
     post:
       tags:
-        - UserRole
+        - User
       consumes:
         - application/json
       produces:
@@ -2766,10 +2295,11 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/userroless"
+              $ref: "#/definitions/UserRole"
       responses:
         201:
-          description: userroless records created  /regions:
+          description: User created
+  /regions:
     get:
       tags:
         - Region
@@ -2785,7 +2315,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Region"
-      deprecated: false'
     post:
       tags:
         - Region
@@ -2803,7 +2332,7 @@ paths:
             $ref: "#/definitions/Region"
       responses:
         201:
-          description: Region record created
+          description: Region created
           headers:
             Location:
               description: A link to the Region
@@ -2831,7 +2360,7 @@ paths:
               $ref: "#/definitions/Region"
       responses:
         201:
-          description: Region records created
+          description: Region created
   /regions/{id}:
     get:
       tags:
@@ -2848,11 +2377,10 @@ paths:
             $ref: "#/definitions/Region"
         404:
           description: Region not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of Region record to fetch
+          description: id of Region to fetch
           required: true
           type: integer
     put:
@@ -2871,7 +2399,6 @@ paths:
             $ref: "#/definitions/Region"
         404:
           description: Region not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -2896,12 +2423,11 @@ paths:
         200:
           description: OK
         404:
-          description: Region record not found
-      deprecated: false
+          description: Region not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of Region to delete
           required: true
           type: integer
   /districts:
@@ -2920,7 +2446,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/District"
-      deprecated: false'
     post:
       tags:
         - District
@@ -2938,7 +2463,7 @@ paths:
             $ref: "#/definitions/District"
       responses:
         201:
-          description: District record created
+          description: District created
           headers:
             Location:
               description: A link to the District
@@ -2966,7 +2491,7 @@ paths:
               $ref: "#/definitions/District"
       responses:
         201:
-          description: District records created
+          description: District created
   /districts/{id}:
     get:
       tags:
@@ -2983,11 +2508,10 @@ paths:
             $ref: "#/definitions/District"
         404:
           description: District not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of District record to fetch
+          description: id of District to fetch
           required: true
           type: integer
     put:
@@ -3006,7 +2530,6 @@ paths:
             $ref: "#/definitions/District"
         404:
           description: District not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -3031,12 +2554,11 @@ paths:
         200:
           description: OK
         404:
-          description: District record not found
-      deprecated: false
+          description: District not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of District to delete
           required: true
           type: integer
   /serviceareas:
@@ -3055,7 +2577,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/ServiceArea"
-      deprecated: false'
     post:
       tags:
         - ServiceArea
@@ -3073,7 +2594,7 @@ paths:
             $ref: "#/definitions/ServiceArea"
       responses:
         201:
-          description: ServiceArea record created
+          description: ServiceArea created
           headers:
             Location:
               description: A link to the ServiceArea
@@ -3101,7 +2622,7 @@ paths:
               $ref: "#/definitions/ServiceArea"
       responses:
         201:
-          description: ServiceArea records created
+          description: ServiceArea created
   /serviceareas/{id}:
     get:
       tags:
@@ -3118,11 +2639,10 @@ paths:
             $ref: "#/definitions/ServiceArea"
         404:
           description: ServiceArea not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of ServiceArea record to fetch
+          description: id of ServiceArea to fetch
           required: true
           type: integer
     put:
@@ -3141,7 +2661,6 @@ paths:
             $ref: "#/definitions/ServiceArea"
         404:
           description: ServiceArea not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -3166,12 +2685,11 @@ paths:
         200:
           description: OK
         404:
-          description: ServiceArea record not found
-      deprecated: false
+          description: ServiceArea not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of ServiceArea to delete
           required: true
           type: integer
   /cities:
@@ -3190,7 +2708,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/City"
-      deprecated: false'
     post:
       tags:
         - City
@@ -3208,7 +2725,7 @@ paths:
             $ref: "#/definitions/City"
       responses:
         201:
-          description: City record created
+          description: City created
           headers:
             Location:
               description: A link to the City
@@ -3236,7 +2753,7 @@ paths:
               $ref: "#/definitions/City"
       responses:
         201:
-          description: City records created
+          description: City created
   /cities/{id}:
     get:
       tags:
@@ -3253,11 +2770,10 @@ paths:
             $ref: "#/definitions/City"
         404:
           description: City not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of City record to fetch
+          description: id of City to fetch
           required: true
           type: integer
     put:
@@ -3276,7 +2792,6 @@ paths:
             $ref: "#/definitions/City"
         404:
           description: City not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -3301,12 +2816,11 @@ paths:
         200:
           description: OK
         404:
-          description: City record not found
-      deprecated: false
+          description: City not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of City to delete
           required: true
           type: integer
   /schooldistricts:
@@ -3325,7 +2839,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolDistrict"
-      deprecated: false'
     post:
       tags:
         - SchoolDistrict
@@ -3343,7 +2856,7 @@ paths:
             $ref: "#/definitions/SchoolDistrict"
       responses:
         201:
-          description: SchoolDistrict record created
+          description: SchoolDistrict created
           headers:
             Location:
               description: A link to the SchoolDistrict
@@ -3371,7 +2884,7 @@ paths:
               $ref: "#/definitions/SchoolDistrict"
       responses:
         201:
-          description: SchoolDistrict records created
+          description: SchoolDistrict created
   /schooldistricts/{id}:
     get:
       tags:
@@ -3388,11 +2901,10 @@ paths:
             $ref: "#/definitions/SchoolDistrict"
         404:
           description: SchoolDistrict not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of SchoolDistrict record to fetch
+          description: id of SchoolDistrict to fetch
           required: true
           type: integer
     put:
@@ -3411,7 +2923,6 @@ paths:
             $ref: "#/definitions/SchoolDistrict"
         404:
           description: SchoolDistrict not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -3436,282 +2947,11 @@ paths:
         200:
           description: OK
         404:
-          description: SchoolDistrict record not found
-      deprecated: false
+          description: SchoolDistrict not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
-          required: true
-          type: integer
-  /groupMembership:
-    get:
-      tags:
-        - GroupMembership
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/GroupMembership"
-      deprecated: false'
-    post:
-      tags:
-        - GroupMembership
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/GroupMembership"
-      responses:
-        201:
-          description: GroupMembership record created
-          headers:
-            Location:
-              description: A link to the GroupMembership
-              type: string
-              format: url
-          schema:
-            $ref: "#/definitions/GroupMembership"
-  /groupMembership/bulk:
-    post:
-      tags:
-        - GroupMembership
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/GroupMembership"
-      responses:
-        201:
-          description: GroupMembership records created
-  /groupMembership/{id}:
-    get:
-      tags:
-        - GroupMembership
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/GroupMembership"
-        404:
-          description: GroupMembership not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of GroupMembership record to fetch
-          required: true
-          type: integer
-    put:
-      tags:
-        - GroupMembership
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/GroupMembership"
-        404:
-          description: GroupMembership not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of GroupMembership to fetch
-          required: true
-          type: integer
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/GroupMembership"
-  /groupMembership/{id}/delete:
-    post:
-      tags:
-        - GroupMembership
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-        404:
-          description: GroupMembership record not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of Owner record to delete
-          required: true
-          type: integer
-  /userFavourite:
-    get:
-      tags:
-        - UserFavourite
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserFavourite"
-      deprecated: false'
-    post:
-      tags:
-        - UserFavourite
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/UserFavourite"
-      responses:
-        201:
-          description: UserFavourite record created
-          headers:
-            Location:
-              description: A link to the UserFavourite
-              type: string
-              format: url
-          schema:
-            $ref: "#/definitions/UserFavourite"
-  /userFavourite/bulk:
-    post:
-      tags:
-        - UserFavourite
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserFavourite"
-      responses:
-        201:
-          description: UserFavourite records created
-  /userFavourite/{id}:
-    get:
-      tags:
-        - UserFavourite
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/UserFavourite"
-        404:
-          description: UserFavourite not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of UserFavourite record to fetch
-          required: true
-          type: integer
-    put:
-      tags:
-        - UserFavourite
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/UserFavourite"
-        404:
-          description: UserFavourite not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of UserFavourite to fetch
-          required: true
-          type: integer
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/UserFavourite"
-  /userFavourite/{id}/delete:
-    post:
-      tags:
-        - UserFavourite
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-        404:
-          description: UserFavourite record not found
-      deprecated: false
-      parameters:
-        - name: id
-          in: path
-          description: id of Owner record to delete
+          description: id of SchoolDistrict to delete
           required: true
           type: integer
   /schoolbuses/search:
@@ -3890,24 +3130,24 @@ paths:
           type: integer
   /schoolbuses/{id}/ccwdata:
     get:
-    description: Returns CCWData for a particular Schoolbus
-    tags:
-      - SchoolBus
-    produces:
-      - text/plain
-      - application/json
-      - text/json
-    responses:
-      '200':
-        description: OK
-        schema:
-          $ref: '#/definitions/CCWData'
-    parameters:
-      - name: id
-        in: path
-        description: id of SchoolBus to fetch CCWData for
-        required: true
-        type: integer
+      description: Returns CCWData for a particular Schoolbus
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CCWData'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to fetch CCWData for
+          required: true
+          type: integer
   /schoolbusowners/{id}/attachments:
     get:
       description: Returns attachments for a particular SchoolBusOwner
@@ -3996,6 +3236,22 @@ paths:
           description: id of SchoolBusOwner to fetch contact address for
           required: true
           type: integer
+  /favouritecontexttypes:
+    get:
+      description: Returns list of available FavouriteContextTypes
+      tags:
+        - SchoolBusOwner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FavouriteContextType'
   /roles/{id}/permissions:
     get:
       description: Get all the permissions for a role
@@ -4458,8 +3714,7 @@ definitions:
         type: string
         description: The VIN for the School Bus
       schoolBusOwner:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/SchoolBusOwner'
       permitNumber:
         type: string
         description: The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.
@@ -4468,10 +3723,8 @@ definitions:
         description: Enumerated type of Status - Inactive,  Active,  Archived
       isOutOfProvince:
         type: boolean
-        description: 
-      serviceArea:
-        $ref: "#/definitions/"
-        description: 
+      ServiceArea:
+        $ref: '#/definitions/ServiceArea'
       homeTerminalAddr1:
         type: string
         description: Address 1 of physical location of the School Bus.
@@ -4479,7 +3732,7 @@ definitions:
         type: string
         description: Address 2 of physical location of the School Bus.
       homeTerminalCity:
-        $ref: "#/definitions/"
+        $ref: '#/definitions/City'
         description: City of physical location of the School Bus.
       homeTerminalProvince:
         type: string
@@ -4501,7 +3754,7 @@ definitions:
         type: string
         description: An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.
       schoolBusDistrict:
-        $ref: "#/definitions/"
+        $ref: '#/definitions/SchoolDistrict'
         description: The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.
       isIndependentSchool:
         type: boolean
@@ -4546,8 +3799,7 @@ definitions:
         type: boolean
         description: A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to the user as no longer relevant.
       schoolBus:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/SchoolBus'
   SchoolBusAttachment:
     type: object
     description: Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.
@@ -4568,8 +3820,7 @@ definitions:
         type: string
         description: A note about the attachment,  optionally maintained by the user.
       schoolBus:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/SchoolBus'
   SchoolBusHistory:
     type: object
     description: The history of updates made to a School Bus. Exact format of the history TBD.
@@ -4581,11 +3832,9 @@ definitions:
         type: integer
         description: Primary Key
       schoolBus:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/SchoolBus'
   SchoolBusOwner:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -4604,10 +3853,10 @@ definitions:
         format: date-time
         description: The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.
       primaryContact:
-        $ref: "#/definitions/"
+        $ref: '#/definitions/SchoolBusOwnerContact'
         description: Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.
       serviceArea:
-        $ref: "#/definitions/"
+        $ref: '#/definitions/ServiceArea'
         description: The District to which this School Bus is affliated.
       nextInspectionDate:
         type: string
@@ -4620,11 +3869,9 @@ definitions:
       contacts:
         type: array
         items:
-          $ref: "#/definitions/"
-        description: 
+          $ref: '#/definitions/SchoolBusOwnerContact'
   SchoolBusOwnerAttachment:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -4633,8 +3880,7 @@ definitions:
         type: integer
         description: Primary Key
       schoolBusOwner:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/SchoolBusOwner'
       internalFileName:
         type: string
         description: The physical location of the attachment on the file system.
@@ -4646,7 +3892,6 @@ definitions:
         description: A note about the attachment,  optionally maintained by the user.
   SchoolBusOwnerNote:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -4661,11 +3906,9 @@ definitions:
         type: string
         description: The contents of the note.
       schoolBusOwner:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/SchoolBusOwner'
   SchoolBusOwnerContact:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -4688,16 +3931,13 @@ definitions:
       schoolBusOwnerContactPhones:
         type: array
         items:
-          $ref: "#/definitions/"
-        description: 
+          $ref: '#/definitions/SchoolBusOwnerContactPhone'
       schoolBusOwnerContactAddresses:
         type: array
         items:
-          $ref: "#/definitions/"
-        description: 
+          $ref: '#/definitions/SchoolBusOwnerContactAddress'
   SchoolBusOwnerContactPhone:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -4713,7 +3953,6 @@ definitions:
         description: The phone number of the contact. Entered as free form to support a range of formats.
   SchoolBusOwnerContactAddress:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -4750,8 +3989,7 @@ definitions:
         type: integer
         description: Primary Key
       schoolBusOwner:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/SchoolBusOwner'
   CCWData:
     type: object
     description: Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls.
@@ -4771,121 +4009,85 @@ definitions:
         description: Vehicle Year
       ICBCVehicleType:
         type: string
-        description: 
       ICBCRateClass:
         type: string
-        description: 
       ICBCCVIPDecal:
         type: string
-        description: 
       ICBCFleetUnitNo:
         format: int32
         type: integer
-        description: 
       ICBCGrossVehicleWeight:
         format: int32
         type: integer
-        description: 
       ICBCMake:
         type: string
-        description: 
       ICBCBody:
         type: string
-        description: 
       ICBCRebuiltStatus:
         type: string
-        description: 
       ICBCCVIPExpiry:
         type: string
         format: date-time
-        description: 
       ICBCNetWt:
         format: int32
         type: integer
-        description: 
       ICBCModel:
         type: string
-        description: 
       ICBCFuel:
         type: string
-        description: 
       ICBCSeatingCapacity:
         format: int32
         type: integer
-        description: 
       ICBCColour:
         type: string
-        description: 
       ICBCNotesAndOrders:
         type: string
-        description: 
       ICBCOrderedOn:
         type: string
         format: date-time
-        description: 
       ICBCRegOwnerName:
         type: string
-        description: 
       ICBCRegOwnerAddr1:
         type: string
-        description: 
       ICBCRegOwnerAddr2:
         type: string
-        description: 
       ICBCRegOwnerCity:
         type: string
-        description: 
       ICBCRegOwnerProv:
         type: string
-        description: 
       ICBCRegOwnerPostalCode:
         type: string
-        description: 
       ICBCRegOwnerStatus:
         type: string
-        description: 
       ICBCRegOwnerRODL:
         type: string
-        description: 
       ICBCRegOwnerPool:
         type: string
-        description: 
       NSCClientNum:
         type: string
-        description: 
       NSCCarrierName:
         type: string
-        description: 
       NSCCarrierConditions:
         type: string
-        description: 
       NSCCarrierSafetyRating:
         type: string
-        description: 
       NSCPolicyNumber:
         type: string
-        description: 
       NSCPolicyEffectiveDate:
         type: string
         format: date-time
-        description: 
       NSCPolicyStatusDate:
         type: string
         format: date-time
-        description: 
       NSCPolicyExpiryDate:
         type: string
         format: date-time
-        description: 
       NSCPolicyStatus:
         type: string
-        description: 
       NSCPlateDecal:
         type: string
-        description: 
   Inspection:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -4894,10 +4096,9 @@ definitions:
         type: integer
         description: Primary Key make this match the Inspection Details page
       schoolBus:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/SchoolBus'
       inspector:
-        $ref: "#/definitions/"
+        $ref: '#/definitions/User'
         description: Defaults for a new inspection to the current user,  but can be changed as needed.
       inspectionDate:
         type: string
@@ -4951,11 +4152,9 @@ definitions:
         type: boolean
         description: True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied.
       favouriteContextType:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/FavouriteContextType'
   Region:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -4980,7 +4179,6 @@ definitions:
         description: The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
   District:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -4996,7 +4194,7 @@ definitions:
         type: string
         description: The name of the District
       region:
-        $ref: "#/definitions/"
+        $ref: '#/definitions/Region'
         description: The region in which the District is found.
       startDate:
         type: string
@@ -5008,7 +4206,6 @@ definitions:
         description: The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
   ServiceArea:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -5024,7 +4221,7 @@ definitions:
         type: string
         description: The name of the Service Area
       district:
-        $ref: "#/definitions/"
+        $ref: '#/definitions/District'
         description: The district in which the Service Area is found.
       startDate:
         type: string
@@ -5036,7 +4233,7 @@ definitions:
         description: The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
   SchoolDistrict:
     type: object
-    description: 
+    description: A list of School Districts in the Province of BC. Authoritative source to be determined.
     required:
       - id
     properties:
@@ -5065,7 +4262,6 @@ definitions:
         description: The name of the City
   Notification:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -5074,32 +4270,23 @@ definitions:
         type: integer
         description: Primary Key
       event:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/NotificationEvent'
       event2:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/NotificationEvent'
       hasBeenViewed:
         type: boolean
-        description: 
       isWatchNotification:
         type: boolean
-        description: 
       isExpired:
         type: boolean
-        description: 
       isAllDay:
         type: boolean
-        description: 
       priorityCode:
         type: string
-        description: 
       user:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/User'
   NotificationEvent:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -5110,22 +4297,16 @@ definitions:
       eventTime:
         type: string
         format: date-time
-        description: 
       eventTypeCode:
         type: string
-        description: 
       eventSubTypeCode:
         type: string
-        description: 
       notes:
         type: string
-        description: 
       notificationGenerated:
         type: boolean
-        description: 
       schoolBus:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/SchoolBus'
   User:
     type: object
     description: Information about the users of the system.
@@ -5139,41 +4320,31 @@ definitions:
         description: Primary Key
       givenName:
         type: string
-        description: 
       surname:
         type: string
-        description: 
       initials:
         type: string
-        description: 
       email:
         type: string
-        description: 
       active:
         type: boolean
-        description: 
       smUserId:
         type: string
         description: Security Manager User ID
       guid:
         type: string
-        description: 
       smAuthorizationDirectory:
         type: string
-        description: 
       userRoles:
         type: array
         items:
-          $ref: "#/definitions/"
-        description: 
+          $ref: '#/definitions/UserRole'
       groupMemberships:
         type: array
         items:
-          $ref: "#/definitions/"
-        description: 
+          $ref: '#/definitions/GroupMembership'
   UserRole:
     type: object
-    description: 
     required:
       - id
       - effectiveDate
@@ -5185,20 +4356,15 @@ definitions:
       effectiveDate:
         type: string
         format: date-time
-        description: 
       expiryDate:
         type: string
         format: date-time
-        description: 
       user:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/User'
       role:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/Role'
   Role:
     type: object
-    description: 
     required:
       - id
       - name
@@ -5210,23 +4376,18 @@ definitions:
         description: Primary Key
       name:
         type: string
-        description: 
       description:
         type: string
-        description: 
       rolePermissions:
         type: array
         items:
-          $ref: "#/definitions/"
-        description: 
+          $ref: '#/definitions/RolePermission'
       userRoles:
         type: array
         items:
-          $ref: "#/definitions/"
-        description: 
+          $ref: '#/definitions/UserRole'
   RolePermission:
     type: object
-    description: 
     required:
       - id
     properties:
@@ -5235,14 +4396,11 @@ definitions:
         type: integer
         description: Primary Key
       role:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/Role'
       permission:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/Permission'
   Permission:
     type: object
-    description: 
     required:
       - id
       - code
@@ -5255,16 +4413,12 @@ definitions:
         description: Primary Key
       code:
         type: string
-        description: 
       name:
         type: string
-        description: 
       description:
         type: string
-        description: 
   GroupMembership:
     type: object
-    description: 
     required:
       - id
       - active
@@ -5275,16 +4429,12 @@ definitions:
         description: Primary Key
       active:
         type: boolean
-        description: 
       group:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/Group'
       user:
-        $ref: "#/definitions/"
-        description: 
+        $ref: '#/definitions/User'
   Group:
     type: object
-    description: 
     required:
       - id
       - name
@@ -5296,10 +4446,8 @@ definitions:
         description: Primary Key
       name:
         type: string
-        description: 
       description:
         type: string
-        description: 
   GroupMembership:
     type: object
     required:

@@ -174,7 +174,7 @@
         {
             "Description": null,
             "Length": null,
-            "Name": "serviceArea",
+            "Name": "ServiceArea",
             "RefDef": "ServiceArea",
             "Required": [
                 {
@@ -3117,7 +3117,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A list of School Districts in the Province of BC. Authoritative source to be determined.",
             "Length": null,
             "Name": "SchoolDistrict",
             "RefDef": null,

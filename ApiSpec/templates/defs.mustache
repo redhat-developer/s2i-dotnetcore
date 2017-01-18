@@ -1,43 +1,43 @@
 definitions:{{#list}}
 {{#table}}  {{Name}}:
-    type: object
-    description: {{Description}}
+    type: object{{#Description}}
+    description: {{Description}}{{/Description}}
     required:
 {{#Required}}      - {{req}}
 {{/Required}}
     properties:{{/table}}{{#boolean}}{{!
 }}      {{Name}}:
-        type: boolean
-        description: {{Description}}{{/boolean}}{{#string}}{{!
+        type: boolean{{#Description}}
+        description: {{Description}}{{/Description}}{{/boolean}}{{#string}}{{!
 }}      {{Name}}:
-        type: string
-        description: {{Description}}{{/string}}{{#integer}}{{!
+        type: string{{#Description}}
+        description: {{Description}}{{/Description}}{{/string}}{{#integer}}{{!
 }}      {{Name}}:
         format: int32
-        type: integer
-        description: {{Description}}{{/integer}}{{#float}}{{!
+        type: integer{{#Description}}
+        description: {{Description}}{{/Description}}{{/integer}}{{#float}}{{!
 }}      {{Name}}:
         format: float
-        type: decimal
-        description: {{Description}}{{/float}}{{#id}}{{!
+        type: decimal{{#Description}}
+        description: {{Description}}{{/Description}}{{/float}}{{#id}}{{!
 }}      {{Name}}:
         format: int32
-        type: integer
-        description: {{Description}}{{/id}}{{#datetime}}{{!
+        type: integer{{#Description}}
+        description: {{Description}}{{/Description}}{{/id}}{{#datetime}}{{!
 }}      {{Name}}:
         type: string
-        format: date-time
-        description: {{Description}}{{/datetime}}{{#date}}{{!
+        format: date-time{{#Description}}
+        description: {{Description}}{{/Description}}{{/datetime}}{{#date}}{{!
 }}      {{Name}}:
         type: string
-        format: date-time
-        description: {{Description}}{{/date}}{{#links}}{{!
+        format: date-time{{#Description}}
+        description: {{Description}}{{/Description}}{{/date}}{{#links}}{{!
 }}      {{Name}}:
         type: array
         items:
-          $ref: "#/definitions/{{Ref}}"
-        description: {{Description}}{{/links}}{{#ref}}{{!
+          $ref: '#/definitions/{{RefDef}}'{{#Description}}
+        description: {{Description}}{{/Description}}{{/links}}{{#ref}}{{!
 }}      {{Name}}:
-        $ref: "#/definitions/{{Ref}}"
-        description: {{Description}}{{/ref}}{{/list
+        $ref: '#/definitions/{{RefDef}}'{{#Description}}
+        description: {{Description}}{{/Description}}{{/ref}}{{/list
 }}
