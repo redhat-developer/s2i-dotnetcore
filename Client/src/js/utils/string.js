@@ -6,8 +6,10 @@ export function plural(num, singular, plural) {
   return num === 1 ? singular : plural;
 }
 
-export function concat(a, b, sep) {
+export function concat(left, right, sep) {
   if (!sep) { sep = ' '; }
+  var a = left ? left.trim() : null;
+  var b = right ? right.trim() : null;
   if (a && b) { return `${a}${sep}${b}`; }
   if (a) { return a; }
   if (b) { return b; }

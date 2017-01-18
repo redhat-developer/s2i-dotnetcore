@@ -55,15 +55,23 @@
     margin-right: 5px;
   }
 
+  .checkbox {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 16px;
+  }
+
   button {
     margin-left: 5px;
   }
 
-  h4 {
-    font-weight: 600;
+  h1 {
+    small {
+      font-size: 85%;
+    }
   }
 
-  strong {
-    font-weight: 400;
+  h3 {
+    font-weight: 600;
   }
 }

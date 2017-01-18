@@ -1,8 +1,8 @@
 import store from './store';
 
-import { formatDateTime, isOverdue } from './utils/date';
+import { daysFromToday } from './utils/date';
 import { ApiRequest } from './utils/http';
-import { lastFirstName, concat } from './utils/string';
+import { lastFirstName, firstLastName, concat } from './utils/string';
 
 import _ from 'lodash';
 
@@ -88,19 +88,26 @@ export function deleteFavourite(favourite) {
 // School Buses
 ////////////////////
 
+function addSchoolBusDisplayFields(bus) {
+  bus.isActive = bus.status === 'Active';
+  bus.ownerName = bus.schoolBusOwner ? bus.schoolBusOwner.name : '';
+  bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
+  bus.districtName = bus.schoolBusDistrict ? bus.schoolBusDistrict.name : '';
+  bus.homeTerminalAddrs = concat(bus.homeTerminalAddr1, bus.homeTerminalAddr2, ', ');
+  bus.homeTerminalCityProv = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
+  bus.daysToInspection = daysFromToday(bus.nextInspectionDate);
+  bus.isOverdue = bus.daysToInspection < 0;
+  bus.inspectorName = bus.inspector ? firstLastName(bus.inspector.givenName, bus.inspector.surname) : '';
+  bus.isReinspection = bus.nextInspectionType === 'Re-inspection';
+}
+
 export function searchSchoolBuses(params) {
   return new ApiRequest('/schoolbuses/search').get(params).then(response => {
     // Normalize the response
     var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
 
     // Add display fields
-    _.map(schoolBuses, bus => {
-      bus.ownerName = bus.schoolBusOwner ? bus.schoolBusOwner.name : '';
-      bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
-      bus.homeTerminal = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
-      bus.isOverdue = isOverdue(bus.nextInspectionDate);
-      bus.nextInspectionDate = formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY');
-    });
+    _.map(schoolBuses, bus => { addSchoolBusDisplayFields(bus); });
 
     store.dispatch({ type: 'UPDATE_BUSES', schoolBuses: schoolBuses });
   });
@@ -117,9 +124,12 @@ export function getSchoolBuses(params) {
 
 export function getSchoolBus(schoolBusId) {
   return new ApiRequest(`/schoolbuses/${schoolBusId}`).get().then(response => {
-    var schoolBus = response;
+    var bus = response;
 
-    store.dispatch({ type: 'UPDATE_BUS', schoolBus: schoolBus });
+    // Add display fields
+    addSchoolBusDisplayFields(bus);
+
+    store.dispatch({ type: 'UPDATE_BUS', schoolBus: bus });
   });
 }
 

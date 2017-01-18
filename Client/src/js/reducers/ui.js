@@ -1,8 +1,9 @@
 const DEFAULT_STATE = {
   requests: {
     waiting: false,
-    error: null,
+    error: {}, // ApiError
   },
+
   schoolBuses: {},
 };
 
@@ -13,13 +14,14 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
     case 'REQUESTS_BEGIN':
       return { ...state, requests: {
         waiting: true,
-        error: null,
+        error: {},
       }};
 
     case 'REQUESTS_END':
-      return { ...state, requests: {
-        waiting: false,
-      }};
+      return { ...state, requests: { ...state.requests, ...{ waiting: false } } };
+
+    case 'REQUESTS_ERROR':
+      return { ...state, requests: { ...state.requests, ...{ error: action.error } } };
 
     case 'UPDATE_BUSES_UI':
       return { ...state, schoolBuses: action.schoolBuses };

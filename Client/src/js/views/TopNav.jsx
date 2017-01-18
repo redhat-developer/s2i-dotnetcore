@@ -1,15 +1,18 @@
 import React from 'react';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Popover, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 
+import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 
 var TopNav = React.createClass({
   propTypes: {
-    showWorkingIndicator: React.PropTypes.bool,
     currentUser: React.PropTypes.object,
+    showWorkingIndicator: React.PropTypes.bool,
+    requestError: React.PropTypes.object,
   },
 
   render: function () {
@@ -51,7 +54,17 @@ var TopNav = React.createClass({
               {this.props.currentUser.fullName} <small>{this.props.currentUser.districtName} District</small>
             </NavItem>
           </Nav>
-          <div id="working-indicator" hidden={!this.props.showWorkingIndicator}>Working <Spinner/></div>
+          <OverlayTrigger trigger="click" placement="bottom" rootClose overlay={
+              <Popover id="error-message" title={ this.props.requestError.status + ' – API Error' }>
+                <p><small>{ this.props.requestError.message }</small></p>
+              </Popover>
+            }>
+            <Button id="error-indicator" className={ this.props.requestError.message ? '' : 'hide' } bsStyle="danger" bsSize="xsmall">
+              Error
+              <Glyphicon glyph="exclamation-sign" />
+            </Button>
+          </OverlayTrigger>
+          <div id="working-indicator" hidden={ !this.props.showWorkingIndicator }>Working <Spinner/></div>
         </Navbar>
       </nav>
     </div>;
@@ -61,8 +74,9 @@ var TopNav = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    showWorkingIndicator: state.ui.requests.waiting,
     currentUser: state.user,
+    showWorkingIndicator: state.ui.requests.waiting,
+    requestError: state.ui.requests.error,
   };
 }
 
