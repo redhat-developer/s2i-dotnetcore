@@ -7,10 +7,30 @@ import _ from 'lodash';
 
 import Spinner from '../components/Spinner.jsx';
 
-import { formatDateTime, daysFromToday } from '../utils/date';
+import { formatDateTime } from '../utils/date';
 import { concat, plural } from '../utils/string';
 
 import * as Api from '../api';
+
+/*
+
+Notes on the screen:
+
+  "Out of Province" is grayed out (or not displayed?) if false. The drop down would only visible in edit mode.
+  The Next Inspection date:
+    Has an "R" if it is a "Re-inspection" inspection type
+    Is red if it is overdue (red = "error")
+    Is yellow if it is due within 30 (configurable) days (yellow = warn)
+    Is white otherwise (white, green = "OK" - one or other chosen based on context)
+    Has the correspondingly appropriate font colour based on the colour.
+  Notes, Attachments show record counts
+  School Bus Data box shows the rest of the School Bus Data
+  Inspections shows the list of inspections
+  Remainder of the screen shows the CCW data
+
+*/
+
+const DAYS_DUE_WARNING = 30;
 
 var SchoolBusesDetail = React.createClass({
   propTypes: {
@@ -99,20 +119,21 @@ var SchoolBusesDetail = React.createClass({
     var bus = this.props.schoolBus;
     var ccw = this.props.schoolBusCCW;
 
-    var active = bus.status === 'Active';
-    var daysToInspection = daysFromToday(bus.nextInspectionDate);
-    var overdue = (daysToInspection < 0);
-    if (overdue) { daysToInspection *= -1; }
-    var inspectionNotice = (overdue ? 'Overdue - ' : '')
+    var daysToInspection = bus.daysToInspection;
+    if (bus.isOverdue) { daysToInspection *= -1; }
+
+    var inspectionNotice = (bus.isReinspection ? 'R ' : '') + (bus.isOverdue ? 'Overdue - ' : '')
       + daysToInspection + ' ' + plural(daysToInspection, 'day', 'days')
       + ' - ' + formatDateTime(bus.nextInspectionDate, 'YYYY-DD-MMM');
+
+    var inspectionStyle = bus.isOverdue ? 'danger' : (daysToInspection <= DAYS_DUE_WARNING ? 'warning' : 'success');
 
     return <div id="school-buses-detail">
       <Row id="school-buses-top">
         <Col md={10}>
-          <Label bsStyle={ active ? 'success' : 'warning'}>{ active ? 'Verified Active' : bus.status }</Label>
+          <Label bsStyle={ bus.isActive ? 'success' : 'danger'}>{ bus.isActive ? 'Verified Active' : bus.status }</Label>
           <Label className={ bus.isOutOfProvince ? '' : 'hide' }>Out of Province</Label>
-          <Label bsStyle={ overdue ? 'danger' : 'success'}>{ inspectionNotice }</Label>
+          <Label bsStyle={ inspectionStyle }>{ inspectionNotice }</Label>
           <Button title="Notes" onClick={ this.showNotes }>Notes ({ Object.keys(this.props.schoolBusNotes).length })</Button>
           <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ Object.keys(this.props.schoolBusAttachments).length })</Button>
           <Button title="History" onClick={ this.showHistory }>History ({ Object.keys(this.props.schoolBusHistories).length })</Button>
@@ -129,7 +150,7 @@ var SchoolBusesDetail = React.createClass({
         return <div id="school-buses-header">
           <Row>
             <Col md={12}>
-              <h1>SB Owner: <small>{ bus.schoolBusOwner ? bus.schoolBusOwner.name : '' }</small></h1>
+              <h1>SB Owner: <small>{ bus.ownerName }</small></h1>
             </Col>
           </Row>
           <Row>
@@ -148,72 +169,72 @@ var SchoolBusesDetail = React.createClass({
       <Row>
         <Col md={6}>
           <Well>
-            <h4>School Bus Data</h4>
+            <h3>School Bus Data</h3>
             {(() => {
               if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
               return <div id="school-buses-data">
                 <Row>
-                  <Col md={3} className="text-right"><strong>Area:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ bus.serviceArea ? bus.serviceArea.name : '' }</Col>
+                  <Col md={4} className="text-right"><strong>Area:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.serviceAreaName }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>Inspector:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ bus.inspectorName }</Col>
+                  <Col md={4} className="text-right"><strong>Inspector:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.inspectorName }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>Home Terminal:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ concat(bus.homeTerminalAddr1, bus.homeTerminalAddr2, ', ') }</Col>
+                  <Col md={4} className="text-right"><strong>Home Terminal:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.homeTerminalAddrs }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>City, Prov:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ concat(bus.homeTerminalCity, bus.homeTerminalProv, ', ') }</Col>
+                  <Col md={4} className="text-right"><strong>City, Prov:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.homeTerminalCityProv }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>Postal Code:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ bus.homeTerminalPostalCode }</Col>
+                  <Col md={4} className="text-right"><strong>Postal Code:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.homeTerminalPostalCode }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>Desription:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ bus.homeTerminalDesription }</Col>
+                  <Col md={4} className="text-right"><strong>Desription:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.homeTerminalComment }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>School Bus Class:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ bus.schoolBusClass }</Col>
+                  <Col md={4} className="text-right"><strong>School Bus Class:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.schoolBusClass }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>Restrictions:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ bus.restrictions }</Col>
+                  <Col md={4} className="text-right"><strong>Restrictions:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.restrictions }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>School District:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ bus.schoolBusDistrict ? bus.schoolBusDistrict.name : '' }</Col>
+                  <Col md={4} className="text-right"><strong>School District:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.districtName }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>Independent School:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}><Checkbox checked={ bus.isIndependentSchool }></Checkbox></Col>
+                  <Col md={4} className="text-right"><strong>Independent School:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}><Checkbox checked={ bus.isIndependentSchool } disabled></Checkbox></Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>Unit Number:</strong></Col>
-                  <Col md={8} style={{ marginLeft: 5 }}>{ bus.schoolBusUnitNumber }</Col>
+                  <Col md={4} className="text-right"><strong>Unit Number:</strong></Col>
+                  <Col md={7} style={{ marginLeft: 5 }}>{ bus.schoolBusUnitNumber }</Col>
                   <Col md={1}></Col>
                 </Row>
                 <Row>
-                  <Col md={3} className="text-right"><strong>Seating Capacity:</strong></Col>
+                  <Col md={4} className="text-right"><strong>Seating Capacity:</strong></Col>
                   <Col md={1} style={{ marginLeft: 5 }}>{ bus.schoolBusSeatingCapacity }</Col>
                   <Col md={4} className="text-right"><strong>Mobile Aid Capacity:</strong></Col>
                   <Col md={1} style={{ marginLeft: 5 }}>{ bus.mobilityAidCapacity }</Col>
-                  <Col md={3}></Col>
+                  <Col md={2}></Col>
                 </Row>
               </div>;
             })()}
@@ -221,11 +242,11 @@ var SchoolBusesDetail = React.createClass({
         </Col>
         <Col md={6}>
           <Well>
-            <h4>Inspection History</h4>
+            <h3>Inspection History</h3>
             <div className="text-right"><Button><Glyphicon glyph="plus" /> Add</Button></div>
             {(() => {
               if (this.state.loadingSchoolBusInspections ) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-              if (Object.keys(this.props.schoolBusInspections).length === 0) { return <Alert bsStyle="info" style={{ marginTop: 10 }}>No inspections</Alert>; }
+              if (Object.keys(this.props.schoolBusInspections).length === 0) { return <Alert bsStyle="success" style={{ marginTop: 10 }}>No inspections</Alert>; }
 
               return <Table condensed striped>
                 <thead>
@@ -259,7 +280,7 @@ var SchoolBusesDetail = React.createClass({
       <Row>
         <Col md={12}>
           <Well>
-            <h4>Policy</h4>
+            <h3>Policy</h3>
             {(() => {
               if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
@@ -288,7 +309,7 @@ var SchoolBusesDetail = React.createClass({
       <Row>
         <Col md={6}>
           <Well>
-            <h4>ICBC Registered Owner</h4>
+            <h3>ICBC Registered Owner</h3>
             {(() => {
               if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
@@ -325,7 +346,7 @@ var SchoolBusesDetail = React.createClass({
         </Col>
         <Col md={6}>
           <Well>
-            <h4>NSC</h4>
+            <h3>NSC</h3>
             {(() => {
               if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
@@ -354,7 +375,7 @@ var SchoolBusesDetail = React.createClass({
       <Row>
         <Col md={12}>
           <Well>
-            <h4>ICBC Vehicle Data</h4>
+            <h3>ICBC Vehicle Data</h3>
             {(() => {
               if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 

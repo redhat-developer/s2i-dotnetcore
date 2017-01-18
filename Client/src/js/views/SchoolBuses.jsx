@@ -16,6 +16,7 @@ import Favourites from '../components/Favourites.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import Spinner from '../components/Spinner.jsx';
 
+import { formatDateTime } from '../utils/date';
 import { notBlank } from '../utils/string';
 
 /*
@@ -390,11 +391,11 @@ var SchoolBuses = React.createClass({
                 <td><a href={ editPath }>{ bus.regi }</a></td>
                 <td><a href={ ownerPath }>{ bus.ownerName }</a></td>
                 <td>{ bus.serviceAreaName }</td>
-                <td>{ bus.homeTerminal }</td>
+                <td>{ bus.homeTerminalCityProv }</td>
                 <td>{ bus.schoolBusUnitNumber }</td>
                 <td>{ bus.permitNumber }</td>
-                <td>{ bus.nextInspectionDate }
-                  { bus.nextInspectionType === 'reinspection' ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
+                <td>{ formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY') }
+                  { bus.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
                   { bus.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }
                 </td>
                 <td>{ bus.inspectorName }</td>

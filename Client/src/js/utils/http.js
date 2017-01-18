@@ -125,8 +125,12 @@ export function jsonRequest(path, options) {
       return xhr.responseText ? JSON.parse(xhr.responseText) : null;
     }
   }).catch(err => {
-    if(err instanceof HttpError) {
-      throw new ApiError(`API ${err.method} ${err.path} failed (${err.status})`, err.method, err.path, err.status, err.body);
+    if (err instanceof HttpError) {
+      var apiError = new ApiError(`API ${err.method} ${err.path} failed (${err.status})`, err.method, err.path, err.status, err.body);
+
+      store.dispatch({ type: 'REQUESTS_ERROR', error: apiError });
+
+      throw apiError;
     } else {
       throw err;
     }

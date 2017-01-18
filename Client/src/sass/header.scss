@@ -37,12 +37,13 @@
 
   #error-indicator {
     position: absolute;
-    top: 100%;
-    right: 15px;
+    top: 21px;
+    right: 22px;
     background-color: #B72B2B;
     font-size: 13px;
     color: white;
     margin-top: -8px;
+    z-index: 100;
 
     span {
       margin-left: 5px;
