@@ -14,8 +14,7 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/{{respDef}}"
-      deprecated: false'{{/get}}{{!
+              $ref: "#/definitions/{{respDef}}"{{/get}}{{!
 }}{{#post}}
     post:
       tags:
@@ -34,10 +33,10 @@
             $ref: "#/definitions/{{paramDef}}"
       responses:
         201:
-          description: $1 record created
+          description: {{respDef}} created
           headers:
             Location:
-              description: A link to the {{tag}}
+              description: A link to the {{respDef}}
               type: string
               format: url
           schema:
@@ -63,7 +62,8 @@
               $ref: "#/definitions/{{paramDef}}"
       responses:
         201:
-          description: {{paramDef}} records created{{/bulk}}{{!
+          description: {{tag}} created
+{{/bulk}}{{!
 }}{{#getById}}
     get:
       tags:
@@ -80,11 +80,10 @@
             $ref: "#/definitions/{{respDef}}"
         404:
           description: {{tag}} not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of {{tag}} record to fetch
+          description: id of {{tag}} to fetch
           required: true
           type: integer{{/getById}}{{!
 }}{{#putById}}
@@ -104,7 +103,6 @@
             $ref: "#/definitions/{{paramDef}}"
         404:
           description: {{tag}} not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -130,12 +128,11 @@
         200:
           description: OK
         404:
-          description: {{tag}} record not found
-      deprecated: false
+          description: {{tag}} not found
       parameters:
         - name: id
           in: path
-          description: id of {{tag}} record to delete
+          description: id of {{tag}} to delete
           required: true
           type: integer{{/deleteById}}{{!
 }}{{#fullpath}}  /{{fullpath}}:
@@ -158,8 +155,7 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/{{tag}}"
-      deprecated: false'
+              $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
     post:
       tags:
         - {{tag}}
@@ -174,17 +170,17 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/{{tag}}"
+            $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
       responses:
         201:
-          description: {{tag}} record created
+          description: {{tag}} created
           headers:
             Location:
               description: A link to the {{tag}}
               type: string
               format: url
           schema:
-            $ref: "#/definitions/{{tag}}"
+            $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
   /{{path}}/bulk:
     post:
       tags:
@@ -202,10 +198,10 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/{{tag}}"
+              $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
       responses:
         201:
-          description: {{tag}} records created
+          description: {{tag}} created
   /{{path}}/{id}:
     get:
       tags:
@@ -219,14 +215,13 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/{{tag}}"
+            $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
         404:
           description: {{tag}} not found
-      deprecated: false
       parameters:
         - name: id
           in: path
-          description: id of {{tag}} record to fetch
+          description: id of {{tag}} to fetch
           required: true
           type: integer
     put:
@@ -242,10 +237,9 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/{{tag}}"
+            $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
         404:
           description: {{tag}} not found
-      deprecated: false
       parameters:
         - name: id
           in: path
@@ -256,7 +250,7 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/{{tag}}"
+            $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
   /{{path}}/{id}/delete:
     post:
       tags:
@@ -270,12 +264,11 @@
         200:
           description: OK
         404:
-          description: {{tag}} record not found
-      deprecated: false
+          description: {{tag}} not found
       parameters:
         - name: id
           in: path
-          description: id of Owner record to delete
+          description: id of {{tag}} to delete
           required: true
           type: integer
 {{/crud}}{{!
