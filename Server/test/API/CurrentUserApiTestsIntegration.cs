@@ -113,11 +113,14 @@ namespace SchoolBusAPI.Test
             Assert.Equal(found, true);
 
             // cleanup.
-            request = new HttpRequestMessage(HttpMethod.Post, "/api/users/current/favourites/delete");
-            response = await _client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
 
-
+            foreach (UserFavourite item in results)
+            {
+                request = new HttpRequestMessage(HttpMethod.Post, "/api/users/current/favourites/"+item.Id+"/delete");
+                response = await _client.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+            }
+                        
             // confirm the cleanup worked.
 
             request = new HttpRequestMessage(HttpMethod.Get, "/api/users/current/favourites/test");

@@ -32,9 +32,10 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Removes all of the current user&#39;s favourites</remarks>
+        /// <remarks>Removes a specific user favourite</remarks>
+        /// <param name="id">id of Favourite to delete</param>
         /// <response code="200">OK</response>
-        IActionResult UsersCurrentFavouritesDeletePostAsync();
+        IActionResult UsersCurrentFavouritesIdDeletePostAsync(int id);
 
         /// <summary>
         /// 
