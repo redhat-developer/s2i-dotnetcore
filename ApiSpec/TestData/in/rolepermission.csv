@@ -1,4 +1,0 @@
-File,!role,!permission,!roleid,role,!permissionid,permission,id
-RP,User,User,200000,rg:{'id': '200000'},200000,rg:{'id':'200000'},200000
-RP,Admin,User,200001,rg:{'id': '200001'},200000,rg:{'id':'200000'},200001
-RP,Admin,Admin,200001,rg:{'id': '200001'},200001,rg:{'id':'200001'},200002

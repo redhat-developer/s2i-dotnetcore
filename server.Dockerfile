@@ -20,5 +20,5 @@ ENV ASPNETCORE_URLS http://*:8080
 EXPOSE 8080
 
 RUN dotnet publish -c Release -o /app/out
-WORKDIR /app
+WORKDIR /app/out
 ENTRYPOINT ["dotnet", "/app/out/SchoolBusAPI.dll"]
