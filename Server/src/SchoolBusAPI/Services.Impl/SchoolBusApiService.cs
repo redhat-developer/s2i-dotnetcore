@@ -131,6 +131,10 @@ namespace SchoolBusAPI.Services.Impl
                         SchoolBusOwner school_bus_owner = _context.SchoolBusOwners.First(a => a.Id == school_bus_owner_id);
                         item.SchoolBusOwner = school_bus_owner;
                     }
+                    else // invalid data
+                    {
+                        item.SchoolBusOwner = null;
+                    }
                 }
 
                 // adjust service area.
@@ -143,6 +147,11 @@ namespace SchoolBusAPI.Services.Impl
                     {
                         ServiceArea service_area = _context.ServiceAreas.First(a => a.Id == service_area_id);
                         item.ServiceArea = service_area;
+                    } 
+                    else
+                    // invalid data
+                    {
+                        item.ServiceArea = null;
                     }
                 }
 
@@ -157,6 +166,11 @@ namespace SchoolBusAPI.Services.Impl
                         SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolbus_district_id);
                         item.SchoolBusDistrict = school_district;
                     }
+                    else
+                    // invalid data
+                    {
+                        item.SchoolBusDistrict = null;
+                    }
                 }
 
                 // adjust home city
@@ -169,6 +183,29 @@ namespace SchoolBusAPI.Services.Impl
                     {
                         City city = _context.Cities.First(a => a.Id == city_id);
                         item.HomeTerminalCity = city;
+                    }
+                    else
+                    // invalid data
+                    {
+                        item.HomeTerminalCity = null;
+                    }
+                }
+
+                // adjust inspector
+
+                if (item.Inspector != null)
+                {
+                    int inspector_id = item.Inspector.Id;
+                    bool inspector_exists = _context.Users.Any(a => a.Id == inspector_id);
+                    if (inspector_exists)
+                    {
+                        User inspector = _context.Users.First(a => a.Id == inspector_id);
+                        item.Inspector = inspector;
+                    }
+                    else
+                    // invalid data
+                    {
+                        item.Inspector = null;
                     }
                 }
 

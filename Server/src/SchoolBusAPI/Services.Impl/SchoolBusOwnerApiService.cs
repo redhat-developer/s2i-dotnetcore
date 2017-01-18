@@ -73,6 +73,10 @@ namespace SchoolBusAPI.Services.Impl
                     {
                         SchoolBusOwnerContact contact = _context.SchoolBusOwnerContacts.First(a => a.Id == primary_contact_id);
                         item.PrimaryContact = contact;
+                    }
+                    else
+                    {
+                        item.PrimaryContact = null;
                     }                    
                 }                
 
@@ -88,12 +92,31 @@ namespace SchoolBusAPI.Services.Impl
                     }
                     else
                     {
-                        return new ObjectResult("ERROR - Service area with an id of " + servicearea_id + " does not exist, for record id " + item.Id);
+                        item.ServiceArea = null;
                     }
                 }
-                else
+
+                // adjust contacts
+                if (item.Contacts != null)
                 {
-                    return new ObjectResult("ERROR - Primary contact is null.");
+                    for (int i = 0; i < item.Contacts.Count; i++)
+                    {
+                        SchoolBusOwnerContact contact = item.Contacts[i];
+                        if (contact != null)
+                        {
+                            int contact_id = contact.Id;
+                            bool contact_exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == contact_id);
+                            if (contact_exists)
+                            {
+                                SchoolBusOwnerContact new_contact = _context.SchoolBusOwnerContacts.First(a => a.Id == contact_id);
+                                item.Contacts[i] = new_contact;
+                            }
+                            else
+                            {
+                                item.Contacts[i] = null;
+                            }
+                        }
+                    }
                 }
 
                 var exists = _context.SchoolBusOwners.Any(a => a.Id == item.Id);
