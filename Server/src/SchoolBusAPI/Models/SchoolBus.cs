@@ -67,9 +67,10 @@ namespace SchoolBusAPI.Models
         /// <param name="SchoolBusUnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
         /// <param name="SchoolBusSeatingCapacity">The maximum number of passengers in the bus based on the specific use of the bus. For example, the same 2-per seat / 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children, 3 per seat..</param>
         /// <param name="MobilityAidCapacity">The number of mobility aid passenger seats in the bus..</param>
-        public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea ServiceArea = null, string HomeTerminalAddr1 = null, string HomeTerminalAddr2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string Restrictions = null, DateTime? NextInspectionDate = null, string NextInspectionType = null, SchoolDistrict SchoolBusDistrict = null, bool? IsIndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusBodyType = null, string SchoolBusBodyTypeOther = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null)
+        /// <param name="Inspector">Inspector.</param>
+        public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea ServiceArea = null, string HomeTerminalAddr1 = null, string HomeTerminalAddr2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string Restrictions = null, DateTime? NextInspectionDate = null, string NextInspectionType = null, SchoolDistrict SchoolBusDistrict = null, bool? IsIndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusBodyType = null, string SchoolBusBodyTypeOther = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null, User Inspector = null)
         {
-            
+
             this.Id = Id;
             this.Regi = Regi;
             this.Plate = Plate;
@@ -97,7 +98,8 @@ namespace SchoolBusAPI.Models
             this.SchoolBusUnitNumber = SchoolBusUnitNumber;
             this.SchoolBusSeatingCapacity = SchoolBusSeatingCapacity;
             this.MobilityAidCapacity = MobilityAidCapacity;
-            
+            this.Inspector = Inspector;
+
         }
 
         /// <summary>
@@ -290,6 +292,15 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "The number of mobility aid passenger seats in the bus.")]
         public int? MobilityAidCapacity { get; set; }
 
+
+        /// <summary>
+        /// Gets or Sets Inspector
+        /// </summary>
+        public User Inspector { get; set; }
+
+        [ForeignKey("Inspector")]
+        public int? InspectorRefId { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -325,6 +336,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  SchoolBusUnitNumber: ").Append(SchoolBusUnitNumber).Append("\n");
             sb.Append("  SchoolBusSeatingCapacity: ").Append(SchoolBusSeatingCapacity).Append("\n");
             sb.Append("  MobilityAidCapacity: ").Append(MobilityAidCapacity).Append("\n");
+            sb.Append("  Inspector: ").Append(Inspector).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -496,6 +508,11 @@ namespace SchoolBusAPI.Models
                     this.MobilityAidCapacity == other.MobilityAidCapacity ||
                     this.MobilityAidCapacity != null &&
                     this.MobilityAidCapacity.Equals(other.MobilityAidCapacity)
+                ) &&
+                (
+                    this.Inspector == other.Inspector ||
+                    this.Inspector != null &&
+                    this.Inspector.Equals(other.Inspector)
                 );
         }
 
@@ -615,6 +632,10 @@ namespace SchoolBusAPI.Models
                 if (this.MobilityAidCapacity != null)
                 {
                     hash = hash * 59 + this.MobilityAidCapacity.GetHashCode();
+                }
+                if (this.Inspector != null)
+                {
+                    hash = hash * 59 + this.Inspector.GetHashCode();
                 }
                 return hash;
             }

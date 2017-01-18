@@ -205,6 +205,7 @@ namespace SchoolBusAPI.Services.Impl
                     .Include(x => x.SchoolBusDistrict)
                     .Include(x => x.SchoolBusOwner.PrimaryContact)
                     .Include(x => x.ServiceArea.District.Region)
+                    .Include(x => x.Inspector)
                     .First(a => a.Id == id);
                 return new ObjectResult(result);
             }
@@ -225,7 +226,8 @@ namespace SchoolBusAPI.Services.Impl
                 .Include(x => x.HomeTerminalCity)
                 .Include(x => x.SchoolBusDistrict)
                 .Include(x => x.SchoolBusOwner.PrimaryContact)
-                .Include(x => x.ServiceArea.District.Region)                
+                .Include(x => x.ServiceArea.District.Region)
+                .Include(x => x.Inspector)
                 .ToList();
             return new ObjectResult(result);
         }
@@ -266,10 +268,22 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 SchoolBus schoolbus = _context.SchoolBuss.Where(a => a.Id == id).First();
-                string regi = schoolbus.Regi;                
+                string regi = schoolbus.Regi;
                 // get CCW data for this bus.
-                var result = _context.CCWDatas.Where(a => a.ICBCRegi == regi).First();
-                return new ObjectResult(result);
+
+                // could be none.
+                // validate the bus id            
+                bool ccw_exists = _context.CCWDatas.Any(a => a.ICBCRegi == regi);
+                if (ccw_exists)
+                {
+                    var result = _context.CCWDatas.Where(a => a.ICBCRegi == regi).First();
+                    return new ObjectResult(result);
+                }
+                else
+                {
+                    // record not found
+                    return new StatusCodeResult(404);
+                }
             }
             else
             {
@@ -420,7 +434,7 @@ namespace SchoolBusAPI.Services.Impl
                 .Include(x => x.SchoolBusDistrict)
                 .Include(x => x.SchoolBusOwner.PrimaryContact)
                 .Include(x => x.ServiceArea.District.Region)
-
+                .Include(x => x.Inspector)
                 .Select(x => x);
 
             bool keySearch = false;

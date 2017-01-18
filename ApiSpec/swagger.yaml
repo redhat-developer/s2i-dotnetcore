@@ -3870,6 +3870,8 @@ definitions:
         type: integer
         format: int32
         description: The number of mobility aid passenger seats in the bus.
+      inspector:
+        $ref: '#/definitions/User'
   SchoolBusNote:
     type: object
     required:
