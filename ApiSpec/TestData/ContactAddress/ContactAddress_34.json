@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "727 Glover Road",
+        "addr1": "3100 Shaughnessy St",
         "addr2": null,
-        "city": "Langley",
+        "city": "Port Coquitlam",
         "id": "200033",
-        "postalCode": "V3A 4P6",
+        "postalCode": "V3C 4S7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

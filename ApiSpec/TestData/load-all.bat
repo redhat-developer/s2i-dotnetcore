@@ -25,6 +25,8 @@ call load.bat "CCW\CCW_CCW.json" api/ccwdata/bulk %TARGET_SERVER%
 
 call load.bat "group\group_Group.json" api/groups/bulk %TARGET_SERVER%
 
+call load.bat "Inspections\Inspections_Inspection.json" api/inspections/bulk %TARGET_SERVER%
+
 
 
 

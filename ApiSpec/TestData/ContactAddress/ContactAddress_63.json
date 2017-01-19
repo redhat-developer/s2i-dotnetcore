@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3643 Robson St",
+        "addr1": "3795 Burdett Avenue",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Victoria",
         "id": "200062",
-        "postalCode": "V6B 3K9",
+        "postalCode": "V8Y 1Y7",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

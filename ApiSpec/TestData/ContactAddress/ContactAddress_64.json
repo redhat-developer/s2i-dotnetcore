@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4305 Essendene Avenue",
+        "addr1": "4879 Roger Street",
         "addr2": null,
-        "city": "Abbotsford",
+        "city": "Nanaimo",
         "id": "200063",
-        "postalCode": "V2S 2H7",
+        "postalCode": "V9R 5H4",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

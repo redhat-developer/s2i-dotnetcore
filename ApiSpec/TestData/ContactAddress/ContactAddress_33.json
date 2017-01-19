@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1019 Hardy Street",
+        "addr1": "3760 Keith Road",
         "addr2": null,
-        "city": "Kelowna",
+        "city": "North Vancouver",
         "id": "200032",
-        "postalCode": "V1Y 8H2",
+        "postalCode": "V5T 2C1",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

@@ -52,8 +52,46 @@ namespace SchoolBusAPI.Services.Impl
                 return new BadRequestResult();
             }
             foreach (Inspection item in items)
-            {
-                _context.Inspections.Add(item);
+            {               
+                // adjust the user
+                if (item.Inspector != null)
+                {
+                    int user_id = item.Inspector.Id;
+                    bool user_exists = _context.Users.Any(a => a.Id == user_id);
+                    if (user_exists)
+                    {
+                        User user = _context.Users.First(a => a.Id == user_id);
+                        item.Inspector = user;
+                    }
+                    else
+                    {
+                        item.Inspector = null;
+                    }
+                }
+                // adjust the schoolbus
+                if (item.SchoolBus != null)
+                {
+                    int schoolbus_id = item.SchoolBus.Id;
+                    bool schoolbus_exists = _context.SchoolBuss.Any(a => a.Id == schoolbus_id);
+                    if (schoolbus_exists)
+                    {
+                        SchoolBus schoolbus = _context.SchoolBuss.First(a => a.Id == schoolbus_id);
+                        item.SchoolBus = schoolbus;
+                    }
+                    else
+                    {
+                        item.SchoolBus = null;
+                    }
+                }
+                bool exists = _context.Inspections.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Inspections.Update(item);
+                }
+                else
+                {
+                    _context.Inspections.Add(item);
+                }                
             }
             // Save the changes
             _context.SaveChanges();

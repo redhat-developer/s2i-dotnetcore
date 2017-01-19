@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4600 Roger Street",
+        "addr1": "4216 Robson St",
         "addr2": null,
-        "city": "Nanaimo",
+        "city": "Vancouver",
         "id": "200004",
-        "postalCode": "V9R 5H9",
+        "postalCode": "V6B 3K9",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

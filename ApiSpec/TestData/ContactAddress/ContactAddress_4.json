@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2277 James Street",
+        "addr1": "4397 Burdett Avenue",
         "addr2": null,
-        "city": "Aldergrove",
+        "city": "Terrace",
         "id": "200003",
-        "postalCode": "V5G 4S4",
+        "postalCode": "V8G 1S2",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

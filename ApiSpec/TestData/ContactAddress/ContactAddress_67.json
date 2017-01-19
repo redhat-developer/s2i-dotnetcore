@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1593 102nd Avenue",
+        "addr1": "127 Coldstream Avenue",
         "addr2": null,
-        "city": "Fort St John",
+        "city": "Vernon",
         "id": "200066",
-        "postalCode": "V1J 3Y7",
+        "postalCode": "V1T 6N1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

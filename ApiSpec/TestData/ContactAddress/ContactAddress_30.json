@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1323 Cordova Street",
+        "addr1": "1004 Robson St",
         "addr2": null,
         "city": "Vancouver",
         "id": "200029",
-        "postalCode": "V6B 1E1",
+        "postalCode": "V6B 3K9",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

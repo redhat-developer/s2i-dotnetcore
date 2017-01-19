@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1710 Yoho Valley Road",
+        "addr1": "1028 Glover Road",
         "addr2": null,
-        "city": "Golden",
+        "city": "Langley",
         "id": "200026",
-        "postalCode": "V0A 1H0",
+        "postalCode": "V3A 1Z3",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

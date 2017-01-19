@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2890 Burdett Avenue",
+        "addr1": "2487 Kinchant St",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Kamloops",
         "id": "200055",
-        "postalCode": "V8Y 1Y7",
+        "postalCode": "V2S 5R8",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

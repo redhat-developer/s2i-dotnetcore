@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2277 James Street",
+        "addr1": "3162 Findlay Creek Road",
         "addr2": null,
-        "city": "Aldergrove",
+        "city": "Elko",
         "id": "200048",
-        "postalCode": "V5G 4S4",
+        "postalCode": "V0B 1J0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]
