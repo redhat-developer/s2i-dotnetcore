@@ -49,7 +49,6 @@ namespace SampleApp
                     options.NoDelay = true;
                     options.UseConnectionLogging();
                 })
-                .UseUrls("http://0.0.0.0:8080")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .Build();
