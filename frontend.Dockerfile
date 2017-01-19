@@ -12,7 +12,7 @@ WORKDIR /app/Common/src/SchoolBusCommon
 RUN dotnet restore
 RUN dotnet build -c Release
 
-MKDIR /app/FrontEnd/src/SchoolBusClient
+RUN mkdir /app/FrontEnd/src/SchoolBusClient
 
 COPY FrontEnd/global.json /app/FrontEnd/
 COPY FrontEnd/src/SchoolBusClient/SchoolBusFrontEnd.xproj /app/FrontEnd/src/SchoolBusClient/
