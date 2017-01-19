@@ -9,6 +9,7 @@ ENV LTTNG_UST_REGISTER_TIMEOUT 0
 COPY Common /app/Common
 WORKDIR /app/Common/src/SchoolBusCommon
 RUN dotnet restore
+RUN dotnet build -c Release
 
 COPY FrontEnd/src/SchoolBusClient/SchoolBusFrontEnd.xproj /app/FrontEnd/src/SchoolBusClient/
 COPY FrontEnd/src/SchoolBusClient/project.json /app/FrontEnd/src/SchoolBusClient/
