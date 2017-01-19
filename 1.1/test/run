@@ -87,6 +87,19 @@ check_result() {
   fi
 }
 
+check_command_exists_at()
+{
+  local command=$1
+  local at=$2
+  info "Testing if ${command} is at ${at}"
+  local actual=$(docker run ${IMAGE_NAME}-testapp bash -c "command -v ${command}")
+  if [[ "${at}_" != "${actual}_" ]]; then
+    info "TEST FAILED (${command} is at ${actual}, expected ${at})"
+    cleanup
+    exit $result
+  fi
+}
+
 wait_for_cid() {
   local max_attempts=10
   local sleep_time=1
@@ -161,8 +174,12 @@ test_http() {
     status=$?
     if [ $status -eq 0 ]; then
       if [ $response_code -eq 200 ]; then
-        output=$(cat ${output_file})
-        if [ "${output}_" == "${expected}_" ]; then
+        if [ $# -gt 1 ]; then
+          output=$(cat ${output_file})
+          if [ "${output}_" == "${expected}_" ]; then
+            result=0
+          fi
+        else
           result=0
         fi
       fi
@@ -329,6 +346,28 @@ test_cli_app() {
   cleanup ${app}
 }
 
+test_new_web_app() {
+  app=newweb
+  prepare ${app}
+  run_s2i_build ${app}
+  check_result $?
+
+  local cid_file=$(mktemp -u --suffix=.cid)
+  run_test_application &
+  wait_for_cid
+
+  # installed via DOTNET_NPM_TOOLS
+  check_command_exists_at bower /opt/app-root/node_modules/.bin/bower
+
+  # minified using npm tools
+  test_http "/js/site.min.js"
+  check_result $?
+
+  cleanup_app
+  info "All tests for the ${app} finished successfully."
+  cleanup ${app}
+}
+
 # Since we built the candidate image locally, we don't want S2I attempt to pull
 # it from Docker hub
 s2i_args="--force-pull=false"
@@ -360,5 +399,7 @@ for app in ${WEB_APPS[@]}; do
   info "All tests for the ${app} finished successfully."
   cleanup ${app}
 done
+
+test_new_web_app
 
 info "All tests finished successfully."
