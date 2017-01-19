@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2558 Glover Road",
+        "addr1": "3795 Burdett Avenue",
         "addr2": null,
-        "city": "Coquitlam",
+        "city": "Victoria",
         "id": "200062",
-        "postalCode": "V3J 4S1",
+        "postalCode": "V8Y 1Y7",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

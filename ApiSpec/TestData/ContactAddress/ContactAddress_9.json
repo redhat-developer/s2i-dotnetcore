@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1547 Roger Street",
+        "addr1": "1115 Shaughnessy St",
         "addr2": null,
-        "city": "Port Alberni",
+        "city": "Port Coquitlam",
         "id": "200008",
-        "postalCode": "V9Y 4M8",
+        "postalCode": "V3C 4S7",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "616 Scotts Lane",
+        "addr1": "4283 Burdett Avenue",
         "addr2": null,
-        "city": "Okanagan Mission",
+        "city": "Victoria",
         "id": "200049",
-        "postalCode": "V0R 1S0",
+        "postalCode": "V8W 1L6",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

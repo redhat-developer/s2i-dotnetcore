@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3924 Roger Street",
+        "addr1": "2890 Burdett Avenue",
         "addr2": null,
-        "city": "Duncan",
+        "city": "Victoria",
         "id": "200007",
-        "postalCode": "V9L 1P1",
+        "postalCode": "V8Y 1Y7",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

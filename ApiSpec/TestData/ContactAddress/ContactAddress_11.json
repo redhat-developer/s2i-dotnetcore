@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2553 Holdom Avenue",
+        "addr1": "3420 Burdett Avenue",
         "addr2": null,
-        "city": "Surrey",
+        "city": "Victoria",
         "id": "200010",
-        "postalCode": "V3T 4Y5",
+        "postalCode": "V8W IE9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

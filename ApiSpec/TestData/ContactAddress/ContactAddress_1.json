@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1967 Findlay Creek Road",
+        "addr1": "4357 Hastings Street",
         "addr2": null,
-        "city": "Fernie",
+        "city": "Vancouver",
         "id": "200000",
-        "postalCode": "V0B 1M1",
+        "postalCode": "V6C 1B4",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

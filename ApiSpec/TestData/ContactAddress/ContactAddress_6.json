@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1967 Findlay Creek Road",
+        "addr1": "2558 Glover Road",
         "addr2": null,
-        "city": "Fernie",
+        "city": "Coquitlam",
         "id": "200005",
-        "postalCode": "V0B 1M1",
+        "postalCode": "V3J 4S1",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

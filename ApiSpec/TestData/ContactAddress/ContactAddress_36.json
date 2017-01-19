@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "232 Cordova Street",
+        "addr1": "3056 Quayside Dr",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "New Westminster",
         "id": "200035",
-        "postalCode": "V6B 1E1",
+        "postalCode": "V3M 6A1",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

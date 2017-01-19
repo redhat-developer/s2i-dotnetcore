@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "684 Roger Street",
+        "addr1": "4879 Roger Street",
         "addr2": null,
-        "city": "Duncan",
+        "city": "Nanaimo",
         "id": "200063",
-        "postalCode": "V9L 1P1",
+        "postalCode": "V9R 5H4",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

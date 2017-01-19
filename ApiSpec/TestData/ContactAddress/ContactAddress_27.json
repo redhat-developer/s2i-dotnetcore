@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2882 Carlson Road",
+        "addr1": "1028 Glover Road",
         "addr2": null,
-        "city": "Prince George",
+        "city": "Langley",
         "id": "200026",
-        "postalCode": "V2L 5E5",
+        "postalCode": "V3A 1Z3",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

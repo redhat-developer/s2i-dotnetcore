@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1710 Yoho Valley Road",
+        "addr1": "4600 Roger Street",
         "addr2": null,
-        "city": "Golden",
+        "city": "Nanaimo",
         "id": "200047",
-        "postalCode": "V0A 1H0",
+        "postalCode": "V9R 5H9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2519 St George Street",
+        "addr1": "2120 Burdett Avenue",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Victoria",
         "id": "200067",
-        "postalCode": "V5T 1Z7",
+        "postalCode": "V8W 1L6",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]
