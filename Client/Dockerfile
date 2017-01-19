@@ -20,18 +20,17 @@ RUN apt-get update \
 
 # copy Node.js packages
 
-COPY /package.json /app/src/ 
-WORKDIR /app/src
+COPY /package.json /app/out/src/ 
+WORKDIR /app/out/src
 
 ENV NODE_ENV production
 
 RUN npm install
 
 # copy the full source
-COPY . /app/src 
+COPY . /app/out/src 
 
 # compile the source
 
 RUN ./node_modules/.bin/gulp --production  
 
-# End of Node.js portion.
