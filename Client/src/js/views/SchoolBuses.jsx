@@ -373,7 +373,7 @@ var SchoolBuses = React.createClass({
             <tr>
               { buildHeader('regi', 'Regi') }
               { buildHeader('ownerName', 'Owner') }
-              { buildHeader('serviceAreaName', 'Service Area') }
+              { buildHeader('districtName', 'District') }
               { buildHeader('homeTerminal', 'Home Terminal') }
               { buildHeader('schoolBusUnitNumber', 'Fleet Unit #') }
               { buildHeader('permitNumber', 'Permit') }
@@ -390,7 +390,7 @@ var SchoolBuses = React.createClass({
               return <tr key={ bus.id } className={ bus.status != 'Active' ? 'info' : null }>
                 <td><a href={ editPath }>{ bus.regi }</a></td>
                 <td><a href={ ownerPath }>{ bus.ownerName }</a></td>
-                <td>{ bus.serviceAreaName }</td>
+                <td>{ bus.districtName }</td>
                 <td>{ bus.homeTerminalCityProv }</td>
                 <td>{ bus.schoolBusUnitNumber }</td>
                 <td>{ bus.permitNumber }</td>

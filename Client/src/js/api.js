@@ -92,7 +92,8 @@ function addSchoolBusDisplayFields(bus) {
   bus.isActive = bus.status === 'Active';
   bus.ownerName = bus.schoolBusOwner ? bus.schoolBusOwner.name : '';
   bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
-  bus.districtName = bus.schoolBusDistrict ? bus.schoolBusDistrict.name : '';
+  bus.districtName = bus.serviceArea ? (bus.serviceArea.district ? bus.serviceArea.district.name : '') : '';
+  bus.schoolBusDistrictName = bus.schoolBusDistrict ? bus.schoolBusDistrict.name : '';
   bus.homeTerminalAddrs = concat(bus.homeTerminalAddr1, bus.homeTerminalAddr2, ', ');
   bus.homeTerminalCityProv = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
   bus.daysToInspection = daysFromToday(bus.nextInspectionDate);
