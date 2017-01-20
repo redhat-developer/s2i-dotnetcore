@@ -253,7 +253,8 @@ namespace SchoolBusAPI.Services.Impl
                 else
                 {
                     // record not found
-                    return new StatusCodeResult(404);
+                    CCWData[] nodata = new CCWData[0];
+                    return new ObjectResult (nodata);
                 }
             }
             else
@@ -511,11 +512,12 @@ namespace SchoolBusAPI.Services.Impl
         /// </summary>
         /// <remarks>Used for the search schoolbus page.</remarks>
         /// <param name="serviceareas">Service areas (array of id numbers)</param>
+        /// <param name="districts">Districts (array of id numbers)</param>
         /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
         /// <param name="cities">Cities (array of id numbers)</param>
         /// <param name="schooldistricts">School Districts (array of id numbers)</param>
         /// <param name="owner"></param>
-        /// <param name="regi">ICBC Regi Number</param>
+        /// <param name="regi">e Regi Number</param>
         /// <param name="vin">VIN</param>
         /// <param name="plate">License Plate String</param>
         /// <param name="includeInactive">True if Inactive schoolbuses will be returned</param>
@@ -523,7 +525,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="startDate">Inspection start date</param>
         /// <param name="endDate">Inspection end date</param>
         /// <response code="200">OK</response>
-        public IActionResult SchoolbusesSearchGetAsync(int?[] serviceareas, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate)
+        public IActionResult SchoolbusesSearchGetAsync(int?[] serviceareas, int?[] districts, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate)
         {
 
             // Eager loading of related data
@@ -560,6 +562,17 @@ namespace SchoolBusAPI.Services.Impl
             // only search other fields if a key search was not done.
             if (!keySearch)
             {
+                if (districts != null)
+                {
+                    foreach (int? district in districts)
+                    {
+                        if (district != null)
+                        {
+                            data = data.Where(x => x.ServiceArea.District.Id == district);
+                        }
+                    }
+                }
+
                 if (serviceareas != null)
                 {
                     foreach (int? servicearea in serviceareas)

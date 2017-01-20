@@ -121,6 +121,7 @@ namespace SchoolBusAPI.Services
         /// </summary>
         /// <remarks>Used for the search schoolbus page.</remarks>
         /// <param name="serviceareas">Service areas (array of id numbers)</param>
+        /// <param name="districts">Districts (array of id numbers)</param>
         /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
         /// <param name="cities">Cities (array of id numbers)</param>
         /// <param name="schooldistricts">School Districts (array of id numbers)</param>
@@ -133,6 +134,6 @@ namespace SchoolBusAPI.Services
         /// <param name="startDate">Inspection start date</param>
         /// <param name="endDate">Inspection end date</param>
         /// <response code="200">OK</response>
-        IActionResult SchoolbusesSearchGetAsync(int?[] serviceareas, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate);
+        IActionResult SchoolbusesSearchGetAsync(int?[] serviceareas, int?[] districts, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate);
     }
 }

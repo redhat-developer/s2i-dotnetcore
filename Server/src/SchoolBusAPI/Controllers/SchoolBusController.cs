@@ -207,6 +207,7 @@ namespace SchoolBusAPI.Controllers
         /// </summary>
         /// <remarks>Used for the search schoolbus page.</remarks>
         /// <param name="serviceareas">Service areas (array of id numbers)</param>
+        /// <param name="districts">Districts (array of id numbers)</param>
         /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
         /// <param name="cities">Cities (array of id numbers)</param>
         /// <param name="schooldistricts">School Districts (array of id numbers)</param>
@@ -223,9 +224,9 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/schoolbuses/search")]
         [SwaggerOperation("SchoolbusesSearchGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBus>))]
-        public virtual IActionResult SchoolbusesSearchGet([FromQuery]int?[] serviceareas, [FromQuery]int?[] inspectors, [FromQuery]int?[] cities, [FromQuery]int?[] schooldistricts, [FromQuery]int? owner, [FromQuery]string regi, [FromQuery]string vin, [FromQuery]string plate, [FromQuery]bool? includeInactive, [FromQuery]bool? onlyReInspections, [FromQuery]DateTime? startDate, [FromQuery]DateTime? endDate)
+        public virtual IActionResult SchoolbusesSearchGet([FromQuery]int?[] serviceareas, [FromQuery]int?[] districts, [FromQuery]int?[] inspectors, [FromQuery]int?[] cities, [FromQuery]int?[] schooldistricts, [FromQuery]int? owner, [FromQuery]string regi, [FromQuery]string vin, [FromQuery]string plate, [FromQuery]bool? includeInactive, [FromQuery]bool? onlyReInspections, [FromQuery]DateTime? startDate, [FromQuery]DateTime? endDate)
         {
-            return this._service.SchoolbusesSearchGetAsync(serviceareas, inspectors, cities, schooldistricts, owner, regi, vin, plate, includeInactive, onlyReInspections, startDate, endDate);
+            return this._service.SchoolbusesSearchGetAsync(serviceareas, districts, inspectors, cities, schooldistricts, owner, regi, vin, plate, includeInactive, onlyReInspections, startDate, endDate);
         }
     }
 }
