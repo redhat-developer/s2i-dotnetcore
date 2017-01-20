@@ -427,6 +427,10 @@ definitions:
       RIPInspectionId:
         type: string
         description: The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.
+      createdDate:
+        type: string
+        format: date-time
+        description: Record creation date
   UserFavourite:
     type: object
     description: User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.

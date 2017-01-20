@@ -47,7 +47,8 @@ namespace SchoolBusAPI.Models
         /// <param name="Notes">A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application..</param>
         /// <param name="Restrictions">The Restrictions text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page..</param>
         /// <param name="RIPInspectionId">The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details..</param>
-        public Inspection(int Id, SchoolBus SchoolBus = null, User Inspector = null, DateTime? InspectionDate = null, string InspectionType = null, string InspectionResult = null, string Notes = null, string Restrictions = null, string RIPInspectionId = null)
+        /// <param name="CreatedDate">Record creation date.</param>
+        public Inspection(int Id, SchoolBus SchoolBus = null, User Inspector = null, DateTime? InspectionDate = null, string InspectionType = null, string InspectionResult = null, string Notes = null, string Restrictions = null, string RIPInspectionId = null, DateTime? CreatedDate = null)
         {   
             this.Id = Id;
             this.SchoolBus = SchoolBus;
@@ -58,6 +59,7 @@ namespace SchoolBusAPI.Models
             this.Notes = Notes;
             this.Restrictions = Restrictions;
             this.RIPInspectionId = RIPInspectionId;
+            this.CreatedDate = CreatedDate;
         }
 
         /// <summary>
@@ -134,6 +136,13 @@ namespace SchoolBusAPI.Models
         public string RIPInspectionId { get; set; }
         
         /// <summary>
+        /// Record creation date
+        /// </summary>
+        /// <value>Record creation date</value>
+        [MetaDataExtension (Description = "Record creation date")]
+        public DateTime? CreatedDate { get; set; }
+        
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -150,6 +159,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  Notes: ").Append(Notes).Append("\n");
             sb.Append("  Restrictions: ").Append(Restrictions).Append("\n");
             sb.Append("  RIPInspectionId: ").Append(RIPInspectionId).Append("\n");
+            sb.Append("  CreatedDate: ").Append(CreatedDate).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -231,6 +241,11 @@ namespace SchoolBusAPI.Models
                     this.RIPInspectionId == other.RIPInspectionId ||
                     this.RIPInspectionId != null &&
                     this.RIPInspectionId.Equals(other.RIPInspectionId)
+                ) &&                 
+                (
+                    this.CreatedDate == other.CreatedDate ||
+                    this.CreatedDate != null &&
+                    this.CreatedDate.Equals(other.CreatedDate)
                 );
         }
 
@@ -277,6 +292,10 @@ namespace SchoolBusAPI.Models
                                 if (this.RIPInspectionId != null)
                 {
                     hash = hash * 59 + this.RIPInspectionId.GetHashCode();
+                }                
+                                if (this.CreatedDate != null)
+                {
+                    hash = hash * 59 + this.CreatedDate.GetHashCode();
                 }                
                 
                 return hash;

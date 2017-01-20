@@ -2585,6 +2585,25 @@
             "table": null
         },
         {
+            "Description": "Record creation date",
+            "Length": null,
+            "Name": "createdDate",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "boolean": null,
+            "datetime": "datetime",
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
             "Description": "User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.",
             "Length": null,
             "Name": "UserFavourite",
