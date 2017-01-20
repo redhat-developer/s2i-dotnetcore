@@ -10,7 +10,8 @@ definitions:{{#list}}
         type: boolean{{#Description}}
         description: {{Description}}{{/Description}}{{/boolean}}{{#string}}{{!
 }}      {{Name}}:
-        type: string{{#Description}}
+        type: string{{#Length}}
+        maxLength: {{Length}}{{/Length}}{{#Description}}
         description: {{Description}}{{/Description}}{{/string}}{{#integer}}{{!
 }}      {{Name}}:
         format: int32
