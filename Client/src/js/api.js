@@ -91,6 +91,7 @@ export function deleteFavourite(favourite) {
 function addSchoolBusDisplayFields(bus) {
   bus.isActive = bus.status === 'Active';
   bus.ownerName = bus.schoolBusOwner ? bus.schoolBusOwner.name : '';
+  bus.ownerPath = bus.schoolBusOwner ? ('#/owners/' + bus.schoolBusOwner.id) : '';
   bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
   bus.districtName = bus.serviceArea ? (bus.serviceArea.district ? bus.serviceArea.district.name : '') : '';
   bus.schoolBusDistrictName = bus.schoolBusDistrict ? bus.schoolBusDistrict.name : '';

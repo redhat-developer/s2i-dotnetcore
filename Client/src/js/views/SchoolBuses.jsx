@@ -58,6 +58,7 @@ var SchoolBuses = React.createClass({
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
+    router : React.PropTypes.object,
   },
 
   getInitialState() {
@@ -306,6 +307,12 @@ var SchoolBuses = React.createClass({
     this.updateUIState(newState);
   },
 
+  edit(bus) {
+    this.props.router.push({
+      pathname: 'school-buses/' + bus.id,
+    });
+  },
+
   render() {
     var districts = _.sortBy(this.props.districts, 'name');
     var inspectors = _.sortBy(this.props.inspectors, 'name');
@@ -417,17 +424,15 @@ var SchoolBuses = React.createClass({
               { buildHeader('permitNumber', 'Permit') }
               { buildHeader('nextInspectionDate', 'Next Inspection') }
               { buildHeader('inspectorName', 'Inspector') }
+              <th></th>
             </tr>
           </thead>
           <tbody>
           {
             _.map(schoolBuses, (bus) => {
-              var editPath = '#/school-buses/' + bus.id;
-              var ownerPath = '#/owners/' + (bus.schoolBusOwner ? bus.schoolBusOwner.id : '');
-
               return <tr key={ bus.id } className={ bus.status != 'Active' ? 'info' : null }>
-                <td><a href={ editPath }>{ bus.regi }</a></td>
-                <td><a href={ ownerPath }>{ bus.ownerName }</a></td>
+                <td>{ bus.regi }</td>
+                <td><a href={ bus.ownerPath }>{ bus.ownerName }</a></td>
                 <td>{ bus.districtName }</td>
                 <td>{ bus.homeTerminalCityProv }</td>
                 <td>{ bus.schoolBusUnitNumber }</td>
@@ -437,6 +442,9 @@ var SchoolBuses = React.createClass({
                   { bus.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }
                 </td>
                 <td>{ bus.inspectorName }</td>
+                <td style={{ textAlign: 'right' }}>
+                  <Button title="edit" bsSize="xsmall" onClick={ this.edit.bind(this, bus) }><Glyphicon glyph="edit" /></Button>
+                </td>
               </tr>;
             })
           }
