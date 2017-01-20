@@ -166,6 +166,7 @@ var SchoolBuses = React.createClass({
         var favourite = _.find(this.props.favourites, (favourite) => { return favourite.isDefault; });
         if (favourite) {
           this.loadFavourite(favourite);
+          return;
         }
       }
       this.fetch();
@@ -179,9 +180,10 @@ var SchoolBuses = React.createClass({
     });
   },
 
-  updateSearchState(state) {
+  updateSearchState(state, callback) {
     this.setState({ search: { ...this.state.search, ...state }}, () =>{
       store.dispatch({ type: 'UPDATE_BUSES_SEARCH', schoolBuses: this.state.search });
+      if (callback) { callback(); }
     });
   },
 
@@ -260,7 +262,7 @@ var SchoolBuses = React.createClass({
   },
 
   loadFavourite(favourite) {
-    this.updateSearchState(JSON.parse(favourite.value));
+    this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
 
   sort(e) {
