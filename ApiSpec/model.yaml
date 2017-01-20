@@ -453,6 +453,9 @@ definitions:
       isDefault:
         type: boolean
         description: True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied.
+      User:
+        $ref: '#/definitions/User'
+        description: The User who has this Favourite
   Region:
     type: object
     required:

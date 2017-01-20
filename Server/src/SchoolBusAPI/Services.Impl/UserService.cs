@@ -230,9 +230,139 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
             // TODO adjust UserFavourites model such that we can query to find a user's favourites.
-            // var result = _context.UserFavourites.Select(x => x.x.ToViewModel()).ToList();
-            var result = "";
-            return new ObjectResult(result);
+
+            var data = _context.UserFavourites
+                .Where(x => x.User.Id == user.Id)                
+                .ToList();
+            return new ObjectResult(data);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Updates the active set of groups for a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        public virtual IActionResult UsersIdFavouritesPutAsync(int id, UserFavourite[] items)
+        {
+            bool exists = _context.Users.Any(a => a.Id == id);
+            if (exists)
+            {
+                // update the given user's group membership.
+
+                User user = _context.Users.First(a => a.Id == id);
+                var data = _context.UserFavourites
+                    .Where(x => x.User.Id == user.Id);
+                foreach (UserFavourite item in data)
+                {
+                    bool found = false;
+                    foreach (UserFavourite parameterItem in items)
+                    {
+                        if (parameterItem == item)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        _context.UserFavourites.Remove(item);
+                    }
+                }
+
+                // add new items.
+                foreach (UserFavourite parameterItem in items)
+                {
+                    bool found = false;
+                    foreach (UserFavourite item in data)
+                    {
+                        if (parameterItem == item)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        // adjust user  
+                        parameterItem.User = user;                        
+                        _context.UserFavourites.Add(parameterItem);
+                    }
+                }
+
+                _context.SaveChanges();
+                return new NoContentResult();
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds a user to groups</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        public virtual IActionResult UsersIdFavouritesPostAsync(int id, UserFavourite[] items)
+        {
+            bool exists = _context.Users.Any(a => a.Id == id);
+            if (exists)
+            {
+                // update the given user's group membership.
+
+                User user = _context.Users.First(a => a.Id == id);
+                var data = _context.UserFavourites
+                    .Where(x => x.User.Id == user.Id);
+                foreach (UserFavourite item in data)
+                {
+                    bool found = false;
+                    foreach (UserFavourite parameterItem in items)
+                    {
+                        if (parameterItem == item)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        _context.UserFavourites.Remove(item);
+                    }
+                }
+
+                // add new items.
+                foreach (UserFavourite parameterItem in items)
+                {
+                    bool found = false;
+                    foreach (UserFavourite item in data)
+                    {
+                        if (parameterItem == item)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        // adjust user and group. 
+                        parameterItem.User = user;                        
+
+                        _context.UserFavourites.Add(parameterItem);
+                    }
+                }
+
+                _context.SaveChanges();
+                return new NoContentResult();
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>

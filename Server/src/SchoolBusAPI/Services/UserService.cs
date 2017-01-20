@@ -71,6 +71,34 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns the favourites for a user</remarks>
+        /// <param name="id">id of User to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        IActionResult UsersIdFavouritesGetAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds favourites to a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="item"></param>
+        /// <response code="200">Favourites added to user</response>
+        IActionResult UsersIdFavouritesPostAsync(int id, UserFavourite[] item);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Updates the favourites for a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        IActionResult UsersIdFavouritesPutAsync(int id, UserFavourite[] items);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns data for a particular user</remarks>
         /// <param name="id">id of User to fetch</param>
         /// <response code="200">OK</response>

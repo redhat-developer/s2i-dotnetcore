@@ -113,6 +113,53 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns the favourites for a user</remarks>
+        /// <param name="id">id of User to fetch</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        [HttpGet]
+        [Route("/api/users/{id}/favourites")]
+        [SwaggerOperation("UsersIdFavouritesGet")]
+        [SwaggerResponse(200, type: typeof(List<UserFavourite>))]
+        public virtual IActionResult UsersIdFavouritesGet([FromRoute]int id)
+        {
+            return this._service.UsersIdFavouritesGetAsync(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Adds favourites to a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="item"></param>
+        /// <response code="200">Favourites added to user</response>
+        [HttpPost]
+        [Route("/api/users/{id}/favourites")]
+        [SwaggerOperation("UsersIdFavouritesPost")]
+        public virtual IActionResult UsersIdFavouritesPost([FromRoute]int id, [FromBody]UserFavourite[] item)
+        {
+            return this._service.UsersIdFavouritesPostAsync(id, item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Updates the favourites for a user</remarks>
+        /// <param name="id">id of User to update</param>
+        /// <param name="items"></param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        [HttpPut]
+        [Route("/api/users/{id}/favourites")]
+        [SwaggerOperation("UsersIdFavouritesPut")]
+        public virtual IActionResult UsersIdFavouritesPut([FromRoute]int id, [FromBody]UserFavourite[] items)
+        {
+            return this._service.UsersIdFavouritesPutAsync(id, items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns data for a particular user</remarks>
         /// <param name="id">id of User to fetch</param>
         /// <response code="200">OK</response>
