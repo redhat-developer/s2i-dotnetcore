@@ -68,6 +68,14 @@ namespace SchoolBusAPI.Services
         IActionResult GroupsIdPutAsync(int id, Group item);
 
         /// <summary>
+        /// returns users in a given Group
+        /// </summary>
+        /// <remarks>Used to get users in a given Group</remarks>
+        /// <param name="id">id of Group to fetch Users for</param>
+        /// <response code="200">OK</response>
+        IActionResult GroupsIdUsersGetAsync(int id);
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="item"></param>

@@ -1,3 +1,29 @@
+  /groups/{id}/users:
+    get:
+      summary: returns users in a given Group
+      description:
+        Used to get users in a given Group
+      tags:
+        - Group
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of Group to fetch Users for
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"          
   /schoolbuses/search:
     get:
       summary: Searches school buses

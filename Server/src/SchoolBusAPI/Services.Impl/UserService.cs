@@ -286,8 +286,69 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdGroupsPutAsync(int id, GroupMembership[] items)
         {
-            var result = "";
-            return new ObjectResult(result);
+            bool exists = _context.Users.Any(a => a.Id == id);
+            if (exists)
+            {
+                // update the given user's group membership.
+
+                User user = _context.Users.First(a => a.Id == id);
+                var data = _context.GroupMemberships
+                    .Where(x => x.User.Id == user.Id);
+                foreach (GroupMembership item in data)
+                {
+                    bool found = false;
+                    foreach (GroupMembership parameterItem in items)
+                    {
+                        if (parameterItem == item)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        _context.GroupMemberships.Remove(item);
+                    }
+                }
+
+                // add new items.
+                foreach (GroupMembership parameterItem in items)
+                {
+                    bool found = false;
+                    foreach (GroupMembership item in data)
+                    {
+                        if (parameterItem == item)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        // adjust user and group. 
+                        parameterItem.User = user;
+
+                        if (parameterItem.Group != null)
+                        {
+                            int group_id = parameterItem.Group.Id;
+                            bool group_exists = _context.Groups.Any(a => a.Id == group_id);
+                            if (group_exists)
+                            {
+                                Group group = _context.Groups.First(a => a.Id == group_id);
+                                parameterItem.Group = group;
+                            }
+                        }
+
+                        _context.GroupMemberships.Add(parameterItem);
+                    }
+                }
+
+                _context.SaveChanges();
+                return new NoContentResult();
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -300,8 +361,69 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdGroupsPostAsync(int id, GroupMembership[] items)
         {
-            var result = "";
-            return new ObjectResult(result);
+            bool exists = _context.Users.Any(a => a.Id == id);
+            if (exists)
+            {
+                // update the given user's group membership.
+
+                User user = _context.Users.First(a => a.Id == id);
+                var data = _context.GroupMemberships
+                    .Where(x => x.User.Id == user.Id);
+                foreach (GroupMembership item in data)
+                {
+                    bool found = false;
+                    foreach (GroupMembership parameterItem in items)
+                    {
+                        if (parameterItem == item)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        _context.GroupMemberships.Remove(item);
+                    }
+                }
+
+                // add new items.
+                foreach (GroupMembership parameterItem in items)
+                {
+                    bool found = false;
+                    foreach (GroupMembership item in data)
+                    {
+                        if (parameterItem == item)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        // adjust user and group. 
+                        parameterItem.User = user;
+
+                        if (parameterItem.Group != null)
+                        {
+                            int group_id = parameterItem.Group.Id;
+                            bool group_exists = _context.Groups.Any(a => a.Id == group_id);
+                            if (group_exists)
+                            {
+                                Group group = _context.Groups.First(a => a.Id == group_id);
+                                parameterItem.Group = group;
+                            }
+                        }
+
+                        _context.GroupMemberships.Add(parameterItem);
+                    }
+                }
+
+                _context.SaveChanges();
+                return new NoContentResult();
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
 
         /// <summary>
@@ -312,8 +434,18 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult UsersIdNotificationsGetAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                // Not Found
+                return new StatusCodeResult(404);
+            }
+
+            var data = _context.Notifications
+                .Where(x => x.User.Id == user.Id)
+                .ToList();
+
+            return new ObjectResult(data);
         }
 
         /// <summary>
