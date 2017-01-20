@@ -209,6 +209,9 @@ test_web_application() {
   test_scl_usage "echo \$HOME" "/opt/app-root" "${cid_file}"
   check_result $?
 
+  # Verify npm is enabled in the container
+  test_scl_usage "npm --version" "2.15.1" "${cid_file}"
+
   test_http "/" "Hello world"
   check_result $?
   test_http "/TextFile.txt" "A text file."
