@@ -59,6 +59,8 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.
         /// </summary>
@@ -66,12 +68,16 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.")]
         public string Type { get; set; }
 
+        
+
         /// <summary>
         /// The phone number of the contact. Entered as free form to support a range of formats.
         /// </summary>
         /// <value>The phone number of the contact. Entered as free form to support a range of formats.</value>
         [MetaDataExtension (Description = "The phone number of the contact. Entered as free form to support a range of formats.")]
         public string PhoneNumber { get; set; }
+
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -121,17 +127,16 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Type == other.Type ||
                     this.Type != null &&
                     this.Type.Equals(other.Type)
-                ) && 
+                ) &&                 
                 (
                     this.PhoneNumber == other.PhoneNumber ||
                     this.PhoneNumber != null &&
@@ -150,16 +155,19 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
+                   
                 hash = hash * 59 + this.Id.GetHashCode();
+                
                 
                 if (this.Type != null)
                 {
                     hash = hash * 59 + this.Type.GetHashCode();
-                }
+                }                
+                
                 if (this.PhoneNumber != null)
                 {
                     hash = hash * 59 + this.PhoneNumber.GetHashCode();
-                }
+                }                
                 return hash;
             }
         }

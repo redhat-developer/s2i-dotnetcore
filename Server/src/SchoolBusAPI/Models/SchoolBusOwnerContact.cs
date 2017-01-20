@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolBusAPI.Models
 {
@@ -66,12 +67,16 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// The given name of the contact.
         /// </summary>
         /// <value>The given name of the contact.</value>
         [MetaDataExtension (Description = "The given name of the contact.")]
         public string GivenName { get; set; }
+
+        
 
         /// <summary>
         /// The surname of the contact.
@@ -80,12 +85,16 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "The surname of the contact.")]
         public string Surname { get; set; }
 
+        
+
         /// <summary>
         /// The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.
         /// </summary>
         /// <value>The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.</value>
         [MetaDataExtension (Description = "The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.")]
         public string Role { get; set; }
+
+        
 
         /// <summary>
         /// Notes about the contact.
@@ -94,15 +103,27 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Notes about the contact.")]
         public string Notes { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets SchoolBusOwnerContactPhones
         /// </summary>
         public List<SchoolBusOwnerContactPhone> SchoolBusOwnerContactPhones { get; set; }
 
+                
+        [ForeignKey("SchoolBusOwnerContactPhones")]
+        public int SchoolBusOwnerContactPhonesRefId { get; set; }
+        
+
         /// <summary>
         /// Gets or Sets SchoolBusOwnerContactAddresses
         /// </summary>
         public List<SchoolBusOwnerContactAddress> SchoolBusOwnerContactAddresses { get; set; }
+
+                
+        [ForeignKey("SchoolBusOwnerContactAddresses")]
+        public int SchoolBusOwnerContactAddressesRefId { get; set; }
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -156,26 +177,26 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.GivenName == other.GivenName ||
                     this.GivenName != null &&
                     this.GivenName.Equals(other.GivenName)
-                ) && 
+                ) &&                 
                 (
                     this.Surname == other.Surname ||
                     this.Surname != null &&
                     this.Surname.Equals(other.Surname)
-                ) && 
+                ) &&                 
                 (
                     this.Role == other.Role ||
                     this.Role != null &&
                     this.Role.Equals(other.Role)
-                ) && 
+                ) &&                 
                 (
                     this.Notes == other.Notes ||
                     this.Notes != null &&
@@ -204,32 +225,41 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
+                   
                 hash = hash * 59 + this.Id.GetHashCode();
+                
                 
                 if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();
-                }
+                }                
+                
                 if (this.Surname != null)
                 {
                     hash = hash * 59 + this.Surname.GetHashCode();
-                }
+                }                
+                
                 if (this.Role != null)
                 {
                     hash = hash * 59 + this.Role.GetHashCode();
-                }
+                }                
+                
                 if (this.Notes != null)
                 {
                     hash = hash * 59 + this.Notes.GetHashCode();
-                }
+                }                
+                   
                 if (this.SchoolBusOwnerContactPhones != null)
                 {
                     hash = hash * 59 + this.SchoolBusOwnerContactPhones.GetHashCode();
                 }
+                
+                   
                 if (this.SchoolBusOwnerContactAddresses != null)
                 {
                     hash = hash * 59 + this.SchoolBusOwnerContactAddresses.GetHashCode();
                 }
+                
                 return hash;
             }
         }

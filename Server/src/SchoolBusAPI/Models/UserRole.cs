@@ -64,25 +64,44 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets EffectiveDate
         /// </summary>
         public DateTime EffectiveDate { get; set; }
+
+                
+        [ForeignKey("EffectiveDate")]
+        public int EffectiveDateRefId { get; set; }
+        
 
         /// <summary>
         /// Gets or Sets ExpiryDate
         /// </summary>
         public DateTime? ExpiryDate { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
 
+                
+        [ForeignKey("User")]
+        public int UserRefId { get; set; }
+        
+
         /// <summary>
         /// Gets or Sets Role
         /// </summary>
         public Role Role { get; set; }
+
+                
+        [ForeignKey("Role")]
+        public int RoleRefId { get; set; }
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -134,25 +153,26 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
-                    this.Id == other.Id ||                    
+                    this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.EffectiveDate == other.EffectiveDate ||
+                    this.EffectiveDate != null &&
                     this.EffectiveDate.Equals(other.EffectiveDate)
-                ) && 
+                ) &&                 
                 (
                     this.ExpiryDate == other.ExpiryDate ||
                     this.ExpiryDate != null &&
                     this.ExpiryDate.Equals(other.ExpiryDate)
-                ) && 
+                ) &&                 
                 (
                     this.User == other.User ||
                     this.User != null &&
                     this.User.Equals(other.User)
-                ) && 
+                ) &&                 
                 (
                     this.Role == other.Role ||
                     this.Role != null &&
@@ -171,22 +191,32 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
+                   
                 hash = hash * 59 + this.Id.GetHashCode();
                 
-                hash = hash * 59 + this.EffectiveDate.GetHashCode();
+                   
+                if (this.EffectiveDate != null)
+                {
+                    hash = hash * 59 + this.EffectiveDate.GetHashCode();
+                }
+                
                 
                 if (this.ExpiryDate != null)
                 {
                     hash = hash * 59 + this.ExpiryDate.GetHashCode();
-                }
+                }                
+                   
                 if (this.User != null)
                 {
                     hash = hash * 59 + this.User.GetHashCode();
                 }
+                
+                   
                 if (this.Role != null)
                 {
                     hash = hash * 59 + this.Role.GetHashCode();
                 }
+                
                 return hash;
             }
         }

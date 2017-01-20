@@ -129,12 +129,16 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// The Registration Number (Regi) is the link between the CCW information and a specific School Bus
         /// </summary>
         /// <value>The Registration Number (Regi) is the link between the CCW information and a specific School Bus</value>
         [MetaDataExtension (Description = "The Registration Number (Regi) is the link between the CCW information and a specific School Bus")]
         public string ICBCRegi { get; set; }
+
+        
 
         /// <summary>
         /// Vehicle Year
@@ -143,180 +147,252 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Vehicle Year")]
         public int? ICBCModelYear { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCVehicleType
         /// </summary>
         public string ICBCVehicleType { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCRateClass
         /// </summary>
         public string ICBCRateClass { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCCVIPDecal
         /// </summary>
         public string ICBCCVIPDecal { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCFleetUnitNo
         /// </summary>
         public int? ICBCFleetUnitNo { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCGrossVehicleWeight
         /// </summary>
         public int? ICBCGrossVehicleWeight { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCMake
         /// </summary>
         public string ICBCMake { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCBody
         /// </summary>
         public string ICBCBody { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCRebuiltStatus
         /// </summary>
         public string ICBCRebuiltStatus { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCCVIPExpiry
         /// </summary>
         public DateTime? ICBCCVIPExpiry { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCNetWt
         /// </summary>
         public int? ICBCNetWt { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCModel
         /// </summary>
         public string ICBCModel { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCFuel
         /// </summary>
         public string ICBCFuel { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCSeatingCapacity
         /// </summary>
         public int? ICBCSeatingCapacity { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCColour
         /// </summary>
         public string ICBCColour { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCNotesAndOrders
         /// </summary>
         public string ICBCNotesAndOrders { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCOrderedOn
         /// </summary>
         public DateTime? ICBCOrderedOn { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCRegOwnerName
         /// </summary>
         public string ICBCRegOwnerName { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCRegOwnerAddr1
         /// </summary>
         public string ICBCRegOwnerAddr1 { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCRegOwnerAddr2
         /// </summary>
         public string ICBCRegOwnerAddr2 { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCRegOwnerCity
         /// </summary>
         public string ICBCRegOwnerCity { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCRegOwnerProv
         /// </summary>
         public string ICBCRegOwnerProv { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCRegOwnerPostalCode
         /// </summary>
         public string ICBCRegOwnerPostalCode { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCRegOwnerStatus
         /// </summary>
         public string ICBCRegOwnerStatus { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets ICBCRegOwnerRODL
         /// </summary>
         public string ICBCRegOwnerRODL { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets ICBCRegOwnerPool
         /// </summary>
         public string ICBCRegOwnerPool { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets NSCClientNum
         /// </summary>
         public string NSCClientNum { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets NSCCarrierName
         /// </summary>
         public string NSCCarrierName { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets NSCCarrierConditions
         /// </summary>
         public string NSCCarrierConditions { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets NSCCarrierSafetyRating
         /// </summary>
         public string NSCCarrierSafetyRating { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets NSCPolicyNumber
         /// </summary>
         public string NSCPolicyNumber { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets NSCPolicyEffectiveDate
         /// </summary>
         public DateTime? NSCPolicyEffectiveDate { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets NSCPolicyStatusDate
         /// </summary>
         public DateTime? NSCPolicyStatusDate { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets NSCPolicyExpiryDate
         /// </summary>
         public DateTime? NSCPolicyExpiryDate { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets NSCPolicyStatus
         /// </summary>
         public string NSCPolicyStatus { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets NSCPlateDecal
         /// </summary>
         public string NSCPlateDecal { get; set; }
+
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -401,191 +477,191 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
-                    this.Id == other.Id ||                    
+                    this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegi == other.ICBCRegi ||
                     this.ICBCRegi != null &&
                     this.ICBCRegi.Equals(other.ICBCRegi)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCModelYear == other.ICBCModelYear ||
                     this.ICBCModelYear != null &&
                     this.ICBCModelYear.Equals(other.ICBCModelYear)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCVehicleType == other.ICBCVehicleType ||
                     this.ICBCVehicleType != null &&
                     this.ICBCVehicleType.Equals(other.ICBCVehicleType)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRateClass == other.ICBCRateClass ||
                     this.ICBCRateClass != null &&
                     this.ICBCRateClass.Equals(other.ICBCRateClass)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCCVIPDecal == other.ICBCCVIPDecal ||
                     this.ICBCCVIPDecal != null &&
                     this.ICBCCVIPDecal.Equals(other.ICBCCVIPDecal)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCFleetUnitNo == other.ICBCFleetUnitNo ||
                     this.ICBCFleetUnitNo != null &&
                     this.ICBCFleetUnitNo.Equals(other.ICBCFleetUnitNo)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCGrossVehicleWeight == other.ICBCGrossVehicleWeight ||
                     this.ICBCGrossVehicleWeight != null &&
                     this.ICBCGrossVehicleWeight.Equals(other.ICBCGrossVehicleWeight)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCMake == other.ICBCMake ||
                     this.ICBCMake != null &&
                     this.ICBCMake.Equals(other.ICBCMake)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCBody == other.ICBCBody ||
                     this.ICBCBody != null &&
                     this.ICBCBody.Equals(other.ICBCBody)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRebuiltStatus == other.ICBCRebuiltStatus ||
                     this.ICBCRebuiltStatus != null &&
                     this.ICBCRebuiltStatus.Equals(other.ICBCRebuiltStatus)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCCVIPExpiry == other.ICBCCVIPExpiry ||
                     this.ICBCCVIPExpiry != null &&
                     this.ICBCCVIPExpiry.Equals(other.ICBCCVIPExpiry)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCNetWt == other.ICBCNetWt ||
                     this.ICBCNetWt != null &&
                     this.ICBCNetWt.Equals(other.ICBCNetWt)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCModel == other.ICBCModel ||
                     this.ICBCModel != null &&
                     this.ICBCModel.Equals(other.ICBCModel)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCFuel == other.ICBCFuel ||
                     this.ICBCFuel != null &&
                     this.ICBCFuel.Equals(other.ICBCFuel)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCSeatingCapacity == other.ICBCSeatingCapacity ||
                     this.ICBCSeatingCapacity != null &&
                     this.ICBCSeatingCapacity.Equals(other.ICBCSeatingCapacity)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCColour == other.ICBCColour ||
                     this.ICBCColour != null &&
                     this.ICBCColour.Equals(other.ICBCColour)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCNotesAndOrders == other.ICBCNotesAndOrders ||
                     this.ICBCNotesAndOrders != null &&
                     this.ICBCNotesAndOrders.Equals(other.ICBCNotesAndOrders)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCOrderedOn == other.ICBCOrderedOn ||
                     this.ICBCOrderedOn != null &&
                     this.ICBCOrderedOn.Equals(other.ICBCOrderedOn)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegOwnerName == other.ICBCRegOwnerName ||
                     this.ICBCRegOwnerName != null &&
                     this.ICBCRegOwnerName.Equals(other.ICBCRegOwnerName)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegOwnerAddr1 == other.ICBCRegOwnerAddr1 ||
                     this.ICBCRegOwnerAddr1 != null &&
                     this.ICBCRegOwnerAddr1.Equals(other.ICBCRegOwnerAddr1)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegOwnerAddr2 == other.ICBCRegOwnerAddr2 ||
                     this.ICBCRegOwnerAddr2 != null &&
                     this.ICBCRegOwnerAddr2.Equals(other.ICBCRegOwnerAddr2)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegOwnerCity == other.ICBCRegOwnerCity ||
                     this.ICBCRegOwnerCity != null &&
                     this.ICBCRegOwnerCity.Equals(other.ICBCRegOwnerCity)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegOwnerProv == other.ICBCRegOwnerProv ||
                     this.ICBCRegOwnerProv != null &&
                     this.ICBCRegOwnerProv.Equals(other.ICBCRegOwnerProv)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegOwnerPostalCode == other.ICBCRegOwnerPostalCode ||
                     this.ICBCRegOwnerPostalCode != null &&
                     this.ICBCRegOwnerPostalCode.Equals(other.ICBCRegOwnerPostalCode)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegOwnerStatus == other.ICBCRegOwnerStatus ||
                     this.ICBCRegOwnerStatus != null &&
                     this.ICBCRegOwnerStatus.Equals(other.ICBCRegOwnerStatus)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegOwnerRODL == other.ICBCRegOwnerRODL ||
                     this.ICBCRegOwnerRODL != null &&
                     this.ICBCRegOwnerRODL.Equals(other.ICBCRegOwnerRODL)
-                ) && 
+                ) &&                 
                 (
                     this.ICBCRegOwnerPool == other.ICBCRegOwnerPool ||
                     this.ICBCRegOwnerPool != null &&
                     this.ICBCRegOwnerPool.Equals(other.ICBCRegOwnerPool)
-                ) && 
+                ) &&                 
                 (
                     this.NSCClientNum == other.NSCClientNum ||
                     this.NSCClientNum != null &&
                     this.NSCClientNum.Equals(other.NSCClientNum)
-                ) && 
+                ) &&                 
                 (
                     this.NSCCarrierName == other.NSCCarrierName ||
                     this.NSCCarrierName != null &&
                     this.NSCCarrierName.Equals(other.NSCCarrierName)
-                ) && 
+                ) &&                 
                 (
                     this.NSCCarrierConditions == other.NSCCarrierConditions ||
                     this.NSCCarrierConditions != null &&
                     this.NSCCarrierConditions.Equals(other.NSCCarrierConditions)
-                ) && 
+                ) &&                 
                 (
                     this.NSCCarrierSafetyRating == other.NSCCarrierSafetyRating ||
                     this.NSCCarrierSafetyRating != null &&
                     this.NSCCarrierSafetyRating.Equals(other.NSCCarrierSafetyRating)
-                ) && 
+                ) &&                 
                 (
                     this.NSCPolicyNumber == other.NSCPolicyNumber ||
                     this.NSCPolicyNumber != null &&
                     this.NSCPolicyNumber.Equals(other.NSCPolicyNumber)
-                ) && 
+                ) &&                 
                 (
                     this.NSCPolicyEffectiveDate == other.NSCPolicyEffectiveDate ||
                     this.NSCPolicyEffectiveDate != null &&
                     this.NSCPolicyEffectiveDate.Equals(other.NSCPolicyEffectiveDate)
-                ) && 
+                ) &&                 
                 (
                     this.NSCPolicyStatusDate == other.NSCPolicyStatusDate ||
                     this.NSCPolicyStatusDate != null &&
                     this.NSCPolicyStatusDate.Equals(other.NSCPolicyStatusDate)
-                ) && 
+                ) &&                 
                 (
                     this.NSCPolicyExpiryDate == other.NSCPolicyExpiryDate ||
                     this.NSCPolicyExpiryDate != null &&
                     this.NSCPolicyExpiryDate.Equals(other.NSCPolicyExpiryDate)
-                ) && 
+                ) &&                 
                 (
                     this.NSCPolicyStatus == other.NSCPolicyStatus ||
                     this.NSCPolicyStatus != null &&
                     this.NSCPolicyStatus.Equals(other.NSCPolicyStatus)
-                ) && 
+                ) &&                 
                 (
                     this.NSCPlateDecal == other.NSCPlateDecal ||
                     this.NSCPlateDecal != null &&
@@ -604,156 +680,194 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
+                   
                 hash = hash * 59 + this.Id.GetHashCode();
+                
                 
                 if (this.ICBCRegi != null)
                 {
                     hash = hash * 59 + this.ICBCRegi.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCModelYear != null)
                 {
                     hash = hash * 59 + this.ICBCModelYear.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCVehicleType != null)
                 {
                     hash = hash * 59 + this.ICBCVehicleType.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRateClass != null)
                 {
                     hash = hash * 59 + this.ICBCRateClass.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCCVIPDecal != null)
                 {
                     hash = hash * 59 + this.ICBCCVIPDecal.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCFleetUnitNo != null)
                 {
                     hash = hash * 59 + this.ICBCFleetUnitNo.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCGrossVehicleWeight != null)
                 {
                     hash = hash * 59 + this.ICBCGrossVehicleWeight.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCMake != null)
                 {
                     hash = hash * 59 + this.ICBCMake.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCBody != null)
                 {
                     hash = hash * 59 + this.ICBCBody.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRebuiltStatus != null)
                 {
                     hash = hash * 59 + this.ICBCRebuiltStatus.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCCVIPExpiry != null)
                 {
                     hash = hash * 59 + this.ICBCCVIPExpiry.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCNetWt != null)
                 {
                     hash = hash * 59 + this.ICBCNetWt.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCModel != null)
                 {
                     hash = hash * 59 + this.ICBCModel.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCFuel != null)
                 {
                     hash = hash * 59 + this.ICBCFuel.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCSeatingCapacity != null)
                 {
                     hash = hash * 59 + this.ICBCSeatingCapacity.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCColour != null)
                 {
                     hash = hash * 59 + this.ICBCColour.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCNotesAndOrders != null)
                 {
                     hash = hash * 59 + this.ICBCNotesAndOrders.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCOrderedOn != null)
                 {
                     hash = hash * 59 + this.ICBCOrderedOn.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRegOwnerName != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerName.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRegOwnerAddr1 != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerAddr1.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRegOwnerAddr2 != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerAddr2.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRegOwnerCity != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerCity.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRegOwnerProv != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerProv.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRegOwnerPostalCode != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerPostalCode.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRegOwnerStatus != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerStatus.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRegOwnerRODL != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerRODL.GetHashCode();
-                }
+                }                
+                
                 if (this.ICBCRegOwnerPool != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerPool.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCClientNum != null)
                 {
                     hash = hash * 59 + this.NSCClientNum.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCCarrierName != null)
                 {
                     hash = hash * 59 + this.NSCCarrierName.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCCarrierConditions != null)
                 {
                     hash = hash * 59 + this.NSCCarrierConditions.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCCarrierSafetyRating != null)
                 {
                     hash = hash * 59 + this.NSCCarrierSafetyRating.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCPolicyNumber != null)
                 {
                     hash = hash * 59 + this.NSCPolicyNumber.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCPolicyEffectiveDate != null)
                 {
                     hash = hash * 59 + this.NSCPolicyEffectiveDate.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCPolicyStatusDate != null)
                 {
                     hash = hash * 59 + this.NSCPolicyStatusDate.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCPolicyExpiryDate != null)
                 {
                     hash = hash * 59 + this.NSCPolicyExpiryDate.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCPolicyStatus != null)
                 {
                     hash = hash * 59 + this.NSCPolicyStatus.GetHashCode();
-                }
+                }                
+                
                 if (this.NSCPlateDecal != null)
                 {
                     hash = hash * 59 + this.NSCPlateDecal.GetHashCode();
-                }
+                }                
                 return hash;
             }
         }

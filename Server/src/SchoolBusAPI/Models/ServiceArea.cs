@@ -65,12 +65,16 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// The Ministry ID for the Service Area
         /// </summary>
         /// <value>The Ministry ID for the Service Area</value>
         [MetaDataExtension (Description = "The Ministry ID for the Service Area")]
         public int? MinistryServiceAreaID { get; set; }
+
+        
 
         /// <summary>
         /// The name of the Service Area
@@ -79,12 +83,19 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "The name of the Service Area")]
         public string Name { get; set; }
 
+        
+
         /// <summary>
         /// The district in which the Service Area is found.
         /// </summary>
         /// <value>The district in which the Service Area is found.</value>
         [MetaDataExtension (Description = "The district in which the Service Area is found.")]
         public District District { get; set; }
+
+                
+        [ForeignKey("District")]
+        public int DistrictRefId { get; set; }
+        
 
         /// <summary>
         /// The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS
@@ -93,12 +104,16 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? StartDate { get; set; }
 
+        
+
         /// <summary>
         /// The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
         /// <value>The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
         [MetaDataExtension (Description = "The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? EndDate { get; set; }
+
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -151,31 +166,31 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.MinistryServiceAreaID == other.MinistryServiceAreaID ||
                     this.MinistryServiceAreaID != null &&
                     this.MinistryServiceAreaID.Equals(other.MinistryServiceAreaID)
-                ) && 
+                ) &&                 
                 (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
-                ) && 
+                ) &&                 
                 (
                     this.District == other.District ||
                     this.District != null &&
                     this.District.Equals(other.District)
-                ) && 
+                ) &&                 
                 (
                     this.StartDate == other.StartDate ||
                     this.StartDate != null &&
                     this.StartDate.Equals(other.StartDate)
-                ) && 
+                ) &&                 
                 (
                     this.EndDate == other.EndDate ||
                     this.EndDate != null &&
@@ -194,28 +209,35 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
+                   
                 hash = hash * 59 + this.Id.GetHashCode();
-
+                
+                
                 if (this.MinistryServiceAreaID != null)
                 {
                     hash = hash * 59 + this.MinistryServiceAreaID.GetHashCode();
-                }
+                }                
+                
                 if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
-                }
+                }                
+                   
                 if (this.District != null)
                 {
                     hash = hash * 59 + this.District.GetHashCode();
                 }
+                
+                
                 if (this.StartDate != null)
                 {
                     hash = hash * 59 + this.StartDate.GetHashCode();
-                }
+                }                
+                
                 if (this.EndDate != null)
                 {
                     hash = hash * 59 + this.EndDate.GetHashCode();
-                }
+                }                
                 return hash;
             }
         }

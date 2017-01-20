@@ -71,52 +71,72 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets Event
         /// </summary>
         public NotificationEvent Event { get; set; }
 
+                
         [ForeignKey("Event")]
-        public int? EventRefId { get; set; }
+        public int EventRefId { get; set; }
+        
 
         /// <summary>
         /// Gets or Sets Event2
         /// </summary>
         public NotificationEvent Event2 { get; set; }
+
+                
         [ForeignKey("Event2")]
-        public int? Event2RefId { get; set; }
+        public int Event2RefId { get; set; }
+        
 
         /// <summary>
         /// Gets or Sets HasBeenViewed
         /// </summary>
         public bool? HasBeenViewed { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets IsWatchNotification
         /// </summary>
         public bool? IsWatchNotification { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets IsExpired
         /// </summary>
         public bool? IsExpired { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets IsAllDay
         /// </summary>
         public bool? IsAllDay { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets PriorityCode
         /// </summary>
         public string PriorityCode { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
+
+                
         [ForeignKey("User")]
-        public int? UserRefId { get; set; }
+        public int UserRefId { get; set; }
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -172,47 +192,46 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Event == other.Event ||
                     this.Event != null &&
                     this.Event.Equals(other.Event)
-                ) && 
+                ) &&                 
                 (
                     this.Event2 == other.Event2 ||
                     this.Event2 != null &&
                     this.Event2.Equals(other.Event2)
-                ) && 
+                ) &&                 
                 (
                     this.HasBeenViewed == other.HasBeenViewed ||
                     this.HasBeenViewed != null &&
                     this.HasBeenViewed.Equals(other.HasBeenViewed)
-                ) && 
+                ) &&                 
                 (
                     this.IsWatchNotification == other.IsWatchNotification ||
                     this.IsWatchNotification != null &&
                     this.IsWatchNotification.Equals(other.IsWatchNotification)
-                ) && 
+                ) &&                 
                 (
                     this.IsExpired == other.IsExpired ||
                     this.IsExpired != null &&
                     this.IsExpired.Equals(other.IsExpired)
-                ) && 
+                ) &&                 
                 (
                     this.IsAllDay == other.IsAllDay ||
                     this.IsAllDay != null &&
                     this.IsAllDay.Equals(other.IsAllDay)
-                ) && 
+                ) &&                 
                 (
                     this.PriorityCode == other.PriorityCode ||
                     this.PriorityCode != null &&
                     this.PriorityCode.Equals(other.PriorityCode)
-                ) && 
+                ) &&                 
                 (
                     this.User == other.User ||
                     this.User != null &&
@@ -231,42 +250,52 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
+                   
+                hash = hash * 59 + this.Id.GetHashCode();
+                
+                   
                 if (this.Event != null)
                 {
                     hash = hash * 59 + this.Event.GetHashCode();
                 }
+                
+                   
                 if (this.Event2 != null)
                 {
                     hash = hash * 59 + this.Event2.GetHashCode();
                 }
+                
+                
                 if (this.HasBeenViewed != null)
                 {
                     hash = hash * 59 + this.HasBeenViewed.GetHashCode();
-                }
+                }                
+                
                 if (this.IsWatchNotification != null)
                 {
                     hash = hash * 59 + this.IsWatchNotification.GetHashCode();
-                }
+                }                
+                
                 if (this.IsExpired != null)
                 {
                     hash = hash * 59 + this.IsExpired.GetHashCode();
-                }
+                }                
+                
                 if (this.IsAllDay != null)
                 {
                     hash = hash * 59 + this.IsAllDay.GetHashCode();
-                }
+                }                
+                
                 if (this.PriorityCode != null)
                 {
                     hash = hash * 59 + this.PriorityCode.GetHashCode();
-                }
+                }                
+                   
                 if (this.User != null)
                 {
                     hash = hash * 59 + this.User.GetHashCode();
                 }
+                
                 return hash;
             }
         }

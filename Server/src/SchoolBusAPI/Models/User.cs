@@ -76,30 +76,45 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets Active
         /// </summary>
         public bool Active { get; set; }
+
+                
+        [ForeignKey("Active")]
+        public int ActiveRefId { get; set; }
+        
 
         /// <summary>
         /// Gets or Sets GivenName
         /// </summary>
         public string GivenName { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets Surname
         /// </summary>
         public string Surname { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets Initials
         /// </summary>
         public string Initials { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets Email
         /// </summary>
         public string Email { get; set; }
+
+        
 
         /// <summary>
         /// Security Manager User ID
@@ -108,25 +123,41 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Security Manager User ID")]
         public string SmUserId { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets Guid
         /// </summary>
         public string Guid { get; set; }
+
+        
 
         /// <summary>
         /// Gets or Sets SmAuthorizationDirectory
         /// </summary>
         public string SmAuthorizationDirectory { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets UserRoles
         /// </summary>
         public List<UserRole> UserRoles { get; set; }
 
+                
+        [ForeignKey("UserRoles")]
+        public int UserRolesRefId { get; set; }
+        
+
         /// <summary>
         /// Gets or Sets GroupMemberships
         /// </summary>
         public List<GroupMembership> GroupMemberships { get; set; }
+
+                
+        [ForeignKey("GroupMemberships")]
+        public int GroupMembershipsRefId { get; set; }
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -184,45 +215,46 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
-                    this.Id == other.Id ||                    
+                    this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
-                    this.Active == other.Active ||                    
+                    this.Active == other.Active ||
+                    this.Active != null &&
                     this.Active.Equals(other.Active)
-                ) && 
+                ) &&                 
                 (
                     this.GivenName == other.GivenName ||
                     this.GivenName != null &&
                     this.GivenName.Equals(other.GivenName)
-                ) && 
+                ) &&                 
                 (
                     this.Surname == other.Surname ||
                     this.Surname != null &&
                     this.Surname.Equals(other.Surname)
-                ) && 
+                ) &&                 
                 (
                     this.Initials == other.Initials ||
                     this.Initials != null &&
                     this.Initials.Equals(other.Initials)
-                ) && 
+                ) &&                 
                 (
                     this.Email == other.Email ||
                     this.Email != null &&
                     this.Email.Equals(other.Email)
-                ) && 
+                ) &&                 
                 (
                     this.SmUserId == other.SmUserId ||
                     this.SmUserId != null &&
                     this.SmUserId.Equals(other.SmUserId)
-                ) && 
+                ) &&                 
                 (
                     this.Guid == other.Guid ||
                     this.Guid != null &&
                     this.Guid.Equals(other.Guid)
-                ) && 
+                ) &&                 
                 (
                     this.SmAuthorizationDirectory == other.SmAuthorizationDirectory ||
                     this.SmAuthorizationDirectory != null &&
@@ -251,46 +283,62 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
+                   
                 hash = hash * 59 + this.Id.GetHashCode();
-
-                hash = hash * 59 + this.Active.GetHashCode();
+                
+                   
+                if (this.Active != null)
+                {
+                    hash = hash * 59 + this.Active.GetHashCode();
+                }
+                
                 
                 if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();
-                }
+                }                
+                
                 if (this.Surname != null)
                 {
                     hash = hash * 59 + this.Surname.GetHashCode();
-                }
+                }                
+                
                 if (this.Initials != null)
                 {
                     hash = hash * 59 + this.Initials.GetHashCode();
-                }
+                }                
+                
                 if (this.Email != null)
                 {
                     hash = hash * 59 + this.Email.GetHashCode();
-                }
+                }                
+                
                 if (this.SmUserId != null)
                 {
                     hash = hash * 59 + this.SmUserId.GetHashCode();
-                }
+                }                
+                
                 if (this.Guid != null)
                 {
                     hash = hash * 59 + this.Guid.GetHashCode();
-                }
+                }                
+                
                 if (this.SmAuthorizationDirectory != null)
                 {
                     hash = hash * 59 + this.SmAuthorizationDirectory.GetHashCode();
-                }
+                }                
+                   
                 if (this.UserRoles != null)
                 {
                     hash = hash * 59 + this.UserRoles.GetHashCode();
                 }
+                
+                   
                 if (this.GroupMemberships != null)
                 {
                     hash = hash * 59 + this.GroupMemberships.GetHashCode();
                 }
+                
                 return hash;
             }
         }

@@ -57,12 +57,16 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// The name of the City
         /// </summary>
         /// <value>The name of the City</value>
         [MetaDataExtension (Description = "The name of the City")]
         public string Name { get; set; }
+
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -111,11 +115,11 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Name == other.Name ||
                     this.Name != null &&
@@ -134,12 +138,14 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
+                   
                 hash = hash * 59 + this.Id.GetHashCode();
+                
                 
                 if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
-                }
+                }                
                 return hash;
             }
         }

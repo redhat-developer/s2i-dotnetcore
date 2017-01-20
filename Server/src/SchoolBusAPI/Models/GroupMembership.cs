@@ -62,20 +62,37 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets Active
         /// </summary>
         public bool Active { get; set; }
+
+                
+        [ForeignKey("Active")]
+        public int ActiveRefId { get; set; }
+        
 
         /// <summary>
         /// Gets or Sets Group
         /// </summary>
         public Group Group { get; set; }
 
+                
+        [ForeignKey("Group")]
+        public int GroupRefId { get; set; }
+        
+
         /// <summary>
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
+
+                
+        [ForeignKey("User")]
+        public int UserRefId { get; set; }
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -126,20 +143,21 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Active == other.Active ||
+                    this.Active != null &&
                     this.Active.Equals(other.Active)
-                ) && 
+                ) &&                 
                 (
                     this.Group == other.Group ||
                     this.Group != null &&
                     this.Group.Equals(other.Group)
-                ) && 
+                ) &&                 
                 (
                     this.User == other.User ||
                     this.User != null &&
@@ -158,21 +176,27 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
+                   
+                hash = hash * 59 + this.Id.GetHashCode();
+                
+                   
+                if (this.Active != null)
                 {
-                    hash = hash * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Active.GetHashCode();
                 }
-
-                hash = hash * 59 + this.Active.GetHashCode();
-
+                
+                   
                 if (this.Group != null)
                 {
                     hash = hash * 59 + this.Group.GetHashCode();
                 }
+                
+                   
                 if (this.User != null)
                 {
                     hash = hash * 59 + this.User.GetHashCode();
                 }
+                
                 return hash;
             }
         }

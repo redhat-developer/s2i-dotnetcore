@@ -57,10 +57,17 @@ namespace SchoolBusAPI.Models
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
 
+        
+
         /// <summary>
         /// Gets or Sets SchoolBus
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
+
+                
+        [ForeignKey("SchoolBus")]
+        public int SchoolBusRefId { get; set; }
+        
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -109,11 +116,11 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
-                    this.Id == other.Id ||                    
+                    this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.SchoolBus == other.SchoolBus ||
                     this.SchoolBus != null &&
@@ -132,12 +139,15 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
+                   
                 hash = hash * 59 + this.Id.GetHashCode();
                 
+                   
                 if (this.SchoolBus != null)
                 {
                     hash = hash * 59 + this.SchoolBus.GetHashCode();
                 }
+                
                 return hash;
             }
         }

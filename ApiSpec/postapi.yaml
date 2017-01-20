@@ -434,6 +434,50 @@
               $ref: "#/definitions/UserRoleViewModel"
         404:
           description: Role not found
+  /users:
+    get:
+      description: Returns all users
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserViewModel"
+        404:
+           description: User not found
+    post:
+      description: Create new user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        201:
+          description: User created
+          headers:
+            Location:
+              description: A link to the User
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/User"
   /users/current:
     get:
       description: Get the currently logged in user
@@ -448,6 +492,191 @@
           description: OK
           schema:
             $ref: "#/definitions/CurrentUserViewModel"
+  /users/current/favourites:
+    put:
+      description: Updates a favourite
+      tags:
+        - CurrentUser
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserFavourite"
+      responses:
+        201:
+          description: UserFavourite created
+          headers:
+            Location:
+              description: A link to the UserFavourite
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/UserFavourite"            
+    post:
+      description: Create new favourite for the current user
+      tags:
+        - CurrentUser
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserFavourite"
+      responses:
+        201:
+          description: UserFavourite created
+          headers:
+            Location:
+              description: A link to the UserFavourite
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/UserFavourite"
+  /users/current/favourites/{type}:
+    get:
+      description: Returns a user's favourites of a given type.  If type is empty, returns all.
+      tags:
+        - CurrentUser
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserFavourite"
+        "404":
+           description: User not found
+      parameters:
+        - name: type
+          in: path
+          description: type of favourite to return
+          required: false
+          type: string
+  /users/current/favourites/{id}/delete:
+    post:
+      description: Removes a specific user favourite
+      tags:
+        - CurrentUser
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: id
+          in: path
+          description: id of Favourite to delete
+          required: true
+          type: integer      
+  /users/bulk:
+    post:
+      description: Adds a number of users
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+      responses:
+        200:
+          description: OK
+  /users/{id}:
+    get:
+      description: Returns data for a particular user
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/UserViewModel"
+        404:
+           description: User not found
+    put:
+      description: Updates a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserViewModel"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/UserViewModel"
+        404:
+          description: User not found
+  /users/{id}/delete:
+    post:
+      description: Deletes a user
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: User not found
   /users/{id}/roles:
     get:
       description: Returns the roles for a user
@@ -646,31 +875,7 @@
             items:
               $ref: "#/definitions/GroupMembershipViewModel"
         404:
-          description: User not found
-  /users/{id}/favourites:
-    get:
-      description: Returns a user's favourites of a given context type
-      tags:
-        - User
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserFavouriteViewModel"
-        "404":
-           description: User not found
-      parameters:
-        - name: id
-          in: path
-          description: id of User to fetch favorites for
-          required: true
-          type: integer
+          description: User not found  
   /users/{id}/notifications:
     get:
       description: Returns a user's notifications
