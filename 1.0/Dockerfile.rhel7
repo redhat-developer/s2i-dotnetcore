@@ -35,6 +35,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 COPY ./contrib/ /opt/app-root
 
 RUN yum install -y yum-utils && \
+    yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-dotnet-rpms && \
     yum-config-manager --enable rhel-7-server-rpms && \
     yum-config-manager --enable rhel-7-server-ose-3.0-rpms && \
