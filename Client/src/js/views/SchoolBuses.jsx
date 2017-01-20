@@ -23,7 +23,7 @@ import { notBlank } from '../utils/string';
 
 * System default should be:
 ** If user is an inspector, Inspector == Current User else not used
-** If the user is not an inspector, Service Areas in home district, else not used
+** If the user is not an inspector, Districts in home district, else not used
 
 TODO:
 * Print / Email
@@ -48,7 +48,7 @@ const DEFAULT_SORT_FIELD = 'regi';
 var SchoolBuses = React.createClass({
   propTypes: {
     schoolBuses: React.PropTypes.object,
-    serviceAreas: React.PropTypes.object,
+    districts: React.PropTypes.object,
     inspectors: React.PropTypes.object,
     cities: React.PropTypes.object,
     schoolDistricts: React.PropTypes.object,
@@ -62,7 +62,7 @@ var SchoolBuses = React.createClass({
       loading: false,
 
       search: {
-        selectedServiceAreasIds: this.props.search.selectedServiceAreasIds || [],
+        selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
         selectedInspectorsIds: this.props.search.selectedInspectorsIds || [],
         selectedCitiesIds: this.props.search.selectedCitiesIds || [],
         selectedSchoolDistrictsIds: this.props.search.selectedSchoolDistrictsIds || [],
@@ -95,8 +95,8 @@ var SchoolBuses = React.createClass({
       onlyReInspections: this.state.search.justReInspections,
     };
 
-    if (this.state.search.selectedServiceAreasIds.length > 0) {
-      searchParams.serviceareas = this.state.search.selectedServiceAreasIds;
+    if (this.state.search.selectedDistrictsIds.length > 0) {
+      searchParams.districts = this.state.search.selectedDistrictsIds;
     }
     if (this.state.search.selectedInspectorsIds.length > 0) {
       searchParams.inspectors = this.state.search.selectedInspectorsIds;
@@ -185,10 +185,10 @@ var SchoolBuses = React.createClass({
     });
   },
 
-  serviceAreasChanged(selected) {
+  districtsChanged(selected) {
     var selectedIds = _.map(selected, 'id');
     this.updateSearchState({
-      selectedServiceAreasIds: selectedIds,
+      selectedDistrictsIds: selectedIds,
     });
   },
 
@@ -280,7 +280,7 @@ var SchoolBuses = React.createClass({
   },
 
   render() {
-    var serviceAreas = _.sortBy(this.props.serviceAreas, 'name');
+    var districts = _.sortBy(this.props.districts, 'name');
     var inspectors = _.sortBy(this.props.inspectors, 'name');
     var cities = _.sortBy(this.props.cities, 'name');
     var schoolDistricts = _.sortBy(this.props.schoolDistricts, 'name');
@@ -291,8 +291,8 @@ var SchoolBuses = React.createClass({
           <Col md={11}>
             <Row>
               <ButtonToolbar id="school-buses-search">
-                <MultiDropdown id="service-areas-dropdown" placeholder="Service Areas"
-                  items={ serviceAreas } selectedIds={ this.state.search.selectedServiceAreasIds } onChange={ this.serviceAreasChanged } showMaxItems={ 2 } />
+                <MultiDropdown id="districts-dropdown" placeholder="Districts"
+                  items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } onChange={ this.districtsChanged } showMaxItems={ 2 } />
                 <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors"
                   items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } onChange={ this.inspectorsChanged } showMaxItems={ 2 } />
                 <MultiDropdown id="cities-dropdown" placeholder="Cities"
@@ -414,7 +414,7 @@ var SchoolBuses = React.createClass({
 function mapStateToProps(state) {
   return {
     schoolBuses: state.models.schoolBuses,
-    serviceAreas: state.lookups.serviceAreas,
+    districts: state.lookups.districts,
     inspectors: state.models.users,
     cities: state.lookups.cities,
     schoolDistricts: state.lookups.schoolDistricts,
