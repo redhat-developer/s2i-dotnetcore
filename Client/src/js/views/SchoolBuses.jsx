@@ -54,6 +54,7 @@ var SchoolBuses = React.createClass({
     inspectors: React.PropTypes.object,
     cities: React.PropTypes.object,
     schoolDistricts: React.PropTypes.object,
+    owners: React.PropTypes.object,
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
@@ -68,6 +69,8 @@ var SchoolBuses = React.createClass({
         selectedInspectorsIds: this.props.search.selectedInspectorsIds || [],
         selectedCitiesIds: this.props.search.selectedCitiesIds || [],
         selectedSchoolDistrictsIds: this.props.search.selectedSchoolDistrictsIds || [],
+        ownerId: this.props.search.ownerId || '',
+        ownerName: this.props.search.ownerName || 'Owner',
         keySearchField: this.props.search.keySearchField || KEY_SEARCH_REGI,
         searchText: this.props.search.searchText || '',
         nextInspection: this.props.search.nextInspection || WITHIN_30_DAYS,
@@ -77,8 +80,10 @@ var SchoolBuses = React.createClass({
         justReInspections: this.props.search.justReInspections === true,
       },
 
-      sortField: this.props.ui.sortField || DEFAULT_SORT_FIELD,
-      sortDesc: this.props.ui.sortDesc === true,
+      ui : {
+        sortField: this.props.ui.sortField || DEFAULT_SORT_FIELD,
+        sortDesc: this.props.ui.sortDesc === true,
+      },
     };
   },
 
@@ -95,6 +100,7 @@ var SchoolBuses = React.createClass({
     var searchParams = {
       includeInactive: !this.state.search.hideInactive,
       onlyReInspections: this.state.search.justReInspections,
+      owner: this.state.search.ownerId,
     };
 
     if (this.state.search.selectedDistrictsIds.length > 0) {
@@ -166,9 +172,10 @@ var SchoolBuses = React.createClass({
     this.setState({ loading: true });
 
     var usersPromise = Api.getUsers();
+    var ownersPromise = Api.getOwners();
     var favouritesPromise = Api.getFavourites('schoolBus');
 
-    Promise.all([usersPromise, favouritesPromise]).then(() => {
+    Promise.all([usersPromise, ownersPromise, favouritesPromise]).then(() => {
       // If this is the first load, then look for a default favourite
       if (!this.props.search.loaded) {
         var favourite = _.find(this.props.favourites, (favourite) => { return favourite.isDefault; });
@@ -191,6 +198,13 @@ var SchoolBuses = React.createClass({
   updateSearchState(state, callback) {
     this.setState({ search: { ...this.state.search, ...state }}, () =>{
       store.dispatch({ type: 'UPDATE_BUSES_SEARCH', schoolBuses: this.state.search });
+      if (callback) { callback(); }
+    });
+  },
+
+  updateUIState(state, callback) {
+    this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
+      store.dispatch({ type: 'UPDATE_BUSES_UI', schoolBuses: this.state.ui });
       if (callback) { callback(); }
     });
   },
@@ -220,6 +234,13 @@ var SchoolBuses = React.createClass({
     var selectedIds = _.map(selected, 'id');
     this.updateSearchState({
       selectedSchoolDistrictsIds: selectedIds,
+    });
+  },
+
+  ownerSelected(keyEvent, e) {
+    this.updateSearchState({
+      ownerId: keyEvent || '',
+      ownerName: keyEvent !== 0 ? e.target.text : 'Owner',
     });
   },
 
@@ -275,18 +296,14 @@ var SchoolBuses = React.createClass({
 
   sort(e) {
     var newState = {};
-    if (this.state.sortField !== e.currentTarget.id) {
+    if (this.state.ui.sortField !== e.currentTarget.id) {
       newState.sortField = e.currentTarget.id;
       newState.sortDesc = false;
     } else {
-      newState.sortDesc = !this.state.sortDesc;
+      newState.sortDesc = !this.state.ui.sortDesc;
     }
-    this.setState(newState, () =>{
-      store.dispatch({ type: 'UPDATE_BUSES_UI', schoolBuses: {
-        sortField: this.state.sortField,
-        sortDesc: this.state.sortDesc,
-      }});
-    });
+
+    this.updateUIState(newState);
   },
 
   render() {
@@ -294,6 +311,7 @@ var SchoolBuses = React.createClass({
     var inspectors = _.sortBy(this.props.inspectors, 'name');
     var cities = _.sortBy(this.props.cities, 'name');
     var schoolDistricts = _.sortBy(this.props.schoolDistricts, 'name');
+    var owners = _.sortBy(this.props.owners, 'name');
 
     return <div id="school-buses">
       <Well id="school-buses-bar" bsSize="small" className="clearfix">
@@ -309,9 +327,17 @@ var SchoolBuses = React.createClass({
                   items={ cities } selectedIds={ this.state.search.selectedCitiesIds } onChange={ this.citiesChanged } showMaxItems={ 2 } />
                 <MultiDropdown id="school-districts-dropdown" placeholder="School Districts"
                   items={ schoolDistricts } selectedIds={ this.state.search.selectedSchoolDistrictsIds } fieldName="shortName" onChange={ this.schoolDistrictsChanged } showMaxItems={ 2 } />
+                <DropdownButton id="school-buses-owner-dropdown" title={ this.state.search.ownerName } onSelect={ this.ownerSelected }>
+                  <MenuItem key={ 0 } eventKey={ 0 }>&nbsp;</MenuItem>
+                  {
+                    _.map(owners, (owner) => {
+                      return <MenuItem key={ owner.id } eventKey={ owner.id }>{ owner.name }</MenuItem>;
+                    })
+                  }
+                </DropdownButton>
                 <Form inline>
                   <InputGroup id="school-buses-key-search">
-                    <DropdownButton id="school-buses-key-dropdown" componentClass={InputGroup.Button} title={ this.state.search.keySearchField } onSelect={ this.keySearchSelected }>
+                    <DropdownButton id="school-buses-key-dropdown" componentClass={ InputGroup.Button } title={ this.state.search.keySearchField } onSelect={ this.keySearchSelected }>
                       <MenuItem key={ KEY_SEARCH_REGI } eventKey={ KEY_SEARCH_REGI }>{ KEY_SEARCH_REGI }</MenuItem>
                       <MenuItem key={ KEY_SEARCH_VIN } eventKey={ KEY_SEARCH_VIN }>{ KEY_SEARCH_VIN }</MenuItem>
                       <MenuItem key={ KEY_SEARCH_PLATE } eventKey={ KEY_SEARCH_PLATE }>{ KEY_SEARCH_PLATE }</MenuItem>
@@ -367,15 +393,15 @@ var SchoolBuses = React.createClass({
         if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
         if (Object.keys(this.props.schoolBuses).length === 0) { return <Alert bsStyle="success">No school buses</Alert>; }
 
-        var schoolBuses = _.sortBy(this.props.schoolBuses, this.state.sortField);
-        if (this.state.sortDesc) {
+        var schoolBuses = _.sortBy(this.props.schoolBuses, this.state.ui.sortField);
+        if (this.state.ui.sortDesc) {
           _.reverse(schoolBuses);
         }
 
         var buildHeader = (id, title) => {
           var sortGlyph = '';
-          if (this.state.sortField === id) {
-            sortGlyph = <span>&nbsp;<Glyphicon glyph={ this.state.sortDesc ? 'sort-by-attributes-alt' : 'sort-by-attributes' }/></span>;
+          if (this.state.ui.sortField === id) {
+            sortGlyph = <span>&nbsp;<Glyphicon glyph={ this.state.ui.sortDesc ? 'sort-by-attributes-alt' : 'sort-by-attributes' }/></span>;
           }
           return <th id={ id } onClick={ this.sort }>{ title }{ sortGlyph }</th>;
         };
@@ -430,6 +456,7 @@ function mapStateToProps(state) {
     inspectors: state.models.users,
     cities: state.lookups.cities,
     schoolDistricts: state.lookups.schoolDistricts,
+    owners: state.models.owners,
     favourites: state.models.favourites,
     search: state.search.schoolBuses,
     ui: state.ui.schoolBuses,

@@ -21,8 +21,8 @@ export function getCurrentUser() {
 // Users
 ////////////////////
 
-export function getUsers(params) {
-  return new ApiRequest('/users').get(params).then(response => {
+export function getUsers() {
+  return new ApiRequest('/users').get().then(response => {
     // Normalize the response
     var users = _.fromPairs(response.map(user => [ user.id, user ]));
 
@@ -114,8 +114,8 @@ export function searchSchoolBuses(params) {
   });
 }
 
-export function getSchoolBuses(params) {
-  return new ApiRequest('/schoolbuses').get(params).then(response => {
+export function getSchoolBuses() {
+  return new ApiRequest('/schoolbuses').get().then(response => {
     // Normalize the response
     var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
 
@@ -181,6 +181,24 @@ export function getSchoolBusNotes(schoolBusId) {
 ////////////////////
 // Owners
 ////////////////////
+
+function addOwnerDisplayFields(owner) {
+  owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
+}
+
+export function getOwners() {
+  return new ApiRequest('/schoolbusowners').get().then(response => {
+    // Normalize the response
+    var owners = _.fromPairs(response.map(owner => [ owner.id, owner ]));
+
+    // Add display fields
+    _.map(owners, owner => {
+      addOwnerDisplayFields(owner);
+    });
+
+    store.dispatch({ type: 'UPDATE_OWNERS', owners: owners });
+  });
+}
 
 export function getOwner(ownerId) {
   return new ApiRequest(`/schoolbusowners/${ownerId}`).get().then(response => {
