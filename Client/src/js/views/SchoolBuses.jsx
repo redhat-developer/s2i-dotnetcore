@@ -38,10 +38,12 @@ const BEFORE_TODAY = 'Before Today';
 const BEFORE_END_OF_MONTH = 'Before End of Month';
 const BEFORE_END_OF_QUARTER = 'Before End of Quarter';
 const TODAY = 'Today';
+const WITHIN_30_DAYS = 'Within 30 Days';
 const THIS_MONTH = 'This Month';
 const NEXT_MONTH = 'Next Month';
 const THIS_QUARTER = 'This Quarter';
 const CUSTOM = 'Custom';
+const ALL = 'All';
 
 const DEFAULT_SORT_FIELD = 'regi';
 
@@ -68,7 +70,7 @@ var SchoolBuses = React.createClass({
         selectedSchoolDistrictsIds: this.props.search.selectedSchoolDistrictsIds || [],
         keySearchField: this.props.search.keySearchField || KEY_SEARCH_REGI,
         searchText: this.props.search.searchText || '',
-        nextInspection: this.props.search.nextInspection || BEFORE_END_OF_MONTH,
+        nextInspection: this.props.search.nextInspection || WITHIN_30_DAYS,
         startDate: this.props.search.startDate || '',
         endDate: this.props.search.endDate || '',
         hideInactive: this.props.search.hideInactive !== false,
@@ -126,6 +128,9 @@ var SchoolBuses = React.createClass({
         startDate = today;
         endDate = today;
         break;
+      case WITHIN_30_DAYS:
+        endDate = today.add(30, 'day');
+        break;
       case THIS_MONTH:
         startDate = today.startOf('month');
         endDate = Moment(startDate).endOf('month');
@@ -141,6 +146,9 @@ var SchoolBuses = React.createClass({
       case CUSTOM:
         startDate = Moment(this.state.search.startDate);
         endDate = Moment(this.state.search.endDate);
+        break;
+      case ALL:
+      default:
         break;
     }
 
@@ -316,10 +324,12 @@ var SchoolBuses = React.createClass({
             <Row>
               <ButtonToolbar id="school-buses-inspections">
                 <DropdownButton id="school-buses-inspection-dropdown" title={ this.state.search.nextInspection } onSelect={ this.nextInspectionSelected }>
+                  <MenuItem key={ ALL } eventKey={ ALL }>{ ALL }</MenuItem>
                   <MenuItem key={ BEFORE_TODAY } eventKey={ BEFORE_TODAY }>{ BEFORE_TODAY }</MenuItem>
                   <MenuItem key={ BEFORE_END_OF_MONTH } eventKey={ BEFORE_END_OF_MONTH }>{ BEFORE_END_OF_MONTH }</MenuItem>
                   <MenuItem key={ BEFORE_END_OF_QUARTER } eventKey={ BEFORE_END_OF_QUARTER }>{ BEFORE_END_OF_QUARTER }</MenuItem>
                   <MenuItem key={ TODAY } eventKey={ TODAY }>{ TODAY }</MenuItem>
+                  <MenuItem key={ WITHIN_30_DAYS } eventKey={ WITHIN_30_DAYS }>{ WITHIN_30_DAYS }</MenuItem>
                   <MenuItem key={ THIS_MONTH } eventKey={ THIS_MONTH }>{ THIS_MONTH }</MenuItem>
                   <MenuItem key={ NEXT_MONTH } eventKey={ NEXT_MONTH }>{ NEXT_MONTH }</MenuItem>
                   <MenuItem key={ THIS_QUARTER } eventKey={ THIS_QUARTER }>{ THIS_QUARTER }</MenuItem>
