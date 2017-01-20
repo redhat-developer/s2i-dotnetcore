@@ -1,16 +1,25 @@
 <html lang="en-CA">
-<head>
-  <meta charset="utf-8">
-
-  <title>MOTI School Bus Inspection Tracking System</title>
-</head>
-
-<body>
-  <h1>MOTI School Bus Inspection Tracking System</h1>
-
-  buildTime: {{buildTime}}
-  buildSha: {{buildSha}}
-  buildBranch: {{buildBranch}}
-  buildVersion: {{buildNum}}
-</body>
+  <head>
+    <title>MOTI School Bus Inspection Tracking System</title>
+  </head>
+  <body>
+    <div>
+      <div>
+        <span>Name</span>
+        <span id="name">MOTI School Bus Inspection Tracking System</span>
+      </div>
+      <div>
+        <span>Build Date</span>
+        <span id="buildtime">{{buildTime}}</span>
+      </div>
+      <div>
+        <span>Version: </span>
+        <span id="version">{{buildNum}}</span>
+      </div>
+      <div>
+        <span>Git Commit</span>
+        <span id="commit">{{buildSha}}</span>
+      </div>
+    </div>
+  </body>
 </html>

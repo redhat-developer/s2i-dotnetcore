@@ -237,3 +237,13 @@ export function getServiceAreas() {
     store.dispatch({ type: 'UPDATE_SERVICE_AREAS', serviceAreas: serviceAreas });
   });
 }
+
+////////////////////
+// Version
+////////////////////
+
+export function getVersion() {
+  return new ApiRequest('/version').get().then(response => {
+    store.dispatch({ type: 'UPDATE_VERSION', version: response });
+  });
+}

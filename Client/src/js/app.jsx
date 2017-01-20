@@ -14,6 +14,7 @@ import Notifications from './views/Notifications.jsx';
 import UserManagement from './views/UserManagement.jsx';
 import UserManagementEdit from './views/UserManagementEdit.jsx';
 import RolesPermissions from './views/RolesPermissions.jsx';
+import Version from './views/Version.jsx';
 import FourOhFour from './views/404.jsx';
 
 
@@ -30,6 +31,7 @@ const App = <Provider store={ store }>
       <Route path="user-management" component={ UserManagement }/>
       <Route path="user-management/:userId" component={ UserManagementEdit }/>
       <Route path="roles-permissions" component={ RolesPermissions }/>
+      <Route path="version" component={ Version }/>
       <Route path="*" component={ FourOhFour }/>
     </Route>
   </Router>
