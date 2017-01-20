@@ -45,7 +45,7 @@ const THIS_QUARTER = 'This Quarter';
 const CUSTOM = 'Custom';
 const ALL = 'All';
 
-const DEFAULT_SORT_FIELD = 'regi';
+const DEFAULT_SORT_FIELD = 'ownerName';
 
 var SchoolBuses = React.createClass({
   propTypes: {
@@ -416,10 +416,10 @@ var SchoolBuses = React.createClass({
         return <Table condensed striped>
           <thead>
             <tr>
-              { buildHeader('regi', 'Regi') }
               { buildHeader('ownerName', 'Owner') }
               { buildHeader('districtName', 'District') }
               { buildHeader('homeTerminal', 'Home Terminal') }
+              { buildHeader('regi', 'Regi') }
               { buildHeader('schoolBusUnitNumber', 'Fleet Unit #') }
               { buildHeader('permitNumber', 'Permit') }
               { buildHeader('nextInspectionDate', 'Next Inspection') }
@@ -431,10 +431,10 @@ var SchoolBuses = React.createClass({
           {
             _.map(schoolBuses, (bus) => {
               return <tr key={ bus.id } className={ bus.status != 'Active' ? 'info' : null }>
-                <td>{ bus.regi }</td>
                 <td><a href={ bus.ownerPath }>{ bus.ownerName }</a></td>
                 <td>{ bus.districtName }</td>
                 <td>{ bus.homeTerminalCityProv }</td>
+                <td>{ bus.regi }</td>
                 <td>{ bus.schoolBusUnitNumber }</td>
                 <td>{ bus.permitNumber }</td>
                 <td>{ formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY') }
