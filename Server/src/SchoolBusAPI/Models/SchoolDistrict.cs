@@ -26,7 +26,6 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "A list of School Districts in the Province of BC. Authoritative source to be determined.")]
 
-
     public partial class SchoolDistrict : IEquatable<SchoolDistrict>
     {
         /// <summary>
@@ -42,14 +41,12 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="Name">The full name of the School District.</param>
-        /// <param name="ShortName">A short name for the School District useful in some areas of the UI. Usually with format \&quot;SD 61\&quot;..</param>
+        /// <param name="ShortName">A short name for the School District useful in some areas of the UI. Usually with format \\&amp;amp;quot;SD 61\\&amp;amp;quot;..</param>
         public SchoolDistrict(int Id, string Name = null, string ShortName = null)
-        {
-            
+        {   
             this.Id = Id;
             this.Name = Name;
             this.ShortName = ShortName;
-            
         }
 
         /// <summary>
@@ -58,21 +55,21 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
+        
         /// <summary>
         /// The full name of the School District
         /// </summary>
         /// <value>The full name of the School District</value>
         [MetaDataExtension (Description = "The full name of the School District")]
         public string Name { get; set; }
-
+        
         /// <summary>
-        /// A short name for the School District useful in some areas of the UI. Usually with format \"SD 61\".
+        /// A short name for the School District useful in some areas of the UI. Usually with format \\&amp;quot;SD 61\\&amp;quot;.
         /// </summary>
-        /// <value>A short name for the School District useful in some areas of the UI. Usually with format \"SD 61\".</value>
-        [MetaDataExtension (Description = "A short name for the School District useful in some areas of the UI. Usually with format &quot;SD 61&quot;.")]
+        /// <value>A short name for the School District useful in some areas of the UI. Usually with format \\&amp;quot;SD 61\\&amp;quot;.</value>
+        [MetaDataExtension (Description = "A short name for the School District useful in some areas of the UI. Usually with format \\&amp;quot;SD 61\\&amp;quot;.")]
         public string ShortName { get; set; }
-
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -121,16 +118,16 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
-                ) && 
+                ) &&                 
                 (
                     this.ShortName == other.ShortName ||
                     this.ShortName != null &&
@@ -149,27 +146,39 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                if (this.Name != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
-                }
-                if (this.ShortName != null)
+                }                
+                                if (this.ShortName != null)
                 {
                     hash = hash * 59 + this.ShortName.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SchoolDistrict left, SchoolDistrict right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SchoolDistrict left, SchoolDistrict right)
         {
             return !Equals(left, right);

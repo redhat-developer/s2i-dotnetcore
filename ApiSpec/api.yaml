@@ -1963,6 +1963,28 @@
           description: id of Permission to delete
           required: true
           type: integer
+
+  /permissions/bulk:
+    post:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Permission"
+      responses:
+        201:
+          description: Permission created
   /roles:
     get:
       tags:
@@ -2095,6 +2117,28 @@
           required: true
           type: integer
 
+  /roles/bulk:
+    post:
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Role"
+      responses:
+        201:
+          description: Role created
+
   /rolepermissions/bulk:
     post:
       tags:
@@ -2116,137 +2160,6 @@
       responses:
         201:
           description: Role created
-  /users:
-    get:
-      tags:
-        - User
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserViewModel"
-    post:
-      tags:
-        - User
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/UserViewModel"
-      responses:
-        201:
-          description: User created
-          headers:
-            Location:
-              description: A link to the User
-              type: string
-              format: url
-          schema:
-            $ref: "#/definitions/UserViewModel"
-  /users/bulk:
-    post:
-      tags:
-        - User
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserViewModel"
-      responses:
-        201:
-          description: User created
-  /users/{id}:
-    get:
-      tags:
-        - User
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/UserViewModel"
-        404:
-          description: User not found
-      parameters:
-        - name: id
-          in: path
-          description: id of User to fetch
-          required: true
-          type: integer
-    put:
-      tags:
-        - User
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/UserViewModel"
-        404:
-          description: User not found
-      parameters:
-        - name: id
-          in: path
-          description: id of User to fetch
-          required: true
-          type: integer
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/UserViewModel"
-  /users/{id}/delete:
-    post:
-      tags:
-        - User
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-        404:
-          description: User not found
-      parameters:
-        - name: id
-          in: path
-          description: id of User to delete
-          required: true
-          type: integer
 
   /usergroups/bulk:
     post:

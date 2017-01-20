@@ -26,29 +26,29 @@ namespace SchoolBusAPI
         /// <returns></returns>
         public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
         {
-            services.AddTransient<ICityApiService, CityApiService>();
-            services.AddTransient<ICurrentUserApiService, CurrentUserApiService>();
-            services.AddTransient<ICCWDataApiService, CCWDataApiService>();
-            services.AddTransient<IDistrictApiService, DistrictApiService>();
-            services.AddTransient<IGroupApiService, GroupApiService>();
-            services.AddTransient<IInspectionApiService, InspectionApiService>();
-            services.AddTransient<INotificationApiService, NotificationApiService>();
-            services.AddTransient<INotificationEventApiService, NotificationEventApiService>();
-            services.AddTransient<IPermissionApiService, PermissionApiService>();
-            services.AddTransient<IRegionApiService, RegionApiService>();
-            services.AddTransient<IRoleApiService, RoleApiService>();
-            services.AddTransient<ISchoolBusApiService, SchoolBusApiService>();
-            services.AddTransient<ISchoolBusAttachmentApiService, SchoolBusAttachmentApiService>();
-            services.AddTransient<ISchoolBusHistoryApiService, SchoolBusHistoryApiService>();
-            services.AddTransient<ISchoolBusNoteApiService, SchoolBusNoteApiService>();
-            services.AddTransient<ISchoolBusOwnerApiService, SchoolBusOwnerApiService>();
-            services.AddTransient<ISchoolBusOwnerAttachmentApiService, SchoolBusOwnerAttachmentApiService>();
-            services.AddTransient<ISchoolBusOwnerContactApiService, SchoolBusOwnerContactApiService>();
-            services.AddTransient<ISchoolBusOwnerHistoryApiService, SchoolBusOwnerHistoryApiService>();
-            services.AddTransient<ISchoolBusOwnerNoteApiService, SchoolBusOwnerNoteApiService>();
-            services.AddTransient<ISchoolDistrictApiService, SchoolDistrictApiService>();
-            services.AddTransient<IServiceAreaApiService, ServiceAreaApiService>();
-            services.AddTransient<IUserApiService, UserApiService>();            
+            services.AddTransient<ICityService, CityService>();
+            services.AddTransient<ICurrentUserService, CurrentUserService>();
+            services.AddTransient<ICCWDataService, CCWDataService>();
+            services.AddTransient<IDistrictService, DistrictService>();
+            services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IInspectionService, InspectionService>();
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<INotificationEventService, NotificationEventService>();
+            services.AddTransient<IPermissionService, PermissionService>();
+            services.AddTransient<IRegionService, RegionService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<ISchoolBusService, SchoolBusService>();
+            services.AddTransient<ISchoolBusAttachmentService, SchoolBusAttachmentService>();
+            services.AddTransient<ISchoolBusHistoryService, SchoolBusHistoryService>();
+            services.AddTransient<ISchoolBusNoteService, SchoolBusNoteService>();
+            services.AddTransient<ISchoolBusOwnerService, SchoolBusOwnerService>();
+            services.AddTransient<ISchoolBusOwnerAttachmentService, SchoolBusOwnerAttachmentService>();
+            services.AddTransient<ISchoolBusOwnerContactService, SchoolBusOwnerContactService>();
+            services.AddTransient<ISchoolBusOwnerHistoryService, SchoolBusOwnerHistoryService>();
+            services.AddTransient<ISchoolBusOwnerNoteService, SchoolBusOwnerNoteService>();
+            services.AddTransient<ISchoolDistrictService, SchoolDistrictService>();
+            services.AddTransient<IServiceAreaService, ServiceAreaService>();
+            services.AddTransient<IUserService, UserService>();            
             return services;
         }
     }

@@ -22,10 +22,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// The history of updates made to a School Bus. Exact format of the history TBD.
+    /// The history of updates made to a School Bus Owner record. Exact format of the history TBD.
     /// </summary>
-        [MetaDataExtension (Description = "The history of updates made to a School Bus. Exact format of the history TBD.")]
-
+        [MetaDataExtension (Description = "The history of updates made to a School Bus Owner record. Exact format of the history TBD.")]
 
     public partial class SchoolBusOwnerHistory : IEquatable<SchoolBusOwnerHistory>
     {
@@ -43,11 +42,9 @@ namespace SchoolBusAPI.Models
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
         public SchoolBusOwnerHistory(int Id, SchoolBusOwner SchoolBusOwner = null)
-        {
-            
+        {   
             this.Id = Id;
             this.SchoolBusOwner = SchoolBusOwner;
-            
         }
 
         /// <summary>
@@ -56,15 +53,18 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets SchoolBusOwner
         /// </summary>
         public SchoolBusOwner SchoolBusOwner { get; set; }
-
+        
+        /// <summary>
+        /// Foreign key for SchoolBusOwner 
+        /// </summary>       
         [ForeignKey("SchoolBusOwner")]
         public int? SchoolBusOwnerRefId { get; set; }
-
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -112,11 +112,11 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
-                    this.Id == other.Id ||                    
+                    this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.SchoolBusOwner == other.SchoolBusOwner ||
                     this.SchoolBusOwner != null &&
@@ -135,8 +135,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                hash = hash * 59 + this.Id.GetHashCode();
-                
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                   
                 if (this.SchoolBusOwner != null)
                 {
                     hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
@@ -146,12 +146,24 @@ namespace SchoolBusAPI.Models
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SchoolBusOwnerHistory left, SchoolBusOwnerHistory right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SchoolBusOwnerHistory left, SchoolBusOwnerHistory right)
         {
             return !Equals(left, right);

@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class SchoolBusOwnerContactAddress : IEquatable<SchoolBusOwnerContactAddress>
     {
         /// <summary>
@@ -48,8 +46,7 @@ namespace SchoolBusAPI.Models
         /// <param name="Province">The Province of the address..</param>
         /// <param name="PostalCode">The postal code of the address..</param>
         public SchoolBusOwnerContactAddress(int Id, string Type = null, string Addr1 = null, string Addr2 = null, string City = null, string Province = null, string PostalCode = null)
-        {
-            
+        {   
             this.Id = Id;
             this.Type = Type;
             this.Addr1 = Addr1;
@@ -57,7 +54,6 @@ namespace SchoolBusAPI.Models
             this.City = City;
             this.Province = Province;
             this.PostalCode = PostalCode;
-            
         }
 
         /// <summary>
@@ -66,49 +62,49 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
+        
         /// <summary>
         /// The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.
         /// </summary>
         /// <value>The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.</value>
         [MetaDataExtension (Description = "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.")]
         public string Type { get; set; }
-
+        
         /// <summary>
         /// Address 1 line of the address.
         /// </summary>
         /// <value>Address 1 line of the address.</value>
         [MetaDataExtension (Description = "Address 1 line of the address.")]
         public string Addr1 { get; set; }
-
+        
         /// <summary>
         /// Address 2 line of the address.
         /// </summary>
         /// <value>Address 2 line of the address.</value>
         [MetaDataExtension (Description = "Address 2 line of the address.")]
         public string Addr2 { get; set; }
-
+        
         /// <summary>
         /// The City of the address.
         /// </summary>
         /// <value>The City of the address.</value>
         [MetaDataExtension (Description = "The City of the address.")]
         public string City { get; set; }
-
+        
         /// <summary>
         /// The Province of the address.
         /// </summary>
         /// <value>The Province of the address.</value>
         [MetaDataExtension (Description = "The Province of the address.")]
         public string Province { get; set; }
-
+        
         /// <summary>
         /// The postal code of the address.
         /// </summary>
         /// <value>The postal code of the address.</value>
         [MetaDataExtension (Description = "The postal code of the address.")]
         public string PostalCode { get; set; }
-
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -161,36 +157,36 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Type == other.Type ||
                     this.Type != null &&
                     this.Type.Equals(other.Type)
-                ) && 
+                ) &&                 
                 (
                     this.Addr1 == other.Addr1 ||
                     this.Addr1 != null &&
                     this.Addr1.Equals(other.Addr1)
-                ) && 
+                ) &&                 
                 (
                     this.Addr2 == other.Addr2 ||
                     this.Addr2 != null &&
                     this.Addr2.Equals(other.Addr2)
-                ) && 
+                ) &&                 
                 (
                     this.City == other.City ||
                     this.City != null &&
                     this.City.Equals(other.City)
-                ) && 
+                ) &&                 
                 (
                     this.Province == other.Province ||
                     this.Province != null &&
                     this.Province.Equals(other.Province)
-                ) && 
+                ) &&                 
                 (
                     this.PostalCode == other.PostalCode ||
                     this.PostalCode != null &&
@@ -209,43 +205,55 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                if (this.Type != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.Type != null)
                 {
                     hash = hash * 59 + this.Type.GetHashCode();
-                }
-                if (this.Addr1 != null)
+                }                
+                                if (this.Addr1 != null)
                 {
                     hash = hash * 59 + this.Addr1.GetHashCode();
-                }
-                if (this.Addr2 != null)
+                }                
+                                if (this.Addr2 != null)
                 {
                     hash = hash * 59 + this.Addr2.GetHashCode();
-                }
-                if (this.City != null)
+                }                
+                                if (this.City != null)
                 {
                     hash = hash * 59 + this.City.GetHashCode();
-                }
-                if (this.Province != null)
+                }                
+                                if (this.Province != null)
                 {
                     hash = hash * 59 + this.Province.GetHashCode();
-                }
-                if (this.PostalCode != null)
+                }                
+                                if (this.PostalCode != null)
                 {
                     hash = hash * 59 + this.PostalCode.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SchoolBusOwnerContactAddress left, SchoolBusOwnerContactAddress right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SchoolBusOwnerContactAddress left, SchoolBusOwnerContactAddress right)
         {
             return !Equals(left, right);

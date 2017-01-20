@@ -87,6 +87,9 @@ definitions:
         format: int32
         type: integer
         description: The number of mobility aid passenger seats in the bus.
+      inspector:
+        $ref: '#/definitions/User'
+        description: The inspector assigned to this schoolbus
   SchoolBusNote:
     type: object
     description: Notes entered by users about a specific School Bus.
@@ -424,19 +427,6 @@ definitions:
       RIPInspectionId:
         type: string
         description: The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.
-  FavouriteContextType:
-    type: object
-    description: The name for a place in the UI where per user settings can be stored - for example, the School Bus search screen, School Bus Owner search screen, etc.
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      name:
-        type: string
-        description: Context Name known by the UI.
   UserFavourite:
     type: object
     description: User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.
@@ -447,6 +437,9 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
+      type:
+        type: string
+        description: The type of Favourite
       name:
         type: string
         description: The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.
@@ -456,8 +449,6 @@ definitions:
       isDefault:
         type: boolean
         description: True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied.
-      favouriteContextType:
-        $ref: '#/definitions/FavouriteContextType'
   Region:
     type: object
     required:
@@ -640,14 +631,6 @@ definitions:
         type: string
       smAuthorizationDirectory:
         type: string
-      userRoles:
-        type: array
-        items:
-          $ref: '#/definitions/UserRole'
-      groupMemberships:
-        type: array
-        items:
-          $ref: '#/definitions/GroupMembership'
   UserRole:
     type: object
     required:

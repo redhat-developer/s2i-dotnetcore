@@ -1971,6 +1971,28 @@ paths:
           description: id of Permission to delete
           required: true
           type: integer
+
+  /permissions/bulk:
+    post:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Permission"
+      responses:
+        201:
+          description: Permission created
   /roles:
     get:
       tags:
@@ -2103,6 +2125,28 @@ paths:
           required: true
           type: integer
 
+  /roles/bulk:
+    post:
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Role"
+      responses:
+        201:
+          description: Role created
+
   /rolepermissions/bulk:
     post:
       tags:
@@ -2124,137 +2168,6 @@ paths:
       responses:
         201:
           description: Role created
-  /users:
-    get:
-      tags:
-        - User
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserViewModel"
-    post:
-      tags:
-        - User
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/UserViewModel"
-      responses:
-        201:
-          description: User created
-          headers:
-            Location:
-              description: A link to the User
-              type: string
-              format: url
-          schema:
-            $ref: "#/definitions/UserViewModel"
-  /users/bulk:
-    post:
-      tags:
-        - User
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserViewModel"
-      responses:
-        201:
-          description: User created
-  /users/{id}:
-    get:
-      tags:
-        - User
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/UserViewModel"
-        404:
-          description: User not found
-      parameters:
-        - name: id
-          in: path
-          description: id of User to fetch
-          required: true
-          type: integer
-    put:
-      tags:
-        - User
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/UserViewModel"
-        404:
-          description: User not found
-      parameters:
-        - name: id
-          in: path
-          description: id of User to fetch
-          required: true
-          type: integer
-        - name: item
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/UserViewModel"
-  /users/{id}/delete:
-    post:
-      tags:
-        - User
-      consumes: []
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        200:
-          description: OK
-        404:
-          description: User not found
-      parameters:
-        - name: id
-          in: path
-          description: id of User to delete
-          required: true
-          type: integer
 
   /usergroups/bulk:
     post:
@@ -2998,7 +2911,7 @@ paths:
           type: integer
         - name: regi
           in: query
-          description: ICBC Regi Number
+          description: e Regi Number
           type: string
         - name: vin
           in: query
@@ -3236,22 +3149,6 @@ paths:
           description: id of SchoolBusOwner to fetch contact address for
           required: true
           type: integer
-  /favouritecontexttypes:
-    get:
-      description: Returns list of available FavouriteContextTypes
-      tags:
-        - SchoolBusOwner
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/FavouriteContextType'
   /roles/{id}/permissions:
     get:
       description: Get all the permissions for a role
@@ -3390,6 +3287,50 @@ paths:
               $ref: "#/definitions/UserRoleViewModel"
         404:
           description: Role not found
+  /users:
+    get:
+      description: Returns all users
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserViewModel"
+        404:
+           description: User not found
+    post:
+      description: Create new user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        201:
+          description: User created
+          headers:
+            Location:
+              description: A link to the User
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/User"
   /users/current:
     get:
       description: Get the currently logged in user
@@ -3404,6 +3345,191 @@ paths:
           description: OK
           schema:
             $ref: "#/definitions/CurrentUserViewModel"
+  /users/current/favourites:
+    put:
+      description: Updates a favourite
+      tags:
+        - CurrentUser
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserFavourite"
+      responses:
+        201:
+          description: UserFavourite created
+          headers:
+            Location:
+              description: A link to the UserFavourite
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/UserFavourite"            
+    post:
+      description: Create new favourite for the current user
+      tags:
+        - CurrentUser
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserFavourite"
+      responses:
+        201:
+          description: UserFavourite created
+          headers:
+            Location:
+              description: A link to the UserFavourite
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/UserFavourite"
+  /users/current/favourites/{type}:
+    get:
+      description: Returns a user's favourites of a given type.  If type is empty, returns all.
+      tags:
+        - CurrentUser
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserFavourite"
+        "404":
+           description: User not found
+      parameters:
+        - name: type
+          in: path
+          description: type of favourite to return
+          required: false
+          type: string
+  /users/current/favourites/{id}/delete:
+    post:
+      description: Removes a specific user favourite
+      tags:
+        - CurrentUser
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: id
+          in: path
+          description: id of Favourite to delete
+          required: true
+          type: integer      
+  /users/bulk:
+    post:
+      description: Adds a number of users
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+      responses:
+        200:
+          description: OK
+  /users/{id}:
+    get:
+      description: Returns data for a particular user
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/UserViewModel"
+        404:
+           description: User not found
+    put:
+      description: Updates a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserViewModel"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/UserViewModel"
+        404:
+          description: User not found
+  /users/{id}/delete:
+    post:
+      description: Deletes a user
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: User not found
   /users/{id}/roles:
     get:
       description: Returns the roles for a user
@@ -3602,31 +3728,7 @@ paths:
             items:
               $ref: "#/definitions/GroupMembershipViewModel"
         404:
-          description: User not found
-  /users/{id}/favourites:
-    get:
-      description: Returns a user's favourites of a given context type
-      tags:
-        - User
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserFavouriteViewModel"
-        "404":
-           description: User not found
-      parameters:
-        - name: id
-          in: path
-          description: id of User to fetch favorites for
-          required: true
-          type: integer
+          description: User not found  
   /users/{id}/notifications:
     get:
       description: Returns a user's notifications
@@ -3782,6 +3884,9 @@ definitions:
         format: int32
         type: integer
         description: The number of mobility aid passenger seats in the bus.
+      inspector:
+        $ref: '#/definitions/User'
+        description: The inspector assigned to this schoolbus
   SchoolBusNote:
     type: object
     description: Notes entered by users about a specific School Bus.
@@ -4119,19 +4224,6 @@ definitions:
       RIPInspectionId:
         type: string
         description: The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.
-  FavouriteContextType:
-    type: object
-    description: The name for a place in the UI where per user settings can be stored - for example, the School Bus search screen, School Bus Owner search screen, etc.
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      name:
-        type: string
-        description: Context Name known by the UI.
   UserFavourite:
     type: object
     description: User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.
@@ -4142,6 +4234,9 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
+      type:
+        type: string
+        description: The type of Favourite
       name:
         type: string
         description: The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.
@@ -4151,8 +4246,6 @@ definitions:
       isDefault:
         type: boolean
         description: True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied.
-      favouriteContextType:
-        $ref: '#/definitions/FavouriteContextType'
   Region:
     type: object
     required:
@@ -4335,14 +4428,6 @@ definitions:
         type: string
       smAuthorizationDirectory:
         type: string
-      userRoles:
-        type: array
-        items:
-          $ref: '#/definitions/UserRole'
-      groupMemberships:
-        type: array
-        items:
-          $ref: '#/definitions/GroupMembership'
   UserRole:
     type: object
     required:

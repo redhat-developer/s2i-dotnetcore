@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class CityApiUnitTest 
     { 
 		
-		private readonly CityApiController _CityApi;
+		private readonly CityController _CityApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
                     */
 
-                    CityApiService _service = new CityApiService(dbAppContext.Object);
+                    CityService _service = new CityService(dbAppContext.Object);
 			
-                    _CityApi = new CityApiController (_service);
+                    _CityApi = new CityController (_service);
 
 		}
 	

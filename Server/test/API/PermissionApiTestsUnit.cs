@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class PermissionApiUnitTest 
     { 
 		
-		private readonly PermissionApiController _PermissionApi;
+		private readonly PermissionController _PermissionApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
             */
 
-            PermissionApiService _service = new PermissionApiService(dbAppContext.Object);
+            PermissionService _service = new PermissionService(dbAppContext.Object);
 			
-                    _PermissionApi = new PermissionApiController (_service);
+                    _PermissionApi = new PermissionController (_service);
 
 		}
 	

@@ -533,6 +533,25 @@
             "table": null
         },
         {
+            "Description": "The inspector assigned to this schoolbus",
+            "Length": null,
+            "Name": "inspector",
+            "RefDef": "User",
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": "ref",
+            "string": null,
+            "table": null
+        },
+        {
             "Description": "Notes entered by users about a specific School Bus.",
             "Length": null,
             "Name": "SchoolBusNote",
@@ -2566,63 +2585,6 @@
             "table": null
         },
         {
-            "Description": "The name for a place in the UI where per user settings can be stored - for example, the School Bus search screen, School Bus Owner search screen, etc.",
-            "Length": null,
-            "Name": "FavouriteContextType",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "Context Name known by the UI.",
-            "Length": null,
-            "Name": "name",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
             "Description": "User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.",
             "Length": null,
             "Name": "UserFavourite",
@@ -2658,6 +2620,25 @@
             "links": null,
             "ref": null,
             "string": null,
+            "table": null
+        },
+        {
+            "Description": "The type of Favourite",
+            "Length": null,
+            "Name": "type",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
             "table": null
         },
         {
@@ -2714,25 +2695,6 @@
             "integer": null,
             "links": null,
             "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "favouriteContextType",
-            "RefDef": "FavouriteContextType",
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": "ref",
             "string": null,
             "table": null
         },
@@ -3809,50 +3771,6 @@
             "links": null,
             "ref": null,
             "string": "string",
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "userRoles",
-            "RefDef": "UserRole",
-            "Required": [
-                {
-                    "req": "id"
-                },
-                {
-                    "req": "active"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": "links",
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "groupMemberships",
-            "RefDef": "GroupMembership",
-            "Required": [
-                {
-                    "req": "id"
-                },
-                {
-                    "req": "active"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": "links",
-            "ref": null,
-            "string": null,
             "table": null
         },
         {

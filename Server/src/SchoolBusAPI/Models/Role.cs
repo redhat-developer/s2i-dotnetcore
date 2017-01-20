@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class Role : IEquatable<Role>
     {
         /// <summary>
@@ -46,16 +44,14 @@ namespace SchoolBusAPI.Models
         /// <param name="RolePermissions">RolePermissions.</param>
         /// <param name="UserRoles">UserRoles.</param>
         public Role(int Id, string Name, string Description, List<RolePermission> RolePermissions = null, List<UserRole> UserRoles = null)
-        {
-            
+        {   
             this.Id = Id;
-            
             this.Name = Name;
-            
             this.Description = Description;
+
+
             this.RolePermissions = RolePermissions;
             this.UserRoles = UserRoles;
-            
         }
 
         /// <summary>
@@ -64,27 +60,27 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
         public string Name { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         public string Description { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets RolePermissions
         /// </summary>
         public List<RolePermission> RolePermissions { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets UserRoles
         /// </summary>
         public List<UserRole> UserRoles { get; set; }
-
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -135,16 +131,16 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
-                    this.Id == other.Id ||                    
+                    this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
-                ) && 
+                ) &&                 
                 (
                     this.Description == other.Description ||
                     this.Description != null &&
@@ -173,20 +169,20 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                if (this.Name != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
-                }
-                if (this.Description != null)
+                }                
+                                if (this.Description != null)
                 {
                     hash = hash * 59 + this.Description.GetHashCode();
-                }
+                }                
+                                   
                 if (this.RolePermissions != null)
                 {
                     hash = hash * 59 + this.RolePermissions.GetHashCode();
-                }
+                }                   
                 if (this.UserRoles != null)
                 {
                     hash = hash * 59 + this.UserRoles.GetHashCode();
@@ -196,12 +192,24 @@ namespace SchoolBusAPI.Models
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(Role left, Role right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(Role left, Role right)
         {
             return !Equals(left, right);

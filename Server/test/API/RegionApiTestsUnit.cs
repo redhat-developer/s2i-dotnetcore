@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class RegionApiUnitTest 
     { 
 		
-		private readonly RegionApiController _RegionApi;
+		private readonly RegionController _RegionApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
             */
 
-            RegionApiService _service = new RegionApiService(dbAppContext.Object);
+            RegionService _service = new RegionService(dbAppContext.Object);
 			
-                    _RegionApi = new RegionApiController (_service);
+                    _RegionApi = new RegionController (_service);
 
 		}
 	

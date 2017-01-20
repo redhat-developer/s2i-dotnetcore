@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class UserApiUnitTest 
     { 
 		
-		private readonly UserApiController _UserApi;
+		private readonly UserController _UserApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
             */
 
-            UserApiService _service = new UserApiService(dbAppContext.Object);
+            UserService _service = new UserService(dbAppContext.Object);
 			
-                    _UserApi = new UserApiController (_service);
+                    _UserApi = new UserController (_service);
 
 		}
 	

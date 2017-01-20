@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class SchoolBusOwnerApiUnitTest 
     { 
 		
-		private readonly SchoolBusOwnerApiController _SchoolBusOwnerApi;
+		private readonly SchoolBusOwnerController _SchoolBusOwnerApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
             */
 
-            SchoolBusOwnerApiService _service = new SchoolBusOwnerApiService(dbAppContext.Object);
+            SchoolBusOwnerService _service = new SchoolBusOwnerService(dbAppContext.Object);
 			
-                    _SchoolBusOwnerApi = new SchoolBusOwnerApiController (_service);
+                    _SchoolBusOwnerApi = new SchoolBusOwnerController (_service);
 
 		}
 	

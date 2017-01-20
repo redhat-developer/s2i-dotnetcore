@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class SchoolBusOwnerContactPhone : IEquatable<SchoolBusOwnerContactPhone>
     {
         /// <summary>
@@ -44,12 +42,10 @@ namespace SchoolBusAPI.Models
         /// <param name="Type">The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list..</param>
         /// <param name="PhoneNumber">The phone number of the contact. Entered as free form to support a range of formats..</param>
         public SchoolBusOwnerContactPhone(int Id, string Type = null, string PhoneNumber = null)
-        {
-            
+        {   
             this.Id = Id;
             this.Type = Type;
             this.PhoneNumber = PhoneNumber;
-            
         }
 
         /// <summary>
@@ -58,21 +54,21 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
+        
         /// <summary>
         /// The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.
         /// </summary>
         /// <value>The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.</value>
         [MetaDataExtension (Description = "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.")]
         public string Type { get; set; }
-
+        
         /// <summary>
         /// The phone number of the contact. Entered as free form to support a range of formats.
         /// </summary>
         /// <value>The phone number of the contact. Entered as free form to support a range of formats.</value>
         [MetaDataExtension (Description = "The phone number of the contact. Entered as free form to support a range of formats.")]
         public string PhoneNumber { get; set; }
-
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -121,17 +117,16 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Type == other.Type ||
                     this.Type != null &&
                     this.Type.Equals(other.Type)
-                ) && 
+                ) &&                 
                 (
                     this.PhoneNumber == other.PhoneNumber ||
                     this.PhoneNumber != null &&
@@ -150,27 +145,39 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                if (this.Type != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.Type != null)
                 {
                     hash = hash * 59 + this.Type.GetHashCode();
-                }
-                if (this.PhoneNumber != null)
+                }                
+                                if (this.PhoneNumber != null)
                 {
                     hash = hash * 59 + this.PhoneNumber.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SchoolBusOwnerContactPhone left, SchoolBusOwnerContactPhone right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SchoolBusOwnerContactPhone left, SchoolBusOwnerContactPhone right)
         {
             return !Equals(left, right);

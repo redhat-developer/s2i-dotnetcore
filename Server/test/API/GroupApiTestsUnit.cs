@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class GroupApiUnitTest 
     { 
 		
-		private readonly GroupApiController _GroupApi;
+		private readonly GroupController _GroupApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
             */
 
-            GroupApiService _service = new GroupApiService(dbAppContext.Object);
+            GroupService _service = new GroupService(dbAppContext.Object);
 			
-                    _GroupApi = new GroupApiController (_service);
+                    _GroupApi = new GroupController (_service);
 
 		}
 	

@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class GroupMembership : IEquatable<GroupMembership>
     {
         /// <summary>
@@ -45,14 +43,12 @@ namespace SchoolBusAPI.Models
         /// <param name="Group">Group.</param>
         /// <param name="User">User.</param>
         public GroupMembership(int Id, bool Active, Group Group = null, User User = null)
-        {
-            
+        {   
             this.Id = Id;
-            
             this.Active = Active;
+
             this.Group = Group;
             this.User = User;
-            
         }
 
         /// <summary>
@@ -61,22 +57,34 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets Active
         /// </summary>
         public bool Active { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets Group
         /// </summary>
         public Group Group { get; set; }
-
+        
+        /// <summary>
+        /// Foreign key for Group 
+        /// </summary>       
+        [ForeignKey("Group")]
+        public int? GroupRefId { get; set; }
+        
         /// <summary>
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
-
+        
+        /// <summary>
+        /// Foreign key for User 
+        /// </summary>       
+        [ForeignKey("User")]
+        public int? UserRefId { get; set; }
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -126,20 +134,20 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Active == other.Active ||
                     this.Active.Equals(other.Active)
-                ) && 
+                ) &&                 
                 (
                     this.Group == other.Group ||
                     this.Group != null &&
                     this.Group.Equals(other.Group)
-                ) && 
+                ) &&                 
                 (
                     this.User == other.User ||
                     this.User != null &&
@@ -158,17 +166,14 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
-
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                   
                 hash = hash * 59 + this.Active.GetHashCode();
-
+                                   
                 if (this.Group != null)
                 {
                     hash = hash * 59 + this.Group.GetHashCode();
-                }
+                }                   
                 if (this.User != null)
                 {
                     hash = hash * 59 + this.User.GetHashCode();
@@ -178,12 +183,24 @@ namespace SchoolBusAPI.Models
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(GroupMembership left, GroupMembership right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(GroupMembership left, GroupMembership right)
         {
             return !Equals(left, right);

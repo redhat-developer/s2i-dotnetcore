@@ -26,7 +26,6 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The history of updates made to a School Bus. Exact format of the history TBD.")]
 
-
     public partial class SchoolBusHistory : IEquatable<SchoolBusHistory>
     {
         /// <summary>
@@ -43,11 +42,9 @@ namespace SchoolBusAPI.Models
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="SchoolBus">SchoolBus.</param>
         public SchoolBusHistory(int Id, SchoolBus SchoolBus = null)
-        {
-            
+        {   
             this.Id = Id;
             this.SchoolBus = SchoolBus;
-            
         }
 
         /// <summary>
@@ -56,12 +53,18 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets SchoolBus
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
-
+        
+        /// <summary>
+        /// Foreign key for SchoolBus 
+        /// </summary>       
+        [ForeignKey("SchoolBus")]
+        public int? SchoolBusRefId { get; set; }
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -109,11 +112,11 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
-                    this.Id == other.Id ||                    
+                    this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.SchoolBus == other.SchoolBus ||
                     this.SchoolBus != null &&
@@ -132,8 +135,8 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                hash = hash * 59 + this.Id.GetHashCode();
-                
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                   
                 if (this.SchoolBus != null)
                 {
                     hash = hash * 59 + this.SchoolBus.GetHashCode();
@@ -143,12 +146,24 @@ namespace SchoolBusAPI.Models
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SchoolBusHistory left, SchoolBusHistory right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SchoolBusHistory left, SchoolBusHistory right)
         {
             return !Equals(left, right);

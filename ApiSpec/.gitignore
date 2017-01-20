@@ -1,4 +1,4 @@
 .DS_Store
-~*
-*.bck
-orig.*
+node_modules
+dist
+*.bk

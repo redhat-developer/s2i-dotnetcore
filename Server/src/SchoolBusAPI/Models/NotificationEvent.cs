@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class NotificationEvent : IEquatable<NotificationEvent>
     {
         /// <summary>
@@ -47,9 +45,8 @@ namespace SchoolBusAPI.Models
         /// <param name="Notes">Notes.</param>
         /// <param name="NotificationGenerated">NotificationGenerated.</param>
         /// <param name="SchoolBus">SchoolBus.</param>
-        public NotificationEvent(int Id, string EventTime = null, string EventTypeCode = null, string EventSubTypeCode = null, string Notes = null, bool? NotificationGenerated = null, SchoolBus SchoolBus = null)
-        {
-            
+        public NotificationEvent(int Id, DateTime? EventTime = null, string EventTypeCode = null, string EventSubTypeCode = null, string Notes = null, bool? NotificationGenerated = null, SchoolBus SchoolBus = null)
+        {   
             this.Id = Id;
             this.EventTime = EventTime;
             this.EventTypeCode = EventTypeCode;
@@ -57,7 +54,6 @@ namespace SchoolBusAPI.Models
             this.Notes = Notes;
             this.NotificationGenerated = NotificationGenerated;
             this.SchoolBus = SchoolBus;
-            
         }
 
         /// <summary>
@@ -66,39 +62,43 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets EventTime
         /// </summary>
-        public string EventTime { get; set; }
-
+        public DateTime? EventTime { get; set; }
+        
         /// <summary>
         /// Gets or Sets EventTypeCode
         /// </summary>
         public string EventTypeCode { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets EventSubTypeCode
         /// </summary>
         public string EventSubTypeCode { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets Notes
         /// </summary>
         public string Notes { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets NotificationGenerated
         /// </summary>
         public bool? NotificationGenerated { get; set; }
-
+        
         /// <summary>
         /// Gets or Sets SchoolBus
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
+        
+        /// <summary>
+        /// Foreign key for SchoolBus 
+        /// </summary>       
         [ForeignKey("SchoolBus")]
         public int? SchoolBusRefId { get; set; }
-
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -151,37 +151,36 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
-                    this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.EventTime == other.EventTime ||
                     this.EventTime != null &&
                     this.EventTime.Equals(other.EventTime)
-                ) && 
+                ) &&                 
                 (
                     this.EventTypeCode == other.EventTypeCode ||
                     this.EventTypeCode != null &&
                     this.EventTypeCode.Equals(other.EventTypeCode)
-                ) && 
+                ) &&                 
                 (
                     this.EventSubTypeCode == other.EventSubTypeCode ||
                     this.EventSubTypeCode != null &&
                     this.EventSubTypeCode.Equals(other.EventSubTypeCode)
-                ) && 
+                ) &&                 
                 (
                     this.Notes == other.Notes ||
                     this.Notes != null &&
                     this.Notes.Equals(other.Notes)
-                ) && 
+                ) &&                 
                 (
                     this.NotificationGenerated == other.NotificationGenerated ||
                     this.NotificationGenerated != null &&
                     this.NotificationGenerated.Equals(other.NotificationGenerated)
-                ) && 
+                ) &&                 
                 (
                     this.SchoolBus == other.SchoolBus ||
                     this.SchoolBus != null &&
@@ -200,30 +199,28 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Id != null)
-                {
-                    hash = hash * 59 + this.Id.GetHashCode();
-                }
-                if (this.EventTime != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.EventTime != null)
                 {
                     hash = hash * 59 + this.EventTime.GetHashCode();
-                }
-                if (this.EventTypeCode != null)
+                }                
+                                if (this.EventTypeCode != null)
                 {
                     hash = hash * 59 + this.EventTypeCode.GetHashCode();
-                }
-                if (this.EventSubTypeCode != null)
+                }                
+                                if (this.EventSubTypeCode != null)
                 {
                     hash = hash * 59 + this.EventSubTypeCode.GetHashCode();
-                }
-                if (this.Notes != null)
+                }                
+                                if (this.Notes != null)
                 {
                     hash = hash * 59 + this.Notes.GetHashCode();
-                }
-                if (this.NotificationGenerated != null)
+                }                
+                                if (this.NotificationGenerated != null)
                 {
                     hash = hash * 59 + this.NotificationGenerated.GetHashCode();
-                }
+                }                
+                                   
                 if (this.SchoolBus != null)
                 {
                     hash = hash * 59 + this.SchoolBus.GetHashCode();
@@ -233,12 +230,24 @@ namespace SchoolBusAPI.Models
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(NotificationEvent left, NotificationEvent right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(NotificationEvent left, NotificationEvent right)
         {
             return !Equals(left, right);
