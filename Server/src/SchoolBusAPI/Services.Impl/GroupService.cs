@@ -41,6 +41,36 @@ namespace SchoolBusAPI.Services.Impl
         }
 
         /// <summary>
+        /// returns users in a given Group
+        /// </summary>
+        /// <remarks>Used to get users in a given Group</remarks>
+        /// <param name="id">id of Group to fetch Users for</param>
+        /// <response code="200">OK</response>
+        public IActionResult GroupsIdUsersGetAsync(int id)
+        {
+            bool exists = _context.Groups.Any(a => a.Id == id);
+            if (exists)
+            {
+                var result = new List<User>();
+                var data = _context.GroupMemberships
+                    .Include("User")
+                    .Where(x => x.Group.Id == id);
+                
+                // extract the users
+                foreach (var item in data)
+                {
+                    result.Add(item.User);
+                }
+                return new ObjectResult(result.ToList());
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="items"></param>
@@ -159,7 +189,17 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="201">Group created</response>
         public IActionResult GroupsPostAsync(Group item)
         {
-            _context.Groups.Add(item);
+            var exists = _context.Groups.Any(a => a.Id == item.Id);
+            if (exists)
+            {
+                _context.Groups.Update(item);                
+            }
+            else
+            {
+                // record not found
+                _context.Groups.Add(item);
+            }
+            
             _context.SaveChanges();
             return new ObjectResult(item);
         }

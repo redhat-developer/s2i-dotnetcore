@@ -112,6 +112,21 @@ namespace SchoolBusAPI.Controllers
         }
 
         /// <summary>
+        /// returns users in a given Group
+        /// </summary>
+        /// <remarks>Used to get users in a given Group</remarks>
+        /// <param name="id">id of Group to fetch Users for</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/groups/{id}/users")]
+        [SwaggerOperation("GroupsIdUsersGet")]
+        [SwaggerResponse(200, type: typeof(List<User>))]
+        public virtual IActionResult GroupsIdUsersGet([FromRoute]int id)
+        {
+            return this._service.GroupsIdUsersGetAsync(id);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="item"></param>
