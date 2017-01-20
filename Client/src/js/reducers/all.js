@@ -5,6 +5,7 @@ import userReducer from './user';
 import searchReducer from './search';
 import modelsReducer from './models';
 import lookupsReducer from './lookups';
+import versionReducer from './version';
 
 
 export default combineReducers({
@@ -13,4 +14,5 @@ export default combineReducers({
   search  : searchReducer,
   models  : modelsReducer,
   lookups : lookupsReducer,
+  version : versionReducer,
 });

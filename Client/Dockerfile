@@ -2,7 +2,7 @@ FROM microsoft/dotnet:1.1.0-sdk-projectjson
 # Dockerfile for package SchoolBusClient
 
 # install rlwrap
- 
+
 RUN apt-get update \
  && apt-get upgrade -y --force-yes \
  && apt-get install rlwrap bzip2 \
@@ -20,7 +20,7 @@ RUN apt-get update \
 
 # copy Node.js packages
 
-COPY /package.json /app/out/src/ 
+COPY /package.json /app/out/src/
 WORKDIR /app/out/src
 
 ENV NODE_ENV production
@@ -28,9 +28,9 @@ ENV NODE_ENV production
 RUN npm install
 
 # copy the full source
-COPY . /app/out/src 
+COPY . /app/out/src
 
 # compile the source
 
-RUN ./node_modules/.bin/gulp --production  
+RUN ./node_modules/.bin/gulp --production --commit=$OPENSHIFT_BUILD_COMMIT
 
