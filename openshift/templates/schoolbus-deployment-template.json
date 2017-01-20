@@ -136,7 +136,7 @@
                 "env": [
                   {
                     "name": "MIDDLEWARE_NAME",
-                    "value": "${MIDDLEWARE_NAME}:8080"
+                    "value": "${BACKEND_NAME}:8080"
                   },
                   {
                     "name": "BACKEND_NAME",
@@ -687,7 +687,7 @@
           }
         ],
         "selector": {
-          "name": "${RPROXY_NAME}"
+          "app": "${RPROXY_NAME}"
         }
       }
     },
@@ -701,7 +701,7 @@
         "host": "${APPLICATION_DOMAIN}",		
         "to": {
           "kind": "Service",
-          "app": "${RPROXY_NAME}"
+		  "name": "${RPROXY_NAME}"
 		},
 		"tls": {
             "termination": "edge"
@@ -978,7 +978,7 @@
       "name": "FRONTEND_IMAGE_NAME",
       "displayName": "Application Frontend image name.",
       "description": "Application Frontend image name.",
-      "value": "client",
+      "value": "frontend",
       "required": true
     },
 	{
