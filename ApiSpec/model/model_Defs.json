@@ -2718,6 +2718,25 @@
             "table": null
         },
         {
+            "Description": "The User who has this Favourite",
+            "Length": null,
+            "Name": "User",
+            "RefDef": "User",
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": "ref",
+            "string": null,
+            "table": null
+        },
+        {
             "Description": null,
             "Length": null,
             "Name": "Region",

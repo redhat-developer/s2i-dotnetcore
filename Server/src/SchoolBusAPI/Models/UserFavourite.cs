@@ -44,13 +44,15 @@ namespace SchoolBusAPI.Models
         /// <param name="Name">The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed..</param>
         /// <param name="Value">The settings saved by the user. In general,  a UI defined chunk of json that stores the settings in place when the user created the favourite..</param>
         /// <param name="IsDefault">True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied..</param>
-        public UserFavourite(int Id, string Type = null, string Name = null, string Value = null, bool? IsDefault = null)
+        /// <param name="User">The User who has this Favourite.</param>
+        public UserFavourite(int Id, string Type = null, string Name = null, string Value = null, bool? IsDefault = null, User User = null)
         {   
             this.Id = Id;
             this.Type = Type;
             this.Name = Name;
             this.Value = Value;
             this.IsDefault = IsDefault;
+            this.User = User;
         }
 
         /// <summary>
@@ -89,6 +91,19 @@ namespace SchoolBusAPI.Models
         public bool? IsDefault { get; set; }
         
         /// <summary>
+        /// The User who has this Favourite
+        /// </summary>
+        /// <value>The User who has this Favourite</value>
+        [MetaDataExtension (Description = "The User who has this Favourite")]
+        public User User { get; set; }
+        
+        /// <summary>
+        /// Foreign key for User 
+        /// </summary>       
+        [ForeignKey("User")]
+        public int? UserRefId { get; set; }
+        
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -101,6 +116,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("  IsDefault: ").Append(IsDefault).Append("\n");
+            sb.Append("  User: ").Append(User).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -162,6 +178,11 @@ namespace SchoolBusAPI.Models
                     this.IsDefault == other.IsDefault ||
                     this.IsDefault != null &&
                     this.IsDefault.Equals(other.IsDefault)
+                ) &&                 
+                (
+                    this.User == other.User ||
+                    this.User != null &&
+                    this.User.Equals(other.User)
                 );
         }
 
@@ -193,7 +214,11 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.IsDefault.GetHashCode();
                 }                
-                
+                                   
+                if (this.User != null)
+                {
+                    hash = hash * 59 + this.User.GetHashCode();
+                }
                 return hash;
             }
         }

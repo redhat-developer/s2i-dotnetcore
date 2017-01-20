@@ -142,11 +142,10 @@ namespace SchoolBusAPI
         }
 
         /// <summary>
-        /// Set a column comment
+        /// Set a table description
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columnName"></param>
-        /// <param name="description"></param>
+        /// <param name="tableName">Name of the table</param>        
+        /// <param name="description">Description text for the table</param>
         private void SetTableDescription(string tableName, string description)
         {
             // Postgres has the COMMENT command to update a description.

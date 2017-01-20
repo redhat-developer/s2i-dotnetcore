@@ -3563,6 +3563,84 @@ paths:
           description: OK
         404:
           description: User not found
+  /users/{id}/favourites:
+    get:
+      description: Returns the favourites for a user
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserFavourite"
+        404:
+           description: User not found
+    post:
+      description: Adds favourites to a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserFavourite"
+      responses:
+        200:
+          description: Favourites added to user          
+    put:
+      description: Updates the favourites for a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: id
+          in: path
+          description: id of User to update
+          required: true
+          type: integer
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserFavourite"
+      responses:
+        200:
+          description: OK          
+        404:
+          description: User not found
   /users/{id}/roles:
     get:
       description: Returns the roles for a user
@@ -4283,6 +4361,9 @@ definitions:
       isDefault:
         type: boolean
         description: True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied.
+      User:
+        $ref: '#/definitions/User'
+        description: The User who has this Favourite
   Region:
     type: object
     required:
