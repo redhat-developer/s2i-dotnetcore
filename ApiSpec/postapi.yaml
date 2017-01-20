@@ -45,6 +45,13 @@
           type: array
           items:
             type: integer
+        - name: districts
+          in: query
+          description: Districts (array of id numbers)
+          collectionFormat: multi
+          type: array
+          items:
+            type: integer
         - name: inspectors
           in: query
           description: Assigned School Bus Inspectors (array of id numbers)
