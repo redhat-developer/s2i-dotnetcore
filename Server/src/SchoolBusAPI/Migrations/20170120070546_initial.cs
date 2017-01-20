@@ -64,24 +64,11 @@ namespace SchoolBusAPI.Migrations
                 {
                     CITY_ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    _CITY = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SBI_CITY", x => x.CITY_ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SBI_FAVOURITE_CONTEXT_TYPE",
-                columns: table => new
-                {
-                    FAVOURITE_CONTEXT_TYPE_ID = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     NAME = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SBI_FAVOURITE_CONTEXT_TYPE", x => x.FAVOURITE_CONTEXT_TYPE_ID);
+                    table.PrimaryKey("PK_SBI_CITY", x => x.CITY_ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -148,7 +135,9 @@ namespace SchoolBusAPI.Migrations
                 columns: table => new
                 {
                     SCHOOL_DISTRICT_ID = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    NAME = table.Column<string>(nullable: true),
+                    SHORT_NAME = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -181,20 +170,14 @@ namespace SchoolBusAPI.Migrations
                 {
                     USER_FAVOURITE_ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    FAVOURITE_CONTEXT_TYPE_ID = table.Column<int>(nullable: true),
                     IS_DEFAULT = table.Column<bool>(nullable: true),
                     NAME = table.Column<string>(nullable: true),
+                    TYPE = table.Column<string>(nullable: true),
                     VALUE = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SBI_USER_FAVOURITE", x => x.USER_FAVOURITE_ID);
-                    table.ForeignKey(
-                        name: "FK_SBI_USER_FAVOURITE_SBI_FAVOURITE_CONTEXT_TYPE_FAVOURITE_CONTEXT_TYPE_ID",
-                        column: x => x.FAVOURITE_CONTEXT_TYPE_ID,
-                        principalTable: "SBI_FAVOURITE_CONTEXT_TYPE",
-                        principalColumn: "FAVOURITE_CONTEXT_TYPE_ID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,7 +189,7 @@ namespace SchoolBusAPI.Migrations
                     END_DATE = table.Column<DateTime>(nullable: true),
                     MINISTRY_DISTRICT_ID = table.Column<int>(nullable: true),
                     NAME = table.Column<string>(nullable: true),
-                    REGION_REF_ID = table.Column<int>(nullable: false),
+                    REGION_REF_ID = table.Column<int>(nullable: true),
                     START_DATE = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
@@ -217,7 +200,7 @@ namespace SchoolBusAPI.Migrations
                         column: x => x.REGION_REF_ID,
                         principalTable: "SBI_REGION",
                         principalColumn: "REGION_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -281,21 +264,21 @@ namespace SchoolBusAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     EFFECTIVE_DATE = table.Column<DateTime>(nullable: false),
                     EXPIRY_DATE = table.Column<DateTime>(nullable: true),
-                    ROLE_ID = table.Column<int>(nullable: true),
-                    USER_ID = table.Column<int>(nullable: true)
+                    ROLE_REF_ID = table.Column<int>(nullable: true),
+                    USER_REF_ID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SBI_USER_ROLE", x => x.USER_ROLE_ID);
                     table.ForeignKey(
-                        name: "FK_SBI_USER_ROLE_SBI_ROLE_ROLE_ID",
-                        column: x => x.ROLE_ID,
+                        name: "FK_SBI_USER_ROLE_SBI_ROLE_ROLE_REF_ID",
+                        column: x => x.ROLE_REF_ID,
                         principalTable: "SBI_ROLE",
                         principalColumn: "ROLE_ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SBI_USER_ROLE_SBI_USER_USER_ID",
-                        column: x => x.USER_ID,
+                        name: "FK_SBI_USER_ROLE_SBI_USER_USER_REF_ID",
+                        column: x => x.USER_REF_ID,
                         principalTable: "SBI_USER",
                         principalColumn: "USER_ID",
                         onDelete: ReferentialAction.Restrict);
@@ -307,7 +290,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     SERVICE_AREA_ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    DISTRICT_ID = table.Column<int>(nullable: true),
+                    DISTRICT_REF_ID = table.Column<int>(nullable: true),
                     END_DATE = table.Column<DateTime>(nullable: true),
                     MINISTRY_SERVICE_AREA_ID = table.Column<int>(nullable: true),
                     NAME = table.Column<string>(nullable: true),
@@ -317,8 +300,8 @@ namespace SchoolBusAPI.Migrations
                 {
                     table.PrimaryKey("PK_SBI_SERVICE_AREA", x => x.SERVICE_AREA_ID);
                     table.ForeignKey(
-                        name: "FK_SBI_SERVICE_AREA_SBI_DISTRICT_DISTRICT_ID",
-                        column: x => x.DISTRICT_ID,
+                        name: "FK_SBI_SERVICE_AREA_SBI_DISTRICT_DISTRICT_REF_ID",
+                        column: x => x.DISTRICT_REF_ID,
                         principalTable: "SBI_DISTRICT",
                         principalColumn: "DISTRICT_ID",
                         onDelete: ReferentialAction.Restrict);
@@ -330,14 +313,15 @@ namespace SchoolBusAPI.Migrations
                 {
                     SCHOOL_BUS_ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    BUS_LOCATION_ADDR1 = table.Column<string>(nullable: true),
-                    BUS_LOCATION_ADDR2 = table.Column<string>(nullable: true),
-                    BUS_LOCATION_CITY_ID = table.Column<int>(nullable: true),
-                    BUS_LOCATION_POST_CODE = table.Column<string>(nullable: true),
-                    BUS_LOCATION_PROV = table.Column<string>(nullable: true),
+                    HOME_TERMINAL_ADDR1 = table.Column<string>(nullable: true),
+                    HOME_TERMINAL_ADDR2 = table.Column<string>(nullable: true),
+                    HOME_TERMINAL_CITY_REF_ID = table.Column<int>(nullable: true),
+                    HOME_TERMINAL_COMMENT = table.Column<string>(nullable: true),
+                    HOME_TERMINAL_POSTAL_CODE = table.Column<string>(nullable: true),
+                    HOME_TERMINAL_PROVINCE = table.Column<string>(nullable: true),
+                    INSPECTOR_REF_ID = table.Column<int>(nullable: true),
                     IS_INDEPENDENT_SCHOOL = table.Column<bool>(nullable: true),
                     IS_OUT_OF_PROVINCE = table.Column<bool>(nullable: true),
-                    LOCATION_ID = table.Column<int>(nullable: true),
                     MOBILITY_AID_CAPACITY = table.Column<int>(nullable: true),
                     NAME_OF_INDEPENDENT_SCHOOL = table.Column<string>(nullable: true),
                     NEXT_INSPECTION_DATE = table.Column<DateTime>(nullable: true),
@@ -346,11 +330,14 @@ namespace SchoolBusAPI.Migrations
                     PLATE = table.Column<string>(nullable: true),
                     REGI = table.Column<string>(nullable: true),
                     RESTRICTIONS = table.Column<string>(nullable: true),
+                    SCHOOL_BUS_BODY_TYPE = table.Column<string>(nullable: true),
+                    SCHOOL_BUS_BODY_TYPE_OTHER = table.Column<string>(nullable: true),
                     SCHOOL_BUS_CLASS = table.Column<string>(nullable: true),
-                    SCHOOL_BUS_DISTRICT_ID = table.Column<int>(nullable: true),
-                    SCHOOL_BUS_OWNER_ID = table.Column<int>(nullable: true),
+                    SCHOOL_BUS_DISTRICT_REF_ID = table.Column<int>(nullable: true),
+                    SCHOOL_BUS_OWNER_REF_ID = table.Column<int>(nullable: true),
                     SCHOOL_BUS_SEATING_CAPACITY = table.Column<int>(nullable: true),
                     SCHOOL_BUS_UNIT_NUMBER = table.Column<string>(nullable: true),
+                    SERVICE_AREA_REF_ID = table.Column<int>(nullable: true),
                     STATUS = table.Column<string>(nullable: true),
                     VIN = table.Column<string>(nullable: true)
                 },
@@ -358,22 +345,28 @@ namespace SchoolBusAPI.Migrations
                 {
                     table.PrimaryKey("PK_SBI_SCHOOL_BUS", x => x.SCHOOL_BUS_ID);
                     table.ForeignKey(
-                        name: "FK_SBI_SCHOOL_BUS_SBI_CITY_BUS_LOCATION_CITY_ID",
-                        column: x => x.BUS_LOCATION_CITY_ID,
+                        name: "FK_SBI_SCHOOL_BUS_SBI_CITY_HOME_TERMINAL_CITY_REF_ID",
+                        column: x => x.HOME_TERMINAL_CITY_REF_ID,
                         principalTable: "SBI_CITY",
                         principalColumn: "CITY_ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SBI_SCHOOL_BUS_SBI_SERVICE_AREA_LOCATION_ID",
-                        column: x => x.LOCATION_ID,
-                        principalTable: "SBI_SERVICE_AREA",
-                        principalColumn: "SERVICE_AREA_ID",
+                        name: "FK_SBI_SCHOOL_BUS_SBI_USER_INSPECTOR_REF_ID",
+                        column: x => x.INSPECTOR_REF_ID,
+                        principalTable: "SBI_USER",
+                        principalColumn: "USER_ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SBI_SCHOOL_BUS_SBI_SCHOOL_DISTRICT_SCHOOL_BUS_DISTRICT_ID",
-                        column: x => x.SCHOOL_BUS_DISTRICT_ID,
+                        name: "FK_SBI_SCHOOL_BUS_SBI_SCHOOL_DISTRICT_SCHOOL_BUS_DISTRICT_REF_ID",
+                        column: x => x.SCHOOL_BUS_DISTRICT_REF_ID,
                         principalTable: "SBI_SCHOOL_DISTRICT",
                         principalColumn: "SCHOOL_DISTRICT_ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SBI_SCHOOL_BUS_SBI_SERVICE_AREA_SERVICE_AREA_REF_ID",
+                        column: x => x.SERVICE_AREA_REF_ID,
+                        principalTable: "SBI_SERVICE_AREA",
+                        principalColumn: "SERVICE_AREA_ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -385,6 +378,7 @@ namespace SchoolBusAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     INSPECTION_DATE = table.Column<DateTime>(nullable: true),
                     INSPECTION_RESULT = table.Column<string>(nullable: true),
+                    INSPECTION_TYPE = table.Column<string>(nullable: true),
                     INSPECTOR_REF_ID = table.Column<int>(nullable: true),
                     NOTES = table.Column<string>(nullable: true),
                     RIPINSPECTION_ID = table.Column<string>(nullable: true),
@@ -415,7 +409,7 @@ namespace SchoolBusAPI.Migrations
                     NOTIFICATION_EVENT_ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     EVENT_SUB_TYPE_CODE = table.Column<string>(nullable: true),
-                    EVENT_TIME = table.Column<string>(nullable: true),
+                    EVENT_TIME = table.Column<DateTime>(nullable: true),
                     EVENT_TYPE_CODE = table.Column<string>(nullable: true),
                     NOTES = table.Column<string>(nullable: true),
                     NOTIFICATION_GENERATED = table.Column<bool>(nullable: true),
@@ -441,14 +435,14 @@ namespace SchoolBusAPI.Migrations
                     DESCRIPTION = table.Column<string>(nullable: true),
                     EXTERNAL_FILE_NAME = table.Column<string>(nullable: true),
                     INTERNAL_FILE_NAME = table.Column<string>(nullable: true),
-                    SCHOOL_BUS_ID = table.Column<int>(nullable: true)
+                    SCHOOL_BUS_REF_ID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SBI_SCHOOL_BUS_ATTACHMENT", x => x.SCHOOL_BUS_ATTACHMENT_ID);
                     table.ForeignKey(
-                        name: "FK_SBI_SCHOOL_BUS_ATTACHMENT_SBI_SCHOOL_BUS_SCHOOL_BUS_ID",
-                        column: x => x.SCHOOL_BUS_ID,
+                        name: "FK_SBI_SCHOOL_BUS_ATTACHMENT_SBI_SCHOOL_BUS_SCHOOL_BUS_REF_ID",
+                        column: x => x.SCHOOL_BUS_REF_ID,
                         principalTable: "SBI_SCHOOL_BUS",
                         principalColumn: "SCHOOL_BUS_ID",
                         onDelete: ReferentialAction.Restrict);
@@ -500,7 +494,7 @@ namespace SchoolBusAPI.Migrations
                 {
                     NOTIFICATION_ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    EVENT_REF2_ID = table.Column<int>(nullable: true),
+                    EVENT2_REF_ID = table.Column<int>(nullable: true),
                     EVENT_REF_ID = table.Column<int>(nullable: true),
                     HAS_BEEN_VIEWED = table.Column<bool>(nullable: true),
                     IS_ALL_DAY = table.Column<bool>(nullable: true),
@@ -513,8 +507,8 @@ namespace SchoolBusAPI.Migrations
                 {
                     table.PrimaryKey("PK_SBI_NOTIFICATION", x => x.NOTIFICATION_ID);
                     table.ForeignKey(
-                        name: "FK_SBI_NOTIFICATION_SBI_NOTIFICATION_EVENT_EVENT_REF2_ID",
-                        column: x => x.EVENT_REF2_ID,
+                        name: "FK_SBI_NOTIFICATION_SBI_NOTIFICATION_EVENT_EVENT2_REF_ID",
+                        column: x => x.EVENT2_REF_ID,
                         principalTable: "SBI_NOTIFICATION_EVENT",
                         principalColumn: "NOTIFICATION_EVENT_ID",
                         onDelete: ReferentialAction.Restrict);
@@ -557,7 +551,7 @@ namespace SchoolBusAPI.Migrations
                     GIVEN_NAME = table.Column<string>(nullable: true),
                     NOTES = table.Column<string>(nullable: true),
                     ROLE = table.Column<string>(nullable: true),
-                    SCHOOL_BUS_OWNER_REF_ID = table.Column<int>(nullable: true),
+                    SCHOOL_BUS_OWNER_ID = table.Column<int>(nullable: true),
                     SURNAME = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -607,15 +601,15 @@ namespace SchoolBusAPI.Migrations
                     CITY = table.Column<string>(nullable: true),
                     POSTAL_CODE = table.Column<string>(nullable: true),
                     PROVINCE = table.Column<string>(nullable: true),
-                    SCHOOL_BUS_OWNER_CONTACT_REF_ID = table.Column<int>(nullable: true),
+                    SCHOOL_BUS_OWNER_CONTACT_ID = table.Column<int>(nullable: true),
                     TYPE = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SBI_SCHOOL_BUS_OWNER_CONTACT_ADDRESS", x => x.SCHOOL_BUS_OWNER_CONTACT_ADDRESS_ID);
                     table.ForeignKey(
-                        name: "FK_SBI_SCHOOL_BUS_OWNER_CONTACT_ADDRESS_SBI_SCHOOL_BUS_OWNER_CONTACT_SCHOOL_BUS_OWNER_CONTACT_REF_ID",
-                        column: x => x.SCHOOL_BUS_OWNER_CONTACT_REF_ID,
+                        name: "FK_SBI_SCHOOL_BUS_OWNER_CONTACT_ADDRESS_SBI_SCHOOL_BUS_OWNER_CONTACT_SCHOOL_BUS_OWNER_CONTACT_ID",
+                        column: x => x.SCHOOL_BUS_OWNER_CONTACT_ID,
                         principalTable: "SBI_SCHOOL_BUS_OWNER_CONTACT",
                         principalColumn: "SCHOOL_BUS_OWNER_CONTACT_ID",
                         onDelete: ReferentialAction.Restrict);
@@ -628,15 +622,15 @@ namespace SchoolBusAPI.Migrations
                     SCHOOL_BUS_OWNER_CONTACT_PHONE_ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     PHONE_NUMBER = table.Column<string>(nullable: true),
-                    SCHOOL_BUS_OWNER_CONTACT_REF_ID = table.Column<int>(nullable: true),
+                    SCHOOL_BUS_OWNER_CONTACT_ID = table.Column<int>(nullable: true),
                     TYPE = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SBI_SCHOOL_BUS_OWNER_CONTACT_PHONE", x => x.SCHOOL_BUS_OWNER_CONTACT_PHONE_ID);
                     table.ForeignKey(
-                        name: "FK_SBI_SCHOOL_BUS_OWNER_CONTACT_PHONE_SBI_SCHOOL_BUS_OWNER_CONTACT_SCHOOL_BUS_OWNER_CONTACT_REF_ID",
-                        column: x => x.SCHOOL_BUS_OWNER_CONTACT_REF_ID,
+                        name: "FK_SBI_SCHOOL_BUS_OWNER_CONTACT_PHONE_SBI_SCHOOL_BUS_OWNER_CONTACT_SCHOOL_BUS_OWNER_CONTACT_ID",
+                        column: x => x.SCHOOL_BUS_OWNER_CONTACT_ID,
                         principalTable: "SBI_SCHOOL_BUS_OWNER_CONTACT",
                         principalColumn: "SCHOOL_BUS_OWNER_CONTACT_ID",
                         onDelete: ReferentialAction.Restrict);
@@ -708,9 +702,9 @@ namespace SchoolBusAPI.Migrations
                 column: "SCHOOL_BUS_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_NOTIFICATION_EVENT_REF2_ID",
+                name: "IX_SBI_NOTIFICATION_EVENT2_REF_ID",
                 table: "SBI_NOTIFICATION",
-                column: "EVENT_REF2_ID");
+                column: "EVENT2_REF_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SBI_NOTIFICATION_EVENT_REF_ID",
@@ -738,29 +732,34 @@ namespace SchoolBusAPI.Migrations
                 column: "ROLE_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_SCHOOL_BUS_BUS_LOCATION_CITY_ID",
+                name: "IX_SBI_SCHOOL_BUS_HOME_TERMINAL_CITY_REF_ID",
                 table: "SBI_SCHOOL_BUS",
-                column: "BUS_LOCATION_CITY_ID");
+                column: "HOME_TERMINAL_CITY_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_SCHOOL_BUS_LOCATION_ID",
+                name: "IX_SBI_SCHOOL_BUS_INSPECTOR_REF_ID",
                 table: "SBI_SCHOOL_BUS",
-                column: "LOCATION_ID");
+                column: "INSPECTOR_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_SCHOOL_BUS_SCHOOL_BUS_DISTRICT_ID",
+                name: "IX_SBI_SCHOOL_BUS_SCHOOL_BUS_DISTRICT_REF_ID",
                 table: "SBI_SCHOOL_BUS",
-                column: "SCHOOL_BUS_DISTRICT_ID");
+                column: "SCHOOL_BUS_DISTRICT_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_SCHOOL_BUS_SCHOOL_BUS_OWNER_ID",
+                name: "IX_SBI_SCHOOL_BUS_SCHOOL_BUS_OWNER_REF_ID",
                 table: "SBI_SCHOOL_BUS",
-                column: "SCHOOL_BUS_OWNER_ID");
+                column: "SCHOOL_BUS_OWNER_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_SCHOOL_BUS_ATTACHMENT_SCHOOL_BUS_ID",
+                name: "IX_SBI_SCHOOL_BUS_SERVICE_AREA_REF_ID",
+                table: "SBI_SCHOOL_BUS",
+                column: "SERVICE_AREA_REF_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SBI_SCHOOL_BUS_ATTACHMENT_SCHOOL_BUS_REF_ID",
                 table: "SBI_SCHOOL_BUS_ATTACHMENT",
-                column: "SCHOOL_BUS_ID");
+                column: "SCHOOL_BUS_REF_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SBI_SCHOOL_BUS_HISTORY_SCHOOL_BUS_REF_ID",
@@ -788,19 +787,19 @@ namespace SchoolBusAPI.Migrations
                 column: "SCHOOL_BUS_OWNER_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_SCHOOL_BUS_OWNER_CONTACT_SCHOOL_BUS_OWNER_REF_ID",
+                name: "IX_SBI_SCHOOL_BUS_OWNER_CONTACT_SCHOOL_BUS_OWNER_ID",
                 table: "SBI_SCHOOL_BUS_OWNER_CONTACT",
-                column: "SCHOOL_BUS_OWNER_REF_ID");
+                column: "SCHOOL_BUS_OWNER_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_SCHOOL_BUS_OWNER_CONTACT_ADDRESS_SCHOOL_BUS_OWNER_CONTACT_REF_ID",
+                name: "IX_SBI_SCHOOL_BUS_OWNER_CONTACT_ADDRESS_SCHOOL_BUS_OWNER_CONTACT_ID",
                 table: "SBI_SCHOOL_BUS_OWNER_CONTACT_ADDRESS",
-                column: "SCHOOL_BUS_OWNER_CONTACT_REF_ID");
+                column: "SCHOOL_BUS_OWNER_CONTACT_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_SCHOOL_BUS_OWNER_CONTACT_PHONE_SCHOOL_BUS_OWNER_CONTACT_REF_ID",
+                name: "IX_SBI_SCHOOL_BUS_OWNER_CONTACT_PHONE_SCHOOL_BUS_OWNER_CONTACT_ID",
                 table: "SBI_SCHOOL_BUS_OWNER_CONTACT_PHONE",
-                column: "SCHOOL_BUS_OWNER_CONTACT_REF_ID");
+                column: "SCHOOL_BUS_OWNER_CONTACT_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SBI_SCHOOL_BUS_OWNER_HISTORY_SCHOOL_BUS_OWNER_REF_ID",
@@ -813,29 +812,24 @@ namespace SchoolBusAPI.Migrations
                 column: "SCHOOL_BUS_OWNER_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_SERVICE_AREA_DISTRICT_ID",
+                name: "IX_SBI_SERVICE_AREA_DISTRICT_REF_ID",
                 table: "SBI_SERVICE_AREA",
-                column: "DISTRICT_ID");
+                column: "DISTRICT_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_USER_FAVOURITE_FAVOURITE_CONTEXT_TYPE_ID",
-                table: "SBI_USER_FAVOURITE",
-                column: "FAVOURITE_CONTEXT_TYPE_ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SBI_USER_ROLE_ROLE_ID",
+                name: "IX_SBI_USER_ROLE_ROLE_REF_ID",
                 table: "SBI_USER_ROLE",
-                column: "ROLE_ID");
+                column: "ROLE_REF_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SBI_USER_ROLE_USER_ID",
+                name: "IX_SBI_USER_ROLE_USER_REF_ID",
                 table: "SBI_USER_ROLE",
-                column: "USER_ID");
+                column: "USER_REF_ID");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_SBI_SCHOOL_BUS_SBI_SCHOOL_BUS_OWNER_SCHOOL_BUS_OWNER_ID",
+                name: "FK_SBI_SCHOOL_BUS_SBI_SCHOOL_BUS_OWNER_SCHOOL_BUS_OWNER_REF_ID",
                 table: "SBI_SCHOOL_BUS",
-                column: "SCHOOL_BUS_OWNER_ID",
+                column: "SCHOOL_BUS_OWNER_REF_ID",
                 principalTable: "SBI_SCHOOL_BUS_OWNER",
                 principalColumn: "SCHOOL_BUS_OWNER_ID",
                 onDelete: ReferentialAction.Restrict);
@@ -849,9 +843,9 @@ namespace SchoolBusAPI.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_SBI_SCHOOL_BUS_OWNER_CONTACT_SBI_SCHOOL_BUS_OWNER_SCHOOL_BUS_OWNER_REF_ID",
+                name: "FK_SBI_SCHOOL_BUS_OWNER_CONTACT_SBI_SCHOOL_BUS_OWNER_SCHOOL_BUS_OWNER_ID",
                 table: "SBI_SCHOOL_BUS_OWNER_CONTACT",
-                column: "SCHOOL_BUS_OWNER_REF_ID",
+                column: "SCHOOL_BUS_OWNER_ID",
                 principalTable: "SBI_SCHOOL_BUS_OWNER",
                 principalColumn: "SCHOOL_BUS_OWNER_ID",
                 onDelete: ReferentialAction.Restrict);
@@ -864,11 +858,7 @@ namespace SchoolBusAPI.Migrations
                 table: "SBI_DISTRICT");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_SBI_SCHOOL_BUS_OWNER_SBI_SERVICE_AREA_SERVICE_AREA_REF_ID",
-                table: "SBI_SCHOOL_BUS_OWNER");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_SBI_SCHOOL_BUS_OWNER_CONTACT_SBI_SCHOOL_BUS_OWNER_SCHOOL_BUS_OWNER_REF_ID",
+                name: "FK_SBI_SCHOOL_BUS_OWNER_CONTACT_SBI_SCHOOL_BUS_OWNER_SCHOOL_BUS_OWNER_ID",
                 table: "SBI_SCHOOL_BUS_OWNER_CONTACT");
 
             migrationBuilder.DropTable(
@@ -926,13 +916,7 @@ namespace SchoolBusAPI.Migrations
                 name: "SBI_PERMISSION");
 
             migrationBuilder.DropTable(
-                name: "SBI_FAVOURITE_CONTEXT_TYPE");
-
-            migrationBuilder.DropTable(
                 name: "SBI_ROLE");
-
-            migrationBuilder.DropTable(
-                name: "SBI_USER");
 
             migrationBuilder.DropTable(
                 name: "SBI_SCHOOL_BUS");
@@ -941,22 +925,25 @@ namespace SchoolBusAPI.Migrations
                 name: "SBI_CITY");
 
             migrationBuilder.DropTable(
+                name: "SBI_USER");
+
+            migrationBuilder.DropTable(
                 name: "SBI_SCHOOL_DISTRICT");
 
             migrationBuilder.DropTable(
                 name: "SBI_REGION");
 
             migrationBuilder.DropTable(
-                name: "SBI_SERVICE_AREA");
-
-            migrationBuilder.DropTable(
-                name: "SBI_DISTRICT");
-
-            migrationBuilder.DropTable(
                 name: "SBI_SCHOOL_BUS_OWNER");
 
             migrationBuilder.DropTable(
                 name: "SBI_SCHOOL_BUS_OWNER_CONTACT");
+
+            migrationBuilder.DropTable(
+                name: "SBI_SERVICE_AREA");
+
+            migrationBuilder.DropTable(
+                name: "SBI_DISTRICT");
         }
     }
 }

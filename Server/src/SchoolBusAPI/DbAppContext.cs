@@ -22,7 +22,6 @@ namespace SchoolBusAPI.Models
         DbSet<CCWData> CCWDatas { get; set; }
         DbSet<City> Cities { get; set; }
         DbSet<District> Districts { get; set; }
-        DbSet<FavouriteContextType> FavouriteContextTypes { get; set; }
         DbSet<Group> Groups { get; set; }
         DbSet<GroupMembership> GroupMemberships { get; set; }
         DbSet<Inspection> Inspections { get; set; }
@@ -83,7 +82,6 @@ namespace SchoolBusAPI.Models
         public virtual DbSet<CCWData> CCWDatas { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<District> Districts { get; set; }
-        public virtual DbSet<FavouriteContextType> FavouriteContextTypes { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<GroupMembership> GroupMemberships { get; set; }
         public virtual DbSet<Inspection> Inspections { get; set; }

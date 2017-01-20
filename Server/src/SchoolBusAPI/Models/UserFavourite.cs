@@ -26,7 +26,6 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.")]
 
-
     public partial class UserFavourite : IEquatable<UserFavourite>
     {
         /// <summary>
@@ -46,14 +45,12 @@ namespace SchoolBusAPI.Models
         /// <param name="Value">The settings saved by the user. In general,  a UI defined chunk of json that stores the settings in place when the user created the favourite..</param>
         /// <param name="IsDefault">True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied..</param>
         public UserFavourite(int Id, string Type = null, string Name = null, string Value = null, bool? IsDefault = null)
-        {
-            
+        {   
             this.Id = Id;
             this.Type = Type;
             this.Name = Name;
             this.Value = Value;
             this.IsDefault = IsDefault;
-            
         }
 
         /// <summary>
@@ -62,45 +59,35 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// The type of Favourite
         /// </summary>
         /// <value>The type of Favourite</value>
         [MetaDataExtension (Description = "The type of Favourite")]
         public string Type { get; set; }
-
         
-
         /// <summary>
         /// The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.
         /// </summary>
         /// <value>The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.</value>
         [MetaDataExtension (Description = "The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.")]
         public string Name { get; set; }
-
         
-
         /// <summary>
         /// The settings saved by the user. In general,  a UI defined chunk of json that stores the settings in place when the user created the favourite.
         /// </summary>
         /// <value>The settings saved by the user. In general,  a UI defined chunk of json that stores the settings in place when the user created the favourite.</value>
         [MetaDataExtension (Description = "The settings saved by the user. In general,  a UI defined chunk of json that stores the settings in place when the user created the favourite.")]
         public string Value { get; set; }
-
         
-
         /// <summary>
         /// True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied.
         /// </summary>
         /// <value>True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied.</value>
         [MetaDataExtension (Description = "True if this Favourite is the default for this Context Type. On first access to a context in a session the default favourite for the context it is invoked. If there is no default favourite,  a system-wide default is invoked. On return to the context within a session,  the last parameters used are reapplied.")]
         public bool? IsDefault { get; set; }
-
         
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -189,40 +176,47 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                
-                if (this.Type != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.Type != null)
                 {
                     hash = hash * 59 + this.Type.GetHashCode();
                 }                
-                
-                if (this.Name != null)
+                                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
                 }                
-                
-                if (this.Value != null)
+                                if (this.Value != null)
                 {
                     hash = hash * 59 + this.Value.GetHashCode();
                 }                
-                
-                if (this.IsDefault != null)
+                                if (this.IsDefault != null)
                 {
                     hash = hash * 59 + this.IsDefault.GetHashCode();
                 }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(UserFavourite left, UserFavourite right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(UserFavourite left, UserFavourite right)
         {
             return !Equals(left, right);

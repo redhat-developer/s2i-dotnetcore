@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class Region : IEquatable<Region>
     {
         /// <summary>
@@ -46,14 +44,12 @@ namespace SchoolBusAPI.Models
         /// <param name="StartDate">The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
         /// <param name="EndDate">The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
         public Region(int Id, int? MinistryRegionID = null, string Name = null, DateTime? StartDate = null, DateTime? EndDate = null)
-        {
-            
+        {   
             this.Id = Id;
             this.MinistryRegionID = MinistryRegionID;
             this.Name = Name;
             this.StartDate = StartDate;
             this.EndDate = EndDate;
-            
         }
 
         /// <summary>
@@ -62,45 +58,35 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// The Ministry ID for the Region
         /// </summary>
         /// <value>The Ministry ID for the Region</value>
         [MetaDataExtension (Description = "The Ministry ID for the Region")]
         public int? MinistryRegionID { get; set; }
-
         
-
         /// <summary>
         /// The name of the Region
         /// </summary>
         /// <value>The name of the Region</value>
         [MetaDataExtension (Description = "The name of the Region")]
         public string Name { get; set; }
-
         
-
         /// <summary>
         /// The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
         /// <value>The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
         [MetaDataExtension (Description = "The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? StartDate { get; set; }
-
         
-
         /// <summary>
         /// The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
         /// <value>The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
         [MetaDataExtension (Description = "The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? EndDate { get; set; }
-
         
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -189,40 +175,47 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                
-                if (this.MinistryRegionID != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.MinistryRegionID != null)
                 {
                     hash = hash * 59 + this.MinistryRegionID.GetHashCode();
                 }                
-                
-                if (this.Name != null)
+                                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
                 }                
-                
-                if (this.StartDate != null)
+                                if (this.StartDate != null)
                 {
                     hash = hash * 59 + this.StartDate.GetHashCode();
                 }                
-                
-                if (this.EndDate != null)
+                                if (this.EndDate != null)
                 {
                     hash = hash * 59 + this.EndDate.GetHashCode();
                 }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(Region left, Region right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(Region left, Region right)
         {
             return !Equals(left, right);

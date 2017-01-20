@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class NotificationEventApiUnitTest 
     { 
 		
-		private readonly NotificationEventApiController _NotificationEventApi;
+		private readonly NotificationEventController _NotificationEventApi;
 		
 		/// <summary>
         /// Setup the test
@@ -57,9 +57,9 @@ namespace SchoolBusAPI.Test
 
                     */
 
-                    NotificationEventApiService _service = new NotificationEventApiService(dbAppContext.Object);
+                    NotificationEventService _service = new NotificationEventService(dbAppContext.Object);
 			
-                    _NotificationEventApi = new NotificationEventApiController (_service);
+                    _NotificationEventApi = new NotificationEventController (_service);
 
 		}
 	

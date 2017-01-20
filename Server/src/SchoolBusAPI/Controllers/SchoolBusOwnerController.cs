@@ -43,20 +43,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns list of available FavouriteContextTypes</remarks>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/favouritecontexttypes")]
-        [SwaggerOperation("FavouritecontexttypesGet")]
-        [SwaggerResponse(200, type: typeof(List<FavouriteContextType>))]
-        public virtual IActionResult FavouritecontexttypesGet()
-        {
-            return this._service.FavouritecontexttypesGetAsync();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="items"></param>
         /// <response code="201">SchoolBusOwner created</response>
         [HttpPost]

@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class SchoolDistrictApiUnitTest 
     { 
 		
-		private readonly SchoolDistrictApiController _SchoolDistrictApi;
+		private readonly SchoolDistrictController _SchoolDistrictApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
             */
 
-            SchoolDistrictApiService _service = new SchoolDistrictApiService(dbAppContext.Object);
+            SchoolDistrictService _service = new SchoolDistrictService(dbAppContext.Object);
 			
-                    _SchoolDistrictApi = new SchoolDistrictApiController (_service);
+                    _SchoolDistrictApi = new SchoolDistrictController (_service);
 
 		}
 	

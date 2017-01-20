@@ -14,11 +14,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using SchoolBusAPI.Models;
 
-/// <summary>
-/// 
-/// </summary>
-namespace SchoolBusAPI.Models
+namespace SchoolBusAPI
 {
     /// <summary>
     /// Uility class used to update database column comments or descriptions.

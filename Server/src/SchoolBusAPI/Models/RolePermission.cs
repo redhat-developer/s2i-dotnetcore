@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class RolePermission : IEquatable<RolePermission>
     {
         /// <summary>
@@ -44,12 +42,10 @@ namespace SchoolBusAPI.Models
         /// <param name="Role">Role.</param>
         /// <param name="Permission">Permission.</param>
         public RolePermission(int Id, Role Role = null, Permission Permission = null)
-        {
-            
+        {   
             this.Id = Id;
             this.Role = Role;
             this.Permission = Permission;
-            
         }
 
         /// <summary>
@@ -58,29 +54,29 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets Role
         /// </summary>
         public Role Role { get; set; }
-
-                
-        [ForeignKey("Role")]
-        public int RoleRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for Role 
+        /// </summary>       
+        [ForeignKey("Role")]
+        public int? RoleRefId { get; set; }
+        
         /// <summary>
         /// Gets or Sets Permission
         /// </summary>
         public Permission Permission { get; set; }
-
-                
-        [ForeignKey("Permission")]
-        public int PermissionRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for Permission 
+        /// </summary>       
+        [ForeignKey("Permission")]
+        public int? PermissionRefId { get; set; }
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -157,32 +153,39 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                   
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                   
                 if (this.Role != null)
                 {
                     hash = hash * 59 + this.Role.GetHashCode();
-                }
-                
-                   
+                }                   
                 if (this.Permission != null)
                 {
                     hash = hash * 59 + this.Permission.GetHashCode();
                 }
-                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(RolePermission left, RolePermission right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(RolePermission left, RolePermission right)
         {
             return !Equals(left, right);

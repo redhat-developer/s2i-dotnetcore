@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SchoolBusAPI.Models
+namespace SchoolBusAPI
 {
     /// <summary>
     /// Utility class used for the column comment (description) feature

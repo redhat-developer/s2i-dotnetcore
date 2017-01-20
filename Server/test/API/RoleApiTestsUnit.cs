@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class RoleApiUnitTest 
     { 
 		
-		private readonly RoleApiController _RoleApi;
+		private readonly RoleController _RoleApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
             */
 
-            RoleApiService _service = new RoleApiService(dbAppContext.Object);
+            RoleService _service = new RoleService(dbAppContext.Object);
 			
-                    _RoleApi = new RoleApiController (_service);
+                    _RoleApi = new RoleController (_service);
 
 		}
 	

@@ -125,7 +125,7 @@ namespace SchoolBusAPI.Services
         /// <param name="cities">Cities (array of id numbers)</param>
         /// <param name="schooldistricts">School Districts (array of id numbers)</param>
         /// <param name="owner"></param>
-        /// <param name="regi">ICBC Regi Number</param>
+        /// <param name="regi">e Regi Number</param>
         /// <param name="vin">VIN</param>
         /// <param name="plate">License Plate String</param>
         /// <param name="includeInactive">True if Inactive schoolbuses will be returned</param>

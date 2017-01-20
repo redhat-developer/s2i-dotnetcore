@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class ServiceAreaApiUnitTest 
     { 
 		
-		private readonly ServiceAreaApiController _ServiceAreaApi;
+		private readonly ServiceAreaController _ServiceAreaApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
                     */
 
-                    ServiceAreaApiService _service = new ServiceAreaApiService(dbAppContext.Object);
+                    ServiceAreaService _service = new ServiceAreaService(dbAppContext.Object);
 			
-                    _ServiceAreaApi = new ServiceAreaApiController (_service);
+                    _ServiceAreaApi = new ServiceAreaController (_service);
 
 		}
 	

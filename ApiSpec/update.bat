@@ -9,7 +9,7 @@ rem To install, run:
 rem npm install mustache -g 
 rem 
 
-SET OUTPUT_FILE = SBIswagger.yaml
+SET OUTPUT_FILE=SBIswagger.yaml
 
 rem make a backup of the current output file.
 

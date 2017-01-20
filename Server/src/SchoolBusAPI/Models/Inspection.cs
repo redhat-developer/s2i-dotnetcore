@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class Inspection : IEquatable<Inspection>
     {
         /// <summary>
@@ -50,8 +48,7 @@ namespace SchoolBusAPI.Models
         /// <param name="Restrictions">The Restrictions text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page..</param>
         /// <param name="RIPInspectionId">The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details..</param>
         public Inspection(int Id, SchoolBus SchoolBus = null, User Inspector = null, DateTime? InspectionDate = null, string InspectionType = null, string InspectionResult = null, string Notes = null, string Restrictions = null, string RIPInspectionId = null)
-        {
-            
+        {   
             this.Id = Id;
             this.SchoolBus = SchoolBus;
             this.Inspector = Inspector;
@@ -61,7 +58,6 @@ namespace SchoolBusAPI.Models
             this.Notes = Notes;
             this.Restrictions = Restrictions;
             this.RIPInspectionId = RIPInspectionId;
-            
         }
 
         /// <summary>
@@ -70,85 +66,73 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key make this match the Inspection Details page</value>
         [MetaDataExtension (Description = "Primary Key make this match the Inspection Details page")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets SchoolBus
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
-
-                
-        [ForeignKey("SchoolBus")]
-        public int SchoolBusRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for SchoolBus 
+        /// </summary>       
+        [ForeignKey("SchoolBus")]
+        public int? SchoolBusRefId { get; set; }
+        
         /// <summary>
         /// Defaults for a new inspection to the current user,  but can be changed as needed.
         /// </summary>
         /// <value>Defaults for a new inspection to the current user,  but can be changed as needed.</value>
         [MetaDataExtension (Description = "Defaults for a new inspection to the current user,  but can be changed as needed.")]
         public User Inspector { get; set; }
-
-                
-        [ForeignKey("Inspector")]
-        public int InspectorRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for Inspector 
+        /// </summary>       
+        [ForeignKey("Inspector")]
+        public int? InspectorRefId { get; set; }
+        
         /// <summary>
         /// The date the inspection was conducted.
         /// </summary>
         /// <value>The date the inspection was conducted.</value>
         [MetaDataExtension (Description = "The date the inspection was conducted.")]
         public DateTime? InspectionDate { get; set; }
-
         
-
         /// <summary>
         /// The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created
         /// </summary>
         /// <value>The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created</value>
         [MetaDataExtension (Description = "The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created")]
         public string InspectionType { get; set; }
-
         
-
         /// <summary>
         /// The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.
         /// </summary>
         /// <value>The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.</value>
         [MetaDataExtension (Description = "The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.")]
         public string InspectionResult { get; set; }
-
         
-
         /// <summary>
         /// A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.
         /// </summary>
         /// <value>A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.</value>
         [MetaDataExtension (Description = "A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.")]
         public string Notes { get; set; }
-
         
-
         /// <summary>
         /// The Restrictions text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page.
         /// </summary>
         /// <value>The Restrictions text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page.</value>
         [MetaDataExtension (Description = "The Restrictions text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page.")]
         public string Restrictions { get; set; }
-
         
-
         /// <summary>
         /// The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.
         /// </summary>
         /// <value>The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.</value>
         [MetaDataExtension (Description = "The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.")]
         public string RIPInspectionId { get; set; }
-
         
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -261,62 +245,63 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                   
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                   
                 if (this.SchoolBus != null)
                 {
                     hash = hash * 59 + this.SchoolBus.GetHashCode();
-                }
-                
-                   
+                }                   
                 if (this.Inspector != null)
                 {
                     hash = hash * 59 + this.Inspector.GetHashCode();
-                }
-                
-                
-                if (this.InspectionDate != null)
+                }                if (this.InspectionDate != null)
                 {
                     hash = hash * 59 + this.InspectionDate.GetHashCode();
                 }                
-                
-                if (this.InspectionType != null)
+                                if (this.InspectionType != null)
                 {
                     hash = hash * 59 + this.InspectionType.GetHashCode();
                 }                
-                
-                if (this.InspectionResult != null)
+                                if (this.InspectionResult != null)
                 {
                     hash = hash * 59 + this.InspectionResult.GetHashCode();
                 }                
-                
-                if (this.Notes != null)
+                                if (this.Notes != null)
                 {
                     hash = hash * 59 + this.Notes.GetHashCode();
                 }                
-                
-                if (this.Restrictions != null)
+                                if (this.Restrictions != null)
                 {
                     hash = hash * 59 + this.Restrictions.GetHashCode();
                 }                
-                
-                if (this.RIPInspectionId != null)
+                                if (this.RIPInspectionId != null)
                 {
                     hash = hash * 59 + this.RIPInspectionId.GetHashCode();
                 }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(Inspection left, Inspection right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(Inspection left, Inspection right)
         {
             return !Equals(left, right);

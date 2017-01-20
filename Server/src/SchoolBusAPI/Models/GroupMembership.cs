@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class GroupMembership : IEquatable<GroupMembership>
     {
         /// <summary>
@@ -45,14 +43,12 @@ namespace SchoolBusAPI.Models
         /// <param name="Group">Group.</param>
         /// <param name="User">User.</param>
         public GroupMembership(int Id, bool Active, Group Group = null, User User = null)
-        {
-            
+        {   
             this.Id = Id;
-            
             this.Active = Active;
+
             this.Group = Group;
             this.User = User;
-            
         }
 
         /// <summary>
@@ -61,39 +57,34 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets Active
         /// </summary>
         public bool Active { get; set; }
-
-                
-        [ForeignKey("Active")]
-        public int ActiveRefId { get; set; }
         
-
         /// <summary>
         /// Gets or Sets Group
         /// </summary>
         public Group Group { get; set; }
-
-                
-        [ForeignKey("Group")]
-        public int GroupRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for Group 
+        /// </summary>       
+        [ForeignKey("Group")]
+        public int? GroupRefId { get; set; }
+        
         /// <summary>
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
-
-                
-        [ForeignKey("User")]
-        public int UserRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for User 
+        /// </summary>       
+        [ForeignKey("User")]
+        public int? UserRefId { get; set; }
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -150,7 +141,6 @@ namespace SchoolBusAPI.Models
                 ) &&                 
                 (
                     this.Active == other.Active ||
-                    this.Active != null &&
                     this.Active.Equals(other.Active)
                 ) &&                 
                 (
@@ -176,38 +166,41 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                   
-                if (this.Active != null)
-                {
-                    hash = hash * 59 + this.Active.GetHashCode();
-                }
-                
-                   
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                   
+                hash = hash * 59 + this.Active.GetHashCode();
+                                   
                 if (this.Group != null)
                 {
                     hash = hash * 59 + this.Group.GetHashCode();
-                }
-                
-                   
+                }                   
                 if (this.User != null)
                 {
                     hash = hash * 59 + this.User.GetHashCode();
                 }
-                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(GroupMembership left, GroupMembership right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(GroupMembership left, GroupMembership right)
         {
             return !Equals(left, right);

@@ -26,7 +26,6 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The School Bus entity, including only information that is of specific interest to the School Bus inspector and not tracked in other systems such as ICBC or NSC")]
 
-
     public partial class SchoolBus : IEquatable<SchoolBus>
     {
         /// <summary>
@@ -69,8 +68,7 @@ namespace SchoolBusAPI.Models
         /// <param name="MobilityAidCapacity">The number of mobility aid passenger seats in the bus..</param>
         /// <param name="Inspector">The inspector assigned to this schoolbus.</param>
         public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea ServiceArea = null, string HomeTerminalAddr1 = null, string HomeTerminalAddr2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string Restrictions = null, DateTime? NextInspectionDate = null, string NextInspectionType = null, SchoolDistrict SchoolBusDistrict = null, bool? IsIndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusBodyType = null, string SchoolBusBodyTypeOther = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null, User Inspector = null)
-        {
-            
+        {   
             this.Id = Id;
             this.Regi = Regi;
             this.Plate = Plate;
@@ -99,7 +97,6 @@ namespace SchoolBusAPI.Models
             this.SchoolBusSeatingCapacity = SchoolBusSeatingCapacity;
             this.MobilityAidCapacity = MobilityAidCapacity;
             this.Inspector = Inspector;
-            
         }
 
         /// <summary>
@@ -108,261 +105,220 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// The ICBC Registration number for the School Bus
         /// </summary>
         /// <value>The ICBC Registration number for the School Bus</value>
         [MetaDataExtension (Description = "The ICBC Registration number for the School Bus")]
         public string Regi { get; set; }
-
         
-
         /// <summary>
         /// The ICBC Plate Number for the School Bus
         /// </summary>
         /// <value>The ICBC Plate Number for the School Bus</value>
         [MetaDataExtension (Description = "The ICBC Plate Number for the School Bus")]
         public string Plate { get; set; }
-
         
-
         /// <summary>
         /// The VIN for the School Bus
         /// </summary>
         /// <value>The VIN for the School Bus</value>
         [MetaDataExtension (Description = "The VIN for the School Bus")]
         public string VIN { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets SchoolBusOwner
         /// </summary>
         public SchoolBusOwner SchoolBusOwner { get; set; }
-
-                
-        [ForeignKey("SchoolBusOwner")]
-        public int SchoolBusOwnerRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for SchoolBusOwner 
+        /// </summary>       
+        [ForeignKey("SchoolBusOwner")]
+        public int? SchoolBusOwnerRefId { get; set; }
+        
         /// <summary>
         /// The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.
         /// </summary>
         /// <value>The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.</value>
         [MetaDataExtension (Description = "The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.")]
         public string PermitNumber { get; set; }
-
         
-
         /// <summary>
         /// Enumerated type of Status - Inactive,  Active,  Archived
         /// </summary>
         /// <value>Enumerated type of Status - Inactive,  Active,  Archived</value>
         [MetaDataExtension (Description = "Enumerated type of Status - Inactive,  Active,  Archived")]
         public string Status { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets IsOutOfProvince
         /// </summary>
         public bool? IsOutOfProvince { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets ServiceArea
         /// </summary>
         public ServiceArea ServiceArea { get; set; }
-
-                
-        [ForeignKey("ServiceArea")]
-        public int ServiceAreaRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for ServiceArea 
+        /// </summary>       
+        [ForeignKey("ServiceArea")]
+        public int? ServiceAreaRefId { get; set; }
+        
         /// <summary>
         /// Address 1 of physical location of the School Bus.
         /// </summary>
         /// <value>Address 1 of physical location of the School Bus.</value>
         [MetaDataExtension (Description = "Address 1 of physical location of the School Bus.")]
         public string HomeTerminalAddr1 { get; set; }
-
         
-
         /// <summary>
         /// Address 2 of physical location of the School Bus.
         /// </summary>
         /// <value>Address 2 of physical location of the School Bus.</value>
         [MetaDataExtension (Description = "Address 2 of physical location of the School Bus.")]
         public string HomeTerminalAddr2 { get; set; }
-
         
-
         /// <summary>
         /// City of physical location of the School Bus.
         /// </summary>
         /// <value>City of physical location of the School Bus.</value>
         [MetaDataExtension (Description = "City of physical location of the School Bus.")]
         public City HomeTerminalCity { get; set; }
-
-                
-        [ForeignKey("HomeTerminalCity")]
-        public int HomeTerminalCityRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for HomeTerminalCity 
+        /// </summary>       
+        [ForeignKey("HomeTerminalCity")]
+        public int? HomeTerminalCityRefId { get; set; }
+        
         /// <summary>
         /// Province of physical location of the School Bus - free form.
         /// </summary>
         /// <value>Province of physical location of the School Bus - free form.</value>
         [MetaDataExtension (Description = "Province of physical location of the School Bus - free form.")]
         public string HomeTerminalProvince { get; set; }
-
         
-
         /// <summary>
         /// Postal Code of physical location of the School Bus.
         /// </summary>
         /// <value>Postal Code of physical location of the School Bus.</value>
         [MetaDataExtension (Description = "Postal Code of physical location of the School Bus.")]
         public string HomeTerminalPostalCode { get; set; }
-
         
-
         /// <summary>
         /// A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection
         /// </summary>
         /// <value>A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection</value>
         [MetaDataExtension (Description = "A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection")]
         public string HomeTerminalComment { get; set; }
-
         
-
         /// <summary>
         /// Text of any restrictions to be printed on the school bus permit.
         /// </summary>
         /// <value>Text of any restrictions to be printed on the school bus permit.</value>
         [MetaDataExtension (Description = "Text of any restrictions to be printed on the school bus permit.")]
         public string Restrictions { get; set; }
-
         
-
         /// <summary>
         /// The next inspection date for this School Bus. Set at the time an inspection is set.
         /// </summary>
         /// <value>The next inspection date for this School Bus. Set at the time an inspection is set.</value>
         [MetaDataExtension (Description = "The next inspection date for this School Bus. Set at the time an inspection is set.")]
         public DateTime? NextInspectionDate { get; set; }
-
         
-
         /// <summary>
         /// An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.
         /// </summary>
         /// <value>An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.</value>
         [MetaDataExtension (Description = "An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.")]
         public string NextInspectionType { get; set; }
-
         
-
         /// <summary>
         /// The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.
         /// </summary>
         /// <value>The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.</value>
         [MetaDataExtension (Description = "The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.")]
         public SchoolDistrict SchoolBusDistrict { get; set; }
-
-                
-        [ForeignKey("SchoolBusDistrict")]
-        public int SchoolBusDistrictRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for SchoolBusDistrict 
+        /// </summary>       
+        [ForeignKey("SchoolBusDistrict")]
+        public int? SchoolBusDistrictRefId { get; set; }
+        
         /// <summary>
         /// True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field.
         /// </summary>
         /// <value>True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field.</value>
         [MetaDataExtension (Description = "True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field.")]
         public bool? IsIndependentSchool { get; set; }
-
         
-
         /// <summary>
         /// The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.
         /// </summary>
         /// <value>The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.</value>
         [MetaDataExtension (Description = "The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.")]
         public string NameOfIndependentSchool { get; set; }
-
         
-
         /// <summary>
         /// The enumerated class of School Bus.
         /// </summary>
         /// <value>The enumerated class of School Bus.</value>
         [MetaDataExtension (Description = "The enumerated class of School Bus.")]
         public string SchoolBusClass { get; set; }
-
         
-
         /// <summary>
         /// The enumerated body type of the School Bus.
         /// </summary>
         /// <value>The enumerated body type of the School Bus.</value>
         [MetaDataExtension (Description = "The enumerated body type of the School Bus.")]
         public string SchoolBusBodyType { get; set; }
-
         
-
         /// <summary>
         /// The enumerated body type of the School Bus.
         /// </summary>
         /// <value>The enumerated body type of the School Bus.</value>
         [MetaDataExtension (Description = "The enumerated body type of the School Bus.")]
         public string SchoolBusBodyTypeOther { get; set; }
-
         
-
         /// <summary>
         /// The unit number of the Bus as defined by the School Bus owner - freeform text.
         /// </summary>
         /// <value>The unit number of the Bus as defined by the School Bus owner - freeform text.</value>
         [MetaDataExtension (Description = "The unit number of the Bus as defined by the School Bus owner - freeform text.")]
         public string SchoolBusUnitNumber { get; set; }
-
         
-
         /// <summary>
         /// The maximum number of passengers in the bus based on the specific use of the bus. For example,  the same 2-per seat &#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.
         /// </summary>
         /// <value>The maximum number of passengers in the bus based on the specific use of the bus. For example,  the same 2-per seat &#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.</value>
         [MetaDataExtension (Description = "The maximum number of passengers in the bus based on the specific use of the bus. For example,  the same 2-per seat &#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.")]
         public int? SchoolBusSeatingCapacity { get; set; }
-
         
-
         /// <summary>
         /// The number of mobility aid passenger seats in the bus.
         /// </summary>
         /// <value>The number of mobility aid passenger seats in the bus.</value>
         [MetaDataExtension (Description = "The number of mobility aid passenger seats in the bus.")]
         public int? MobilityAidCapacity { get; set; }
-
         
-
         /// <summary>
         /// The inspector assigned to this schoolbus
         /// </summary>
         /// <value>The inspector assigned to this schoolbus</value>
         [MetaDataExtension (Description = "The inspector assigned to this schoolbus")]
         public User Inspector { get; set; }
-
-                
-        [ForeignKey("Inspector")]
-        public int InspectorRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for Inspector 
+        /// </summary>       
+        [ForeignKey("Inspector")]
+        public int? InspectorRefId { get; set; }
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -589,160 +545,139 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                
-                if (this.Regi != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.Regi != null)
                 {
                     hash = hash * 59 + this.Regi.GetHashCode();
                 }                
-                
-                if (this.Plate != null)
+                                if (this.Plate != null)
                 {
                     hash = hash * 59 + this.Plate.GetHashCode();
                 }                
-                
-                if (this.VIN != null)
+                                if (this.VIN != null)
                 {
                     hash = hash * 59 + this.VIN.GetHashCode();
                 }                
-                   
+                                   
                 if (this.SchoolBusOwner != null)
                 {
                     hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
-                }
-                
-                
-                if (this.PermitNumber != null)
+                }                if (this.PermitNumber != null)
                 {
                     hash = hash * 59 + this.PermitNumber.GetHashCode();
                 }                
-                
-                if (this.Status != null)
+                                if (this.Status != null)
                 {
                     hash = hash * 59 + this.Status.GetHashCode();
                 }                
-                
-                if (this.IsOutOfProvince != null)
+                                if (this.IsOutOfProvince != null)
                 {
                     hash = hash * 59 + this.IsOutOfProvince.GetHashCode();
                 }                
-                   
+                                   
                 if (this.ServiceArea != null)
                 {
                     hash = hash * 59 + this.ServiceArea.GetHashCode();
-                }
-                
-                
-                if (this.HomeTerminalAddr1 != null)
+                }                if (this.HomeTerminalAddr1 != null)
                 {
                     hash = hash * 59 + this.HomeTerminalAddr1.GetHashCode();
                 }                
-                
-                if (this.HomeTerminalAddr2 != null)
+                                if (this.HomeTerminalAddr2 != null)
                 {
                     hash = hash * 59 + this.HomeTerminalAddr2.GetHashCode();
                 }                
-                   
+                                   
                 if (this.HomeTerminalCity != null)
                 {
                     hash = hash * 59 + this.HomeTerminalCity.GetHashCode();
-                }
-                
-                
-                if (this.HomeTerminalProvince != null)
+                }                if (this.HomeTerminalProvince != null)
                 {
                     hash = hash * 59 + this.HomeTerminalProvince.GetHashCode();
                 }                
-                
-                if (this.HomeTerminalPostalCode != null)
+                                if (this.HomeTerminalPostalCode != null)
                 {
                     hash = hash * 59 + this.HomeTerminalPostalCode.GetHashCode();
                 }                
-                
-                if (this.HomeTerminalComment != null)
+                                if (this.HomeTerminalComment != null)
                 {
                     hash = hash * 59 + this.HomeTerminalComment.GetHashCode();
                 }                
-                
-                if (this.Restrictions != null)
+                                if (this.Restrictions != null)
                 {
                     hash = hash * 59 + this.Restrictions.GetHashCode();
                 }                
-                
-                if (this.NextInspectionDate != null)
+                                if (this.NextInspectionDate != null)
                 {
                     hash = hash * 59 + this.NextInspectionDate.GetHashCode();
                 }                
-                
-                if (this.NextInspectionType != null)
+                                if (this.NextInspectionType != null)
                 {
                     hash = hash * 59 + this.NextInspectionType.GetHashCode();
                 }                
-                   
+                                   
                 if (this.SchoolBusDistrict != null)
                 {
                     hash = hash * 59 + this.SchoolBusDistrict.GetHashCode();
-                }
-                
-                
-                if (this.IsIndependentSchool != null)
+                }                if (this.IsIndependentSchool != null)
                 {
                     hash = hash * 59 + this.IsIndependentSchool.GetHashCode();
                 }                
-                
-                if (this.NameOfIndependentSchool != null)
+                                if (this.NameOfIndependentSchool != null)
                 {
                     hash = hash * 59 + this.NameOfIndependentSchool.GetHashCode();
                 }                
-                
-                if (this.SchoolBusClass != null)
+                                if (this.SchoolBusClass != null)
                 {
                     hash = hash * 59 + this.SchoolBusClass.GetHashCode();
                 }                
-                
-                if (this.SchoolBusBodyType != null)
+                                if (this.SchoolBusBodyType != null)
                 {
                     hash = hash * 59 + this.SchoolBusBodyType.GetHashCode();
                 }                
-                
-                if (this.SchoolBusBodyTypeOther != null)
+                                if (this.SchoolBusBodyTypeOther != null)
                 {
                     hash = hash * 59 + this.SchoolBusBodyTypeOther.GetHashCode();
                 }                
-                
-                if (this.SchoolBusUnitNumber != null)
+                                if (this.SchoolBusUnitNumber != null)
                 {
                     hash = hash * 59 + this.SchoolBusUnitNumber.GetHashCode();
                 }                
-                
-                if (this.SchoolBusSeatingCapacity != null)
+                                if (this.SchoolBusSeatingCapacity != null)
                 {
                     hash = hash * 59 + this.SchoolBusSeatingCapacity.GetHashCode();
                 }                
-                
-                if (this.MobilityAidCapacity != null)
+                                if (this.MobilityAidCapacity != null)
                 {
                     hash = hash * 59 + this.MobilityAidCapacity.GetHashCode();
                 }                
-                   
+                                   
                 if (this.Inspector != null)
                 {
                     hash = hash * 59 + this.Inspector.GetHashCode();
                 }
-                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SchoolBus left, SchoolBus right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SchoolBus left, SchoolBus right)
         {
             return !Equals(left, right);

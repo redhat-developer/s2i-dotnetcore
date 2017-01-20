@@ -42,20 +42,7 @@ namespace SchoolBusAPI.Test
             _client = _server.CreateClient();
 		}
 	
-		
-		[Fact]
-		/// <summary>
-        /// Integration test for FavouritecontexttypesGet
-        /// </summary>
-		public async void TestFavouritecontexttypesGet()
-		{
-			var response = await _client.GetAsync("/api/favouritecontexttypes");
-            response.EnsureSuccessStatusCode();
-			
-			// update this to test the API.
-			Assert.True(true);
-		}		
-        
+		        
 		
 		[Fact]
 		/// <summary>

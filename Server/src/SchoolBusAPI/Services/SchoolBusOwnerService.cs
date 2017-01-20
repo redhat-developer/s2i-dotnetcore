@@ -32,13 +32,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns list of available FavouriteContextTypes</remarks>
-        /// <response code="200">OK</response>
-        IActionResult FavouritecontexttypesGetAsync();
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="items"></param>
         /// <response code="201">SchoolBusOwner created</response>
         IActionResult SchoolbusownersBulkPostAsync(SchoolBusOwner[] items);

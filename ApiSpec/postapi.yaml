@@ -42,7 +42,7 @@
           type: integer
         - name: regi
           in: query
-          description: ICBC Regi Number
+          description: e Regi Number
           type: string
         - name: vin
           in: query
@@ -280,22 +280,6 @@
           description: id of SchoolBusOwner to fetch contact address for
           required: true
           type: integer
-  /favouritecontexttypes:
-    get:
-      description: Returns list of available FavouriteContextTypes
-      tags:
-        - SchoolBusOwner
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/FavouriteContextType'
   /roles/{id}/permissions:
     get:
       description: Get all the permissions for a role

@@ -26,7 +26,6 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.")]
 
-
     public partial class SchoolBusAttachment : IEquatable<SchoolBusAttachment>
     {
         /// <summary>
@@ -46,14 +45,12 @@ namespace SchoolBusAPI.Models
         /// <param name="Description">A note about the attachment,  optionally maintained by the user..</param>
         /// <param name="SchoolBus">SchoolBus.</param>
         public SchoolBusAttachment(int Id, string InternalFileName = null, string ExternalFileName = null, string Description = null, SchoolBus SchoolBus = null)
-        {
-            
+        {   
             this.Id = Id;
             this.InternalFileName = InternalFileName;
             this.ExternalFileName = ExternalFileName;
             this.Description = Description;
             this.SchoolBus = SchoolBus;
-            
         }
 
         /// <summary>
@@ -62,46 +59,39 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// The physical location of the attachment on the file system.
         /// </summary>
         /// <value>The physical location of the attachment on the file system.</value>
         [MetaDataExtension (Description = "The physical location of the attachment on the file system.")]
         public string InternalFileName { get; set; }
-
         
-
         /// <summary>
         /// The name of the attachment as defined by the user in uploading the document.
         /// </summary>
         /// <value>The name of the attachment as defined by the user in uploading the document.</value>
         [MetaDataExtension (Description = "The name of the attachment as defined by the user in uploading the document.")]
         public string ExternalFileName { get; set; }
-
         
-
         /// <summary>
         /// A note about the attachment,  optionally maintained by the user.
         /// </summary>
         /// <value>A note about the attachment,  optionally maintained by the user.</value>
         [MetaDataExtension (Description = "A note about the attachment,  optionally maintained by the user.")]
         public string Description { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets SchoolBus
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
-
-                
-        [ForeignKey("SchoolBus")]
-        public int SchoolBusRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for SchoolBus 
+        /// </summary>       
+        [ForeignKey("SchoolBus")]
+        public int? SchoolBusRefId { get; set; }
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -190,41 +180,47 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                
-                if (this.InternalFileName != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.InternalFileName != null)
                 {
                     hash = hash * 59 + this.InternalFileName.GetHashCode();
                 }                
-                
-                if (this.ExternalFileName != null)
+                                if (this.ExternalFileName != null)
                 {
                     hash = hash * 59 + this.ExternalFileName.GetHashCode();
                 }                
-                
-                if (this.Description != null)
+                                if (this.Description != null)
                 {
                     hash = hash * 59 + this.Description.GetHashCode();
                 }                
-                   
+                                   
                 if (this.SchoolBus != null)
                 {
                     hash = hash * 59 + this.SchoolBus.GetHashCode();
                 }
-                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SchoolBusAttachment left, SchoolBusAttachment right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SchoolBusAttachment left, SchoolBusAttachment right)
         {
             return !Equals(left, right);

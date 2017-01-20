@@ -26,7 +26,6 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "A list of cities in BC. Authoritative source to be determined.")]
 
-
     public partial class City : IEquatable<City>
     {
         /// <summary>
@@ -43,11 +42,9 @@ namespace SchoolBusAPI.Models
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="Name">The name of the City.</param>
         public City(int Id, string Name = null)
-        {
-            
+        {   
             this.Id = Id;
             this.Name = Name;
-            
         }
 
         /// <summary>
@@ -56,18 +53,14 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// The name of the City
         /// </summary>
         /// <value>The name of the City</value>
         [MetaDataExtension (Description = "The name of the City")]
         public string Name { get; set; }
-
         
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -138,25 +131,35 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                
-                if (this.Name != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
                 }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(City left, City right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(City left, City right)
         {
             return !Equals(left, right);

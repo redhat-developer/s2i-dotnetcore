@@ -38,17 +38,7 @@ namespace SchoolBusAPI.Services.Impl
             _context = context;
         }
 	
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns list of available FavouriteContextTypes</remarks>
-        /// <response code="200">OK</response>
-
-        public virtual IActionResult FavouritecontexttypesGetAsync ()        
-        {
-            var result = _context.FavouriteContextTypes.ToList();
-            return new ObjectResult(result);
-        }
+       
         /// <summary>
         /// 
         /// </summary>

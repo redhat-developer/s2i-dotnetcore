@@ -34,7 +34,7 @@ namespace SchoolBusAPI.Test
 	public class InspectionApiUnitTest 
     { 
 		
-		private readonly InspectionApiController _InspectionApi;
+		private readonly InspectionController _InspectionApi;
 		
 		/// <summary>
         /// Setup the test
@@ -56,9 +56,9 @@ namespace SchoolBusAPI.Test
 
             */
 
-            InspectionApiService _service = new InspectionApiService(dbAppContext.Object);
+            InspectionService _service = new InspectionService(dbAppContext.Object);
 			
-                    _InspectionApi = new InspectionApiController (_service);
+                    _InspectionApi = new InspectionController (_service);
 
 		}
 	

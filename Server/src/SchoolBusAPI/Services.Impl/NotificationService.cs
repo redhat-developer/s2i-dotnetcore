@@ -152,11 +152,45 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="body"></param>
         /// <response code="201">Notification created</response>
 
-        public virtual IActionResult NotificationsPostAsync (Notification body)        
+        public virtual IActionResult NotificationsPostAsync (Notification item)        
         {
-            _context.Notifications.Add(body);
+            // adjust events
+     
+            if (item.Event != null)
+            {
+                int event_id = item.Event.Id;
+                bool event_exists = _context.NotificationEvents.Any(a => a.Id == event_id);
+                if (event_exists)
+                {
+                    NotificationEvent event1 = _context.NotificationEvents.First(a => a.Id == event_id);
+                    item.Event = event1;
+                }
+            }
+
+    
+            if (item.Event2 != null)
+            {
+                int event2_id = item.Event2.Id;
+                bool event2_exists = _context.NotificationEvents.Any(a => a.Id == event2_id);
+                if (event2_exists)
+                {
+                    NotificationEvent event2 = _context.NotificationEvents.First(a => a.Id == event2_id);
+                    item.Event2 = event2;
+                }
+            }
+
+            bool notification_exists = _context.Notifications.Any(a => a.Id == item.Id);
+            if (notification_exists)
+            {
+                _context.Notifications.Update(item);
+            }
+            else
+            {
+                _context.Notifications.Add(item);
+            }
+            
             _context.SaveChanges();
-            return new ObjectResult(body);
+            return new ObjectResult(item);
         }
     }
 }

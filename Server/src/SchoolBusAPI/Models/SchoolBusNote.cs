@@ -26,7 +26,6 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "Notes entered by users about a specific School Bus.")]
 
-
     public partial class SchoolBusNote : IEquatable<SchoolBusNote>
     {
         /// <summary>
@@ -45,13 +44,11 @@ namespace SchoolBusAPI.Models
         /// <param name="IsNoLongerRelevant">A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to the user as no longer relevant..</param>
         /// <param name="SchoolBus">SchoolBus.</param>
         public SchoolBusNote(int Id, string Note = null, bool? IsNoLongerRelevant = null, SchoolBus SchoolBus = null)
-        {
-            
+        {   
             this.Id = Id;
             this.Note = Note;
             this.IsNoLongerRelevant = IsNoLongerRelevant;
             this.SchoolBus = SchoolBus;
-            
         }
 
         /// <summary>
@@ -60,37 +57,32 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// The contents of the note.
         /// </summary>
         /// <value>The contents of the note.</value>
         [MetaDataExtension (Description = "The contents of the note.")]
         public string Note { get; set; }
-
         
-
         /// <summary>
         /// A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to the user as no longer relevant.
         /// </summary>
         /// <value>A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to the user as no longer relevant.</value>
         [MetaDataExtension (Description = "A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to the user as no longer relevant.")]
         public bool? IsNoLongerRelevant { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets SchoolBus
         /// </summary>
         public SchoolBus SchoolBus { get; set; }
-
-                
-        [ForeignKey("SchoolBus")]
-        public int SchoolBusRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for SchoolBus 
+        /// </summary>       
+        [ForeignKey("SchoolBus")]
+        public int? SchoolBusRefId { get; set; }
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -173,36 +165,43 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                
-                if (this.Note != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.Note != null)
                 {
                     hash = hash * 59 + this.Note.GetHashCode();
                 }                
-                
-                if (this.IsNoLongerRelevant != null)
+                                if (this.IsNoLongerRelevant != null)
                 {
                     hash = hash * 59 + this.IsNoLongerRelevant.GetHashCode();
                 }                
-                   
+                                   
                 if (this.SchoolBus != null)
                 {
                     hash = hash * 59 + this.SchoolBus.GetHashCode();
                 }
-                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SchoolBusNote left, SchoolBusNote right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SchoolBusNote left, SchoolBusNote right)
         {
             return !Equals(left, right);

@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class District : IEquatable<District>
     {
         /// <summary>
@@ -47,15 +45,13 @@ namespace SchoolBusAPI.Models
         /// <param name="StartDate">The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
         /// <param name="EndDate">The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
         public District(int Id, int? MinistryDistrictID = null, string Name = null, Region Region = null, DateTime? StartDate = null, DateTime? EndDate = null)
-        {
-            
+        {   
             this.Id = Id;
             this.MinistryDistrictID = MinistryDistrictID;
             this.Name = Name;
             this.Region = Region;
             this.StartDate = StartDate;
             this.EndDate = EndDate;
-            
         }
 
         /// <summary>
@@ -64,57 +60,48 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// The Ministry ID for the District
         /// </summary>
         /// <value>The Ministry ID for the District</value>
         [MetaDataExtension (Description = "The Ministry ID for the District")]
         public int? MinistryDistrictID { get; set; }
-
         
-
         /// <summary>
         /// The name of the District
         /// </summary>
         /// <value>The name of the District</value>
         [MetaDataExtension (Description = "The name of the District")]
         public string Name { get; set; }
-
         
-
         /// <summary>
         /// The region in which the District is found.
         /// </summary>
         /// <value>The region in which the District is found.</value>
         [MetaDataExtension (Description = "The region in which the District is found.")]
         public Region Region { get; set; }
-
-                
-        [ForeignKey("Region")]
-        public int RegionRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for Region 
+        /// </summary>       
+        [ForeignKey("Region")]
+        public int? RegionRefId { get; set; }
+        
         /// <summary>
         /// The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
         /// <value>The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
         [MetaDataExtension (Description = "The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? StartDate { get; set; }
-
         
-
         /// <summary>
         /// The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
         /// <value>The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
         [MetaDataExtension (Description = "The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? EndDate { get; set; }
-
         
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -209,46 +196,51 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                
-                if (this.MinistryDistrictID != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.MinistryDistrictID != null)
                 {
                     hash = hash * 59 + this.MinistryDistrictID.GetHashCode();
                 }                
-                
-                if (this.Name != null)
+                                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
                 }                
-                   
+                                   
                 if (this.Region != null)
                 {
                     hash = hash * 59 + this.Region.GetHashCode();
-                }
-                
-                
-                if (this.StartDate != null)
+                }                if (this.StartDate != null)
                 {
                     hash = hash * 59 + this.StartDate.GetHashCode();
                 }                
-                
-                if (this.EndDate != null)
+                                if (this.EndDate != null)
                 {
                     hash = hash * 59 + this.EndDate.GetHashCode();
                 }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(District left, District right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(District left, District right)
         {
             return !Equals(left, right);

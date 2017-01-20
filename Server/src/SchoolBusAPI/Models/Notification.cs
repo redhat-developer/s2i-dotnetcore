@@ -25,8 +25,6 @@ namespace SchoolBusAPI.Models
     /// 
     /// </summary>
 
-
-
     public partial class Notification : IEquatable<Notification>
     {
         /// <summary>
@@ -50,8 +48,7 @@ namespace SchoolBusAPI.Models
         /// <param name="PriorityCode">PriorityCode.</param>
         /// <param name="User">User.</param>
         public Notification(int Id, NotificationEvent Event = null, NotificationEvent Event2 = null, bool? HasBeenViewed = null, bool? IsWatchNotification = null, bool? IsExpired = null, bool? IsAllDay = null, string PriorityCode = null, User User = null)
-        {
-            
+        {   
             this.Id = Id;
             this.Event = Event;
             this.Event2 = Event2;
@@ -61,7 +58,6 @@ namespace SchoolBusAPI.Models
             this.IsAllDay = IsAllDay;
             this.PriorityCode = PriorityCode;
             this.User = User;
-            
         }
 
         /// <summary>
@@ -70,74 +66,65 @@ namespace SchoolBusAPI.Models
         /// <value>Primary Key</value>
         [MetaDataExtension (Description = "Primary Key")]
         public int Id { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets Event
         /// </summary>
         public NotificationEvent Event { get; set; }
-
-                
-        [ForeignKey("Event")]
-        public int EventRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for Event 
+        /// </summary>       
+        [ForeignKey("Event")]
+        public int? EventRefId { get; set; }
+        
         /// <summary>
         /// Gets or Sets Event2
         /// </summary>
         public NotificationEvent Event2 { get; set; }
-
-                
-        [ForeignKey("Event2")]
-        public int Event2RefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for Event2 
+        /// </summary>       
+        [ForeignKey("Event2")]
+        public int? Event2RefId { get; set; }
+        
         /// <summary>
         /// Gets or Sets HasBeenViewed
         /// </summary>
         public bool? HasBeenViewed { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets IsWatchNotification
         /// </summary>
         public bool? IsWatchNotification { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets IsExpired
         /// </summary>
         public bool? IsExpired { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets IsAllDay
         /// </summary>
         public bool? IsAllDay { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets PriorityCode
         /// </summary>
         public string PriorityCode { get; set; }
-
         
-
         /// <summary>
         /// Gets or Sets User
         /// </summary>
         public User User { get; set; }
-
-                
-        [ForeignKey("User")]
-        public int UserRefId { get; set; }
         
-
+        /// <summary>
+        /// Foreign key for User 
+        /// </summary>       
+        [ForeignKey("User")]
+        public int? UserRefId { get; set; }
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -250,63 +237,63 @@ namespace SchoolBusAPI.Models
             {
                 int hash = 41;
                 // Suitable nullity checks
-                   
-                hash = hash * 59 + this.Id.GetHashCode();
-                
-                   
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                   
                 if (this.Event != null)
                 {
                     hash = hash * 59 + this.Event.GetHashCode();
-                }
-                
-                   
+                }                   
                 if (this.Event2 != null)
                 {
                     hash = hash * 59 + this.Event2.GetHashCode();
-                }
-                
-                
-                if (this.HasBeenViewed != null)
+                }                if (this.HasBeenViewed != null)
                 {
                     hash = hash * 59 + this.HasBeenViewed.GetHashCode();
                 }                
-                
-                if (this.IsWatchNotification != null)
+                                if (this.IsWatchNotification != null)
                 {
                     hash = hash * 59 + this.IsWatchNotification.GetHashCode();
                 }                
-                
-                if (this.IsExpired != null)
+                                if (this.IsExpired != null)
                 {
                     hash = hash * 59 + this.IsExpired.GetHashCode();
                 }                
-                
-                if (this.IsAllDay != null)
+                                if (this.IsAllDay != null)
                 {
                     hash = hash * 59 + this.IsAllDay.GetHashCode();
                 }                
-                
-                if (this.PriorityCode != null)
+                                if (this.PriorityCode != null)
                 {
                     hash = hash * 59 + this.PriorityCode.GetHashCode();
                 }                
-                   
+                                   
                 if (this.User != null)
                 {
                     hash = hash * 59 + this.User.GetHashCode();
                 }
-                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(Notification left, Notification right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(Notification left, Notification right)
         {
             return !Equals(left, right);
