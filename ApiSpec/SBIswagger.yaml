@@ -3919,12 +3919,16 @@ definitions:
         description: Primary Key
       ICBCRegistrationNumber:
         type: string
+        uniqueItems: true
         description: The ICBC Registration number for the School Bus
       licencePlateNumber:
         type: string
+        uniqueItems: true
         description: The ICBC Plate Number for the School Bus
       VehicleIdentificationNumber:
         type: string
+        maxLength: 17
+        uniqueItems: true
         description: The VIN for the School Bus
       schoolBusOwner:
         $ref: '#/definitions/SchoolBusOwner'
@@ -3984,11 +3988,11 @@ definitions:
       unitNumber:
         type: string
         description: The unit number of the Bus as defined by the School Bus owner - freeform text.
-      schoolBusSeatingCapacity:
+      schoolBusSeatingCapacity
         format: int32
         type: integer
         description: The maximum number of passengers in the bus based on the specific use of the bus. For example,  the same 2-per seat &#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.
-      mobilityAidCapacity:
+      mobilityAidCapacity
         format: int32
         type: integer
         description: The number of mobility aid passenger seats in the bus.
@@ -4068,7 +4072,7 @@ definitions:
       ICBCRegistrationNumber:
         type: string
         description: The Registration Number (Regi) is the link between the CCW information and a specific School Bus
-      ICBCModelYear:
+      ICBCModelYear
         format: int32
         type: integer
         description: Vehicle Year
@@ -4078,10 +4082,10 @@ definitions:
         type: string
       ICBCCVIPDecal:
         type: string
-      ICBCFleetUnitNo:
+      ICBCFleetUnitNo
         format: int32
         type: integer
-      ICBCGrossVehicleWeight:
+      ICBCGrossVehicleWeight
         format: int32
         type: integer
       ICBCMake:
@@ -4093,14 +4097,14 @@ definitions:
       ICBCCVIPExpiry:
         type: string
         format: date-time
-      ICBCNetWt:
+      ICBCNetWt
         format: int32
         type: integer
       ICBCModel:
         type: string
       ICBCFuel:
         type: string
-      ICBCSeatingCapacity:
+      ICBCSeatingCapacity
         format: int32
         type: integer
       ICBCColour:
@@ -4338,7 +4342,7 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
-      ministryRegionID:
+      ministryRegionID
         format: int32
         type: integer
         description: The Ministry ID for the Region
@@ -4362,7 +4366,7 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
-      ministryDistrictID:
+      ministryDistrictID
         format: int32
         type: integer
         description: The Ministry ID for the District
@@ -4389,7 +4393,7 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
-      ministryServiceAreaID:
+      ministryServiceAreaID
         format: int32
         type: integer
         description: The Ministry ID for the Service Area

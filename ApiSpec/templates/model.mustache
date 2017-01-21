@@ -7,38 +7,35 @@ definitions:{{#list}}
 {{/Required}}
     properties:{{/table}}{{#boolean}}{{!
 }}      {{Name}}:
-        type: boolean{{#Description}}
-        description: {{Description}}{{/Description}}{{/boolean}}{{#string}}{{!
+        type: boolean{{/boolean}}{{#binary}}{{!
+}}      {{Name}}:
+        type: binary{{/binary}}{{#string}}{{!
 }}      {{Name}}:
         type: string{{#Length}}
-        maxLength: {{Length}}{{/Length}}{{#Description}}
-        description: {{Description}}{{/Description}}{{/string}}{{#integer}}{{!
-}}      {{Name}}:
+        maxLength: {{Length}}{{/Length}}{{/string}}{{#integer}}{{!
+}}      {{Name}}
         format: int32
-        type: integer{{#Description}}
-        description: {{Description}}{{/Description}}{{/integer}}{{#float}}{{!
+        type: integer{{/integer}}{{#float}}{{!
 }}      {{Name}}:
         format: float
-        type: decimal{{#Description}}
-        description: {{Description}}{{/Description}}{{/float}}{{#id}}{{!
+        type: decimal{{/float}}{{#id}}{{!
 }}      {{Name}}:
         format: int32
-        type: integer{{#Description}}
-        description: {{Description}}{{/Description}}{{/id}}{{#datetime}}{{!
+        type: integer{{/id}}{{#datetime}}{{!
 }}      {{Name}}:
         type: string
-        format: date-time{{#Description}}
-        description: {{Description}}{{/Description}}{{/datetime}}{{#date}}{{!
+        format: date-time{{/datetime}}{{#date}}{{!
 }}      {{Name}}:
         type: string
-        format: date-time{{#Description}}
-        description: {{Description}}{{/Description}}{{/date}}{{#links}}{{!
+        format: date-time{{/date}}{{#links}}{{!
 }}      {{Name}}:
         type: array
         items:
-          $ref: '#/definitions/{{RefDef}}'{{#Description}}
-        description: {{Description}}{{/Description}}{{/links}}{{#ref}}{{!
+          $ref: '#/definitions/{{RefDef}}'{{/links}}{{#ref}}{{!
 }}      {{Name}}:
-        $ref: '#/definitions/{{RefDef}}'{{#Description}}
-        description: {{Description}}{{/Description}}{{/ref}}{{/list
-}}
+        $ref: '#/definitions/{{RefDef}}'{{/ref}}{{!
+}}{{#Unique}}
+        uniqueItems: true{{/Unique}}{{!
+}}{{^table}}{{#Description}}
+        description: {{Description}}{{/Description}}{{/table}}{{!
+}}{{/list}}
