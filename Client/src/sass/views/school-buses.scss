@@ -1,62 +1,68 @@
-#school-buses-search {
-  margin-top: -10px;
+#school-buses-list {
+  #school-buses-search {
+    margin-top: -10px;
 
-  > div {
+    > div {
+      margin-top: 10px;
+    }
+
+    > form > span {
+      margin-top: 10px;
+    }
+  }
+
+  #school-buses-inspections {
+    margin-top: 10px;
+
+    label {
+      margin-top: 7px;
+      margin-left: 7px;
+    }
+  }
+
+  #school-buses-key-search {
+    margin-left: 5px;
+
+    .dropdown-menu {
+      min-width: 70px;
+    }
+
+    .btn {
+      min-width: 70px;
+    }
+
+    input {
+      min-width: 175px;
+    }
+  }
+
+  #school-buses-buttons {
+    float: right;
+
+    .btn {
+      width: 40px;
+    }
+  }
+
+  #school-buses-faves {
+    float: right;
     margin-top: 10px;
   }
 
-  > form > span {
-    margin-top: 10px;
-  }
-}
-
-#school-buses-inspections {
-  margin-top: 10px;
-
-  label {
-    margin-top: 7px;
-    margin-left: 7px;
-  }
-}
-
-#school-buses-key-search {
-  margin-left: 5px;
-
-  .dropdown-menu {
-    min-width: 70px;
+  #school-buses-faves-dropdown {
+    width: 79px;
   }
 
-  .btn {
-    min-width: 70px;
+  #search-button {
+    float:right;
   }
-
-  input {
-    min-width: 175px;
-  }
-}
-
-#school-buses-buttons {
-  float: right;
-
-  .btn {
-    width: 40px;
-  }
-}
-
-#school-buses-faves {
-  float: right;
-  margin-top: 10px;
-}
-
-#school-buses-faves-dropdown {
-  width: 79px;
-}
-
-#search-button {
-  float:right;
 }
 
 #school-buses-detail {
+  #school-buses-top {
+    margin-bottom: 10px;
+  }
+
   .well {
     margin-left: 5px;
     margin-right: 5px;

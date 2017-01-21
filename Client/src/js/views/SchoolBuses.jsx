@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton, MenuItem, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { Form, FormControl, InputGroup, Checkbox } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
 import Moment from 'moment';
@@ -58,7 +59,6 @@ var SchoolBuses = React.createClass({
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
-    router : React.PropTypes.object,
   },
 
   getInitialState() {
@@ -307,10 +307,12 @@ var SchoolBuses = React.createClass({
     this.updateUIState(newState);
   },
 
-  edit(bus) {
-    this.props.router.push({
-      pathname: 'school-buses/' + bus.id,
-    });
+  email() {
+
+  },
+
+  print() {
+
   },
 
   render() {
@@ -320,7 +322,7 @@ var SchoolBuses = React.createClass({
     var schoolDistricts = _.sortBy(this.props.schoolDistricts, 'name');
     var owners = _.sortBy(this.props.owners, 'name');
 
-    return <div id="school-buses">
+    return <div id="school-buses-list">
       <Well id="school-buses-bar" bsSize="small" className="clearfix">
         <Row>
           <Col md={11}>
@@ -385,8 +387,8 @@ var SchoolBuses = React.createClass({
           <Col md={1}>
             <Row id="school-buses-buttons">
               <ButtonGroup>
-                <Button><Glyphicon glyph="envelope" title="E-mail" /></Button>
-                <Button><Glyphicon glyph="print" title="Print" /></Button>
+                <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
+                <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
               </ButtonGroup>
             </Row>
             <Row id="school-buses-faves">
@@ -443,7 +445,9 @@ var SchoolBuses = React.createClass({
                 </td>
                 <td>{ bus.inspectorName }</td>
                 <td style={{ textAlign: 'right' }}>
-                  <Button title="edit" bsSize="xsmall" onClick={ this.edit.bind(this, bus) }><Glyphicon glyph="edit" /></Button>
+                  <LinkContainer to={{ pathname: 'school-buses/' + bus.id }}>
+                    <Button title="edit" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                  </LinkContainer>
                 </td>
               </tr>;
             })
