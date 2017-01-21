@@ -21,8 +21,8 @@ export function getCurrentUser() {
 // Users
 ////////////////////
 
-export function getUsers(params) {
-  return new ApiRequest('/users').get(params).then(response => {
+export function getUsers() {
+  return new ApiRequest('/users').get().then(response => {
     // Normalize the response
     var users = _.fromPairs(response.map(user => [ user.id, user ]));
 
@@ -91,8 +91,10 @@ export function deleteFavourite(favourite) {
 function addSchoolBusDisplayFields(bus) {
   bus.isActive = bus.status === 'Active';
   bus.ownerName = bus.schoolBusOwner ? bus.schoolBusOwner.name : '';
+  bus.ownerPath = bus.schoolBusOwner ? ('#/owners/' + bus.schoolBusOwner.id) : '';
   bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
-  bus.districtName = bus.schoolBusDistrict ? bus.schoolBusDistrict.name : '';
+  bus.districtName = bus.serviceArea ? (bus.serviceArea.district ? bus.serviceArea.district.name : '') : '';
+  bus.schoolBusDistrictName = bus.schoolBusDistrict ? bus.schoolBusDistrict.name : '';
   bus.homeTerminalAddrs = concat(bus.homeTerminalAddr1, bus.homeTerminalAddr2, ', ');
   bus.homeTerminalCityProv = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
   bus.daysToInspection = daysFromToday(bus.nextInspectionDate);
@@ -113,8 +115,8 @@ export function searchSchoolBuses(params) {
   });
 }
 
-export function getSchoolBuses(params) {
-  return new ApiRequest('/schoolbuses').get(params).then(response => {
+export function getSchoolBuses() {
+  return new ApiRequest('/schoolbuses').get().then(response => {
     // Normalize the response
     var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
 
@@ -180,6 +182,24 @@ export function getSchoolBusNotes(schoolBusId) {
 ////////////////////
 // Owners
 ////////////////////
+
+function addOwnerDisplayFields(owner) {
+  owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
+}
+
+export function getOwners() {
+  return new ApiRequest('/schoolbusowners').get().then(response => {
+    // Normalize the response
+    var owners = _.fromPairs(response.map(owner => [ owner.id, owner ]));
+
+    // Add display fields
+    _.map(owners, owner => {
+      addOwnerDisplayFields(owner);
+    });
+
+    store.dispatch({ type: 'UPDATE_OWNERS', owners: owners });
+  });
+}
 
 export function getOwner(ownerId) {
   return new ApiRequest(`/schoolbusowners/${ownerId}`).get().then(response => {

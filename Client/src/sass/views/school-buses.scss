@@ -1,50 +1,68 @@
-#school-buses-key-search {
-  margin-left: 5px;
+#school-buses-list {
+  #school-buses-search {
+    margin-top: -10px;
 
-  .dropdown-menu {
-    min-width: 70px;
+    > div {
+      margin-top: 10px;
+    }
+
+    > form > span {
+      margin-top: 10px;
+    }
   }
 
-  .btn {
-    min-width: 70px;
+  #school-buses-inspections {
+    margin-top: 10px;
+
+    label {
+      margin-top: 7px;
+      margin-left: 7px;
+    }
   }
 
-  input {
-    min-width: 175px;
+  #school-buses-key-search {
+    margin-left: 5px;
+
+    .dropdown-menu {
+      min-width: 70px;
+    }
+
+    .btn {
+      min-width: 70px;
+    }
+
+    input {
+      min-width: 175px;
+    }
   }
-}
 
-#school-buses-buttons {
-  float: right;
+  #school-buses-buttons {
+    float: right;
 
-  .btn {
-    width: 40px;
+    .btn {
+      width: 40px;
+    }
   }
-}
 
-#school-buses-faves {
-  float: right;
-  margin-top: 10px;
-}
-
-#school-buses-faves-dropdown {
-  width: 79px;
-}
-
-#school-buses-inspections {
-  margin-top: 10px;
-
-  .checkbox-inline {
-    margin-top: 7px;
-    margin-left: 7px;
+  #school-buses-faves {
+    float: right;
+    margin-top: 10px;
   }
-}
 
-#search-button {
-  float:right;
+  #school-buses-faves-dropdown {
+    width: 79px;
+  }
+
+  #search-button {
+    float:right;
+  }
 }
 
 #school-buses-detail {
+  #school-buses-top {
+    margin-bottom: 10px;
+  }
+
   .well {
     margin-left: 5px;
     margin-right: 5px;
