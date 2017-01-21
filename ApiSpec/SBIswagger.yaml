@@ -3917,14 +3917,18 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
-      regi:
+      ICBCRegistrationNumber:
         type: string
+        uniqueItems: true
         description: The ICBC Registration number for the School Bus
-      plate:
+      licencePlateNumber:
         type: string
+        uniqueItems: true
         description: The ICBC Plate Number for the School Bus
-      VIN:
+      VehicleIdentificationNumber:
         type: string
+        maxLength: 17
+        uniqueItems: true
         description: The VIN for the School Bus
       schoolBusOwner:
         $ref: '#/definitions/SchoolBusOwner'
@@ -3936,12 +3940,12 @@ definitions:
         description: Enumerated type of Status - Inactive,  Active,  Archived
       isOutOfProvince:
         type: boolean
-      ServiceArea:
-        $ref: '#/definitions/ServiceArea'
-      homeTerminalAddr1:
+      District:
+        $ref: '#/definitions/District'
+      homeTerminalAddress1:
         type: string
         description: Address 1 of physical location of the School Bus.
-      homeTerminalAddr2:
+      homeTerminalAddress2:
         type: string
         description: Address 2 of physical location of the School Bus.
       homeTerminalCity:
@@ -3956,99 +3960,60 @@ definitions:
       homeTerminalComment:
         type: string
         description: A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection
-      restrictions:
+      restrictionsText:
         type: string
         description: Text of any restrictions to be printed on the school bus permit.
       nextInspectionDate:
         type: string
         format: date-time
         description: The next inspection date for this School Bus. Set at the time an inspection is set.
-      nextInspectionType:
+      nextInspectionTypeCode:
         type: string
         description: An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.
-      schoolBusDistrict:
+      schoolDistrict:
         $ref: '#/definitions/SchoolDistrict'
         description: The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.
       isIndependentSchool:
         type: boolean
         description: True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field.
-      nameOfIndependentSchool:
+      independentSchoolName:
         type: string
         description: The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.
-      schoolBusClass:
+      permitClassCode:
         type: string
         description: The enumerated class of School Bus.
-      schoolBusBodyType:
+      bodyTypeCode:
         type: string
         description: The enumerated body type of the School Bus.
-      schoolBusBodyTypeOther:
-        type: string
-        description: The enumerated body type of the School Bus.
-      schoolBusUnitNumber:
+      unitNumber:
         type: string
         description: The unit number of the Bus as defined by the School Bus owner - freeform text.
-      schoolBusSeatingCapacity:
+      schoolBusSeatingCapacity
         format: int32
         type: integer
         description: The maximum number of passengers in the bus based on the specific use of the bus. For example,  the same 2-per seat &#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.
-      mobilityAidCapacity:
+      mobilityAidCapacity
         format: int32
         type: integer
         description: The number of mobility aid passenger seats in the bus.
       inspector:
         $ref: '#/definitions/User'
         description: The inspector assigned to this schoolbus
-  SchoolBusNote:
-    type: object
-    description: Notes entered by users about a specific School Bus.
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      note:
-        type: string
-        description: The contents of the note.
-      isNoLongerRelevant:
-        type: boolean
-        description: A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to the user as no longer relevant.
-      schoolBus:
-        $ref: '#/definitions/SchoolBus'
-  SchoolBusAttachment:
-    type: object
-    description: Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      internalFileName:
-        type: string
-        description: The physical location of the attachment on the file system.
-      externalFileName:
-        type: string
-        description: The name of the attachment as defined by the user in uploading the document.
-      description:
-        type: string
-        description: A note about the attachment,  optionally maintained by the user.
-      schoolBus:
-        $ref: '#/definitions/SchoolBus'
-  SchoolBusHistory:
-    type: object
-    description: The history of updates made to a School Bus. Exact format of the history TBD.
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      schoolBus:
-        $ref: '#/definitions/SchoolBus'
+      notes:
+        type: array
+        items:
+          $ref: '#/definitions/Note'
+        description: The set of notes about the school bus entered by users.
+      attachments:
+        type: array
+        items:
+          $ref: '#/definitions/Attachment'
+        description: The set of attachments about the school bus uploaded by the users.
+      history:
+        type: array
+        items:
+          $ref: '#/definitions/History'
+        description: The history of updates made to the School Bus.
   SchoolBusOwner:
     type: object
     required:
@@ -4069,143 +4034,31 @@ definitions:
         format: date-time
         description: The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.
       primaryContact:
-        $ref: '#/definitions/SchoolBusOwnerContact'
+        $ref: '#/definitions/Contact'
         description: Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.
-      serviceArea:
-        $ref: '#/definitions/ServiceArea'
+      District:
+        $ref: '#/definitions/District'
         description: The District to which this School Bus is affliated.
-      nextInspectionDate:
-        type: string
-        format: date-time
-        description: The calculated next inspection date from across the School Buses associated with this School Bus Owner
-      numberOfBuses:
-        format: int32
-        type: integer
-        description: The calculated count of the number of School Buses associated with this School Bus Owner
       contacts:
         type: array
         items:
-          $ref: '#/definitions/SchoolBusOwnerContact'
-  SchoolBusOwnerAttachment:
-    type: object
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      schoolBusOwner:
-        $ref: '#/definitions/SchoolBusOwner'
-      internalFileName:
-        type: string
-        description: The physical location of the attachment on the file system.
-      externalFileName:
-        type: string
-        description: The name of the attachment as defined by the user in uploading the document.
-      description:
-        type: string
-        description: A note about the attachment,  optionally maintained by the user.
-  SchoolBusOwnerNote:
-    type: object
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      isNoLongerRelevant:
-        type: boolean
-        description: A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to the user as no longer relevant.
-      note:
-        type: string
-        description: The contents of the note.
-      schoolBusOwner:
-        $ref: '#/definitions/SchoolBusOwner'
-  SchoolBusOwnerContact:
-    type: object
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      givenName:
-        type: string
-        description: The given name of the contact.
-      surname:
-        type: string
-        description: The surname of the contact.
-      role:
-        type: string
-        description: The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.
+          $ref: '#/definitions/Contact'
+        description: The set of contacts related to the School Bus Owner.
       notes:
-        type: string
-        description: Notes about the contact.
-      schoolBusOwnerContactPhones:
         type: array
         items:
-          $ref: '#/definitions/SchoolBusOwnerContactPhone'
-      schoolBusOwnerContactAddresses:
+          $ref: '#/definitions/Note'
+        description: The set of notes about the school bus owner entered by users.
+      attachments:
         type: array
         items:
-          $ref: '#/definitions/SchoolBusOwnerContactAddress'
-  SchoolBusOwnerContactPhone:
-    type: object
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      type:
-        type: string
-        description: The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.
-      phoneNumber:
-        type: string
-        description: The phone number of the contact. Entered as free form to support a range of formats.
-  SchoolBusOwnerContactAddress:
-    type: object
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      type:
-        type: string
-        description: The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.
-      addr1:
-        type: string
-        description: Address 1 line of the address.
-      addr2:
-        type: string
-        description: Address 2 line of the address.
-      city:
-        type: string
-        description: The City of the address.
-      province:
-        type: string
-        description: The Province of the address.
-      postalCode:
-        type: string
-        description: The postal code of the address.
-  SchoolBusOwnerHistory:
-    type: object
-    description: The history of updates made to a School Bus Owner record. Exact format of the history TBD.
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        description: Primary Key
-      schoolBusOwner:
-        $ref: '#/definitions/SchoolBusOwner'
+          $ref: '#/definitions/Attachment'
+        description: The set of attachments about the school bus owner uploaded by the users.
+      history:
+        type: array
+        items:
+          $ref: '#/definitions/History'
+        description: The history of updates made to the School Bus Owner data.
   CCWData:
     type: object
     description: Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls.
@@ -4216,10 +4069,10 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
-      ICBCRegi:
+      ICBCRegistrationNumber:
         type: string
         description: The Registration Number (Regi) is the link between the CCW information and a specific School Bus
-      ICBCModelYear:
+      ICBCModelYear
         format: int32
         type: integer
         description: Vehicle Year
@@ -4229,10 +4082,10 @@ definitions:
         type: string
       ICBCCVIPDecal:
         type: string
-      ICBCFleetUnitNo:
+      ICBCFleetUnitNo
         format: int32
         type: integer
-      ICBCGrossVehicleWeight:
+      ICBCGrossVehicleWeight
         format: int32
         type: integer
       ICBCMake:
@@ -4244,14 +4097,14 @@ definitions:
       ICBCCVIPExpiry:
         type: string
         format: date-time
-      ICBCNetWt:
+      ICBCNetWt
         format: int32
         type: integer
       ICBCModel:
         type: string
       ICBCFuel:
         type: string
-      ICBCSeatingCapacity:
+      ICBCSeatingCapacity
         format: int32
         type: integer
       ICBCColour:
@@ -4320,18 +4173,15 @@ definitions:
         type: string
         format: date-time
         description: The date the inspection was conducted.
-      inspectionType:
+      inspectionTypeCode:
         type: string
         description: The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created
-      inspectionResult:
+      inspectionResultCode:
         type: string
         description: The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.
       notes:
         type: string
         description: A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.
-      restrictions:
-        type: string
-        description: The Restrictions text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page.
       RIPInspectionId:
         type: string
         description: The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.
@@ -4339,6 +4189,125 @@ definitions:
         type: string
         format: date-time
         description: Record creation date
+  Note:
+    type: object
+    description: Notes entered by users about instance of entities - e.g. School Buses and School Bus Owners
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+      noteText:
+        type: string
+        description: The contents of the note.
+      isNoLongerRelevant:
+        type: boolean
+        description: A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to other users as no longer applicable.
+  Attachment:
+    type: object
+    description: Attachments uploaded by users about instance of entities - e.g. School Buses and School Bus Owners
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+      internalFileName:
+        type: string
+        description: The physical location of the attachment on the file system.
+      externalFileName:
+        type: string
+        description: The name of the attachment as defined by the user in uploading the document.
+      description:
+        type: string
+        description: A note about the attachment,  optionally maintained by the user.
+  History:
+    type: object
+    description: The history of updates made to an entity - e.g. a School Bus or a School Bus Owner
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+      historyText:
+        type: string
+        description: The text of the history entry tracked against the related entity.
+  Contact:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+      givenName:
+        type: string
+        description: The given name of the contact.
+      surname:
+        type: string
+        description: The surname of the contact.
+      role:
+        type: string
+        description: The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.
+      notes:
+        type: string
+        description: A note about the contact maintained by the users.
+      contactPhones:
+        type: array
+        items:
+          $ref: '#/definitions/ContactPhone'
+      contactAddresses:
+        type: array
+        items:
+          $ref: '#/definitions/ContactAddress'
+  ContactPhone:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+      type:
+        type: string
+        description: The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.
+      phoneNumber:
+        type: string
+        description: The phone number of the contact. Entered as free form to support a range of formats.
+  ContactAddress:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+      type:
+        type: string
+        description: The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.
+      address1:
+        type: string
+        description: Address 1 line of the address.
+      address2:
+        type: string
+        description: Address 2 line of the address.
+      city:
+        type: string
+        description: The City of the address.
+      province:
+        type: string
+        description: The Province of the address.
+      postalCode:
+        type: string
+        description: The postal code of the address.
   UserFavourite:
     type: object
     description: User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.
@@ -4373,7 +4342,7 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
-      ministryRegionID:
+      ministryRegionID
         format: int32
         type: integer
         description: The Ministry ID for the Region
@@ -4397,7 +4366,7 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
-      ministryDistrictID:
+      ministryDistrictID
         format: int32
         type: integer
         description: The Ministry ID for the District
@@ -4424,7 +4393,7 @@ definitions:
         format: int32
         type: integer
         description: Primary Key
-      ministryServiceAreaID:
+      ministryServiceAreaID
         format: int32
         type: integer
         description: The Ministry ID for the Service Area

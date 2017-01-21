@@ -10,6 +10,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -29,6 +31,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -41,13 +45,15 @@
         {
             "Description": "The ICBC Registration number for the School Bus",
             "Length": null,
-            "Name": "regi",
+            "Name": "ICBCRegistrationNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": true,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -60,13 +66,15 @@
         {
             "Description": "The ICBC Plate Number for the School Bus",
             "Length": null,
-            "Name": "plate",
+            "Name": "licencePlateNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": true,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -78,14 +86,16 @@
         },
         {
             "Description": "The VIN for the School Bus",
-            "Length": null,
-            "Name": "VIN",
+            "Length": "17",
+            "Name": "VehicleIdentificationNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": true,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -105,6 +115,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -124,6 +136,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -143,6 +157,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -162,6 +178,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -174,13 +192,15 @@
         {
             "Description": null,
             "Length": null,
-            "Name": "ServiceArea",
-            "RefDef": "ServiceArea",
+            "Name": "District",
+            "RefDef": "District",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -193,13 +213,15 @@
         {
             "Description": "Address 1 of physical location of the School Bus.",
             "Length": null,
-            "Name": "homeTerminalAddr1",
+            "Name": "homeTerminalAddress1",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -212,13 +234,15 @@
         {
             "Description": "Address 2 of physical location of the School Bus.",
             "Length": null,
-            "Name": "homeTerminalAddr2",
+            "Name": "homeTerminalAddress2",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -238,6 +262,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -257,6 +283,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -276,6 +304,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -295,6 +325,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -307,13 +339,15 @@
         {
             "Description": "Text of any restrictions to be printed on the school bus permit.",
             "Length": null,
-            "Name": "restrictions",
+            "Name": "restrictionsText",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -333,6 +367,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -345,13 +381,15 @@
         {
             "Description": "An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass/Fail status of the most recent inspection.",
             "Length": null,
-            "Name": "nextInspectionType",
+            "Name": "nextInspectionTypeCode",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -364,13 +402,15 @@
         {
             "Description": "The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.",
             "Length": null,
-            "Name": "schoolBusDistrict",
+            "Name": "schoolDistrict",
             "RefDef": "SchoolDistrict",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -390,6 +430,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -402,13 +444,15 @@
         {
             "Description": "The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.",
             "Length": null,
-            "Name": "nameOfIndependentSchool",
+            "Name": "independentSchoolName",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -421,13 +465,15 @@
         {
             "Description": "The enumerated class of School Bus.",
             "Length": null,
-            "Name": "schoolBusClass",
+            "Name": "permitClassCode",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -440,32 +486,15 @@
         {
             "Description": "The enumerated body type of the School Bus.",
             "Length": null,
-            "Name": "schoolBusBodyType",
+            "Name": "bodyTypeCode",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The enumerated body type of the School Bus.",
-            "Length": null,
-            "Name": "schoolBusBodyTypeOther",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -478,13 +507,15 @@
         {
             "Description": "The unit number of the Bus as defined by the School Bus owner - freeform text.",
             "Length": null,
-            "Name": "schoolBusUnitNumber",
+            "Name": "unitNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -504,6 +535,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -523,6 +556,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -542,6 +577,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -552,268 +589,65 @@
             "table": null
         },
         {
-            "Description": "Notes entered by users about a specific School Bus.",
+            "Description": "The set of notes about the school bus entered by users.",
             "Length": null,
-            "Name": "SchoolBusNote",
-            "RefDef": null,
+            "Name": "notes",
+            "RefDef": "Note",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
             "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
+            "links": "links",
             "ref": null,
             "string": null,
             "table": null
         },
         {
-            "Description": "The contents of the note.",
+            "Description": "The set of attachments about the school bus uploaded by the users.",
             "Length": null,
-            "Name": "note",
-            "RefDef": null,
+            "Name": "attachments",
+            "RefDef": "Attachment",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
             "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to the user as no longer relevant.",
-            "Length": null,
-            "Name": "isNoLongerRelevant",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": "boolean",
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
+            "links": "links",
             "ref": null,
             "string": null,
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The history of updates made to the School Bus.",
             "Length": null,
-            "Name": "schoolBus",
-            "RefDef": "SchoolBus",
+            "Name": "history",
+            "RefDef": "History",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
             "integer": null,
-            "links": null,
-            "ref": "ref",
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "Attachments uploaded by users about a specific School Bus. Attachments are stored in the file system, with rows in this table pointing to the file system location of the attachment.",
-            "Length": null,
-            "Name": "SchoolBusAttachment",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
+            "links": "links",
             "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "The physical location of the attachment on the file system.",
-            "Length": null,
-            "Name": "internalFileName",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The name of the attachment as defined by the user in uploading the document.",
-            "Length": null,
-            "Name": "externalFileName",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "A note about the attachment,  optionally maintained by the user.",
-            "Length": null,
-            "Name": "description",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "schoolBus",
-            "RefDef": "SchoolBus",
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": "ref",
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "The history of updates made to a School Bus. Exact format of the history TBD.",
-            "Length": null,
-            "Name": "SchoolBusHistory",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "schoolBus",
-            "RefDef": "SchoolBus",
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": "ref",
             "string": null,
             "table": null
         },
@@ -827,6 +661,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -846,6 +682,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -865,6 +703,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -884,6 +724,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -903,6 +745,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -916,12 +760,14 @@
             "Description": "Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.",
             "Length": null,
             "Name": "primaryContact",
-            "RefDef": "SchoolBusOwnerContact",
+            "RefDef": "Contact",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -934,13 +780,15 @@
         {
             "Description": "The District to which this School Bus is affliated.",
             "Length": null,
-            "Name": "serviceArea",
-            "RefDef": "ServiceArea",
+            "Name": "District",
+            "RefDef": "District",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -951,53 +799,17 @@
             "table": null
         },
         {
-            "Description": "The calculated next inspection date from across the School Buses associated with this School Bus Owner",
-            "Length": null,
-            "Name": "nextInspectionDate",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": "datetime",
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "The calculated count of the number of School Buses associated with this School Bus Owner",
-            "Length": null,
-            "Name": "numberOfBuses",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": "integer",
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": null,
+            "Description": "The set of contacts related to the School Bus Owner.",
             "Length": null,
             "Name": "contacts",
-            "RefDef": "SchoolBusOwnerContact",
+            "RefDef": "Contact",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1008,338 +820,17 @@
             "table": null
         },
         {
-            "Description": null,
-            "Length": null,
-            "Name": "SchoolBusOwnerAttachment",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "schoolBusOwner",
-            "RefDef": "SchoolBusOwner",
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": "ref",
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "The physical location of the attachment on the file system.",
-            "Length": null,
-            "Name": "internalFileName",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The name of the attachment as defined by the user in uploading the document.",
-            "Length": null,
-            "Name": "externalFileName",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "A note about the attachment,  optionally maintained by the user.",
-            "Length": null,
-            "Name": "description",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "SchoolBusOwnerNote",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to the user as no longer relevant.",
-            "Length": null,
-            "Name": "isNoLongerRelevant",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": "boolean",
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "The contents of the note.",
-            "Length": null,
-            "Name": "note",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "schoolBusOwner",
-            "RefDef": "SchoolBusOwner",
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": "ref",
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "SchoolBusOwnerContact",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "The given name of the contact.",
-            "Length": null,
-            "Name": "givenName",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The surname of the contact.",
-            "Length": null,
-            "Name": "surname",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.",
-            "Length": null,
-            "Name": "role",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "Notes about the contact.",
+            "Description": "The set of notes about the school bus owner entered by users.",
             "Length": null,
             "Name": "notes",
-            "RefDef": null,
+            "RefDef": "Note",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "schoolBusOwnerContactPhones",
-            "RefDef": "SchoolBusOwnerContactPhone",
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1350,15 +841,17 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The set of attachments about the school bus owner uploaded by the users.",
             "Length": null,
-            "Name": "schoolBusOwnerContactAddresses",
-            "RefDef": "SchoolBusOwnerContactAddress",
+            "Name": "attachments",
+            "RefDef": "Attachment",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1369,287 +862,23 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The history of updates made to the School Bus Owner data.",
             "Length": null,
-            "Name": "SchoolBusOwnerContactPhone",
-            "RefDef": null,
+            "Name": "history",
+            "RefDef": "History",
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
             "integer": null,
-            "links": null,
+            "links": "links",
             "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.",
-            "Length": null,
-            "Name": "type",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The phone number of the contact. Entered as free form to support a range of formats.",
-            "Length": null,
-            "Name": "phoneNumber",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "SchoolBusOwnerContactAddress",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.",
-            "Length": null,
-            "Name": "type",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "Address 1 line of the address.",
-            "Length": null,
-            "Name": "addr1",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "Address 2 line of the address.",
-            "Length": null,
-            "Name": "addr2",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The City of the address.",
-            "Length": null,
-            "Name": "city",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The Province of the address.",
-            "Length": null,
-            "Name": "province",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The postal code of the address.",
-            "Length": null,
-            "Name": "postalCode",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The history of updates made to a School Bus Owner record. Exact format of the history TBD.",
-            "Length": null,
-            "Name": "SchoolBusOwnerHistory",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "Primary Key",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "schoolBusOwner",
-            "RefDef": "SchoolBusOwner",
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": "ref",
             "string": null,
             "table": null
         },
@@ -1663,6 +892,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1682,6 +913,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -1694,13 +927,15 @@
         {
             "Description": "The Registration Number (Regi) is the link between the CCW information and a specific School Bus",
             "Length": null,
-            "Name": "ICBCRegi",
+            "Name": "ICBCRegistrationNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1720,6 +955,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1739,6 +976,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1758,6 +997,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1777,6 +1018,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1796,6 +1039,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1815,6 +1060,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1834,6 +1081,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1853,6 +1102,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1872,6 +1123,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1891,6 +1144,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -1910,6 +1165,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1929,6 +1186,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1948,6 +1207,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1967,6 +1228,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -1986,6 +1249,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2005,6 +1270,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2024,6 +1291,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2043,6 +1312,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2062,6 +1333,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2081,6 +1354,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2100,6 +1375,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2119,6 +1396,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2138,6 +1417,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2157,6 +1438,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2176,6 +1459,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2195,6 +1480,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2214,6 +1501,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2233,6 +1522,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2252,6 +1543,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2271,6 +1564,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2290,6 +1585,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2309,6 +1606,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2328,6 +1627,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2347,6 +1648,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2366,6 +1669,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2385,6 +1690,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2404,6 +1711,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2423,6 +1732,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -2442,6 +1753,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2461,6 +1774,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2480,6 +1795,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2492,13 +1809,15 @@
         {
             "Description": "The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created",
             "Length": null,
-            "Name": "inspectionType",
+            "Name": "inspectionTypeCode",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2511,13 +1830,15 @@
         {
             "Description": "The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.",
             "Length": null,
-            "Name": "inspectionResult",
+            "Name": "inspectionResultCode",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2537,25 +1858,8 @@
                     "req": "id"
                 }
             ],
-            "boolean": null,
-            "datetime": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": "The Restrictions text from the School Bus record. This is visible on the Inspections screen as a convenience for adjusting it prior to printing the Permit Page.",
-            "Length": null,
-            "Name": "restrictions",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2575,6 +1879,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2594,6 +1900,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2604,15 +1912,17 @@
             "table": null
         },
         {
-            "Description": "User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.",
+            "Description": "Notes entered by users about instance of entities - e.g. School Buses and School Bus Owners",
             "Length": null,
-            "Name": "UserFavourite",
+            "Name": "Note",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2632,6 +1942,680 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": "id",
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The contents of the note.",
+            "Length": null,
+            "Name": "noteText",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to other users as no longer applicable.",
+            "Length": null,
+            "Name": "isNoLongerRelevant",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": "boolean",
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "Attachments uploaded by users about instance of entities - e.g. School Buses and School Bus Owners",
+            "Length": null,
+            "Name": "Attachment",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": "table"
+        },
+        {
+            "Description": "Primary Key",
+            "Length": null,
+            "Name": "id",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": "id",
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The physical location of the attachment on the file system.",
+            "Length": null,
+            "Name": "internalFileName",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The name of the attachment as defined by the user in uploading the document.",
+            "Length": null,
+            "Name": "externalFileName",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "A note about the attachment,  optionally maintained by the user.",
+            "Length": null,
+            "Name": "description",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The history of updates made to an entity - e.g. a School Bus or a School Bus Owner",
+            "Length": null,
+            "Name": "History",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": "table"
+        },
+        {
+            "Description": "Primary Key",
+            "Length": null,
+            "Name": "id",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": "id",
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The text of the history entry tracked against the related entity.",
+            "Length": null,
+            "Name": "historyText",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": null,
+            "Length": null,
+            "Name": "Contact",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": "table"
+        },
+        {
+            "Description": "Primary Key",
+            "Length": null,
+            "Name": "id",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": "id",
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The given name of the contact.",
+            "Length": null,
+            "Name": "givenName",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The surname of the contact.",
+            "Length": null,
+            "Name": "surname",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.",
+            "Length": null,
+            "Name": "role",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "A note about the contact maintained by the users.",
+            "Length": null,
+            "Name": "notes",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": null,
+            "Length": null,
+            "Name": "contactPhones",
+            "RefDef": "ContactPhone",
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": "links",
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": null,
+            "Length": null,
+            "Name": "contactAddresses",
+            "RefDef": "ContactAddress",
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": "links",
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": null,
+            "Length": null,
+            "Name": "ContactPhone",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": "table"
+        },
+        {
+            "Description": "Primary Key",
+            "Length": null,
+            "Name": "id",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": "id",
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.",
+            "Length": null,
+            "Name": "type",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The phone number of the contact. Entered as free form to support a range of formats.",
+            "Length": null,
+            "Name": "phoneNumber",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": null,
+            "Length": null,
+            "Name": "ContactAddress",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": "table"
+        },
+        {
+            "Description": "Primary Key",
+            "Length": null,
+            "Name": "id",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": "id",
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.",
+            "Length": null,
+            "Name": "type",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "Address 1 line of the address.",
+            "Length": null,
+            "Name": "address1",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "Address 2 line of the address.",
+            "Length": null,
+            "Name": "address2",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The City of the address.",
+            "Length": null,
+            "Name": "city",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The Province of the address.",
+            "Length": null,
+            "Name": "province",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The postal code of the address.",
+            "Length": null,
+            "Name": "postalCode",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.",
+            "Length": null,
+            "Name": "UserFavourite",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": "table"
+        },
+        {
+            "Description": "Primary Key",
+            "Length": null,
+            "Name": "id",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -2651,6 +2635,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2670,6 +2656,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2689,6 +2677,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2708,6 +2698,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -2727,6 +2719,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2746,6 +2740,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2765,6 +2761,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -2784,6 +2782,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2803,6 +2803,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2822,6 +2824,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2841,6 +2845,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2860,6 +2866,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2879,6 +2887,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -2898,6 +2908,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2917,6 +2929,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2936,6 +2950,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -2955,6 +2971,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2974,6 +2992,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -2993,6 +3013,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3012,6 +3034,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -3031,6 +3055,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3050,6 +3076,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3069,6 +3097,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3088,6 +3118,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -3107,6 +3139,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -3126,6 +3160,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3145,6 +3181,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -3164,6 +3202,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3183,6 +3223,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3202,6 +3244,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3221,6 +3265,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -3240,6 +3286,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3259,6 +3307,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3278,6 +3328,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -3297,6 +3349,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3316,6 +3370,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3335,6 +3391,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -3354,6 +3412,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -3373,6 +3433,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -3392,6 +3454,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -3411,6 +3475,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3430,6 +3496,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3449,6 +3517,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3468,6 +3538,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -3487,6 +3559,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -3506,6 +3580,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3525,6 +3601,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3544,6 +3622,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3563,6 +3643,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -3582,6 +3664,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3604,6 +3688,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3626,6 +3712,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -3648,6 +3736,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3670,6 +3760,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3692,6 +3784,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3714,6 +3808,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3736,6 +3832,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -3758,6 +3856,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3780,6 +3880,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3802,6 +3904,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3824,6 +3928,8 @@
                     "req": "effectiveDate"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3846,6 +3952,8 @@
                     "req": "effectiveDate"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -3868,6 +3976,8 @@
                     "req": "effectiveDate"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -3890,6 +4000,8 @@
                     "req": "effectiveDate"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": "datetime",
             "id": null,
@@ -3912,6 +4024,8 @@
                     "req": "effectiveDate"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3934,6 +4048,8 @@
                     "req": "effectiveDate"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3959,6 +4075,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -3984,6 +4102,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -4009,6 +4129,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4034,6 +4156,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4059,6 +4183,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4084,6 +4210,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4103,6 +4231,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4122,6 +4252,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -4141,6 +4273,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4160,6 +4294,8 @@
                     "req": "id"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4188,6 +4324,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4216,6 +4354,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -4244,6 +4384,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4272,6 +4414,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4300,6 +4444,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4322,6 +4468,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4344,6 +4492,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -4366,6 +4516,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": "boolean",
             "datetime": null,
             "id": null,
@@ -4388,6 +4540,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4410,6 +4564,8 @@
                     "req": "active"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4435,6 +4591,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4460,6 +4618,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": "id",
@@ -4485,6 +4645,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
@@ -4510,6 +4672,8 @@
                     "req": "description"
                 }
             ],
+            "Unique": null,
+            "binary": null,
             "boolean": null,
             "datetime": null,
             "id": null,
