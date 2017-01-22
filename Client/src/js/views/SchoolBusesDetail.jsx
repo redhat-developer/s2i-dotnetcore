@@ -132,7 +132,7 @@ var SchoolBusesDetail = React.createClass({
         return <div id="school-buses-header">
           <Row>
             <Col md={12}>
-              <h1>SB Owner: <small>{ bus.ownerName }</small><Button bsSize="small">Change Owner</Button></h1>
+              <h1>SB Owner: <small>{ bus.ownerName }</small></h1>
             </Col>
           </Row>
           <Row>
