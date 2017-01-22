@@ -9,7 +9,7 @@ var ColField = React.createClass({
   },
 
   render() {
-    return <Col { ...this.props } style={ { ...{ paddingLeft: 5 }, ...this.props.style } }>
+    return <Col { ...this.props } style={ { ...{ paddingLeft: 7 }, ...this.props.style } }>
       { this.props.children }
     </Col>;
   },
