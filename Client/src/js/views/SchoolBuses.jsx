@@ -421,8 +421,8 @@ var SchoolBuses = React.createClass({
               { buildHeader('ownerName', 'Owner') }
               { buildHeader('districtName', 'District') }
               { buildHeader('homeTerminal', 'Home Terminal') }
-              { buildHeader('regi', 'Regi') }
-              { buildHeader('schoolBusUnitNumber', 'Fleet Unit #') }
+              { buildHeader('icbcRegistrationNumber', 'Regi') }
+              { buildHeader('unitNumber', 'Fleet Unit #') }
               { buildHeader('permitNumber', 'Permit') }
               { buildHeader('nextInspectionDate', 'Next Inspection') }
               { buildHeader('inspectorName', 'Inspector') }
@@ -436,8 +436,8 @@ var SchoolBuses = React.createClass({
                 <td><a href={ bus.ownerPath }>{ bus.ownerName }</a></td>
                 <td>{ bus.districtName }</td>
                 <td>{ bus.homeTerminalCityProv }</td>
-                <td>{ bus.regi }</td>
-                <td>{ bus.schoolBusUnitNumber }</td>
+                <td>{ bus.icbcRegistrationNumber }</td>
+                <td>{ bus.unitNumber }</td>
                 <td>{ bus.permitNumber }</td>
                 <td>{ formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY') }
                   { bus.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
