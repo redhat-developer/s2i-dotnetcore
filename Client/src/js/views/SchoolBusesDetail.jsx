@@ -176,8 +176,8 @@ var SchoolBusesDetail = React.createClass({
 
                 return <div id="school-buses-data">
                   <Row>
-                    <ColLabel md={4}>Area</ColLabel>
-                    <ColField md={8}>{ bus.serviceAreaName }</ColField>
+                    <ColLabel md={4}>District</ColLabel>
+                    <ColField md={8}>{ bus.districtName }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Inspector</ColLabel>
@@ -196,7 +196,7 @@ var SchoolBusesDetail = React.createClass({
                     <ColField md={8}>{ bus.homeTerminalPostalCode }</ColField>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Desription</ColLabel>
+                    <ColLabel md={4}>Description</ColLabel>
                     <ColField md={8}>{ bus.homeTerminalComment }</ColField>
                   </Row>
                   <Row>
@@ -213,7 +213,7 @@ var SchoolBusesDetail = React.createClass({
                   </Row>
                   <Row>
                     <ColLabel md={4}>School District</ColLabel>
-                    <ColField md={8}>{ bus.districtName }</ColField>
+                    <ColField md={8}>{ bus.schoolDistrictName }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Independent School</ColLabel>
@@ -261,7 +261,7 @@ var SchoolBusesDetail = React.createClass({
                         <td>{ formatDateTime(inspection.inspectionDate, 'YYYY-MM-DD') }</td>
                         <td>{ inspection.inspectionTypeCode }</td>
                         <td><a href={ editPath }>{ inspection.inspectionResultCode }</a></td>
-                        <td>{ bus.inspector ? concat(bus.inspector.givenName, bus.inspector.surname) : '' }</td>
+                        <td>{ inspection.inspectorName }</td>
                       </tr>;
                     })
                   }

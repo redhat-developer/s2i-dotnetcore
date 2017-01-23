@@ -435,7 +435,7 @@ var SchoolBuses = React.createClass({
               return <tr key={ bus.id } className={ bus.status != 'Active' ? 'info' : null }>
                 <td><a href={ bus.ownerPath }>{ bus.ownerName }</a></td>
                 <td>{ bus.districtName }</td>
-                <td>{ bus.homeTerminalCityProv }</td>
+                <td>{ bus.homeTerminalCityPostal }</td>
                 <td>{ bus.icbcRegistrationNumber }</td>
                 <td>{ bus.unitNumber }</td>
                 <td>{ bus.permitNumber }</td>
