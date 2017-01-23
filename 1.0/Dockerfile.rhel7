@@ -8,7 +8,7 @@ ENV DOTNET_CORE_VERSION=1.0
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
     HOME=/opt/app-root \
-    PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/bin:/opt/app-root/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
 LABEL io.k8s.description="Platform for building and running .NET Core 1.0 applications" \
@@ -35,10 +35,11 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 COPY ./contrib/ /opt/app-root
 
 RUN yum install -y yum-utils && \
+    yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-dotnet-rpms && \
     yum-config-manager --enable rhel-7-server-rpms && \
     yum-config-manager --enable rhel-7-server-ose-3.0-rpms && \
-    yum install -y --setopt=tsflags=nodocs rh-dotnetcore10 nss_wrapper tar && \
+    yum install -y --setopt=tsflags=nodocs rh-dotnetcore10 nss_wrapper tar rh-nodejs4-npm && \
     yum clean all && \
     mkdir -p /opt/app-root/src && \
     useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
@@ -72,7 +73,7 @@ RUN chown -R 1001:0 /opt/app-root && chmod -R og+rwx /opt/app-root
 
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
-    ENABLED_COLLECTIONS=rh-dotnetcore10
+    ENABLED_COLLECTIONS="rh-dotnetcore10 rh-nodejs4"
 
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable

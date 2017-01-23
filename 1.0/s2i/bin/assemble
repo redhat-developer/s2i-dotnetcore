@@ -10,6 +10,14 @@ DOTNET_RESTORE_ROOT="${DOTNET_RESTORE_ROOT:-.}"
 # Private environment
 DOTNET_FRAMEWORK="netcoreapp1.0"
 
+# npm
+if [ -n "${DOTNET_NPM_TOOLS}" ]; then
+  echo "---> Installing npm tools ..."
+  pushd $HOME
+  npm install ${DOTNET_NPM_TOOLS}
+  popd
+fi
+
 echo "---> Copying application source ..."
 cp -Rf /tmp/src/. ./
 

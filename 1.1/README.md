@@ -96,6 +96,12 @@ a `.s2i/environment` file inside your source code repository.
 
     Used to select the project to run. This must be the folder containing
     `project.json`. Defaults to `.`.
+    The application is built using the `dotnet publish` command.
+
+* **DOTNET_NPM_TOOLS**
+
+    Used to specify a list of npm packages to install before building the app.
+    Defaults to ``.
 
 * **DOTNET_TEST_PROJECTS**
 
@@ -105,7 +111,7 @@ a `.s2i/environment` file inside your source code repository.
 * **DOTNET_CONFIGURATION**
 
     Used to run the application in Debug or Release mode. This should be either
-    `Release` or `Debug`.  This is passed to the `dotnet build` invocation.
+    `Release` or `Debug`.  This is passed to the `dotnet publish` invocation.
     Defaults to `Release`.
 
 * **DOTNET_RESTORE_ROOT**
@@ -117,3 +123,10 @@ a `.s2i/environment` file inside your source code repository.
 
     This variable is set to `http://*:8080` to configure ASP.NET Core to use the
     port exposed by the image.
+
+NPM
+---
+
+Typical modern web applications rely on javascript tools to build the front-end.
+The image includes npm (node package manager) to install these tools. Packages can be
+installed by setting `DOTNET_NPM_TOOLS` and by calling `npm install` in the build process.
