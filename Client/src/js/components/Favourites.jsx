@@ -181,7 +181,7 @@ var Favourites = React.createClass({
                   <Col md={3}>
                     <ButtonToolbar>
                       <Button bsSize="xsmall" onClick={ this.editFavourite.bind(this, favourite) }><Glyphicon glyph="edit" /></Button>
-                      <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm params={ favourite } onConfirm={ this.deleteFavourite }/> }>
+                      <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteFavourite.bind(this, favourite) }/> }>
                         <Button bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
                       </OverlayTrigger>
                     </ButtonToolbar>
