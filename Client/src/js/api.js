@@ -94,13 +94,13 @@ function addSchoolBusDisplayFields(bus) {
   bus.ownerPath = bus.schoolBusOwner ? ('#/owners/' + bus.schoolBusOwner.id) : '';
   bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
   bus.districtName = bus.serviceArea ? (bus.serviceArea.district ? bus.serviceArea.district.name : '') : '';
-  bus.schoolBusDistrictName = bus.schoolBusDistrict ? bus.schoolBusDistrict.name : '';
-  bus.homeTerminalAddrs = concat(bus.homeTerminalAddr1, bus.homeTerminalAddr2, ', ');
+  bus.schoolDistrictName = bus.schoolDistrict ? bus.schoolDistrict.name : '';
+  bus.homeTerminalAddress = concat(bus.homeTerminalAddress1, bus.homeTerminalAddress2, ', ');
   bus.homeTerminalCityProv = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
   bus.daysToInspection = daysFromToday(bus.nextInspectionDate);
   bus.isOverdue = bus.daysToInspection < 0;
   bus.inspectorName = bus.inspector ? firstLastName(bus.inspector.givenName, bus.inspector.surname) : '';
-  bus.isReinspection = bus.nextInspectionType === 'Re-inspection';
+  bus.isReinspection = bus.nextInspectionTypeCode === 'R';
 }
 
 export function searchSchoolBuses(params) {

@@ -151,9 +151,9 @@ var SchoolBusesDetail = React.createClass({
             <Row>
               <Col md={1}></Col>
               <Col md={11}>
-                <h1>Regi: <small>{ bus.regi }</small>
-                  &nbsp;Plate: <small>{ bus.plate }</small>
-                  &nbsp;VIN: <small>{ bus.vin }</small>
+                <h1>Regi: <small>{ bus.icbcRegistrationNumber }</small>
+                  &nbsp;Plate: <small>{ bus.licencePlateNumber }</small>
+                  &nbsp;VIN: <small>{ bus.vehicleIdentificationNumber }</small>
                   &nbsp;Permit: <small>{ bus.permitNumber }</small>
                   {(() => {
                     if (bus.permitNumber) {
@@ -185,7 +185,7 @@ var SchoolBusesDetail = React.createClass({
                   </Row>
                   <Row>
                     <ColLabel md={4}>Home Terminal</ColLabel>
-                    <ColField md={8}>{ bus.homeTerminalAddrs }</ColField>
+                    <ColField md={8}>{ bus.homeTerminalAddress }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>City, Prov</ColLabel>
@@ -201,15 +201,15 @@ var SchoolBusesDetail = React.createClass({
                   </Row>
                   <Row>
                     <ColLabel md={4}>Permit Class</ColLabel>
-                    <ColField md={8}>{ bus.schoolBusClass }</ColField>
+                    <ColField md={8}>{ bus.permitClassCode }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Body Type</ColLabel>
-                    <ColField md={8}>{ bus.schoolBusBodyType }</ColField>
+                    <ColField md={8}>{ bus.bodyTypeCode }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Restrictions</ColLabel>
-                    <ColField md={8}>{ bus.restrictions }</ColField>
+                    <ColField md={8}>{ bus.restrictionsText }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>School District</ColLabel>
@@ -218,11 +218,11 @@ var SchoolBusesDetail = React.createClass({
                   <Row>
                     <ColLabel md={4}>Independent School</ColLabel>
                     <ColField md={1}><Checkbox checked={ bus.isIndependentSchool } disabled></Checkbox></ColField>
-                    <ColField md={6}>{ bus.nameOfIndependentSchool }</ColField>
+                    <ColField md={6}>{ bus.independentSchoolName }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Unit Number</ColLabel>
-                    <ColField md={8}>{ bus.schoolBusUnitNumber }</ColField>
+                    <ColField md={8}>{ bus.unitNumber }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Seating Capacity</ColLabel>
@@ -257,10 +257,10 @@ var SchoolBusesDetail = React.createClass({
                     _.map(this.props.schoolBusInspections, (inspection) => {
                       var editPath = '#/inspections/' + inspection.id;
 
-                      return <tr key={ bus.id } className={ bus.status != 'Active' ? 'info' : null }>
+                      return <tr key={ inspection.id } className={ bus.isActive ? 'info' : null }>
                         <td>{ formatDateTime(inspection.inspectionDate, 'YYYY-MM-DD') }</td>
-                        <td>{ inspection.type }</td>
-                        <td><a href={ editPath }>{ inspection.result }</a></td>
+                        <td>{ inspection.inspectionTypeCode }</td>
+                        <td><a href={ editPath }>{ inspection.inspectionResultCode }</a></td>
                         <td>{ bus.inspector ? concat(bus.inspector.givenName, bus.inspector.surname) : '' }</td>
                       </tr>;
                     })
