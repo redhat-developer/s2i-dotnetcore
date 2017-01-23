@@ -31,15 +31,15 @@ using SchoolBusAPI.Services.Impl;
 
 namespace SchoolBusAPI.Test
 {
-	public class ContactApiUnitTest 
+	public class SchoolBusNoteApiUnitTest 
     { 
 		
-		private readonly ContactController _ContactApi;
+		private readonly NoteController _SchoolBusNoteApi;
 		
 		/// <summary>
         /// Setup the test
         /// </summary>        
-		public ContactApiUnitTest()
+		public SchoolBusNoteApiUnitTest()
 		{
             DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
             Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
@@ -56,22 +56,22 @@ namespace SchoolBusAPI.Test
 
             */
 
-            ContactService _service = new ContactService(dbAppContext.Object);
+            NoteService _service = new NoteService(dbAppContext.Object);
 			
-                    _ContactApi = new ContactController (_service);
+                    _SchoolBusNoteApi = new NoteController (_service);
 
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsBulkPost
+        /// Unit test for SchoolbusnotesBulkPost
         /// </summary>
-		public void TestContactsBulkPost()
+		public void TestSchoolbusnotesBulkPost()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsBulkPost();
+			//  var result = _SchoolBusNoteApiController.SchoolbusnotesBulkPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -80,13 +80,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsIdDelete
+        /// Unit test for SchoolbusnotesGet
         /// </summary>
-		public void TestContactsIdDelete()
+		public void TestSchoolbusnotesGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsIdDelete();
+			//  var result = _SchoolBusNoteApiController.SchoolbusnotesGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -95,13 +95,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsIdGet
+        /// Unit test for SchoolbusnotesIdDelete
         /// </summary>
-		public void TestContactsIdGet()
+		public void TestSchoolbusnotesIdDelete()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsIdGet();
+			//  var result = _SchoolBusNoteApiController.SchoolbusnotesIdDelete();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -110,13 +110,43 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsIdPut
+        /// Unit test for SchoolbusnotesIdGet
         /// </summary>
-		public void TestContactsIdPut()
+		public void TestSchoolbusnotesIdGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsIdPut();
+			//  var result = _SchoolBusNoteApiController.SchoolbusnotesIdGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for SchoolbusnotesIdPut
+        /// </summary>
+		public void TestSchoolbusnotesIdPut()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _SchoolBusNoteApiController.SchoolbusnotesIdPut();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for SchoolbusnotesPost
+        /// </summary>
+		public void TestSchoolbusnotesPost()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _SchoolBusNoteApiController.SchoolbusnotesPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

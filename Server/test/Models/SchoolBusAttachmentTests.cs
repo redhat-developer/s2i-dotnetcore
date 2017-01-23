@@ -29,14 +29,14 @@ namespace SchoolBusAPI.Test
     public class SchoolBusAttachmentModelTests
     {
         // TODO uncomment below to declare an instance variable for SchoolBusAttachment
-        private SchoolBusAttachment instance;
+        private Attachment instance;
 
         /// <summary>
         /// Setup the test.
         /// </summary>        
         public SchoolBusAttachmentModelTests()
         {
-            instance = new SchoolBusAttachment();
+            instance = new Attachment();
         }
 
     
@@ -46,7 +46,7 @@ namespace SchoolBusAPI.Test
         [Fact]
         public void SchoolBusAttachmentInstanceTest()
         {
-            Assert.IsType<SchoolBusAttachment>(instance);  
+            Assert.IsType<Attachment>(instance);  
         }
 
         /// <summary>

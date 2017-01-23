@@ -23,30 +23,30 @@ using System.Reflection;
 namespace SchoolBusAPI.Test
 {
     /// <summary>
-    ///  Class for testing the model SchoolBusOwnerContactAddress
+    ///  Class for testing the model ContactAddress
     /// </summary>
     
-    public class SchoolBusOwnerContactAddressModelTests
+    public class ContactAddressModelTests
     {
-        // TODO uncomment below to declare an instance variable for SchoolBusOwnerContactAddress
-        private SchoolBusOwnerContactAddress instance;
+        // TODO uncomment below to declare an instance variable for ContactAddress
+        private ContactAddress instance;
 
         /// <summary>
         /// Setup the test.
         /// </summary>        
-        public SchoolBusOwnerContactAddressModelTests()
+        public ContactAddressModelTests()
         {
-            instance = new SchoolBusOwnerContactAddress();
+            instance = new ContactAddress();
         }
 
     
         /// <summary>
-        /// Test an instance of SchoolBusOwnerContactAddress
+        /// Test an instance of ContactAddress
         /// </summary>
         [Fact]
-        public void SchoolBusOwnerContactAddressInstanceTest()
+        public void ContactAddressInstanceTest()
         {
-            Assert.IsType<SchoolBusOwnerContactAddress>(instance);  
+            Assert.IsType<ContactAddress>(instance);  
         }
 
         /// <summary>
@@ -59,12 +59,12 @@ namespace SchoolBusAPI.Test
 			Assert.True(true);
         }
         /// <summary>
-        /// Test the property 'SchoolBusOwnerContact'
+        /// Test the property 'Contact'
         /// </summary>
         [Fact]
-        public void SchoolBusOwnerContactTest()
+        public void ContactTest()
         {
-            // TODO unit test for the property 'SchoolBusOwnerContact'
+            // TODO unit test for the property 'Contact'
 			Assert.True(true);
         }
 

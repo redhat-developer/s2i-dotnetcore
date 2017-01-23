@@ -54,11 +54,11 @@
             "getById": null,
             "idpath": null,
             "paramDef": null,
-            "path": "schoolbusnotes",
+            "path": "notes",
             "post": null,
             "putById": null,
             "respDef": null,
-            "tag": "SchoolBusNote"
+            "tag": "Note"
         },
         {
             "Description": null,
@@ -69,11 +69,11 @@
             "getById": null,
             "idpath": null,
             "paramDef": null,
-            "path": "schoolbusattachments",
+            "path": "attachments",
             "post": null,
             "putById": null,
             "respDef": null,
-            "tag": "SchoolBusAttachment"
+            "tag": "Attachment"
         },
         {
             "Description": null,
@@ -84,11 +84,11 @@
             "getById": null,
             "idpath": null,
             "paramDef": null,
-            "path": "schoolbushistories",
+            "path": "histories",
             "post": null,
             "putById": null,
             "respDef": null,
-            "tag": "SchoolBusHistory"
+            "tag": "History"
         },
         {
             "Description": null,
@@ -144,11 +144,11 @@
             "getById": null,
             "idpath": null,
             "paramDef": null,
-            "path": "schoolbusownernotes",
+            "path": "notes",
             "post": null,
             "putById": null,
             "respDef": null,
-            "tag": "SchoolBusOwnerNote"
+            "tag": "Note"
         },
         {
             "Description": null,
@@ -159,11 +159,11 @@
             "getById": null,
             "idpath": null,
             "paramDef": null,
-            "path": "schoolbusownerattachments",
+            "path": "attachments",
             "post": null,
             "putById": null,
             "respDef": null,
-            "tag": "SchoolBusOwnerAttachment"
+            "tag": "Attachment"
         },
         {
             "Description": null,
@@ -174,11 +174,11 @@
             "getById": null,
             "idpath": null,
             "paramDef": null,
-            "path": "schoolbusownercontacts",
+            "path": "contacts",
             "post": null,
             "putById": null,
             "respDef": null,
-            "tag": "SchoolBusOwnerContact"
+            "tag": "Contact"
         },
         {
             "Description": null,
@@ -189,11 +189,11 @@
             "getById": null,
             "idpath": null,
             "paramDef": null,
-            "path": "schoolbusownerhistory",
+            "path": "histories",
             "post": null,
             "putById": null,
             "respDef": null,
-            "tag": "SchoolBusOwnerHistory"
+            "tag": "History"
         },
         {
             "Description": null,

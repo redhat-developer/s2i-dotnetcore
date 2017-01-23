@@ -20,12 +20,12 @@ using Xunit;
 using SchoolBusAPI;
 using System.Text;
 using System.Net;
-using SchoolBusAPI.Models;
 using Newtonsoft.Json;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Test
 {
-	public class SchoolBusOwnerApiIntegrationTest 
+	public class HistoryApiIntegrationTest 
     { 
 		private readonly TestServer _server;
 		private readonly HttpClient _client;
@@ -33,7 +33,7 @@ namespace SchoolBusAPI.Test
 		/// <summary>
         /// Setup the test
         /// </summary>        
-		public SchoolBusOwnerApiIntegrationTest()
+		public HistoryApiIntegrationTest()
 		{
 			_server = new TestServer(new WebHostBuilder()
             .UseEnvironment("Development")
@@ -42,15 +42,14 @@ namespace SchoolBusAPI.Test
             _client = _server.CreateClient();
 		}
 	
-		        
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for SchoolbusownersBulkPost
+        /// Integration test for HistoryBulkPost
         /// </summary>
-		public async void TestSchoolbusownersBulkPost()
+		public async void TestHistoryBulkPost()
 		{
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusowners/bulk");
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/histories/bulk");
             request.Content = new StringContent("[]", Encoding.UTF8, "application/json");
 
             var response = await _client.SendAsync(request);
@@ -60,17 +59,16 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for SchoolbusownersContacts
+        /// Integration test for HistoryGet
         /// </summary>
-		public async void TestContacts()
+		public async void TestHistory()
 		{
-            string initialNumber = "123-123-1234";
-            string initialAddress = "1234 Main St.";
+            // now create a school bus owner record
 
-            // first create a school bus owner record
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusowners");
-            SchoolBusOwner schoolBusOwner = new SchoolBusOwner();
-            var jsonString = schoolBusOwner.ToJson();
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/histories");
+            History History = new History();
+
+            var jsonString = History.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
@@ -80,50 +78,34 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
 
-            schoolBusOwner = JsonConvert.DeserializeObject<SchoolBusOwner>(jsonString);
+            History = JsonConvert.DeserializeObject<History>(jsonString);
             // get the id
-            var id = schoolBusOwner.Id;
-
-            // make a change.   
-            Contact contact = new Contact();
-            ContactPhone contactPhone = new ContactPhone();
-            contactPhone.PhoneNumber = initialNumber;
-            ContactAddress contactAddress = new ContactAddress();
-            contactAddress.Address1 = initialAddress;
-            contact.ContactAddresses = new List<ContactAddress>();
-            contact.ContactPhones = new List<ContactPhone>();
-
-            contact.ContactAddresses.Add(contactAddress);
-            contact.ContactPhones.Add(contactPhone);
-
-            schoolBusOwner.PrimaryContact = contact;
+            var id = History.Id;
 
             // now do an update.
-            request = new HttpRequestMessage(HttpMethod.Put, "/api/schoolbusowners/" + id);
-            request.Content = new StringContent(schoolBusOwner.ToJson(), Encoding.UTF8, "application/json");
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/histories/" + id);
+            request.Content = new StringContent(History.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // do a get.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbusowners/" + id);
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/histories/" + id);
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
-            schoolBusOwner = JsonConvert.DeserializeObject<SchoolBusOwner>(jsonString);
+            History = JsonConvert.DeserializeObject<History>(jsonString);
             
             // do a delete.
-            request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusowners/" + id + "/delete");
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/histories/" + id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // should get a 404 if we try a get now.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbusowners/" + id);
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/histories/" + id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
-
-        }        	
-                
+        }		                
     }
 }

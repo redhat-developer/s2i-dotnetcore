@@ -391,10 +391,10 @@
           description: id of SchoolBus to delete
           required: true
           type: integer
-  /schoolbusnotes:
+  /notes:
     get:
       tags:
-        - SchoolBusNote
+        - Note
       consumes: []
       produces:
         - text/plain
@@ -406,10 +406,10 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusNote"
+              $ref: "#/definitions/Note"
     post:
       tags:
-        - SchoolBusNote
+        - Note
       consumes:
         - application/json
       produces:
@@ -421,21 +421,21 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusNote"
+            $ref: "#/definitions/Note"
       responses:
         201:
-          description: SchoolBusNote created
+          description: Note created
           headers:
             Location:
-              description: A link to the SchoolBusNote
+              description: A link to the Note
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolBusNote"
-  /schoolbusnotes/bulk:
+            $ref: "#/definitions/Note"
+  /notes/bulk:
     post:
       tags:
-        - SchoolBusNote
+        - Note
       consumes:
         - application/json
       produces:
@@ -449,14 +449,14 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusNote"
+              $ref: "#/definitions/Note"
       responses:
         201:
-          description: SchoolBusNote created
-  /schoolbusnotes/{id}:
+          description: Note created
+  /notes/{id}:
     get:
       tags:
-        - SchoolBusNote
+        - Note
       consumes: []
       produces:
         - text/plain
@@ -466,18 +466,18 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusNote"
+            $ref: "#/definitions/Note"
         404:
-          description: SchoolBusNote not found
+          description: Note not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusNote to fetch
+          description: id of Note to fetch
           required: true
           type: integer
     put:
       tags:
-        - SchoolBusNote
+        - Note
       consumes:
         - application/json
       produces:
@@ -488,24 +488,24 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusNote"
+            $ref: "#/definitions/Note"
         404:
-          description: SchoolBusNote not found
+          description: Note not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusNote to fetch
+          description: id of Note to fetch
           required: true
           type: integer
         - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusNote"
-  /schoolbusnotes/{id}/delete:
+            $ref: "#/definitions/Note"
+  /notes/{id}/delete:
     post:
       tags:
-        - SchoolBusNote
+        - Note
       consumes: []
       produces:
         - text/plain
@@ -515,17 +515,17 @@
         200:
           description: OK
         404:
-          description: SchoolBusNote not found
+          description: Note not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusNote to delete
+          description: id of Note to delete
           required: true
           type: integer
-  /schoolbusattachments:
+  /attachments:
     get:
       tags:
-        - SchoolBusAttachment
+        - Attachment
       consumes: []
       produces:
         - text/plain
@@ -537,10 +537,10 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusAttachment"
+              $ref: "#/definitions/Attachment"
     post:
       tags:
-        - SchoolBusAttachment
+        - Attachment
       consumes:
         - application/json
       produces:
@@ -552,21 +552,21 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusAttachment"
+            $ref: "#/definitions/Attachment"
       responses:
         201:
-          description: SchoolBusAttachment created
+          description: Attachment created
           headers:
             Location:
-              description: A link to the SchoolBusAttachment
+              description: A link to the Attachment
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolBusAttachment"
-  /schoolbusattachments/bulk:
+            $ref: "#/definitions/Attachment"
+  /attachments/bulk:
     post:
       tags:
-        - SchoolBusAttachment
+        - Attachment
       consumes:
         - application/json
       produces:
@@ -580,14 +580,14 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusAttachment"
+              $ref: "#/definitions/Attachment"
       responses:
         201:
-          description: SchoolBusAttachment created
-  /schoolbusattachments/{id}:
+          description: Attachment created
+  /attachments/{id}:
     get:
       tags:
-        - SchoolBusAttachment
+        - Attachment
       consumes: []
       produces:
         - text/plain
@@ -597,18 +597,18 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusAttachment"
+            $ref: "#/definitions/Attachment"
         404:
-          description: SchoolBusAttachment not found
+          description: Attachment not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusAttachment to fetch
+          description: id of Attachment to fetch
           required: true
           type: integer
     put:
       tags:
-        - SchoolBusAttachment
+        - Attachment
       consumes:
         - application/json
       produces:
@@ -619,24 +619,24 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusAttachment"
+            $ref: "#/definitions/Attachment"
         404:
-          description: SchoolBusAttachment not found
+          description: Attachment not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusAttachment to fetch
+          description: id of Attachment to fetch
           required: true
           type: integer
         - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusAttachment"
-  /schoolbusattachments/{id}/delete:
+            $ref: "#/definitions/Attachment"
+  /attachments/{id}/delete:
     post:
       tags:
-        - SchoolBusAttachment
+        - Attachment
       consumes: []
       produces:
         - text/plain
@@ -646,17 +646,17 @@
         200:
           description: OK
         404:
-          description: SchoolBusAttachment not found
+          description: Attachment not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusAttachment to delete
+          description: id of Attachment to delete
           required: true
           type: integer
-  /schoolbushistories:
+  /histories:
     get:
       tags:
-        - SchoolBusHistory
+        - History
       consumes: []
       produces:
         - text/plain
@@ -668,10 +668,10 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusHistory"
+              $ref: "#/definitions/History"
     post:
       tags:
-        - SchoolBusHistory
+        - History
       consumes:
         - application/json
       produces:
@@ -683,21 +683,21 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusHistory"
+            $ref: "#/definitions/History"
       responses:
         201:
-          description: SchoolBusHistory created
+          description: History created
           headers:
             Location:
-              description: A link to the SchoolBusHistory
+              description: A link to the History
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolBusHistory"
-  /schoolbushistories/bulk:
+            $ref: "#/definitions/History"
+  /histories/bulk:
     post:
       tags:
-        - SchoolBusHistory
+        - History
       consumes:
         - application/json
       produces:
@@ -711,14 +711,14 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusHistory"
+              $ref: "#/definitions/History"
       responses:
         201:
-          description: SchoolBusHistory created
-  /schoolbushistories/{id}:
+          description: History created
+  /histories/{id}:
     get:
       tags:
-        - SchoolBusHistory
+        - History
       consumes: []
       produces:
         - text/plain
@@ -728,18 +728,18 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusHistory"
+            $ref: "#/definitions/History"
         404:
-          description: SchoolBusHistory not found
+          description: History not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusHistory to fetch
+          description: id of History to fetch
           required: true
           type: integer
     put:
       tags:
-        - SchoolBusHistory
+        - History
       consumes:
         - application/json
       produces:
@@ -750,24 +750,24 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusHistory"
+            $ref: "#/definitions/History"
         404:
-          description: SchoolBusHistory not found
+          description: History not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusHistory to fetch
+          description: id of History to fetch
           required: true
           type: integer
         - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusHistory"
-  /schoolbushistories/{id}/delete:
+            $ref: "#/definitions/History"
+  /histories/{id}/delete:
     post:
       tags:
-        - SchoolBusHistory
+        - History
       consumes: []
       produces:
         - text/plain
@@ -777,11 +777,11 @@
         200:
           description: OK
         404:
-          description: SchoolBusHistory not found
+          description: History not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusHistory to delete
+          description: id of History to delete
           required: true
           type: integer
   /notifications:
@@ -1177,10 +1177,10 @@
           description: id of SchoolBusOwner to delete
           required: true
           type: integer
-  /schoolbusownernotes:
+  /notes:
     get:
       tags:
-        - SchoolBusOwnerNote
+        - Note
       consumes: []
       produces:
         - text/plain
@@ -1192,10 +1192,10 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusOwnerNote"
+              $ref: "#/definitions/Note"
     post:
       tags:
-        - SchoolBusOwnerNote
+        - Note
       consumes:
         - application/json
       produces:
@@ -1207,21 +1207,21 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusOwnerNote"
+            $ref: "#/definitions/Note"
       responses:
         201:
-          description: SchoolBusOwnerNote created
+          description: Note created
           headers:
             Location:
-              description: A link to the SchoolBusOwnerNote
+              description: A link to the Note
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolBusOwnerNote"
-  /schoolbusownernotes/bulk:
+            $ref: "#/definitions/Note"
+  /notes/bulk:
     post:
       tags:
-        - SchoolBusOwnerNote
+        - Note
       consumes:
         - application/json
       produces:
@@ -1235,14 +1235,14 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusOwnerNote"
+              $ref: "#/definitions/Note"
       responses:
         201:
-          description: SchoolBusOwnerNote created
-  /schoolbusownernotes/{id}:
+          description: Note created
+  /notes/{id}:
     get:
       tags:
-        - SchoolBusOwnerNote
+        - Note
       consumes: []
       produces:
         - text/plain
@@ -1252,18 +1252,18 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusOwnerNote"
+            $ref: "#/definitions/Note"
         404:
-          description: SchoolBusOwnerNote not found
+          description: Note not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerNote to fetch
+          description: id of Note to fetch
           required: true
           type: integer
     put:
       tags:
-        - SchoolBusOwnerNote
+        - Note
       consumes:
         - application/json
       produces:
@@ -1274,24 +1274,24 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusOwnerNote"
+            $ref: "#/definitions/Note"
         404:
-          description: SchoolBusOwnerNote not found
+          description: Note not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerNote to fetch
+          description: id of Note to fetch
           required: true
           type: integer
         - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusOwnerNote"
-  /schoolbusownernotes/{id}/delete:
+            $ref: "#/definitions/Note"
+  /notes/{id}/delete:
     post:
       tags:
-        - SchoolBusOwnerNote
+        - Note
       consumes: []
       produces:
         - text/plain
@@ -1301,17 +1301,17 @@
         200:
           description: OK
         404:
-          description: SchoolBusOwnerNote not found
+          description: Note not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerNote to delete
+          description: id of Note to delete
           required: true
           type: integer
-  /schoolbusownerattachments:
+  /attachments:
     get:
       tags:
-        - SchoolBusOwnerAttachment
+        - Attachment
       consumes: []
       produces:
         - text/plain
@@ -1323,10 +1323,10 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusOwnerAttachment"
+              $ref: "#/definitions/Attachment"
     post:
       tags:
-        - SchoolBusOwnerAttachment
+        - Attachment
       consumes:
         - application/json
       produces:
@@ -1338,21 +1338,21 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusOwnerAttachment"
+            $ref: "#/definitions/Attachment"
       responses:
         201:
-          description: SchoolBusOwnerAttachment created
+          description: Attachment created
           headers:
             Location:
-              description: A link to the SchoolBusOwnerAttachment
+              description: A link to the Attachment
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolBusOwnerAttachment"
-  /schoolbusownerattachments/bulk:
+            $ref: "#/definitions/Attachment"
+  /attachments/bulk:
     post:
       tags:
-        - SchoolBusOwnerAttachment
+        - Attachment
       consumes:
         - application/json
       produces:
@@ -1366,14 +1366,14 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusOwnerAttachment"
+              $ref: "#/definitions/Attachment"
       responses:
         201:
-          description: SchoolBusOwnerAttachment created
-  /schoolbusownerattachments/{id}:
+          description: Attachment created
+  /attachments/{id}:
     get:
       tags:
-        - SchoolBusOwnerAttachment
+        - Attachment
       consumes: []
       produces:
         - text/plain
@@ -1383,18 +1383,18 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusOwnerAttachment"
+            $ref: "#/definitions/Attachment"
         404:
-          description: SchoolBusOwnerAttachment not found
+          description: Attachment not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerAttachment to fetch
+          description: id of Attachment to fetch
           required: true
           type: integer
     put:
       tags:
-        - SchoolBusOwnerAttachment
+        - Attachment
       consumes:
         - application/json
       produces:
@@ -1405,24 +1405,24 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusOwnerAttachment"
+            $ref: "#/definitions/Attachment"
         404:
-          description: SchoolBusOwnerAttachment not found
+          description: Attachment not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerAttachment to fetch
+          description: id of Attachment to fetch
           required: true
           type: integer
         - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusOwnerAttachment"
-  /schoolbusownerattachments/{id}/delete:
+            $ref: "#/definitions/Attachment"
+  /attachments/{id}/delete:
     post:
       tags:
-        - SchoolBusOwnerAttachment
+        - Attachment
       consumes: []
       produces:
         - text/plain
@@ -1432,17 +1432,17 @@
         200:
           description: OK
         404:
-          description: SchoolBusOwnerAttachment not found
+          description: Attachment not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerAttachment to delete
+          description: id of Attachment to delete
           required: true
           type: integer
-  /schoolbusownercontacts:
+  /contacts:
     get:
       tags:
-        - SchoolBusOwnerContact
+        - Contact
       consumes: []
       produces:
         - text/plain
@@ -1454,10 +1454,10 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusOwnerContact"
+              $ref: "#/definitions/Contact"
     post:
       tags:
-        - SchoolBusOwnerContact
+        - Contact
       consumes:
         - application/json
       produces:
@@ -1469,21 +1469,21 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusOwnerContact"
+            $ref: "#/definitions/Contact"
       responses:
         201:
-          description: SchoolBusOwnerContact created
+          description: Contact created
           headers:
             Location:
-              description: A link to the SchoolBusOwnerContact
+              description: A link to the Contact
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolBusOwnerContact"
-  /schoolbusownercontacts/bulk:
+            $ref: "#/definitions/Contact"
+  /contacts/bulk:
     post:
       tags:
-        - SchoolBusOwnerContact
+        - Contact
       consumes:
         - application/json
       produces:
@@ -1497,14 +1497,14 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusOwnerContact"
+              $ref: "#/definitions/Contact"
       responses:
         201:
-          description: SchoolBusOwnerContact created
-  /schoolbusownercontacts/{id}:
+          description: Contact created
+  /contacts/{id}:
     get:
       tags:
-        - SchoolBusOwnerContact
+        - Contact
       consumes: []
       produces:
         - text/plain
@@ -1514,18 +1514,18 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusOwnerContact"
+            $ref: "#/definitions/Contact"
         404:
-          description: SchoolBusOwnerContact not found
+          description: Contact not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerContact to fetch
+          description: id of Contact to fetch
           required: true
           type: integer
     put:
       tags:
-        - SchoolBusOwnerContact
+        - Contact
       consumes:
         - application/json
       produces:
@@ -1536,24 +1536,24 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusOwnerContact"
+            $ref: "#/definitions/Contact"
         404:
-          description: SchoolBusOwnerContact not found
+          description: Contact not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerContact to fetch
+          description: id of Contact to fetch
           required: true
           type: integer
         - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusOwnerContact"
-  /schoolbusownercontacts/{id}/delete:
+            $ref: "#/definitions/Contact"
+  /contacts/{id}/delete:
     post:
       tags:
-        - SchoolBusOwnerContact
+        - Contact
       consumes: []
       produces:
         - text/plain
@@ -1563,17 +1563,17 @@
         200:
           description: OK
         404:
-          description: SchoolBusOwnerContact not found
+          description: Contact not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerContact to delete
+          description: id of Contact to delete
           required: true
           type: integer
-  /schoolbusownerhistory:
+  /histories:
     get:
       tags:
-        - SchoolBusOwnerHistory
+        - History
       consumes: []
       produces:
         - text/plain
@@ -1585,10 +1585,10 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusOwnerHistory"
+              $ref: "#/definitions/History"
     post:
       tags:
-        - SchoolBusOwnerHistory
+        - History
       consumes:
         - application/json
       produces:
@@ -1600,21 +1600,21 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusOwnerHistory"
+            $ref: "#/definitions/History"
       responses:
         201:
-          description: SchoolBusOwnerHistory created
+          description: History created
           headers:
             Location:
-              description: A link to the SchoolBusOwnerHistory
+              description: A link to the History
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolBusOwnerHistory"
-  /schoolbusownerhistory/bulk:
+            $ref: "#/definitions/History"
+  /histories/bulk:
     post:
       tags:
-        - SchoolBusOwnerHistory
+        - History
       consumes:
         - application/json
       produces:
@@ -1628,14 +1628,14 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/SchoolBusOwnerHistory"
+              $ref: "#/definitions/History"
       responses:
         201:
-          description: SchoolBusOwnerHistory created
-  /schoolbusownerhistory/{id}:
+          description: History created
+  /histories/{id}:
     get:
       tags:
-        - SchoolBusOwnerHistory
+        - History
       consumes: []
       produces:
         - text/plain
@@ -1645,18 +1645,18 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusOwnerHistory"
+            $ref: "#/definitions/History"
         404:
-          description: SchoolBusOwnerHistory not found
+          description: History not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerHistory to fetch
+          description: id of History to fetch
           required: true
           type: integer
     put:
       tags:
-        - SchoolBusOwnerHistory
+        - History
       consumes:
         - application/json
       produces:
@@ -1667,24 +1667,24 @@
         200:
           description: OK
           schema:
-            $ref: "#/definitions/SchoolBusOwnerHistory"
+            $ref: "#/definitions/History"
         404:
-          description: SchoolBusOwnerHistory not found
+          description: History not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerHistory to fetch
+          description: id of History to fetch
           required: true
           type: integer
         - name: item
           in: body
           required: true
           schema:
-            $ref: "#/definitions/SchoolBusOwnerHistory"
-  /schoolbusownerhistory/{id}/delete:
+            $ref: "#/definitions/History"
+  /histories/{id}/delete:
     post:
       tags:
-        - SchoolBusOwnerHistory
+        - History
       consumes: []
       produces:
         - text/plain
@@ -1694,11 +1694,11 @@
         200:
           description: OK
         404:
-          description: SchoolBusOwnerHistory not found
+          description: History not found
       parameters:
         - name: id
           in: path
-          description: id of SchoolBusOwnerHistory to delete
+          description: id of History to delete
           required: true
           type: integer
   /groups:

@@ -19,13 +19,13 @@ using System.Threading.Tasks;
 using Xunit;
 using SchoolBusAPI;
 using System.Text;
+using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using System.Net;
-using Newtonsoft.Json;
 
 namespace SchoolBusAPI.Test
 {
-	public class ContactApiIntegrationTest 
+	public class SchoolBusNoteApiIntegrationTest 
     { 
 		private readonly TestServer _server;
 		private readonly HttpClient _client;
@@ -33,7 +33,7 @@ namespace SchoolBusAPI.Test
 		/// <summary>
         /// Setup the test
         /// </summary>        
-		public ContactApiIntegrationTest()
+		public SchoolBusNoteApiIntegrationTest()
 		{
 			_server = new TestServer(new WebHostBuilder()
             .UseEnvironment("Development")
@@ -45,29 +45,30 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for ContactsBulkPost
+        /// Integration test for SchoolbusnotesBulkPost
         /// </summary>
-		public async void TestContactsBulkPost()
+		public async void TestSchoolbusnotesBulkPost()
 		{
-            var request = new HttpRequestMessage(HttpMethod.Post, "api/Contacts/bulk");
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/notes/bulk");
             request.Content = new StringContent("[]", Encoding.UTF8, "application/json");
+
             var response = await _client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-        }		
+            response.EnsureSuccessStatusCode();           
+		}		
         
 		
 		[Fact]
 		/// <summary>
-        /// Integration test for Contacts
+        /// Integration test for Notes
         /// </summary>
-		public async void TestContacts()
+		public async void TestNotes()
 		{
-            // first test the POST.
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/Contacts");
+            // now create a school bus owner record
 
-            // create a new schoolbus.
-            Contact Contact = new Contact();            
-            string jsonString = Contact.ToJson();
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/notes");
+            Note note = new Note();
+
+            var jsonString = note.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
@@ -77,36 +78,37 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
 
-            Contact = JsonConvert.DeserializeObject<Contact>(jsonString);
+            note = JsonConvert.DeserializeObject<Note>(jsonString);
             // get the id
-            var id = Contact.Id; 
-            
-            // do an update.
-            request = new HttpRequestMessage(HttpMethod.Put, "/api/Contacts/" + id);
-            request.Content = new StringContent(Contact.ToJson(), Encoding.UTF8, "application/json");
+            var id = note.Id;
+
+            // make a change.    
+
+            // now do an update.
+
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/notes/" + id);
+            request.Content = new StringContent(note.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // do a get.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/Contacts/" + id);
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/notes/" + id);
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
-            Contact = JsonConvert.DeserializeObject<Contact>(jsonString);
+            note = JsonConvert.DeserializeObject<Note>(jsonString);
             
             // do a delete.
-            request = new HttpRequestMessage(HttpMethod.Post, "/api/Contacts/" + id +"/delete");
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/notes/" + id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // should get a 404 if we try a get now.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/Contacts/" + id);
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/notes/" + id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
-        }		
-        
-		
+        }		        
     }
 }

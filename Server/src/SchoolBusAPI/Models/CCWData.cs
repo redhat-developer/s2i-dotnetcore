@@ -40,7 +40,7 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="CCWData" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="ICBCRegi">The Registration Number (Regi) is the link between the CCW information and a specific School Bus.</param>
+        /// <param name="ICBCRegistrationNumber">The Registration Number (Regi) is the link between the CCW information and a specific School Bus.</param>
         /// <param name="ICBCModelYear">Vehicle Year.</param>
         /// <param name="ICBCVehicleType">ICBCVehicleType.</param>
         /// <param name="ICBCRateClass">ICBCRateClass.</param>
@@ -77,10 +77,10 @@ namespace SchoolBusAPI.Models
         /// <param name="NSCPolicyExpiryDate">NSCPolicyExpiryDate.</param>
         /// <param name="NSCPolicyStatus">NSCPolicyStatus.</param>
         /// <param name="NSCPlateDecal">NSCPlateDecal.</param>
-        public CCWData(int Id, string ICBCRegi = null, int? ICBCModelYear = null, string ICBCVehicleType = null, string ICBCRateClass = null, string ICBCCVIPDecal = null, int? ICBCFleetUnitNo = null, int? ICBCGrossVehicleWeight = null, string ICBCMake = null, string ICBCBody = null, string ICBCRebuiltStatus = null, DateTime? ICBCCVIPExpiry = null, int? ICBCNetWt = null, string ICBCModel = null, string ICBCFuel = null, int? ICBCSeatingCapacity = null, string ICBCColour = null, string ICBCNotesAndOrders = null, DateTime? ICBCOrderedOn = null, string ICBCRegOwnerName = null, string ICBCRegOwnerAddr1 = null, string ICBCRegOwnerAddr2 = null, string ICBCRegOwnerCity = null, string ICBCRegOwnerProv = null, string ICBCRegOwnerPostalCode = null, string ICBCRegOwnerStatus = null, string ICBCRegOwnerRODL = null, string ICBCRegOwnerPool = null, string NSCClientNum = null, string NSCCarrierName = null, string NSCCarrierConditions = null, string NSCCarrierSafetyRating = null, string NSCPolicyNumber = null, DateTime? NSCPolicyEffectiveDate = null, DateTime? NSCPolicyStatusDate = null, DateTime? NSCPolicyExpiryDate = null, string NSCPolicyStatus = null, string NSCPlateDecal = null)
+        public CCWData(int Id, string ICBCRegistrationNumber = null, int? ICBCModelYear = null, string ICBCVehicleType = null, string ICBCRateClass = null, string ICBCCVIPDecal = null, int? ICBCFleetUnitNo = null, int? ICBCGrossVehicleWeight = null, string ICBCMake = null, string ICBCBody = null, string ICBCRebuiltStatus = null, DateTime? ICBCCVIPExpiry = null, int? ICBCNetWt = null, string ICBCModel = null, string ICBCFuel = null, int? ICBCSeatingCapacity = null, string ICBCColour = null, string ICBCNotesAndOrders = null, DateTime? ICBCOrderedOn = null, string ICBCRegOwnerName = null, string ICBCRegOwnerAddr1 = null, string ICBCRegOwnerAddr2 = null, string ICBCRegOwnerCity = null, string ICBCRegOwnerProv = null, string ICBCRegOwnerPostalCode = null, string ICBCRegOwnerStatus = null, string ICBCRegOwnerRODL = null, string ICBCRegOwnerPool = null, string NSCClientNum = null, string NSCCarrierName = null, string NSCCarrierConditions = null, string NSCCarrierSafetyRating = null, string NSCPolicyNumber = null, DateTime? NSCPolicyEffectiveDate = null, DateTime? NSCPolicyStatusDate = null, DateTime? NSCPolicyExpiryDate = null, string NSCPolicyStatus = null, string NSCPlateDecal = null)
         {   
             this.Id = Id;
-            this.ICBCRegi = ICBCRegi;
+            this.ICBCRegistrationNumber = ICBCRegistrationNumber;
             this.ICBCModelYear = ICBCModelYear;
             this.ICBCVehicleType = ICBCVehicleType;
             this.ICBCRateClass = ICBCRateClass;
@@ -131,7 +131,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The Registration Number (Regi) is the link between the CCW information and a specific School Bus</value>
         [MetaDataExtension (Description = "The Registration Number (Regi) is the link between the CCW information and a specific School Bus")]
-        public string ICBCRegi { get; set; }
+        public string ICBCRegistrationNumber { get; set; }
         
         /// <summary>
         /// Vehicle Year
@@ -324,7 +324,7 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class CCWData {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  ICBCRegi: ").Append(ICBCRegi).Append("\n");
+            sb.Append("  ICBCRegistrationNumber: ").Append(ICBCRegistrationNumber).Append("\n");
             sb.Append("  ICBCModelYear: ").Append(ICBCModelYear).Append("\n");
             sb.Append("  ICBCVehicleType: ").Append(ICBCVehicleType).Append("\n");
             sb.Append("  ICBCRateClass: ").Append(ICBCRateClass).Append("\n");
@@ -404,9 +404,9 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) &&                 
                 (
-                    this.ICBCRegi == other.ICBCRegi ||
-                    this.ICBCRegi != null &&
-                    this.ICBCRegi.Equals(other.ICBCRegi)
+                    this.ICBCRegistrationNumber == other.ICBCRegistrationNumber ||
+                    this.ICBCRegistrationNumber != null &&
+                    this.ICBCRegistrationNumber.Equals(other.ICBCRegistrationNumber)
                 ) &&                 
                 (
                     this.ICBCModelYear == other.ICBCModelYear ||
@@ -602,9 +602,9 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                if (this.ICBCRegi != null)
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.ICBCRegistrationNumber != null)
                 {
-                    hash = hash * 59 + this.ICBCRegi.GetHashCode();
+                    hash = hash * 59 + this.ICBCRegistrationNumber.GetHashCode();
                 }                
                                 if (this.ICBCModelYear != null)
                 {

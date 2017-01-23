@@ -43,21 +43,23 @@ namespace SchoolBusAPI.Models
         /// <param name="Status">Status of the School Bus owner - enumerated value Active,  Archived.</param>
         /// <param name="DateCreated">The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition..</param>
         /// <param name="PrimaryContact">Link to the designated Primary Contact for the Inspector to the School Bus Owner organization..</param>
-        /// <param name="ServiceArea">The District to which this School Bus is affliated..</param>
-        /// <param name="NextInspectionDate">The calculated next inspection date from across the School Buses associated with this School Bus Owner.</param>
-        /// <param name="NumberOfBuses">The calculated count of the number of School Buses associated with this School Bus Owner.</param>
-        /// <param name="Contacts">Contacts.</param>
-        public SchoolBusOwner(int Id, string Name = null, string Status = null, DateTime? DateCreated = null, SchoolBusOwnerContact PrimaryContact = null, ServiceArea ServiceArea = null, DateTime? NextInspectionDate = null, int? NumberOfBuses = null, List<SchoolBusOwnerContact> Contacts = null)
+        /// <param name="District">The District to which this School Bus is affliated..</param>
+        /// <param name="Contacts">The set of contacts related to the School Bus Owner..</param>
+        /// <param name="Notes">The set of notes about the school bus owner entered by users..</param>
+        /// <param name="Attachments">The set of attachments about the school bus owner uploaded by the users..</param>
+        /// <param name="History">The history of updates made to the School Bus Owner data..</param>
+        public SchoolBusOwner(int Id, string Name = null, string Status = null, DateTime? DateCreated = null, Contact PrimaryContact = null, District District = null, List<Contact> Contacts = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null)
         {   
             this.Id = Id;
             this.Name = Name;
             this.Status = Status;
             this.DateCreated = DateCreated;
             this.PrimaryContact = PrimaryContact;
-            this.ServiceArea = ServiceArea;
-            this.NextInspectionDate = NextInspectionDate;
-            this.NumberOfBuses = NumberOfBuses;
+            this.District = District;
             this.Contacts = Contacts;
+            this.Notes = Notes;
+            this.Attachments = Attachments;
+            this.History = History;
         }
 
         /// <summary>
@@ -93,7 +95,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.</value>
         [MetaDataExtension (Description = "Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.")]
-        public SchoolBusOwnerContact PrimaryContact { get; set; }
+        public Contact PrimaryContact { get; set; }
         
         /// <summary>
         /// Foreign key for PrimaryContact 
@@ -106,32 +108,41 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The District to which this School Bus is affliated.</value>
         [MetaDataExtension (Description = "The District to which this School Bus is affliated.")]
-        public ServiceArea ServiceArea { get; set; }
+        public District District { get; set; }
         
         /// <summary>
-        /// Foreign key for ServiceArea 
+        /// Foreign key for District 
         /// </summary>       
-        [ForeignKey("ServiceArea")]
-        public int? ServiceAreaRefId { get; set; }
+        [ForeignKey("District")]
+        public int? DistrictRefId { get; set; }
         
         /// <summary>
-        /// The calculated next inspection date from across the School Buses associated with this School Bus Owner
+        /// The set of contacts related to the School Bus Owner.
         /// </summary>
-        /// <value>The calculated next inspection date from across the School Buses associated with this School Bus Owner</value>
-        [MetaDataExtension (Description = "The calculated next inspection date from across the School Buses associated with this School Bus Owner")]
-        public DateTime? NextInspectionDate { get; set; }
+        /// <value>The set of contacts related to the School Bus Owner.</value>
+        [MetaDataExtension (Description = "The set of contacts related to the School Bus Owner.")]
+        public List<Contact> Contacts { get; set; }
         
         /// <summary>
-        /// The calculated count of the number of School Buses associated with this School Bus Owner
+        /// The set of notes about the school bus owner entered by users.
         /// </summary>
-        /// <value>The calculated count of the number of School Buses associated with this School Bus Owner</value>
-        [MetaDataExtension (Description = "The calculated count of the number of School Buses associated with this School Bus Owner")]
-        public int? NumberOfBuses { get; set; }
+        /// <value>The set of notes about the school bus owner entered by users.</value>
+        [MetaDataExtension (Description = "The set of notes about the school bus owner entered by users.")]
+        public List<Note> Notes { get; set; }
         
         /// <summary>
-        /// Gets or Sets Contacts
+        /// The set of attachments about the school bus owner uploaded by the users.
         /// </summary>
-        public List<SchoolBusOwnerContact> Contacts { get; set; }
+        /// <value>The set of attachments about the school bus owner uploaded by the users.</value>
+        [MetaDataExtension (Description = "The set of attachments about the school bus owner uploaded by the users.")]
+        public List<Attachment> Attachments { get; set; }
+        
+        /// <summary>
+        /// The history of updates made to the School Bus Owner data.
+        /// </summary>
+        /// <value>The history of updates made to the School Bus Owner data.</value>
+        [MetaDataExtension (Description = "The history of updates made to the School Bus Owner data.")]
+        public List<History> History { get; set; }
         
         /// <summary>
         /// Returns the string presentation of the object
@@ -146,10 +157,11 @@ namespace SchoolBusAPI.Models
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  DateCreated: ").Append(DateCreated).Append("\n");
             sb.Append("  PrimaryContact: ").Append(PrimaryContact).Append("\n");
-            sb.Append("  ServiceArea: ").Append(ServiceArea).Append("\n");
-            sb.Append("  NextInspectionDate: ").Append(NextInspectionDate).Append("\n");
-            sb.Append("  NumberOfBuses: ").Append(NumberOfBuses).Append("\n");
+            sb.Append("  District: ").Append(District).Append("\n");
             sb.Append("  Contacts: ").Append(Contacts).Append("\n");
+            sb.Append("  Notes: ").Append(Notes).Append("\n");
+            sb.Append("  Attachments: ").Append(Attachments).Append("\n");
+            sb.Append("  History: ").Append(History).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -213,24 +225,29 @@ namespace SchoolBusAPI.Models
                     this.PrimaryContact.Equals(other.PrimaryContact)
                 ) &&                 
                 (
-                    this.ServiceArea == other.ServiceArea ||
-                    this.ServiceArea != null &&
-                    this.ServiceArea.Equals(other.ServiceArea)
-                ) &&                 
-                (
-                    this.NextInspectionDate == other.NextInspectionDate ||
-                    this.NextInspectionDate != null &&
-                    this.NextInspectionDate.Equals(other.NextInspectionDate)
-                ) &&                 
-                (
-                    this.NumberOfBuses == other.NumberOfBuses ||
-                    this.NumberOfBuses != null &&
-                    this.NumberOfBuses.Equals(other.NumberOfBuses)
+                    this.District == other.District ||
+                    this.District != null &&
+                    this.District.Equals(other.District)
                 ) && 
                 (
                     this.Contacts == other.Contacts ||
                     this.Contacts != null &&
                     this.Contacts.SequenceEqual(other.Contacts)
+                ) && 
+                (
+                    this.Notes == other.Notes ||
+                    this.Notes != null &&
+                    this.Notes.SequenceEqual(other.Notes)
+                ) && 
+                (
+                    this.Attachments == other.Attachments ||
+                    this.Attachments != null &&
+                    this.Attachments.SequenceEqual(other.Attachments)
+                ) && 
+                (
+                    this.History == other.History ||
+                    this.History != null &&
+                    this.History.SequenceEqual(other.History)
                 );
         }
 
@@ -263,21 +280,25 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.PrimaryContact.GetHashCode();
                 }                   
-                if (this.ServiceArea != null)
+                if (this.District != null)
                 {
-                    hash = hash * 59 + this.ServiceArea.GetHashCode();
-                }                if (this.NextInspectionDate != null)
-                {
-                    hash = hash * 59 + this.NextInspectionDate.GetHashCode();
-                }                
-                                if (this.NumberOfBuses != null)
-                {
-                    hash = hash * 59 + this.NumberOfBuses.GetHashCode();
-                }                
-                                   
+                    hash = hash * 59 + this.District.GetHashCode();
+                }                   
                 if (this.Contacts != null)
                 {
                     hash = hash * 59 + this.Contacts.GetHashCode();
+                }                   
+                if (this.Notes != null)
+                {
+                    hash = hash * 59 + this.Notes.GetHashCode();
+                }                   
+                if (this.Attachments != null)
+                {
+                    hash = hash * 59 + this.Attachments.GetHashCode();
+                }                   
+                if (this.History != null)
+                {
+                    hash = hash * 59 + this.History.GetHashCode();
                 }
                 return hash;
             }
