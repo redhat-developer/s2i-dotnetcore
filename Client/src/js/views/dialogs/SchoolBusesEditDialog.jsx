@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { Form, FormGroup, FormControl, HelpBlock, ControlLabel, Checkbox } from 'react-bootstrap';
-
-import _ from 'lodash';
+import { Form, FormGroup, FormControl, HelpBlock, ControlLabel } from 'react-bootstrap';
 
 import { isBlank } from '../../utils/string';
 
@@ -40,7 +38,7 @@ For now, the Regi/VIN/Plate cannot be edited. If needed, that would be a separat
 
 var SchoolBusesEditDialog = React.createClass({
   propTypes: {
-    favourite: React.PropTypes.object.isRequired,
+    schoolBus: React.PropTypes.object.isRequired,
     onSave: React.PropTypes.func.isRequired,
     onClose: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool,
@@ -48,9 +46,8 @@ var SchoolBusesEditDialog = React.createClass({
 
   getInitialState() {
     return {
-      name: this.props.favourite.name || '',
-      isDefault: this.props.favourite.isDefault || false,
-      nameError: '',
+      field: '',
+      fieldError: false,
     };
   },
 
@@ -58,42 +55,27 @@ var SchoolBusesEditDialog = React.createClass({
     this.input.focus();
   },
 
-  nameChanged(e) {
-    this.setState({ name: e.target.value });
-  },
-
-  defaultChanged(e) {
-    this.setState({ isDefault: e.target.checked });
+  fieldChanged(e) {
+    this.setState({ field: e.target.value });
   },
 
   save() {
-    if (isBlank(this.state.name)) {
-      this.setState({ nameError: 'Name is required' });
-    } else {
-      this.props.onSave({ ...this.props.favourite, ...{
-        name: this.state.name,
-        isDefault: this.state.isDefault,
-      }});
-    }
   },
 
   render() {
-    return <Modal id="edit-favourite" show={ this.props.show } bsSize="small" onHide={ this.props.onClose }>
+    return <Modal id="school-buses-edit" show={ this.props.show } bsSize="large" onHide={ this.props.onClose }>
       <Modal.Header closeButton>
         <Modal.Title>
-          <strong>Favourite</strong>
+          <strong>School Bus</strong>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <FormGroup validationState={ this.state.nameError ? 'error' : null }>
-            <ControlLabel>Name <sup>*</sup></ControlLabel>
-            <FormControl type="text" defaultValue={ this.state.name } onChange={ this.nameChanged } inputRef={ ref => { this.input = ref; }} />
-            <HelpBlock>{ this.state.nameError }</HelpBlock>
+          <FormGroup validationState={ this.state.fieldError ? 'error' : null }>
+            <ControlLabel>Field <sup>*</sup></ControlLabel>
+            <FormControl type="text" defaultValue={ this.state.field } onChange={ this.fieldChanged } inputRef={ ref => { this.input = ref; }} />
+            <HelpBlock>{ this.state.fieldError }</HelpBlock>
           </FormGroup>
-          <Checkbox checked={ this.state.isDefault } onChange={ this.defaultChanged }>
-            Default
-          </Checkbox>
         </Form>
       </Modal.Body>
       <Modal.Footer>
