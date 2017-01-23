@@ -31,15 +31,15 @@ using SchoolBusAPI.Services.Impl;
 
 namespace SchoolBusAPI.Test
 {
-	public class ContactApiUnitTest 
+	public class HistoryApiUnitTest 
     { 
 		
-		private readonly ContactController _ContactApi;
+		private readonly HistoryController _HistoryApi;
 		
 		/// <summary>
         /// Setup the test
         /// </summary>        
-		public ContactApiUnitTest()
+		public HistoryApiUnitTest()
 		{
             DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
             Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
@@ -56,22 +56,22 @@ namespace SchoolBusAPI.Test
 
             */
 
-            ContactService _service = new ContactService(dbAppContext.Object);
+            HistoryService _service = new HistoryService(dbAppContext.Object);
 			
-                    _ContactApi = new ContactController (_service);
+                    _HistoryApi = new HistoryController (_service);
 
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsBulkPost
+        /// Unit test for HistoryBulkPost
         /// </summary>
-		public void TestContactsBulkPost()
+		public void TestHistoryBulkPost()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsBulkPost();
+			//  var result = _HistoryApiController.HistoryBulkPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -80,13 +80,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsIdDelete
+        /// Unit test for HistoryGet
         /// </summary>
-		public void TestContactsIdDelete()
+		public void TestHistoryGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsIdDelete();
+			//  var result = _HistoryApiController.HistoryGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -95,13 +95,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsIdGet
+        /// Unit test for HistoryIdDelete
         /// </summary>
-		public void TestContactsIdGet()
+		public void TestHistoryIdDelete()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsIdGet();
+			//  var result = _HistoryApiController.HistoryIdDelete();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -110,13 +110,43 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsIdPut
+        /// Unit test for HistoryIdGet
         /// </summary>
-		public void TestContactsIdPut()
+		public void TestHistoryIdGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsIdPut();
+			//  var result = _HistoryApiController.HistoryIdGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for HistoryIdPut
+        /// </summary>
+		public void TestHistoryIdPut()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _HistoryApiController.HistoryIdPut();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for HistoryPost
+        /// </summary>
+		public void TestHistoryPost()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _HistoryApiController.HistoryPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

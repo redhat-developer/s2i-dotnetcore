@@ -32,16 +32,13 @@ namespace SchoolBusAPI.Models
         DbSet<Role> Roles { get; set; }
         DbSet<RolePermission> RolePermissions { get; set; }
         DbSet<SchoolBus> SchoolBuss { get; set; }
-        DbSet<SchoolBusAttachment> SchoolBusAttachments { get; set; }       
-        DbSet<SchoolBusHistory> SchoolBusHistorys { get; set; }
-        DbSet<SchoolBusNote> SchoolBusNotes { get; set; }
-        DbSet<SchoolBusOwner> SchoolBusOwners { get; set; }
-        DbSet<SchoolBusOwnerAttachment> SchoolBusOwnerAttachments { get; set; }
-        DbSet<SchoolBusOwnerContact> SchoolBusOwnerContacts { get; set; }
-        DbSet<SchoolBusOwnerContactAddress> SchoolBusOwnerContactAddresss { get; set; }
-        DbSet<SchoolBusOwnerContactPhone> SchoolBusOwnerContactPhones { get; set; }
-        DbSet<SchoolBusOwnerHistory> SchoolBusOwnerHistorys { get; set; }
-        DbSet<SchoolBusOwnerNote> SchoolBusOwnerNotes { get; set; }
+        DbSet<Attachment> Attachments { get; set; }       
+        DbSet<History> Historys { get; set; }
+        DbSet<Note> Notes { get; set; }
+        DbSet<SchoolBusOwner> SchoolBusOwners { get; set; }        
+        DbSet<Contact> Contacts { get; set; }
+        DbSet<ContactAddress> ContactAddresss { get; set; }
+        DbSet<ContactPhone> ContactPhones { get; set; }
         DbSet<SchoolDistrict> SchoolDistricts { get; set; }
         DbSet<ServiceArea> ServiceAreas { get; set; }
         DbSet<User> Users { get; set; }
@@ -92,16 +89,13 @@ namespace SchoolBusAPI.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
         public virtual DbSet<SchoolBus> SchoolBuss { get; set; }
-        public virtual DbSet<SchoolBusAttachment> SchoolBusAttachments { get; set; }
-        public virtual DbSet<SchoolBusHistory> SchoolBusHistorys { get; set; }
-        public virtual DbSet<SchoolBusNote> SchoolBusNotes { get; set; }
+        public virtual DbSet<Attachment> Attachments { get; set; }
+        public virtual DbSet<History> Historys { get; set; }
+        public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<SchoolBusOwner> SchoolBusOwners { get; set; }
-        public virtual DbSet<SchoolBusOwnerAttachment> SchoolBusOwnerAttachments { get; set; }
-        public virtual DbSet<SchoolBusOwnerContact> SchoolBusOwnerContacts { get; set; }
-        public virtual DbSet<SchoolBusOwnerContactAddress> SchoolBusOwnerContactAddresss { get; set; }
-        public virtual DbSet<SchoolBusOwnerContactPhone> SchoolBusOwnerContactPhones { get; set; }
-        public virtual DbSet<SchoolBusOwnerHistory> SchoolBusOwnerHistorys { get; set; }
-        public virtual DbSet<SchoolBusOwnerNote> SchoolBusOwnerNotes { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<ContactAddress> ContactAddresss { get; set; }
+        public virtual DbSet<ContactPhone> ContactPhones { get; set; }
         public virtual DbSet<SchoolDistrict> SchoolDistricts { get; set; }
         public virtual DbSet<ServiceArea> ServiceAreas { get; set; }
         public virtual DbSet<User> Users { get; set; }

@@ -76,7 +76,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/schoolbuses/{id}/attachments")]
         [SwaggerOperation("SchoolbusesIdAttachmentsGet")]
-        [SwaggerResponse(200, type: typeof(List<SchoolBusAttachment>))]
+        [SwaggerResponse(200, type: typeof(List<Attachment>))]
         public virtual IActionResult SchoolbusesIdAttachmentsGet([FromRoute]int id)
         {
             return this._service.SchoolbusesIdAttachmentsGetAsync(id);
@@ -130,12 +130,12 @@ namespace SchoolBusAPI.Controllers
         /// 
         /// </summary>
         /// <remarks>Returns History for a particular SchoolBus</remarks>
-        /// <param name="id">id of SchoolBus to fetch SchoolBusHistory for</param>
+        /// <param name="id">id of SchoolBus to fetch History for</param>
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbuses/{id}/history")]
         [SwaggerOperation("SchoolbusesIdHistoryGet")]
-        [SwaggerResponse(200, type: typeof(List<SchoolBusHistory>))]
+        [SwaggerResponse(200, type: typeof(List<History>))]
         public virtual IActionResult SchoolbusesIdHistoryGet([FromRoute]int id)
         {
             return this._service.SchoolbusesIdHistoryGetAsync(id);
@@ -166,7 +166,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/schoolbuses/{id}/notes")]
         [SwaggerOperation("SchoolbusesIdNotesGet")]
-        [SwaggerResponse(200, type: typeof(List<SchoolBusNote>))]
+        [SwaggerResponse(200, type: typeof(List<Note>))]
         public virtual IActionResult SchoolbusesIdNotesGet([FromRoute]int id)
         {
             return this._service.SchoolbusesIdNotesGetAsync(id);
@@ -206,7 +206,6 @@ namespace SchoolBusAPI.Controllers
         /// Searches school buses
         /// </summary>
         /// <remarks>Used for the search schoolbus page.</remarks>
-        /// <param name="serviceareas">Service areas (array of id numbers)</param>
         /// <param name="districts">Districts (array of id numbers)</param>
         /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
         /// <param name="cities">Cities (array of id numbers)</param>
@@ -224,9 +223,9 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/schoolbuses/search")]
         [SwaggerOperation("SchoolbusesSearchGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBus>))]
-        public virtual IActionResult SchoolbusesSearchGet([FromQuery]int?[] serviceareas, [FromQuery]int?[] districts, [FromQuery]int?[] inspectors, [FromQuery]int?[] cities, [FromQuery]int?[] schooldistricts, [FromQuery]int? owner, [FromQuery]string regi, [FromQuery]string vin, [FromQuery]string plate, [FromQuery]bool? includeInactive, [FromQuery]bool? onlyReInspections, [FromQuery]DateTime? startDate, [FromQuery]DateTime? endDate)
+        public virtual IActionResult SchoolbusesSearchGet([FromQuery]int?[] districts, [FromQuery]int?[] inspectors, [FromQuery]int?[] cities, [FromQuery]int?[] schooldistricts, [FromQuery]int? owner, [FromQuery]string regi, [FromQuery]string vin, [FromQuery]string plate, [FromQuery]bool? includeInactive, [FromQuery]bool? onlyReInspections, [FromQuery]DateTime? startDate, [FromQuery]DateTime? endDate)
         {
-            return this._service.SchoolbusesSearchGetAsync(serviceareas, districts, inspectors, cities, schooldistricts, owner, regi, vin, plate, includeInactive, onlyReInspections, startDate, endDate);
+            return this._service.SchoolbusesSearchGetAsync(districts, inspectors, cities, schooldistricts, owner, regi, vin, plate, includeInactive, onlyReInspections, startDate, endDate);
         }
     }
 }

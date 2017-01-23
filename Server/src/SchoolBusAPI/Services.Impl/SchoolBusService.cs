@@ -71,39 +71,35 @@ namespace SchoolBusAPI.Services.Impl
                     }
                 }
 
-                // adjust service area.
-
-                if (item.ServiceArea != null)
+                // adjust District.
+                if (item.District != null)
                 {
-                    int service_area_id = item.ServiceArea.Id;
-                    bool service_area_exists = _context.ServiceAreas.Any(a => a.Id == service_area_id);
-                    if (service_area_exists)
+                    int district_id = item.District.Id;
+                    var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
+                    if (district_exists)
                     {
-                        ServiceArea service_area = _context.ServiceAreas.First(a => a.Id == service_area_id);
-                        item.ServiceArea = service_area;
-                    } 
-                    else
-                    // invalid data
-                    {
-                        item.ServiceArea = null;
+                        District district = _context.Districts.First(a => a.Id == district_id);
+                        item.District = district;
                     }
-                }
-
-                // adjust school district
-
-                if (item.SchoolBusDistrict != null)
-                {
-                    int schoolbus_district_id = item.SchoolBusDistrict.Id;
-                    bool schoolbus_district_exists = _context.SchoolDistricts.Any(a => a.Id == schoolbus_district_id);
-                    if (schoolbus_district_exists)
+                    else
                     {
-                        SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolbus_district_id);
-                        item.SchoolBusDistrict = school_district;
+                        item.District = null;
+                    }
+                }                // adjust school district
+
+                if (item.SchoolDistrict != null)
+                {
+                    int schoolDistrict_id = item.SchoolDistrict.Id;
+                    bool schoolDistrict_exists = _context.SchoolDistricts.Any(a => a.Id == schoolDistrict_id);
+                    if (schoolDistrict_exists)
+                    {
+                        SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolDistrict_id);
+                        item.SchoolDistrict = school_district;
                     }
                     else
                     // invalid data
                     {
-                        item.SchoolBusDistrict = null;
+                        item.SchoolDistrict = null;
                     }
                 }
 
@@ -173,9 +169,9 @@ namespace SchoolBusAPI.Services.Impl
             {
                 var result = _context.SchoolBuss
                     .Include(x => x.HomeTerminalCity)
-                    .Include(x => x.SchoolBusDistrict)
+                    .Include(x => x.SchoolDistrict)
                     .Include(x => x.SchoolBusOwner.PrimaryContact)
-                    .Include(x => x.ServiceArea.District.Region)
+                    .Include(x => x.District.Region)
                     .Include(x => x.Inspector)
                     .First(a => a.Id == id);
                 return new ObjectResult(result);
@@ -195,9 +191,9 @@ namespace SchoolBusAPI.Services.Impl
         {
             var result = _context.SchoolBuss
                 .Include(x => x.HomeTerminalCity)
-                .Include(x => x.SchoolBusDistrict)
+                .Include(x => x.SchoolDistrict)
                 .Include(x => x.SchoolBusOwner.PrimaryContact)
-                .Include(x => x.ServiceArea.District.Region)
+                .Include(x => x.District.Region)
                 .Include(x => x.Inspector)
                 .ToList();
             return new ObjectResult(result);
@@ -215,7 +211,10 @@ namespace SchoolBusAPI.Services.Impl
             bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusAttachments.Where(a => a.SchoolBus.Id == id);
+                SchoolBus schoolBus = _context.SchoolBuss
+                    .Include(x => x.Attachments)
+                    .First(a => a.Id == id);
+                var result = schoolBus.Attachments;
                 return new ObjectResult(result);
             }
             else
@@ -239,15 +238,15 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 SchoolBus schoolbus = _context.SchoolBuss.Where(a => a.Id == id).First();
-                string regi = schoolbus.Regi;
+                string regi = schoolbus.ICBCRegistrationNumber;
                 // get CCW data for this bus.
 
                 // could be none.
                 // validate the bus id            
-                bool ccw_exists = _context.CCWDatas.Any(a => a.ICBCRegi == regi);
+                bool ccw_exists = _context.CCWDatas.Any(a => a.ICBCRegistrationNumber == regi);
                 if (ccw_exists)
                 {
-                    var result = _context.CCWDatas.Where(a => a.ICBCRegi == regi).First();
+                    var result = _context.CCWDatas.Where(a => a.ICBCRegistrationNumber == regi).First();
                     return new ObjectResult(result);
                 }
                 else
@@ -304,7 +303,10 @@ namespace SchoolBusAPI.Services.Impl
             bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusHistorys.Where(a => a.SchoolBus.Id == id);
+                SchoolBus schoolBus = _context.SchoolBuss
+                    .Include(x => x.History)
+                    .First(a => a.Id == id);
+                var result = schoolBus.History;
                 return new ObjectResult(result);
             }
             else
@@ -326,7 +328,10 @@ namespace SchoolBusAPI.Services.Impl
             bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusNotes.Where(a => a.SchoolBus.Id == id);
+                SchoolBus schoolBus = _context.SchoolBuss
+                    .Include(x => x.Notes)
+                    .First(a => a.Id == id);
+                var result = schoolBus.Notes;
                 return new ObjectResult(result);
             }
             else
@@ -357,29 +362,32 @@ namespace SchoolBusAPI.Services.Impl
                 }
             }
 
-            // adjust service area.
 
-            if (item.ServiceArea != null)
+            // adjust District.
+            if (item.District != null)
             {
-                int service_area_id = item.ServiceArea.Id;
-                bool service_area_exists = _context.ServiceAreas.Any(a => a.Id == service_area_id);
-                if (service_area_exists)
+                int district_id = item.District.Id;
+                var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
+                if (district_exists)
                 {
-                    ServiceArea service_area = _context.ServiceAreas.First(a => a.Id == service_area_id);
-                    item.ServiceArea = service_area;
+                    District district = _context.Districts.First(a => a.Id == district_id);
+                    item.District = district;
+                }
+                else
+                {
+                    item.District = null;
                 }
             }
-
             // adjust school district
 
-            if (item.SchoolBusDistrict != null)
+            if (item.SchoolDistrict != null)
             {
-                int schoolbus_district_id = item.SchoolBusDistrict.Id;
-                bool schoolbus_district_exists = _context.SchoolDistricts.Any(a => a.Id == schoolbus_district_id);
-                if (schoolbus_district_exists)
+                int schoolDistrict_id = item.SchoolDistrict.Id;
+                bool schoolDistrict_exists = _context.SchoolDistricts.Any(a => a.Id == schoolDistrict_id);
+                if (schoolDistrict_exists)
                 {
-                    SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolbus_district_id);
-                    item.SchoolBusDistrict = school_district;
+                    SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolDistrict_id);
+                    item.SchoolDistrict = school_district;
                 }
             }
 
@@ -431,29 +439,32 @@ namespace SchoolBusAPI.Services.Impl
                 }
             }
 
-            // adjust service area.
-
-            if (item.ServiceArea != null)
+            // adjust District.
+            if (item.District != null)
             {
-                int service_area_id = item.ServiceArea.Id;
-                bool service_area_exists = _context.ServiceAreas.Any(a => a.Id == service_area_id);
-                if (service_area_exists)
+                int district_id = item.District.Id;
+                var district_exists = _context.Districts.Any(a => a.Id == district_id);
+                if (district_exists)
                 {
-                    ServiceArea service_area = _context.ServiceAreas.First(a => a.Id == service_area_id);
-                    item.ServiceArea = service_area;
+                    District district = _context.Districts.First(a => a.Id == district_id);
+                    item.District = district;
+                }
+                else
+                {
+                    item.District = null;
                 }
             }
 
             // adjust school district
 
-            if (item.SchoolBusDistrict != null)
+            if (item.SchoolDistrict != null)
             {
-                int schoolbus_district_id = item.SchoolBusDistrict.Id;
-                bool schoolbus_district_exists = _context.SchoolDistricts.Any(a => a.Id == schoolbus_district_id);
+                int schoolDistrict_id = item.SchoolDistrict.Id;
+                bool schoolbus_district_exists = _context.SchoolDistricts.Any(a => a.Id == schoolDistrict_id);
                 if (schoolbus_district_exists)
                 {
-                    SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolbus_district_id);
-                    item.SchoolBusDistrict = school_district;
+                    SchoolDistrict schoolDistrict = _context.SchoolDistricts.First(a => a.Id == schoolDistrict_id);
+                    item.SchoolDistrict = schoolDistrict;
                 }
             }
 
@@ -510,8 +521,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// Searches school buses
         /// </summary>
-        /// <remarks>Used for the search schoolbus page.</remarks>
-        /// <param name="serviceareas">Service areas (array of id numbers)</param>
+        /// <remarks>Used for the search schoolbus page.</remarks>        
         /// <param name="districts">Districts (array of id numbers)</param>
         /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
         /// <param name="cities">Cities (array of id numbers)</param>
@@ -525,15 +535,15 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="startDate">Inspection start date</param>
         /// <param name="endDate">Inspection end date</param>
         /// <response code="200">OK</response>
-        public IActionResult SchoolbusesSearchGetAsync(int?[] serviceareas, int?[] districts, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate)
+        public IActionResult SchoolbusesSearchGetAsync(int?[] districts, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate)
         {
 
             // Eager loading of related data
             var data = _context.SchoolBuss
                 .Include(x => x.HomeTerminalCity)
-                .Include(x => x.SchoolBusDistrict)
+                .Include(x => x.SchoolDistrict)
                 .Include(x => x.SchoolBusOwner.PrimaryContact)
-                .Include(x => x.ServiceArea.District.Region)
+                .Include(x => x.District.Region)
                 .Include(x => x.Inspector)
                 .Select(x => x);
 
@@ -543,19 +553,19 @@ namespace SchoolBusAPI.Services.Impl
 
             if (regi != null)
             {
-                data = data.Where(x => x.Regi == regi);
+                data = data.Where(x => x.ICBCRegistrationNumber == regi);
                 keySearch = true;
             }
 
             if (vin != null)
             {
-                data = data.Where(x => x.VIN == vin);
+                data = data.Where(x => x.VehicleIdentificationNumber == vin);
                 keySearch = true;
             }
 
             if (plate != null)
             {
-                data = data.Where(x => x.Plate == plate);
+                data = data.Where(x => x.LicencePlateNumber == plate);
                 keySearch = true;
             }
 
@@ -568,21 +578,10 @@ namespace SchoolBusAPI.Services.Impl
                     {
                         if (district != null)
                         {
-                            data = data.Where(x => x.ServiceArea.District.Id == district);
+                            data = data.Where(x => x.District.Id == district);
                         }
                     }
-                }
-
-                if (serviceareas != null)
-                {
-                    foreach (int? servicearea in serviceareas)
-                    {
-                        if (servicearea != null)
-                        {
-                            data = data.Where(x => x.ServiceArea.Id == servicearea);
-                        }
-                    }
-                }
+                }                
 
                 if (inspectors != null)
                 {
@@ -606,7 +605,7 @@ namespace SchoolBusAPI.Services.Impl
                     {
                         if (schooldistrict != null)
                         {
-                            data = data.Where(x => x.SchoolBusDistrict.Id == schooldistrict);
+                            data = data.Where(x => x.SchoolDistrict.Id == schooldistrict);
                         }
                     }
                 }
@@ -628,7 +627,7 @@ namespace SchoolBusAPI.Services.Impl
 
                 if (onlyReInspections != null && onlyReInspections == true)
                 {
-                    data = data.Where(x => x.NextInspectionType == "Re-inspection");
+                    data = data.Where(x => x.NextInspectionTypeCode == "Re-inspection");
                 }
 
                 if (startDate != null)

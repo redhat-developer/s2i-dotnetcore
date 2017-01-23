@@ -58,10 +58,10 @@ namespace SchoolBusAPI.Services.Impl
                 if (item.PrimaryContact != null)
                 {
                     int primary_contact_id = item.PrimaryContact.Id;
-                    var primary_contact_exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == primary_contact_id);
+                    var primary_contact_exists = _context.Contacts.Any(a => a.Id == primary_contact_id);
                     if (primary_contact_exists)
                     {
-                        SchoolBusOwnerContact contact = _context.SchoolBusOwnerContacts.First(a => a.Id == primary_contact_id);
+                        Contact contact = _context.Contacts.First(a => a.Id == primary_contact_id);
                         item.PrimaryContact = contact;
                     }
                     else
@@ -70,19 +70,19 @@ namespace SchoolBusAPI.Services.Impl
                     }                    
                 }                
 
-                // adjust Service Area.
-                if (item.ServiceArea != null)
+                // adjust District.
+                if (item.District != null)
                 {
-                    int servicearea_id = item.ServiceArea.Id;
-                    var servicearea_exists = _context.ServiceAreas.Any(a => a.Id == servicearea_id);
-                    if (servicearea_exists)
+                    int district_id = item.District.Id;
+                    var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
+                    if (district_exists)
                     {
-                        ServiceArea servicearea = _context.ServiceAreas.First(a => a.Id == servicearea_id);
-                        item.ServiceArea = servicearea;
+                        District district = _context.Districts.First(a => a.Id == district_id);
+                        item.District = district;
                     }
                     else
                     {
-                        item.ServiceArea = null;
+                        item.District = null;
                     }
                 }
 
@@ -91,14 +91,14 @@ namespace SchoolBusAPI.Services.Impl
                 {
                     for (int i = 0; i < item.Contacts.Count; i++)
                     {
-                        SchoolBusOwnerContact contact = item.Contacts[i];
+                        Contact contact = item.Contacts[i];
                         if (contact != null)
                         {
                             int contact_id = contact.Id;
-                            bool contact_exists = _context.SchoolBusOwnerContacts.Any(a => a.Id == contact_id);
+                            bool contact_exists = _context.Contacts.Any(a => a.Id == contact_id);
                             if (contact_exists)
                             {
-                                SchoolBusOwnerContact new_contact = _context.SchoolBusOwnerContacts.First(a => a.Id == contact_id);
+                                Contact new_contact = _context.Contacts.First(a => a.Id == contact_id);
                                 item.Contacts[i] = new_contact;
                             }
                             else
@@ -147,7 +147,8 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusOwnerAttachments.Where(a => a.SchoolBusOwner.Id == id);
+                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners.First(a => a.Id == id);
+                var result = schoolBusOwner.Notes;
                 return new ObjectResult(result);
             }
             else
@@ -168,13 +169,13 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                List<SchoolBusOwnerContactAddress> result = new List<SchoolBusOwnerContactAddress>();
+                List<ContactAddress> result = new List<ContactAddress>();
                 var owner = _context.SchoolBusOwners.Where(a => a.Id == id).First();
                 var contacts = owner.Contacts;
-                foreach (SchoolBusOwnerContact contact in contacts)
+                foreach (Contact contact in contacts)
                 {
                     // merge the lists
-                    result = result.Concat ( contact.SchoolBusOwnerContactAddresses).ToList();
+                    result = result.Concat ( contact.ContactAddresses).ToList();
                 }
                 return new ObjectResult(result);
             }
@@ -196,13 +197,13 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                List<SchoolBusOwnerContactPhone> result = new List<SchoolBusOwnerContactPhone>();
+                List<ContactPhone> result = new List<ContactPhone>();
                 var owner = _context.SchoolBusOwners.Where(a => a.Id == id).First();
                 var contacts = owner.Contacts;
-                foreach (SchoolBusOwnerContact contact in contacts)
+                foreach (Contact contact in contacts)
                 {
                     // merge the lists
-                    result = result.Concat(contact.SchoolBusOwnerContactPhones).ToList();
+                    result = result.Concat(contact.ContactPhones).ToList();
                 }
                 return new ObjectResult(result);                
             }
@@ -270,7 +271,8 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusOwnerNotes.Where(a => a.SchoolBusOwner.Id == id);
+                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners.First(a => a.Id == id);
+                var result = schoolBusOwner.Notes;
                 return new ObjectResult(result);
             }
             else

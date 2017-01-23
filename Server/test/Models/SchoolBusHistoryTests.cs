@@ -29,14 +29,14 @@ namespace SchoolBusAPI.Test
     public class SchoolBusHistoryModelTests
     {
         // TODO uncomment below to declare an instance variable for SchoolBusHistory
-        private SchoolBusHistory instance;
+        private History instance;
 
         /// <summary>
         /// Setup the test.
         /// </summary>        
         public SchoolBusHistoryModelTests()
         {
-            instance = new SchoolBusHistory();
+            instance = new History();
         }
 
     
@@ -46,7 +46,7 @@ namespace SchoolBusAPI.Test
         [Fact]
         public void SchoolBusHistoryInstanceTest()
         {
-            Assert.IsType<SchoolBusHistory>(instance);  
+            Assert.IsType<History>(instance);  
         }
 
         /// <summary>

@@ -77,11 +77,10 @@ namespace SchoolBusAPI.Test
         /// </summary>
 		public async void TestSchoolBuses()
 		{
-
-            // create a service area.
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/serviceareas");
-            ServiceArea servicearea = new ServiceArea();
-            string jsonString = servicearea.ToJson();
+            // create a district.
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/districts");
+            District district = new District();
+            string jsonString = district.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             var response = await _client.SendAsync(request);
@@ -90,8 +89,8 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
 
-            servicearea = JsonConvert.DeserializeObject<ServiceArea>(jsonString);
-            var servicearea_id = servicearea.Id;
+            district = JsonConvert.DeserializeObject<District>(jsonString);
+            var district_id = district.Id;
 
 
             // create a schoolbus owner.
@@ -113,7 +112,7 @@ namespace SchoolBusAPI.Test
             // create a new schoolbus.
             SchoolBus schoolbus = new SchoolBus();
             schoolbus.Status = "0";
-            schoolbus.ServiceArea = servicearea;
+            schoolbus.District = district;
             schoolbus.SchoolBusOwner = schoolBusOwner;
             
 
@@ -190,12 +189,12 @@ namespace SchoolBusAPI.Test
 
             // cleanup service area.
 
-            request = new HttpRequestMessage(HttpMethod.Post, "/api/serviceareas/" + servicearea_id + "/delete");
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/districts/" + district_id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // should get a 404 if we try a get now.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/serviceareas/" + servicearea_id);
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/districts/" + district_id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
 
@@ -238,10 +237,10 @@ namespace SchoolBusAPI.Test
 		public async void TestBusSearch()
 		{
             //setup test
-            // create a service area.
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/serviceareas");
-            ServiceArea servicearea = new ServiceArea();
-            string jsonString = servicearea.ToJson();
+            // create a district 
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/districts");
+            District district = new District();
+            string jsonString = district.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             var response = await _client.SendAsync(request);
@@ -250,8 +249,8 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
 
-            servicearea = JsonConvert.DeserializeObject<ServiceArea>(jsonString);
-            var servicearea_id = servicearea.Id;
+            district = JsonConvert.DeserializeObject<District>(jsonString);
+            var district_id = district.Id;
 
 
             // create a schoolbus owner.
@@ -273,10 +272,10 @@ namespace SchoolBusAPI.Test
             // create a new schoolbus.
             SchoolBus schoolbus = new SchoolBus();
             schoolbus.Status = "Active";
-            schoolbus.ServiceArea = servicearea;
+            schoolbus.District = district;
             schoolbus.SchoolBusOwner = schoolBusOwner;
-            schoolbus.VIN = "1234";
-            schoolbus.Plate = "12345";
+            schoolbus.VehicleIdentificationNumber = "1234";
+            schoolbus.LicencePlateNumber = "12345";
 
             jsonString = schoolbus.ToJson();
 
@@ -313,7 +312,7 @@ namespace SchoolBusAPI.Test
 
             // test the search
 
-            var parametersToAdd = new System.Collections.Generic.Dictionary<string, string> { { "servicearea", "["+servicearea_id +"]" } };
+            var parametersToAdd = new System.Collections.Generic.Dictionary<string, string> { { "district", "["+district_id +"]" } };
 
             SchoolBus[] searchresults = await SearchHelper(parametersToAdd);
 
@@ -391,12 +390,12 @@ namespace SchoolBusAPI.Test
 
             // cleanup service area.
 
-            request = new HttpRequestMessage(HttpMethod.Post, "/api/serviceareas/" + servicearea_id + "/delete");
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/districts/" + district_id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             // should get a 404 if we try a get now.
-            request = new HttpRequestMessage(HttpMethod.Get, "/api/serviceareas/" + servicearea_id);
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/districts/" + district_id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
 

@@ -31,15 +31,15 @@ using SchoolBusAPI.Services.Impl;
 
 namespace SchoolBusAPI.Test
 {
-	public class ContactApiUnitTest 
+	public class AttachmentApiUnitTest 
     { 
 		
-		private readonly ContactController _ContactApi;
+		private readonly AttachmentController _AttachmentApi;
 		
 		/// <summary>
         /// Setup the test
         /// </summary>        
-		public ContactApiUnitTest()
+		public AttachmentApiUnitTest()
 		{
             DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
             Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
@@ -56,22 +56,22 @@ namespace SchoolBusAPI.Test
 
             */
 
-            ContactService _service = new ContactService(dbAppContext.Object);
+            AttachmentService _service = new AttachmentService(dbAppContext.Object);
 			
-                    _ContactApi = new ContactController (_service);
+                    _AttachmentApi = new AttachmentController (_service);
 
 		}
 	
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsBulkPost
+        /// Unit test for AttachmentsBulkPost
         /// </summary>
-		public void TestContactsBulkPost()
+		public void TestAttachmentsBulkPost()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsBulkPost();
+			//  var result = _AttachmentApiController.AttachmentsBulkPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -80,13 +80,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsIdDelete
+        /// Unit test for AttachmentsGet
         /// </summary>
-		public void TestContactsIdDelete()
+		public void TestAttachmentsGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsIdDelete();
+			//  var result = _AttachmentApiController.AttachmentsGet();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -95,13 +95,13 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsIdGet
+        /// Unit test for AttachmentsIdDelete
         /// </summary>
-		public void TestContactsIdGet()
+		public void TestAttachmentsIdDelete()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsIdGet();
+			//  var result = _AttachmentApiController.AttachmentsIdDelete();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);
@@ -110,13 +110,43 @@ namespace SchoolBusAPI.Test
 		
 		[Fact]
 		/// <summary>
-        /// Unit test for ContactsIdPut
+        /// Unit test for AttachmentsIdGet
         /// </summary>
-		public void TestContactsIdPut()
+		public void TestAttachmentsIdGet()
 		{
 			// Add test code here
 			// it may look like: 
-			//  var result = _ContactApiController.ContactsIdPut();
+			//  var result = _AttachmentApiController.AttachmentsIdGet();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for AttachmentsIdPut
+        /// </summary>
+		public void TestAttachmentsIdPut()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _AttachmentApiController.AttachmentsIdPut();
+			//  Assert.True (result == expected-result);
+
+            Assert.True(true);
+		}		
+        
+		
+		[Fact]
+		/// <summary>
+        /// Unit test for AttachmentsPost
+        /// </summary>
+		public void TestAttachmentsPost()
+		{
+			// Add test code here
+			// it may look like: 
+			//  var result = _AttachmentApiController.AttachmentsPost();
 			//  Assert.True (result == expected-result);
 
             Assert.True(true);

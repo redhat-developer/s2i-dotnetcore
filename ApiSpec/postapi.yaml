@@ -37,14 +37,7 @@
         - text/plain
         - application/json
         - text/json
-      parameters:
-        - name: serviceareas
-          in: query
-          description: Service areas (array of id numbers)
-          collectionFormat: multi
-          type: array
-          items:
-            type: integer
+      parameters:        
         - name: districts
           in: query
           description: Districts (array of id numbers)
@@ -150,7 +143,7 @@
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusNote'
+              $ref: '#/definitions/Note'
         "404":
            description: SchoolBus not found
       parameters:
@@ -174,7 +167,7 @@
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusAttachment'
+              $ref: '#/definitions/Attachment'
         "404":
            description: SchoolBus not found
       parameters:
@@ -198,11 +191,11 @@
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusHistory'
+              $ref: '#/definitions/History'
       parameters:
         - name: id
           in: path
-          description: id of SchoolBus to fetch SchoolBusHistory for
+          description: id of SchoolBus to fetch History for
           required: true
           type: integer
   /schoolbuses/{id}/ccwdata:
@@ -240,7 +233,7 @@
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwnerAttachment'
+              $ref: '#/definitions/Attachment'
       parameters:
         - name: id
           in: path
@@ -262,18 +255,18 @@
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwnerNote'
+              $ref: '#/definitions/Note'
       parameters:
         - name: id
           in: path
           description: id of SchoolBusOwner to fetch notes for
           required: true
           type: integer
-  /schoolbusownercontacts/{id}/contactphones:
+  /contacts/{id}/contactphones:
     get:
       description: Returns phone contacts for a particular SchoolBusOwner
       tags:
-        - SchoolBusOwnerContact
+        - Contact
       produces:
         - text/plain
         - application/json
@@ -284,18 +277,18 @@
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwnerContactPhone'
+              $ref: '#/definitions/ContactPhone'
       parameters:
         - name: id
           in: path
           description: id of SchoolBusOwner to fetch contact phone for
           required: true
           type: integer
-  /schoolbusownercontacts/{id}/contactaddresses:
+  /contacts/{id}/contactaddresses:
     get:
       description: Returns address contacts for a particular SchoolBusOwner
       tags:
-        - SchoolBusOwnerContact
+        - Contact
       produces:
         - text/plain
         - application/json
@@ -306,7 +299,7 @@
           schema:
             type: array
             items:
-              $ref: '#/definitions/SchoolBusOwnerContactAddress'
+              $ref: '#/definitions/ContactAddress'
       parameters:
         - name: id
           in: path

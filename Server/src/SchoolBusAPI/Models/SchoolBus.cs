@@ -40,63 +40,67 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="SchoolBus" /> class.
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Regi">The ICBC Registration number for the School Bus.</param>
-        /// <param name="Plate">The ICBC Plate Number for the School Bus.</param>
-        /// <param name="VIN">The VIN for the School Bus.</param>
+        /// <param name="ICBCRegistrationNumber">The ICBC Registration number for the School Bus.</param>
+        /// <param name="LicencePlateNumber">The ICBC Plate Number for the School Bus.</param>
+        /// <param name="VehicleIdentificationNumber">The VIN for the School Bus.</param>
         /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
         /// <param name="PermitNumber">The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service..</param>
         /// <param name="Status">Enumerated type of Status - Inactive,  Active,  Archived.</param>
         /// <param name="IsOutOfProvince">IsOutOfProvince.</param>
-        /// <param name="ServiceArea">ServiceArea.</param>
-        /// <param name="HomeTerminalAddr1">Address 1 of physical location of the School Bus..</param>
-        /// <param name="HomeTerminalAddr2">Address 2 of physical location of the School Bus..</param>
+        /// <param name="District">District.</param>
+        /// <param name="HomeTerminalAddress1">Address 1 of physical location of the School Bus..</param>
+        /// <param name="HomeTerminalAddress2">Address 2 of physical location of the School Bus..</param>
         /// <param name="HomeTerminalCity">City of physical location of the School Bus..</param>
         /// <param name="HomeTerminalProvince">Province of physical location of the School Bus - free form..</param>
         /// <param name="HomeTerminalPostalCode">Postal Code of physical location of the School Bus..</param>
         /// <param name="HomeTerminalComment">A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection.</param>
-        /// <param name="Restrictions">Text of any restrictions to be printed on the school bus permit..</param>
+        /// <param name="RestrictionsText">Text of any restrictions to be printed on the school bus permit..</param>
         /// <param name="NextInspectionDate">The next inspection date for this School Bus. Set at the time an inspection is set..</param>
-        /// <param name="NextInspectionType">An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&amp;#x2F;Fail status of the most recent inspection..</param>
-        /// <param name="SchoolBusDistrict">The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless..</param>
+        /// <param name="NextInspectionTypeCode">An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&amp;#x2F;Fail status of the most recent inspection..</param>
+        /// <param name="SchoolDistrict">The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless..</param>
         /// <param name="IsIndependentSchool">True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field..</param>
-        /// <param name="NameOfIndependentSchool">The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false..</param>
-        /// <param name="SchoolBusClass">The enumerated class of School Bus..</param>
-        /// <param name="SchoolBusBodyType">The enumerated body type of the School Bus..</param>
-        /// <param name="SchoolBusBodyTypeOther">The enumerated body type of the School Bus..</param>
-        /// <param name="SchoolBusUnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
+        /// <param name="IndependentSchoolName">The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false..</param>
+        /// <param name="PermitClassCode">The enumerated class of School Bus..</param>
+        /// <param name="BodyTypeCode">The enumerated body type of the School Bus..</param>
+        /// <param name="UnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
         /// <param name="SchoolBusSeatingCapacity">The maximum number of passengers in the bus based on the specific use of the bus. For example,  the same 2-per seat &amp;#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat..</param>
         /// <param name="MobilityAidCapacity">The number of mobility aid passenger seats in the bus..</param>
         /// <param name="Inspector">The inspector assigned to this schoolbus.</param>
-        public SchoolBus(int Id, string Regi = null, string Plate = null, string VIN = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, ServiceArea ServiceArea = null, string HomeTerminalAddr1 = null, string HomeTerminalAddr2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string Restrictions = null, DateTime? NextInspectionDate = null, string NextInspectionType = null, SchoolDistrict SchoolBusDistrict = null, bool? IsIndependentSchool = null, string NameOfIndependentSchool = null, string SchoolBusClass = null, string SchoolBusBodyType = null, string SchoolBusBodyTypeOther = null, string SchoolBusUnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null, User Inspector = null)
+        /// <param name="Notes">The set of notes about the school bus entered by users..</param>
+        /// <param name="Attachments">The set of attachments about the school bus uploaded by the users..</param>
+        /// <param name="History">The history of updates made to the School Bus..</param>
+        public SchoolBus(int Id, string ICBCRegistrationNumber = null, string LicencePlateNumber = null, string VehicleIdentificationNumber = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, string Status = null, bool? IsOutOfProvince = null, District District = null, string HomeTerminalAddress1 = null, string HomeTerminalAddress2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string RestrictionsText = null, DateTime? NextInspectionDate = null, string NextInspectionTypeCode = null, SchoolDistrict SchoolDistrict = null, bool? IsIndependentSchool = null, string IndependentSchoolName = null, string PermitClassCode = null, string BodyTypeCode = null, string UnitNumber = null, int? SchoolBusSeatingCapacity = null, int? MobilityAidCapacity = null, User Inspector = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null)
         {   
             this.Id = Id;
-            this.Regi = Regi;
-            this.Plate = Plate;
-            this.VIN = VIN;
+            this.ICBCRegistrationNumber = ICBCRegistrationNumber;
+            this.LicencePlateNumber = LicencePlateNumber;
+            this.VehicleIdentificationNumber = VehicleIdentificationNumber;
             this.SchoolBusOwner = SchoolBusOwner;
             this.PermitNumber = PermitNumber;
             this.Status = Status;
             this.IsOutOfProvince = IsOutOfProvince;
-            this.ServiceArea = ServiceArea;
-            this.HomeTerminalAddr1 = HomeTerminalAddr1;
-            this.HomeTerminalAddr2 = HomeTerminalAddr2;
+            this.District = District;
+            this.HomeTerminalAddress1 = HomeTerminalAddress1;
+            this.HomeTerminalAddress2 = HomeTerminalAddress2;
             this.HomeTerminalCity = HomeTerminalCity;
             this.HomeTerminalProvince = HomeTerminalProvince;
             this.HomeTerminalPostalCode = HomeTerminalPostalCode;
             this.HomeTerminalComment = HomeTerminalComment;
-            this.Restrictions = Restrictions;
+            this.RestrictionsText = RestrictionsText;
             this.NextInspectionDate = NextInspectionDate;
-            this.NextInspectionType = NextInspectionType;
-            this.SchoolBusDistrict = SchoolBusDistrict;
+            this.NextInspectionTypeCode = NextInspectionTypeCode;
+            this.SchoolDistrict = SchoolDistrict;
             this.IsIndependentSchool = IsIndependentSchool;
-            this.NameOfIndependentSchool = NameOfIndependentSchool;
-            this.SchoolBusClass = SchoolBusClass;
-            this.SchoolBusBodyType = SchoolBusBodyType;
-            this.SchoolBusBodyTypeOther = SchoolBusBodyTypeOther;
-            this.SchoolBusUnitNumber = SchoolBusUnitNumber;
+            this.IndependentSchoolName = IndependentSchoolName;
+            this.PermitClassCode = PermitClassCode;
+            this.BodyTypeCode = BodyTypeCode;
+            this.UnitNumber = UnitNumber;
             this.SchoolBusSeatingCapacity = SchoolBusSeatingCapacity;
             this.MobilityAidCapacity = MobilityAidCapacity;
             this.Inspector = Inspector;
+            this.Notes = Notes;
+            this.Attachments = Attachments;
+            this.History = History;
         }
 
         /// <summary>
@@ -111,21 +115,21 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The ICBC Registration number for the School Bus</value>
         [MetaDataExtension (Description = "The ICBC Registration number for the School Bus")]
-        public string Regi { get; set; }
+        public string ICBCRegistrationNumber { get; set; }
         
         /// <summary>
         /// The ICBC Plate Number for the School Bus
         /// </summary>
         /// <value>The ICBC Plate Number for the School Bus</value>
         [MetaDataExtension (Description = "The ICBC Plate Number for the School Bus")]
-        public string Plate { get; set; }
+        public string LicencePlateNumber { get; set; }
         
         /// <summary>
         /// The VIN for the School Bus
         /// </summary>
         /// <value>The VIN for the School Bus</value>
         [MetaDataExtension (Description = "The VIN for the School Bus")]
-        public string VIN { get; set; }
+        public string VehicleIdentificationNumber { get; set; }
         
         /// <summary>
         /// Gets or Sets SchoolBusOwner
@@ -158,29 +162,29 @@ namespace SchoolBusAPI.Models
         public bool? IsOutOfProvince { get; set; }
         
         /// <summary>
-        /// Gets or Sets ServiceArea
+        /// Gets or Sets District
         /// </summary>
-        public ServiceArea ServiceArea { get; set; }
+        public District District { get; set; }
         
         /// <summary>
-        /// Foreign key for ServiceArea 
+        /// Foreign key for District 
         /// </summary>       
-        [ForeignKey("ServiceArea")]
-        public int? ServiceAreaRefId { get; set; }
+        [ForeignKey("District")]
+        public int? DistrictRefId { get; set; }
         
         /// <summary>
         /// Address 1 of physical location of the School Bus.
         /// </summary>
         /// <value>Address 1 of physical location of the School Bus.</value>
         [MetaDataExtension (Description = "Address 1 of physical location of the School Bus.")]
-        public string HomeTerminalAddr1 { get; set; }
+        public string HomeTerminalAddress1 { get; set; }
         
         /// <summary>
         /// Address 2 of physical location of the School Bus.
         /// </summary>
         /// <value>Address 2 of physical location of the School Bus.</value>
         [MetaDataExtension (Description = "Address 2 of physical location of the School Bus.")]
-        public string HomeTerminalAddr2 { get; set; }
+        public string HomeTerminalAddress2 { get; set; }
         
         /// <summary>
         /// City of physical location of the School Bus.
@@ -221,7 +225,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Text of any restrictions to be printed on the school bus permit.</value>
         [MetaDataExtension (Description = "Text of any restrictions to be printed on the school bus permit.")]
-        public string Restrictions { get; set; }
+        public string RestrictionsText { get; set; }
         
         /// <summary>
         /// The next inspection date for this School Bus. Set at the time an inspection is set.
@@ -235,20 +239,20 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.</value>
         [MetaDataExtension (Description = "An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.")]
-        public string NextInspectionType { get; set; }
+        public string NextInspectionTypeCode { get; set; }
         
         /// <summary>
         /// The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.
         /// </summary>
         /// <value>The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.</value>
         [MetaDataExtension (Description = "The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.")]
-        public SchoolDistrict SchoolBusDistrict { get; set; }
+        public SchoolDistrict SchoolDistrict { get; set; }
         
         /// <summary>
-        /// Foreign key for SchoolBusDistrict 
+        /// Foreign key for SchoolDistrict 
         /// </summary>       
-        [ForeignKey("SchoolBusDistrict")]
-        public int? SchoolBusDistrictRefId { get; set; }
+        [ForeignKey("SchoolDistrict")]
+        public int? SchoolDistrictRefId { get; set; }
         
         /// <summary>
         /// True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field.
@@ -262,35 +266,28 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.</value>
         [MetaDataExtension (Description = "The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.")]
-        public string NameOfIndependentSchool { get; set; }
+        public string IndependentSchoolName { get; set; }
         
         /// <summary>
         /// The enumerated class of School Bus.
         /// </summary>
         /// <value>The enumerated class of School Bus.</value>
         [MetaDataExtension (Description = "The enumerated class of School Bus.")]
-        public string SchoolBusClass { get; set; }
+        public string PermitClassCode { get; set; }
         
         /// <summary>
         /// The enumerated body type of the School Bus.
         /// </summary>
         /// <value>The enumerated body type of the School Bus.</value>
         [MetaDataExtension (Description = "The enumerated body type of the School Bus.")]
-        public string SchoolBusBodyType { get; set; }
-        
-        /// <summary>
-        /// The enumerated body type of the School Bus.
-        /// </summary>
-        /// <value>The enumerated body type of the School Bus.</value>
-        [MetaDataExtension (Description = "The enumerated body type of the School Bus.")]
-        public string SchoolBusBodyTypeOther { get; set; }
+        public string BodyTypeCode { get; set; }
         
         /// <summary>
         /// The unit number of the Bus as defined by the School Bus owner - freeform text.
         /// </summary>
         /// <value>The unit number of the Bus as defined by the School Bus owner - freeform text.</value>
         [MetaDataExtension (Description = "The unit number of the Bus as defined by the School Bus owner - freeform text.")]
-        public string SchoolBusUnitNumber { get; set; }
+        public string UnitNumber { get; set; }
         
         /// <summary>
         /// The maximum number of passengers in the bus based on the specific use of the bus. For example,  the same 2-per seat &#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.
@@ -320,6 +317,27 @@ namespace SchoolBusAPI.Models
         public int? InspectorRefId { get; set; }
         
         /// <summary>
+        /// The set of notes about the school bus entered by users.
+        /// </summary>
+        /// <value>The set of notes about the school bus entered by users.</value>
+        [MetaDataExtension (Description = "The set of notes about the school bus entered by users.")]
+        public List<Note> Notes { get; set; }
+        
+        /// <summary>
+        /// The set of attachments about the school bus uploaded by the users.
+        /// </summary>
+        /// <value>The set of attachments about the school bus uploaded by the users.</value>
+        [MetaDataExtension (Description = "The set of attachments about the school bus uploaded by the users.")]
+        public List<Attachment> Attachments { get; set; }
+        
+        /// <summary>
+        /// The history of updates made to the School Bus.
+        /// </summary>
+        /// <value>The history of updates made to the School Bus.</value>
+        [MetaDataExtension (Description = "The history of updates made to the School Bus.")]
+        public List<History> History { get; set; }
+        
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -328,33 +346,35 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class SchoolBus {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Regi: ").Append(Regi).Append("\n");
-            sb.Append("  Plate: ").Append(Plate).Append("\n");
-            sb.Append("  VIN: ").Append(VIN).Append("\n");
+            sb.Append("  ICBCRegistrationNumber: ").Append(ICBCRegistrationNumber).Append("\n");
+            sb.Append("  LicencePlateNumber: ").Append(LicencePlateNumber).Append("\n");
+            sb.Append("  VehicleIdentificationNumber: ").Append(VehicleIdentificationNumber).Append("\n");
             sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
             sb.Append("  PermitNumber: ").Append(PermitNumber).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  IsOutOfProvince: ").Append(IsOutOfProvince).Append("\n");
-            sb.Append("  ServiceArea: ").Append(ServiceArea).Append("\n");
-            sb.Append("  HomeTerminalAddr1: ").Append(HomeTerminalAddr1).Append("\n");
-            sb.Append("  HomeTerminalAddr2: ").Append(HomeTerminalAddr2).Append("\n");
+            sb.Append("  District: ").Append(District).Append("\n");
+            sb.Append("  HomeTerminalAddress1: ").Append(HomeTerminalAddress1).Append("\n");
+            sb.Append("  HomeTerminalAddress2: ").Append(HomeTerminalAddress2).Append("\n");
             sb.Append("  HomeTerminalCity: ").Append(HomeTerminalCity).Append("\n");
             sb.Append("  HomeTerminalProvince: ").Append(HomeTerminalProvince).Append("\n");
             sb.Append("  HomeTerminalPostalCode: ").Append(HomeTerminalPostalCode).Append("\n");
             sb.Append("  HomeTerminalComment: ").Append(HomeTerminalComment).Append("\n");
-            sb.Append("  Restrictions: ").Append(Restrictions).Append("\n");
+            sb.Append("  RestrictionsText: ").Append(RestrictionsText).Append("\n");
             sb.Append("  NextInspectionDate: ").Append(NextInspectionDate).Append("\n");
-            sb.Append("  NextInspectionType: ").Append(NextInspectionType).Append("\n");
-            sb.Append("  SchoolBusDistrict: ").Append(SchoolBusDistrict).Append("\n");
+            sb.Append("  NextInspectionTypeCode: ").Append(NextInspectionTypeCode).Append("\n");
+            sb.Append("  SchoolDistrict: ").Append(SchoolDistrict).Append("\n");
             sb.Append("  IsIndependentSchool: ").Append(IsIndependentSchool).Append("\n");
-            sb.Append("  NameOfIndependentSchool: ").Append(NameOfIndependentSchool).Append("\n");
-            sb.Append("  SchoolBusClass: ").Append(SchoolBusClass).Append("\n");
-            sb.Append("  SchoolBusBodyType: ").Append(SchoolBusBodyType).Append("\n");
-            sb.Append("  SchoolBusBodyTypeOther: ").Append(SchoolBusBodyTypeOther).Append("\n");
-            sb.Append("  SchoolBusUnitNumber: ").Append(SchoolBusUnitNumber).Append("\n");
+            sb.Append("  IndependentSchoolName: ").Append(IndependentSchoolName).Append("\n");
+            sb.Append("  PermitClassCode: ").Append(PermitClassCode).Append("\n");
+            sb.Append("  BodyTypeCode: ").Append(BodyTypeCode).Append("\n");
+            sb.Append("  UnitNumber: ").Append(UnitNumber).Append("\n");
             sb.Append("  SchoolBusSeatingCapacity: ").Append(SchoolBusSeatingCapacity).Append("\n");
             sb.Append("  MobilityAidCapacity: ").Append(MobilityAidCapacity).Append("\n");
             sb.Append("  Inspector: ").Append(Inspector).Append("\n");
+            sb.Append("  Notes: ").Append(Notes).Append("\n");
+            sb.Append("  Attachments: ").Append(Attachments).Append("\n");
+            sb.Append("  History: ").Append(History).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -398,19 +418,19 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) &&                 
                 (
-                    this.Regi == other.Regi ||
-                    this.Regi != null &&
-                    this.Regi.Equals(other.Regi)
+                    this.ICBCRegistrationNumber == other.ICBCRegistrationNumber ||
+                    this.ICBCRegistrationNumber != null &&
+                    this.ICBCRegistrationNumber.Equals(other.ICBCRegistrationNumber)
                 ) &&                 
                 (
-                    this.Plate == other.Plate ||
-                    this.Plate != null &&
-                    this.Plate.Equals(other.Plate)
+                    this.LicencePlateNumber == other.LicencePlateNumber ||
+                    this.LicencePlateNumber != null &&
+                    this.LicencePlateNumber.Equals(other.LicencePlateNumber)
                 ) &&                 
                 (
-                    this.VIN == other.VIN ||
-                    this.VIN != null &&
-                    this.VIN.Equals(other.VIN)
+                    this.VehicleIdentificationNumber == other.VehicleIdentificationNumber ||
+                    this.VehicleIdentificationNumber != null &&
+                    this.VehicleIdentificationNumber.Equals(other.VehicleIdentificationNumber)
                 ) &&                 
                 (
                     this.SchoolBusOwner == other.SchoolBusOwner ||
@@ -433,19 +453,19 @@ namespace SchoolBusAPI.Models
                     this.IsOutOfProvince.Equals(other.IsOutOfProvince)
                 ) &&                 
                 (
-                    this.ServiceArea == other.ServiceArea ||
-                    this.ServiceArea != null &&
-                    this.ServiceArea.Equals(other.ServiceArea)
+                    this.District == other.District ||
+                    this.District != null &&
+                    this.District.Equals(other.District)
                 ) &&                 
                 (
-                    this.HomeTerminalAddr1 == other.HomeTerminalAddr1 ||
-                    this.HomeTerminalAddr1 != null &&
-                    this.HomeTerminalAddr1.Equals(other.HomeTerminalAddr1)
+                    this.HomeTerminalAddress1 == other.HomeTerminalAddress1 ||
+                    this.HomeTerminalAddress1 != null &&
+                    this.HomeTerminalAddress1.Equals(other.HomeTerminalAddress1)
                 ) &&                 
                 (
-                    this.HomeTerminalAddr2 == other.HomeTerminalAddr2 ||
-                    this.HomeTerminalAddr2 != null &&
-                    this.HomeTerminalAddr2.Equals(other.HomeTerminalAddr2)
+                    this.HomeTerminalAddress2 == other.HomeTerminalAddress2 ||
+                    this.HomeTerminalAddress2 != null &&
+                    this.HomeTerminalAddress2.Equals(other.HomeTerminalAddress2)
                 ) &&                 
                 (
                     this.HomeTerminalCity == other.HomeTerminalCity ||
@@ -468,9 +488,9 @@ namespace SchoolBusAPI.Models
                     this.HomeTerminalComment.Equals(other.HomeTerminalComment)
                 ) &&                 
                 (
-                    this.Restrictions == other.Restrictions ||
-                    this.Restrictions != null &&
-                    this.Restrictions.Equals(other.Restrictions)
+                    this.RestrictionsText == other.RestrictionsText ||
+                    this.RestrictionsText != null &&
+                    this.RestrictionsText.Equals(other.RestrictionsText)
                 ) &&                 
                 (
                     this.NextInspectionDate == other.NextInspectionDate ||
@@ -478,14 +498,14 @@ namespace SchoolBusAPI.Models
                     this.NextInspectionDate.Equals(other.NextInspectionDate)
                 ) &&                 
                 (
-                    this.NextInspectionType == other.NextInspectionType ||
-                    this.NextInspectionType != null &&
-                    this.NextInspectionType.Equals(other.NextInspectionType)
+                    this.NextInspectionTypeCode == other.NextInspectionTypeCode ||
+                    this.NextInspectionTypeCode != null &&
+                    this.NextInspectionTypeCode.Equals(other.NextInspectionTypeCode)
                 ) &&                 
                 (
-                    this.SchoolBusDistrict == other.SchoolBusDistrict ||
-                    this.SchoolBusDistrict != null &&
-                    this.SchoolBusDistrict.Equals(other.SchoolBusDistrict)
+                    this.SchoolDistrict == other.SchoolDistrict ||
+                    this.SchoolDistrict != null &&
+                    this.SchoolDistrict.Equals(other.SchoolDistrict)
                 ) &&                 
                 (
                     this.IsIndependentSchool == other.IsIndependentSchool ||
@@ -493,29 +513,24 @@ namespace SchoolBusAPI.Models
                     this.IsIndependentSchool.Equals(other.IsIndependentSchool)
                 ) &&                 
                 (
-                    this.NameOfIndependentSchool == other.NameOfIndependentSchool ||
-                    this.NameOfIndependentSchool != null &&
-                    this.NameOfIndependentSchool.Equals(other.NameOfIndependentSchool)
+                    this.IndependentSchoolName == other.IndependentSchoolName ||
+                    this.IndependentSchoolName != null &&
+                    this.IndependentSchoolName.Equals(other.IndependentSchoolName)
                 ) &&                 
                 (
-                    this.SchoolBusClass == other.SchoolBusClass ||
-                    this.SchoolBusClass != null &&
-                    this.SchoolBusClass.Equals(other.SchoolBusClass)
+                    this.PermitClassCode == other.PermitClassCode ||
+                    this.PermitClassCode != null &&
+                    this.PermitClassCode.Equals(other.PermitClassCode)
                 ) &&                 
                 (
-                    this.SchoolBusBodyType == other.SchoolBusBodyType ||
-                    this.SchoolBusBodyType != null &&
-                    this.SchoolBusBodyType.Equals(other.SchoolBusBodyType)
+                    this.BodyTypeCode == other.BodyTypeCode ||
+                    this.BodyTypeCode != null &&
+                    this.BodyTypeCode.Equals(other.BodyTypeCode)
                 ) &&                 
                 (
-                    this.SchoolBusBodyTypeOther == other.SchoolBusBodyTypeOther ||
-                    this.SchoolBusBodyTypeOther != null &&
-                    this.SchoolBusBodyTypeOther.Equals(other.SchoolBusBodyTypeOther)
-                ) &&                 
-                (
-                    this.SchoolBusUnitNumber == other.SchoolBusUnitNumber ||
-                    this.SchoolBusUnitNumber != null &&
-                    this.SchoolBusUnitNumber.Equals(other.SchoolBusUnitNumber)
+                    this.UnitNumber == other.UnitNumber ||
+                    this.UnitNumber != null &&
+                    this.UnitNumber.Equals(other.UnitNumber)
                 ) &&                 
                 (
                     this.SchoolBusSeatingCapacity == other.SchoolBusSeatingCapacity ||
@@ -531,6 +546,21 @@ namespace SchoolBusAPI.Models
                     this.Inspector == other.Inspector ||
                     this.Inspector != null &&
                     this.Inspector.Equals(other.Inspector)
+                ) && 
+                (
+                    this.Notes == other.Notes ||
+                    this.Notes != null &&
+                    this.Notes.SequenceEqual(other.Notes)
+                ) && 
+                (
+                    this.Attachments == other.Attachments ||
+                    this.Attachments != null &&
+                    this.Attachments.SequenceEqual(other.Attachments)
+                ) && 
+                (
+                    this.History == other.History ||
+                    this.History != null &&
+                    this.History.SequenceEqual(other.History)
                 );
         }
 
@@ -546,17 +576,17 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                if (this.Regi != null)
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.ICBCRegistrationNumber != null)
                 {
-                    hash = hash * 59 + this.Regi.GetHashCode();
+                    hash = hash * 59 + this.ICBCRegistrationNumber.GetHashCode();
                 }                
-                                if (this.Plate != null)
+                                if (this.LicencePlateNumber != null)
                 {
-                    hash = hash * 59 + this.Plate.GetHashCode();
+                    hash = hash * 59 + this.LicencePlateNumber.GetHashCode();
                 }                
-                                if (this.VIN != null)
+                                if (this.VehicleIdentificationNumber != null)
                 {
-                    hash = hash * 59 + this.VIN.GetHashCode();
+                    hash = hash * 59 + this.VehicleIdentificationNumber.GetHashCode();
                 }                
                                    
                 if (this.SchoolBusOwner != null)
@@ -575,16 +605,16 @@ namespace SchoolBusAPI.Models
                     hash = hash * 59 + this.IsOutOfProvince.GetHashCode();
                 }                
                                    
-                if (this.ServiceArea != null)
+                if (this.District != null)
                 {
-                    hash = hash * 59 + this.ServiceArea.GetHashCode();
-                }                if (this.HomeTerminalAddr1 != null)
+                    hash = hash * 59 + this.District.GetHashCode();
+                }                if (this.HomeTerminalAddress1 != null)
                 {
-                    hash = hash * 59 + this.HomeTerminalAddr1.GetHashCode();
+                    hash = hash * 59 + this.HomeTerminalAddress1.GetHashCode();
                 }                
-                                if (this.HomeTerminalAddr2 != null)
+                                if (this.HomeTerminalAddress2 != null)
                 {
-                    hash = hash * 59 + this.HomeTerminalAddr2.GetHashCode();
+                    hash = hash * 59 + this.HomeTerminalAddress2.GetHashCode();
                 }                
                                    
                 if (this.HomeTerminalCity != null)
@@ -602,45 +632,41 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.HomeTerminalComment.GetHashCode();
                 }                
-                                if (this.Restrictions != null)
+                                if (this.RestrictionsText != null)
                 {
-                    hash = hash * 59 + this.Restrictions.GetHashCode();
+                    hash = hash * 59 + this.RestrictionsText.GetHashCode();
                 }                
                                 if (this.NextInspectionDate != null)
                 {
                     hash = hash * 59 + this.NextInspectionDate.GetHashCode();
                 }                
-                                if (this.NextInspectionType != null)
+                                if (this.NextInspectionTypeCode != null)
                 {
-                    hash = hash * 59 + this.NextInspectionType.GetHashCode();
+                    hash = hash * 59 + this.NextInspectionTypeCode.GetHashCode();
                 }                
                                    
-                if (this.SchoolBusDistrict != null)
+                if (this.SchoolDistrict != null)
                 {
-                    hash = hash * 59 + this.SchoolBusDistrict.GetHashCode();
+                    hash = hash * 59 + this.SchoolDistrict.GetHashCode();
                 }                if (this.IsIndependentSchool != null)
                 {
                     hash = hash * 59 + this.IsIndependentSchool.GetHashCode();
                 }                
-                                if (this.NameOfIndependentSchool != null)
+                                if (this.IndependentSchoolName != null)
                 {
-                    hash = hash * 59 + this.NameOfIndependentSchool.GetHashCode();
+                    hash = hash * 59 + this.IndependentSchoolName.GetHashCode();
                 }                
-                                if (this.SchoolBusClass != null)
+                                if (this.PermitClassCode != null)
                 {
-                    hash = hash * 59 + this.SchoolBusClass.GetHashCode();
+                    hash = hash * 59 + this.PermitClassCode.GetHashCode();
                 }                
-                                if (this.SchoolBusBodyType != null)
+                                if (this.BodyTypeCode != null)
                 {
-                    hash = hash * 59 + this.SchoolBusBodyType.GetHashCode();
+                    hash = hash * 59 + this.BodyTypeCode.GetHashCode();
                 }                
-                                if (this.SchoolBusBodyTypeOther != null)
+                                if (this.UnitNumber != null)
                 {
-                    hash = hash * 59 + this.SchoolBusBodyTypeOther.GetHashCode();
-                }                
-                                if (this.SchoolBusUnitNumber != null)
-                {
-                    hash = hash * 59 + this.SchoolBusUnitNumber.GetHashCode();
+                    hash = hash * 59 + this.UnitNumber.GetHashCode();
                 }                
                                 if (this.SchoolBusSeatingCapacity != null)
                 {
@@ -654,6 +680,18 @@ namespace SchoolBusAPI.Models
                 if (this.Inspector != null)
                 {
                     hash = hash * 59 + this.Inspector.GetHashCode();
+                }                   
+                if (this.Notes != null)
+                {
+                    hash = hash * 59 + this.Notes.GetHashCode();
+                }                   
+                if (this.Attachments != null)
+                {
+                    hash = hash * 59 + this.Attachments.GetHashCode();
+                }                   
+                if (this.History != null)
+                {
+                    hash = hash * 59 + this.History.GetHashCode();
                 }
                 return hash;
             }

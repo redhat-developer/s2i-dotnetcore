@@ -75,7 +75,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/schoolbusowners/{id}/attachments")]
         [SwaggerOperation("SchoolbusownersIdAttachmentsGet")]
-        [SwaggerResponse(200, type: typeof(List<SchoolBusOwnerAttachment>))]
+        [SwaggerResponse(200, type: typeof(List<Attachment>))]
         public virtual IActionResult SchoolbusownersIdAttachmentsGet([FromRoute]int id)
         {
             return this._service.SchoolbusownersIdAttachmentsGetAsync(id);
@@ -119,7 +119,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/schoolbusowners/{id}/notes")]
         [SwaggerOperation("SchoolbusownersIdNotesGet")]
-        [SwaggerResponse(200, type: typeof(List<SchoolBusOwnerNote>))]
+        [SwaggerResponse(200, type: typeof(List<Note>))]
         public virtual IActionResult SchoolbusownersIdNotesGet([FromRoute]int id)
         {
             return this._service.SchoolbusownersIdNotesGetAsync(id);

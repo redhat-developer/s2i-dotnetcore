@@ -23,30 +23,30 @@ using System.Reflection;
 namespace SchoolBusAPI.Test
 {
     /// <summary>
-    ///  Class for testing the model SchoolBusOwnerNote
+    ///  Class for testing the model Note
     /// </summary>
     
-    public class SchoolBusOwnerNoteModelTests
+    public class NoteModelTests
     {
-        // TODO uncomment below to declare an instance variable for SchoolBusOwnerNote
-        private SchoolBusOwnerNote instance;
+        // TODO uncomment below to declare an instance variable for Note
+        private Note instance;
 
         /// <summary>
         /// Setup the test.
         /// </summary>        
-        public SchoolBusOwnerNoteModelTests()
+        public NoteModelTests()
         {
-            instance = new SchoolBusOwnerNote();
+            instance = new Note();
         }
 
     
         /// <summary>
-        /// Test an instance of SchoolBusOwnerNote
+        /// Test an instance of Note
         /// </summary>
         [Fact]
-        public void SchoolBusOwnerNoteInstanceTest()
+        public void NoteInstanceTest()
         {
-            Assert.IsType<SchoolBusOwnerNote>(instance);  
+            Assert.IsType<Note>(instance);  
         }
 
         /// <summary>
