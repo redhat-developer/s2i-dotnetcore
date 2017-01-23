@@ -97,6 +97,7 @@ function parseSchoolBus(bus) {
   bus.schoolDistrictShortName = bus.schoolDistrict ? bus.schoolDistrict.shortName : '';
   bus.homeTerminalAddress = concat(bus.homeTerminalAddress1, bus.homeTerminalAddress2, ', ');
   bus.homeTerminalCityProv = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalProvince, ', ');
+  bus.homeTerminalCityPostal = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
   bus.daysToInspection = daysFromToday(bus.nextInspectionDate);
   bus.isOverdue = bus.daysToInspection < 0;
   bus.inspectorName = bus.inspector ? firstLastName(bus.inspector.givenName, bus.inspector.surname) : '';
