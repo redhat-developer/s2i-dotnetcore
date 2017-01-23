@@ -88,15 +88,15 @@ export function deleteFavourite(favourite) {
 // School Buses
 ////////////////////
 
-function addSchoolBusDisplayFields(bus) {
+function parseSchoolBus(bus) {
   bus.isActive = bus.status === 'Active';
   bus.ownerName = bus.schoolBusOwner ? bus.schoolBusOwner.name : '';
   bus.ownerPath = bus.schoolBusOwner ? ('#/owners/' + bus.schoolBusOwner.id) : '';
-  bus.serviceAreaName = bus.serviceArea ? bus.serviceArea.name : '';
-  bus.districtName = bus.serviceArea ? (bus.serviceArea.district ? bus.serviceArea.district.name : '') : '';
+  bus.districtName = bus.district ? bus.district.name : '';
   bus.schoolDistrictName = bus.schoolDistrict ? bus.schoolDistrict.name : '';
+  bus.schoolDistrictShortName = bus.schoolDistrict ? bus.schoolDistrict.shortName : '';
   bus.homeTerminalAddress = concat(bus.homeTerminalAddress1, bus.homeTerminalAddress2, ', ');
-  bus.homeTerminalCityProv = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
+  bus.homeTerminalCityProv = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalProvince, ', ');
   bus.daysToInspection = daysFromToday(bus.nextInspectionDate);
   bus.isOverdue = bus.daysToInspection < 0;
   bus.inspectorName = bus.inspector ? firstLastName(bus.inspector.givenName, bus.inspector.surname) : '';
@@ -109,7 +109,7 @@ export function searchSchoolBuses(params) {
     var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
 
     // Add display fields
-    _.map(schoolBuses, bus => { addSchoolBusDisplayFields(bus); });
+    _.map(schoolBuses, bus => { parseSchoolBus(bus); });
 
     store.dispatch({ type: 'UPDATE_BUSES', schoolBuses: schoolBuses });
   });
@@ -129,7 +129,7 @@ export function getSchoolBus(schoolBusId) {
     var bus = response;
 
     // Add display fields
-    addSchoolBusDisplayFields(bus);
+    parseSchoolBus(bus);
 
     store.dispatch({ type: 'UPDATE_BUS', schoolBus: bus });
   });
@@ -166,6 +166,9 @@ export function getSchoolBusInspections(schoolBusId) {
     // Normalize the response
     var schoolBusInspections = _.fromPairs(response.map(inspection => [ inspection.id, inspection ]));
 
+    // Add display fields
+    _.map(schoolBusInspections, inspection => { parseInspection(inspection); });
+
     store.dispatch({ type: 'UPDATE_BUS_INSPECTIONS', schoolBusInspections: schoolBusInspections });
   });
 }
@@ -180,10 +183,19 @@ export function getSchoolBusNotes(schoolBusId) {
 }
 
 ////////////////////
+// Inspections
+////////////////////
+
+function parseInspection(inspection) {
+  inspection.inspectorName = inspection.inspector ? firstLastName(inspection.inspector.givenName, inspection.inspector.surname) : '';
+}
+
+
+////////////////////
 // Owners
 ////////////////////
 
-function addOwnerDisplayFields(owner) {
+function parseOwner(owner) {
   owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
 }
 
@@ -194,7 +206,7 @@ export function getOwners() {
 
     // Add display fields
     _.map(owners, owner => {
-      addOwnerDisplayFields(owner);
+      parseOwner(owner);
     });
 
     store.dispatch({ type: 'UPDATE_OWNERS', owners: owners });
