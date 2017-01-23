@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { Form, FormGroup, FormControl, HelpBlock, ControlLabel } from 'react-bootstrap';
 
-import { isBlank } from '../../utils/string';
 
 /*
 
