@@ -3918,6 +3918,54 @@
         {
             "Description": null,
             "Length": null,
+            "Name": "userRoles",
+            "RefDef": "UserRole",
+            "Required": [
+                {
+                    "req": "id"
+                },
+                {
+                    "req": "active"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": "links",
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": null,
+            "Length": null,
+            "Name": "groupMemberships",
+            "RefDef": "GroupMembership",
+            "Required": [
+                {
+                    "req": "id"
+                },
+                {
+                    "req": "active"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "id": null,
+            "integer": null,
+            "links": "links",
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": null,
+            "Length": null,
             "Name": "UserRole",
             "RefDef": null,
             "Required": [

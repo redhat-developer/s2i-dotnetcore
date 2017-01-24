@@ -184,6 +184,8 @@ User,boolean,,active,,,Y,,Defs,boolean,rg:None,rg:None,rg:None,rg:None,rg:None,r
 User,string,,smUserId,Security Manager User ID,,,,Defs,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,string,rg:None,rg:None,smUserId,Security Manager User ID,rg:None,"rg:[ { 'req' : 'id' }, { 'req': 'active'} ]",rg:None
 User,string,,guid,,,,,Defs,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,string,rg:None,rg:None,guid,rg:None,rg:None,"rg:[ { 'req' : 'id' }, { 'req': 'active'} ]",rg:None
 User,string,,smAuthorizationDirectory,,,,,Defs,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,string,rg:None,rg:None,smAuthorizationDirectory,rg:None,rg:None,"rg:[ { 'req' : 'id' }, { 'req': 'active'} ]",rg:None
+User,links,,userRoles,,UserRole,,,Defs,rg:None,rg:None,rg:None,rg:None,rg:None,links,rg:None,rg:None,rg:None,rg:None,userRoles,rg:None,UserRole,"rg:[ { 'req' : 'id' }, { 'req': 'active'} ]",rg:None
+User,links,,groupMemberships,,GroupMembership,,,Defs,rg:None,rg:None,rg:None,rg:None,rg:None,links,rg:None,rg:None,rg:None,rg:None,groupMemberships,rg:None,GroupMembership,"rg:[ { 'req' : 'id' }, { 'req': 'active'} ]",rg:None
 UserRole,table,,UserRole,,,,,Defs,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,table,rg:None,UserRole,rg:None,rg:None,"rg:[ { 'req' : 'id' }, { 'req': 'effectiveDate'} ]",rg:None
 UserRole,id,,id,Primary Key,,Y,,Defs,rg:None,rg:None,rg:None,id,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,id,Primary Key,rg:None,"rg:[ { 'req' : 'id' }, { 'req': 'effectiveDate'} ]",rg:None
 UserRole,datetime,,effectiveDate,,,Y,,Defs,rg:None,rg:None,datetime,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,effectiveDate,rg:None,rg:None,"rg:[ { 'req' : 'id' }, { 'req': 'effectiveDate'} ]",rg:None

@@ -607,6 +607,14 @@ definitions:
         type: string
       smAuthorizationDirectory:
         type: string
+      userRoles:
+        type: array
+        items:
+          $ref: '#/definitions/UserRole'
+      groupMemberships:
+        type: array
+        items:
+          $ref: '#/definitions/GroupMembership'
   UserRole:
     type: object
     required:
