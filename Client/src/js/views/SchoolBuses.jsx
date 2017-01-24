@@ -172,11 +172,11 @@ var SchoolBuses = React.createClass({
   componentDidMount() {
     this.setState({ loading: true });
 
-    var usersPromise = Api.getUsers();
+    var inspectorsPromise = Api.getInspectors();
     var ownersPromise = Api.getOwners();
     var favouritesPromise = Api.getFavourites('schoolBus');
 
-    Promise.all([usersPromise, ownersPromise, favouritesPromise]).then(() => {
+    Promise.all([inspectorsPromise, ownersPromise, favouritesPromise]).then(() => {
       // If this is the first load, then look for a default favourite
       if (!this.props.search.loaded) {
         var favourite = _.find(this.props.favourites, (favourite) => { return favourite.isDefault; });
@@ -465,7 +465,7 @@ function mapStateToProps(state) {
   return {
     schoolBuses: state.models.schoolBuses,
     districts: state.lookups.districts,
-    inspectors: state.models.users,
+    inspectors: state.models.inspectors,
     cities: state.lookups.cities,
     schoolDistricts: state.lookups.schoolDistricts,
     owners: state.models.owners,

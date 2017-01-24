@@ -27,6 +27,9 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
     case 'UPDATE_USER':
       return { ...state, user: action.user };
 
+    case 'UPDATE_INSPECTORS':
+      return { ...state, inspectors: action.inspectors };
+
     // Favourites
     case 'UPDATE_FAVOURITES':
       return { ...state, favourites: action.favourites };

@@ -21,15 +21,17 @@ export function getCurrentUser() {
 // Users
 ////////////////////
 
+function parseUser(user) {
+  user.name = lastFirstName(user.surname, user.givenName);
+}
+
 export function getUsers() {
   return new ApiRequest('/users').get().then(response => {
     // Normalize the response
     var users = _.fromPairs(response.map(user => [ user.id, user ]));
 
     // Add display fields
-    _.map(users, user => {
-      user.name = lastFirstName(user.surname, user.givenName);
-    });
+    _.map(users, user => { parseUser(user); });
 
     store.dispatch({ type: 'UPDATE_USERS', users: users });
   });
@@ -40,11 +42,28 @@ export function getUser(userId) {
     var user = response;
 
     // Add display fields
-    user.name = lastFirstName(user.surname, user.givenName);
+    parseUser(user);
 
     store.dispatch({ type: 'UPDATE_USER', user: user });
   });
 }
+
+export function getInspectors() {
+  var inspectorGroup = _.find(store.getState().lookups.groups, { name: 'Inspector' });
+  var groupId = inspectorGroup ? inspectorGroup.id : 0;
+
+  return new ApiRequest(`/groups/${groupId}/users`).get().then(response => {
+    // Normalize the response
+    var users = _.fromPairs(response.map(user => [ user.id, user ]));
+
+    // Add display fields
+    _.map(users, user => { parseUser(user); });
+
+    store.dispatch({ type: 'UPDATE_INSPECTORS', inspectors: users });
+  });
+}
+
+
 
 ////////////////////
 // Favourites
@@ -268,6 +287,15 @@ export function getServiceAreas() {
     var serviceAreas = _.fromPairs(response.map(serviceArea => [ serviceArea.id, serviceArea ]));
 
     store.dispatch({ type: 'UPDATE_SERVICE_AREAS', serviceAreas: serviceAreas });
+  });
+}
+
+export function getGroups() {
+  return new ApiRequest('/groups').get().then(response => {
+    // Normalize the response
+    var groups = _.fromPairs(response.map(group => [ group.id, group ]));
+
+    store.dispatch({ type: 'UPDATE_GROUPS', groups: groups });
   });
 }
 
