@@ -217,7 +217,7 @@
           in: path
           description: id of SchoolBus to fetch CCWData for
           required: true
-          type: integer
+          type: integer          
   /schoolbusowners/{id}/attachments:
     get:
       description: Returns attachments for a particular SchoolBusOwner
@@ -262,6 +262,28 @@
           description: id of SchoolBusOwner to fetch notes for
           required: true
           type: integer
+  /schoolbusowners/{id}/view:
+    get:
+      description: Returns SchoolBusOwner data plus additional information required for display
+      tags:
+        - SchoolBusOwner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SchoolBusOwnerViewModel'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch attachments for
+          required: true
+          type: integer           
   /contacts/{id}/contactphones:
     get:
       description: Returns phone contacts for a particular SchoolBusOwner
