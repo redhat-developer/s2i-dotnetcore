@@ -48,7 +48,9 @@ namespace SchoolBusAPI.Models
         /// <param name="SmUserId">Security Manager User ID.</param>
         /// <param name="Guid">Guid.</param>
         /// <param name="SmAuthorizationDirectory">SmAuthorizationDirectory.</param>
-        public User(int Id, bool Active, string GivenName = null, string Surname = null, string Initials = null, string Email = null, string SmUserId = null, string Guid = null, string SmAuthorizationDirectory = null)
+        /// <param name="UserRoles">UserRoles.</param>
+        /// <param name="GroupMemberships">GroupMemberships.</param>
+        public User(int Id, bool Active, string GivenName = null, string Surname = null, string Initials = null, string Email = null, string SmUserId = null, string Guid = null, string SmAuthorizationDirectory = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null)
         {   
             this.Id = Id;
             this.Active = Active;
@@ -60,6 +62,8 @@ namespace SchoolBusAPI.Models
             this.SmUserId = SmUserId;
             this.Guid = Guid;
             this.SmAuthorizationDirectory = SmAuthorizationDirectory;
+            this.UserRoles = UserRoles;
+            this.GroupMemberships = GroupMemberships;
         }
 
         /// <summary>
@@ -112,6 +116,16 @@ namespace SchoolBusAPI.Models
         public string SmAuthorizationDirectory { get; set; }
         
         /// <summary>
+        /// Gets or Sets UserRoles
+        /// </summary>
+        public List<UserRole> UserRoles { get; set; }
+        
+        /// <summary>
+        /// Gets or Sets GroupMemberships
+        /// </summary>
+        public List<GroupMembership> GroupMemberships { get; set; }
+        
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -128,6 +142,8 @@ namespace SchoolBusAPI.Models
             sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
             sb.Append("  Guid: ").Append(Guid).Append("\n");
             sb.Append("  SmAuthorizationDirectory: ").Append(SmAuthorizationDirectory).Append("\n");
+            sb.Append("  UserRoles: ").Append(UserRoles).Append("\n");
+            sb.Append("  GroupMemberships: ").Append(GroupMemberships).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -208,6 +224,16 @@ namespace SchoolBusAPI.Models
                     this.SmAuthorizationDirectory == other.SmAuthorizationDirectory ||
                     this.SmAuthorizationDirectory != null &&
                     this.SmAuthorizationDirectory.Equals(other.SmAuthorizationDirectory)
+                ) && 
+                (
+                    this.UserRoles == other.UserRoles ||
+                    this.UserRoles != null &&
+                    this.UserRoles.SequenceEqual(other.UserRoles)
+                ) && 
+                (
+                    this.GroupMemberships == other.GroupMemberships ||
+                    this.GroupMemberships != null &&
+                    this.GroupMemberships.SequenceEqual(other.GroupMemberships)
                 );
         }
 
@@ -253,7 +279,15 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.SmAuthorizationDirectory.GetHashCode();
                 }                
-                
+                                   
+                if (this.UserRoles != null)
+                {
+                    hash = hash * 59 + this.UserRoles.GetHashCode();
+                }                   
+                if (this.GroupMemberships != null)
+                {
+                    hash = hash * 59 + this.GroupMemberships.GetHashCode();
+                }
                 return hash;
             }
         }
