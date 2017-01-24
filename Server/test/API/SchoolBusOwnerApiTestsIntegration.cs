@@ -55,10 +55,9 @@ namespace SchoolBusAPI.Test
 
             var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-        }		
-        
-		
-		[Fact]
+        }
+
+        [Fact]
 		/// <summary>
         /// Integration test for SchoolbusownersContacts
         /// </summary>

@@ -60,22 +60,7 @@ namespace SchoolBusAPI.Test
 			
                     _SchoolBusOwnerApi = new SchoolBusOwnerController (_service);
 
-		}
-	
-		
-		[Fact]
-		/// <summary>
-        /// Unit test for FavouritecontexttypesGet
-        /// </summary>
-		public void TestFavouritecontexttypesGet()
-		{
-			// Add test code here
-			// it may look like: 
-			//  var result = _SchoolBusOwnerApiController.FavouritecontexttypesGet();
-			//  Assert.True (result == expected-result);
-
-            Assert.True(true);
-		}		
+		}				
         
 		
 		[Fact]

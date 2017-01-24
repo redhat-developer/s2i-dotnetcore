@@ -109,5 +109,25 @@ namespace SchoolBusAPI.Mappings
             dto.Id = model.Id;
             return dto;
         }
+
+        /// <summary>
+        /// Converts a SchoolBusOwner to a SchoolBusOwnerViewModel
+        /// </summary>
+        /// <param name="model">The SchoolBusOwner to convert</param>
+        /// <returns>A SchoolBusOwnerViewModel</returns>
+        public static SchoolBusOwnerViewModel ToViewModel(this SchoolBusOwner model)
+        {
+            var dto = new SchoolBusOwnerViewModel();            
+            dto.Attachments = model.Attachments;
+            dto.Contacts = model.Contacts;
+            dto.DateCreated = model.DateCreated;
+            dto.District = model.District;
+            dto.History = model.History;
+            dto.Id = model.Id;
+            dto.Name = model.Name;
+            dto.PrimaryContact = model.PrimaryContact;
+            dto.Status = model.Status;
+            return dto;
+        }
     }
 }

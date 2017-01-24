@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
+using SchoolBusAPI.Mappings;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -305,10 +307,76 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
+        /// <summary>
+        /// Utility function used by the owner view service
+        /// </summary>
+        /// <param name="schoolBusOwnerId">Owner for which to lookup inspections</param>
+        /// <returns>Date of next inspection, or null if there is none</returns>
+        private DateTime? GetNextInspectionDate (int schoolBusOwnerId)
+        {
+            DateTime? result = null;
+
+            // next inspection is drawn from the schoolbus table
+            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
+            if (exists)
+            {
+                SchoolBus schoolbus = _context.SchoolBuss.Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId)
+                    .OrderByDescending(x => x.NextInspectionDate)
+                    .First();
+                result = schoolbus.NextInspectionDate;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Utility function used by the owner view service
+        /// </summary>
+        /// <param name="schoolBusOwnerId">Owner for which to lookup school buses</param>
+        /// <returns>Number of associated school buses</returns>
+        private int GetNumberSchoolBuses(int schoolBusOwnerId)
+        {
+            int result = 0;
+
+            // next inspection is drawn from the inspections table.
+            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
+            if (exists)
+            {
+                result = _context.SchoolBuss.Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId)
+                    .Count();
+                
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// View service used by the view school bus owner page
+        /// </summary>
+        /// <param name="id">SchoolBusOwner Id</param>
+        /// <returns>A SchoolBusOwnerViewModel, or 404 if the record does not exist</returns>
+        public IActionResult SchoolbusownersIdViewGetAsync(int id)
+        {
+            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
+            {
+                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners.First(a => a.Id == id);
+                var result = schoolBusOwner.ToViewModel();
+                // populate the calculated fields.
+                result.nextInspectionDate = GetNextInspectionDate(id); ;
+                result.numberOfBuses = GetNumberSchoolBuses(id);
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
-        
+
         /// <param name="body"></param>
         /// <response code="201">SchoolBusOwner created</response>
 

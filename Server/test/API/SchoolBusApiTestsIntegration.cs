@@ -23,6 +23,8 @@ using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using System.Net;
 using Microsoft.AspNetCore.WebUtilities;
+using SchoolBusAPI.ViewModels;
+using SchoolBusAPI.Mappings;
 
 namespace SchoolBusAPI.Test
 {
@@ -276,6 +278,8 @@ namespace SchoolBusAPI.Test
             schoolbus.SchoolBusOwner = schoolBusOwner;
             schoolbus.VehicleIdentificationNumber = "1234";
             schoolbus.LicencePlateNumber = "12345";
+            DateTime nextInspection = DateTime.Now;
+            schoolbus.NextInspectionDate = nextInspection;
 
             jsonString = schoolbus.ToJson();
 
@@ -377,6 +381,21 @@ namespace SchoolBusAPI.Test
 
             Assert.Equal(found, true);
 
+            // now test the owner view.
+
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/schoolbusowners/" + schoolBusOwner_id + "/view");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+            SchoolBusOwnerViewModel model = JsonConvert.DeserializeObject<SchoolBusOwnerViewModel>(jsonString);
+
+            // should be one bus.
+            Assert.Equal(model.numberOfBuses, 1);
+            Assert.Equal(model.nextInspectionDate.Value.Hour, nextInspection.Hour);
+            Assert.Equal(model.nextInspectionDate.Value.Minute, nextInspection.Minute);
+            Assert.Equal(model.nextInspectionDate.Value.Second, nextInspection.Second);            
 
             // teardown
             request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbuses/" + id + "/delete");
@@ -400,7 +419,6 @@ namespace SchoolBusAPI.Test
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
 
             // cleanup schoolbus owner
-
             request = new HttpRequestMessage(HttpMethod.Post, "/api/schoolbusowners/" + schoolBusOwner_id + "/delete");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();

@@ -144,6 +144,21 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns SchoolBusOwner data plus additional information required for display</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch attachments for</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/schoolbusowners/{id}/view")]
+        [SwaggerOperation("SchoolbusownersIdViewGet")]
+        [SwaggerResponse(200, type: typeof(List<SchoolBusOwnerViewModel>))]
+        public virtual IActionResult SchoolbusownersIdViewGet([FromRoute]int id)
+        {
+            return this._service.SchoolbusownersIdViewGetAsync(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="item"></param>
         /// <response code="201">SchoolBusOwner created</response>
         [HttpPost]

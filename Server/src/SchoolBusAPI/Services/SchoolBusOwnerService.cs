@@ -86,6 +86,14 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns SchoolBusOwner data plus additional information required for display</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch attachments for</param>
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusownersIdViewGetAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="item"></param>
         /// <response code="201">SchoolBusOwner created</response>
         IActionResult SchoolbusownersPostAsync(SchoolBusOwner item);
