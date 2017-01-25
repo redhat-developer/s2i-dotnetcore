@@ -25,25 +25,8 @@ using Newtonsoft.Json;
 
 namespace SchoolBusAPI.Test
 {
-	public class SchoolBusOwnerApiIntegrationTest 
+	public class SchoolBusOwnerApiIntegrationTest : ApiIntegrationTestBase
     { 
-		private readonly TestServer _server;
-		private readonly HttpClient _client;
-			
-		/// <summary>
-        /// Setup the test
-        /// </summary>        
-		public SchoolBusOwnerApiIntegrationTest()
-		{
-			_server = new TestServer(new WebHostBuilder()
-            .UseEnvironment("Development")
-            .UseContentRoot(Directory.GetCurrentDirectory())
-            .UseStartup<Startup>());
-            _client = _server.CreateClient();
-		}
-	
-		        
-		
 		[Fact]
 		/// <summary>
         /// Integration test for SchoolbusownersBulkPost

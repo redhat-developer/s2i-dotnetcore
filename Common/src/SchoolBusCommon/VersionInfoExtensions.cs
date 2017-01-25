@@ -30,6 +30,7 @@ namespace SchoolBusCommon
                     PendingMigrations = database.GetPendingMigrations()
                 };
             }
+            catch { }
             finally
             {
                 connection.Close();

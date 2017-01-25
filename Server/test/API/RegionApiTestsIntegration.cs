@@ -8,40 +8,17 @@
  * 
  */
 
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xunit;
-using SchoolBusAPI;
-using System.Text;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using System.Net;
+using System.Net.Http;
+using System.Text;
+using Xunit;
 
 namespace SchoolBusAPI.Test
 {
-	public class RegionApiIntegrationTest 
-    { 
-		private readonly TestServer _server;
-		private readonly HttpClient _client;
-			
-		/// <summary>
-        /// Setup the test
-        /// </summary>        
-		public RegionApiIntegrationTest()
-		{
-			_server = new TestServer(new WebHostBuilder()
-            .UseEnvironment("Development")
-            .UseContentRoot(Directory.GetCurrentDirectory())
-            .UseStartup<Startup>());
-            _client = _server.CreateClient();
-		}
-	
+    public class RegionApiIntegrationTest : ApiIntegrationTestBase
+    { 	
 		/// <summary>
         /// Integration test for the bulk upload
         /// </summary>

@@ -18,7 +18,7 @@ using System.Reflection;
 namespace SchoolBusAPI.Controllers
 {
     [Route("api")]
-    public class VersionApiController : Controller
+    public class VersionController : Controller
     {
         // Hack in the git commit id.
         private const string _commitKey = "OPENSHIFT_BUILD_COMMIT";
@@ -26,7 +26,7 @@ namespace SchoolBusAPI.Controllers
         private readonly DbContext _context;
         private readonly IConfiguration _configuration;
 
-        public VersionApiController(IConfiguration configuration, DbAppContext context)
+        public VersionController(IConfiguration configuration, DbAppContext context)
         {
             _configuration = configuration;
             _context = context;

@@ -5,6 +5,7 @@
   "description": "The API server for the schoolbus inspection application.",
   "dependencies": {
     "Microsoft.AspNetCore.Antiforgery": "1.1.0",
+    "Microsoft.AspNetCore.Authentication": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
     "Microsoft.AspNetCore.Mvc": "1.1.0",
@@ -31,7 +32,6 @@
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0",
     "Npgsql.EntityFrameworkCore.PostgreSQL": "1.1.0",
     "SchoolBusCommon": "1.0.0-*",
-    "SonarAnalyzer.CSharp": "1.20.0",
     "Swashbuckle.SwaggerGen": "6.0.0-beta901",
     "Swashbuckle.SwaggerUi": "6.0.0-beta901",
     "System.Xml.XmlDocument": "4.3.0",
@@ -70,7 +70,7 @@
     "emitEntryPoint": true,
     "preserveCompilationContext": true,
     "debugType": "portable",
-    "xmlDoc": true,
+    "xmlDoc": false,
     "compile": {
       "exclude": [
         "wwwroot",

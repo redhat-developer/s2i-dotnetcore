@@ -28,24 +28,8 @@ using SchoolBusAPI.Mappings;
 
 namespace SchoolBusAPI.Test
 {
-	public class SchoolBusApiIntegrationTest 
-    { 
-		private readonly TestServer _server;
-		private readonly HttpClient _client;
-			
-		/// <summary>
-        /// Setup the test
-        /// </summary>        
-		public SchoolBusApiIntegrationTest()
-		{
-			_server = new TestServer(new WebHostBuilder()
-            .UseEnvironment("Development")
-            .UseContentRoot(Directory.GetCurrentDirectory())
-            .UseStartup<Startup>());
-            _client = _server.CreateClient();
-		}
-	
-		
+	public class SchoolBusApiIntegrationTest : ApiIntegrationTestBase
+    { 	
 		[Fact]
 		/// <summary>
         /// Integration test for AddBus

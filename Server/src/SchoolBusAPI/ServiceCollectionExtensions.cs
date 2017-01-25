@@ -8,7 +8,9 @@
  * 
  */
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using SchoolBusAPI.Controllers;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Services.Impl;
 
@@ -26,6 +28,7 @@ namespace SchoolBusAPI
         /// <returns></returns>
         public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ICurrentUserService, CurrentUserService>();
             services.AddTransient<ICCWDataService, CCWDataService>();
@@ -49,6 +52,7 @@ namespace SchoolBusAPI
             services.AddTransient<ISchoolDistrictService, SchoolDistrictService>();
             services.AddTransient<IServiceAreaService, ServiceAreaService>();
             services.AddTransient<IUserService, UserService>();            
+            services.AddTransient<ITestService, TestService>();
             return services;
         }
     }

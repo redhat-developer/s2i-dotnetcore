@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using SchoolBusClient.Handlers;
 using System;
 using System.IO;
@@ -32,7 +33,15 @@ namespace SchoolBusClient
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(
+                    opts => {
+                        opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                        opts.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+                        // ReferenceLoopHandling is set to Ignore to prevent JSON parser issues with the user / roles model.
+                        opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    });
+
 
             // Allow access to the Configuration object
             services.AddSingleton<IConfiguration>(Configuration);
