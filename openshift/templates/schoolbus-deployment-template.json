@@ -468,6 +468,10 @@
                   {
                     "name": "ADMINPW",
                     "value": "${SCHOOLBUS_ADMINPW}"
+                  },
+                  {
+                    "name": "UserInitializationFile",
+                    "value": "/secrets/users.json"
                   }
                 ],
                 "readinessProbe": {
@@ -495,6 +499,11 @@
                   {
                     "name": "${BACKEND_NAME}-docs",
                     "mountPath": "${DOCUMENT_MOUNT_PATH}"
+                  },
+                  {
+                    "name": "secret-volume",
+                    "mountPath": "/secrets",                    
+                    "readOnly": true
                   }
                 ]
               }
@@ -505,12 +514,18 @@
                 "persistentVolumeClaim": {
                   "claimName": "${BACKEND_NAME}-docs-pvc"
                 }
+              },
+              {
+                "name": "secret-volume",
+                "secret": {
+                  "secretName": "secret-volume"
+                }
               }
             ]
           }
         }
       }
-    },	
+    },
     {
       "kind": "Service",
       "apiVersion": "v1",
