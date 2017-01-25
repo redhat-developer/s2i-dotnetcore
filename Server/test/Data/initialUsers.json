@@ -6,7 +6,26 @@
     "initials": "JD",
     "surname": "Doe",
     "smAuthorizationDirectory": "IDIR",
-    "smUserId": "JDoe"
+    "smUserId": "JDoe",
+    "userRoles": [
+      {
+        "Role": {
+          "Name": "User"
+        }
+      },
+      {
+        "Role": {
+          "Name": "Administrator"
+        }
+      }
+    ],
+    "GroupMemberships": [
+      {
+        "Group": {
+          "Name": "Other"
+        }
+      }
+    ]
   },
   {
     "active": true,
@@ -15,6 +34,25 @@
     "initials": "JD",
     "surname": "Dow",
     "smAuthorizationDirectory": "IDIR",
-    "smUserId": "JDow"
+    "smUserId": "JDow",
+    "userRoles": [
+      {
+        "Role": {
+          "Name": "Administrator"
+        }
+      }
+    ],
+    "GroupMemberships": [
+      {
+        "Group": {
+          "Name": "Manager"
+        }
+      },
+      {
+        "Group": {
+          "Name": "Inspector"
+        }
+      }
+    ]
   }
 ]
