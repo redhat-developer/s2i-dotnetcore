@@ -34,7 +34,19 @@ namespace SchoolBusClient.Handlers
             {
                 string requestPath = context.Request.Path.Value;
                 int indexOfApi = requestPath.IndexOf(_apiPathKey);
-                context.Request.Path = requestPath.Remove(0, indexOfApi);
+                if (indexOfApi > -1)
+                {
+                    context.Request.Path = requestPath.Remove(0, indexOfApi);
+                }
+                else
+                {
+                    int indexOfSwagger = requestPath.IndexOf(_swaggerKey);
+                    if (indexOfSwagger > -1)
+                    {
+                        context.Request.Path = requestPath.Remove(0, indexOfSwagger);
+                    }
+                }
+                    
                 await _proxy.Invoke(context);
             }
             catch(Exception e)
