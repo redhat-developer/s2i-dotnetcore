@@ -64,35 +64,62 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Adds a user to the system as an administrator, only if they do not exist.
+        /// Adds a user to the system, only if they do not exist.
         /// </summary>
         private static void AddInitialUser(this IDbAppContext context, User initialUser)
         {
-            initialUser.Active = true;
-            initialUser.GroupMemberships = new List<GroupMembership>
+            User user = context.GetUserBySmUserId(initialUser.SmUserId);
+            if (user != null)
             {
-                new GroupMembership
-                {
-                    Active = true,
-                    Group = context.GetGroup("Other")
-                }
-            };
-            initialUser.Guid = string.Empty;
-            initialUser.Id = 0;
-            initialUser.UserRoles = new List<UserRole>
-            {
-                new UserRole
-                {
-                    EffectiveDate = DateTime.Now,
-                    Role = context.GetRole("Administrator")
-                }
-            };
-
-            User dbUser = context.GetUserBySmUserId(initialUser.SmUserId);
-            if(dbUser == null)
-            {
-                context.Users.Add(initialUser);
+                return;
             }
+
+            user = new User();
+            user.Active = true;
+            user.Email = initialUser.Email;
+            user.GivenName = initialUser.GivenName;
+            user.Initials = initialUser.Initials;
+            user.SmAuthorizationDirectory = initialUser.SmAuthorizationDirectory;
+            user.SmUserId = initialUser.SmUserId;
+            user.Surname = initialUser.Surname;
+
+            string[] userRoles = initialUser.UserRoles.Select(x => x.Role.Name).ToArray();
+            if (user.UserRoles == null)
+                user.UserRoles = new List<UserRole>();
+
+            foreach (string userRole in userRoles)
+            {
+                Role role = context.GetRole(userRole);
+                if (role != null)
+                { 
+                    user.UserRoles.Add(
+                        new UserRole
+                        {
+                            EffectiveDate = DateTime.Now,
+                            Role = role
+                        });
+                }
+            }
+
+            string[] userGroups = initialUser.GroupMemberships.Select(x => x.Group.Name).ToArray();
+            if (user.GroupMemberships == null)
+                user.GroupMemberships = new List<GroupMembership>();
+
+            foreach (string userGroup in userGroups)
+            {
+                Group group = context.GetGroup(userGroup);
+                if (group != null)
+                {
+                    user.GroupMemberships.Add(
+                        new GroupMembership
+                        {
+                            Active = true,
+                            Group = context.GetGroup("Other")
+                        });
+                }
+            }
+
+            context.Users.Add(user);
         }
 
         public static void UpdateSeedUserInfo(this DbAppContext context, User userInfo)
