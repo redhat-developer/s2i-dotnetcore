@@ -8,15 +8,10 @@ crud,histories,History,,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None
 crud,notifications,Notification,,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,notifications,Notification,rg:None,rg:None,rg:None
 crud,notificationevents,NotificationEvent,,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,notificationevents,NotificationEvent,rg:None,rg:None,rg:None
 crud,schoolbusowners,SchoolBusOwner,,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,schoolbusowners,SchoolBusOwner,rg:None,rg:None,rg:None
-crud,notes,Note,,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,notes,Note,rg:None,rg:None,rg:None
-crud,attachments,Attachment,,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,attachments,Attachment,rg:None,rg:None,rg:None
 crud,contacts,Contact,,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,contacts,Contact,rg:None,rg:None,rg:None
-crud,histories,History,,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,histories,History,rg:None,rg:None,rg:None
 crud,groups,Group,,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,groups,Group,rg:None,rg:None,rg:None
 crud,permissions,Permission,PermissionViewModel,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,permissions,Permission,PermissionViewModel,rg:None,rg:None
-bulk,permissions,Permission,Permission,,,Path,rg:None,rg:None,1,rg:None,rg:None,rg:None,rg:None,rg:None,permissions,Permission,Permission,rg:None,rg:None
 crud,roles,Role,RoleViewModel,,,Path,1,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,rg:None,roles,Role,RoleViewModel,rg:None,rg:None
-bulk,roles,Role,Role,,,Path,rg:None,rg:None,1,rg:None,rg:None,rg:None,rg:None,rg:None,roles,Role,Role,rg:None,rg:None
 bulk,rolepermissions,Role,RolePermission,,,Path,rg:None,rg:None,1,rg:None,rg:None,rg:None,rg:None,rg:None,rolepermissions,Role,RolePermission,rg:None,rg:None
 bulk,usergroups,User,GroupMembership,,,Path,rg:None,rg:None,1,rg:None,rg:None,rg:None,rg:None,rg:None,usergroups,User,GroupMembership,rg:None,rg:None
 bulk,userroles,User,UserRole,,,Path,rg:None,rg:None,1,rg:None,rg:None,rg:None,rg:None,rg:None,userroles,User,UserRole,rg:None,rg:None
