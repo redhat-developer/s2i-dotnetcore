@@ -8,41 +8,17 @@
  * 
  */
 
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xunit;
-using SchoolBusAPI;
-using System.Text;
-using System.Net;
-using SchoolBusAPI.Models;
 using Newtonsoft.Json;
+using SchoolBusAPI.Models;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using Xunit;
 
 namespace SchoolBusAPI.Test
 {
-	public class InspectionApiIntegrationTest 
+    public class InspectionApiIntegrationTest : ApiIntegrationTestBase
     { 
-		private readonly TestServer _server;
-		private readonly HttpClient _client;
-			
-		/// <summary>
-        /// Setup the test
-        /// </summary>        
-		public InspectionApiIntegrationTest()
-		{
-			_server = new TestServer(new WebHostBuilder()
-            .UseEnvironment("Development")
-            .UseContentRoot(Directory.GetCurrentDirectory())
-            .UseStartup<Startup>());
-            _client = _server.CreateClient();
-		}
-	
-		
 		[Fact]
 		/// <summary>
         /// Integration test for InspectionsBulkPost

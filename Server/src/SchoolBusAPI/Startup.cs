@@ -8,23 +8,23 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml.XPath;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using SchoolBusAPI.Authentication;
+using SchoolBusAPI.Authorization;
+using SchoolBusAPI.Models;
 using Swashbuckle.Swagger.Model;
 using Swashbuckle.SwaggerGen.Annotations;
-using Microsoft.EntityFrameworkCore;
-using SchoolBusAPI.Models;
+using System;
+using System.IO;
 using System.Text;
+using System.Xml.XPath;
 
 namespace SchoolBusAPI
 {
@@ -50,25 +50,27 @@ namespace SchoolBusAPI
             Configuration = builder.Build();
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthorization();
+            services.RegisterPermissionHandler();
+            services.AddSingleton<IDbAppContextFactory, DbAppContextFactory>(CreateDbAppContextFactory);
             services.AddSingleton<IConfiguration>(Configuration);
 
             // Add database context
             // - Pattern should be using Configuration.GetConnectionString("Schoolbus") directly; see GetConnectionString for more details.
-            services.AddDbContext<DbAppContext>(options =>
-                options.UseNpgsql(GetConnectionString()));
+            services.AddDbContext<DbAppContext>(options => options.UseNpgsql(GetConnectionString()));
 
             // Add framework services.
-            services.AddMvc()
+            services.AddMvc(options => options.AddDefaultAuthorizationPolicyFilter())
                 .AddJsonOptions(
                     opts => {
                         opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                        opts.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
                         // ReferenceLoopHandling is set to Ignore to prevent JSON parser issues with the user / roles model.
                         opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                     });
-            
+
             // Configure Swagger
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
@@ -91,39 +93,14 @@ namespace SchoolBusAPI
             services.RegisterApplicationServices();
         }
 
-        // ToDo:
-        // - Replace the individual environment variables with one that naturally works with the configuration provider and how connection strings work.
-        // -- For instance:
-        // --- ConnectionStrings:Schoolbus or ConnectionStrings__Schoolbus
-        // -- This way the configuration provider is performing all of the lifting and the connection string can be retrieved in a single consistent manner.
-        private string GetConnectionString()
-        {
-            string connectionString = string.Empty;
-
-            string host = Configuration["DATABASE_SERVICE_NAME"];
-            string username = Configuration["POSTGRESQL_USER"];
-            string password = Configuration["POSTGRESQL_PASSWORD"];
-            string database = Configuration["POSTGRESQL_DATABASE"];
-
-            if(string.IsNullOrEmpty(host) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(database))
-            {
-                // When things get cleaned up properly, this is the only call we'll have to make.
-                connectionString = Configuration.GetConnectionString("Schoolbus");
-            }
-            else
-            {
-                // Environment variables override all other settings; same behaviour as the configuration provider when things get cleaned up. 
-                connectionString = $"Host={host};Username={username};Password={password};Database={database};";
-            }
-
-            return connectionString;
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            TryMigrateDatabase(app, loggerFactory);
+            app.UseAuthentication(env);
 
             if (env.IsDevelopment())
             {
@@ -135,8 +112,6 @@ namespace SchoolBusAPI
             app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUi();
-
-            TryMigrateDatabase(app, loggerFactory);
         }
 
         // TODO:
@@ -161,6 +136,11 @@ namespace SchoolBusAPI
                     DbCommentsUpdater<DbAppContext> updater = new DbCommentsUpdater<DbAppContext>((DbAppContext)context);
                     updater.UpdateDatabaseDescriptions();
                     log.LogInformation("The database documentation has been updated.");
+
+                    log.LogInformation("Adding/Updating seed data ...");
+                    Seeders.SeedFactory<DbAppContext> seederFactory = new Seeders.SeedFactory<DbAppContext>(Configuration, _hostingEnv, loggerFactory);
+                    seederFactory.Seed(context as DbAppContext);
+                    log.LogInformation("Seeding operations are complete.");
                 }
 
                 log.LogInformation("All database migration activities are complete.");
@@ -175,6 +155,42 @@ namespace SchoolBusAPI
 
                 log.LogCritical(new EventId(-1, "Database Migration Failed"), e, msg.ToString());
             }
+        }
+
+        // ToDo:
+        // - Replace the individual environment variables with one that naturally works with the configuration provider and how connection strings work.
+        // -- For instance:
+        // --- ConnectionStrings:Schoolbus or ConnectionStrings__Schoolbus
+        // -- This way the configuration provider is performing all of the lifting and the connection string can be retrieved in a single consistent manner.
+        private string GetConnectionString()
+        {
+            string connectionString = string.Empty;
+
+            string host = Configuration["DATABASE_SERVICE_NAME"];
+            string username = Configuration["POSTGRESQL_USER"];
+            string password = Configuration["POSTGRESQL_PASSWORD"];
+            string database = Configuration["POSTGRESQL_DATABASE"];
+
+            if (string.IsNullOrEmpty(host) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(database))
+            {
+                // When things get cleaned up properly, this is the only call we'll have to make.
+                connectionString = Configuration.GetConnectionString("Schoolbus");
+            }
+            else
+            {
+                // Environment variables override all other settings; same behaviour as the configuration provider when things get cleaned up. 
+                connectionString = $"Host={host};Username={username};Password={password};Database={database};";
+            }
+
+            return connectionString;
+        }
+
+        private DbAppContextFactory CreateDbAppContextFactory(IServiceProvider serviceProvider)
+        {
+            DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
+            options.UseNpgsql(GetConnectionString());
+            DbAppContextFactory dbAppContextFactory = new DbAppContextFactory(options.Options);
+            return dbAppContextFactory;
         }
     }
 }

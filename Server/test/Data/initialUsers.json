@@ -1,0 +1,22 @@
+[
+  {
+    "active": true,
+    "email": "john.doe@testdomain.test",
+    "givenName": "John",
+    "initials": "JD",
+    "smUserID": null,
+    "surname": "Doe",
+	"smAuthorizationDirectory": "IDIR",
+	"smUserId": "JDoe",
+  },
+  {
+    "active": true,
+    "email": "jane.dow@testdomain.test",
+    "givenName": "Jane",
+    "initials": "JD",
+    "smUserID": null,
+    "surname": "Dow",
+	"smAuthorizationDirectory": "IDIR",
+	"smUserId": "JDow",
+  }
+]

@@ -25,24 +25,8 @@ using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Test
 {
-	public class HistoryApiIntegrationTest 
-    { 
-		private readonly TestServer _server;
-		private readonly HttpClient _client;
-			
-		/// <summary>
-        /// Setup the test
-        /// </summary>        
-		public HistoryApiIntegrationTest()
-		{
-			_server = new TestServer(new WebHostBuilder()
-            .UseEnvironment("Development")
-            .UseContentRoot(Directory.GetCurrentDirectory())
-            .UseStartup<Startup>());
-            _client = _server.CreateClient();
-		}
-	
-		
+	public class HistoryApiIntegrationTest : ApiIntegrationTestBase
+    { 		
 		[Fact]
 		/// <summary>
         /// Integration test for HistoryBulkPost

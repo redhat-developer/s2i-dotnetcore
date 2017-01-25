@@ -10,13 +10,29 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Npgsql;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using System.Collections.Generic;
-using System;
 
 namespace SchoolBusAPI.Models
 {
+    public interface IDbAppContextFactory
+    {
+        IDbAppContext Create();
+    }
+
+    public class DbAppContextFactory : IDbAppContextFactory
+    {
+        DbContextOptions<DbAppContext> _options;
+
+        public DbAppContextFactory(DbContextOptions<DbAppContext> options)
+        {
+            _options = options;
+        }
+
+        public IDbAppContext Create()
+        {
+            return new DbAppContext(_options);
+        }
+    }
+
     public interface IDbAppContext
     {
         DbSet<CCWData> CCWDatas { get; set; }
@@ -53,6 +69,8 @@ namespace SchoolBusAPI.Models
         /// the started transaction.
         /// </returns>
         IDbContextTransaction BeginTransaction();
+
+        int SaveChanges();
     }
 
     public class DbAppContext : DbContext, IDbAppContext

@@ -25,24 +25,8 @@ using System.Net;
 
 namespace SchoolBusAPI.Test
 {
-	public class AttachmentApiIntegrationTest 
-    { 
-		private readonly TestServer _server;
-		private readonly HttpClient _client;
-			
-		/// <summary>
-        /// Setup the test
-        /// </summary>        
-		public AttachmentApiIntegrationTest()
-		{
-			_server = new TestServer(new WebHostBuilder()
-            .UseEnvironment("Development")
-            .UseContentRoot(Directory.GetCurrentDirectory())
-            .UseStartup<Startup>());
-            _client = _server.CreateClient();
-		}
-	
-		
+	public class AttachmentApiIntegrationTest : ApiIntegrationTestBase
+    { 	
 		[Fact]
 		/// <summary>
         /// Integration test for AttachmentsBulkPost

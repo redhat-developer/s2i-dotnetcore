@@ -6,6 +6,7 @@ using SchoolBusCommon;
 using System;
 using System.Net.Http;
 using System.Reflection;
+using System.Linq;
 
 namespace SchoolBusClient.Controllers
 {
@@ -56,6 +57,7 @@ namespace SchoolBusClient.Controllers
         private T GetVersion<T>(string path)
         {
             var httpClient = new HttpClient();
+            Request.Headers.ToList().ForEach(h => httpClient.DefaultRequestHeaders.Add(h.Key, (string)h.Value));
             httpClient.BaseAddress = _apiServerUri;
             var content = httpClient.GetStringAsync(path).Result;
             return JsonConvert.DeserializeObject<T>(content);
