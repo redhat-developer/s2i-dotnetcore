@@ -7,8 +7,8 @@ import _ from 'lodash';
 
 import * as Api from '../api';
 
-import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import Confirm from '../components/Confirm.jsx';
+import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import RootCloseMenu from './RootCloseMenu.jsx';
 
 import { isBlank } from '../utils/string';
@@ -62,7 +62,7 @@ var EditDialog = React.createClass({
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <FormGroup validationState={ this.state.nameError ? 'error' : null }>
+          <FormGroup controlId="name" validationState={ this.state.nameError ? 'error' : null }>
             <ControlLabel>Name <sup>*</sup></ControlLabel>
             <FormControl type="text" defaultValue={ this.state.name } onChange={ this.nameChanged } inputRef={ ref => { this.input = ref; }} />
             <HelpBlock>{ this.state.nameError }</HelpBlock>
