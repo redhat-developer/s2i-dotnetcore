@@ -10,6 +10,8 @@ namespace SchoolBusClient.Handlers
     public class ApiProxyMiddleware
     {
         private static readonly string _apiPathKey = "/api/";
+        private static readonly string _swaggerKey = "/swagger/";
+
         private readonly ILogger _logger;
         private readonly string _apiUri;
         private readonly Microsoft.AspNetCore.Proxy.ProxyMiddleware _proxy;
@@ -32,7 +34,19 @@ namespace SchoolBusClient.Handlers
             {
                 string requestPath = context.Request.Path.Value;
                 int indexOfApi = requestPath.IndexOf(_apiPathKey);
-                context.Request.Path = requestPath.Remove(0, indexOfApi);
+                if (indexOfApi > -1)
+                {
+                    context.Request.Path = requestPath.Remove(0, indexOfApi);
+                }
+                else
+                {
+                    int indexOfSwagger = requestPath.IndexOf(_swaggerKey);
+                    if (indexOfSwagger > -1)
+                    {
+                        context.Request.Path = requestPath.Remove(0, indexOfSwagger);
+                    }
+                }
+                    
                 await _proxy.Invoke(context);
             }
             catch(Exception e)
@@ -46,7 +60,8 @@ namespace SchoolBusClient.Handlers
 
         public static bool IsApiPath(HttpContext httpContext)
         {
-            return httpContext.Request.Path.Value.IndexOf(_apiPathKey, StringComparison.OrdinalIgnoreCase) >= 0;
+            return httpContext.Request.Path.Value.IndexOf(_apiPathKey, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                httpContext.Request.Path.Value.IndexOf(_swaggerKey, StringComparison.OrdinalIgnoreCase) >= 0;
         }
     }
 }
