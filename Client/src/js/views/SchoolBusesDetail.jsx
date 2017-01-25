@@ -89,10 +89,6 @@ var SchoolBusesDetail = React.createClass({
   showHistory() {
   },
 
-  edit () {
-
-  },
-
   print() {
 
   },
@@ -103,6 +99,10 @@ var SchoolBusesDetail = React.createClass({
 
   closeEditDialog() {
     this.setState({ showEditDialog: false });
+  },
+
+  saveEdit() {
+    this.closeEditDialog();
   },
 
   render() {
@@ -188,7 +188,7 @@ var SchoolBusesDetail = React.createClass({
                     <ColField md={8}>{ bus.homeTerminalAddress }</ColField>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>City, Prov</ColLabel>
+                    <ColLabel md={4}>City, Province</ColLabel>
                     <ColField md={8}>{ bus.homeTerminalCityProv }</ColField>
                   </Row>
                   <Row>
@@ -445,7 +445,7 @@ var SchoolBusesDetail = React.createClass({
         </Row>
       </div>
       { this.state.showEditDialog ?
-        <SchoolBusesEditDialog show={ this.state.showEditDialog } schoolBus={ this.state.schoolBus } onSave={ this.save } onClose= { this.closeEditDialog } /> : null
+        <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose= { this.closeEditDialog } /> : null
       }
     </div>;
   },

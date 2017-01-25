@@ -27,10 +27,12 @@ var Confirm = React.createClass({
 
     return <Popover id="confirm" title="Are you sure?" {...props}>
       { this.props.children }
-      <ButtonGroup>
-        <Button bsStyle="primary" onClick={ this.confirmed }><Glyphicon glyph="ok-circle" /> Yes</Button>
-        <Button onClick={ this.canceled }><Glyphicon glyph="remove-circle" /> No</Button>
-      </ButtonGroup>
+      <div style={{ textAlign: 'center', marginTop: '6px' }}>
+        <ButtonGroup>
+          <Button bsStyle="primary" onClick={ this.confirmed }><Glyphicon glyph="ok-circle" /> Yes</Button>
+          <Button onClick={ this.canceled }><Glyphicon glyph="remove-circle" /> No</Button>
+        </ButtonGroup>
+      </div>
     </Popover>;
   },
 });

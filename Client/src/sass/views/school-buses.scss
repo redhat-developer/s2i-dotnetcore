@@ -93,3 +93,10 @@
     font-weight: 600;
   }
 }
+
+#school-buses-edit {
+  [class*='col-'] {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+}
