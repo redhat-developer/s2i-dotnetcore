@@ -15,7 +15,6 @@ COPY Server /app/Server
 WORKDIR /app/Server/src/SchoolBusAPI/
 RUN dotnet restore
 
-ENV ASPNETCORE_ENVIRONMENT Staging
 ENV ASPNETCORE_URLS http://*:8080
 EXPOSE 8080
 

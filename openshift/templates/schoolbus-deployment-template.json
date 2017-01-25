@@ -472,7 +472,11 @@
                   {
                     "name": "UserInitializationFile",
                     "value": "/secrets/users.json"
-                  }
+                  },
+				  {
+				    "name": "ASPNETCORE_ENVIRONMENT",
+					"value": "Development"
+				  }
                 ],
                 "readinessProbe": {
                   "timeoutSeconds": 3000,
