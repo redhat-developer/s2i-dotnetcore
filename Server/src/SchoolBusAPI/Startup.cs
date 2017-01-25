@@ -84,9 +84,16 @@ namespace SchoolBusAPI
 
                 options.DescribeAllEnumsAsStrings();
 
-                var comments = new XPathDocument($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml");
-                options.OperationFilter<XmlCommentsOperationFilter>(comments);
-                options.ModelFilter<XmlCommentsModelFilter>(comments);
+                // The swagger API documentation pages look far better with code documentation
+                // as input, but we need to protect the application from crashing on startup
+                // if the code documetation does not get generated for some reason.
+                string codeDocPath = $"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml";
+                if (File.Exists(codeDocPath))
+                {
+                    var comments = new XPathDocument(codeDocPath);
+                    options.OperationFilter<XmlCommentsOperationFilter>(comments);
+                    options.ModelFilter<XmlCommentsModelFilter>(comments);
+                }
             });
 
             // Add application services.
