@@ -25,7 +25,7 @@ var Confirm = React.createClass({
   render() {
     var props = _.omit(this.props, 'onConfirm', 'onCancel', 'hide', 'children');
 
-    return <Popover id="confirm" title="Are you sure?" {...props}>
+    return <Popover id="confirm" title="Are you sure?" { ...props }>
       { this.props.children }
       <div style={{ textAlign: 'center', marginTop: '6px' }}>
         <ButtonGroup>
