@@ -16,6 +16,9 @@ const HOST = argv.host || 'localhost';
 const API_HOST = argv.apihost || 'server-tran-schoolbus-dev.pathfinder.gov.bc.ca';
 const API_PORT = argv.apiport || process.env.BC_GOV_SCHOOLBUS_API_PORT || 80;
 
+// Include your SmUSerId on the command line or in ENV.
+const DEV_USER = argv.devuser || process.env.SCHOOL_BUS_DEV_USER || '';
+
 const PROJECT_ROOT = path.join(__dirname, '..');
 const DIST_PATH = path.join(PROJECT_ROOT, 'dist');
 
@@ -25,6 +28,9 @@ app.use(morgan('dev'));
 
 app.use('/api', proxy(`http://${API_HOST}:${API_PORT}/api`, {
   changeOrigin: true,
+  headers: {
+    'DEV-USER': DEV_USER,
+  },
 }));
 
 // Override WebPack config to work with this express server
