@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+
 import { PageHeader } from 'react-bootstrap';
 
-import Spinner from '../components/Spinner.jsx';
-
 import * as Api from '../api';
+
+import Spinner from '../components/Spinner.jsx';
 
 var UserManagementEdit = React.createClass({
   propTypes: {

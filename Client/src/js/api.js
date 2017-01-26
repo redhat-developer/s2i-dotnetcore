@@ -48,23 +48,6 @@ export function getUser(userId) {
   });
 }
 
-export function getInspectors() {
-  var inspectorGroup = _.find(store.getState().lookups.groups, { name: 'Inspector' });
-  var groupId = inspectorGroup ? inspectorGroup.id : 0;
-
-  return new ApiRequest(`/groups/${groupId}/users`).get().then(response => {
-    // Normalize the response
-    var users = _.fromPairs(response.map(user => [ user.id, user ]));
-
-    // Add display fields
-    _.map(users, user => { parseUser(user); });
-
-    store.dispatch({ type: 'UPDATE_INSPECTORS', inspectors: users });
-  });
-}
-
-
-
 ////////////////////
 // Favourites
 ////////////////////
@@ -238,18 +221,6 @@ export function searchOwners(params) {
   });
 }
 
-export function getOwners() {
-  return new ApiRequest('/schoolbusowners').get().then(response => {
-    // Normalize the response
-    var owners = _.fromPairs(response.map(owner => [ owner.id, owner ]));
-
-    // Add display fields
-    _.map(owners, owner => { parseOwner(owner); });
-
-    store.dispatch({ type: 'UPDATE_OWNERS', owners: owners });
-  });
-}
-
 export function getOwner(ownerId) {
   return new ApiRequest(`/schoolbusowners/${ownerId}`).get().then(response => {
     var owner = response;
@@ -258,8 +229,20 @@ export function getOwner(ownerId) {
   });
 }
 
+export function getOwners() {
+  return new ApiRequest('/schoolbusowners').get().then(response => {
+    // Normalize the response
+    var owners = _.fromPairs(response.map(owner => [ owner.id, owner ]));
+
+    // Add display fields
+    _.map(owners, owner => { parseOwner(owner); });
+
+    store.dispatch({ type: 'UPDATE_OWNERS_LOOKUP', owners: owners });
+  });
+}
+
 ////////////////////
-// Look Ups
+// Look-ups
 ////////////////////
 
 export function getCities() {
@@ -267,7 +250,7 @@ export function getCities() {
     // Normalize the response
     var cities = _.fromPairs(response.map(city => [ city.id, city ]));
 
-    store.dispatch({ type: 'UPDATE_CITIES', cities: cities });
+    store.dispatch({ type: 'UPDATE_CITIES_LOOKUP', cities: cities });
   });
 }
 
@@ -276,7 +259,7 @@ export function getDistricts() {
     // Normalize the response
     var districts = _.fromPairs(response.map(district => [ district.id, district ]));
 
-    store.dispatch({ type: 'UPDATE_DISTRICTS', districts: districts });
+    store.dispatch({ type: 'UPDATE_DISTRICTS_LOOKUP', districts: districts });
   });
 }
 
@@ -285,7 +268,7 @@ export function getRegions() {
     // Normalize the response
     var regions = _.fromPairs(response.map(region => [ region.id, region ]));
 
-    store.dispatch({ type: 'UPDATE_REGIONS', regions: regions });
+    store.dispatch({ type: 'UPDATE_REGIONS_LOOKUP', regions: regions });
   });
 }
 
@@ -294,7 +277,7 @@ export function getSchoolDistricts() {
     // Normalize the response
     var schoolDistricts = _.fromPairs(response.map(schoolDistrict => [ schoolDistrict.id, schoolDistrict ]));
 
-    store.dispatch({ type: 'UPDATE_SCHOOL_DISTRICTS', schoolDistricts: schoolDistricts });
+    store.dispatch({ type: 'UPDATE_SCHOOL_DISTRICTS_LOOKUP', schoolDistricts: schoolDistricts });
   });
 }
 
@@ -303,7 +286,7 @@ export function getServiceAreas() {
     // Normalize the response
     var serviceAreas = _.fromPairs(response.map(serviceArea => [ serviceArea.id, serviceArea ]));
 
-    store.dispatch({ type: 'UPDATE_SERVICE_AREAS', serviceAreas: serviceAreas });
+    store.dispatch({ type: 'UPDATE_SERVICE_AREAS_LOOKUP', serviceAreas: serviceAreas });
   });
 }
 
@@ -312,7 +295,22 @@ export function getGroups() {
     // Normalize the response
     var groups = _.fromPairs(response.map(group => [ group.id, group ]));
 
-    store.dispatch({ type: 'UPDATE_GROUPS', groups: groups });
+    store.dispatch({ type: 'UPDATE_GROUPS_LOOKUP', groups: groups });
+  });
+}
+
+export function getInspectors() {
+  var inspectorGroup = _.find(store.getState().lookups.groups, { name: 'Inspector' });
+  var groupId = inspectorGroup ? inspectorGroup.id : 0;
+
+  return new ApiRequest(`/groups/${groupId}/users`).get().then(response => {
+    // Normalize the response
+    var users = _.fromPairs(response.map(user => [ user.id, user ]));
+
+    // Add display fields
+    _.map(users, user => { parseUser(user); });
+
+    store.dispatch({ type: 'UPDATE_INSPECTORS_LOOKUP', inspectors: users });
   });
 }
 

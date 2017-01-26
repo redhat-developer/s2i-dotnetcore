@@ -1,11 +1,13 @@
 import React from 'react';
-import Promise from 'bluebird';
+
 import { connect } from 'react-redux';
+
 import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton, MenuItem, Button, ButtonGroup, Glyphicon, Checkbox } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
+import Promise from 'bluebird';
 
 import * as Api from '../api';
 import store from '../store';
@@ -38,8 +40,6 @@ TODO:
 
 */
 
-const DEFAULT_SORT_FIELD = 'ownerName';
-
 var Owners = React.createClass({
   propTypes: {
     districts: React.PropTypes.object,
@@ -63,7 +63,7 @@ var Owners = React.createClass({
       },
 
       ui : {
-        sortField: this.props.ui.sortField || DEFAULT_SORT_FIELD,
+        sortField: this.props.ui.sortField || 'name',
         sortDesc: this.props.ui.sortDesc === true,
       },
     };
@@ -279,8 +279,8 @@ var Owners = React.createClass({
 function mapStateToProps(state) {
   return {
     districts: state.lookups.districts,
-    inspectors: state.models.inspectors,
-    owners: state.models.owners,
+    inspectors: state.lookups.inspectors,
+    owners: state.lookups.owners,
     favourites: state.models.favourites,
     search: state.search.owners,
     ui: state.ui.owners,
