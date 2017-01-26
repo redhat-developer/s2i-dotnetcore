@@ -1,4 +1,5 @@
 import React from 'react';
+import Promise from 'bluebird';
 import { connect } from 'react-redux';
 import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton, MenuItem, Button, ButtonGroup, Glyphicon, Checkbox } from 'react-bootstrap';
