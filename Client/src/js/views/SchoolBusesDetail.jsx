@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+
 import { Well, Row, Col  } from 'react-bootstrap';
 import { Alert, Label, Button, Glyphicon, Checkbox, Table  } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -8,14 +10,14 @@ import _ from 'lodash';
 
 import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
 
+import * as Api from '../api';
+
 import ColField from '../components/ColField.jsx';
 import ColLabel from '../components/ColLabel.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTime } from '../utils/date';
 import { concat, plural } from '../utils/string';
-
-import * as Api from '../api';
 
 
 const DAYS_DUE_WARNING = 30;

@@ -1,6 +1,9 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+
 import { PageHeader, Well, Row, Button } from 'react-bootstrap';
+
 import $ from 'jquery';
 
 import * as Api from '../api';

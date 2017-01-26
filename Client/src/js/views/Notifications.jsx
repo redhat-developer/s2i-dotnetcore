@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+
 import { PageHeader } from 'react-bootstrap';
 
 var Notifications = React.createClass({

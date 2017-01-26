@@ -1,6 +1,7 @@
 import React from 'react';
-import Promise from 'bluebird';
+
 import { connect } from 'react-redux';
+
 import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton, MenuItem, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { Form, FormControl, InputGroup, Checkbox } from 'react-bootstrap';
@@ -8,6 +9,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
 import Moment from 'moment';
+import Promise from 'bluebird';
 
 import * as Api from '../api';
 import store from '../store';
@@ -47,7 +49,6 @@ const THIS_QUARTER = 'This Quarter';
 const CUSTOM = 'Custom';
 const ALL = 'All';
 
-const DEFAULT_SORT_FIELD = 'ownerName';
 
 var SchoolBuses = React.createClass({
   propTypes: {
@@ -83,7 +84,7 @@ var SchoolBuses = React.createClass({
       },
 
       ui : {
-        sortField: this.props.ui.sortField || DEFAULT_SORT_FIELD,
+        sortField: this.props.ui.sortField || 'ownerName',
         sortDesc: this.props.ui.sortDesc === true,
       },
     };
@@ -466,10 +467,10 @@ function mapStateToProps(state) {
   return {
     schoolBuses: state.models.schoolBuses,
     districts: state.lookups.districts,
-    inspectors: state.models.inspectors,
+    inspectors: state.lookups.inspectors,
     cities: state.lookups.cities,
     schoolDistricts: state.lookups.schoolDistricts,
-    owners: state.models.owners,
+    owners: state.lookups.owners,
     favourites: state.models.favourites,
     search: state.search.schoolBuses,
     ui: state.ui.schoolBuses,

@@ -1,14 +1,16 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+
 import { PageHeader, Alert, Table, Button, Glyphicon } from 'react-bootstrap';
 
 import _ from 'lodash';
 
-import Spinner from '../components/Spinner.jsx';
-import OverlayTrigger from '../components/OverlayTrigger.jsx';
-import Confirm from '../components/Confirm.jsx';
-
 import * as Api from '../api';
+
+import Confirm from '../components/Confirm.jsx';
+import OverlayTrigger from '../components/OverlayTrigger.jsx';
+import Spinner from '../components/Spinner.jsx';
 
 
 var UserManagement = React.createClass({

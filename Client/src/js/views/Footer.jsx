@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Row } from 'react-bootstrap';
-
 import { connect } from 'react-redux';
+
+import { Row } from 'react-bootstrap';
 
 
 var Footer = React.createClass({
