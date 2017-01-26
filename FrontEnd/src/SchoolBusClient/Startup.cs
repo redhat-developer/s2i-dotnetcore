@@ -46,9 +46,25 @@ namespace SchoolBusClient
             // Allow access to the Configuration object
             services.AddSingleton<IConfiguration>(Configuration);
             
-            // Save this for later:
+            // Call should look like this:
             // services.Configure<ApiProxyServerOptions>(Configuration.GetSection("ApiProxyServer"));
             services.Configure<ApiProxyServerOptions>(ConfigureApiProxyServerOptions);
+
+            // Call should look like this:
+            // services.Configure<SwaggerProxyServerOptions>(Configuration.GetSection("SwaggerProxyServer"));
+            services.Configure<SwaggerProxyServerOptions>(ConfigureSwaggerProxyServerOptions);
+        }
+
+        private void ConfigureSwaggerProxyServerOptions(SwaggerProxyServerOptions options)
+        {
+            SwaggerProxyServerOptions defaultConfig = Configuration.GetSection("SwaggerProxyServer").Get<SwaggerProxyServerOptions>();
+            ConfigureProxyServerOptions(options, defaultConfig);
+        }
+
+        private void ConfigureApiProxyServerOptions(ApiProxyServerOptions options)
+        {
+            ApiProxyServerOptions defaultConfig = Configuration.GetSection("ApiProxyServer").Get<ApiProxyServerOptions>();
+            ConfigureProxyServerOptions(options, defaultConfig);
         }
 
         // ToDo:
@@ -57,14 +73,14 @@ namespace SchoolBusClient
         // -- ApiProxyServer:Host
         // -- ApiProxyServer:Port
         // - Remove use of IConfiguration and MIDDLEWARE_NAME environment variable 
-        private void ConfigureApiProxyServerOptions(ApiProxyServerOptions options)
+        private void ConfigureProxyServerOptions(ProxyServerOptions options, ProxyServerOptions defaultConfig)
         {
-            ApiProxyServerOptions defaultConfig = Configuration.GetSection("ApiProxyServer").Get<ApiProxyServerOptions>();
             if (defaultConfig != null)
             {
                 options.Host = defaultConfig.Host;
                 options.Port = defaultConfig.Port;
                 options.Scheme = defaultConfig.Scheme;
+                options.PathKey = defaultConfig.PathKey;
             }
 
             string apiServerUri = Configuration["MIDDLEWARE_NAME"];
@@ -108,7 +124,8 @@ namespace SchoolBusClient
                 });
             }
 
-            app.UseApiProxyServer();
+            app.UseProxyServer<ApiProxyMiddleware, ApiProxyServerOptions>();
+            app.UseProxyServer<SwaggerProxyMiddleware, SwaggerProxyServerOptions>();
         }
     }
 }

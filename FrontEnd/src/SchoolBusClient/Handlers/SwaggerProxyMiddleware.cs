@@ -4,9 +4,9 @@ using Microsoft.Extensions.Options;
 
 namespace SchoolBusClient.Handlers
 {
-    public class SwaggerProxyMiddleware : ProxyMiddlewareBase<SwaggerProxyServerOptions>
+    public class ApiProxyMiddleware : ProxyMiddlewareBase<ApiProxyServerOptions>
     {
-        public SwaggerProxyMiddleware(RequestDelegate next, IOptions<SwaggerProxyServerOptions> serverOptions, ILoggerFactory loggerFactory) 
+        public ApiProxyMiddleware(RequestDelegate next, IOptions<ApiProxyServerOptions> serverOptions, ILoggerFactory loggerFactory) 
             : base(next, serverOptions, loggerFactory)
         {
         }

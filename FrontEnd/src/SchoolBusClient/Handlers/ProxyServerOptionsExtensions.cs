@@ -2,11 +2,11 @@
 using Microsoft.Extensions.Options;
 using System;
 
-namespace SchoolBusClient
+namespace SchoolBusClient.Handlers
 {
-    public static class ApiProxyServerOptionsExtensions
+    public static class ProxyServerOptionsExtensions
     {
-        public static Uri ToUri(this ApiProxyServerOptions options)
+        public static Uri ToUri(this ProxyServerOptions options)
         {
             int portNumber = 80;
             int.TryParse(options.Port, out portNumber);
@@ -15,7 +15,7 @@ namespace SchoolBusClient
         }
 
 
-        public static IOptions<ProxyOptions> ToProxyOptions(this ApiProxyServerOptions options)
+        public static IOptions<ProxyOptions> ToProxyOptions(this ProxyServerOptions options)
         {
             ProxyOptions proxyOptions = new ProxyOptions()
             {
