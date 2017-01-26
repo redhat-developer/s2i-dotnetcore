@@ -1,5 +1,7 @@
 SET TARGET_SERVER=http://localhost:59836
-rem SET TARGET_SERVER=http://server-tran-schoolbus-dev.pathfinder.gov.bc.ca
+SET TARGET_SERVER=http://server-tran-schoolbus-dev.pathfinder.gov.bc.ca
+
+curl -c cookie http://server-tran-schoolbus-dev.pathfinder.gov.bc.ca/api/authentication/dev/token?userId=
 
 call load.bat "cities\cities_city.json" api/cities/bulk "%TARGET_SERVER%"
 call load.bat "Regions\Regions_Region.json" api/regions/bulk "%TARGET_SERVER%"
@@ -11,7 +13,7 @@ call load.bat "Permissions\permissions_Perms.json" api/permissions/bulk "%TARGET
 call load.bat "roles\roles_Role.json" api/roles/bulk "%TARGET_SERVER%"
 
 rem need to load owner contacts before owners.
-call load.bat "OwnerContacts\OwnerContacts_Contact.json" api/schoolbusownercontacts/bulk "%TARGET_SERVER%"
+call load.bat "OwnerContacts\OwnerContacts_Contact.json" api/contacts/bulk "%TARGET_SERVER%"
 call load.bat "Owners\Owners_SBOwner.json" api/schoolbusowners/bulk "%TARGET_SERVER%"
 call load.bat "SchoolBus\SchoolBus_SchoolBus.json" api/schoolbuses/bulk "%TARGET_SERVER%"
 call load.bat "users\users_user.json" api/users/bulk "%TARGET_SERVER%"
