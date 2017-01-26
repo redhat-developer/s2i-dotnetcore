@@ -3,6 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Promise from 'bluebird';
 
+import './utils/shims';
+
 
 Promise.config({
   cancellation: true,

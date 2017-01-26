@@ -1,4 +1,5 @@
 import React from 'react';
+import Promise from 'bluebird';
 import { connect } from 'react-redux';
 import { Modal, Grid, Row, Col } from 'react-bootstrap';
 import { Radio, Button, Glyphicon } from 'react-bootstrap';

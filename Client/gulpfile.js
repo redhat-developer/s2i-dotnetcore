@@ -31,7 +31,7 @@ const DIST_DIR = 'dist';
 const DEPLOY_PATH = path.join(__dirname, '..', 'Client', 'src', 'SchoolBusClient', 'wwwroot');
 const NODE_MODULES_DIR = 'node_modules/';
 const JS_SHIMS = [
-  // 'node_modules/es5-shim/es5-shim.js',
+  'node_modules/object-assign-shim/index.js',
 ];
 const VENDOR_CSS = [
   'bootstrap/dist/css/bootstrap.css',
