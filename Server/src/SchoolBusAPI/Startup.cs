@@ -78,8 +78,8 @@ namespace SchoolBusAPI
                 options.SingleApiVersion(new Info
                 {
                     Version = "v1",
-                    Title = "SchoolBusAPI",
-                    Description = "SchoolBusAPI (ASP.NET Core 1.0.1)"
+                    Title = "SBI REST API",
+                    Description = "School Bus Inspection System"
                 });
 
                 options.DescribeAllEnumsAsStrings();

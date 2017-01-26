@@ -40,6 +40,96 @@ namespace SchoolBusAPI.Services.Impl
         }
 	
         /// <summary>
+        /// Adjust a SchoolBus item to ensure child object data is in place correctly
+        /// </summary>
+        /// <param name="item"></param>
+        private void AdjustSchoolBus(SchoolBus item)
+        {
+            if (item.SchoolBusOwner != null)
+            {
+                int school_bus_owner_id = item.SchoolBusOwner.Id;
+                bool school_bus_owner_exists = _context.SchoolBusOwners.Any(a => a.Id == school_bus_owner_id);
+                if (school_bus_owner_exists)
+                {
+                    SchoolBusOwner school_bus_owner = _context.SchoolBusOwners.First(a => a.Id == school_bus_owner_id);
+                    item.SchoolBusOwner = school_bus_owner;
+                }
+                else // invalid data
+                {
+                    item.SchoolBusOwner = null;
+                }
+            }
+
+            // adjust District.
+            if (item.District != null)
+            {
+                int district_id = item.District.Id;
+                var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
+                if (district_exists)
+                {
+                    District district = _context.Districts.First(a => a.Id == district_id);
+                    item.District = district;
+                }
+                else
+                {
+                    item.District = null;
+                }
+            }                // adjust school district
+
+            if (item.SchoolDistrict != null)
+            {
+                int schoolDistrict_id = item.SchoolDistrict.Id;
+                bool schoolDistrict_exists = _context.SchoolDistricts.Any(a => a.Id == schoolDistrict_id);
+                if (schoolDistrict_exists)
+                {
+                    SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolDistrict_id);
+                    item.SchoolDistrict = school_district;
+                }
+                else
+                // invalid data
+                {
+                    item.SchoolDistrict = null;
+                }
+            }
+
+            // adjust home city
+
+            if (item.HomeTerminalCity != null)
+            {
+                int city_id = item.HomeTerminalCity.Id;
+                bool city_exists = _context.Cities.Any(a => a.Id == city_id);
+                if (city_exists)
+                {
+                    City city = _context.Cities.First(a => a.Id == city_id);
+                    item.HomeTerminalCity = city;
+                }
+                else
+                // invalid data
+                {
+                    item.HomeTerminalCity = null;
+                }
+            }
+
+            // adjust inspector
+
+            if (item.Inspector != null)
+            {
+                int inspector_id = item.Inspector.Id;
+                bool inspector_exists = _context.Users.Any(a => a.Id == inspector_id);
+                if (inspector_exists)
+                {
+                    User inspector = _context.Users.First(a => a.Id == inspector_id);
+                    item.Inspector = inspector;
+                }
+                else
+                // invalid data
+                {
+                    item.Inspector = null;
+                }
+            }
+        }
+
+        /// <summary>
         /// Creates several school buses
         /// </summary>
         /// <remarks>Used for bulk creation of schoolbus records.</remarks>
@@ -55,89 +145,7 @@ namespace SchoolBusAPI.Services.Impl
             foreach (SchoolBus item in items)
             {
                 // adjust school bus owner
-
-                if (item.SchoolBusOwner != null)
-                {
-                    int school_bus_owner_id = item.SchoolBusOwner.Id;
-                    bool school_bus_owner_exists = _context.SchoolBusOwners.Any(a => a.Id == school_bus_owner_id);
-                    if (school_bus_owner_exists)
-                    {
-                        SchoolBusOwner school_bus_owner = _context.SchoolBusOwners.First(a => a.Id == school_bus_owner_id);
-                        item.SchoolBusOwner = school_bus_owner;
-                    }
-                    else // invalid data
-                    {
-                        item.SchoolBusOwner = null;
-                    }
-                }
-
-                // adjust District.
-                if (item.District != null)
-                {
-                    int district_id = item.District.Id;
-                    var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
-                    if (district_exists)
-                    {
-                        District district = _context.Districts.First(a => a.Id == district_id);
-                        item.District = district;
-                    }
-                    else
-                    {
-                        item.District = null;
-                    }
-                }                // adjust school district
-
-                if (item.SchoolDistrict != null)
-                {
-                    int schoolDistrict_id = item.SchoolDistrict.Id;
-                    bool schoolDistrict_exists = _context.SchoolDistricts.Any(a => a.Id == schoolDistrict_id);
-                    if (schoolDistrict_exists)
-                    {
-                        SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolDistrict_id);
-                        item.SchoolDistrict = school_district;
-                    }
-                    else
-                    // invalid data
-                    {
-                        item.SchoolDistrict = null;
-                    }
-                }
-
-                // adjust home city
-
-                if (item.HomeTerminalCity != null)
-                {
-                    int city_id = item.HomeTerminalCity.Id;
-                    bool city_exists = _context.Cities.Any(a => a.Id == city_id);
-                    if (city_exists)
-                    {
-                        City city = _context.Cities.First(a => a.Id == city_id);
-                        item.HomeTerminalCity = city;
-                    }
-                    else
-                    // invalid data
-                    {
-                        item.HomeTerminalCity = null;
-                    }
-                }
-
-                // adjust inspector
-
-                if (item.Inspector != null)
-                {
-                    int inspector_id = item.Inspector.Id;
-                    bool inspector_exists = _context.Users.Any(a => a.Id == inspector_id);
-                    if (inspector_exists)
-                    {
-                        User inspector = _context.Users.First(a => a.Id == inspector_id);
-                        item.Inspector = inspector;
-                    }
-                    else
-                    // invalid data
-                    {
-                        item.Inspector = null;
-                    }
-                }
+                AdjustSchoolBus(item);
 
                 var exists = _context.SchoolBuss.Any(a => a.Id == item.Id);
                 if (exists)
@@ -351,58 +359,7 @@ namespace SchoolBusAPI.Services.Impl
         public virtual IActionResult SchoolbusesIdPutAsync (int id, SchoolBus item)        
         {
             // adjust school bus owner
-            if (item.SchoolBusOwner != null)
-            {
-                int school_bus_owner_id = item.SchoolBusOwner.Id;
-                bool school_bus_owner_exists = _context.SchoolBusOwners.Any(a => a.Id == school_bus_owner_id);
-                if (school_bus_owner_exists)
-                {
-                    SchoolBusOwner school_bus_owner = _context.SchoolBusOwners.First(a => a.Id == school_bus_owner_id);
-                    item.SchoolBusOwner = school_bus_owner;
-                }
-            }
-
-
-            // adjust District.
-            if (item.District != null)
-            {
-                int district_id = item.District.Id;
-                var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
-                if (district_exists)
-                {
-                    District district = _context.Districts.First(a => a.Id == district_id);
-                    item.District = district;
-                }
-                else
-                {
-                    item.District = null;
-                }
-            }
-            // adjust school district
-
-            if (item.SchoolDistrict != null)
-            {
-                int schoolDistrict_id = item.SchoolDistrict.Id;
-                bool schoolDistrict_exists = _context.SchoolDistricts.Any(a => a.Id == schoolDistrict_id);
-                if (schoolDistrict_exists)
-                {
-                    SchoolDistrict school_district = _context.SchoolDistricts.First(a => a.Id == schoolDistrict_id);
-                    item.SchoolDistrict = school_district;
-                }
-            }
-
-            // adjust home city
-
-            if (item.HomeTerminalCity != null)
-            {
-                int city_id = item.HomeTerminalCity.Id;
-                bool city_exists = _context.Cities.Any(a => a.Id == city_id);
-                if (city_exists)
-                {
-                    City city = _context.Cities.First(a => a.Id == city_id);
-                    item.HomeTerminalCity = city;
-                }
-            }
+            AdjustSchoolBus(item);
 
             bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists && id == item.Id)
@@ -428,58 +385,7 @@ namespace SchoolBusAPI.Services.Impl
         public virtual IActionResult SchoolbusesPostAsync(SchoolBus item)
         {
             // adjust school bus owner
-            if (item.SchoolBusOwner != null)
-            {
-                int school_bus_owner_id = item.SchoolBusOwner.Id;
-                bool school_bus_owner_exists = _context.SchoolBusOwners.Any(a => a.Id == school_bus_owner_id);
-                if (school_bus_owner_exists)
-                {
-                    SchoolBusOwner school_bus_owner = _context.SchoolBusOwners.First(a => a.Id == school_bus_owner_id);
-                    item.SchoolBusOwner = school_bus_owner;
-                }
-            }
-
-            // adjust District.
-            if (item.District != null)
-            {
-                int district_id = item.District.Id;
-                var district_exists = _context.Districts.Any(a => a.Id == district_id);
-                if (district_exists)
-                {
-                    District district = _context.Districts.First(a => a.Id == district_id);
-                    item.District = district;
-                }
-                else
-                {
-                    item.District = null;
-                }
-            }
-
-            // adjust school district
-
-            if (item.SchoolDistrict != null)
-            {
-                int schoolDistrict_id = item.SchoolDistrict.Id;
-                bool schoolbus_district_exists = _context.SchoolDistricts.Any(a => a.Id == schoolDistrict_id);
-                if (schoolbus_district_exists)
-                {
-                    SchoolDistrict schoolDistrict = _context.SchoolDistricts.First(a => a.Id == schoolDistrict_id);
-                    item.SchoolDistrict = schoolDistrict;
-                }
-            }
-
-            // adjust home city
-
-            if (item.HomeTerminalCity != null)
-            {
-                int city_id = item.HomeTerminalCity.Id;
-                bool city_exists = _context.Cities.Any(a => a.Id == city_id);
-                if (city_exists)
-                {
-                    City city = _context.Cities.First(a => a.Id == city_id);
-                    item.HomeTerminalCity = city;
-                }
-            }
+            AdjustSchoolBus(item);
 
             bool exists = _context.SchoolBuss.Any(a => a.Id == item.Id);
             if (exists)
