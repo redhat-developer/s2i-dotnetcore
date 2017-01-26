@@ -16,7 +16,7 @@ const HOST = argv.host || 'localhost';
 const API_HOST = argv.apihost || 'server-tran-schoolbus-dev.pathfinder.gov.bc.ca';
 const API_PORT = argv.apiport || process.env.BC_GOV_SCHOOLBUS_API_PORT || 80;
 
-// Include your SmUSerId on the command line or in ENV.
+// Include your SmUserId on the command line or in ENV.
 const DEV_USER = argv.devuser || process.env.SCHOOL_BUS_DEV_USER || '';
 
 const PROJECT_ROOT = path.join(__dirname, '..');

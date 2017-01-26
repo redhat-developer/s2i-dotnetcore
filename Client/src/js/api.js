@@ -217,6 +217,25 @@ function parseInspection(inspection) {
 
 function parseOwner(owner) {
   owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
+  owner.schoolBusCount = 1;
+  owner.nextInspectionDate = '2017-02-21';
+  owner.nextInspectionTypeCode = 'R';
+
+  owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
+  owner.isOverdue = owner.daysToInspection < 0;
+  owner.isReinspection = owner.nextInspectionTypeCode === 'R';
+}
+
+export function searchOwners(params) {
+  return new ApiRequest('/schoolbusowners/search').get(params).then(response => {
+    // Normalize the response
+    var owners = _.fromPairs(response.map(owner => [ owner.id, owner ]));
+
+    // Add display fields
+    _.map(owners, owner => { parseOwner(owner); });
+
+    store.dispatch({ type: 'UPDATE_OWNERS', owners: owners });
+  });
 }
 
 export function getOwners() {
@@ -225,9 +244,7 @@ export function getOwners() {
     var owners = _.fromPairs(response.map(owner => [ owner.id, owner ]));
 
     // Add display fields
-    _.map(owners, owner => {
-      parseOwner(owner);
-    });
+    _.map(owners, owner => { parseOwner(owner); });
 
     store.dispatch({ type: 'UPDATE_OWNERS', owners: owners });
   });
