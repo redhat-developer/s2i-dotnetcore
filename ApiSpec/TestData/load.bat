@@ -9,7 +9,7 @@ SET server=%3
 IF %3==dev SET server=%dev%
 IF %3==test SET server=%test%
 
-curl -v -H "Content-Type: application/json" -X POST --data-binary "@%1" %server%/%2
+curl -b cookie -v -H "Content-Type: application/json" -X POST --data-binary "@%1" %server%/%2
 
 GOTO End1
 
