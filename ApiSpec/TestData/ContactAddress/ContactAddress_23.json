@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3420 Burdett Avenue",
+        "addr1": "729 Blanshard",
         "addr2": null,
         "city": "Victoria",
         "id": "200022",
-        "postalCode": "V8W IE9",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3162 Findlay Creek Road",
+        "addr1": "1967 Findlay Creek Road",
         "addr2": null,
-        "city": "Elko",
+        "city": "Fernie",
         "id": "200048",
-        "postalCode": "V0B 1J0",
+        "postalCode": "V0B 1M1",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "34 Alaska Hwy",
+        "addr1": "3162 Findlay Creek Road",
         "addr2": null,
-        "city": "Chetwynd",
+        "city": "Elko",
         "id": "200050",
-        "postalCode": "V0C 1J0",
+        "postalCode": "V0B 1J0",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

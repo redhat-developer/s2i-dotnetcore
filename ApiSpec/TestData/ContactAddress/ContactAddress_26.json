@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "223 Brew Creek Rd",
+        "addr1": "4112 Burdett Avenue",
         "addr2": null,
-        "city": "Whistler",
+        "city": "Victoria",
         "id": "200025",
-        "postalCode": "V0N 1B0",
+        "postalCode": "V8W 1B2",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

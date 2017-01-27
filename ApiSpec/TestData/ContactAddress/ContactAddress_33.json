@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3760 Keith Road",
+        "addr1": "1059 Blanshard",
         "addr2": null,
-        "city": "North Vancouver",
+        "city": "Victoria",
         "id": "200032",
-        "postalCode": "V5T 2C1",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

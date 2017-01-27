@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "232 Cordova Street",
+        "addr1": "1065 Sixth Street",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "New Westminster",
         "id": "200040",
-        "postalCode": "V6B 1E1",
+        "postalCode": "V3L 3C1",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

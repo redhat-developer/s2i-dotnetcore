@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "101 Shaughnessy St",
+        "addr1": "806 Coldstream Avenue",
         "addr2": null,
-        "city": "Port Coquitlam",
+        "city": "Vernon",
         "id": "200002",
-        "postalCode": "V3C 4S7",
+        "postalCode": "V1T 6N1",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]
