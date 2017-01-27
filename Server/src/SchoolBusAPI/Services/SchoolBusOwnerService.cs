@@ -97,5 +97,16 @@ namespace SchoolBusAPI.Services
         /// <param name="item"></param>
         /// <response code="201">SchoolBusOwner created</response>
         IActionResult SchoolbusownersPostAsync(SchoolBusOwner item);
+
+        /// <summary>
+        /// Searches school bus owners
+        /// </summary>
+        /// <remarks>Used for the search school bus owners.</remarks>
+        /// <param name="districts">Districts (array of id numbers)</param>
+        /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
+        /// <param name="owner"></param>
+        /// <param name="includeInactive">True if Inactive schoolbuses will be returned</param>
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusownersSearchGetAsync(int?[] districts, int?[] inspectors, int? owner, bool? includeInactive);
     }
 }

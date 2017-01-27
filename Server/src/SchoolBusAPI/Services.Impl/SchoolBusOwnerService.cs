@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Mappings;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -40,11 +41,69 @@ namespace SchoolBusAPI.Services.Impl
             _context = context;
         }
 	
-       
+        private void AdjustSchoolBusOwner (SchoolBusOwner item)
+        {
+            // adjust Primary Contact.
+            if (item.PrimaryContact != null)
+            {
+                int primary_contact_id = item.PrimaryContact.Id;
+                var primary_contact_exists = _context.Contacts.Any(a => a.Id == primary_contact_id);
+                if (primary_contact_exists)
+                {
+                    Contact contact = _context.Contacts.First(a => a.Id == primary_contact_id);
+                    item.PrimaryContact = contact;
+                }
+                else
+                {
+                    item.PrimaryContact = null;
+                }
+            }
+
+            // adjust District.
+            if (item.District != null)
+            {
+                int district_id = item.District.Id;
+                var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
+                if (district_exists)
+                {
+                    District district = _context.Districts.First(a => a.Id == district_id);
+                    item.District = district;
+                }
+                else
+                {
+                    item.District = null;
+                }
+            }
+
+            // adjust contacts
+            if (item.Contacts != null)
+            {
+                for (int i = 0; i < item.Contacts.Count; i++)
+                {
+                    Contact contact = item.Contacts[i];
+                    if (contact != null)
+                    {
+                        int contact_id = contact.Id;
+                        bool contact_exists = _context.Contacts.Any(a => a.Id == contact_id);
+                        if (contact_exists)
+                        {
+                            Contact new_contact = _context.Contacts.First(a => a.Id == contact_id);
+                            item.Contacts[i] = new_contact;
+                        }
+                        else
+                        {
+                            item.Contacts[i] = null;
+                        }
+                    }
+                }
+            }
+
+        }
+
         /// <summary>
         /// 
         /// </summary>
-        
+
         /// <param name="body"></param>
         /// <response code="201">SchoolBusOwners created</response>
 
@@ -56,60 +115,7 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (SchoolBusOwner item in items)
             {
-                // adjust Primary Contact.
-                if (item.PrimaryContact != null)
-                {
-                    int primary_contact_id = item.PrimaryContact.Id;
-                    var primary_contact_exists = _context.Contacts.Any(a => a.Id == primary_contact_id);
-                    if (primary_contact_exists)
-                    {
-                        Contact contact = _context.Contacts.First(a => a.Id == primary_contact_id);
-                        item.PrimaryContact = contact;
-                    }
-                    else
-                    {
-                        item.PrimaryContact = null;
-                    }                    
-                }                
-
-                // adjust District.
-                if (item.District != null)
-                {
-                    int district_id = item.District.Id;
-                    var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
-                    if (district_exists)
-                    {
-                        District district = _context.Districts.First(a => a.Id == district_id);
-                        item.District = district;
-                    }
-                    else
-                    {
-                        item.District = null;
-                    }
-                }
-
-                // adjust contacts
-                if (item.Contacts != null)
-                {
-                    for (int i = 0; i < item.Contacts.Count; i++)
-                    {
-                        Contact contact = item.Contacts[i];
-                        if (contact != null)
-                        {
-                            int contact_id = contact.Id;
-                            bool contact_exists = _context.Contacts.Any(a => a.Id == contact_id);
-                            if (contact_exists)
-                            {
-                                Contact new_contact = _context.Contacts.First(a => a.Id == contact_id);
-                                item.Contacts[i] = new_contact;
-                            }
-                            else
-                            {
-                                item.Contacts[i] = null;
-                            }
-                        }
-                    }
-                }
+                AdjustSchoolBusOwner(item);
 
                 var exists = _context.SchoolBusOwners.Any(a => a.Id == item.Id);
                 if (exists)
@@ -293,6 +299,8 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdPutAsync (int id, SchoolBusOwner body)        
         {
+            AdjustSchoolBusOwner(body);
+
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists && id == body.Id)
             {
@@ -382,9 +390,107 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersPostAsync (SchoolBusOwner body)        
         {
+            AdjustSchoolBusOwner(body);
+
             _context.SchoolBusOwners.Add(body);
             _context.SaveChanges();
             return new ObjectResult(body);
+        }
+
+        /// <summary>
+        /// Searches school bus owners
+        /// </summary>
+        /// <remarks>Used for the search school bus owners.</remarks>
+        /// <param name="districts">Districts (array of id numbers)</param>
+        /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
+        /// <param name="owner"></param>
+        /// <param name="includeInactive">True if Inactive schoolbuses will be returned</param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult SchoolbusownersSearchGetAsync(int?[] districts, int?[] inspectors, int? owner, bool? includeInactive)
+        {
+            // Eager loading of related data
+            var data = _context.SchoolBusOwners
+                .Include(x => x.Attachments)
+                .Include(x => x.Contacts)
+                .Include(x => x.District.Region)
+                .Include(x => x.History)
+                .Include(x => x.Notes)
+                .Include(x => x.PrimaryContact)
+                .Select(x => x);           
+
+            // Note that Districts searches SchoolBus Districts, not SchoolBusOwner Districts
+            if (districts != null)
+            {
+                List<int> ids = new List<int>();
+
+                // get the owner ids for matching records.                
+                foreach (int? district in districts)
+                {
+                    if (district != null)
+                    {
+                        var buses = _context.SchoolBuss.Where(x => x.District.Id == district);
+                        foreach (var bus in buses)
+                        {
+                            if (bus.SchoolBusOwner != null)
+                            {
+                                ids.Add(bus.SchoolBusOwner.Id);
+                            }
+                        }
+                        
+                    }
+                }
+
+                if (ids.Count > 0)
+                {
+                    data = data.Where(x => ids.Contains(x.Id));
+                }
+
+            }
+            
+
+            if (inspectors != null)
+            {
+                List<int> ids = new List<int>();
+
+                // get the owner ids for matching records.                
+                foreach (int? inspector in inspectors)
+                {
+                    if (inspector != null)
+                    {
+                        var buses = _context.SchoolBuss.Where(x => x.Inspector.Id == inspector);
+                        foreach (var bus in buses)
+                        {
+                            if (bus.Inspector != null)
+                            {
+                                ids.Add(bus.SchoolBusOwner.Id);
+                            }
+                        }
+                        
+                    }
+                }
+
+                if (ids.Count > 0)
+                {
+                    data = data.Where(x => ids.Contains(x.Id));
+                }
+
+            }
+
+
+
+            if (owner != null)
+            {
+                data = data.Where(x => x.Id == owner);
+            }
+
+
+            if (includeInactive == null || includeInactive == false)
+            {
+                data = data.Where(x => x.Status == "Active");
+            }            
+
+            var result = data.ToList();
+            return new ObjectResult(result);
         }
     }
 }

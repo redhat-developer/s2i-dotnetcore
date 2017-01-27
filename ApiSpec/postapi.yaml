@@ -283,7 +283,48 @@
           in: path
           description: id of SchoolBusOwner to fetch attachments for
           required: true
-          type: integer           
+          type: integer
+  /schoolbusowners/search:
+    get:
+      summary: Searches school bus owners
+      description:
+        Used for the search school bus owners.
+      tags:
+        - SchoolBusOwner
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:        
+        - name: districts
+          in: query
+          description: Districts (array of id numbers)
+          collectionFormat: multi
+          type: array
+          items:
+            type: integer
+        - name: inspectors
+          in: query
+          description: Assigned School Bus Inspectors (array of id numbers)
+          type: array
+          items:
+              type: integer
+        - name: owner
+          in: query
+          type: integer
+        - name: includeInactive
+          in: query
+          description: True if Inactive schoolbuses will be returned
+          type: boolean
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusOwner"  
   /contacts/{id}/contactphones:
     get:
       description: Returns phone contacts for a particular SchoolBusOwner
