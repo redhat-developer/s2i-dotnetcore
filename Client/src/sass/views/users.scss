@@ -1,0 +1,80 @@
+#users-list {
+  #users-search {
+    margin-top: -10px;
+
+    > div {
+      margin-top: 10px;
+    }
+
+    > label {
+      margin-top: 17px;
+      margin-left: 10px;
+      float: left;
+    }
+
+    #search-button {
+      margin-top: 10px;
+      margin-left: 20px;
+    }
+  }
+
+  #users-buttons {
+    float: right;
+
+    .btn {
+      width: 40px;
+    }
+  }
+
+  #users-faves {
+    float: right;
+    margin-top: 10px;
+  }
+
+  #users-faves-dropdown {
+    width: 79px;
+  }
+}
+
+#users-detail {
+  #users-top {
+    margin-bottom: 10px;
+  }
+
+  .well {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .label {
+    font-size: 100%;
+    margin-right: 5px;
+  }
+
+  .checkbox {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 16px;
+  }
+
+  .btn {
+    margin-left: 5px;
+  }
+
+  h1 {
+    small {
+      font-size: 85%;
+    }
+  }
+
+  h3 {
+    font-weight: 600;
+  }
+}
+
+#users-edit {
+  [class*='col-'] {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+}
