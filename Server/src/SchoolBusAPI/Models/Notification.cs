@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -112,6 +113,8 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets PriorityCode
         /// </summary>
+        [MaxLength(255)]
+        
         public string PriorityCode { get; set; }
         
         /// <summary>

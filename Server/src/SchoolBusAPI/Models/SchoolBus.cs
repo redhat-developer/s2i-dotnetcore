@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -115,6 +116,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The ICBC Registration number for the School Bus</value>
         [MetaDataExtension (Description = "The ICBC Registration number for the School Bus")]
+        [MaxLength(255)]
+        
         public string ICBCRegistrationNumber { get; set; }
         
         /// <summary>
@@ -122,6 +125,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The ICBC Plate Number for the School Bus</value>
         [MetaDataExtension (Description = "The ICBC Plate Number for the School Bus")]
+        [MaxLength(255)]
+        
         public string LicencePlateNumber { get; set; }
         
         /// <summary>
@@ -129,6 +134,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The VIN for the School Bus</value>
         [MetaDataExtension (Description = "The VIN for the School Bus")]
+        [MaxLength(17)]
+        
         public string VehicleIdentificationNumber { get; set; }
         
         /// <summary>
@@ -147,6 +154,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.</value>
         [MetaDataExtension (Description = "The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.")]
+        [MaxLength(255)]
+        
         public string PermitNumber { get; set; }
         
         /// <summary>
@@ -154,6 +163,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Enumerated type of Status - Inactive,  Active,  Archived</value>
         [MetaDataExtension (Description = "Enumerated type of Status - Inactive,  Active,  Archived")]
+        [MaxLength(255)]
+        
         public string Status { get; set; }
         
         /// <summary>
@@ -177,6 +188,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Address 1 of physical location of the School Bus.</value>
         [MetaDataExtension (Description = "Address 1 of physical location of the School Bus.")]
+        [MaxLength(255)]
+        
         public string HomeTerminalAddress1 { get; set; }
         
         /// <summary>
@@ -184,6 +197,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Address 2 of physical location of the School Bus.</value>
         [MetaDataExtension (Description = "Address 2 of physical location of the School Bus.")]
+        [MaxLength(255)]
+        
         public string HomeTerminalAddress2 { get; set; }
         
         /// <summary>
@@ -204,6 +219,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Province of physical location of the School Bus - free form.</value>
         [MetaDataExtension (Description = "Province of physical location of the School Bus - free form.")]
+        [MaxLength(255)]
+        
         public string HomeTerminalProvince { get; set; }
         
         /// <summary>
@@ -211,6 +228,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Postal Code of physical location of the School Bus.</value>
         [MetaDataExtension (Description = "Postal Code of physical location of the School Bus.")]
+        [MaxLength(255)]
+        
         public string HomeTerminalPostalCode { get; set; }
         
         /// <summary>
@@ -218,6 +237,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection</value>
         [MetaDataExtension (Description = "A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection")]
+        [MaxLength(2048)]
+        
         public string HomeTerminalComment { get; set; }
         
         /// <summary>
@@ -225,6 +246,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Text of any restrictions to be printed on the school bus permit.</value>
         [MetaDataExtension (Description = "Text of any restrictions to be printed on the school bus permit.")]
+        [MaxLength(2048)]
+        
         public string RestrictionsText { get; set; }
         
         /// <summary>
@@ -239,6 +262,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.</value>
         [MetaDataExtension (Description = "An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.")]
+        [MaxLength(255)]
+        
         public string NextInspectionTypeCode { get; set; }
         
         /// <summary>
@@ -266,6 +291,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.</value>
         [MetaDataExtension (Description = "The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.")]
+        [MaxLength(255)]
+        
         public string IndependentSchoolName { get; set; }
         
         /// <summary>
@@ -273,6 +300,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The enumerated class of School Bus.</value>
         [MetaDataExtension (Description = "The enumerated class of School Bus.")]
+        [MaxLength(255)]
+        
         public string PermitClassCode { get; set; }
         
         /// <summary>
@@ -280,6 +309,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The enumerated body type of the School Bus.</value>
         [MetaDataExtension (Description = "The enumerated body type of the School Bus.")]
+        [MaxLength(255)]
+        
         public string BodyTypeCode { get; set; }
         
         /// <summary>
@@ -287,6 +318,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The unit number of the Bus as defined by the School Bus owner - freeform text.</value>
         [MetaDataExtension (Description = "The unit number of the Bus as defined by the School Bus owner - freeform text.")]
+        [MaxLength(255)]
+        
         public string UnitNumber { get; set; }
         
         /// <summary>

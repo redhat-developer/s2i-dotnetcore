@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -71,16 +72,22 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets EventTypeCode
         /// </summary>
+        [MaxLength(255)]
+        
         public string EventTypeCode { get; set; }
         
         /// <summary>
         /// Gets or Sets EventSubTypeCode
         /// </summary>
+        [MaxLength(255)]
+        
         public string EventSubTypeCode { get; set; }
         
         /// <summary>
         /// Gets or Sets Notes
         /// </summary>
+        [MaxLength(2048)]
+        
         public string Notes { get; set; }
         
         /// <summary>

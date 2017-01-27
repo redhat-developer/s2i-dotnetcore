@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -63,6 +64,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The physical location of the attachment on the file system.</value>
         [MetaDataExtension (Description = "The physical location of the attachment on the file system.")]
+        [MaxLength(2048)]
+        
         public string InternalFileName { get; set; }
         
         /// <summary>
@@ -70,6 +73,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The name of the attachment as defined by the user in uploading the document.</value>
         [MetaDataExtension (Description = "The name of the attachment as defined by the user in uploading the document.")]
+        [MaxLength(2048)]
+        
         public string ExternalFileName { get; set; }
         
         /// <summary>
@@ -77,6 +82,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>A note about the attachment,  optionally maintained by the user.</value>
         [MetaDataExtension (Description = "A note about the attachment,  optionally maintained by the user.")]
+        [MaxLength(2048)]
+        
         public string Description { get; set; }
         
         /// <summary>

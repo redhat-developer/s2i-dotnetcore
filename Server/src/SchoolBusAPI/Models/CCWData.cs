@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -131,6 +132,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The Registration Number (Regi) is the link between the CCW information and a specific School Bus</value>
         [MetaDataExtension (Description = "The Registration Number (Regi) is the link between the CCW information and a specific School Bus")]
+        [MaxLength(255)]
+        
         public string ICBCRegistrationNumber { get; set; }
         
         /// <summary>
@@ -143,16 +146,22 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets ICBCVehicleType
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCVehicleType { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRateClass
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRateClass { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCCVIPDecal
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCCVIPDecal { get; set; }
         
         /// <summary>
@@ -168,16 +177,22 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets ICBCMake
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCMake { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCBody
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCBody { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRebuiltStatus
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRebuiltStatus { get; set; }
         
         /// <summary>
@@ -193,11 +208,15 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets ICBCModel
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCModel { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCFuel
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCFuel { get; set; }
         
         /// <summary>
@@ -208,11 +227,15 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets ICBCColour
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCColour { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCNotesAndOrders
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCNotesAndOrders { get; set; }
         
         /// <summary>
@@ -223,71 +246,99 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets ICBCRegOwnerName
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRegOwnerName { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRegOwnerAddr1
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRegOwnerAddr1 { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRegOwnerAddr2
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRegOwnerAddr2 { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRegOwnerCity
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRegOwnerCity { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRegOwnerProv
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRegOwnerProv { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRegOwnerPostalCode
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRegOwnerPostalCode { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRegOwnerStatus
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRegOwnerStatus { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRegOwnerRODL
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRegOwnerRODL { get; set; }
         
         /// <summary>
         /// Gets or Sets ICBCRegOwnerPool
         /// </summary>
+        [MaxLength(255)]
+        
         public string ICBCRegOwnerPool { get; set; }
         
         /// <summary>
         /// Gets or Sets NSCClientNum
         /// </summary>
+        [MaxLength(255)]
+        
         public string NSCClientNum { get; set; }
         
         /// <summary>
         /// Gets or Sets NSCCarrierName
         /// </summary>
+        [MaxLength(255)]
+        
         public string NSCCarrierName { get; set; }
         
         /// <summary>
         /// Gets or Sets NSCCarrierConditions
         /// </summary>
+        [MaxLength(255)]
+        
         public string NSCCarrierConditions { get; set; }
         
         /// <summary>
         /// Gets or Sets NSCCarrierSafetyRating
         /// </summary>
+        [MaxLength(255)]
+        
         public string NSCCarrierSafetyRating { get; set; }
         
         /// <summary>
         /// Gets or Sets NSCPolicyNumber
         /// </summary>
+        [MaxLength(255)]
+        
         public string NSCPolicyNumber { get; set; }
         
         /// <summary>
@@ -308,11 +359,15 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets NSCPolicyStatus
         /// </summary>
+        [MaxLength(255)]
+        
         public string NSCPolicyStatus { get; set; }
         
         /// <summary>
         /// Gets or Sets NSCPlateDecal
         /// </summary>
+        [MaxLength(255)]
+        
         public string NSCPlateDecal { get; set; }
         
         /// <summary>

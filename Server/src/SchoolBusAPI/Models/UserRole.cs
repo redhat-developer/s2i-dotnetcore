@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -41,15 +42,13 @@ namespace SchoolBusAPI.Models
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="EffectiveDate">EffectiveDate (required).</param>
         /// <param name="ExpiryDate">ExpiryDate.</param>
-        /// <param name="User">User.</param>
         /// <param name="Role">Role.</param>
-        public UserRole(int Id, DateTime EffectiveDate, DateTime? ExpiryDate = null, User User = null, Role Role = null)
+        public UserRole(int Id, DateTime EffectiveDate, DateTime? ExpiryDate = null, Role Role = null)
         {   
             this.Id = Id;
             this.EffectiveDate = EffectiveDate;
 
             this.ExpiryDate = ExpiryDate;
-            this.User = User;
             this.Role = Role;
         }
 
@@ -69,17 +68,6 @@ namespace SchoolBusAPI.Models
         /// Gets or Sets ExpiryDate
         /// </summary>
         public DateTime? ExpiryDate { get; set; }
-        
-        /// <summary>
-        /// Gets or Sets User
-        /// </summary>
-        public User User { get; set; }
-        
-        /// <summary>
-        /// Foreign key for User 
-        /// </summary>       
-        [ForeignKey("User")]
-        public int? UserRefId { get; set; }
         
         /// <summary>
         /// Gets or Sets Role
@@ -103,7 +91,6 @@ namespace SchoolBusAPI.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  EffectiveDate: ").Append(EffectiveDate).Append("\n");
             sb.Append("  ExpiryDate: ").Append(ExpiryDate).Append("\n");
-            sb.Append("  User: ").Append(User).Append("\n");
             sb.Append("  Role: ").Append(Role).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -158,11 +145,6 @@ namespace SchoolBusAPI.Models
                     this.ExpiryDate.Equals(other.ExpiryDate)
                 ) &&                 
                 (
-                    this.User == other.User ||
-                    this.User != null &&
-                    this.User.Equals(other.User)
-                ) &&                 
-                (
                     this.Role == other.Role ||
                     this.Role != null &&
                     this.Role.Equals(other.Role)
@@ -190,10 +172,6 @@ namespace SchoolBusAPI.Models
                     hash = hash * 59 + this.ExpiryDate.GetHashCode();
                 }                
                                    
-                if (this.User != null)
-                {
-                    hash = hash * 59 + this.User.GetHashCode();
-                }                   
                 if (this.Role != null)
                 {
                     hash = hash * 59 + this.Role.GetHashCode();
