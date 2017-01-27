@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2277 James Street",
+        "addr1": "4216 Robson St",
         "addr2": null,
-        "city": "Aldergrove",
+        "city": "Vancouver",
         "id": "200010",
-        "postalCode": "V5G 4S4",
+        "postalCode": "V6B 3K9",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3420 Burdett Avenue",
+        "addr1": "4537 St George Street",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Vancouver",
         "id": "200061",
-        "postalCode": "V8W IE9",
+        "postalCode": "V5T 1Z7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

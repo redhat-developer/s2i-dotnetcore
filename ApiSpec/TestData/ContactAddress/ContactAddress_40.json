@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "729 Blanshard",
+        "addr1": "998 McGill Road",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Kamloops",
         "id": "200039",
-        "postalCode": "V8W 2H9",
+        "postalCode": "V2C 5R8",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

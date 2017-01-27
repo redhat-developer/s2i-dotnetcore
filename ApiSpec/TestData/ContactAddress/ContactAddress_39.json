@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4580 Hastings Street",
+        "addr1": "4305 Essendene Avenue",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Abbotsford",
         "id": "200038",
-        "postalCode": "V6C 1B4",
+        "postalCode": "V2S 2H7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

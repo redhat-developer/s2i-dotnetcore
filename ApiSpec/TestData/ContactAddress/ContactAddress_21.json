@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4436 Quayside Dr",
+        "addr1": "2262 Burdett Avenue",
         "addr2": null,
-        "city": "New Westminster",
+        "city": "Victoria",
         "id": "200020",
-        "postalCode": "V3M 6A1",
+        "postalCode": "V8Z 2J8",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

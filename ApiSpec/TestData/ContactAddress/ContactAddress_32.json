@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4201 Jade St",
+        "addr1": "3109 Wellington Ave",
         "addr2": null,
-        "city": "West Vancouver",
+        "city": "Chilliwack",
         "id": "200031",
-        "postalCode": "V7V 1Y8",
+        "postalCode": "V2P 2M1",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

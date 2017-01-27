@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3056 Quayside Dr",
+        "addr1": "4904 Robson St",
         "addr2": null,
-        "city": "New Westminster",
+        "city": "Vancouver",
         "id": "200016",
-        "postalCode": "V3M 6A1",
+        "postalCode": "V6B 3K9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]
