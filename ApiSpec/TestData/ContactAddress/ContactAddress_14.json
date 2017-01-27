@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2578 Glover Road",
+        "addr1": "735 Blanshard",
         "addr2": null,
-        "city": "Fort Langley",
+        "city": "Victoria",
         "id": "200013",
-        "postalCode": "V3A 6X5",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3600 Cordova Street",
+        "addr1": "608 Jade St",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Richmond",
         "id": "200060",
-        "postalCode": "V6B 1E1",
+        "postalCode": "V7E 2E4",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

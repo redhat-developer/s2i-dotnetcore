@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "2487 Kinchant St",
+        "addr1": "1028 Glover Road",
         "addr2": null,
-        "city": "Kamloops",
+        "city": "Langley",
         "id": "200058",
-        "postalCode": "V2S 5R8",
+        "postalCode": "V3A 1Z3",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Bus Yard"
     }
 ]

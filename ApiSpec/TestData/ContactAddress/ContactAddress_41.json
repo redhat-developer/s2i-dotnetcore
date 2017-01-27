@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1065 Sixth Street",
+        "addr1": "2882 Carlson Road",
         "addr2": null,
-        "city": "New Westminster",
+        "city": "Prince George",
         "id": "200040",
-        "postalCode": "V3L 3C1",
+        "postalCode": "V2L 5E5",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

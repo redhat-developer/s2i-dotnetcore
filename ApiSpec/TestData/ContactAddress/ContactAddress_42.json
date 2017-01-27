@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "729 Blanshard",
+        "addr1": "101 Shaughnessy St",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Port Coquitlam",
         "id": "200041",
-        "postalCode": "V8W 2H9",
+        "postalCode": "V3C 4S7",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

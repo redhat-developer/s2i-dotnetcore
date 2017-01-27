@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4528 Nootka Street",
+        "addr1": "3854 Glover Road",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Langley",
         "id": "200066",
-        "postalCode": "V5M 3M5",
+        "postalCode": "V3A 4P6",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4528 Nootka Street",
+        "addr1": "2890 Burdett Avenue",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Victoria",
         "id": "200029",
-        "postalCode": "V5M 3M5",
+        "postalCode": "V8Y 1Y7",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]
