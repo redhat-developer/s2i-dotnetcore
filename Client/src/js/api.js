@@ -91,18 +91,23 @@ export function deleteFavourite(favourite) {
 ////////////////////
 
 function parseSchoolBus(bus) {
+  if (!bus.schoolBusOwner)   { bus.schoolBusOwner   = { id: '', name: '' }; }
+  if (!bus.district)         { bus.district         = { id: '', name: '' }; }
+  if (!bus.schoolDistrict)   { bus.schoolDistrict   = { id: '', name: '', shortName: '' }; }
+  if (!bus.homeTerminalCity) { bus.homeTerminalCity = { id: '', name: '' }; }
+  if (!bus.inspector)        { bus.inspector        = { id: '', givenName: '', surname: '' }; }
+
   bus.isActive = bus.status === 'Active';
-  bus.ownerName = bus.schoolBusOwner ? bus.schoolBusOwner.name : '';
-  bus.ownerPath = bus.schoolBusOwner ? ('#/owners/' + bus.schoolBusOwner.id) : '';
-  bus.districtName = bus.district ? bus.district.name : '';
-  bus.schoolDistrictName = bus.schoolDistrict ? bus.schoolDistrict.name : '';
-  bus.schoolDistrictShortName = bus.schoolDistrict ? bus.schoolDistrict.shortName : '';
+  bus.ownerName = bus.schoolBusOwner.name;
+  bus.ownerPath = bus.schoolBusOwner.id ? '#/owners/' + bus.schoolBusOwner.id : '';
+  bus.districtName = bus.district.name;
+  bus.schoolDistrictName = bus.schoolDistrict.name;
   bus.homeTerminalAddress = concat(bus.homeTerminalAddress1, bus.homeTerminalAddress2, ', ');
-  bus.homeTerminalCityProv = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalProvince, ', ');
-  bus.homeTerminalCityPostal = concat(bus.homeTerminalCity ? bus.homeTerminalCity.name : '', bus.homeTerminalPostalCode, ', ');
+  bus.homeTerminalCityProv = concat(bus.homeTerminalCity.name, bus.homeTerminalProvince, ', ');
+  bus.homeTerminalCityPostal = concat(bus.homeTerminalCity.name, bus.homeTerminalPostalCode, ', ');
   bus.daysToInspection = daysFromToday(bus.nextInspectionDate);
   bus.isOverdue = bus.daysToInspection < 0;
-  bus.inspectorName = bus.inspector ? firstLastName(bus.inspector.givenName, bus.inspector.surname) : '';
+  bus.inspectorName = firstLastName(bus.inspector.givenName, bus.inspector.surname);
   bus.isReinspection = bus.nextInspectionTypeCode === 'R';
 }
 
@@ -129,6 +134,17 @@ export function getSchoolBuses() {
 
 export function getSchoolBus(schoolBusId) {
   return new ApiRequest(`/schoolbuses/${schoolBusId}`).get().then(response => {
+    var bus = response;
+
+    // Add display fields
+    parseSchoolBus(bus);
+
+    store.dispatch({ type: 'UPDATE_BUS', schoolBus: bus });
+  });
+}
+
+export function updateSchoolBus(schoolBus) {
+  return new ApiRequest(`/schoolbuses/${schoolBus.id}`).put(schoolBus).then(response => {
     var bus = response;
 
     // Add display fields

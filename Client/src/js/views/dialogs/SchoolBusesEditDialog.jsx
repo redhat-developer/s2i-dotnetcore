@@ -52,6 +52,9 @@ var SchoolBusesEditDialog = React.createClass({
   getInitialState() {
     return {
       loading: false,
+      changed: false,
+
+      isNew: this.props.schoolBus.id === '',
 
       status: this.props.schoolBus.status || STATUS_ACTIVE,
       ownerId: this.props.schoolBus.schoolBusOwner ? this.props.schoolBus.schoolBusOwner.id : '',
@@ -158,7 +161,10 @@ var SchoolBusesEditDialog = React.createClass({
   },
 
   isIndependentSchoolChanged(value) {
-    this.setState({ isIndependentSchool: value });
+    this.setState({
+      isIndependentSchool: value,
+      independentSchoolName: value ? this.state.independentSchoolName : '',
+    });
   },
 
   independentSchoolNameChanged(e) {
@@ -170,15 +176,49 @@ var SchoolBusesEditDialog = React.createClass({
   },
 
   schoolBusSeatingCapacityChanged(e) {
-    this.setState({ schoolBusSeatingCapacity: e.target.value });
+    var value = parseInt(e.target.value, 10);
+    if (_.isNaN(value)) { value = 0; }
+
+    this.setState({ schoolBusSeatingCapacity: value });
   },
 
   mobilityAidCapacityChanged(e) {
-    this.setState({ mobilityAidCapacity: e.target.value });
+    var value = parseInt(e.target.value, 10);
+    if (_.isNaN(value)) { value = 0; }
+
+    this.setState({ mobilityAidCapacity: value });
   },
 
   editRestrictionsText() {
     this.setState({ disableRestrictionsText: false });
+  },
+
+  didChange() {
+    if (this.state.status !== this.props.schoolBus.status) { return true; }
+    if (this.state.ownerId !== this.props.schoolBus.schoolBusOwner.id) { return true; }
+    if (this.state.districtId !== this.props.schoolBus.district.id) { return true; }
+    if (this.state.inspectorId !== this.props.schoolBus.inspector.id) { return true; }
+
+    if (this.state.address1 !== this.props.schoolBus.homeTerminalAddress1) { return true; }
+    if (this.state.address2 !== this.props.schoolBus.homeTerminalAddress2) { return true; }
+    if (this.state.cityId !== this.props.schoolBus.homeTerminalCity.id) { return true; }
+    if (this.state.province !== this.props.schoolBus.homeTerminalProvince) { return true; }
+    if (this.state.postalCode !== this.props.schoolBus.homeTerminalPostalCode) { return true; }
+    if (this.state.description !== this.props.schoolBus.homeTerminalComment) { return true; }
+
+    if (this.state.permitClassCode !== this.props.schoolBus.permitClassCode) { return true; }
+    if (this.state.bodyTypeCode !== this.props.schoolBus.bodyTypeCode) { return true; }
+    if (this.state.restrictionsText !== this.props.schoolBus.restrictionsText) { return true; }
+
+    if (this.state.schoolDistrictId !== this.props.schoolBus.schoolDistrict.id) { return true; }
+    if (this.state.isIndependentSchool !== this.props.schoolBus.isIndependentSchool) { return true; }
+    if (this.state.independentSchoolName !== this.props.schoolBus.independentSchoolName) { return true; }
+
+    if (this.state.unitNumber !== this.props.schoolBus.unitNumber) { return true; }
+    if (this.state.schoolBusSeatingCapacity !== this.props.schoolBus.schoolBusSeatingCapacity) { return true; }
+    if (this.state.mobilityAidCapacity !== this.props.schoolBus.mobilityAidCapacity) { return true; }
+
+    return false;
   },
 
   save() {
@@ -187,11 +227,31 @@ var SchoolBusesEditDialog = React.createClass({
     } else if (isBlank(this.state.mobilityAidCapacity)) {
       this.setState({ mobilityAidCapacityError: 'Mobility aid capacity is required' });
     } else {
-      this.props.onSave();
-      // this.props.onSave({ ...this.props.schoolBus, ...{
-      //   name: this.state.name,
-      //   isDefault: this.state.isDefault,
-      // }});
+      if (this.didChange()) {
+        this.props.onSave({ ...this.props.schoolBus, ...{
+          status: this.state.status,
+          schoolBusOwner: { id: this.state.ownerId },
+          district: { id: this.state.districtId },
+          inspector: { id: this.state.inspectorId },
+          homeTerminalAddress1: this.state.address1,
+          homeTerminalAddress2: this.state.address2,
+          homeTerminalCity: { id: this.state.cityId },
+          homeTerminalProvince: this.state.province,
+          homeTerminalPostalCode: this.state.postalCode,
+          homeTerminalComment: this.state.description,
+          permitClassCode: this.state.permitClassCode,
+          bodyTypeCode: this.state.bodyTypeCode,
+          restrictionsText: this.state.restrictionsText,
+          schoolDistrict: { id: this.state.schoolDistrictId },
+          isIndependentSchool: this.state.isIndependentSchool,
+          independentSchoolName: this.state.independentSchoolName,
+          unitNumber: this.state.unitNumber,
+          schoolBusSeatingCapacity: this.state.schoolBusSeatingCapacity,
+          mobilityAidCapacity: this.state.mobilityAidCapacity,
+        }});
+      } else {
+        this.props.onClose();
+      }
     }
   },
 
@@ -206,9 +266,9 @@ var SchoolBusesEditDialog = React.createClass({
       <Modal.Header closeButton>
         <Modal.Title>
           <strong>School Bus
-            &nbsp;<small>Regi: { this.props.schoolBus.icbcRegistrationNumber }
-            &nbsp;Plate: { this.props.schoolBus.licencePlateNumber }
-            &nbsp;VIN: { this.props.schoolBus.vehicleIdentificationNumber }</small>
+            <span>Regi: <small>{ this.props.schoolBus.icbcRegistrationNumber }</small></span>
+            <span>Plate: <small>{ this.props.schoolBus.licencePlateNumber }</small></span>
+            <span>VIN: <small>{ this.props.schoolBus.vehicleIdentificationNumber }</small></span>
           </strong>
         </Modal.Title>
       </Modal.Header>
@@ -231,7 +291,7 @@ var SchoolBusesEditDialog = React.createClass({
                 <Col md={3}>
                   <FormGroup>
                     <ControlLabel>Owner</ControlLabel>
-                    <FormControl componentClass="select" value={ this.state.ownerId } onChange={ this.ownerIdChanged }>
+                    <FormControl componentClass="select" value={ this.state.ownerId } onChange={ this.ownerIdChanged } disabled={ this.state.isNew }>
                       {
                         owners.map((owner) => {
                           return <option key={ owner.id } value={ owner.id }>{ owner.name }</option>;
@@ -389,7 +449,7 @@ var SchoolBusesEditDialog = React.createClass({
                 <Col md={5}>
                   <FormGroup>
                     <ControlLabel>Independent School Name</ControlLabel>
-                    <FormControl type="text" defaultValue={ this.state.independentSchoolName } onChange={ this.independentSchoolNameChanged } disabled= { !this.state.isIndependentSchool }/>
+                    <FormControl type="text" value={ this.state.independentSchoolName } onChange={ this.independentSchoolNameChanged } disabled= { !this.state.isIndependentSchool }/>
                   </FormGroup>
                 </Col>
               </Row>
@@ -431,10 +491,10 @@ function mapStateToProps(state) {
   return {
     schoolBus: state.models.schoolBus,
     districts: state.lookups.districts,
-    inspectors: state.models.inspectors,
+    inspectors: state.lookups.inspectors,
     cities: state.lookups.cities,
     schoolDistricts: state.lookups.schoolDistricts,
-    owners: state.models.owners,
+    owners: state.lookups.owners,
   };
 }
 

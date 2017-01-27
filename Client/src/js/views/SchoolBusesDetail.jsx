@@ -103,8 +103,11 @@ var SchoolBusesDetail = React.createClass({
     this.setState({ showEditDialog: false });
   },
 
-  saveEdit() {
-    this.closeEditDialog();
+  saveEdit(schoolBus) {
+    Api.updateSchoolBus(schoolBus).finally(() => {
+      this.closeEditDialog();
+    });
+
   },
 
   render() {
