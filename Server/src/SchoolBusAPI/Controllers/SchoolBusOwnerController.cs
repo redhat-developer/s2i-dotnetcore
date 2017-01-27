@@ -169,5 +169,23 @@ namespace SchoolBusAPI.Controllers
         {
             return this._service.SchoolbusownersPostAsync(item);
         }
+
+        /// <summary>
+        /// Searches school bus owners
+        /// </summary>
+        /// <remarks>Used for the search school bus owners.</remarks>
+        /// <param name="districts">Districts (array of id numbers)</param>
+        /// <param name="inspectors">Assigned School Bus Inspectors (array of id numbers)</param>
+        /// <param name="owner"></param>
+        /// <param name="includeInactive">True if Inactive schoolbuses will be returned</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/schoolbusowners/search")]
+        [SwaggerOperation("SchoolbusownersSearchGet")]
+        [SwaggerResponse(200, type: typeof(List<SchoolBusOwner>))]
+        public virtual IActionResult SchoolbusownersSearchGet([FromQuery]int?[] districts, [FromQuery]int?[] inspectors, [FromQuery]int? owner, [FromQuery]bool? includeInactive)
+        {
+            return this._service.SchoolbusownersSearchGetAsync(districts, inspectors, owner, includeInactive);
+        }
     }
 }
