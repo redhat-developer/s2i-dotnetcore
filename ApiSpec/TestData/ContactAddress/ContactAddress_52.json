@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3121 Blanshard",
+        "addr1": "4819 Wallace Street",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Nanaimo",
         "id": "200051",
-        "postalCode": "V8W 2H9",
+        "postalCode": "V9R 3A8",
         "province": "BC",
-        "type": "Headquarters"
+        "type": "Field Office"
     }
 ]

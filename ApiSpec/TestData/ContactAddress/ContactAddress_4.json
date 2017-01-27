@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4397 Burdett Avenue",
+        "addr1": "729 Blanshard",
         "addr2": null,
-        "city": "Terrace",
+        "city": "Victoria",
         "id": "200003",
-        "postalCode": "V8G 1S2",
+        "postalCode": "V8W 2H9",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Headquarters"
     }
 ]

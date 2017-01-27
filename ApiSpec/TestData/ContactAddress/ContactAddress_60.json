@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4283 Burdett Avenue",
+        "addr1": "4357 Hastings Street",
         "addr2": null,
-        "city": "Victoria",
+        "city": "Vancouver",
         "id": "200059",
-        "postalCode": "V8W 1L6",
+        "postalCode": "V6C 1B4",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "1369 Tolmie St",
+        "addr1": "2420 Roger Street",
         "addr2": null,
-        "city": "Vancouver",
+        "city": "Duncan",
         "id": "200014",
-        "postalCode": "V6M 1Y8",
+        "postalCode": "V9L 1E5",
         "province": "BC",
-        "type": "Field Office"
+        "type": "Bus Yard"
     }
 ]

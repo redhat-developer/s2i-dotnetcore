@@ -1,10 +1,10 @@
 [
     {
-        "addr1": "4600 Roger Street",
+        "addr1": "3121 Blanshard",
         "addr2": null,
-        "city": "Nanaimo",
+        "city": "Victoria",
         "id": "200047",
-        "postalCode": "V9R 5H9",
+        "postalCode": "V8W 2H9",
         "province": "BC",
         "type": "Bus Yard"
     }

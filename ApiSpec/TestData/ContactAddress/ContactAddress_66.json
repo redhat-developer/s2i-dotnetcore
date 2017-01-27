@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4963 Kinchant St",
+        "addr1": "2549 James Street",
         "addr2": null,
-        "city": "Kamloops",
+        "city": "Burnaby",
         "id": "200065",
-        "postalCode": "V2C 1Y1",
+        "postalCode": "V5G 4W7",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]

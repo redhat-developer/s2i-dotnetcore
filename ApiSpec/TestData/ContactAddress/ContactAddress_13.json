@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "4173 James Street",
+        "addr1": "4834 Queens Bay",
         "addr2": null,
-        "city": "Burnaby",
+        "city": "Castlegar",
         "id": "200012",
-        "postalCode": "V5G 4W7",
+        "postalCode": "V0G 2G0",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Field Office"
     }
 ]

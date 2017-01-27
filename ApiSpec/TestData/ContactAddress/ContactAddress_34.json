@@ -1,11 +1,11 @@
 [
     {
-        "addr1": "3100 Shaughnessy St",
+        "addr1": "2487 Kinchant St",
         "addr2": null,
-        "city": "Port Coquitlam",
+        "city": "Kamloops",
         "id": "200033",
-        "postalCode": "V3C 4S7",
+        "postalCode": "V2S 5R8",
         "province": "BC",
-        "type": "Bus Yard"
+        "type": "Headquarters"
     }
 ]
