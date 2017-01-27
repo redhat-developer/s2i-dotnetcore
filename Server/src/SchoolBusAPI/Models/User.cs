@@ -181,59 +181,49 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return                 
+            return
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) &&                 
+                ) &&
                 (
                     this.Active == other.Active ||
                     this.Active.Equals(other.Active)
-                ) &&                 
+                ) &&
                 (
                     this.GivenName == other.GivenName ||
                     this.GivenName != null &&
                     this.GivenName.Equals(other.GivenName)
-                ) &&                 
+                ) &&
                 (
                     this.Surname == other.Surname ||
                     this.Surname != null &&
                     this.Surname.Equals(other.Surname)
-                ) &&                 
+                ) &&
                 (
                     this.Initials == other.Initials ||
                     this.Initials != null &&
                     this.Initials.Equals(other.Initials)
-                ) &&                 
+                ) &&
                 (
                     this.Email == other.Email ||
                     this.Email != null &&
                     this.Email.Equals(other.Email)
-                ) &&                 
+                ) &&
                 (
                     this.SmUserId == other.SmUserId ||
                     this.SmUserId != null &&
                     this.SmUserId.Equals(other.SmUserId)
-                ) &&                 
+                ) &&
                 (
                     this.Guid == other.Guid ||
                     this.Guid != null &&
                     this.Guid.Equals(other.Guid)
-                ) &&                 
+                ) &&
                 (
                     this.SmAuthorizationDirectory == other.SmAuthorizationDirectory ||
                     this.SmAuthorizationDirectory != null &&
                     this.SmAuthorizationDirectory.Equals(other.SmAuthorizationDirectory)
-                ) && 
-                (
-                    this.UserRoles == other.UserRoles ||
-                    this.UserRoles != null &&
-                    this.UserRoles.SequenceEqual(other.UserRoles)
-                ) && 
-                (
-                    this.GroupMemberships == other.GroupMemberships ||
-                    this.GroupMemberships != null &&
-                    this.GroupMemberships.SequenceEqual(other.GroupMemberships)
                 );
         }
 

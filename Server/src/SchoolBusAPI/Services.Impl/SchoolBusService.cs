@@ -491,7 +491,13 @@ namespace SchoolBusAPI.Services.Impl
 
                 if (inspectors != null)
                 {
-                    // no inspectors yet.
+                    foreach (int? inspector in inspectors)
+                    {
+                        if (inspector != null)
+                        {
+                            data = data.Where(x => x.Inspector.Id == inspector);
+                        }
+                    }
                 }
 
                 if (cities != null)
