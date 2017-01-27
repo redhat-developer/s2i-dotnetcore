@@ -104,7 +104,7 @@ var Owners = React.createClass({
   },
 
   updateSearchState(state, callback) {
-    this.setState({ search: { ...this.state.search, ...state }}, () =>{
+    this.setState({ search: { ...this.state.search, ...state, ...{ loaded: true } }}, () =>{
       store.dispatch({ type: 'UPDATE_OWNERS_SEARCH', owners: this.state.search });
       if (callback) { callback(); }
     });
