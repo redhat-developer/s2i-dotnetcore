@@ -21,16 +21,6 @@ import { formatDateTime } from '../utils/date';
 
 /*
 
-Pretty straight forward search after School Bus search.
-
-All parameters (District, Inspector, Owner) are handled the same as for School Bus search.
-  District and Inspector are searches on School Buses to find SB Owners that have buses in those Districts/assigned to those owners
-  District and Inspector are not (currently) fields on the School Bus Owner record. We may add them later, but they aren't right now.
-
-On the search results - display information about the Primary Contact
-
-On the search results remove the "District" (currently Service Area) column, as it is not a unique field per SB Owner (on buses, not on SB Owner).
-
 Default search rules:
   Set the "Inspector" field if the user is an inspector
   Set the "District" field if the user is NOT an inspector to the users home district
@@ -42,6 +32,7 @@ TODO:
 
 var Owners = React.createClass({
   propTypes: {
+    ownerList: React.PropTypes.object,
     districts: React.PropTypes.object,
     inspectors: React.PropTypes.object,
     owners: React.PropTypes.object,
@@ -223,11 +214,11 @@ var Owners = React.createClass({
 
       {(() => {
         if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-        if (Object.keys(this.props.owners).length === 0) { return <Alert bsStyle="success">No owners</Alert>; }
+        if (Object.keys(this.props.ownerList).length === 0) { return <Alert bsStyle="success">No owners</Alert>; }
 
-        var owners = _.sortBy(this.props.owners, this.state.ui.sortField);
+        var ownerList = _.sortBy(this.props.ownerList, this.state.ui.sortField);
         if (this.state.ui.sortDesc) {
-          _.reverse(owners);
+          _.reverse(ownerList);
         }
 
         var buildHeader = (field, title, style) => {
@@ -250,7 +241,7 @@ var Owners = React.createClass({
           </thead>
           <tbody>
           {
-            _.map(owners, (owner) => {
+            _.map(ownerList, (owner) => {
               return <tr key={ owner.id } className={ owner.status != 'Active' ? 'info' : null }>
                 <td>{ owner.name }</td>
                 <td>{ owner.primaryContactName }</td>
@@ -278,6 +269,7 @@ var Owners = React.createClass({
 
 function mapStateToProps(state) {
   return {
+    ownerList: state.models.owners,
     districts: state.lookups.districts,
     inspectors: state.lookups.inspectors,
     owners: state.lookups.owners,
