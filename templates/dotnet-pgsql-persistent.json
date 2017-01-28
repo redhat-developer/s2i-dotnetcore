@@ -87,7 +87,13 @@
                             "kind": "ImageStreamTag",
                             "namespace": "${NAMESPACE}",
                             "name": "${DOTNET_IMAGE_STREAM_TAG}"
-                        }
+                        },
+                        "env": [
+                            {
+                                "name": "DOTNET_STARTUP_PROJECT",
+                                "value": "${DOTNET_STARTUP_PROJECT}"
+                            }
+                        ]
                     }
                 },
                 "output": {
