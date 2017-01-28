@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
+import { Well, Alert, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton, MenuItem, Button, ButtonGroup, Glyphicon, Checkbox } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -15,6 +15,7 @@ import store from '../store';
 import BadgeLabel from '../components/BadgeLabel.jsx';
 import Favourites from '../components/Favourites.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
+import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTime } from '../utils/date';
@@ -221,25 +222,15 @@ var Owners = React.createClass({
           _.reverse(ownerList);
         }
 
-        var buildHeader = (field, title, style) => {
-          var sortGlyph = '';
-          if (this.state.ui.sortField === field) {
-            sortGlyph = <span>&nbsp;<Glyphicon glyph={ this.state.ui.sortDesc ? 'sort-by-attributes-alt' : 'sort-by-attributes' }/></span>;
-          }
-          return <th id={ field } onClick={ this.sort } style={{ ...style, cursor: 'pointer' }}>{ title }{ sortGlyph }</th>;
-        };
+        var headers = [
+          { field: 'name',               title: 'Name'            },
+          { field: 'primaryContactName', title: 'Primary Contact' },
+          { field: 'schoolBusCount',     title: 'School Buses',    style:{ textAlign: 'center' } },
+          { field: 'nextInspectionDate', title: 'Next Inspection', style:{ textAlign: 'center' } },
+          { field: 'blank' },
+        ];
 
-        return <Table condensed striped>
-          <thead>
-            <tr>
-              { buildHeader('name', 'Name') }
-              { buildHeader('primaryContactName', 'Primary Contact') }
-              { buildHeader('schoolBusCount', 'School Buses', { textAlign: 'center' }) }
-              { buildHeader('nextInspectionDate', 'Next Inspection', { textAlign: 'center' }) }
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.sort } headers={ headers }>
           {
             _.map(ownerList, (owner) => {
               return <tr key={ owner.id } className={ owner.status != 'Active' ? 'info' : null }>
@@ -258,8 +249,7 @@ var Owners = React.createClass({
               </tr>;
             })
           }
-          </tbody>
-        </Table>;
+        </SortTable>;
       })()}
 
     </div>;

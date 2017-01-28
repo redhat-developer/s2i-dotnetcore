@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
+import { Well, Alert, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton, MenuItem, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { Form, FormControl, InputGroup, Checkbox } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -18,6 +18,7 @@ import BadgeLabel from '../components/BadgeLabel.jsx';
 import DateControl from '../components/DateControl.jsx';
 import Favourites from '../components/Favourites.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
+import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTime } from '../utils/date';
@@ -409,29 +410,19 @@ var SchoolBuses = React.createClass({
           _.reverse(schoolBuses);
         }
 
-        var buildHeader = (id, title) => {
-          var sortGlyph = '';
-          if (this.state.ui.sortField === id) {
-            sortGlyph = <span>&nbsp;<Glyphicon glyph={ this.state.ui.sortDesc ? 'sort-by-attributes-alt' : 'sort-by-attributes' }/></span>;
-          }
-          return <th id={ id } onClick={ this.sort }>{ title }{ sortGlyph }</th>;
-        };
+        var headers = [
+          { field: 'ownerName',              title: 'Owner'           },
+          { field: 'districtName',           title: 'District'        },
+          { field: 'homeTerminal',           title: 'Home Terminal'   },
+          { field: 'icbcRegistrationNumber', title: 'Regi'            },
+          { field: 'unitNumber',             title: 'Fleet Unit #'    },
+          { field: 'permitNumber',           title: 'Permit'          },
+          { field: 'nextInspectionDate',     title: 'Next Inspection' },
+          { field: 'inspectorName',          title: 'Inspector'       },
+          { field: 'blank' },
+        ];
 
-        return <Table condensed striped>
-          <thead>
-            <tr>
-              { buildHeader('ownerName', 'Owner') }
-              { buildHeader('districtName', 'District') }
-              { buildHeader('homeTerminal', 'Home Terminal') }
-              { buildHeader('icbcRegistrationNumber', 'Regi') }
-              { buildHeader('unitNumber', 'Fleet Unit #') }
-              { buildHeader('permitNumber', 'Permit') }
-              { buildHeader('nextInspectionDate', 'Next Inspection') }
-              { buildHeader('inspectorName', 'Inspector') }
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.sort } headers={ headers }>
           {
             _.map(schoolBuses, (bus) => {
               return <tr key={ bus.id } className={ bus.status != 'Active' ? 'info' : null }>
@@ -454,8 +445,7 @@ var SchoolBuses = React.createClass({
               </tr>;
             })
           }
-          </tbody>
-        </Table>;
+        </SortTable>;
       })()}
 
     </div>;

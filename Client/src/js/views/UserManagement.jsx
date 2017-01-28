@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
+import { Well, Alert, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, Button, ButtonGroup, Glyphicon, Checkbox } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -15,6 +15,7 @@ import store from '../store';
 import Confirm from '../components/Confirm.jsx';
 import Favourites from '../components/Favourites.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
+import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 /*
@@ -175,24 +176,14 @@ var UserManagement = React.createClass({
           _.reverse(users);
         }
 
-        var buildHeader = (field, title, style) => {
-          var sortGlyph = '';
-          if (this.state.ui.sortField === field) {
-            sortGlyph = <span>&nbsp;<Glyphicon glyph={ this.state.ui.sortDesc ? 'sort-by-attributes-alt' : 'sort-by-attributes' }/></span>;
-          }
-          return <th id={ field } onClick={ this.sort } style={{ ...style, cursor: 'pointer' }}>{ title }{ sortGlyph }</th>;
-        };
+        var headers = [
+          { field: 'surname',   title: 'Surname'    },
+          { field: 'givenName', title: 'First Name' },
+          { field: 'initials',  title: 'Initials'   },
+          { field: 'blank' },
+        ];
 
-        return <Table condensed striped>
-          <thead>
-            <tr>
-              { buildHeader('surname', 'Surname') }
-              { buildHeader('givenName', 'First Name') }
-              { buildHeader('initials', 'Initials') }
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.sort } headers={ headers }>
           {
             _.map(users, (user) => {
               return <tr key={ user.id } className={ user.active ? null : 'info' }>
@@ -212,8 +203,7 @@ var UserManagement = React.createClass({
               </tr>;
             })
           }
-          </tbody>
-        </Table>;
+        </SortTable>;
       })()}
 
     </div>;
