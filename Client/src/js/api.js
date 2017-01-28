@@ -1,6 +1,6 @@
 import store from './store';
 
-import { daysFromToday } from './utils/date';
+import { daysFromToday, hoursAgo, sortable } from './utils/date';
 import { ApiRequest } from './utils/http';
 import { lastFirstName, firstLastName, concat } from './utils/string';
 
@@ -106,9 +106,10 @@ function parseSchoolBus(bus) {
   bus.homeTerminalCityProv = concat(bus.homeTerminalCity.name, bus.homeTerminalProvince, ', ');
   bus.homeTerminalCityPostal = concat(bus.homeTerminalCity.name, bus.homeTerminalPostalCode, ', ');
   bus.daysToInspection = daysFromToday(bus.nextInspectionDate);
+  bus.nextInspectionDateSort = sortable(bus.nextInspectionDate);
   bus.isOverdue = bus.daysToInspection < 0;
   bus.inspectorName = firstLastName(bus.inspector.givenName, bus.inspector.surname);
-  bus.isReinspection = bus.nextInspectionTypeCode === 'R';
+  bus.isReinspection = bus.nextInspectionTypeCode === 'Re-Inspection';
 }
 
 export function searchSchoolBuses(params) {
@@ -207,6 +208,9 @@ export function getSchoolBusNotes(schoolBusId) {
 
 function parseInspection(inspection) {
   inspection.inspectorName = inspection.inspector ? firstLastName(inspection.inspector.givenName, inspection.inspector.surname) : '';
+  inspection.isReinspection = inspection.inspectionTypeCode === 'Re-Inspection';
+  inspection.canDelete = hoursAgo(inspection.createdDate) <= 24;
+  inspection.inspectionDateSort = sortable(inspection.inspectionDate);
 }
 
 
@@ -215,11 +219,12 @@ function parseInspection(inspection) {
 ////////////////////
 
 function parseOwner(owner) {
-  owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
   owner.schoolBusCount = 1;
   owner.nextInspectionDate = '2017-02-21';
   owner.nextInspectionTypeCode = 'R';
 
+  owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
+  owner.nextInspectionDateSort = sortable(owner.nextInspectionDate);
   owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
   owner.isOverdue = owner.daysToInspection < 0;
   owner.isReinspection = owner.nextInspectionTypeCode === 'R';

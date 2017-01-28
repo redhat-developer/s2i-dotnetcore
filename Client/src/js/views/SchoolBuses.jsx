@@ -298,18 +298,6 @@ var SchoolBuses = React.createClass({
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
 
-  sort(e) {
-    var newState = {};
-    if (this.state.ui.sortField !== e.currentTarget.id) {
-      newState.sortField = e.currentTarget.id;
-      newState.sortDesc = false;
-    } else {
-      newState.sortDesc = !this.state.ui.sortDesc;
-    }
-
-    this.updateUIState(newState);
-  },
-
   email() {
 
   },
@@ -413,16 +401,16 @@ var SchoolBuses = React.createClass({
         var headers = [
           { field: 'ownerName',              title: 'Owner'           },
           { field: 'districtName',           title: 'District'        },
-          { field: 'homeTerminal',           title: 'Home Terminal'   },
+          { field: 'homeTerminalCityPostal', title: 'Home Terminal'   },
           { field: 'icbcRegistrationNumber', title: 'Regi'            },
           { field: 'unitNumber',             title: 'Fleet Unit #'    },
           { field: 'permitNumber',           title: 'Permit'          },
-          { field: 'nextInspectionDate',     title: 'Next Inspection' },
+          { field: 'nextInspectionDateSort', title: 'Next Inspection' },
           { field: 'inspectorName',          title: 'Inspector'       },
           { field: 'blank' },
         ];
 
-        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.sort } headers={ headers }>
+        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
           {
             _.map(schoolBuses, (bus) => {
               return <tr key={ bus.id } className={ bus.status != 'Active' ? 'info' : null }>

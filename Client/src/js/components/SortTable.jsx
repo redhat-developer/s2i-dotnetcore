@@ -9,16 +9,23 @@ var SortTable = React.createClass({
     // Array of objects with key, title, style fields
     headers: React.PropTypes.array.isRequired,
     // This should be a from a state.ui object
-    sortField: React.PropTypes.object.isRequired,
+    sortField: React.PropTypes.string.isRequired,
     // This should be a from a state.ui object
     sortDesc: React.PropTypes.bool.isRequired,
     onSort: React.PropTypes.func.isRequired,
-    maxHeight: React.PropTypes.string,
+    id: React.PropTypes.string,
     children: React.PropTypes.node,
   },
 
+  sort(e) {
+    this.props.onSort({
+      sortField: e.currentTarget.id,
+      sortDesc: this.props.sortField !== e.currentTarget.id ? false : !this.props.sortDesc,
+    });
+  },
+
   render() {
-    return <div style={ this.props.maxHeight ? { maxHeight: this.props.maxHeight, width: '100%', overflowY: 'scroll' } : {}}>
+    return <div id={ this.props.id }>
       <Table condensed striped>
         <thead>
           <tr>
@@ -32,7 +39,7 @@ var SortTable = React.createClass({
                 if (this.props.sortField === header.field) {
                   sortGlyph = <span>&nbsp;<Glyphicon glyph={ this.props.sortDesc ? 'sort-by-attributes-alt' : 'sort-by-attributes' }/></span>;
                 }
-                return <th id={ header.field } key={ header.field } onClick={ this.props.onSort } style={{ ...header.style, cursor: 'pointer' }}>{ header.title }{ sortGlyph }</th>;
+                return <th id={ header.field } key={ header.field } onClick={ this.sort } style={{ ...header.style, cursor: 'pointer' }}>{ header.title }{ sortGlyph }</th>;
               })
             }
           </tr>

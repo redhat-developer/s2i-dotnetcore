@@ -7,6 +7,7 @@ const DEFAULT_STATE = {
   schoolBuses: {},
   owners: {},
   users: {},
+  inspections: {},
 };
 
 export default function uiReducer(state = DEFAULT_STATE, action) {
@@ -35,6 +36,9 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
 
     case 'UPDATE_USERS_UI':
       return { ...state, users: action.users };
+
+    case 'UPDATE_INSPECTIONS_UI':
+      return { ...state, inspections: action.inspections };
   }
 
   return { ...state, ...newState };

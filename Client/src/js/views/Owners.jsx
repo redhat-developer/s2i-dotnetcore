@@ -153,18 +153,6 @@ var Owners = React.createClass({
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
 
-  sort(e) {
-    var newState = {};
-    if (this.state.ui.sortField !== e.currentTarget.id) {
-      newState.sortField = e.currentTarget.id;
-      newState.sortDesc = false;
-    } else {
-      newState.sortDesc = !this.state.ui.sortDesc;
-    }
-
-    this.updateUIState(newState);
-  },
-
   email() {
 
   },
@@ -223,14 +211,14 @@ var Owners = React.createClass({
         }
 
         var headers = [
-          { field: 'name',               title: 'Name'            },
-          { field: 'primaryContactName', title: 'Primary Contact' },
-          { field: 'schoolBusCount',     title: 'School Buses',    style:{ textAlign: 'center' } },
-          { field: 'nextInspectionDate', title: 'Next Inspection', style:{ textAlign: 'center' } },
+          { field: 'name',                   title: 'Name'            },
+          { field: 'primaryContactName',     title: 'Primary Contact' },
+          { field: 'schoolBusCount',         title: 'School Buses',    style:{ textAlign: 'center' } },
+          { field: 'nextInspectionDateSort', title: 'Next Inspection', style:{ textAlign: 'center' } },
           { field: 'blank' },
         ];
 
-        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.sort } headers={ headers }>
+        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
           {
             _.map(ownerList, (owner) => {
               return <tr key={ owner.id } className={ owner.status != 'Active' ? 'info' : null }>

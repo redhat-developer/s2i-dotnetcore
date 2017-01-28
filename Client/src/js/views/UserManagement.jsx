@@ -119,18 +119,6 @@ var UserManagement = React.createClass({
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
 
-  sort(e) {
-    var newState = {};
-    if (this.state.ui.sortField !== e.currentTarget.id) {
-      newState.sortField = e.currentTarget.id;
-      newState.sortDesc = false;
-    } else {
-      newState.sortDesc = !this.state.ui.sortDesc;
-    }
-
-    this.updateUIState(newState);
-  },
-
   email() {
 
   },
@@ -183,7 +171,7 @@ var UserManagement = React.createClass({
           { field: 'blank' },
         ];
 
-        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.sort } headers={ headers }>
+        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
           {
             _.map(users, (user) => {
               return <tr key={ user.id } className={ user.active ? null : 'info' }>

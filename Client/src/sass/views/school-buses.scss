@@ -83,6 +83,10 @@
     margin-left: 5px;
   }
 
+  .btn-group > .btn + .btn {
+    margin-left: -1px;
+  }
+
   h1 {
     small {
       font-size: 85%;

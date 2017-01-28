@@ -14,9 +14,23 @@ export function formatDateTime(dateTime, format) {
   return dt.format(format);
 }
 
+export function sortable(dateTime) {
+  if (!dateTime) { return 0; }
+  var dt = Moment(dateTime);
+  if (!dt || !dt.isValid()) { return 0; }
+  return dt.unix();
+}
+
 export function daysFromToday(dateTime) {
   var dt = Moment(dateTime);
   if (!dt || !dt.isValid()) { return 0; }
   var now = Moment();
   return dt.diff(now, 'days');
+}
+
+export function hoursAgo(dateTime) {
+  var dt = Moment(dateTime);
+  if (!dt || !dt.isValid()) { return 0; }
+  var now = Moment();
+  return now.diff(dt, 'hours');
 }

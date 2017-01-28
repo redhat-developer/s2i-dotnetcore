@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Well, Row, Col  } from 'react-bootstrap';
-import { Alert, Label, Button, Glyphicon, Checkbox, Table  } from 'react-bootstrap';
+import { Alert, Label, Button, ButtonGroup, Glyphicon, Checkbox  } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
@@ -11,9 +11,14 @@ import _ from 'lodash';
 import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
 
 import * as Api from '../api';
+import store from '../store';
 
+import BadgeLabel from '../components/BadgeLabel.jsx';
 import ColField from '../components/ColField.jsx';
 import ColLabel from '../components/ColLabel.jsx';
+import Confirm from '../components/Confirm.jsx';
+import OverlayTrigger from '../components/OverlayTrigger.jsx';
+import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTime } from '../utils/date';
@@ -30,6 +35,8 @@ var SchoolBusesDetail = React.createClass({
     schoolBusHistories: React.PropTypes.object,
     schoolBusInspections: React.PropTypes.object,
     schoolBusNotes: React.PropTypes.object,
+    ui: React.PropTypes.object,
+
     params: React.PropTypes.object,
   },
 
@@ -43,6 +50,11 @@ var SchoolBusesDetail = React.createClass({
       loadingSchoolBusNotes: false,
 
       showEditDialog: false,
+
+      ui : {
+        sortField: this.props.ui.sortField || 'inspectionDateSort',
+        sortDesc: this.props.ui.sortDesc === true,
+      },
     };
   },
 
@@ -82,6 +94,13 @@ var SchoolBusesDetail = React.createClass({
     });
   },
 
+  updateUIState(state, callback) {
+    this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
+      store.dispatch({ type: 'UPDATE_INSPECTIONS_UI', inspections: this.state.ui });
+      if (callback) { callback(); }
+    });
+  },
+
   showNotes() {
   },
 
@@ -107,6 +126,18 @@ var SchoolBusesDetail = React.createClass({
     Api.updateSchoolBus(schoolBus).finally(() => {
       this.closeEditDialog();
     });
+
+  },
+
+  editInspection(inspection) {
+
+  },
+
+  deleteInspection(inspection) {
+
+  },
+
+  saveInspection(inspection) {
 
   },
 
@@ -223,7 +254,7 @@ var SchoolBusesDetail = React.createClass({
                   <Row>
                     <ColLabel md={4}>Independent School</ColLabel>
                     <ColField md={1}><Checkbox checked={ bus.isIndependentSchool } disabled></Checkbox></ColField>
-                    <ColField md={6}>{ bus.independentSchoolName }</ColField>
+                    <ColField md={7}>{ bus.independentSchoolName }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Unit Number</ColLabel>
@@ -242,38 +273,48 @@ var SchoolBusesDetail = React.createClass({
           </Col>
           <Col md={6}>
             <Well>
-              <h3>Inspection History</h3>
-              <div className="text-right"><Button><Glyphicon glyph="plus" /> Add</Button></div>
+              <h3>Inspection History <span className="pull-right"><Button title="addInspection" bsSize="small"><Glyphicon glyph="plus" /></Button></span></h3>
               {(() => {
                 if (this.state.loadingSchoolBusInspections ) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
                 if (Object.keys(this.props.schoolBusInspections).length === 0) { return <Alert bsStyle="success" style={{ marginTop: 10 }}>No inspections</Alert>; }
 
-                return <Table condensed striped>
-                  <thead>
-                    <tr>
-                      <th>Inspection Date</th>
-                      <th>Type</th>
-                      <th>Status</th>
-                      <th>Inspector</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {
-                    _.map(this.props.schoolBusInspections, (inspection) => {
-                      var editPath = '#/inspections/' + inspection.id;
+                var inspections = _.sortBy(this.props.schoolBusInspections, this.state.ui.sortField);
+                if (this.state.ui.sortDesc) {
+                  _.reverse(inspections);
+                }
 
-                      return <tr key={ inspection.id } className={ bus.isActive ? 'info' : null }>
+                var headers = [
+                  { field: 'inspectionDateSort',   title: 'Inspection Date' },
+                  { field: 'inspectionTypeCode',   title: 'Type'            },
+                  { field: 'inspectionResultCode', title: 'Status'          },
+                  { field: 'inspectorName',        title: 'Inspector'       },
+                  { field: 'blank' },
+                ];
+
+                return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
+                  {
+                    _.map(inspections, (inspection) => {
+                      return <tr key={ inspection.id }>
                         <td>{ formatDateTime(inspection.inspectionDate, 'YYYY-MM-DD') }</td>
-                        <td>{ inspection.inspectionTypeCode }</td>
-                        <td><a href={ editPath }>{ inspection.inspectionResultCode }</a></td>
+                        <td>{ inspection.inspectionTypeCode }
+                          { inspection.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
+                        </td>
+                        <td>{ inspection.inspectionResultCode }</td>
                         <td>{ inspection.inspectorName }</td>
+                        <td style={{ textAlign: 'right' }}>
+                          <ButtonGroup>
+                            <Button title="editInspection" bsSize="xsmall" onClick={ this.editInspection.bind(this, inspection) }><Glyphicon glyph="pencil" /></Button>
+                            <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteInspection.bind(this, inspection) }/> }>
+                              <Button title="deleteInspection" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                            </OverlayTrigger>
+                          </ButtonGroup>
+                        </td>
                       </tr>;
                     })
                   }
-                  </tbody>
-                </Table>;
+                </SortTable>;
               })()}
-              <div className="text-right"><Button>CTMS-Web</Button> <Button>All</Button></div>
+              <div className="text-right"><Button>CTMS-Web</Button></div>
             </Well>
           </Col>
         </Row>
@@ -464,6 +505,7 @@ function mapStateToProps(state) {
     schoolBusHistories: state.models.schoolBusHistories,
     schoolBusInspections: state.models.schoolBusInspections,
     schoolBusNotes: state.models.schoolBusNotes,
+    ui: state.ui.inspections,
   };
 }
 
