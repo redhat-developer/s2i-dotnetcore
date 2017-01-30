@@ -3,6 +3,9 @@
   "buildOptions": {
     "emitEntryPoint": true
   },
+  "dependencies":{
+    "Microsoft.AspNetCore": "1.1.0"
+  },
   "frameworks": {
     "net451": {},
     "netcoreapp1.1": {

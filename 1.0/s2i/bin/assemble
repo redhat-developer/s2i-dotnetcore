@@ -24,6 +24,12 @@ cp -Rf /tmp/src/. ./
 echo "---> Installing dependencies ..."
 dotnet restore $DOTNET_RESTORE_ROOT
 
+# The publish operation fails when .NET framework targets are included in project.json
+# See https://github.com/dotnet/cli/issues/3636
+# This bug won't be fixed for project.json, workaround:
+export DOTNET_REFERENCE_ASSEMBLIES_PATH=/tmp/reference_assemblies
+mkdir -p $DOTNET_REFERENCE_ASSEMBLIES_PATH/.NETFramework/{v1.1,v2.0,v3.5,v4.0,v4.0.3,v4.5,v4.5.1,v4.5.2,v4.6,v4.6.1,v4.6.2}
+
 echo "---> Building application from source ..."
 dotnet publish -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT"
 
