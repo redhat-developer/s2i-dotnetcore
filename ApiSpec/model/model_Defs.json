@@ -46,7 +46,7 @@
         },
         {
             "Description": "The ICBC Registration number for the School Bus",
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegistrationNumber",
             "RefDef": null,
             "Required": [
@@ -68,7 +68,7 @@
         },
         {
             "Description": "The ICBC Plate Number for the School Bus",
-            "Length": null,
+            "Length": "255",
             "Name": "licencePlateNumber",
             "RefDef": null,
             "Required": [
@@ -134,7 +134,7 @@
         },
         {
             "Description": "The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.",
-            "Length": null,
+            "Length": "255",
             "Name": "permitNumber",
             "RefDef": null,
             "Required": [
@@ -156,7 +156,7 @@
         },
         {
             "Description": "Enumerated type of Status - Inactive,  Active,  Archived",
-            "Length": null,
+            "Length": "255",
             "Name": "status",
             "RefDef": null,
             "Required": [
@@ -222,7 +222,7 @@
         },
         {
             "Description": "Address 1 of physical location of the School Bus.",
-            "Length": null,
+            "Length": "255",
             "Name": "homeTerminalAddress1",
             "RefDef": null,
             "Required": [
@@ -244,7 +244,7 @@
         },
         {
             "Description": "Address 2 of physical location of the School Bus.",
-            "Length": null,
+            "Length": "255",
             "Name": "homeTerminalAddress2",
             "RefDef": null,
             "Required": [
@@ -288,7 +288,7 @@
         },
         {
             "Description": "Province of physical location of the School Bus - free form.",
-            "Length": null,
+            "Length": "255",
             "Name": "homeTerminalProvince",
             "RefDef": null,
             "Required": [
@@ -310,7 +310,7 @@
         },
         {
             "Description": "Postal Code of physical location of the School Bus.",
-            "Length": null,
+            "Length": "255",
             "Name": "homeTerminalPostalCode",
             "RefDef": null,
             "Required": [
@@ -332,7 +332,7 @@
         },
         {
             "Description": "A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection",
-            "Length": null,
+            "Length": "2048",
             "Name": "homeTerminalComment",
             "RefDef": null,
             "Required": [
@@ -354,7 +354,7 @@
         },
         {
             "Description": "Text of any restrictions to be printed on the school bus permit.",
-            "Length": null,
+            "Length": "2048",
             "Name": "restrictionsText",
             "RefDef": null,
             "Required": [
@@ -398,7 +398,7 @@
         },
         {
             "Description": "An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass/Fail status of the most recent inspection.",
-            "Length": null,
+            "Length": "255",
             "Name": "nextInspectionTypeCode",
             "RefDef": null,
             "Required": [
@@ -464,7 +464,7 @@
         },
         {
             "Description": "The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.",
-            "Length": null,
+            "Length": "255",
             "Name": "independentSchoolName",
             "RefDef": null,
             "Required": [
@@ -486,7 +486,7 @@
         },
         {
             "Description": "The enumerated class of School Bus.",
-            "Length": null,
+            "Length": "255",
             "Name": "permitClassCode",
             "RefDef": null,
             "Required": [
@@ -508,7 +508,7 @@
         },
         {
             "Description": "The enumerated body type of the School Bus.",
-            "Length": null,
+            "Length": "255",
             "Name": "bodyTypeCode",
             "RefDef": null,
             "Required": [
@@ -530,7 +530,7 @@
         },
         {
             "Description": "The unit number of the Bus as defined by the School Bus owner - freeform text.",
-            "Length": null,
+            "Length": "255",
             "Name": "unitNumber",
             "RefDef": null,
             "Required": [
@@ -728,7 +728,7 @@
         },
         {
             "Description": "The name of the School Bus owner as defined by the user/Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors.",
-            "Length": null,
+            "Length": "255",
             "Name": "name",
             "RefDef": null,
             "Required": [
@@ -750,7 +750,7 @@
         },
         {
             "Description": "Status of the School Bus owner - enumerated value Active,  Archived",
-            "Length": null,
+            "Length": "255",
             "Name": "status",
             "RefDef": null,
             "Required": [
@@ -970,7 +970,7 @@
         },
         {
             "Description": "The Registration Number (Regi) is the link between the CCW information and a specific School Bus",
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegistrationNumber",
             "RefDef": null,
             "Required": [
@@ -1014,7 +1014,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCVehicleType",
             "RefDef": null,
             "Required": [
@@ -1036,7 +1036,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRateClass",
             "RefDef": null,
             "Required": [
@@ -1058,7 +1058,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCCVIPDecal",
             "RefDef": null,
             "Required": [
@@ -1124,7 +1124,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCMake",
             "RefDef": null,
             "Required": [
@@ -1146,7 +1146,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCBody",
             "RefDef": null,
             "Required": [
@@ -1168,7 +1168,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRebuiltStatus",
             "RefDef": null,
             "Required": [
@@ -1234,7 +1234,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCModel",
             "RefDef": null,
             "Required": [
@@ -1256,7 +1256,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCFuel",
             "RefDef": null,
             "Required": [
@@ -1300,7 +1300,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCColour",
             "RefDef": null,
             "Required": [
@@ -1322,7 +1322,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCNotesAndOrders",
             "RefDef": null,
             "Required": [
@@ -1366,7 +1366,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegOwnerName",
             "RefDef": null,
             "Required": [
@@ -1388,7 +1388,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegOwnerAddr1",
             "RefDef": null,
             "Required": [
@@ -1410,7 +1410,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegOwnerAddr2",
             "RefDef": null,
             "Required": [
@@ -1432,7 +1432,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegOwnerCity",
             "RefDef": null,
             "Required": [
@@ -1454,7 +1454,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegOwnerProv",
             "RefDef": null,
             "Required": [
@@ -1476,7 +1476,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegOwnerPostalCode",
             "RefDef": null,
             "Required": [
@@ -1498,7 +1498,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegOwnerStatus",
             "RefDef": null,
             "Required": [
@@ -1520,7 +1520,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegOwnerRODL",
             "RefDef": null,
             "Required": [
@@ -1542,7 +1542,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "ICBCRegOwnerPool",
             "RefDef": null,
             "Required": [
@@ -1564,7 +1564,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "NSCClientNum",
             "RefDef": null,
             "Required": [
@@ -1586,7 +1586,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "NSCCarrierName",
             "RefDef": null,
             "Required": [
@@ -1608,7 +1608,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "NSCCarrierConditions",
             "RefDef": null,
             "Required": [
@@ -1630,7 +1630,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "NSCCarrierSafetyRating",
             "RefDef": null,
             "Required": [
@@ -1652,7 +1652,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "NSCPolicyNumber",
             "RefDef": null,
             "Required": [
@@ -1740,7 +1740,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "NSCPolicyStatus",
             "RefDef": null,
             "Required": [
@@ -1762,7 +1762,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "NSCPlateDecal",
             "RefDef": null,
             "Required": [
@@ -1894,7 +1894,7 @@
         },
         {
             "Description": "The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created",
-            "Length": null,
+            "Length": "255",
             "Name": "inspectionTypeCode",
             "RefDef": null,
             "Required": [
@@ -1916,7 +1916,7 @@
         },
         {
             "Description": "The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.",
-            "Length": null,
+            "Length": "255",
             "Name": "inspectionResultCode",
             "RefDef": null,
             "Required": [
@@ -1938,7 +1938,7 @@
         },
         {
             "Description": "A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.",
-            "Length": null,
+            "Length": "2048",
             "Name": "notes",
             "RefDef": null,
             "Required": [
@@ -1960,7 +1960,7 @@
         },
         {
             "Description": "The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.",
-            "Length": null,
+            "Length": "255",
             "Name": "RIPInspectionId",
             "RefDef": null,
             "Required": [
@@ -2048,7 +2048,7 @@
         },
         {
             "Description": "The contents of the note.",
-            "Length": null,
+            "Length": "2048",
             "Name": "noteText",
             "RefDef": null,
             "Required": [
@@ -2136,7 +2136,7 @@
         },
         {
             "Description": "The physical location of the attachment on the file system.",
-            "Length": null,
+            "Length": "2048",
             "Name": "internalFileName",
             "RefDef": null,
             "Required": [
@@ -2158,7 +2158,7 @@
         },
         {
             "Description": "The name of the attachment as defined by the user in uploading the document.",
-            "Length": null,
+            "Length": "2048",
             "Name": "externalFileName",
             "RefDef": null,
             "Required": [
@@ -2180,7 +2180,7 @@
         },
         {
             "Description": "A note about the attachment,  optionally maintained by the user.",
-            "Length": null,
+            "Length": "2048",
             "Name": "description",
             "RefDef": null,
             "Required": [
@@ -2246,7 +2246,7 @@
         },
         {
             "Description": "The text of the history entry tracked against the related entity.",
-            "Length": null,
+            "Length": "2048",
             "Name": "historyText",
             "RefDef": null,
             "Required": [
@@ -2312,7 +2312,7 @@
         },
         {
             "Description": "The given name of the contact.",
-            "Length": null,
+            "Length": "255",
             "Name": "givenName",
             "RefDef": null,
             "Required": [
@@ -2334,7 +2334,7 @@
         },
         {
             "Description": "The surname of the contact.",
-            "Length": null,
+            "Length": "255",
             "Name": "surname",
             "RefDef": null,
             "Required": [
@@ -2356,7 +2356,7 @@
         },
         {
             "Description": "The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.",
-            "Length": null,
+            "Length": "255",
             "Name": "role",
             "RefDef": null,
             "Required": [
@@ -2378,7 +2378,7 @@
         },
         {
             "Description": "A note about the contact maintained by the users.",
-            "Length": null,
+            "Length": "2048",
             "Name": "notes",
             "RefDef": null,
             "Required": [
@@ -2488,7 +2488,7 @@
         },
         {
             "Description": "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.",
-            "Length": null,
+            "Length": "255",
             "Name": "type",
             "RefDef": null,
             "Required": [
@@ -2510,7 +2510,7 @@
         },
         {
             "Description": "The phone number of the contact. Entered as free form to support a range of formats.",
-            "Length": null,
+            "Length": "255",
             "Name": "phoneNumber",
             "RefDef": null,
             "Required": [
@@ -2576,7 +2576,7 @@
         },
         {
             "Description": "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.",
-            "Length": null,
+            "Length": "255",
             "Name": "type",
             "RefDef": null,
             "Required": [
@@ -2598,7 +2598,7 @@
         },
         {
             "Description": "Address 1 line of the address.",
-            "Length": null,
+            "Length": "255",
             "Name": "address1",
             "RefDef": null,
             "Required": [
@@ -2620,7 +2620,7 @@
         },
         {
             "Description": "Address 2 line of the address.",
-            "Length": null,
+            "Length": "255",
             "Name": "address2",
             "RefDef": null,
             "Required": [
@@ -2642,7 +2642,7 @@
         },
         {
             "Description": "The City of the address.",
-            "Length": null,
+            "Length": "255",
             "Name": "city",
             "RefDef": null,
             "Required": [
@@ -2664,7 +2664,7 @@
         },
         {
             "Description": "The Province of the address.",
-            "Length": null,
+            "Length": "255",
             "Name": "province",
             "RefDef": null,
             "Required": [
@@ -2686,7 +2686,7 @@
         },
         {
             "Description": "The postal code of the address.",
-            "Length": null,
+            "Length": "255",
             "Name": "postalCode",
             "RefDef": null,
             "Required": [
@@ -2752,7 +2752,7 @@
         },
         {
             "Description": "The type of Favourite",
-            "Length": null,
+            "Length": "255",
             "Name": "type",
             "RefDef": null,
             "Required": [
@@ -2774,7 +2774,7 @@
         },
         {
             "Description": "The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.",
-            "Length": null,
+            "Length": "255",
             "Name": "name",
             "RefDef": null,
             "Required": [
@@ -2796,7 +2796,7 @@
         },
         {
             "Description": "The settings saved by the user. In general,  a UI defined chunk of json that stores the settings in place when the user created the favourite.",
-            "Length": null,
+            "Length": "2048",
             "Name": "value",
             "RefDef": null,
             "Required": [
@@ -2928,7 +2928,7 @@
         },
         {
             "Description": "The name of the Region",
-            "Length": null,
+            "Length": "255",
             "Name": "name",
             "RefDef": null,
             "Required": [
@@ -3060,7 +3060,7 @@
         },
         {
             "Description": "The name of the District",
-            "Length": null,
+            "Length": "255",
             "Name": "name",
             "RefDef": null,
             "Required": [
@@ -3214,7 +3214,7 @@
         },
         {
             "Description": "The name of the Service Area",
-            "Length": null,
+            "Length": "255",
             "Name": "name",
             "RefDef": null,
             "Required": [
@@ -3346,7 +3346,7 @@
         },
         {
             "Description": "The full name of the School District",
-            "Length": null,
+            "Length": "255",
             "Name": "name",
             "RefDef": null,
             "Required": [
@@ -3368,7 +3368,7 @@
         },
         {
             "Description": "A short name for the School District useful in some areas of the UI. Usually with format \\&quot;SD 61\\&quot;.",
-            "Length": null,
+            "Length": "255",
             "Name": "shortName",
             "RefDef": null,
             "Required": [
@@ -3434,8 +3434,30 @@
         },
         {
             "Description": "The name of the City",
-            "Length": null,
+            "Length": "255",
             "Name": "name",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "Province",
+            "Length": "255",
+            "Name": "province",
             "RefDef": null,
             "Required": [
                 {
@@ -3632,7 +3654,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "priorityCode",
             "RefDef": null,
             "Required": [
@@ -3742,7 +3764,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "eventTypeCode",
             "RefDef": null,
             "Required": [
@@ -3764,7 +3786,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "eventSubTypeCode",
             "RefDef": null,
             "Required": [
@@ -3786,7 +3808,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "2048",
             "Name": "notes",
             "RefDef": null,
             "Required": [
@@ -3902,7 +3924,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "givenName",
             "RefDef": null,
             "Required": [
@@ -3927,7 +3949,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "surname",
             "RefDef": null,
             "Required": [
@@ -3952,7 +3974,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "initials",
             "RefDef": null,
             "Required": [
@@ -3977,7 +3999,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "email",
             "RefDef": null,
             "Required": [
@@ -4027,7 +4049,7 @@
         },
         {
             "Description": "Security Manager User ID",
-            "Length": null,
+            "Length": "255",
             "Name": "smUserId",
             "RefDef": null,
             "Required": [
@@ -4052,7 +4074,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "guid",
             "RefDef": null,
             "Required": [
@@ -4077,7 +4099,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "smAuthorizationDirectory",
             "RefDef": null,
             "Required": [
@@ -4253,31 +4275,6 @@
         {
             "Description": null,
             "Length": null,
-            "Name": "user",
-            "RefDef": "User",
-            "Required": [
-                {
-                    "req": "id"
-                },
-                {
-                    "req": "effectiveDate"
-                }
-            ],
-            "Unique": null,
-            "binary": null,
-            "boolean": null,
-            "datetime": null,
-            "float": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": "ref",
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
             "Name": "role",
             "RefDef": "Role",
             "Required": [
@@ -4358,7 +4355,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "name",
             "RefDef": null,
             "Required": [
@@ -4386,7 +4383,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "description",
             "RefDef": null,
             "Required": [
@@ -4620,7 +4617,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "code",
             "RefDef": null,
             "Required": [
@@ -4651,7 +4648,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "name",
             "RefDef": null,
             "Required": [
@@ -4682,7 +4679,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "description",
             "RefDef": null,
             "Required": [
@@ -4894,7 +4891,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "name",
             "RefDef": null,
             "Required": [
@@ -4922,7 +4919,7 @@
         },
         {
             "Description": null,
-            "Length": null,
+            "Length": "255",
             "Name": "description",
             "RefDef": null,
             "Required": [

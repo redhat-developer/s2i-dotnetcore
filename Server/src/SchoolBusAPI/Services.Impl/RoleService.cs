@@ -400,25 +400,39 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of Role to fetch</param>
         /// <response code="200">OK</response>
         public virtual IActionResult RolesIdUsersGetAsync(int id)
-        {
-            // get the UserRoles that have this role.
-            var userRoles = _context.UserRoles.Where(x => x.Role.Id == id);
-
+        {            
             // and the users with those UserRoles
             List < User > result = new List<User>();
-            foreach (var userRole in userRoles)
-            {                
-                var usersWithRole = _context.Users
-                        .Include(x => x.UserRoles)
-                        .Where(y => y.UserRoles.Contains(userRole));
-                foreach (User user in usersWithRole)
+
+            List<User> users = _context.Users                     
+                    .ToList();
+
+            foreach (User user in users)
+            {
+                bool found = false;
+                
+
+                if (user.UserRoles != null)
                 {
-                    if (! result.Contains (user))
+                    List<Role> activeRoles = user.UserRoles.Where(
+                        x => x.EffectiveDate <= DateTimeOffset.Now
+                        && (x.ExpiryDate == null || x.ExpiryDate > DateTimeOffset.Now))
+                        .Select(x => x.Role).ToList();
+
+                    foreach (var item in activeRoles)
                     {
-                        result.Add(user);
-                    }                    
+                        if (item != null && item.Id == id)
+                        {
+                            found = true;
+                        }
+                    }
                 }
-            }
+                
+                if (found && !result.Contains (user))
+                {
+                    result.Add(user);
+                }                    
+            }            
 
             return new ObjectResult(result);
         }
@@ -433,8 +447,56 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">Role not found</response>
         public virtual IActionResult RolesIdUsersPutAsync(int id, UserRoleViewModel[] items)
         {
-            // Not supported. 
-            return new StatusCodeResult(404);
+            bool role_exists = _context.Roles.Any(x => x.Id == id);
+            if (role_exists)
+            {
+                Role role = _context.Roles.First(x => x.Id == id);
+
+                foreach (UserRoleViewModel item in items)
+                {
+                    if (item != null)
+                    {
+                        // see if there is a matching user
+                        bool user_exists = _context.Users.Any(x => x.Id == item.UserId);
+                        if (user_exists)
+                        {
+                            User user = _context.Users.First(x => x.Id == item.UserId);
+                            bool found = false;
+                            if (user.UserRoles != null)
+                            {
+                                foreach (UserRole userrole in user.UserRoles)
+                                {
+                                    if (userrole.Role.Id == item.RoleId)
+                                    {
+                                        found = true;
+                                    }
+                                }
+                            }
+                            
+                            if (found == false) // add the user role
+                            {
+                                UserRole newRole = new UserRole();
+                                newRole.Role = role;
+                                
+                                if (user.UserRoles == null)
+                                {
+                                    user.UserRoles = new List<UserRole>();
+                                }
+
+                                user.UserRoles.Add(newRole);
+                            }
+                        }
+
+                    }
+                }
+                _context.SaveChanges();
+                return new StatusCodeResult(200);
+            }
+            else
+            {
+                return new StatusCodeResult(404);
+            }
+            
         }
 
         /// <summary>
