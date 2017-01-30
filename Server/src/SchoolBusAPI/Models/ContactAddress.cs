@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -68,6 +69,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.</value>
         [MetaDataExtension (Description = "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.")]
+        [MaxLength(255)]
+        
         public string Type { get; set; }
         
         /// <summary>
@@ -75,6 +78,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Address 1 line of the address.</value>
         [MetaDataExtension (Description = "Address 1 line of the address.")]
+        [MaxLength(255)]
+        
         public string Address1 { get; set; }
         
         /// <summary>
@@ -82,6 +87,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Address 2 line of the address.</value>
         [MetaDataExtension (Description = "Address 2 line of the address.")]
+        [MaxLength(255)]
+        
         public string Address2 { get; set; }
         
         /// <summary>
@@ -89,6 +96,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The City of the address.</value>
         [MetaDataExtension (Description = "The City of the address.")]
+        [MaxLength(255)]
+        
         public string City { get; set; }
         
         /// <summary>
@@ -96,6 +105,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The Province of the address.</value>
         [MetaDataExtension (Description = "The Province of the address.")]
+        [MaxLength(255)]
+        
         public string Province { get; set; }
         
         /// <summary>
@@ -103,6 +114,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The postal code of the address.</value>
         [MetaDataExtension (Description = "The postal code of the address.")]
+        [MaxLength(255)]
+        
         public string PostalCode { get; set; }
         
         /// <summary>

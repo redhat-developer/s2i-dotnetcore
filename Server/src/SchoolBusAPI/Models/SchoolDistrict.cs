@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -61,6 +62,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The full name of the School District</value>
         [MetaDataExtension (Description = "The full name of the School District")]
+        [MaxLength(255)]
+        
         public string Name { get; set; }
         
         /// <summary>
@@ -68,6 +71,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>A short name for the School District useful in some areas of the UI. Usually with format \\&amp;quot;SD 61\\&amp;quot;.</value>
         [MetaDataExtension (Description = "A short name for the School District useful in some areas of the UI. Usually with format \\&amp;quot;SD 61\\&amp;quot;.")]
+        [MaxLength(255)]
+        
         public string ShortName { get; set; }
         
         /// <summary>

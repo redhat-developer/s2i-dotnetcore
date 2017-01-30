@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -74,6 +75,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The name of the School Bus owner as defined by the user&#x2F;Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors.</value>
         [MetaDataExtension (Description = "The name of the School Bus owner as defined by the user&#x2F;Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors.")]
+        [MaxLength(255)]
+        
         public string Name { get; set; }
         
         /// <summary>
@@ -81,6 +84,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Status of the School Bus owner - enumerated value Active,  Archived</value>
         [MetaDataExtension (Description = "Status of the School Bus owner - enumerated value Active,  Archived")]
+        [MaxLength(255)]
+        
         public string Status { get; set; }
         
         /// <summary>

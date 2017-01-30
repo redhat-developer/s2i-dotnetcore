@@ -116,17 +116,6 @@ namespace SchoolBusAPI.Services.Impl
             }
             foreach (UserRole item in items)
             {
-                // adjust the user
-                if (item.User != null)
-                {
-                    int user_id = item.User.Id;
-                    bool user_exists = _context.Users.Any(a => a.Id == user_id);
-                    if (user_exists)
-                    {
-                        User user = _context.Users.First(a => a.Id == user_id);
-                        item.User = user;
-                    }
-                }
                 // adjust the role
                 if (item.Role != null)
                 {
@@ -213,9 +202,6 @@ namespace SchoolBusAPI.Services.Impl
                 // Not Found
                 return new StatusCodeResult(404);
             }
-            // remove any user role associations.            
-            var toRemove = _context.UserRoles.Where(x => x.User.Id == id ).ToList();
-            toRemove.ForEach(x => _context.UserRoles.Remove(x));
             
             _context.Users.Remove(user);
             _context.SaveChanges();
@@ -637,17 +623,14 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdRolesGetAsync(int id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var user = _context.Users.First(x => x.Id == id);
             if (user == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
             }
 
-            var data = _context.UserRoles
-                .Where(x => x.User.Id == user.Id)
-                .ToList();
-
+            var data = user.UserRoles;            
             return new ObjectResult(data);
         }
 
@@ -660,8 +643,38 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="201">Role created for user</response>
         public virtual IActionResult UsersIdRolesPostAsync(int id, UserRoleViewModel item)
         {
-            var result = "";
-            return new ObjectResult(result);
+            bool exists = _context.Users.Any(x => x.Id == id);
+            bool success = false;
+            if (exists)
+            {
+                // check the role id
+                bool role_exists = _context.Roles.Any(x => x.Id == item.RoleId);
+                if (role_exists)
+                {
+                    User user = _context.Users.First(x => x.Id == id);
+                    // create a new UserRole based on the view model.
+                    UserRole userRole = new UserRole();
+                    Role role = _context.Roles.First(x => x.Id == item.RoleId);
+                    userRole.Role = role;
+
+                    if (! user.UserRoles.Contains (userRole))
+                    {
+                        user.UserRoles.Add(userRole);
+                    }
+                    _context.SaveChanges();
+                    success = true;
+                }
+            }
+            
+            if (success)
+            {
+                return new StatusCodeResult(201);
+            }
+            else
+            {
+                return new StatusCodeResult(400);
+            }
+
         }
 
         /// <summary>
@@ -674,8 +687,42 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdRolesPutAsync(int id, UserRoleViewModel[] items)
         {
-            var result = "";
-            return new ObjectResult(result);
+            bool exists = _context.Users.Any(x => x.Id == id);
+            bool success = false;
+            if (exists)
+            {
+                User user = _context.Users.First(x => x.Id == id);
+                user.UserRoles.Clear();
+                foreach (var item in items)
+                {
+                    // check the role id
+                    bool role_exists = _context.Roles.Any(x => x.Id == item.RoleId);
+                    if (role_exists)
+                    {                        
+                        // create a new UserRole based on the view model.
+                        UserRole userRole = new UserRole();
+                        Role role = _context.Roles.First(x => x.Id == item.RoleId);
+                        userRole.Role = role;
+
+                        if (!user.UserRoles.Contains(userRole))
+                        {
+                            user.UserRoles.Add(userRole);
+                        }
+
+                        success = true;
+                    }
+                }                
+            }
+
+            if (success)
+            {
+                _context.SaveChanges();
+                return new StatusCodeResult(201);
+            }
+            else
+            {
+                return new StatusCodeResult(400);
+            }
         }
 
         /// <summary>
@@ -685,9 +732,18 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="item"></param>
         /// <response code="201">User created</response>
         public virtual IActionResult UsersPostAsync(User item)
-        {            
-            // Save changes
-            _context.Users.Add(item);
+        {
+            bool exists = _context.Users.Any(x => x.Id == item.Id);
+            bool success = false;
+            if (exists)
+            {
+                _context.Users.Update(item);
+            }
+            else
+            {
+                _context.Users.Add(item);
+            }
+    
             _context.SaveChanges();
             return new ObjectResult(item);
         }

@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -60,6 +61,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.</value>
         [MetaDataExtension (Description = "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.")]
+        [MaxLength(255)]
+        
         public string Type { get; set; }
         
         /// <summary>
@@ -67,6 +70,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The phone number of the contact. Entered as free form to support a range of formats.</value>
         [MetaDataExtension (Description = "The phone number of the contact. Entered as free form to support a range of formats.")]
+        [MaxLength(255)]
+        
         public string PhoneNumber { get; set; }
         
         /// <summary>

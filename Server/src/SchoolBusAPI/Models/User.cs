@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -81,21 +82,29 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Gets or Sets GivenName
         /// </summary>
+        [MaxLength(255)]
+        
         public string GivenName { get; set; }
         
         /// <summary>
         /// Gets or Sets Surname
         /// </summary>
+        [MaxLength(255)]
+        
         public string Surname { get; set; }
         
         /// <summary>
         /// Gets or Sets Initials
         /// </summary>
+        [MaxLength(255)]
+        
         public string Initials { get; set; }
         
         /// <summary>
         /// Gets or Sets Email
         /// </summary>
+        [MaxLength(255)]
+        
         public string Email { get; set; }
         
         /// <summary>
@@ -103,16 +112,22 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Security Manager User ID</value>
         [MetaDataExtension (Description = "Security Manager User ID")]
+        [MaxLength(255)]
+        
         public string SmUserId { get; set; }
         
         /// <summary>
         /// Gets or Sets Guid
         /// </summary>
+        [MaxLength(255)]
+        
         public string Guid { get; set; }
         
         /// <summary>
         /// Gets or Sets SmAuthorizationDirectory
         /// </summary>
+        [MaxLength(255)]
+        
         public string SmAuthorizationDirectory { get; set; }
         
         /// <summary>
@@ -181,49 +196,59 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return
+            return                 
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) &&
+                ) &&                 
                 (
                     this.Active == other.Active ||
                     this.Active.Equals(other.Active)
-                ) &&
+                ) &&                 
                 (
                     this.GivenName == other.GivenName ||
                     this.GivenName != null &&
                     this.GivenName.Equals(other.GivenName)
-                ) &&
+                ) &&                 
                 (
                     this.Surname == other.Surname ||
                     this.Surname != null &&
                     this.Surname.Equals(other.Surname)
-                ) &&
+                ) &&                 
                 (
                     this.Initials == other.Initials ||
                     this.Initials != null &&
                     this.Initials.Equals(other.Initials)
-                ) &&
+                ) &&                 
                 (
                     this.Email == other.Email ||
                     this.Email != null &&
                     this.Email.Equals(other.Email)
-                ) &&
+                ) &&                 
                 (
                     this.SmUserId == other.SmUserId ||
                     this.SmUserId != null &&
                     this.SmUserId.Equals(other.SmUserId)
-                ) &&
+                ) &&                 
                 (
                     this.Guid == other.Guid ||
                     this.Guid != null &&
                     this.Guid.Equals(other.Guid)
-                ) &&
+                ) &&                 
                 (
                     this.SmAuthorizationDirectory == other.SmAuthorizationDirectory ||
                     this.SmAuthorizationDirectory != null &&
                     this.SmAuthorizationDirectory.Equals(other.SmAuthorizationDirectory)
+                ) && 
+                (
+                    this.UserRoles == other.UserRoles ||
+                    this.UserRoles != null &&
+                    this.UserRoles.SequenceEqual(other.UserRoles)
+                ) && 
+                (
+                    this.GroupMemberships == other.GroupMemberships ||
+                    this.GroupMemberships != null &&
+                    this.GroupMemberships.SequenceEqual(other.GroupMemberships)
                 );
         }
 

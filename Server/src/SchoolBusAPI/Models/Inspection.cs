@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -103,6 +104,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created</value>
         [MetaDataExtension (Description = "The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created")]
+        [MaxLength(255)]
+        
         public string InspectionTypeCode { get; set; }
         
         /// <summary>
@@ -110,6 +113,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.</value>
         [MetaDataExtension (Description = "The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.")]
+        [MaxLength(255)]
+        
         public string InspectionResultCode { get; set; }
         
         /// <summary>
@@ -117,6 +122,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.</value>
         [MetaDataExtension (Description = "A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.")]
+        [MaxLength(2048)]
+        
         public string Notes { get; set; }
         
         /// <summary>
@@ -124,6 +131,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.</value>
         [MetaDataExtension (Description = "The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.")]
+        [MaxLength(255)]
+        
         public string RIPInspectionId { get; set; }
         
         /// <summary>

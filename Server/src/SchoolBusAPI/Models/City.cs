@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -41,10 +42,12 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <param name="Id">Primary Key (required).</param>
         /// <param name="Name">The name of the City.</param>
-        public City(int Id, string Name = null)
+        /// <param name="Province">Province.</param>
+        public City(int Id, string Name = null, string Province = null)
         {   
             this.Id = Id;
             this.Name = Name;
+            this.Province = Province;
         }
 
         /// <summary>
@@ -59,7 +62,18 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The name of the City</value>
         [MetaDataExtension (Description = "The name of the City")]
+        [MaxLength(255)]
+        
         public string Name { get; set; }
+        
+        /// <summary>
+        /// Province
+        /// </summary>
+        /// <value>Province</value>
+        [MetaDataExtension (Description = "Province")]
+        [MaxLength(255)]
+        
+        public string Province { get; set; }
         
         /// <summary>
         /// Returns the string presentation of the object
@@ -71,6 +85,7 @@ namespace SchoolBusAPI.Models
             sb.Append("class City {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Province: ").Append(Province).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -117,6 +132,11 @@ namespace SchoolBusAPI.Models
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
+                ) &&                 
+                (
+                    this.Province == other.Province ||
+                    this.Province != null &&
+                    this.Province.Equals(other.Province)
                 );
         }
 
@@ -135,6 +155,10 @@ namespace SchoolBusAPI.Models
                 hash = hash * 59 + this.Id.GetHashCode();                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
+                }                
+                                if (this.Province != null)
+                {
+                    hash = hash * 59 + this.Province.GetHashCode();
                 }                
                 
                 return hash;
