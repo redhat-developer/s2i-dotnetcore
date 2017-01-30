@@ -30,6 +30,8 @@ for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
     dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK"
 done
 
+rm -rf $DOTNET_REFERENCE_ASSEMBLIES_PATH
+
 # Fix source directory permissions
 fix-permissions ./
 # set permissions for any installed artifacts
