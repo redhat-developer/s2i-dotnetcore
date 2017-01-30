@@ -170,7 +170,7 @@ namespace SchoolBusAPI.Services.Impl
             // Save changes
             _context.Permissions.Add(permission);
             _context.SaveChanges();
-            return new ObjectResult(permission.ToViewModel());
+            return new ObjectResult(permission);
         }
 
     }

@@ -400,24 +400,40 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of Role to fetch</param>
         /// <response code="200">OK</response>
         public virtual IActionResult RolesIdUsersGetAsync(int id)
-        {
-            // Eager loading of related data
-            var role = _context.Roles
-                .Where(x => x.Id == id)
-                .Include(x => x.UserRoles)
-                .ThenInclude(userRole => userRole.User)
-                .FirstOrDefault();
+        {            
+            // and the users with those UserRoles
+            List < User > result = new List<User>();
 
-            if (role == null)
+            List<User> users = _context.Users                     
+                    .ToList();
+
+            foreach (User user in users)
             {
-                // Not Found
-                return new StatusCodeResult(404);
-            }
+                bool found = false;
+                
 
-            var usersWithRole = role.UserRoles;
+                if (user.UserRoles != null)
+                {
+                    List<Role> activeRoles = user.UserRoles.Where(
+                        x => x.EffectiveDate <= DateTimeOffset.Now
+                        && (x.ExpiryDate == null || x.ExpiryDate > DateTimeOffset.Now))
+                        .Select(x => x.Role).ToList();
 
-            // Create DTO with serializable response
-            var result = usersWithRole.Select(x => x.ToViewModel()).ToList();
+                    foreach (var item in activeRoles)
+                    {
+                        if (item != null && item.Id == id)
+                        {
+                            found = true;
+                        }
+                    }
+                }
+                
+                if (found && !result.Contains (user))
+                {
+                    result.Add(user);
+                }                    
+            }            
+
             return new ObjectResult(result);
         }
 
@@ -431,64 +447,56 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">Role not found</response>
         public virtual IActionResult RolesIdUsersPutAsync(int id, UserRoleViewModel[] items)
         {
-            using (var txn = _context.BeginTransaction())
+            bool role_exists = _context.Roles.Any(x => x.Id == id);
+            if (role_exists)
             {
-                // Eager loading of related data
-                var role = _context.Roles
-                    .Where(x => x.Id == id)
-                    .Include(x => x.UserRoles)
-                    .ThenInclude(userRole => userRole.User)
-                    .FirstOrDefault();
+                Role role = _context.Roles.First(x => x.Id == id);
 
-                // Not Found
-                if (role == null)
+                foreach (UserRoleViewModel item in items)
                 {
-                    return new StatusCodeResult(404);
-                }
-
-                var userIds = items.Select(x => x.UserId).ToList();
-                var allUsers = _context.Users.Where(x => userIds.Contains(x.Id)).ToList();
-
-                foreach (var userRoleDto in items)
-                {
-                    if (userRoleDto.Id.HasValue)
+                    if (item != null)
                     {
-                        var existingUserRole = role.UserRoles.FirstOrDefault(x => x.Id == userRoleDto.Id.Value);
-                        if (existingUserRole == null)
+                        // see if there is a matching user
+                        bool user_exists = _context.Users.Any(x => x.Id == item.UserId);
+                        if (user_exists)
                         {
-                            // TODO throw new ResourceNotFoundException(string.Format("Cannot find userrole with id {0} on role {1}", userRole.Id.Value, roleId));
-                        }
-                        else
-                        {
-                            // TODO Check serialization of Dates
-                            existingUserRole.EffectiveDate = userRoleDto.EffectiveDate;
-                            existingUserRole.ExpiryDate = userRoleDto.ExpiryDate;
-                        }
-                    }
-                    else
-                    {
-                        var dbUserRole = new UserRole();
-                        dbUserRole.Role = role;
-                        dbUserRole.User = allUsers.FirstOrDefault(x => x.Id == userRoleDto.UserId);
-                        _context.UserRoles.Add(dbUserRole);
+                            User user = _context.Users.First(x => x.Id == item.UserId);
+                            bool found = false;
+                            if (user.UserRoles != null)
+                            {
+                                foreach (UserRole userrole in user.UserRoles)
+                                {
+                                    if (userrole.Role.Id == item.RoleId)
+                                    {
+                                        found = true;
+                                    }
+                                }
+                            }
+                            
+                            if (found == false) // add the user role
+                            {
+                                UserRole newRole = new UserRole();
+                                newRole.Role = role;
+                                
+                                if (user.UserRoles == null)
+                                {
+                                    user.UserRoles = new List<UserRole>();
+                                }
 
-                        role.UserRoles.Add(dbUserRole);
+                                user.UserRoles.Add(newRole);
+                            }
+                        }
+
                     }
                 }
-
-                // Users to remove
-                var toRemove = role.UserRoles.Where(x => !userIds.Contains(x.User.Id)).ToList();
-                toRemove.ForEach(x => role.RemoveUser(x.User));
-                _context.UserRoles.RemoveRange(toRemove);
-                _context.Roles.Update(role);
-
-                // Save changes
                 _context.SaveChanges();
-                txn.Commit();
-
-                var result = role.UserRoles.ToList();
-                return new ObjectResult(result);
+                return new StatusCodeResult(200);
             }
+            else
+            {
+                return new StatusCodeResult(404);
+            }
+            
         }
 
         /// <summary>

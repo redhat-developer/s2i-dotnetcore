@@ -11,6 +11,7 @@
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -90,7 +91,7 @@ namespace SchoolBusAPI.Test
             string initialName = "InitialName";
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/roles");
             RoleViewModel role = new RoleViewModel();
-            role.Name = initialName;
+            role.Name = initialName;            
             string jsonString = role.ToJson();
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
@@ -123,6 +124,7 @@ namespace SchoolBusAPI.Test
             UserRoleViewModel userRole = new UserRoleViewModel();
             userRole.RoleId = role_id;
             userRole.UserId = user_id;
+            userRole.EffectiveDate = DateTime.Now;
 
             UserRoleViewModel[] items = new UserRoleViewModel[1];
             items[0] = userRole;
@@ -212,13 +214,9 @@ namespace SchoolBusAPI.Test
             var permission_id = permission.Id;
 
 
-            // now add the permission to the role.           
-            Permission[] items = new Permission[1];
-            items[0] = permission;
-
-            // send the request.
+            // now add the permission to the role.                                  
             request = new HttpRequestMessage(HttpMethod.Post, "/api/roles/" + role_id + "/permissions");
-            jsonString = JsonConvert.SerializeObject(items, Formatting.Indented);
+            jsonString = JsonConvert.SerializeObject(permission, Formatting.Indented);
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
@@ -237,6 +235,8 @@ namespace SchoolBusAPI.Test
             Assert.Equal(permission.Name, rolePermissionsResponse[0].Name);
 
             // test the put.
+            Permission[] items = new Permission[1];
+            items[0] = permission;
 
             request = new HttpRequestMessage(HttpMethod.Put, "/api/roles/" + role_id + "/permissions");
             jsonString = JsonConvert.SerializeObject(items, Formatting.Indented);

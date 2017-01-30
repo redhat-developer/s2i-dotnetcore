@@ -26,8 +26,7 @@ namespace SchoolBusAPI.Mappings
             var dto = new UserRoleViewModel();
             dto.EffectiveDate = model.EffectiveDate;
             dto.ExpiryDate = model.ExpiryDate;
-            dto.RoleId = model.Role.Id;
-            dto.UserId = model.User.Id;
+            dto.RoleId = model.Role.Id;            
             dto.Id = model.Id;
             return dto;
         }

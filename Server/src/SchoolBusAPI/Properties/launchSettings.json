@@ -12,7 +12,9 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "Key": "Value",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "UserInitializationFile": "C:\\repo\\users.json"
       }
     }
   }

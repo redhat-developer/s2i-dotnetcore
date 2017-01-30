@@ -1578,6 +1578,28 @@ paths:
           description: id of Permission to delete
           required: true
           type: integer
+
+  /permissions/bulk:
+    post:
+      tags:
+        - Permission
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Permission"
+      responses:
+        201:
+          description: Permission created
   /roles:
     get:
       tags:
@@ -1709,6 +1731,28 @@ paths:
           description: id of Role to delete
           required: true
           type: integer
+
+  /roles/bulk:
+    post:
+      tags:
+        - Role
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Role"
+      responses:
+        201:
+          description: Role created
 
   /rolepermissions/bulk:
     post:
@@ -2715,7 +2759,48 @@ paths:
           in: path
           description: id of SchoolBusOwner to fetch attachments for
           required: true
-          type: integer           
+          type: integer
+  /schoolbusowners/search:
+    get:
+      summary: Searches school bus owners
+      description:
+        Used for the search school bus owners.
+      tags:
+        - SchoolBusOwner
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:        
+        - name: districts
+          in: query
+          description: Districts (array of id numbers)
+          collectionFormat: multi
+          type: array
+          items:
+            type: integer
+        - name: inspectors
+          in: query
+          description: Assigned School Bus Inspectors (array of id numbers)
+          type: array
+          items:
+              type: integer
+        - name: owner
+          in: query
+          type: integer
+        - name: includeInactive
+          in: query
+          description: True if Inactive schoolbuses will be returned
+          type: boolean
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusOwner"  
   /contacts/{id}/contactphones:
     get:
       description: Returns phone contacts for a particular SchoolBusOwner
@@ -3497,10 +3582,12 @@ definitions:
         description: Primary Key
       ICBCRegistrationNumber:
         type: string
+        maxLength: 255
         uniqueItems: true
         description: The ICBC Registration number for the School Bus
       licencePlateNumber:
         type: string
+        maxLength: 255
         uniqueItems: true
         description: The ICBC Plate Number for the School Bus
       VehicleIdentificationNumber:
@@ -3512,9 +3599,11 @@ definitions:
         $ref: '#/definitions/SchoolBusOwner'
       permitNumber:
         type: string
+        maxLength: 255
         description: The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.
       status:
         type: string
+        maxLength: 255
         description: Enumerated type of Status - Inactive,  Active,  Archived
       isOutOfProvince:
         type: boolean
@@ -3522,24 +3611,30 @@ definitions:
         $ref: '#/definitions/District'
       homeTerminalAddress1:
         type: string
+        maxLength: 255
         description: Address 1 of physical location of the School Bus.
       homeTerminalAddress2:
         type: string
+        maxLength: 255
         description: Address 2 of physical location of the School Bus.
       homeTerminalCity:
         $ref: '#/definitions/City'
         description: City of physical location of the School Bus.
       homeTerminalProvince:
         type: string
+        maxLength: 255
         description: Province of physical location of the School Bus - free form.
       homeTerminalPostalCode:
         type: string
+        maxLength: 255
         description: Postal Code of physical location of the School Bus.
       homeTerminalComment:
         type: string
+        maxLength: 2048
         description: A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection
       restrictionsText:
         type: string
+        maxLength: 2048
         description: Text of any restrictions to be printed on the school bus permit.
       nextInspectionDate:
         type: string
@@ -3547,6 +3642,7 @@ definitions:
         description: The next inspection date for this School Bus. Set at the time an inspection is set.
       nextInspectionTypeCode:
         type: string
+        maxLength: 255
         description: An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.
       schoolDistrict:
         $ref: '#/definitions/SchoolDistrict'
@@ -3556,15 +3652,19 @@ definitions:
         description: True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field.
       independentSchoolName:
         type: string
+        maxLength: 255
         description: The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.
       permitClassCode:
         type: string
+        maxLength: 255
         description: The enumerated class of School Bus.
       bodyTypeCode:
         type: string
+        maxLength: 255
         description: The enumerated body type of the School Bus.
       unitNumber:
         type: string
+        maxLength: 255
         description: The unit number of the Bus as defined by the School Bus owner - freeform text.
       schoolBusSeatingCapacity:
         format: int32
@@ -3603,9 +3703,11 @@ definitions:
         description: Primary Key
       name:
         type: string
+        maxLength: 255
         description: The name of the School Bus owner as defined by the user&#x2F;Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors.
       status:
         type: string
+        maxLength: 255
         description: Status of the School Bus owner - enumerated value Active,  Archived
       dateCreated:
         type: string
@@ -3649,6 +3751,7 @@ definitions:
         description: Primary Key
       ICBCRegistrationNumber:
         type: string
+        maxLength: 255
         description: The Registration Number (Regi) is the link between the CCW information and a specific School Bus
       ICBCModelYear:
         format: int32
@@ -3656,10 +3759,13 @@ definitions:
         description: Vehicle Year
       ICBCVehicleType:
         type: string
+        maxLength: 255
       ICBCRateClass:
         type: string
+        maxLength: 255
       ICBCCVIPDecal:
         type: string
+        maxLength: 255
       ICBCFleetUnitNo:
         format: int32
         type: integer
@@ -3668,10 +3774,13 @@ definitions:
         type: integer
       ICBCMake:
         type: string
+        maxLength: 255
       ICBCBody:
         type: string
+        maxLength: 255
       ICBCRebuiltStatus:
         type: string
+        maxLength: 255
       ICBCCVIPExpiry:
         type: string
         format: date-time
@@ -3680,46 +3789,64 @@ definitions:
         type: integer
       ICBCModel:
         type: string
+        maxLength: 255
       ICBCFuel:
         type: string
+        maxLength: 255
       ICBCSeatingCapacity:
         format: int32
         type: integer
       ICBCColour:
         type: string
+        maxLength: 255
       ICBCNotesAndOrders:
         type: string
+        maxLength: 255
       ICBCOrderedOn:
         type: string
         format: date-time
       ICBCRegOwnerName:
         type: string
+        maxLength: 255
       ICBCRegOwnerAddr1:
         type: string
+        maxLength: 255
       ICBCRegOwnerAddr2:
         type: string
+        maxLength: 255
       ICBCRegOwnerCity:
         type: string
+        maxLength: 255
       ICBCRegOwnerProv:
         type: string
+        maxLength: 255
       ICBCRegOwnerPostalCode:
         type: string
+        maxLength: 255
       ICBCRegOwnerStatus:
         type: string
+        maxLength: 255
       ICBCRegOwnerRODL:
         type: string
+        maxLength: 255
       ICBCRegOwnerPool:
         type: string
+        maxLength: 255
       NSCClientNum:
         type: string
+        maxLength: 255
       NSCCarrierName:
         type: string
+        maxLength: 255
       NSCCarrierConditions:
         type: string
+        maxLength: 255
       NSCCarrierSafetyRating:
         type: string
+        maxLength: 255
       NSCPolicyNumber:
         type: string
+        maxLength: 255
       NSCPolicyEffectiveDate:
         type: string
         format: date-time
@@ -3731,8 +3858,10 @@ definitions:
         format: date-time
       NSCPolicyStatus:
         type: string
+        maxLength: 255
       NSCPlateDecal:
         type: string
+        maxLength: 255
   Inspection:
     type: object
     required:
@@ -3753,15 +3882,19 @@ definitions:
         description: The date the inspection was conducted.
       inspectionTypeCode:
         type: string
+        maxLength: 255
         description: The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created
       inspectionResultCode:
         type: string
+        maxLength: 255
         description: The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here.
       notes:
         type: string
+        maxLength: 2048
         description: A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.
       RIPInspectionId:
         type: string
+        maxLength: 255
         description: The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details.
       createdDate:
         type: string
@@ -3779,6 +3912,7 @@ definitions:
         description: Primary Key
       noteText:
         type: string
+        maxLength: 2048
         description: The contents of the note.
       isNoLongerRelevant:
         type: boolean
@@ -3795,12 +3929,15 @@ definitions:
         description: Primary Key
       internalFileName:
         type: string
+        maxLength: 2048
         description: The physical location of the attachment on the file system.
       externalFileName:
         type: string
+        maxLength: 2048
         description: The name of the attachment as defined by the user in uploading the document.
       description:
         type: string
+        maxLength: 2048
         description: A note about the attachment,  optionally maintained by the user.
   History:
     type: object
@@ -3814,6 +3951,7 @@ definitions:
         description: Primary Key
       historyText:
         type: string
+        maxLength: 2048
         description: The text of the history entry tracked against the related entity.
   Contact:
     type: object
@@ -3826,15 +3964,19 @@ definitions:
         description: Primary Key
       givenName:
         type: string
+        maxLength: 255
         description: The given name of the contact.
       surname:
         type: string
+        maxLength: 255
         description: The surname of the contact.
       role:
         type: string
+        maxLength: 255
         description: The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.
       notes:
         type: string
+        maxLength: 2048
         description: A note about the contact maintained by the users.
       contactPhones:
         type: array
@@ -3855,9 +3997,11 @@ definitions:
         description: Primary Key
       type:
         type: string
+        maxLength: 255
         description: The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.
       phoneNumber:
         type: string
+        maxLength: 255
         description: The phone number of the contact. Entered as free form to support a range of formats.
   ContactAddress:
     type: object
@@ -3870,21 +4014,27 @@ definitions:
         description: Primary Key
       type:
         type: string
+        maxLength: 255
         description: The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.
       address1:
         type: string
+        maxLength: 255
         description: Address 1 line of the address.
       address2:
         type: string
+        maxLength: 255
         description: Address 2 line of the address.
       city:
         type: string
+        maxLength: 255
         description: The City of the address.
       province:
         type: string
+        maxLength: 255
         description: The Province of the address.
       postalCode:
         type: string
+        maxLength: 255
         description: The postal code of the address.
   UserFavourite:
     type: object
@@ -3898,12 +4048,15 @@ definitions:
         description: Primary Key
       type:
         type: string
+        maxLength: 255
         description: The type of Favourite
       name:
         type: string
+        maxLength: 255
         description: The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.
       value:
         type: string
+        maxLength: 2048
         description: The settings saved by the user. In general,  a UI defined chunk of json that stores the settings in place when the user created the favourite.
       isDefault:
         type: boolean
@@ -3926,6 +4079,7 @@ definitions:
         description: The Ministry ID for the Region
       name:
         type: string
+        maxLength: 255
         description: The name of the Region
       startDate:
         type: string
@@ -3950,6 +4104,7 @@ definitions:
         description: The Ministry ID for the District
       name:
         type: string
+        maxLength: 255
         description: The name of the District
       region:
         $ref: '#/definitions/Region'
@@ -3977,6 +4132,7 @@ definitions:
         description: The Ministry ID for the Service Area
       name:
         type: string
+        maxLength: 255
         description: The name of the Service Area
       district:
         $ref: '#/definitions/District'
@@ -4001,9 +4157,11 @@ definitions:
         description: Primary Key
       name:
         type: string
+        maxLength: 255
         description: The full name of the School District
       shortName:
         type: string
+        maxLength: 255
         description: A short name for the School District useful in some areas of the UI. Usually with format \&amp;quot;SD 61\&amp;quot;.
   City:
     type: object
@@ -4017,7 +4175,12 @@ definitions:
         description: Primary Key
       name:
         type: string
+        maxLength: 255
         description: The name of the City
+      province:
+        type: string
+        maxLength: 255
+        description: Province
   Notification:
     type: object
     required:
@@ -4041,6 +4204,7 @@ definitions:
         type: boolean
       priorityCode:
         type: string
+        maxLength: 255
       user:
         $ref: '#/definitions/User'
   NotificationEvent:
@@ -4057,10 +4221,13 @@ definitions:
         format: date-time
       eventTypeCode:
         type: string
+        maxLength: 255
       eventSubTypeCode:
         type: string
+        maxLength: 255
       notes:
         type: string
+        maxLength: 2048
       notificationGenerated:
         type: boolean
       schoolBus:
@@ -4078,21 +4245,28 @@ definitions:
         description: Primary Key
       givenName:
         type: string
+        maxLength: 255
       surname:
         type: string
+        maxLength: 255
       initials:
         type: string
+        maxLength: 255
       email:
         type: string
+        maxLength: 255
       active:
         type: boolean
       smUserId:
         type: string
+        maxLength: 255
         description: Security Manager User ID
       guid:
         type: string
+        maxLength: 255
       smAuthorizationDirectory:
         type: string
+        maxLength: 255
       userRoles:
         type: array
         items:
@@ -4117,8 +4291,6 @@ definitions:
       expiryDate:
         type: string
         format: date-time
-      user:
-        $ref: '#/definitions/User'
       role:
         $ref: '#/definitions/Role'
   Role:
@@ -4134,8 +4306,10 @@ definitions:
         description: Primary Key
       name:
         type: string
+        maxLength: 255
       description:
         type: string
+        maxLength: 255
       rolePermissions:
         type: array
         items:
@@ -4171,10 +4345,13 @@ definitions:
         description: Primary Key
       code:
         type: string
+        maxLength: 255
       name:
         type: string
+        maxLength: 255
       description:
         type: string
+        maxLength: 255
   GroupMembership:
     type: object
     required:
@@ -4204,8 +4381,10 @@ definitions:
         description: Primary Key
       name:
         type: string
+        maxLength: 255
       description:
         type: string
+        maxLength: 255
   SchoolBusOwnerViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -4359,12 +4538,6 @@ definitions:
       expiryDate:
         type: string
         format: date-time
-      userId:
-        format: int32
-        type: integer
-        x-type-options:
-          min: 1
-          max: 1000
       roleId:
         format: int32
         type: integer

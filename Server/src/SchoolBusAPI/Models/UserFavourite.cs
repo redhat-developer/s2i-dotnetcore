@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolBusAPI.Models
 {
@@ -67,6 +68,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The type of Favourite</value>
         [MetaDataExtension (Description = "The type of Favourite")]
+        [MaxLength(255)]
+        
         public string Type { get; set; }
         
         /// <summary>
@@ -74,6 +77,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.</value>
         [MetaDataExtension (Description = "The user-defined name for the recorded settings. Allows the user to save different groups of settings and access each one easily when needed.")]
+        [MaxLength(255)]
+        
         public string Name { get; set; }
         
         /// <summary>
@@ -81,6 +86,8 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The settings saved by the user. In general,  a UI defined chunk of json that stores the settings in place when the user created the favourite.</value>
         [MetaDataExtension (Description = "The settings saved by the user. In general,  a UI defined chunk of json that stores the settings in place when the user created the favourite.")]
+        [MaxLength(2048)]
+        
         public string Value { get; set; }
         
         /// <summary>
