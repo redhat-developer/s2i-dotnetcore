@@ -144,10 +144,9 @@ namespace SchoolBusAPI.Test
 
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
-            UserRoleViewModel[] userRolesResponse = JsonConvert.DeserializeObject<UserRoleViewModel[]>(jsonString);
-
-            Assert.Equal(items[0].RoleId, userRolesResponse[0].RoleId);
-            Assert.Equal(items[0].UserId, userRolesResponse[0].UserId);
+            User[] userRolesResponse = JsonConvert.DeserializeObject<User[]>(jsonString);
+            
+            Assert.Equal(items[0].UserId, userRolesResponse[0].Id);
 
             // cleanup
 
