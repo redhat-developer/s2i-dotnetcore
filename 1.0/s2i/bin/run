@@ -3,14 +3,7 @@ source /opt/app-root/etc/generate_container_user
 
 set -e
 
-# User settable environment
-DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
-DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
-
-# Private environment
-DOTNET_FRAMEWORK="netcoreapp1.0"
-APP_DLL_NAME="$(basename "$(realpath "${DOTNET_STARTUP_PROJECT}")").dll"
-APP_DLL_DIR="${DOTNET_STARTUP_PROJECT}/bin/${DOTNET_CONFIGURATION}/${DOTNET_FRAMEWORK}/publish"
+cd $DOTNET_PUBLISH_PATH
 
 echo "---> Running application ..."
-cd "${APP_DLL_DIR}" && exec dotnet "${APP_DLL_NAME}"
+exec "$DOTNET_RUN_SCRIPT"
