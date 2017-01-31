@@ -16,7 +16,8 @@
   },
   "publishOptions": {
     "include": [
-      "quotes.txt"
+      "quotes.txt",
+      "arguments.txt"
     ]
   }
 }

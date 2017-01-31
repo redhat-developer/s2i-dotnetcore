@@ -9,7 +9,9 @@ ENV DOTNET_CORE_VERSION=1.1
 ENV LANG=C.UTF-8 \
     HOME=/opt/app-root \
     PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/bin:/opt/app-root/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-    STI_SCRIPTS_PATH=/usr/libexec/s2i
+    STI_SCRIPTS_PATH=/usr/libexec/s2i \
+    DOTNET_PUBLISH_PATH=/opt/app-root/publish \
+    DOTNET_RUN_SCRIPT=/opt/app-root/publish/s2i_run
 
 LABEL io.k8s.description="Platform for building and running .NET Core 1.1 applications" \
       io.k8s.display-name=".NET Core 1.1" \
@@ -41,7 +43,7 @@ RUN yum install -y yum-utils && \
     yum-config-manager --enable rhel-7-server-ose-3.0-rpms && \
     yum install -y --setopt=tsflags=nodocs rh-dotnetcore11 nss_wrapper tar rh-nodejs4-npm && \
     yum clean all && \
-    mkdir -p /opt/app-root/src && \
+    mkdir -p /opt/app-root/src /opt/app-root/publish && \
     useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
       -c "Default Application User" default && \
     chown -R 1001:0 /opt/app-root
