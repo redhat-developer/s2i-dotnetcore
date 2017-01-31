@@ -11,6 +11,7 @@ import _ from 'lodash';
 import InspectionEditDialog from './dialogs/InspectionEditDialog.jsx';
 import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
 
+import * as Action from '../actionTypes';
 import * as Api from '../api';
 import store from '../store';
 
@@ -113,7 +114,7 @@ var SchoolBusesDetail = React.createClass({
 
   updateUIState(state, callback) {
     this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
-      store.dispatch({ type: 'UPDATE_INSPECTIONS_UI', inspections: this.state.ui });
+      store.dispatch({ type: Action.UPDATE_INSPECTIONS_UI, inspections: this.state.ui });
       if (callback) { callback(); }
     });
   },

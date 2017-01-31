@@ -9,6 +9,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import _ from 'lodash';
 import Promise from 'bluebird';
 
+import * as Action from '../actionTypes';
 import * as Api from '../api';
 import store from '../store';
 
@@ -108,14 +109,14 @@ var Owners = React.createClass({
 
   updateSearchState(state, callback) {
     this.setState({ search: { ...this.state.search, ...state, ...{ loaded: true } }}, () =>{
-      store.dispatch({ type: 'UPDATE_OWNERS_SEARCH', owners: this.state.search });
+      store.dispatch({ type: Action.UPDATE_OWNERS_SEARCH, owners: this.state.search });
       if (callback) { callback(); }
     });
   },
 
   updateUIState(state, callback) {
     this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
-      store.dispatch({ type: 'UPDATE_OWNERS_UI', owners: this.state.ui });
+      store.dispatch({ type: Action.UPDATE_OWNERS_UI, owners: this.state.ui });
       if (callback) { callback(); }
     });
   },

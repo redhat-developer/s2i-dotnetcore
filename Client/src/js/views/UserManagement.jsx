@@ -9,6 +9,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import _ from 'lodash';
 import Promise from 'bluebird';
 
+import * as Action from '../actionTypes';
 import * as Api from '../api';
 import store from '../store';
 
@@ -39,8 +40,8 @@ TODO:
 */
 var UserManagement = React.createClass({
   propTypes: {
-    currentUser : React.PropTypes.object,
-    users : React.PropTypes.object,
+    currentUser: React.PropTypes.object,
+    users: React.PropTypes.object,
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
@@ -94,14 +95,14 @@ var UserManagement = React.createClass({
 
   updateSearchState(state, callback) {
     this.setState({ search: { ...this.state.search, ...state, ...{ loaded: true } }}, () =>{
-      store.dispatch({ type: 'UPDATE_USERS_SEARCH', users: this.state.search });
+      store.dispatch({ type: Action.UPDATE_USERS_SEARCH, users: this.state.search });
       if (callback) { callback(); }
     });
   },
 
   updateUIState(state, callback) {
     this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
-      store.dispatch({ type: 'UPDATE_USERS_UI', users: this.state.ui });
+      store.dispatch({ type: Action.UPDATE_USERS_UI, users: this.state.ui });
       if (callback) { callback(); }
     });
   },
@@ -189,8 +190,8 @@ var UserManagement = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    currentUser : state.user,
-    users       : state.models.users,
+    currentUser: state.user,
+    users: state.models.users,
     favourites: state.models.favourites,
     search: state.search.users,
     ui: state.ui.users,
