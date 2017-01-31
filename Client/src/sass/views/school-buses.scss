@@ -63,6 +63,17 @@
     margin-bottom: 10px;
   }
 
+  #inspection-list {
+    height: 216px;
+    width: 100%;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+  }
+
+  #school-buses-icbc-owner {
+    min-height: 80px;
+  }
+
   .well {
     margin-left: 5px;
     margin-right: 5px;
@@ -81,6 +92,10 @@
 
   .btn {
     margin-left: 5px;
+  }
+
+  .btn-group > .btn + .btn {
+    margin-left: -1px;
   }
 
   h1 {

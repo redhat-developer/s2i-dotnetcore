@@ -1,20 +1,23 @@
 import React from 'react';
-import { Alert, Dropdown, ButtonToolbar, Button, Modal } from 'react-bootstrap';
-import { Form, FormGroup, FormControl, HelpBlock, ControlLabel, Checkbox } from 'react-bootstrap';
+import { Alert, Dropdown, ButtonToolbar, Button } from 'react-bootstrap';
+import { Form, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 import { Col, Glyphicon } from 'react-bootstrap';
 
 import _ from 'lodash';
 
 import * as Api from '../api';
 
+import CheckboxControl from '../components/CheckboxControl.jsx';
 import Confirm from '../components/Confirm.jsx';
+import EditDialog from '../components/EditDialog.jsx';
+import FormInputControl from '../components/FormInputControl.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import RootCloseMenu from './RootCloseMenu.jsx';
 
 import { isBlank } from '../utils/string';
 
 
-var EditDialog = React.createClass({
+var EditFavouritesDialog = React.createClass({
   propTypes: {
     favourite: React.PropTypes.object.isRequired,
     onSave: React.PropTypes.func.isRequired,
@@ -34,49 +37,49 @@ var EditDialog = React.createClass({
     this.input.focus();
   },
 
-  nameChanged(e) {
-    this.setState({ name: e.target.value });
+  updateState(state, callback) {
+    this.setState(state, callback);
   },
 
-  defaultChanged(e) {
-    this.setState({ isDefault: e.target.checked });
+  didChange() {
+    if (this.state.name !== this.props.favourite.name) { return true; }
+    if (this.state.isDefault !== this.props.favourite.isDefault) { return true; }
+
+    return false;
   },
 
-  save() {
+  isValid() {
     if (isBlank(this.state.name)) {
       this.setState({ nameError: 'Name is required' });
-    } else {
-      this.props.onSave({ ...this.props.favourite, ...{
-        name: this.state.name,
-        isDefault: this.state.isDefault,
-      }});
+      return false;
     }
+    return true;
+  },
+
+  onSave() {
+    this.props.onSave({ ...this.props.favourite, ...{
+      name: this.state.name,
+      isDefault: this.state.isDefault,
+    }});
   },
 
   render() {
-    return <Modal id="edit-favourite" show={ this.props.show } bsSize="small" onHide={ this.props.onClose }>
-      <Modal.Header closeButton>
-        <Modal.Title>
-          <strong>Favourite</strong>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <FormGroup controlId="name" validationState={ this.state.nameError ? 'error' : null }>
-            <ControlLabel>Name <sup>*</sup></ControlLabel>
-            <FormControl type="text" defaultValue={ this.state.name } onChange={ this.nameChanged } inputRef={ ref => { this.input = ref; }} />
-            <HelpBlock>{ this.state.nameError }</HelpBlock>
-          </FormGroup>
-          <Checkbox checked={ this.state.isDefault } onChange={ this.defaultChanged }>
-            Default
-          </Checkbox>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={ this.props.onClose }>Close</Button>
-        <Button bsStyle="primary" onClick={ this.save }>Save</Button>
-      </Modal.Footer>
-    </Modal>;
+    return <EditDialog id="edit-favourite" show={ this.props.show } bsSize="small"
+      onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }
+      title= {
+        <strong>Favourite</strong>
+      }>
+      <Form>
+        <FormGroup controlId="name" validationState={ this.state.nameError ? 'error' : null }>
+          <ControlLabel>Name <sup>*</sup></ControlLabel>
+          <FormInputControl type="text" defaultValue={ this.state.name } updateState={ this.updateState } inputRef={ ref => { this.input = ref; }} />
+          <HelpBlock>{ this.state.nameError }</HelpBlock>
+        </FormGroup>
+        <CheckboxControl id="isDefault" checked={ this.state.isDefault } updateState={ this.updateState }>
+          Default
+        </CheckboxControl>
+      </Form>
+    </EditDialog>;
   },
 });
 
@@ -88,8 +91,8 @@ var Favourites = React.createClass({
     title: React.PropTypes.string,
     type: React.PropTypes.string.isRequired,
     favourites: React.PropTypes.object.isRequired,
+    data: React.PropTypes.object.isRequired,
     onSelect: React.PropTypes.func.isRequired,
-    onAdd: React.PropTypes.func.isRequired,
     pullRight: React.PropTypes.bool,
   },
 
@@ -134,7 +137,7 @@ var Favourites = React.createClass({
     if (favourite.id) {
       Api.updateFavourite(favourite);
     } else {
-      this.props.onAdd(favourite);
+      favourite.value = JSON.stringify(this.props.data);
       Api.addFavourite(favourite);
     }
 
@@ -193,7 +196,7 @@ var Favourites = React.createClass({
         })()}
       </RootCloseMenu>
       { this.state.showEditDialog ?
-        <EditDialog show={ this.state.showEditDialog } favourite={ this.state.favouriteToEdit } onSave={ this.saveFavourite } onClose= { this.closeDialog } /> : null
+        <EditFavouritesDialog show={ this.state.showEditDialog } favourite={ this.state.favouriteToEdit } onSave={ this.saveFavourite } onClose= { this.closeDialog } /> : null
       }
     </Dropdown>;
   },

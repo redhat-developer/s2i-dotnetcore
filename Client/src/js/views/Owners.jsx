@@ -2,19 +2,23 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { Well, Alert, Table, Row, Col } from 'react-bootstrap';
-import { ButtonToolbar, DropdownButton, MenuItem, Button, ButtonGroup, Glyphicon, Checkbox } from 'react-bootstrap';
+import { Well, Alert, Row, Col } from 'react-bootstrap';
+import { ButtonToolbar, MenuItem, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
 import Promise from 'bluebird';
 
+import * as Action from '../actionTypes';
 import * as Api from '../api';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
+import CheckboxControl from '../components/CheckboxControl.jsx';
+import DropdownControl from '../components/DropdownControl.jsx';
 import Favourites from '../components/Favourites.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
+import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTime } from '../utils/date';
@@ -105,29 +109,15 @@ var Owners = React.createClass({
 
   updateSearchState(state, callback) {
     this.setState({ search: { ...this.state.search, ...state, ...{ loaded: true } }}, () =>{
-      store.dispatch({ type: 'UPDATE_OWNERS_SEARCH', owners: this.state.search });
+      store.dispatch({ type: Action.UPDATE_OWNERS_SEARCH, owners: this.state.search });
       if (callback) { callback(); }
     });
   },
 
   updateUIState(state, callback) {
     this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
-      store.dispatch({ type: 'UPDATE_OWNERS_UI', owners: this.state.ui });
+      store.dispatch({ type: Action.UPDATE_OWNERS_UI, owners: this.state.ui });
       if (callback) { callback(); }
-    });
-  },
-
-  districtsChanged(selected) {
-    var selectedIds = _.map(selected, 'id');
-    this.updateSearchState({
-      selectedDistrictsIds: selectedIds,
-    });
-  },
-
-  inspectorsChanged(selected) {
-    var selectedIds = _.map(selected, 'id');
-    this.updateSearchState({
-      selectedInspectorsIds: selectedIds,
     });
   },
 
@@ -138,30 +128,8 @@ var Owners = React.createClass({
     });
   },
 
-  hideInactiveSelected(e) {
-    this.updateSearchState({
-      hideInactive: e.target.checked,
-    });
-  },
-
-  saveFavourite(favourite) {
-    favourite.value = JSON.stringify(this.state.search);
-  },
-
   loadFavourite(favourite) {
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
-  },
-
-  sort(e) {
-    var newState = {};
-    if (this.state.ui.sortField !== e.currentTarget.id) {
-      newState.sortField = e.currentTarget.id;
-      newState.sortDesc = false;
-    } else {
-      newState.sortDesc = !this.state.ui.sortDesc;
-    }
-
-    this.updateUIState(newState);
   },
 
   email() {
@@ -182,24 +150,24 @@ var Owners = React.createClass({
         <Row>
           <Col md={10}>
             <ButtonToolbar id="owners-search">
-              <MultiDropdown id="districts-dropdown" placeholder="Districts"
-                items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } onChange={ this.districtsChanged } showMaxItems={ 2 } />
-              <MultiDropdown id="inspectors-dropdown" placeholder="Inspectors"
-                items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } onChange={ this.inspectorsChanged } showMaxItems={ 2 } />
-              <DropdownButton id="owners-owner-dropdown" title={ this.state.search.ownerName } onSelect={ this.ownerSelected }>
+              <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
+                items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
+              <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors"
+                items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
+              <DropdownControl id="owners-owner-dropdown" title={ this.state.search.ownerName } onSelect={ this.ownerSelected }>
                 <MenuItem key={ 0 } eventKey={ 0 }>&nbsp;</MenuItem>
                 {
                   _.map(owners, (owner) => {
                     return <MenuItem key={ owner.id } eventKey={ owner.id }>{ owner.name }</MenuItem>;
                   })
                 }
-              </DropdownButton>
-              <Checkbox inline checked={ this.state.search.hideInactive } onChange={ this.hideInactiveSelected }>Hide Inactive</Checkbox>
+              </DropdownControl>
+              <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
               <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
             </ButtonToolbar>
           </Col>
           <Col md={1}>
-            <Favourites id="owners-faves-dropdown" type="owner" favourites={ this.props.favourites } onAdd={ this.saveFavourite } onSelect={ this.loadFavourite } />
+            <Favourites id="owners-faves-dropdown" type="owner" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } />
           </Col>
           <Col md={1}>
             <div id="owners-buttons">
@@ -221,25 +189,13 @@ var Owners = React.createClass({
           _.reverse(ownerList);
         }
 
-        var buildHeader = (field, title, style) => {
-          var sortGlyph = '';
-          if (this.state.ui.sortField === field) {
-            sortGlyph = <span>&nbsp;<Glyphicon glyph={ this.state.ui.sortDesc ? 'sort-by-attributes-alt' : 'sort-by-attributes' }/></span>;
-          }
-          return <th id={ field } onClick={ this.sort } style={{ ...style, cursor: 'pointer' }}>{ title }{ sortGlyph }</th>;
-        };
-
-        return <Table condensed striped>
-          <thead>
-            <tr>
-              { buildHeader('name', 'Name') }
-              { buildHeader('primaryContactName', 'Primary Contact') }
-              { buildHeader('schoolBusCount', 'School Buses', { textAlign: 'center' }) }
-              { buildHeader('nextInspectionDate', 'Next Inspection', { textAlign: 'center' }) }
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={[
+          { field: 'name',                   title: 'Name'            },
+          { field: 'primaryContactName',     title: 'Primary Contact' },
+          { field: 'schoolBusCount',         title: 'School Buses',    style:{ textAlign: 'center' } },
+          { field: 'nextInspectionDateSort', title: 'Next Inspection', style:{ textAlign: 'center' } },
+          { field: 'blank' },
+        ]}>
           {
             _.map(ownerList, (owner) => {
               return <tr key={ owner.id } className={ owner.status != 'Active' ? 'info' : null }>
@@ -258,8 +214,7 @@ var Owners = React.createClass({
               </tr>;
             })
           }
-          </tbody>
-        </Table>;
+        </SortTable>;
       })()}
 
     </div>;
