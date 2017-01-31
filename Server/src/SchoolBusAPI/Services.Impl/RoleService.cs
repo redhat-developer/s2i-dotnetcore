@@ -404,28 +404,28 @@ namespace SchoolBusAPI.Services.Impl
             // and the users with those UserRoles
             List < User > result = new List<User>();
 
-            List<User> users = _context.Users                     
+            List<User> users = _context.Users
+                    .Include( x => x.UserRoles)                     
                     .ToList();
 
             foreach (User user in users)
             {
-                bool found = false;
-                
+                bool found = false;                
 
                 if (user.UserRoles != null)
                 {
-                    List<Role> activeRoles = user.UserRoles.Where(
-                        x => x.EffectiveDate <= DateTimeOffset.Now
-                        && (x.ExpiryDate == null || x.ExpiryDate > DateTimeOffset.Now))
-                        .Select(x => x.Role).ToList();
-
-                    foreach (var item in activeRoles)
+                    // ef core does not support lazy loading, so we need to explicitly get data here.
+                    foreach (var item in user.UserRoles)
                     {
-                        if (item != null && item.Id == id)
+                        UserRole userRole = _context.UserRoles
+                                .Include (x => x.Role)
+                                .First(x => x.Id == item.Id);
+                        if (userRole.Role.Id == id && userRole.EffectiveDate <= DateTimeOffset.Now && (userRole.ExpiryDate == null || userRole.ExpiryDate > DateTimeOffset.Now))
                         {
                             found = true;
+                            break;
                         }
-                    }
+                    }                    
                 }
                 
                 if (found && !result.Contains (user))
@@ -477,13 +477,18 @@ namespace SchoolBusAPI.Services.Impl
                             {
                                 UserRole newRole = new UserRole();
                                 newRole.Role = role;
-                                
+                                newRole.EffectiveDate = item.EffectiveDate;
+                                newRole.ExpiryDate = null;
+                                _context.Add(newRole);
+
                                 if (user.UserRoles == null)
                                 {
                                     user.UserRoles = new List<UserRole>();
                                 }
 
                                 user.UserRoles.Add(newRole);
+                                // update the user.
+                                _context.Update(user);
                             }
                         }
 

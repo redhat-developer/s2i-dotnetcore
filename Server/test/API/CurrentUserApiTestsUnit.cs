@@ -56,7 +56,7 @@ namespace SchoolBusAPI.Test
 
                     */
 
-                    CurrentUserService _service = new CurrentUserService(dbAppContext.Object);
+                    CurrentUserService _service = new CurrentUserService(null, dbAppContext.Object);
 			
                     _CurrentUserApi = new CurrentUserController (_service);
 
