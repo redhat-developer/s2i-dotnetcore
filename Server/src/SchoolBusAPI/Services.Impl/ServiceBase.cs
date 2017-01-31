@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
+using System;
 using System.Security.Claims;
 
 namespace SchoolBusAPI.Services.Impl
@@ -25,6 +26,26 @@ namespace SchoolBusAPI.Services.Impl
         protected ClaimsPrincipal User
         {
             get { return _httpContextAccessor.HttpContext.User; }
+        }
+
+        /// <summary>
+        /// Returns the current user ID
+        /// </summary>
+        /// <returns></returns>
+        protected int? GetCurrentUserId()
+        {
+            int? result = null;
+            
+            try
+            {
+                string rawuid = User.FindFirst(SchoolBusAPI.Models.User.USERID_CLAIM).Value;
+                result = int.Parse(rawuid);
+            }
+            catch (Exception e)
+            {
+                result = null;
+            }
+            return result;
         }
 
         protected OkObjectResult Ok(object value)
