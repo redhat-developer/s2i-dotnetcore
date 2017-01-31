@@ -20,13 +20,16 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
+using SchoolBusAPI.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace SchoolBusAPI.Services.Impl
 { 
     /// <summary>
     /// 
     /// </summary>
-    public class CurrentUserService : ICurrentUserService
+    public class CurrentUserService : ServiceBase, ICurrentUserService
     {
 
         private readonly DbAppContext _context;
@@ -34,7 +37,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public CurrentUserService (DbAppContext context)
+        public CurrentUserService (IHttpContextAccessor httpContextAccessor, DbAppContext context) : base(httpContextAccessor, context)
         {
             _context = context;
         }
@@ -141,15 +144,46 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult UsersCurrentGetAsync ()        
         {
+            
             var result = new CurrentUserViewModel();
+
+            
+            
+
             // get the name for the current logged in user
-            result.GivenName = "Test";
-            result.Surname = "User";
+            result.GivenName = User.FindFirst (ClaimTypes.GivenName).Value;
+            result.Surname = User.FindFirst(ClaimTypes.Surname).Value; ;
+
             result.FullName = result.GivenName + " " + result.Surname;
-            result.OverdueInspections = 1;
-            result.DueNextMonthInspections = 2;
+
+            string rawuid = User.FindFirst("userid_claim").Value;
+
+            int id = int.Parse(rawuid);
+
+            int overdue = _context.SchoolBuss
+                .Where(x => x.Inspector.Id == id)
+                .Where(x => x.NextInspectionDate <= DateTime.Now)
+                .Select(x => x)
+                .Count();
+
+            int nextMonth = _context.SchoolBuss
+                .Where(x => x.Inspector.Id == id)
+                .Where(x => x.NextInspectionDate >= DateTime.Now)
+                .Where(x => x.NextInspectionDate <= DateTime.Now.AddMonths(1) )
+                .Select(x => x)
+                .Count();
+            
+            int scheduledInspections = _context.Inspections
+                .Where(x => x.Inspector.Id == id)
+                .Where(x => x.InspectionDate >= DateTime.Now)                
+                .Select(x => x)
+                .Count();
+
+
+            result.OverdueInspections = overdue;
+            result.DueNextMonthInspections = nextMonth;
             result.DistrictName = "Victoria";
-            result.ScheduledInspections = 3;
+            result.ScheduledInspections = scheduledInspections;
 
             // get the number of inspections available for the current logged in user
 
