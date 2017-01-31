@@ -1,6 +1,6 @@
 import store from './store';
 
-import { daysFromToday, hoursAgo, sortable } from './utils/date';
+import { daysFromToday, hoursAgo, sortableDateTime } from './utils/date';
 import { ApiRequest } from './utils/http';
 import { lastFirstName, firstLastName, concat } from './utils/string';
 
@@ -38,7 +38,7 @@ export function getUsers() {
 }
 
 export function getUser(userId) {
-  return new ApiRequest(`/users/${userId}`).get().then(response => {
+  return new ApiRequest(`/users/${ userId }`).get().then(response => {
     var user = response;
 
     // Add display fields
@@ -53,7 +53,7 @@ export function getUser(userId) {
 ////////////////////
 
 export function getFavourites(type) {
-  return new ApiRequest(`/users/current/favourites/${type}`).get().then(response => {
+  return new ApiRequest(`/users/current/favourites/${ type }`).get().then(response => {
     // Normalize the response
     var favourites = _.fromPairs(response.map(favourite => [ favourite.id, favourite ]));
 
@@ -80,7 +80,7 @@ export function updateFavourite(favourite) {
 }
 
 export function deleteFavourite(favourite) {
-  return new ApiRequest(`/users/current/favourites/${favourite.id}/delete`).post().then(response => {
+  return new ApiRequest(`/users/current/favourites/${ favourite.id }/delete`).post().then(response => {
     // No needs to normalize, as we just want the id from the response.
     store.dispatch({ type: 'DELETE_FAVOURITE', id: response.id });
   });
@@ -106,10 +106,9 @@ function parseSchoolBus(bus) {
   bus.homeTerminalCityProv = concat(bus.homeTerminalCity.name, bus.homeTerminalProvince, ', ');
   bus.homeTerminalCityPostal = concat(bus.homeTerminalCity.name, bus.homeTerminalPostalCode, ', ');
   bus.daysToInspection = daysFromToday(bus.nextInspectionDate);
-  bus.nextInspectionDateSort = sortable(bus.nextInspectionDate);
   bus.isOverdue = bus.daysToInspection < 0;
   bus.inspectorName = firstLastName(bus.inspector.givenName, bus.inspector.surname);
-  bus.isReinspection = bus.nextInspectionTypeCode === 'Re-Inspection';
+  bus.isReinspection = bus.nextInspectionTypeCode === 'R';
 }
 
 export function searchSchoolBuses(params) {
@@ -134,7 +133,7 @@ export function getSchoolBuses() {
 }
 
 export function getSchoolBus(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${schoolBusId}`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${ schoolBusId }`).get().then(response => {
     var bus = response;
 
     // Add display fields
@@ -145,7 +144,7 @@ export function getSchoolBus(schoolBusId) {
 }
 
 export function updateSchoolBus(schoolBus) {
-  return new ApiRequest(`/schoolbuses/${schoolBus.id}`).put(schoolBus).then(response => {
+  return new ApiRequest(`/schoolbuses/${ schoolBus.id }`).put(schoolBus).then(response => {
     var bus = response;
 
     // Add display fields
@@ -156,7 +155,7 @@ export function updateSchoolBus(schoolBus) {
 }
 
 export function getSchoolBusAttachments(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${schoolBusId}/attachments`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${ schoolBusId }/attachments`).get().then(response => {
     // Normalize the response
     var schoolBusAttachments = _.fromPairs(response.map(attachment => [ attachment.id, attachment ]));
 
@@ -165,7 +164,7 @@ export function getSchoolBusAttachments(schoolBusId) {
 }
 
 export function getSchoolBusCCW(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${schoolBusId}/ccwdata`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${ schoolBusId }/ccwdata`).get().then(response => {
     var schoolBusCCW = response || {};
 
     store.dispatch({ type: 'UPDATE_BUS_CCW', schoolBusCCW: schoolBusCCW });
@@ -173,7 +172,7 @@ export function getSchoolBusCCW(schoolBusId) {
 }
 
 export function getSchoolBusHistories(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${schoolBusId}/history`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${ schoolBusId }/history`).get().then(response => {
     // Normalize the response
     var schoolBusHistories = _.fromPairs(response.map(history => [ history.id, history ]));
 
@@ -182,7 +181,7 @@ export function getSchoolBusHistories(schoolBusId) {
 }
 
 export function getSchoolBusInspections(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${schoolBusId}/inspections`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${ schoolBusId }/inspections`).get().then(response => {
     // Normalize the response
     var schoolBusInspections = _.fromPairs(response.map(inspection => [ inspection.id, inspection ]));
 
@@ -194,7 +193,7 @@ export function getSchoolBusInspections(schoolBusId) {
 }
 
 export function getSchoolBusNotes(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${schoolBusId}/notes`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${ schoolBusId }/notes`).get().then(response => {
     // Normalize the response
     var schoolBusNotes = _.fromPairs(response.map(note => [ note.id, note ]));
 
@@ -206,25 +205,67 @@ export function getSchoolBusNotes(schoolBusId) {
 // Inspections
 ////////////////////
 
+const INSPECTION_GRACE_PERIOD_HOURS = 24;
+
 function parseInspection(inspection) {
   inspection.inspectorName = inspection.inspector ? firstLastName(inspection.inspector.givenName, inspection.inspector.surname) : '';
   inspection.isReinspection = inspection.inspectionTypeCode === 'Re-Inspection';
-  inspection.canDelete = hoursAgo(inspection.createdDate) <= 24;
-  inspection.inspectionDateSort = sortable(inspection.inspectionDate);
+  inspection.canDelete = hoursAgo(inspection.createdDate) <= INSPECTION_GRACE_PERIOD_HOURS;
+  inspection.inspectionDateSort = sortableDateTime(inspection.inspectionDate);
 }
 
+export function getInspection(id) {
+  return new ApiRequest(`/inspections/${ id }`).get().then(response => {
+    var inspection = response;
+
+    // Add display fields
+    parseInspection(inspection);
+
+    store.dispatch({ type: 'UPDATE_INSPECTION', inspection: inspection });
+  });
+}
+
+export function addInspection(inspection) {
+  return new ApiRequest('/inspections').post(inspection).then(response => {
+    // Normalize the response
+    var inspection = _.fromPairs([[ response.id, response ]]);
+
+    // Add display fields
+    parseInspection(inspection);
+
+    store.dispatch({ type: 'ADD_INSPECTION', inspection: inspection });
+  });
+}
+
+export function updateInspection(inspection) {
+  return new ApiRequest('/inspections/${ inspection.id }').put(inspection).then(response => {
+    // Normalize the response
+    var inspection = _.fromPairs([[ response.id, response ]]);
+
+    // Add display fields
+    parseInspection(inspection);
+
+    store.dispatch({ type: 'UPDATE_INSPECTION', inspection: inspection });
+  });
+}
+
+export function deleteInspection(inspection) {
+  return new ApiRequest(`/inspections/${ inspection.id }/delete`).post().then(response => {
+    // No needs to normalize, as we just want the id from the response.
+    store.dispatch({ type: 'DELETE_INSPECTION', id: response.id });
+  });
+}
 
 ////////////////////
 // Owners
 ////////////////////
 
 function parseOwner(owner) {
+  owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
   owner.schoolBusCount = 1;
   owner.nextInspectionDate = '2017-02-21';
   owner.nextInspectionTypeCode = 'R';
 
-  owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
-  owner.nextInspectionDateSort = sortable(owner.nextInspectionDate);
   owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
   owner.isOverdue = owner.daysToInspection < 0;
   owner.isReinspection = owner.nextInspectionTypeCode === 'R';
@@ -243,7 +284,7 @@ export function searchOwners(params) {
 }
 
 export function getOwner(ownerId) {
-  return new ApiRequest(`/schoolbusowners/${ownerId}`).get().then(response => {
+  return new ApiRequest(`/schoolbusowners/${ ownerId }`).get().then(response => {
     var owner = response;
 
     store.dispatch({ type: 'UPDATE_OWNER', owner: owner });
@@ -324,7 +365,7 @@ export function getInspectors() {
   var inspectorGroup = _.find(store.getState().lookups.groups, { name: 'Inspector' });
   var groupId = inspectorGroup ? inspectorGroup.id : 0;
 
-  return new ApiRequest(`/groups/${groupId}/users`).get().then(response => {
+  return new ApiRequest(`/groups/${ groupId }/users`).get().then(response => {
     // Normalize the response
     var users = _.fromPairs(response.map(user => [ user.id, user ]));
 

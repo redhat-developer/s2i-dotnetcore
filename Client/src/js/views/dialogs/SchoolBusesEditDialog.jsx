@@ -1,27 +1,23 @@
 import React from 'react';
-import Promise from 'bluebird';
+
 import { connect } from 'react-redux';
-import { Modal, Grid, Row, Col } from 'react-bootstrap';
+
+import { Grid, Row, Col } from 'react-bootstrap';
 import { Radio, Button, Glyphicon } from 'react-bootstrap';
-import { Form, FormGroup, FormControl, HelpBlock, ControlLabel } from 'react-bootstrap';
+import { Form, FormControl, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 
 import _ from 'lodash';
-
-import Confirm from '../../components/Confirm.jsx';
-import OverlayTrigger from '../../components/OverlayTrigger.jsx';
-import Spinner from '../../components/Spinner.jsx';
+import Promise from 'bluebird';
 
 import * as Api from '../../api';
 
+import Confirm from '../../components/Confirm.jsx';
+import EditDialog from '../../components/EditDialog.jsx';
+import FormInputControl from '../../components/FormInputControl.jsx';
+import OverlayTrigger from '../../components/OverlayTrigger.jsx';
+import Spinner from '../../components/Spinner.jsx';
+
 import { isBlank } from '../../utils/string';
-
-/*
-
-Changing the School Bus Owner is related to
-Moving a School Bus - SB-133. You can't add a
-new School Bus Owner at this point.
-
-*/
 
 
 const STATUS_ACTIVE = 'Active';
@@ -98,40 +94,8 @@ var SchoolBusesEditDialog = React.createClass({
     });
   },
 
-  statusChanged(e) {
-    this.setState({ status: e.target.value });
-  },
-
-  ownerIdChanged(e) {
-    this.setState({ ownerId: e.target.value });
-  },
-
-  districtIdChanged(e) {
-    this.setState({ districtId: e.target.value });
-  },
-
-  inspectorIdChanged(e) {
-    this.setState({ inspectorId: e.target.value });
-  },
-
-  address1Changed(e) {
-    this.setState({ address1: e.target.value });
-  },
-
-  address2Changed(e) {
-    this.setState({ address2: e.target.value });
-  },
-
-  cityIdChanged(e) {
-    this.setState({ cityId: e.target.value });
-  },
-
-  postalCodeChanged(e) {
-    this.setState({ postalCode: e.target.value });
-  },
-
-  descriptionChanged(e) {
-    this.setState({ description: e.target.value });
+  updateState(state, callback) {
+    this.setState(state, callback);
   },
 
   permitClassCodeChanged(e) {
@@ -148,45 +112,11 @@ var SchoolBusesEditDialog = React.createClass({
     });
   },
 
-  bodyTypeCodeChanged(e) {
-    this.setState({ bodyTypeCode: e.target.value });
-  },
-
-  restrictionsTextChanged(e) {
-    this.setState({ restrictionsText: e.target.value });
-  },
-
-  schoolDistrictIdChanged(e) {
-    this.setState({ schoolDistrictId: e.target.value });
-  },
-
   isIndependentSchoolChanged(value) {
     this.setState({
       isIndependentSchool: value,
       independentSchoolName: value ? this.state.independentSchoolName : '',
     });
-  },
-
-  independentSchoolNameChanged(e) {
-    this.setState({ independentSchoolName: e.target.value });
-  },
-
-  unitNumberChanged(e) {
-    this.setState({ unitNumber: e.target.value });
-  },
-
-  schoolBusSeatingCapacityChanged(e) {
-    var value = parseInt(e.target.value, 10);
-    if (_.isNaN(value)) { value = 0; }
-
-    this.setState({ schoolBusSeatingCapacity: value });
-  },
-
-  mobilityAidCapacityChanged(e) {
-    var value = parseInt(e.target.value, 10);
-    if (_.isNaN(value)) { value = 0; }
-
-    this.setState({ mobilityAidCapacity: value });
   },
 
   editRestrictionsText() {
@@ -221,38 +151,40 @@ var SchoolBusesEditDialog = React.createClass({
     return false;
   },
 
-  save() {
+  isValid() {
     if (isBlank(this.state.schoolBusSeatingCapacity)) {
       this.setState({ schoolBusSeatingCapacityError: 'Seating capacity is required' });
-    } else if (isBlank(this.state.mobilityAidCapacity)) {
-      this.setState({ mobilityAidCapacityError: 'Mobility aid capacity is required' });
-    } else {
-      if (this.didChange()) {
-        this.props.onSave({ ...this.props.schoolBus, ...{
-          status: this.state.status,
-          schoolBusOwner: { id: this.state.ownerId },
-          district: { id: this.state.districtId },
-          inspector: { id: this.state.inspectorId },
-          homeTerminalAddress1: this.state.address1,
-          homeTerminalAddress2: this.state.address2,
-          homeTerminalCity: { id: this.state.cityId },
-          homeTerminalProvince: this.state.province,
-          homeTerminalPostalCode: this.state.postalCode,
-          homeTerminalComment: this.state.description,
-          permitClassCode: this.state.permitClassCode,
-          bodyTypeCode: this.state.bodyTypeCode,
-          restrictionsText: this.state.restrictionsText,
-          schoolDistrict: { id: this.state.schoolDistrictId },
-          isIndependentSchool: this.state.isIndependentSchool,
-          independentSchoolName: this.state.independentSchoolName,
-          unitNumber: this.state.unitNumber,
-          schoolBusSeatingCapacity: this.state.schoolBusSeatingCapacity,
-          mobilityAidCapacity: this.state.mobilityAidCapacity,
-        }});
-      } else {
-        this.props.onClose();
-      }
+      return false;
     }
+    if (isBlank(this.state.mobilityAidCapacity)) {
+      this.setState({ mobilityAidCapacityError: 'Mobility aid capacity is required' });
+      return false;
+    }
+    return true;
+  },
+
+  onSave() {
+    this.props.onSave({ ...this.props.schoolBus, ...{
+      status: this.state.status,
+      schoolBusOwner: { id: this.state.ownerId },
+      district: { id: this.state.districtId },
+      inspector: { id: this.state.inspectorId },
+      homeTerminalAddress1: this.state.address1,
+      homeTerminalAddress2: this.state.address2,
+      homeTerminalCity: { id: this.state.cityId },
+      homeTerminalProvince: this.state.province,
+      homeTerminalPostalCode: this.state.postalCode,
+      homeTerminalComment: this.state.description,
+      permitClassCode: this.state.permitClassCode,
+      bodyTypeCode: this.state.bodyTypeCode,
+      restrictionsText: this.state.restrictionsText,
+      schoolDistrict: { id: this.state.schoolDistrictId },
+      isIndependentSchool: this.state.isIndependentSchool,
+      independentSchoolName: this.state.independentSchoolName,
+      unitNumber: this.state.unitNumber,
+      schoolBusSeatingCapacity: this.state.schoolBusSeatingCapacity,
+      mobilityAidCapacity: this.state.mobilityAidCapacity,
+    }});
   },
 
   render() {
@@ -262,228 +194,221 @@ var SchoolBusesEditDialog = React.createClass({
     var schoolDistricts = _.sortBy(this.props.schoolDistricts, 'name');
     var owners = _.sortBy(this.props.owners, 'name');
 
-    return <Modal id="school-buses-edit" show={ this.props.show } bsSize="large" onHide={ this.props.onClose }>
-      <Modal.Header closeButton>
-        <Modal.Title>
-          <strong>School Bus
-            <span>Regi: <small>{ this.props.schoolBus.icbcRegistrationNumber }</small></span>
-            <span>Plate: <small>{ this.props.schoolBus.licencePlateNumber }</small></span>
-            <span>VIN: <small>{ this.props.schoolBus.vehicleIdentificationNumber }</small></span>
-          </strong>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {(() => {
-          if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+    return <EditDialog id="school-buses-edit" show={ this.props.show } bsSize="large"
+      onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }
+      title= {
+        <strong>School Bus
+          <span>Regi: <small>{ this.props.schoolBus.icbcRegistrationNumber }</small></span>
+          <span>Plate: <small>{ this.props.schoolBus.licencePlateNumber }</small></span>
+          <span>VIN: <small>{ this.props.schoolBus.vehicleIdentificationNumber }</small></span>
+        </strong>
+      }>
+      {(() => {
+        if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
-          return <Form>
-            <Grid fluid>
-              <Row>
-                <Col md={3}>
-                  <FormGroup>
-                    <ControlLabel>Status</ControlLabel>
-                    <FormControl componentClass="select" value={ this.state.status } onChange={ this.statusChanged }>
-                      <option key={ STATUS_ACTIVE } value={ STATUS_ACTIVE }>{ STATUS_ACTIVE }</option>
-                      <option key={ STATUS_ARCHIVED } value={ STATUS_ARCHIVED }>{ STATUS_ARCHIVED }</option>
-                    </FormControl>
-                  </FormGroup>
-                </Col>
-                <Col md={3}>
-                  <FormGroup>
-                    <ControlLabel>Owner</ControlLabel>
-                    <FormControl componentClass="select" value={ this.state.ownerId } onChange={ this.ownerIdChanged } disabled={ this.state.isNew }>
-                      {
-                        owners.map((owner) => {
-                          return <option key={ owner.id } value={ owner.id }>{ owner.name }</option>;
-                        })
-                      }
-                    </FormControl>
-                  </FormGroup>
-                </Col>
-                <Col md={3}>
-                  <FormGroup>
-                    <ControlLabel>District</ControlLabel>
-                    <FormControl componentClass="select" value={ this.state.districtId || '' } onChange={ this.districtIdChanged }>
-                      <option value=""></option>
-                      {
-                        districts.map((district) => {
-                          return <option key={ district.id } value={ district.id }>{ district.name }</option>;
-                        })
-                      }
-                    </FormControl>
-                  </FormGroup>
-                </Col>
-                <Col md={3}>
-                  <FormGroup>
-                    <ControlLabel>Inspector</ControlLabel>
-                    <FormControl componentClass="select" value={ this.state.inspectorId || '' } onChange={ this.inspectorIdChanged }>
-                      <option value=""></option>
-                      {
-                        inspectors.map((inspector) => {
-                          return <option key={ inspector.id } value={ inspector.id }>{ inspector.name }</option>;
-                        })
-                      }
-                    </FormControl>
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={3}>
-                  <FormGroup>
-                    <ControlLabel>Home Terminal Address 1</ControlLabel>
-                    <FormControl type="text" defaultValue={ this.state.address1 } onChange={ this.address1Changed } inputRef={ ref => { this.input = ref; }} />
-                  </FormGroup>
-                </Col>
-                <Col md={3}>
-                  <FormGroup>
-                    <ControlLabel>Address 2</ControlLabel>
-                    <FormControl type="text" defaultValue={ this.state.address2 } onChange={ this.address2Changed } />
-                  </FormGroup>
-                </Col>
-                <Col md={3}>
-                  <FormGroup>
-                    <ControlLabel>City</ControlLabel>
-                    <FormControl componentClass="select" value={ this.state.cityId || '' } onChange={ this.cityIdChanged }>
-                      <option value=""></option>
-                      {
-                        cities.map((city) => {
-                          return <option key={ city.id } value={ city.id }>{ city.name }</option>;
-                        })
-                      }
-                    </FormControl>
-                  </FormGroup>
-                </Col>
-                <Col md={1}>
-                  <FormGroup>
-                    <ControlLabel>Province</ControlLabel>
-                    <FormControl.Static>{ this.state.province }</FormControl.Static>
-                  </FormGroup>
-                </Col>
-                <Col md={2}>
-                  <FormGroup>
-                    <ControlLabel>Postal Code</ControlLabel>
-                    <FormControl type="text" defaultValue={ this.state.postalCode } onChange={ this.postalCodeChanged } />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={12}>
-                  <FormGroup>
-                    <ControlLabel>Home Terminal Description</ControlLabel>
-                    <FormControl componentClass="textarea" defaultValue={ this.state.description } onChange={ this.descriptionChanged } />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={5}>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <ControlLabel>Permit Class</ControlLabel>
-                        <FormControl componentClass="select" value={ this.state.permitClassCode } onChange={ this.permitClassCodeChanged }>
-                          <option key={ PERMIT_CLASS_TYPE_1 } value={ PERMIT_CLASS_TYPE_1 }>{ PERMIT_CLASS_TYPE_1 }</option>;
-                          <option key={ PERMIT_CLASS_TYPE_2 } value={ PERMIT_CLASS_TYPE_2 }>{ PERMIT_CLASS_TYPE_2 }</option>;
-                          <option key={ PERMIT_CLASS_TYPE_3 } value={ PERMIT_CLASS_TYPE_3 }>{ PERMIT_CLASS_TYPE_3 }</option>;
-                        </FormControl>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <ControlLabel>Body Type</ControlLabel>
-                        <FormControl componentClass="select" value={ this.state.bodyTypeCode } onChange={ this.bodyTypeCodeChanged }>
-                          {
-                            BODY_TYPES.map((bodyType) => {
-                              return <option key={ bodyType } value={ bodyType }>{ bodyType }</option>;
-                            })
-                          }
-                        </FormControl>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col md={7}>
-                  <FormGroup>
-                    <div>
-                      <ControlLabel>Restrictions</ControlLabel>
-                      <span className="pull-right">
-                        <OverlayTrigger trigger="click" placement="top" rootClose
-                          overlay={
-                            <Confirm title="Edit Permit Restrictions Text?" onConfirm={ this.editRestrictionsText }>
-                              <div>The permit restrictions text should be changed only in rare circumstances. Are you sure?</div>
-                            </Confirm>
-                          }>
-                          <Button title="editRestrictions" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
-                        </OverlayTrigger>
-                      </span>
-                    </div>
-                    <FormControl componentClass="textarea" rows="4" value={ this.state.restrictionsText } onChange={ this.restrictionsTextChanged } disabled={ this.state.disableRestrictionsText } />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={3}>
-                  <FormGroup>
-                    <ControlLabel>School District</ControlLabel>
-                    <FormControl componentClass="select" value={ this.state.schoolDistrictId || '' } onChange={ this.schoolDistrictIdChanged }>
-                      <option value=""></option>
-                      {
-                        schoolDistricts.map((sd) => {
-                          return <option key={ sd.id } value={ sd.id }>{ sd.name }</option>;
-                        })
-                      }
-                    </FormControl>
-                  </FormGroup>
-                </Col>
-                <Col md={2}>
-                  <FormGroup>
-                    <ControlLabel>Independent School</ControlLabel>
-                    <FormControl componentClass="div">
-                      <Radio inline onChange={ this.isIndependentSchoolChanged.bind(this, true) } checked={ this.state.isIndependentSchool }>Yes</Radio>
-                      { ' ' }
-                      <Radio inline onChange={ this.isIndependentSchoolChanged.bind(this, false) } checked={ !this.state.isIndependentSchool }>No</Radio>
-                    </FormControl>
-                  </FormGroup>
-                </Col>
-                <Col md={5}>
-                  <FormGroup>
-                    <ControlLabel>Independent School Name</ControlLabel>
-                    <FormControl type="text" value={ this.state.independentSchoolName } onChange={ this.independentSchoolNameChanged } disabled= { !this.state.isIndependentSchool }/>
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={3}>
-                  <FormGroup>
-                    <ControlLabel>Unit Number</ControlLabel>
-                    <FormControl type="text" defaultValue={ this.state.unitNumber } onChange={ this.unitNumberChanged } />
-                  </FormGroup>
-                </Col>
-                <Col md={2}>
-                  <FormGroup validationState={ this.state.schoolBusSeatingCapacityError ? 'error' : null }>
-                    <ControlLabel>Seating Capacity <sup>*</sup></ControlLabel>
-                    <FormControl type="number" defaultValue={ this.state.schoolBusSeatingCapacity } onChange={ this.schoolBusSeatingCapacityChanged } />
-                    <HelpBlock>{ this.state.schoolBusSeatingCapacityError }</HelpBlock>
-                  </FormGroup>
-                </Col>
-                <Col md={3}>
-                  <FormGroup validationState={ this.state.mobilityAidCapacityError ? 'error' : null }>
-                    <ControlLabel>Mobility Aid Capacity <sup>*</sup></ControlLabel>
-                    <FormControl type="number" defaultValue={ this.state.mobilityAidCapacity } onChange={ this.mobilityAidCapacityChanged } />
-                    <HelpBlock>{ this.state.mobilityAidCapacityError }</HelpBlock>
-                  </FormGroup>
-                </Col>
-              </Row>
-            </Grid>
-          </Form>;
-        })()}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={ this.props.onClose }>Close</Button>
-        <Button bsStyle="primary" onClick={ this.save }>Save</Button>
-      </Modal.Footer>
-    </Modal>;
+        return <Form>
+          <Grid fluid>
+            <Row>
+              <Col md={3}>
+                <FormGroup controlId="status">
+                  <ControlLabel>Status</ControlLabel>
+                  <FormInputControl componentClass="select" value={ this.state.status } updateState={ this.updateState }>
+                    <option key={ STATUS_ACTIVE } value={ STATUS_ACTIVE }>{ STATUS_ACTIVE }</option>
+                    <option key={ STATUS_ARCHIVED } value={ STATUS_ARCHIVED }>{ STATUS_ARCHIVED }</option>
+                  </FormInputControl>
+                </FormGroup>
+              </Col>
+              <Col md={3}>
+                <FormGroup controlId="ownerId">
+                  <ControlLabel>Owner</ControlLabel>
+                  <FormInputControl componentClass="select" value={ this.state.ownerId } updateState={ this.updateState } disabled={ this.state.isNew }>
+                    {
+                      owners.map((owner) => {
+                        return <option key={ owner.id } value={ owner.id }>{ owner.name }</option>;
+                      })
+                    }
+                  </FormInputControl>
+                </FormGroup>
+              </Col>
+              <Col md={3}>
+                <FormGroup controlId="districtId">
+                  <ControlLabel>District</ControlLabel>
+                  <FormInputControl componentClass="select" value={ this.state.districtId || '' } updateState={ this.updateState }>
+                    <option value=""></option>
+                    {
+                      districts.map((district) => {
+                        return <option key={ district.id } value={ district.id }>{ district.name }</option>;
+                      })
+                    }
+                  </FormInputControl>
+                </FormGroup>
+              </Col>
+              <Col md={3}>
+                <FormGroup controlId="inspectorId">
+                  <ControlLabel>Inspector</ControlLabel>
+                  <FormInputControl componentClass="select" value={ this.state.inspectorId || '' } updateState={ this.updateState }>
+                    <option value=""></option>
+                    {
+                      inspectors.map((inspector) => {
+                        return <option key={ inspector.id } value={ inspector.id }>{ inspector.name }</option>;
+                      })
+                    }
+                  </FormInputControl>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={3}>
+                <FormGroup controlId="address1">
+                  <ControlLabel>Home Terminal Address 1</ControlLabel>
+                  <FormInputControl type="text" defaultValue={ this.state.address1 } updateState={ this.updateState } inputRef={ ref => { this.input = ref; }} />
+                </FormGroup>
+              </Col>
+              <Col md={3}>
+                <FormGroup controlId="address2">
+                  <ControlLabel>Address 2</ControlLabel>
+                  <FormInputControl type="text" defaultValue={ this.state.address2 } updateState={ this.updateState } />
+                </FormGroup>
+              </Col>
+              <Col md={3}>
+                <FormGroup controlId="cityId">
+                  <ControlLabel>City</ControlLabel>
+                  <FormInputControl componentClass="select" value={ this.state.cityId || '' } updateState={ this.updateState }>
+                    <option value=""></option>
+                    {
+                      cities.map((city) => {
+                        return <option key={ city.id } value={ city.id }>{ city.name }</option>;
+                      })
+                    }
+                  </FormInputControl>
+                </FormGroup>
+              </Col>
+              <Col md={1}>
+                <FormGroup controlId="province">
+                  <ControlLabel>Province</ControlLabel>
+                  <FormControl.Static>{ this.state.province }</FormControl.Static>
+                </FormGroup>
+              </Col>
+              <Col md={2}>
+                <FormGroup controlId="postalCode">
+                  <ControlLabel>Postal Code</ControlLabel>
+                  <FormInputControl type="text" defaultValue={ this.state.postalCode } updateState={ this.updateState } />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <FormGroup controlId="description">
+                  <ControlLabel>Home Terminal Description</ControlLabel>
+                  <FormInputControl componentClass="textarea" defaultValue={ this.state.description } updateState={ this.updateState } />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={5}>
+                <Row>
+                  <Col>
+                    <FormGroup controlId="permitClassCode">
+                      <ControlLabel>Permit Class</ControlLabel>
+                      <FormInputControl componentClass="select" value={ this.state.permitClassCode } onChange={ this.permitClassCodeChanged }>
+                        <option key={ PERMIT_CLASS_TYPE_1 } value={ PERMIT_CLASS_TYPE_1 }>{ PERMIT_CLASS_TYPE_1 }</option>;
+                        <option key={ PERMIT_CLASS_TYPE_2 } value={ PERMIT_CLASS_TYPE_2 }>{ PERMIT_CLASS_TYPE_2 }</option>;
+                        <option key={ PERMIT_CLASS_TYPE_3 } value={ PERMIT_CLASS_TYPE_3 }>{ PERMIT_CLASS_TYPE_3 }</option>;
+                      </FormInputControl>
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <FormGroup controlId="bodyTypeCode">
+                      <ControlLabel>Body Type</ControlLabel>
+                      <FormInputControl componentClass="select" value={ this.state.bodyTypeCode } updateState={ this.updateState }>
+                        {
+                          BODY_TYPES.map((bodyType) => {
+                            return <option key={ bodyType } value={ bodyType }>{ bodyType }</option>;
+                          })
+                        }
+                      </FormInputControl>
+                    </FormGroup>
+                  </Col>
+                </Row>
+              </Col>
+              <Col md={7}>
+                <FormGroup controlId="restrictionsText">
+                  <div>
+                    <ControlLabel>Restrictions</ControlLabel>
+                    <span className="pull-right">
+                      <OverlayTrigger trigger="click" placement="top" rootClose
+                        overlay={
+                          <Confirm title="Edit Permit Restrictions Text?" onConfirm={ this.editRestrictionsText }>
+                            <div>The permit restrictions text should be changed only in rare circumstances. Are you sure?</div>
+                          </Confirm>
+                        }>
+                        <Button title="editRestrictions" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                      </OverlayTrigger>
+                    </span>
+                  </div>
+                  <FormInputControl componentClass="textarea" rows="4" value={ this.state.restrictionsText } updateState={ this.updateState } disabled={ this.state.disableRestrictionsText } />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={3}>
+                <FormGroup controlId="schoolDistrictId">
+                  <ControlLabel>School District</ControlLabel>
+                  <FormInputControl componentClass="select" value={ this.state.schoolDistrictId || '' } updateState={ this.updateState }>
+                    <option value=""></option>
+                    {
+                      schoolDistricts.map((sd) => {
+                        return <option key={ sd.id } value={ sd.id }>{ sd.name }</option>;
+                      })
+                    }
+                  </FormInputControl>
+                </FormGroup>
+              </Col>
+              <Col md={2}>
+                <FormGroup>
+                  <ControlLabel>Independent School</ControlLabel>
+                  <FormInputControl componentClass="div">
+                    <Radio inline onChange={ this.isIndependentSchoolChanged.bind(this, true) } checked={ this.state.isIndependentSchool }>Yes</Radio>
+                    { ' ' }
+                    <Radio inline onChange={ this.isIndependentSchoolChanged.bind(this, false) } checked={ !this.state.isIndependentSchool }>No</Radio>
+                  </FormInputControl>
+                </FormGroup>
+              </Col>
+              <Col md={5}>
+                <FormGroup controlId="independentSchoolName">
+                  <ControlLabel>Independent School Name</ControlLabel>
+                  <FormInputControl type="text" value={ this.state.independentSchoolName } updateState={ this.updateState } disabled= { !this.state.isIndependentSchool }/>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={3}>
+                <FormGroup controlId="unitNumber">
+                  <ControlLabel>Unit Number</ControlLabel>
+                  <FormInputControl type="text" defaultValue={ this.state.unitNumber } updateState={ this.updateState } />
+                </FormGroup>
+              </Col>
+              <Col md={2}>
+                <FormGroup controlId="schoolBusSeatingCapacity" validationState={ this.state.schoolBusSeatingCapacityError ? 'error' : null }>
+                  <ControlLabel>Seating Capacity <sup>*</sup></ControlLabel>
+                  <FormInputControl type="number" defaultValue={ this.state.schoolBusSeatingCapacity } updateState={ this.updateState } />
+                  <HelpBlock>{ this.state.schoolBusSeatingCapacityError }</HelpBlock>
+                </FormGroup>
+              </Col>
+              <Col md={3}>
+                <FormGroup controlId="mobilityAidCapacity" validationState={ this.state.mobilityAidCapacityError ? 'error' : null }>
+                  <ControlLabel>Mobility Aid Capacity <sup>*</sup></ControlLabel>
+                  <FormInputControl type="number" defaultValue={ this.state.mobilityAidCapacity } updateState={ this.updateState } />
+                  <HelpBlock>{ this.state.mobilityAidCapacityError }</HelpBlock>
+                </FormGroup>
+              </Col>
+            </Row>
+          </Grid>
+        </Form>;
+      })()}
+    </EditDialog>;
   },
 });
 

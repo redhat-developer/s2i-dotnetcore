@@ -11,11 +11,12 @@ var MultiDropdown = React.createClass({
   propTypes: {
     items: React.PropTypes.array.isRequired,
     placeholder: React.PropTypes.string,
-    id: React.PropTypes.string,
+    id: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
     fieldName: React.PropTypes.string,
     selectedIds: React.PropTypes.array,
     onChange: React.PropTypes.func,
+    updateState: React.PropTypes.func,
     showMaxItems: React.PropTypes.number,
   },
 
@@ -105,8 +106,17 @@ var MultiDropdown = React.createClass({
 
   sendSelected(selectedIds) {
     var selected = this.state.items.filter(item => selectedIds.includes(item.id));
-    if(this.props.onChange) {
-      this.props.onChange(selected);
+
+    // Send selected items to change listener
+    if (this.props.onChange) {
+      this.props.onChange(selected, this.props.id);
+    }
+
+    // Update state with selected Ids
+    if (this.props.updateState) {
+      this.props.updateState({
+        [this.props.id]: selectedIds,
+      });
     }
   },
 
@@ -125,12 +135,12 @@ var MultiDropdown = React.createClass({
       });
     }
 
-    return <Dropdown className={`multi-dropdown ${this.props.className || ''}`} id={ this.props.id } title={ this.state.title }>
+    return <Dropdown className={ `multi-dropdown ${this.props.className || ''}` } id={ this.props.id } title={ this.state.title }>
       <Dropdown.Toggle title={this.state.title} />
       <RootCloseMenu bsRole="menu">
         <Well bsSize="small">
-          <FormControl type="text" placeholder="Search" onChange={this.filter} />
-          <Checkbox className="select-all" checked={this.state.allSelected} onChange={this.selectAll}>Select All</Checkbox>
+          <FormControl type="text" placeholder="Search" onChange={ this.filter } />
+          <Checkbox className="select-all" checked={ this.state.allSelected } onChange={ this.selectAll }>Select All</Checkbox>
         </Well>
         {(() => {
           if(items.length > 0) {
@@ -138,7 +148,7 @@ var MultiDropdown = React.createClass({
               {
                 _.map(items, item => {
                   return <li key={ item.id }>
-                    <Checkbox value={item.id} checked={this.state.selectedIds.includes(item.id)} onChange={this.itemSelected}>
+                    <Checkbox value={ item.id } checked={ this.state.selectedIds.includes(item.id) } onChange={ this.itemSelected }>
                       { item[this.state.fieldName] }
                     </Checkbox>
                   </li>;

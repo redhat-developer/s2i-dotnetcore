@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Well, Alert, Row, Col } from 'react-bootstrap';
-import { ButtonToolbar, Button, ButtonGroup, Glyphicon, Checkbox } from 'react-bootstrap';
+import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
@@ -12,6 +12,7 @@ import Promise from 'bluebird';
 import * as Api from '../api';
 import store from '../store';
 
+import CheckboxControl from '../components/CheckboxControl.jsx';
 import Confirm from '../components/Confirm.jsx';
 import Favourites from '../components/Favourites.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
@@ -105,16 +106,6 @@ var UserManagement = React.createClass({
     });
   },
 
-  hideInactiveSelected(e) {
-    this.updateSearchState({
-      hideInactive: e.target.checked,
-    });
-  },
-
-  saveFavourite(favourite) {
-    favourite.value = JSON.stringify(this.state.search);
-  },
-
   loadFavourite(favourite) {
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
@@ -137,12 +128,12 @@ var UserManagement = React.createClass({
         <Row>
           <Col md={10}>
             <ButtonToolbar id="users-search">
-              <Checkbox inline checked={ this.state.search.hideInactive } onChange={ this.hideInactiveSelected }>Hide Inactive</Checkbox>
+              <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
               <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
             </ButtonToolbar>
           </Col>
           <Col md={1}>
-            <Favourites id="users-faves-dropdown" type="user" favourites={ this.props.favourites } onAdd={ this.saveFavourite } onSelect={ this.loadFavourite } />
+            <Favourites id="users-faves-dropdown" type="user" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } />
           </Col>
           <Col md={1}>
             <div id="users-buttons">
@@ -164,14 +155,12 @@ var UserManagement = React.createClass({
           _.reverse(users);
         }
 
-        var headers = [
+        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={[
           { field: 'surname',   title: 'Surname'    },
           { field: 'givenName', title: 'First Name' },
           { field: 'initials',  title: 'Initials'   },
           { field: 'blank' },
-        ];
-
-        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
+        ]}>
           {
             _.map(users, (user) => {
               return <tr key={ user.id } className={ user.active ? null : 'info' }>

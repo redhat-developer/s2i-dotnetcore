@@ -3,17 +3,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Well, Row, Col  } from 'react-bootstrap';
-import { Alert, Label, Button, ButtonGroup, Glyphicon, Checkbox  } from 'react-bootstrap';
+import { Alert, Label, Button, ButtonGroup, Glyphicon  } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
 
+import InspectionEditDialog from './dialogs/InspectionEditDialog.jsx';
 import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
 
 import * as Api from '../api';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
+import CheckboxControl from '../components/CheckboxControl.jsx';
 import ColField from '../components/ColField.jsx';
 import ColLabel from '../components/ColLabel.jsx';
 import Confirm from '../components/Confirm.jsx';
@@ -36,7 +38,6 @@ var SchoolBusesDetail = React.createClass({
     schoolBusInspections: React.PropTypes.object,
     schoolBusNotes: React.PropTypes.object,
     ui: React.PropTypes.object,
-
     params: React.PropTypes.object,
   },
 
@@ -50,6 +51,9 @@ var SchoolBusesDetail = React.createClass({
       loadingSchoolBusNotes: false,
 
       showEditDialog: false,
+      showInspectionDialog: false,
+
+      inspection: {},
 
       ui : {
         sortField: this.props.ui.sortField || 'inspectionDateSort',
@@ -94,13 +98,6 @@ var SchoolBusesDetail = React.createClass({
     });
   },
 
-  updateUIState(state, callback) {
-    this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
-      store.dispatch({ type: 'UPDATE_INSPECTIONS_UI', inspections: this.state.ui });
-      if (callback) { callback(); }
-    });
-  },
-
   showNotes() {
   },
 
@@ -114,6 +111,14 @@ var SchoolBusesDetail = React.createClass({
 
   },
 
+  updateUIState(state, callback) {
+    this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
+      store.dispatch({ type: 'UPDATE_INSPECTIONS_UI', inspections: this.state.ui });
+      if (callback) { callback(); }
+    });
+  },
+
+
   openEditDialog() {
     this.setState({ showEditDialog: true });
   },
@@ -126,19 +131,52 @@ var SchoolBusesDetail = React.createClass({
     Api.updateSchoolBus(schoolBus).finally(() => {
       this.closeEditDialog();
     });
-
   },
 
-  editInspection(inspection) {
+  openInspectionDialog(inspection) {
+    this.setState({
+      inspection: inspection,
+      showInspectionDialog: true,
+    });
+  },
 
+  closeInspectionDialog() {
+    this.setState({ showInspectionDialog: false });
+  },
+
+  getInspections() {
+    this.setState({ loadingSchoolBusInspections: true });
+    Api.getSchoolBusInspections(this.props.params.schoolBusId).finally(() => {
+      this.setState({ loadingSchoolBusInspections: false });
+    });
+  },
+
+  addInspection() {
+    this.openInspectionDialog({
+      id: '',
+      schoolBus: this.props.schoolBus,
+      inspector: { id: '' }, // current user if inspector, or blank
+    });
   },
 
   deleteInspection(inspection) {
-
+    Api.deleteInspection(inspection).finally(() => {
+      this.getInspections();
+    });
   },
 
   saveInspection(inspection) {
-
+    if (inspection.id) {
+      Api.updateInspection(inspection).finally(() => {
+        this.getInspections();
+        this.closeInspectionDialog();
+      });
+    } else {
+      Api.addInspection(inspection).finally(() => {
+        this.getInspections();
+        this.closeInspectionDialog();
+      });
+    }
   },
 
   render() {
@@ -253,8 +291,8 @@ var SchoolBusesDetail = React.createClass({
                   </Row>
                   <Row>
                     <ColLabel md={4}>Independent School</ColLabel>
-                    <ColField md={1}><Checkbox checked={ bus.isIndependentSchool } disabled></Checkbox></ColField>
-                    <ColField md={7}>{ bus.independentSchoolName }</ColField>
+                    <ColField md={1}><CheckboxControl checked={ bus.isIndependentSchool } disabled></CheckboxControl></ColField>
+                    <ColField md={6}>{ bus.independentSchoolName }</ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Unit Number</ColLabel>
@@ -273,7 +311,7 @@ var SchoolBusesDetail = React.createClass({
           </Col>
           <Col md={6}>
             <Well>
-              <h3>Inspection History <span className="pull-right"><Button title="addInspection" bsSize="small"><Glyphicon glyph="plus" /></Button></span></h3>
+              <h3>Inspection History <span className="pull-right"><Button title="addInspection" onClick={ this.addInspection } bsSize="small"><Glyphicon glyph="plus" /></Button></span></h3>
               {(() => {
                 if (this.state.loadingSchoolBusInspections ) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
                 if (Object.keys(this.props.schoolBusInspections).length === 0) { return <Alert bsStyle="success" style={{ marginTop: 10 }}>No inspections</Alert>; }
@@ -291,7 +329,7 @@ var SchoolBusesDetail = React.createClass({
                   { field: 'blank' },
                 ];
 
-                return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
+                return <SortTable id="inspection-list" sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
                   {
                     _.map(inspections, (inspection) => {
                       return <tr key={ inspection.id }>
@@ -300,10 +338,10 @@ var SchoolBusesDetail = React.createClass({
                           { inspection.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
                         </td>
                         <td>{ inspection.inspectionResultCode }</td>
-                        <td>{ inspection.inspectorName }</td>
+                          <td>{ inspection.inspectorName }</td>
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
-                            <Button title="editInspection" bsSize="xsmall" onClick={ this.editInspection.bind(this, inspection) }><Glyphicon glyph="pencil" /></Button>
+                            <Button title="editInspection" bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, inspection) }><Glyphicon glyph="pencil" /></Button>
                             <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteInspection.bind(this, inspection) }/> }>
                               <Button title="deleteInspection" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                             </OverlayTrigger>
@@ -492,6 +530,9 @@ var SchoolBusesDetail = React.createClass({
       </div>
       { this.state.showEditDialog ?
         <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose= { this.closeEditDialog } /> : null
+      }
+      { this.state.showInspectionDialog ?
+        <InspectionEditDialog show={ this.state.showInspectionDialog } onSave={ this.saveInspection } onClose= { this.closeInspectionDialog } /> : null
       }
     </div>;
   },

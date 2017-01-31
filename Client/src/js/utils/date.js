@@ -14,7 +14,7 @@ export function formatDateTime(dateTime, format) {
   return dt.format(format);
 }
 
-export function sortable(dateTime) {
+export function sortableDateTime(dateTime) {
   if (!dateTime) { return 0; }
   var dt = Moment(dateTime);
   if (!dt || !dt.isValid()) { return 0; }
@@ -33,4 +33,10 @@ export function hoursAgo(dateTime) {
   if (!dt || !dt.isValid()) { return 0; }
   var now = Moment();
   return now.diff(dt, 'hours');
+}
+
+export function today(format) {
+  if (!format) { format = 'YYYY-MM-DDTHH:mm:ss'; }
+  var dt = Moment();
+  return dt.format(format);
 }

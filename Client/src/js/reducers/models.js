@@ -1,10 +1,10 @@
 import _ from 'lodash';
 
 const DEFAULT_MODELS = {
+  favourites: {},
+
   users: {},
   user: {},
-
-  favourites: {},
 
   schoolBuses: {},
   schoolBus: {},
@@ -14,22 +14,14 @@ const DEFAULT_MODELS = {
   schoolBusInspections: {},
   schoolBusNotes: {},
 
+  inspection: {},
+
   owners: {},
   owner: {},
 };
 
 export default function modelsReducer(state = DEFAULT_MODELS, action) {
   switch(action.type) {
-    // Users
-    case 'UPDATE_USERS':
-      return { ...state, users: action.users };
-
-    case 'UPDATE_USER':
-      return { ...state, user: action.user };
-
-    case 'UPDATE_INSPECTORS':
-      return { ...state, inspectors: action.inspectors };
-
     // Favourites
     case 'UPDATE_FAVOURITES':
       return { ...state, favourites: action.favourites };
@@ -42,6 +34,16 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
 
     case 'DELETE_FAVOURITE':
       return { ...state, favourites: _.omit(state.favourites, [ action.id ]) };
+
+    // Users
+    case 'UPDATE_USERS':
+      return { ...state, users: action.users };
+
+    case 'UPDATE_USER':
+      return { ...state, user: action.user };
+
+    case 'UPDATE_INSPECTORS':
+      return { ...state, inspectors: action.inspectors };
 
     // Buses
     case 'UPDATE_BUSES':
@@ -64,6 +66,16 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
 
     case 'UPDATE_BUS_NOTES':
       return { ...state, schoolBusNotes: action.schoolBusNotes };
+
+    // Inspections
+    case 'ADD_INSPECTION':
+      return { ...state, inspection: { ...state.inspection, ...action.inspection } };
+
+    case 'UPDATE_INSPECTION':
+      return { ...state, inspection: { ...state.inspection, ...action.inspection } };
+
+    case 'DELETE_INSPECTION':
+      return { ...state, inspection: _.omit(state.inspection, [ action.id ]) };
 
     // Owners
     case 'UPDATE_OWNERS':
