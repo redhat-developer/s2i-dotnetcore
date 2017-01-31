@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -107,7 +108,10 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsGetAsync ()        
         {
-            var result = _context.Inspections.ToList();
+            var result = _context.Inspections
+                .Include(x => x.Inspector)
+                .Include(x => x.SchoolBus)                
+                .ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -151,7 +155,10 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.Inspections.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.Inspections.First(a => a.Id == id);
+                var result = _context.Inspections
+                    .Include(x => x.Inspector)
+                    .Include(x => x.SchoolBus)
+                    .First(a => a.Id == id);
                 return new ObjectResult(result);
             }
             else
