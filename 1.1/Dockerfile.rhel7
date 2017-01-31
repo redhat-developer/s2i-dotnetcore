@@ -44,7 +44,7 @@ RUN yum install -y yum-utils && \
     yum install -y --setopt=tsflags=nodocs rh-dotnetcore11 nss_wrapper tar rh-nodejs4-npm && \
     yum clean all && \
     mkdir -p /opt/app-root/src /opt/app-root/publish && \
-    useradd -u 1001 -r -g 0 -d /opt/app-root -s /sbin/nologin \
+    useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
       -c "Default Application User" default && \
     chown -R 1001:0 /opt/app-root
 
