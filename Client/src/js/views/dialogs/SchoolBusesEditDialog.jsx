@@ -97,6 +97,20 @@ var SchoolBusesEditDialog = React.createClass({
     this.setState(state, callback);
   },
 
+  cityChanged(e) {
+    var cityId = e.target.value;
+    var province = '';
+    var city = this.props.cities[cityId];
+    if (city) {
+      province = city.province;
+    }
+
+    this.setState({
+      cityId: cityId,
+      province: province,
+    });
+  },
+
   permitClassCodeChanged(e) {
     var permitClassCode = e.target.value;
     var restriction = '';
@@ -281,7 +295,7 @@ var SchoolBusesEditDialog = React.createClass({
               <Col md={3}>
                 <FormGroup controlId="cityId">
                   <ControlLabel>City</ControlLabel>
-                  <FormInputControl componentClass="select" value={ this.state.cityId || '' } updateState={ this.updateState }>
+                  <FormInputControl componentClass="select" value={ this.state.cityId || '' } onChange={ this.cityChanged }>
                     <option value=""></option>
                     {
                       cities.map((city) => {
