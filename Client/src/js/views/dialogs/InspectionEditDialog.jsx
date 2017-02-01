@@ -45,7 +45,7 @@ var InspectionEditDialog = React.createClass({
   },
 
   getInitialState() {
-    var isNew = this.props.inspection.id === '';
+    var isNew = this.props.inspection.id === 0;
 
     return {
       loading: false,

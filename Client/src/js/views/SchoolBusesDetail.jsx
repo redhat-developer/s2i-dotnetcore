@@ -155,9 +155,9 @@ var SchoolBusesDetail = React.createClass({
 
   addInspection() {
     this.openInspectionDialog({
-      id: '',
+      id: 0,
       schoolBus: this.props.schoolBus,
-      inspector: { id: '' }, // current user if inspector, or blank
+      inspector: { id: 0 }, // current user if inspector
     });
   },
 
