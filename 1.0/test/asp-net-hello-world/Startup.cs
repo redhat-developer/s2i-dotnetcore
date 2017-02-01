@@ -50,7 +50,9 @@ namespace SampleApp
                     options.UseConnectionLogging();
                 })
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>()
+                // Specify the startup class by Assembly name
+                // The assembly is named correctly by setting DOTNET_ASSEMBLY_NAME
+                .UseStartup("SampleApp")
                 .Build();
 
             // The following section should be used to demo sockets
