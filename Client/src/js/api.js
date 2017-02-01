@@ -207,12 +207,14 @@ export function getSchoolBusNotes(schoolBusId) {
 // Inspections
 ////////////////////
 
-const INSPECTION_GRACE_PERIOD_HOURS = 24;
+const INSPECTION_EDIT_GRACE_PERIOD_HOURS = 24;
+const INSPECTION_DELETE_GRACE_PERIOD_HOURS = 24;
 
 function parseInspection(inspection) {
   inspection.inspectorName = inspection.inspector ? firstLastName(inspection.inspector.givenName, inspection.inspector.surname) : '';
   inspection.isReinspection = inspection.inspectionTypeCode === 'Re-Inspection';
-  inspection.canDelete = hoursAgo(inspection.createdDate) <= INSPECTION_GRACE_PERIOD_HOURS;
+  inspection.canEdit = hoursAgo(inspection.createdDate) <= INSPECTION_EDIT_GRACE_PERIOD_HOURS;
+  inspection.canDelete = hoursAgo(inspection.createdDate) <= INSPECTION_DELETE_GRACE_PERIOD_HOURS;
   inspection.inspectionDateSort = sortableDateTime(inspection.inspectionDate);
 }
 
@@ -240,7 +242,7 @@ export function addInspection(inspection) {
 }
 
 export function updateInspection(inspection) {
-  return new ApiRequest('/inspections/${ inspection.id }').put(inspection).then(response => {
+  return new ApiRequest(`/inspections/${ inspection.id }`).put(inspection).then(response => {
     // Normalize the response
     var inspection = _.fromPairs([[ response.id, response ]]);
 
@@ -266,7 +268,7 @@ function parseOwner(owner) {
   owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
   owner.schoolBusCount = 1;
   owner.nextInspectionDate = '2017-02-21';
-  owner.nextInspectionTypeCode = 'R';
+  owner.nextInspectionTypeCode = 'Re-Inspection';
 
   owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
   owner.isOverdue = owner.daysToInspection < 0;

@@ -12,6 +12,7 @@ var EditDialog = React.createClass({
     onSave: React.PropTypes.func.isRequired,
     onClose: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
+    className: React.PropTypes.string,
     children: React.PropTypes.node,
   },
 
@@ -26,9 +27,9 @@ var EditDialog = React.createClass({
   },
 
   render() {
-    var props = _.omit(this.props, 'title', 'body', 'onSave', 'onClose', 'didChange', 'isValid', 'updateState');
+    var props = _.omit(this.props, 'title', 'body', 'onSave', 'onClose', 'didChange', 'isValid', 'updateState', 'className');
 
-    return <Modal onHide={ this.props.onClose } { ...props }>
+    return <Modal className={ `edit-dialog ${this.props.className || ''}` } onHide={ this.props.onClose } { ...props }>
       <Modal.Header closeButton>
         <Modal.Title>
           { this.props.title }

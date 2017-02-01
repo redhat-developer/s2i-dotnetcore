@@ -57,8 +57,9 @@ var SchoolBusesDetail = React.createClass({
       inspection: {},
 
       ui : {
+        // Inspections
         sortField: this.props.ui.sortField || 'inspectionDateSort',
-        sortDesc: this.props.ui.sortDesc === true,
+        sortDesc: this.props.ui.sortDesc != false, // defaults to true
       },
     };
   },
@@ -161,23 +162,27 @@ var SchoolBusesDetail = React.createClass({
   },
 
   deleteInspection(inspection) {
-    Api.deleteInspection(inspection).finally(() => {
+    Api.deleteInspection(inspection).then(() => {
       this.getInspections();
     });
   },
 
   saveInspection(inspection) {
-    if (inspection.id) {
-      Api.updateInspection(inspection).finally(() => {
-        this.getInspections();
-        this.closeInspectionDialog();
-      });
-    } else {
-      Api.addInspection(inspection).finally(() => {
-        this.getInspections();
-        this.closeInspectionDialog();
-      });
-    }
+    // Update or add accordingly
+    var inspectionPromise = inspection.id ? Api.updateInspection : Api.addInspection;
+
+    inspectionPromise(inspection).then(() => {
+      // Refresh the inspections table
+      this.getInspections();
+      // Save next inspeciton data to this school bus record
+      Api.updateSchoolBus({ ...this.props.schoolBus, ...{
+        nextInspectionDate: inspection.nextInspectionDate,
+        nextInspectionTypeCode: inspection.nextInspectionTypeCode,
+        inspector: { id: inspection.inspector.id },
+      }});
+    }).finally(() => {
+      this.closeInspectionDialog();
+    });
   },
 
   render() {
@@ -342,9 +347,9 @@ var SchoolBusesDetail = React.createClass({
                           <td>{ inspection.inspectorName }</td>
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
-                            <Button title="editInspection" bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, inspection) }><Glyphicon glyph="pencil" /></Button>
+                            <Button className={ inspection.canEdit ? '' : 'hidden' } title="editInspection" bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, inspection) }><Glyphicon glyph="pencil" /></Button>
                             <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteInspection.bind(this, inspection) }/> }>
-                              <Button title="deleteInspection" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                              <Button className={ inspection.canDelete ? '' : 'hidden' } title="deleteInspection" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                             </OverlayTrigger>
                           </ButtonGroup>
                         </td>
@@ -353,7 +358,7 @@ var SchoolBusesDetail = React.createClass({
                   }
                 </SortTable>;
               })()}
-              <div className="text-right"><Button>CTMS-Web</Button></div>
+              <div className="text-right"><Button target="_blank" href="http://google.com/search?q=CTMS-Web">CTMS-Web</Button></div>
             </Well>
           </Col>
         </Row>
@@ -533,7 +538,7 @@ var SchoolBusesDetail = React.createClass({
         <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose= { this.closeEditDialog } /> : null
       }
       { this.state.showInspectionDialog ?
-        <InspectionEditDialog show={ this.state.showInspectionDialog } onSave={ this.saveInspection } onClose= { this.closeInspectionDialog } /> : null
+        <InspectionEditDialog show={ this.state.showInspectionDialog } inspection={ this.state.inspection } onSave={ this.saveInspection } onClose= { this.closeInspectionDialog } /> : null
       }
     </div>;
   },
