@@ -414,7 +414,10 @@ namespace SchoolBusAPI.Services.Impl
             bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
-                var items = _context.Inspections.Where(a => a.SchoolBus.Id == id);
+                var items = _context.Inspections
+                    .Include(x => x.Inspector)
+                    .Include(x => x.SchoolBus)
+                    .Where(a => a.SchoolBus.Id == id);
                 return new ObjectResult(items);
             }
             else

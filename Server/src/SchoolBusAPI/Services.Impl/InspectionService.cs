@@ -231,55 +231,62 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult InspectionsPostAsync (Inspection item)        
         {
-            // adjust the user
-            if (item.Inspector != null)
+            if (item != null)
             {
-                int user_id = item.Inspector.Id;
-                bool user_exists = _context.Users.Any(a => a.Id == user_id);
-                if (user_exists)
+                if (item.Inspector != null)
                 {
-                    User user = _context.Users.First(a => a.Id == user_id);
-                    item.Inspector = user;
+                    int user_id = item.Inspector.Id;
+                    bool user_exists = _context.Users.Any(a => a.Id == user_id);
+                    if (user_exists)
+                    {
+                        User user = _context.Users.First(a => a.Id == user_id);
+                        item.Inspector = user;
+                    }
+                    else
+                    {
+                        item.Inspector = null;
+                    }
+                }
+                // adjust the schoolbus
+                if (item.SchoolBus != null)
+                {
+                    int schoolbus_id = item.SchoolBus.Id;
+                    bool schoolbus_exists = _context.SchoolBuss.Any(a => a.Id == schoolbus_id);
+                    if (schoolbus_exists)
+                    {
+                        SchoolBus schoolbus = _context.SchoolBuss.First(a => a.Id == schoolbus_id);
+                        item.SchoolBus = schoolbus;
+                    }
+                    else
+                    {
+                        item.SchoolBus = null;
+                    }
+                }
+
+                var exists = _context.Inspections.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Inspections.Update(item);
+                    // Save the changes
+                    _context.SaveChanges();
+                    return new ObjectResult(item);
                 }
                 else
                 {
-                    item.Inspector = null;
+                    // Inspection has a special field, createdDate which is set to now.
+                    item.CreatedDate = DateTime.Now;
+                    _context.Inspections.Add(item);
                 }
-            }
-            // adjust the schoolbus
-            if (item.SchoolBus != null)
-            {
-                int schoolbus_id = item.SchoolBus.Id;
-                bool schoolbus_exists = _context.SchoolBuss.Any(a => a.Id == schoolbus_id);
-                if (schoolbus_exists)
-                {
-                    SchoolBus schoolbus = _context.SchoolBuss.First(a => a.Id == schoolbus_id);
-                    item.SchoolBus = schoolbus;
-                }
-                else
-                {
-                    item.SchoolBus = null;
-                }
-            }
 
-
-            var exists = _context.Inspections.Any(a => a.Id == item.Id);
-            if (exists)
-            {
-                _context.Inspections.Update(item);
-                // Save the changes
                 _context.SaveChanges();
                 return new ObjectResult(item);
-            }
+
+            }            
             else
             {
-                // Inspection has a special field, createdDate which is set to now.
-                item.CreatedDate = DateTime.Now;
-                _context.Inspections.Add(item);
-            }
-                        
-            _context.SaveChanges();
-            return new ObjectResult(item);
+                // no data
+                return new StatusCodeResult(400);
+            }                       
         }         
     }
 }

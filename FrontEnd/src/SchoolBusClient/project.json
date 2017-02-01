@@ -1,7 +1,7 @@
 {
   "title": "Schoolbus Frontend Server",
   "version": "1.0.0-*",
-  "copyright": "Copyright© 2017, Province of British Columbia.",
+  "copyright": "Copyright© 2017, Province of British Columbia",
   "description": "The Frontend server for the schoolbus inspection application.",
   "dependencies": {
     "Microsoft.AspNetCore.Antiforgery": "1.1.0",
