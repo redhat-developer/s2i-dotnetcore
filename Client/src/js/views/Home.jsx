@@ -17,7 +17,7 @@ var Home = React.createClass({
             {this.props.currentUser.fullName}<br/>{this.props.currentUser.districtName} District
           </Col>
           <Col md={4}>
-            <img id="home-logo" src="../images/logo.png"/>
+            <img id="home-logo" src="images/logo.png"/>
           </Col>
         </Row>
       </PageHeader>
