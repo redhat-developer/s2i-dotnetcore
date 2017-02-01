@@ -48,7 +48,6 @@ var SchoolBusesEditDialog = React.createClass({
   getInitialState() {
     return {
       loading: false,
-      changed: false,
 
       isNew: this.props.schoolBus.id === '',
 
@@ -152,15 +151,24 @@ var SchoolBusesEditDialog = React.createClass({
   },
 
   isValid() {
+    this.setState({
+      schoolBusSeatingCapacityError: false,
+      mobilityAidCapacityError: false,
+    });
+
+    var valid = true;
+
     if (isBlank(this.state.schoolBusSeatingCapacity)) {
       this.setState({ schoolBusSeatingCapacityError: 'Seating capacity is required' });
-      return false;
+      valid = false;
     }
+
     if (isBlank(this.state.mobilityAidCapacity)) {
       this.setState({ mobilityAidCapacityError: 'Mobility aid capacity is required' });
-      return false;
+      valid = false;
     }
-    return true;
+
+    return valid;
   },
 
   onSave() {

@@ -110,12 +110,13 @@
 }
 
 #school-buses-edit {
-  [class*='col-'] {
-    padding-left: 7px;
-    padding-right: 7px;
-  }
-
   h4 strong span {
-    margin-left: 10px;
+    margin-left: 20px;
+  }
+}
+
+#inspection-edit {
+  #notes {
+    height: 106px;
   }
 }

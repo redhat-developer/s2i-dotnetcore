@@ -12,13 +12,13 @@ class InputControl extends FormControl {
 
 var DateControl = React.createClass({
   propTypes: {
+    id: React.PropTypes.string.isRequired,
     date: React.PropTypes.string,
     format: React.PropTypes.string,
     className: React.PropTypes.string,
     label: React.PropTypes.string,
     onChange: React.PropTypes.func,
     updateState: React.PropTypes.func,
-    id: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     title: React.PropTypes.string,
   },
@@ -36,7 +36,7 @@ var DateControl = React.createClass({
     }
 
     // Update state
-    if (this.props.updateState && this.props.id) {
+    if (this.props.updateState) {
       this.props.updateState({
         [this.props.id]: dateString,
       });
@@ -51,6 +51,7 @@ var DateControl = React.createClass({
 
     return <div className={ `date-control ${this.props.className || ''}` } id={ this.props.id }>
       {(() => {
+        // Inline label
         if (this.props.label) { return <ControlLabel>{ this.props.label }</ControlLabel>; }
       })()}
       <InputGroup>
