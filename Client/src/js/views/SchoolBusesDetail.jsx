@@ -375,7 +375,7 @@ var SchoolBusesDetail = React.createClass({
                     <ColField md={2}>{ ccw.nscPolicyNumber }</ColField>
                     <ColLabel md={2}>Status Date</ColLabel>
                     <ColField md={2}>{ formatDateTime(ccw.nscPolicyStatusDate, 'YYYY-MMM-DD') }</ColField>
-                    <ColLabel md={2}>Is</ColLabel>
+                    <ColLabel md={2}>Status Is</ColLabel>
                     <ColField md={2}>{ ccw.nscPolicyStatus }</ColField>
                   </Row>
                   <Row>
@@ -422,7 +422,7 @@ var SchoolBusesDetail = React.createClass({
                       }
                       return <div>{ ccw.icbcRegOwnerAddr1 }{ ccw.icbcRegOwnerAddr2 }</div>;
                     })()}</ColField>
-                    <ColLabel md={2}>RODL<br />POOL</ColLabel>
+                    <ColLabel md={2}>RODL #<br />PODL #</ColLabel>
                     <ColField md={2}>{ ccw.icbcRegOwnerRODL }<br />{ ccw.icbcRegOwnerPool }</ColField>
                   </Row>
                 </div>;
