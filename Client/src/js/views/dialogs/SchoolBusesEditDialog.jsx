@@ -49,7 +49,7 @@ var SchoolBusesEditDialog = React.createClass({
     return {
       loading: false,
 
-      isNew: this.props.schoolBus.id === '',
+      isNew: this.props.schoolBus.id === 0,
 
       status: this.props.schoolBus.status || STATUS_ACTIVE,
       ownerId: this.props.schoolBus.schoolBusOwner ? this.props.schoolBus.schoolBusOwner.id : '',
