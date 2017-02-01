@@ -50,21 +50,32 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult UsersCurrentFavouritesIdDeletePostAsync(int id)
         {
-            bool exists = _context.UserFavourites.Any(a => a.Id == id);
-            if (exists)
+            // get the current user id
+            int? user_id = GetCurrentUserId();
+            if (user_id != null)
             {
-                var item = _context.UserFavourites.First(a => a.Id == id);
+                bool exists = _context.UserFavourites.Where(x => x.User.Id == user_id)
+                    .Any(a => a.Id == id);
+                if (exists)
+                {
+                    var item = _context.UserFavourites.First(a => a.Id == id);
 
-                _context.UserFavourites.Remove(item);
-                // Save the changes
-                _context.SaveChanges();
-                return new ObjectResult(item);
+                    _context.UserFavourites.Remove(item);
+                    // Save the changes
+                    _context.SaveChanges();
+                    return new ObjectResult(item);
+                }
+                else
+                {
+                    // record not found
+                    return new StatusCodeResult(404);
+                }
             }
             else
             {
-                // record not found
-                return new StatusCodeResult(404);
+                return new StatusCodeResult(403);
             }
+            
             
         }        
 
@@ -76,6 +87,19 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="201">UserFavourite created</response>
         public virtual IActionResult UsersCurrentFavouritesPostAsync(UserFavourite item)
         {
+            item.User = null;
+            // get the current user id
+            int? id = GetCurrentUserId();
+            if (id != null)
+            {
+                bool user_exists = _context.Users.Any(a => a.Id == id);
+                if (user_exists)
+                {
+                    User user = _context.Users.First(a => a.Id == id);
+                    item.User = user;
+                }
+            }
+
             bool exists = _context.UserFavourites.Any(a => a.Id == item.Id);
             if (exists)
             {
@@ -103,6 +127,19 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="201">UserFavourite created</response>
         public virtual IActionResult UsersCurrentFavouritesPutAsync(UserFavourite item)
         {
+            item.User = null;
+            // get the current user id
+            int? id = GetCurrentUserId();            
+            if (id != null)
+            {
+                bool user_exists = _context.Users.Any(a => a.Id == id);
+                if (user_exists)
+                {
+                    User user = _context.Users.First(a => a.Id == id);
+                    item.User = user;
+                }
+            }
+
             bool exists = _context.UserFavourites.Any(a => a.Id == item.Id);
             if (exists)
             {
@@ -127,13 +164,26 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersCurrentFavouritesTypeGetAsync(string type)
         {
-            var data = _context.UserFavourites.Select(x => x);
-            if (type != null)
+            // get the current user id
+            int? id = GetCurrentUserId();
+
+            if (id != null)
             {
-                data = data.Where( x => x.Type == type);
+                var data = _context.UserFavourites
+                    .Where(x => x.User.Id == id)
+                    .Select(x => x);
+                if (type != null)
+                {
+                    data = data.Where(x => x.Type == type);
+                }
+
+                return new ObjectResult(data.ToList());
             }
-            
-            return new ObjectResult(data.ToList());
+            else
+            {
+                // no user context.
+                return new StatusCodeResult(403);
+            }
         }
 
         /// <summary>
@@ -146,44 +196,43 @@ namespace SchoolBusAPI.Services.Impl
         {
             
             var result = new CurrentUserViewModel();
-
             
-            
-
             // get the name for the current logged in user
             result.GivenName = User.FindFirst (ClaimTypes.GivenName).Value;
-            result.Surname = User.FindFirst(ClaimTypes.Surname).Value; ;
+            result.Surname = User.FindFirst(ClaimTypes.Surname).Value; 
 
             result.FullName = result.GivenName + " " + result.Surname;
 
-            string rawuid = User.FindFirst("userid_claim").Value;
+            // get the current user id
+            int? id = GetCurrentUserId();
 
-            int id = int.Parse(rawuid);
-
-            int overdue = _context.SchoolBuss
+            if (id != null)
+            {
+                int overdue = _context.SchoolBuss
                 .Where(x => x.Inspector.Id == id)
                 .Where(x => x.NextInspectionDate <= DateTime.Now)
                 .Select(x => x)
                 .Count();
 
-            int nextMonth = _context.SchoolBuss
-                .Where(x => x.Inspector.Id == id)
-                .Where(x => x.NextInspectionDate >= DateTime.Now)
-                .Where(x => x.NextInspectionDate <= DateTime.Now.AddMonths(1) )
-                .Select(x => x)
-                .Count();
-            
-            int scheduledInspections = _context.Inspections
-                .Where(x => x.Inspector.Id == id)
-                .Where(x => x.InspectionDate >= DateTime.Now)                
-                .Select(x => x)
-                .Count();
+                int nextMonth = _context.SchoolBuss
+                    .Where(x => x.Inspector.Id == id)
+                    .Where(x => x.NextInspectionDate >= DateTime.Now)
+                    .Where(x => x.NextInspectionDate <= DateTime.Now.AddMonths(1))
+                    .Select(x => x)
+                    .Count();
+
+                int scheduledInspections = _context.Inspections
+                    .Where(x => x.Inspector.Id == id)
+                    .Where(x => x.InspectionDate >= DateTime.Now)
+                    .Select(x => x)
+                    .Count();
 
 
-            result.OverdueInspections = overdue;
-            result.DueNextMonthInspections = nextMonth;
-            result.DistrictName = "Victoria";
-            result.ScheduledInspections = scheduledInspections;
+                result.OverdueInspections = overdue;
+                result.DueNextMonthInspections = nextMonth;
+                result.DistrictName = "Victoria";
+                result.ScheduledInspections = scheduledInspections;
+            }            
 
             // get the number of inspections available for the current logged in user
 
