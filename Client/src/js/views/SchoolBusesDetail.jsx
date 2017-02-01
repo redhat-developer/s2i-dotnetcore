@@ -174,11 +174,10 @@ var SchoolBusesDetail = React.createClass({
     inspectionPromise(inspection).then(() => {
       // Refresh the inspections table
       this.getInspections();
-      // Save next inspeciton data to this school bus record
+      // Save next inspection data to this school bus record
       Api.updateSchoolBus({ ...this.props.schoolBus, ...{
         nextInspectionDate: inspection.nextInspectionDate,
         nextInspectionTypeCode: inspection.nextInspectionTypeCode,
-        inspector: { id: inspection.inspector.id },
       }});
     }).finally(() => {
       this.closeInspectionDialog();
