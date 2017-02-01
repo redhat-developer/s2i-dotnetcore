@@ -5,12 +5,5 @@ set -e
 
 cd $DOTNET_PUBLISH_PATH
 
-ARG_FILE="arguments.txt"
-if [[ -f "${ARG_FILE}" ]]; then
-  echo "---> Running application with arguments from file '${ARG_FILE}' ..."
-  PROG_ARGS="$(cat ${ARG_FILE})"
-  exec "$DOTNET_RUN_SCRIPT" ${PROG_ARGS}
-else
-  echo "---> Running application ..."
-  exec "$DOTNET_RUN_SCRIPT"
-fi
+echo "---> Running application ..."
+exec "$DOTNET_RUN_SCRIPT"

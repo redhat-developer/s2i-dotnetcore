@@ -16,7 +16,7 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
-declare -a CLI_APPS=(hw_framework_config helloworld qotd dotnetbot)
+declare -a CLI_APPS=(hw_framework_config helloworld qotd)
 declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
@@ -258,9 +258,6 @@ get_expected_cli() {
     "hw_framework_config")
       echo 'Hello World!'
       ;;
-    "dotnetbot")
-      echo foobarbaz
-      ;;
     "qotd")
       echo IGNORE_ME
       ;;
@@ -282,10 +279,6 @@ filter_cli() {
     "hw_framework_config")
       # Note: tail -n1 => Omit "--> Running application ..." output
       echo "${all_output}" | tail -n1
-      ;;
-    "dotnetbot")
-      # Only interested in the first 3 lines
-      echo "${all_output}" | head -n3
       ;;
     "qotd")
       # Note: tail -n1 => Omit "--> Running application with ..." output
@@ -310,16 +303,6 @@ success_cli() {
     "hw_framework_config")
       echo "${actual}" | grep -q "${expected}"
       return $?
-      ;;
-    "dotnetbot")
-      local retval=0
-      # Expect running with arguments from arguments.txt
-      echo "${actual}" | head -n1 | grep -q "arguments.txt"
-      retval=$(( ${retval} + $? ))
-      # Expect to have foobarbaz on 3rd line
-      echo "${actual}" | tail -n1 | grep -q "${expected}"
-      retval=$(( ${retval} + $? ))
-      return ${retval}
       ;;
     "qotd")
       local retval=0

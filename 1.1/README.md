@@ -74,10 +74,6 @@ Repository organization
 
     .Net Core Quote of the Day example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
 
-  * **`dotnetbot/`**
-
-    .Net Core ASCII art example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
-
   * **`asp-net-hello-world/`**
 
     ASP .Net hello world example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
