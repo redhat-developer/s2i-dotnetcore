@@ -32,5 +32,5 @@ COPY . /app/out/src
 
 # compile the source
 
-RUN ./node_modules/.bin/gulp --production --commit=$GIT_COMMIT
+RUN /bin/bash -c './node_modules/.bin/gulp --production --commit=$GIT_COMMIT'
 
