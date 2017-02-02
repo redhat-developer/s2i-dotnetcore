@@ -101,9 +101,10 @@ a `.s2i/environment` file inside your source code repository.
 * **DOTNET_ASSEMBLY_NAME**
 
     Used to select the assembly to run. This must NOT include the `.dll` extension.
-    Set this to the output assembly name specified in `project.json` (`name`, `buildoptions/outputName`)
-    or MSBuild (`PropertyGroup/AssemblyName`). For `project.json`, the assembly name defaults to
-    the `project.json` parent folder. This value is used as the default value for `DOTNET_ASSEMBLY_NAME`.
+    Set this to the output assembly name specified in `project.json` (`name`, `buildOptions/outputName`).
+    For `project.json`, the assembly name defaults to the `project.json` parent folder. This value is
+    used as the default value for `DOTNET_ASSEMBLY_NAME`.
+
     When `project.json` is at the `context-dir`, the parent folder name will be 'src'. So, by
     default, this generates a 'src.dll' assembly. Setting `DOTNET_ASSEMBLY_NAME` will cause
     the project to be built in a folder named `<DOTNET_ASSEMBLY_NAME>` which builds a 
