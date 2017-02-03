@@ -40,7 +40,7 @@ TODO:
 
 */
 
-const KEY_SEARCH_REGI = 'Regi';
+const KEY_SEARCH_REGI = 'Registration';
 const KEY_SEARCH_VIN = 'VIN';
 const KEY_SEARCH_PLATE = 'Plate';
 
@@ -309,7 +309,7 @@ var SchoolBuses = React.createClass({
             { field: 'ownerName',              title: 'Owner'           },
             { field: 'districtName',           title: 'District'        },
             { field: 'homeTerminalCityPostal', title: 'Home Terminal'   },
-            { field: 'icbcRegistrationNumber', title: 'Regi'            },
+            { field: 'icbcRegistrationNumber', title: 'Registration'    },
             { field: 'unitNumber',             title: 'Fleet Unit #'    },
             { field: 'permitNumber',           title: 'Permit'          },
             { field: 'nextInspectionDateSort', title: 'Next Inspection' },

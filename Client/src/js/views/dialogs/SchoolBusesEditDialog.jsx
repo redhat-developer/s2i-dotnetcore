@@ -216,7 +216,7 @@ var SchoolBusesEditDialog = React.createClass({
       onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }
       title= {
         <strong>School Bus
-          <span>Regi: <small>{ this.props.schoolBus.icbcRegistrationNumber }</small></span>
+          <span>Registration: <small>{ this.props.schoolBus.icbcRegistrationNumber }</small></span>
           <span>Plate: <small>{ this.props.schoolBus.licencePlateNumber }</small></span>
           <span>VIN: <small>{ this.props.schoolBus.vehicleIdentificationNumber }</small></span>
         </strong>
