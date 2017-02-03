@@ -12,7 +12,9 @@ import Promise from 'bluebird';
 import * as Api from '../../api';
 
 import DateControl from '../../components/DateControl.jsx';
+import DropdownControl from '../../components/DropdownControl.jsx';
 import EditDialog from '../../components/EditDialog.jsx';
+import FilterDropdown from '../../components/FilterDropdown.jsx';
 import FormInputControl from '../../components/FormInputControl.jsx';
 import LinkControl from '../../components/LinkControl.jsx';
 import Spinner from '../../components/Spinner.jsx';
@@ -21,9 +23,8 @@ import { today, businessDayOnOrBefore, daysFromToday, isValidDate } from '../../
 import { isBlank } from '../../utils/string';
 
 /*
-The "inspector" defaults to the current user if the current user is an inspector (TBD - the attribute that will indicate that - likely the existence of a badge number), or blank.
 
-NOTE: The next inspection date and type go into the School Bus record.
+The "inspector" defaults to the current user if the current user is an inspector
 
 */
 
@@ -50,7 +51,7 @@ var InspectionEditDialog = React.createClass({
     return {
       loading: false,
 
-      inspectorId: this.props.inspection.inspector ? this.props.inspection.inspector.id : '',
+      inspectorId: this.props.inspection.inspector ? this.props.inspection.inspector.id : 0,
       inspectionDate: this.props.inspection.inspectionDate || today(),
       inspectionTypeCode: this.props.inspection.inspectionTypeCode || TYPE_ANNUAL,
       inspectionResultCode: this.props.inspection.inspectionResultCode || '',
@@ -106,8 +107,7 @@ var InspectionEditDialog = React.createClass({
     }, this.updateNextInspectionDate);
   },
 
-  resultCodeChanged(e) {
-    var resultCode = e.target.value;
+  resultCodeChanged(resultCode) {
     var typeCode = '';
 
     if (resultCode === RESULT_FAILED) {
@@ -240,26 +240,17 @@ var InspectionEditDialog = React.createClass({
               <Col md={5}>
                 <FormGroup controlId="inspectorId" validationState={ this.state.inspectorIdError ? 'error' : null }>
                   <ControlLabel>Inspector</ControlLabel>
-                  <FormInputControl componentClass="select" value={ this.state.inspectorId || '' } updateState={ this.updateState }>
-                    <option value=""></option>
-                    {
-                      inspectors.map((inspector) => {
-                        return <option key={ inspector.id } value={ inspector.id }>{ inspector.name }</option>;
-                      })
-                    }
-                  </FormInputControl>
+                  <FilterDropdown id="inspectorId" placeholder="None" blankLine
+                    items={ inspectors } selectedId={ this.state.inspectorId } updateState={ this.updateState } />
                   <HelpBlock>{ this.state.inspectorIdError }</HelpBlock>
                 </FormGroup>
               </Col>
-              <Col md={1}></Col>
-              <Col md={2}>
+              <Col md={3}>
                 <FormGroup controlId="inspectionResultCode" validationState={ this.state.inspectionResultCodeError ? 'error' : null }>
                   <ControlLabel>Result</ControlLabel>
-                  <FormInputControl componentClass="select" value={ this.state.inspectionResultCode } onChange={ this.resultCodeChanged }>
-                    <option value=""></option>
-                    <option value={ RESULT_PASSED }>{ RESULT_PASSED }</option>;
-                    <option value={ RESULT_FAILED }>{ RESULT_FAILED }</option>;
-                  </FormInputControl>
+                  <DropdownControl id="inspectionResultCode" title={ this.state.inspectionResultCode } onSelect={ this.resultCodeChanged } placeholder="None" blankLine
+                    items={[ RESULT_PASSED, RESULT_FAILED ]}
+                  />
                   <HelpBlock>{ this.state.inspectionResultCodeError }</HelpBlock>
                 </FormGroup>
               </Col>

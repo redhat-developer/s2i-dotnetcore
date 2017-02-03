@@ -230,7 +230,7 @@ var SchoolBusesDetail = React.createClass({
             <Row>
               <Col md={1}></Col>
               <Col md={11}>
-                <h1>Regi: <small>{ bus.icbcRegistrationNumber }</small>
+                <h1>Registration: <small>{ bus.icbcRegistrationNumber }</small>
                   &nbsp;Plate: <small>{ bus.licencePlateNumber }</small>
                   &nbsp;VIN: <small>{ bus.vehicleIdentificationNumber }</small>
                   &nbsp;Permit: <small>{ bus.permitNumber }</small>

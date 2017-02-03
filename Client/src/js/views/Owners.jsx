@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Well, Alert, Row, Col } from 'react-bootstrap';
-import { ButtonToolbar, MenuItem, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
@@ -15,8 +15,8 @@ import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
 import CheckboxControl from '../components/CheckboxControl.jsx';
-import DropdownControl from '../components/DropdownControl.jsx';
 import Favourites from '../components/Favourites.jsx';
+import FilterDropdown from '../components/FilterDropdown.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
@@ -52,7 +52,7 @@ var Owners = React.createClass({
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
         selectedInspectorsIds: this.props.search.selectedInspectorsIds || [],
-        ownerId: this.props.search.ownerId || '',
+        ownerId: this.props.search.ownerId || 0,
         ownerName: this.props.search.ownerName || 'Owner',
         hideInactive: this.props.search.hideInactive !== false,
       },
@@ -67,7 +67,7 @@ var Owners = React.createClass({
   buildSearchParams() {
     var searchParams = {
       includeInactive: !this.state.search.hideInactive,
-      owner: this.state.search.ownerId,
+      owner: this.state.search.ownerId || '',
     };
 
     if (this.state.search.selectedDistrictsIds.length > 0) {
@@ -121,13 +121,6 @@ var Owners = React.createClass({
     });
   },
 
-  ownerSelected(keyEvent, e) {
-    this.updateSearchState({
-      ownerId: keyEvent || '',
-      ownerName: keyEvent !== 0 ? e.target.text : 'Owner',
-    });
-  },
-
   loadFavourite(favourite) {
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
@@ -154,14 +147,8 @@ var Owners = React.createClass({
                 items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
               <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors"
                 items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
-              <DropdownControl id="owners-owner-dropdown" title={ this.state.search.ownerName } onSelect={ this.ownerSelected }>
-                <MenuItem key={ 0 } eventKey={ 0 }>&nbsp;</MenuItem>
-                {
-                  _.map(owners, (owner) => {
-                    return <MenuItem key={ owner.id } eventKey={ owner.id }>{ owner.name }</MenuItem>;
-                  })
-                }
-              </DropdownControl>
+              <FilterDropdown id="ownerId" placeholder="Owner" blankLine
+                items={ owners } selectedId={ this.state.search.ownerId } updateState={ this.updateSearchState } />
               <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
               <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
             </ButtonToolbar>

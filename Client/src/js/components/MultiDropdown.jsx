@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Well, Dropdown, FormControl, Checkbox } from 'react-bootstrap';
 
 import RootCloseMenu from './RootCloseMenu.jsx';
@@ -33,6 +34,7 @@ var MultiDropdown = React.createClass({
       maxItemsForTitle: this.props.showMaxItems || MAX_ITEMS_FOR_TITLE,
       allSelected: selectedIds.length === items.length,
       fieldName: fieldName,
+      open: false,
     };
   },
 
@@ -120,6 +122,14 @@ var MultiDropdown = React.createClass({
     }
   },
 
+  toggle(open) {
+    this.setState({ open: open }, () => {
+      if (open) {
+        this.input.focus();
+      }
+    });
+  },
+
   filter(e) {
     this.setState({
       filterTerm: e.target.value.toLowerCase().trim(),
@@ -129,38 +139,35 @@ var MultiDropdown = React.createClass({
   render() {
     var items = this.state.items;
 
-    if(this.state.filterTerm.length > 0) {
+    if (this.state.filterTerm.length > 0) {
       items = _.filter(items, item => {
         return item[this.state.fieldName].toLowerCase().indexOf(this.state.filterTerm) !== -1;
       });
     }
 
-    return <Dropdown className={ `multi-dropdown ${this.props.className || ''}` } id={ this.props.id } title={ this.state.title }>
+    return <Dropdown className={ `multi-dropdown ${this.props.className || ''}` } id={ this.props.id } title={ this.state.title } open={ this.state.open } onToggle={ this.toggle }>
       <Dropdown.Toggle title={this.state.title} />
       <RootCloseMenu bsRole="menu">
         <Well bsSize="small">
-          <FormControl type="text" placeholder="Search" onChange={ this.filter } />
+          <FormControl type="text" placeholder="Search" onChange={ this.filter } inputRef={ ref => { this.input = ref; }}/>
           <Checkbox className="select-all" checked={ this.state.allSelected } onChange={ this.selectAll }>Select All</Checkbox>
         </Well>
-        {(() => {
-          if(items.length > 0) {
-            return <ul>
-              {
-                _.map(items, item => {
-                  return <li key={ item.id }>
-                    <Checkbox value={ item.id } checked={ this.state.selectedIds.includes(item.id) } onChange={ this.itemSelected }>
-                      { item[this.state.fieldName] }
-                    </Checkbox>
-                  </li>;
-                })
-              }
-            </ul>;
-          }
-        })()}
+        { items.length > 0 &&
+          <ul>
+            {
+              _.map(items, item => {
+                return <li key={ item.id }>
+                  <Checkbox value={ item.id } checked={ this.state.selectedIds.includes(item.id) } onChange={ this.itemSelected }>
+                    { item[this.state.fieldName] }
+                  </Checkbox>
+                </li>;
+              })
+            }
+          </ul>
+        }
       </RootCloseMenu>
     </Dropdown>;
   },
 });
-
 
 export default MultiDropdown;

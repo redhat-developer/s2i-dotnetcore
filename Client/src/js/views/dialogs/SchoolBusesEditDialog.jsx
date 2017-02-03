@@ -12,7 +12,9 @@ import Promise from 'bluebird';
 import * as Api from '../../api';
 
 import Confirm from '../../components/Confirm.jsx';
+import DropdownControl from '../../components/DropdownControl.jsx';
 import EditDialog from '../../components/EditDialog.jsx';
+import FilterDropdown from '../../components/FilterDropdown.jsx';
 import FormInputControl from '../../components/FormInputControl.jsx';
 import OverlayTrigger from '../../components/OverlayTrigger.jsx';
 import Spinner from '../../components/Spinner.jsx';
@@ -52,13 +54,13 @@ var SchoolBusesEditDialog = React.createClass({
       isNew: this.props.schoolBus.id === 0,
 
       status: this.props.schoolBus.status || STATUS_ACTIVE,
-      ownerId: this.props.schoolBus.schoolBusOwner ? this.props.schoolBus.schoolBusOwner.id : '',
-      districtId: this.props.schoolBus.district ? this.props.schoolBus.district.id : '',
-      inspectorId: this.props.schoolBus.inspector ? this.props.schoolBus.inspector.id : '',
+      ownerId: this.props.schoolBus.schoolBusOwner ? this.props.schoolBus.schoolBusOwner.id : 0,
+      districtId: this.props.schoolBus.district ? this.props.schoolBus.district.id : 0,
+      inspectorId: this.props.schoolBus.inspector ? this.props.schoolBus.inspector.id : 0,
 
       address1: this.props.schoolBus.homeTerminalAddress1 || '',
       address2: this.props.schoolBus.homeTerminalAddress2 || '',
-      cityId: this.props.schoolBus.homeTerminalCity ? this.props.schoolBus.homeTerminalCity.id : '',
+      cityId: this.props.schoolBus.homeTerminalCity ? this.props.schoolBus.homeTerminalCity.id : 0,
       province: this.props.schoolBus.homeTerminalProvince || 'BC',
       postalCode: this.props.schoolBus.homeTerminalPostalCode || '',
       description: this.props.schoolBus.homeTerminalComment || '',
@@ -68,7 +70,7 @@ var SchoolBusesEditDialog = React.createClass({
       restrictionsText: this.props.schoolBus.restrictionsText || '',
       disableRestrictionsText: true,
 
-      schoolDistrictId: this.props.schoolBus.schoolDistrict ? this.props.schoolBus.schoolDistrict.id : '',
+      schoolDistrictId: this.props.schoolBus.schoolDistrict ? this.props.schoolBus.schoolDistrict.id : 0,
       isIndependentSchool: this.props.schoolBus.isIndependentSchool || false,
       independentSchoolName: this.props.schoolBus.independentSchoolName || '',
 
@@ -97,22 +99,16 @@ var SchoolBusesEditDialog = React.createClass({
     this.setState(state, callback);
   },
 
-  cityChanged(e) {
-    var cityId = e.target.value;
-    var province = '';
-    var city = this.props.cities[cityId];
+  cityChanged(city) {
     if (city) {
-      province = city.province;
+      this.setState({
+        cityId: city.id,
+        province: city.province,
+      });
     }
-
-    this.setState({
-      cityId: cityId,
-      province: province,
-    });
   },
 
-  permitClassCodeChanged(e) {
-    var permitClassCode = e.target.value;
+  permitClassCodeChanged(permitClassCode) {
     var restriction = '';
 
     if (permitClassCode === PERMIT_CLASS_TYPE_2) {
@@ -220,7 +216,7 @@ var SchoolBusesEditDialog = React.createClass({
       onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }
       title= {
         <strong>School Bus
-          <span>Regi: <small>{ this.props.schoolBus.icbcRegistrationNumber }</small></span>
+          <span>Registration: <small>{ this.props.schoolBus.icbcRegistrationNumber }</small></span>
           <span>Plate: <small>{ this.props.schoolBus.licencePlateNumber }</small></span>
           <span>VIN: <small>{ this.props.schoolBus.vehicleIdentificationNumber }</small></span>
         </strong>
@@ -234,48 +230,30 @@ var SchoolBusesEditDialog = React.createClass({
               <Col md={3}>
                 <FormGroup controlId="status">
                   <ControlLabel>Status</ControlLabel>
-                  <FormInputControl componentClass="select" value={ this.state.status } updateState={ this.updateState }>
-                    <option key={ STATUS_ACTIVE } value={ STATUS_ACTIVE }>{ STATUS_ACTIVE }</option>
-                    <option key={ STATUS_ARCHIVED } value={ STATUS_ARCHIVED }>{ STATUS_ARCHIVED }</option>
-                  </FormInputControl>
+                  <DropdownControl id="status" title={ this.state.status } updateState={ this.updateState }
+                    items={[ STATUS_ACTIVE, STATUS_ARCHIVED ]}
+                  />
                 </FormGroup>
               </Col>
               <Col md={3}>
                 <FormGroup controlId="ownerId">
                   <ControlLabel>Owner</ControlLabel>
-                  <FormInputControl componentClass="select" value={ this.state.ownerId } updateState={ this.updateState } disabled={ this.state.isNew }>
-                    {
-                      owners.map((owner) => {
-                        return <option key={ owner.id } value={ owner.id }>{ owner.name }</option>;
-                      })
-                    }
-                  </FormInputControl>
+                  <FilterDropdown id="ownerId" placeholder="None"
+                    items={ owners } selectedId={ this.state.ownerId } updateState={ this.updateState } />
                 </FormGroup>
               </Col>
               <Col md={3}>
                 <FormGroup controlId="districtId">
                   <ControlLabel>District</ControlLabel>
-                  <FormInputControl componentClass="select" value={ this.state.districtId || '' } updateState={ this.updateState }>
-                    <option value=""></option>
-                    {
-                      districts.map((district) => {
-                        return <option key={ district.id } value={ district.id }>{ district.name }</option>;
-                      })
-                    }
-                  </FormInputControl>
+                  <FilterDropdown id="districtId" placeholder="None" blankLine
+                    items={ districts } selectedId={ this.state.districtId } updateState={ this.updateState } />
                 </FormGroup>
               </Col>
               <Col md={3}>
                 <FormGroup controlId="inspectorId">
                   <ControlLabel>Inspector</ControlLabel>
-                  <FormInputControl componentClass="select" value={ this.state.inspectorId || '' } updateState={ this.updateState }>
-                    <option value=""></option>
-                    {
-                      inspectors.map((inspector) => {
-                        return <option key={ inspector.id } value={ inspector.id }>{ inspector.name }</option>;
-                      })
-                    }
-                  </FormInputControl>
+                  <FilterDropdown id="inspectorId" placeholder="None" blankLine
+                    items={ inspectors } selectedId={ this.state.inspectorId } updateState={ this.updateState } />
                 </FormGroup>
               </Col>
             </Row>
@@ -295,14 +273,8 @@ var SchoolBusesEditDialog = React.createClass({
               <Col md={3}>
                 <FormGroup controlId="cityId">
                   <ControlLabel>City</ControlLabel>
-                  <FormInputControl componentClass="select" value={ this.state.cityId || '' } onChange={ this.cityChanged }>
-                    <option value=""></option>
-                    {
-                      cities.map((city) => {
-                        return <option key={ city.id } value={ city.id }>{ city.name }</option>;
-                      })
-                    }
-                  </FormInputControl>
+                  <FilterDropdown id="cityId" placeholder="None" blankLine
+                    items={ cities } selectedId={ this.state.cityId } onSelect={ this.cityChanged } />
                 </FormGroup>
               </Col>
               <Col md={1}>
@@ -332,11 +304,9 @@ var SchoolBusesEditDialog = React.createClass({
                   <Col>
                     <FormGroup controlId="permitClassCode">
                       <ControlLabel>Permit Class</ControlLabel>
-                      <FormInputControl componentClass="select" value={ this.state.permitClassCode } onChange={ this.permitClassCodeChanged }>
-                        <option key={ PERMIT_CLASS_TYPE_1 } value={ PERMIT_CLASS_TYPE_1 }>{ PERMIT_CLASS_TYPE_1 }</option>;
-                        <option key={ PERMIT_CLASS_TYPE_2 } value={ PERMIT_CLASS_TYPE_2 }>{ PERMIT_CLASS_TYPE_2 }</option>;
-                        <option key={ PERMIT_CLASS_TYPE_3 } value={ PERMIT_CLASS_TYPE_3 }>{ PERMIT_CLASS_TYPE_3 }</option>;
-                      </FormInputControl>
+                      <DropdownControl id="permitClassCode" title={ this.state.permitClassCode } onSelect={ this.permitClassCodeChanged }
+                        items={[ PERMIT_CLASS_TYPE_1, PERMIT_CLASS_TYPE_2, PERMIT_CLASS_TYPE_3 ]}
+                      />
                     </FormGroup>
                   </Col>
                 </Row>
@@ -344,13 +314,9 @@ var SchoolBusesEditDialog = React.createClass({
                   <Col>
                     <FormGroup controlId="bodyTypeCode">
                       <ControlLabel>Body Type</ControlLabel>
-                      <FormInputControl componentClass="select" value={ this.state.bodyTypeCode } updateState={ this.updateState }>
-                        {
-                          BODY_TYPES.map((bodyType) => {
-                            return <option key={ bodyType } value={ bodyType }>{ bodyType }</option>;
-                          })
-                        }
-                      </FormInputControl>
+                      <DropdownControl id="bodyTypeCode" title={ this.state.bodyTypeCode } updateState={ this.updateState }
+                        items={ BODY_TYPES }
+                      />
                     </FormGroup>
                   </Col>
                 </Row>
@@ -378,14 +344,8 @@ var SchoolBusesEditDialog = React.createClass({
               <Col md={3}>
                 <FormGroup controlId="schoolDistrictId">
                   <ControlLabel>School District</ControlLabel>
-                  <FormInputControl componentClass="select" value={ this.state.schoolDistrictId || '' } updateState={ this.updateState }>
-                    <option value=""></option>
-                    {
-                      schoolDistricts.map((sd) => {
-                        return <option key={ sd.id } value={ sd.id }>{ sd.name }</option>;
-                      })
-                    }
-                  </FormInputControl>
+                  <FilterDropdown id="schoolDistrictId" placeholder="None" blankLine fieldName="shortName"
+                    items={ schoolDistricts } selectedId={ this.state.schoolDistrictId } updateState={ this.updateState } />
                 </FormGroup>
               </Col>
               <Col md={2}>
