@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Well, Alert, Row, Col } from 'react-bootstrap';
-import { ButtonToolbar, MenuItem, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { Form, InputGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -20,6 +20,7 @@ import CheckboxControl from '../components/CheckboxControl.jsx';
 import DateControl from '../components/DateControl.jsx';
 import DropdownControl from '../components/DropdownControl.jsx';
 import Favourites from '../components/Favourites.jsx';
+import FilterDropdown from '../components/FilterDropdown.jsx';
 import FormInputControl from '../components/FormInputControl.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
@@ -77,7 +78,7 @@ var SchoolBuses = React.createClass({
         selectedInspectorsIds: this.props.search.selectedInspectorsIds || [],
         selectedCitiesIds: this.props.search.selectedCitiesIds || [],
         selectedSchoolDistrictsIds: this.props.search.selectedSchoolDistrictsIds || [],
-        ownerId: this.props.search.ownerId || '',
+        ownerId: this.props.search.ownerId || 0,
         ownerName: this.props.search.ownerName || 'Owner',
         keySearchField: this.props.search.keySearchField || KEY_SEARCH_REGI,
         searchText: this.props.search.searchText || '',
@@ -108,7 +109,7 @@ var SchoolBuses = React.createClass({
     var searchParams = {
       includeInactive: !this.state.search.hideInactive,
       onlyReInspections: this.state.search.justReInspections,
-      owner: this.state.search.ownerId,
+      owner: this.state.search.ownerId || '',
     };
 
     if (this.state.search.selectedDistrictsIds.length > 0) {
@@ -217,13 +218,6 @@ var SchoolBuses = React.createClass({
     });
   },
 
-  ownerSelected(keyEvent, e) {
-    this.updateSearchState({
-      ownerId: keyEvent || '',
-      ownerName: keyEvent !== 0 ? e.target.text : 'Owner',
-    });
-  },
-
   loadFavourite(favourite) {
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
@@ -257,21 +251,13 @@ var SchoolBuses = React.createClass({
                   items={ cities } selectedIds={ this.state.search.selectedCitiesIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
                 <MultiDropdown id="selectedSchoolDistrictsIds" placeholder="School Districts"
                   items={ schoolDistricts } selectedIds={ this.state.search.selectedSchoolDistrictsIds } fieldName="shortName" updateState={ this.updateSearchState } showMaxItems={ 2 } />
-                <DropdownControl id="school-buses-owner-dropdown" title={ this.state.search.ownerName } onSelect={ this.ownerSelected }>
-                  <MenuItem key={ 0 } eventKey={ 0 }>&nbsp;</MenuItem>
-                  {
-                    _.map(owners, (owner) => {
-                      return <MenuItem key={ owner.id } eventKey={ owner.id }>{ owner.name }</MenuItem>;
-                    })
-                  }
-                </DropdownControl>
+                <FilterDropdown id="ownerId" placeholder="Owner" blankLine
+                  items={ owners } selectedId={ this.state.search.ownerId } updateState={ this.updateSearchState } />
                 <Form inline>
                   <InputGroup id="school-buses-key-search">
-                    <DropdownControl id="school-buses-key-dropdown" componentClass={ InputGroup.Button } title={ this.state.search.keySearchField } updateState={ this.updateSearchState }>
-                      <MenuItem name="keySearchField" key={ KEY_SEARCH_REGI } eventKey={ KEY_SEARCH_REGI }>{ KEY_SEARCH_REGI }</MenuItem>
-                      <MenuItem name="keySearchField" key={ KEY_SEARCH_VIN } eventKey={ KEY_SEARCH_VIN }>{ KEY_SEARCH_VIN }</MenuItem>
-                      <MenuItem name="keySearchField" key={ KEY_SEARCH_PLATE } eventKey={ KEY_SEARCH_PLATE }>{ KEY_SEARCH_PLATE }</MenuItem>
-                    </DropdownControl>
+                    <DropdownControl id="keySearchField" componentClass={ InputGroup.Button } title={ this.state.search.keySearchField }
+                      updateState={ this.updateSearchState } items={[ KEY_SEARCH_REGI, KEY_SEARCH_VIN, KEY_SEARCH_PLATE ]}
+                    />
                     <FormInputControl id="searchText" type="text" value={ this.state.search.searchText } updateState={ this.updateSearchState } />
                   </InputGroup>
                 </Form>
@@ -279,18 +265,9 @@ var SchoolBuses = React.createClass({
             </Row>
             <Row>
               <ButtonToolbar id="school-buses-inspections">
-                <DropdownControl id="school-buses-inspection-dropdown" title={ this.state.search.nextInspection } updateState={ this.updateSearchState }>
-                  <MenuItem name="nextInspection" key={ ALL } eventKey={ ALL }>{ ALL }</MenuItem>
-                  <MenuItem name="nextInspection" key={ BEFORE_TODAY } eventKey={ BEFORE_TODAY }>{ BEFORE_TODAY }</MenuItem>
-                  <MenuItem name="nextInspection" key={ BEFORE_END_OF_MONTH } eventKey={ BEFORE_END_OF_MONTH }>{ BEFORE_END_OF_MONTH }</MenuItem>
-                  <MenuItem name="nextInspection" key={ BEFORE_END_OF_QUARTER } eventKey={ BEFORE_END_OF_QUARTER }>{ BEFORE_END_OF_QUARTER }</MenuItem>
-                  <MenuItem name="nextInspection" key={ TODAY } eventKey={ TODAY }>{ TODAY }</MenuItem>
-                  <MenuItem name="nextInspection" key={ WITHIN_30_DAYS } eventKey={ WITHIN_30_DAYS }>{ WITHIN_30_DAYS }</MenuItem>
-                  <MenuItem name="nextInspection" key={ THIS_MONTH } eventKey={ THIS_MONTH }>{ THIS_MONTH }</MenuItem>
-                  <MenuItem name="nextInspection" key={ NEXT_MONTH } eventKey={ NEXT_MONTH }>{ NEXT_MONTH }</MenuItem>
-                  <MenuItem name="nextInspection" key={ THIS_QUARTER } eventKey={ THIS_QUARTER }>{ THIS_QUARTER }</MenuItem>
-                  <MenuItem name="nextInspection" key={ CUSTOM } eventKey={ CUSTOM }>{ CUSTOM }&hellip;</MenuItem>
-                </DropdownControl>
+                <DropdownControl id="nextInspection" title={ this.state.search.nextInspection } updateState={ this.updateSearchState }
+                  items={[ ALL, BEFORE_TODAY, BEFORE_END_OF_MONTH, BEFORE_END_OF_QUARTER, TODAY, WITHIN_30_DAYS, THIS_MONTH, NEXT_MONTH, THIS_QUARTER, CUSTOM ]}
+                />
                 {(() => {
                   if (this.state.search.nextInspection === CUSTOM) {
                     return <span>

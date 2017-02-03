@@ -8,7 +8,6 @@
     .caret {
       position: absolute;
       top: 50%;
-      margin-top: -3px;
       right: 10px;
     }
   }
@@ -37,6 +36,10 @@
     .checkbox {
       margin-top: 5px;
       margin-bottom: 5px;
+
+      label {
+        white-space: nowrap;
+      }
     }
 
     .select-all {
