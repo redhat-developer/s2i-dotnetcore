@@ -33,11 +33,8 @@ const DAYS_DUE_WARNING = 30;
 var SchoolBusesDetail = React.createClass({
   propTypes: {
     schoolBus: React.PropTypes.object,
-    schoolBusAttachments: React.PropTypes.object,
     schoolBusCCW: React.PropTypes.object,
-    schoolBusHistories: React.PropTypes.object,
     schoolBusInspections: React.PropTypes.object,
-    schoolBusNotes: React.PropTypes.object,
     ui: React.PropTypes.object,
     params: React.PropTypes.object,
   },
@@ -45,11 +42,8 @@ var SchoolBusesDetail = React.createClass({
   getInitialState() {
     return {
       loadingSchoolBus: false,
-      loadingSchoolBusAttachments: false,
       loadingSchoolBusCCW: false,
-      loadingSchoolBusHistories: false,
       loadingSchoolBusInspections: false,
-      loadingSchoolBusNotes: false,
 
       showEditDialog: false,
       showInspectionDialog: false,
@@ -71,11 +65,8 @@ var SchoolBusesDetail = React.createClass({
   fetch() {
     this.setState({
       loadingSchoolBus: true,
-      loadingSchoolBusAttachments: true,
       loadingSchoolBusCCW: true,
-      loadingSchoolBusHistories: true,
       loadingSchoolBusInspections: true,
-      loadingSchoolBusNotes: true,
     });
 
     var id = this.props.params.schoolBusId;
@@ -83,20 +74,11 @@ var SchoolBusesDetail = React.createClass({
     Api.getSchoolBus(id).finally(() => {
       this.setState({ loadingSchoolBus: false });
     });
-    Api.getSchoolBusAttachments(id).finally(() => {
-      this.setState({ loadingSchoolBusAttachments: false });
-    });
     Api.getSchoolBusCCW(id).finally(() => {
       this.setState({ loadingSchoolBusCCW: false });
     });
-    Api.getSchoolBusHistories(id).finally(() => {
-      this.setState({ loadingSchoolBusHistories: false });
-    });
     Api.getSchoolBusInspections(id).finally(() => {
       this.setState({ loadingSchoolBusInspections: false });
-    });
-    Api.getSchoolBusNotes(id).finally(() => {
-      this.setState({ loadingSchoolBusNotes: false });
     });
   },
 
@@ -204,8 +186,8 @@ var SchoolBusesDetail = React.createClass({
             <Label bsStyle={ bus.isActive ? 'success' : 'danger'}>{ bus.isActive ? 'Verified Active' : bus.status }</Label>
             <Label className={ bus.isOutOfProvince ? '' : 'hide' }>Out of Province</Label>
             <span className={ `label label-${inspectionStyle}` } dangerouslySetInnerHTML={{ __html: inspectionNotice }}></span>
-            <Button title="Notes" onClick={ this.showNotes }>Notes ({ Object.keys(this.props.schoolBusNotes).length })</Button>
-            <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ Object.keys(this.props.schoolBusAttachments).length })</Button>
+            <Button title="Notes" onClick={ this.showNotes }>Notes ({ bus.notes ? bus.notes.length : 0 })</Button>
+            <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ bus.attachments ? bus.attachments.length : 0 })</Button>
             <Button title="History" onClick={ this.showHistory }>History</Button>
           </Col>
           <Col md={2}>
@@ -546,11 +528,8 @@ var SchoolBusesDetail = React.createClass({
 function mapStateToProps(state) {
   return {
     schoolBus: state.models.schoolBus,
-    schoolBusAttachments: state.models.schoolBusAttachments,
     schoolBusCCW: state.models.schoolBusCCW,
-    schoolBusHistories: state.models.schoolBusHistories,
     schoolBusInspections: state.models.schoolBusInspections,
-    schoolBusNotes: state.models.schoolBusNotes,
     ui: state.ui.inspections,
   };
 }
