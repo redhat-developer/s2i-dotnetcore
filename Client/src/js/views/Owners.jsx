@@ -125,6 +125,10 @@ var Owners = React.createClass({
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
 
+  add() {
+
+  },
+
   email() {
 
   },
@@ -179,16 +183,18 @@ var Owners = React.createClass({
         return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={[
           { field: 'name',                   title: 'Name'            },
           { field: 'primaryContactName',     title: 'Primary Contact' },
-          { field: 'schoolBusCount',         title: 'School Buses',    style:{ textAlign: 'center' } },
-          { field: 'nextInspectionDateSort', title: 'Next Inspection', style:{ textAlign: 'center' } },
-          { field: 'blank' },
+          { field: 'numberOfBuses',          title: 'School Buses',    style: { textAlign: 'center' } },
+          { field: 'nextInspectionDateSort', title: 'Next Inspection', style: { textAlign: 'center' } },
+          { field: 'addOwner',               title: 'Add Owner',       style: { textAlign: 'right'  },
+            children: [ <Button key="add" title="add" bsSize="xsmall" onClick={ this.add }><Glyphicon glyph="plus" /></Button> ],
+          },
         ]}>
           {
             _.map(ownerList, (owner) => {
               return <tr key={ owner.id } className={ owner.status != 'Active' ? 'info' : null }>
                 <td>{ owner.name }</td>
                 <td>{ owner.primaryContactName }</td>
-                <td style={{ textAlign: 'center' }}>{ owner.schoolBusCount }</td>
+                <td style={{ textAlign: 'center' }}>{ owner.numberOfBuses }</td>
                 <td style={{ textAlign: 'center' }}>{ formatDateTime(owner.nextInspectionDate, 'MM/DD/YYYY') }
                   { owner.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
                   { owner.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }

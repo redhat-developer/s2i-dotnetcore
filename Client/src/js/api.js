@@ -266,7 +266,7 @@ export function deleteInspection(inspection) {
 
 function parseOwner(owner) {
   owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
-  owner.schoolBusCount = 1;
+  owner.numberOfBuses = 1;
   owner.nextInspectionDate = '2017-02-21';
   owner.nextInspectionTypeCode = 'Re-Inspection';
 

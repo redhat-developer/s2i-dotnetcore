@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 var SortTable = React.createClass({
   propTypes: {
-    // Array of objects with key, title, style fields
+    // Array of objects with key, title, style, children fields
     headers: React.PropTypes.array.isRequired,
     // This should be a from a state.ui object
     sortField: React.PropTypes.string.isRequired,
@@ -31,8 +31,8 @@ var SortTable = React.createClass({
           <tr>
             {
               _.map(this.props.headers, (header) => {
-                if (!header.title) {
-                  return <th key={ header.field } style={ header.style }></th>;
+                if (header.children) {
+                  return <th key={ header.field } style={ header.style }>{ header.children }</th>;
                 }
 
                 var sortGlyph = '';
