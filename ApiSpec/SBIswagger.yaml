@@ -3572,78 +3572,83 @@ paths:
 definitions:
   SchoolBus:
     type: object
-    description: The School Bus entity, including only information that is of specific interest to the School Bus inspector and not tracked in other systems such as ICBC or NSC
+    description: The School Bus vehicle information supplementary to the vehicle information in ICBC
     required:
       - id
+      - status
+      - permitClassCode
+      - bodyTypeCode
+      - schoolBusSeatingCapacity
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a SchoolBus
       ICBCRegistrationNumber:
         type: string
-        maxLength: 255
-        uniqueItems: true
-        description: The ICBC Registration number for the School Bus
+        maxLength: 40
+        description: The registration number of the vehicle as entered by the user and confirmed by the CCW Web Services
       licencePlateNumber:
         type: string
-        maxLength: 255
-        uniqueItems: true
-        description: The ICBC Plate Number for the School Bus
+        maxLength: 15
+        description: The License Plate Number for the vehicle
       VehicleIdentificationNumber:
         type: string
         maxLength: 17
         uniqueItems: true
-        description: The VIN for the School Bus
+        description:  A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number.
       schoolBusOwner:
         $ref: '#/definitions/SchoolBusOwner'
       permitNumber:
         type: string
-        maxLength: 255
-        description: The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.
+        maxLength: 20
+        uniqueItems: true
+        description: The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit
       status:
         type: string
-        maxLength: 255
-        description: Enumerated type of Status - Inactive,  Active,  Archived
+        maxLength: 20
+        description: Status of the school bus record - current values are Inactive, Active, Archived
       isOutOfProvince:
         type: boolean
+        description: True if the School Bus is registered within BC, else False
       District:
         $ref: '#/definitions/District'
       homeTerminalAddress1:
         type: string
-        maxLength: 255
-        description: Address 1 of physical location of the School Bus.
+        maxLength: 80
+        description: Address Line 1 of physical location of the School Bus.
       homeTerminalAddress2:
         type: string
-        maxLength: 255
-        description: Address 2 of physical location of the School Bus.
+        maxLength: 80
+        description: Address Line 2 of physical location of the School Bus.
       homeTerminalCity:
         $ref: '#/definitions/City'
         description: City of physical location of the School Bus.
       homeTerminalProvince:
         type: string
-        maxLength: 255
+        maxLength: 40
         description: Province of physical location of the School Bus - free form.
       homeTerminalPostalCode:
         type: string
-        maxLength: 255
+        maxLength: 15
         description: Postal Code of physical location of the School Bus.
       homeTerminalComment:
         type: string
         maxLength: 2048
-        description: A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection
+        description: A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection.
       restrictionsText:
         type: string
         maxLength: 2048
-        description: Text of any restrictions to be printed on the school bus permit.
+        description: Text of any restrictions to be printed on the school bus permit. Standard comments are associated with the Permit Class but the inspector can enter free form text.
       nextInspectionDate:
         type: string
         format: date-time
-        description: The next inspection date for this School Bus. Set at the time an inspection is set.
+        description: The next inspection date for this School Bus which is set when inspection results are saved
       nextInspectionTypeCode:
         type: string
-        maxLength: 255
-        description: An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection.
+        maxLength: 30
+        description:  Annual or Re-inspection based on the Pass&#x2F;Fail status of the most recent inspection - An enumerated type (by the UI) to indicate the type of the next inspection
       schoolDistrict:
         $ref: '#/definitions/SchoolDistrict'
         description: The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless.
@@ -3652,24 +3657,24 @@ definitions:
         description: True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field.
       independentSchoolName:
         type: string
-        maxLength: 255
+        maxLength: 120
         description: The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.
       permitClassCode:
         type: string
-        maxLength: 255
-        description: The enumerated class of School Bus.
+        maxLength: 50
+        description: The enumerated class of School Bus from drop down
       bodyTypeCode:
         type: string
-        maxLength: 255
-        description: The enumerated body type of the School Bus.
+        maxLength: 50
+        description: The enumerated body type of the School Bus from drop down
       unitNumber:
         type: string
-        maxLength: 255
+        maxLength: 30
         description: The unit number of the Bus as defined by the School Bus owner - freeform text.
       schoolBusSeatingCapacity:
         format: int32
         type: integer
-        description: The maximum number of passengers in the bus based on the specific use of the bus. For example,  the same 2-per seat &#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.
+        description: The maximum number of passengers in the bus based on the specific use of the bus including the driver. For example,  the same 2-per seat &#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.
       mobilityAidCapacity:
         format: int32
         type: integer
@@ -3694,25 +3699,31 @@ definitions:
         description: The history of updates made to the School Bus.
   SchoolBusOwner:
     type: object
+    description: Demographic information about companies, organizations, school districts, or individuals who own or lease school buses
     required:
       - id
+      - name
+      - status
+      - dateCreated
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a SchoolBusOwner
       name:
         type: string
-        maxLength: 255
+        maxLength: 150
+        uniqueItems: true
         description: The name of the School Bus owner as defined by the user&#x2F;Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors.
       status:
         type: string
-        maxLength: 255
-        description: Status of the School Bus owner - enumerated value Active,  Archived
+        maxLength: 30
+        description: Status of the School Bus owner - enumerated value Active,  Inactive or Archived from drop down
       dateCreated:
         type: string
         format: date-time
-        description: The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.
+        description: The original create date and time of the owner record. The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.
       primaryContact:
         $ref: '#/definitions/Contact'
         description: Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.
@@ -3741,18 +3752,20 @@ definitions:
         description: The history of updates made to the School Bus Owner data.
   CCWData:
     type: object
-    description: Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls.
+    description: Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls. The true source of the field definitions are in those other systems.
     required:
       - id
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for CCWData
       ICBCRegistrationNumber:
         type: string
         maxLength: 255
-        description: The Registration Number (Regi) is the link between the CCW information and a specific School Bus
+        uniqueItems: true
+        description: The Registration Number (Regi) is the link between the CCW vehicle information and a specific School Bus
       ICBCModelYear:
         format: int32
         type: integer
@@ -3760,117 +3773,158 @@ definitions:
       ICBCVehicleType:
         type: string
         maxLength: 255
+        description: Designates Commercial &#x2F; Private &#x2F; Other Categories
       ICBCRateClass:
         type: string
         maxLength: 255
+        description: Defines usage such as pleasure only, business, delivery, etc..
       ICBCCVIPDecal:
         type: string
         maxLength: 255
+        description: Six monthly commercial vehicle inspection decal number
       ICBCFleetUnitNo:
         format: int32
         type: integer
+        description: The owner-defined number of the bus within their bus fleet.
       ICBCGrossVehicleWeight:
         format: int32
         type: integer
+        description: Vehicle gross weight in kgs
       ICBCMake:
         type: string
         maxLength: 255
+        description: Vehicle make
       ICBCBody:
         type: string
         maxLength: 255
+        description: Vehicle body code
       ICBCRebuiltStatus:
         type: string
         maxLength: 255
+        description: ICBC coded field about whether or not the vehicle has been rebuilt and if so the nature of the rebuilding.
       ICBCCVIPExpiry:
         type: string
         format: date-time
+        description: Expiry date of the last 6 month commercial vehicle inspection. 
       ICBCNetWt:
         format: int32
         type: integer
+        description: Vehicle net weight in kgs
       ICBCModel:
         type: string
         maxLength: 255
+        description: Vehicle model codes used by ICBC - for example: bus, scbus, dump, logtr
       ICBCFuel:
         type: string
         maxLength: 255
+        description: Fuel type gasoline, propane, diesel etc..
       ICBCSeatingCapacity:
         format: int32
         type: integer
+        description: Vehicle seating capacity including driver
       ICBCColour:
         type: string
         maxLength: 255
+        description: Vehicle color ex BLU, WHI, etc..
       ICBCNotesAndOrders:
         type: string
         maxLength: 255
+        description: Notes and orders from ICBC about the vehicle.
       ICBCOrderedOn:
         type: string
         format: date-time
+        description: TO BE DETERMINED
       ICBCRegOwnerName:
         type: string
         maxLength: 255
+        description: The name of the registered owner of the vehicle - per ICBC.
       ICBCRegOwnerAddr1:
         type: string
         maxLength: 255
+        description: Owners address line 1
       ICBCRegOwnerAddr2:
         type: string
         maxLength: 255
+        description: Owners address line 2
       ICBCRegOwnerCity:
         type: string
         maxLength: 255
+        description: Owners address city
       ICBCRegOwnerProv:
         type: string
         maxLength: 255
+        description: Owners address Province 
       ICBCRegOwnerPostalCode:
         type: string
         maxLength: 255
+        description: Owners address Postal Code
       ICBCRegOwnerStatus:
         type: string
         maxLength: 255
+        description: The status (as defined by ICBC) of the registered owner of the vehicle.
       ICBCRegOwnerRODL:
         type: string
         maxLength: 255
+        description: Registered Owners Driver Licence number
       ICBCRegOwnerPool:
         type: string
         maxLength: 255
+        description: Previous Owners Driver Licence number
       NSCClientNum:
         type: string
         maxLength: 255
+        description: National Safety Code Carrier Number on ICBC client system
       NSCCarrierName:
         type: string
         maxLength: 255
+        description: National Safety Code Carrier Name on ICBC client system
       NSCCarrierConditions:
         type: string
         maxLength: 255
+        description: Conditions imposed on the carrier (bus owner) within NSC
       NSCCarrierSafetyRating:
         type: string
         maxLength: 255
+        description: Carrier safety rating ex - satisfatory, SAT-unaudited etc..
       NSCPolicyNumber:
         type: string
         maxLength: 255
+        description: From NSC: The number of the carrier (NSC Clients) necessary insurance required to operate the vehicle.
       NSCPolicyEffectiveDate:
         type: string
         format: date-time
+        description: From NSC: The effective data of the policy.
       NSCPolicyStatusDate:
         type: string
         format: date-time
+        description: From NSC: The date the status of the policy was established.
       NSCPolicyExpiryDate:
         type: string
         format: date-time
+        description: From NSC: The data of expiration of the policy.
       NSCPolicyStatus:
         type: string
         maxLength: 255
+        description: From NSC: The latest status of the policy.
       NSCPlateDecal:
         type: string
         maxLength: 255
+        description: From NSC: The plate decal as defined by NSC on the vehicle
   Inspection:
     type: object
+    description: School Bus inspection details supplementary to the RIP inspection
     required:
       - id
+      - inspectionDate
+      - inspectionTypeCode
+      - inspectionResultCode
+      - createdDate
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key make this match the Inspection Details page
+        uniqueItems: true
+        description: A system-generated unique identifier for an Inspection
       schoolBus:
         $ref: '#/definitions/SchoolBus'
       inspector:
@@ -3879,7 +3933,7 @@ definitions:
       inspectionDate:
         type: string
         format: date-time
-        description: The date the inspection was conducted.
+        description: The date and time the inspection was conducted.
       inspectionTypeCode:
         type: string
         maxLength: 255
@@ -3899,17 +3953,19 @@ definitions:
       createdDate:
         type: string
         format: date-time
-        description: Record creation date
+        description: Record creation date and time
   Note:
     type: object
     description: Notes entered by users about instance of entities - e.g. School Buses and School Bus Owners
     required:
       - id
+      - noteText
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a Note
       noteText:
         type: string
         maxLength: 2048
@@ -3922,18 +3978,23 @@ definitions:
     description: Attachments uploaded by users about instance of entities - e.g. School Buses and School Bus Owners
     required:
       - id
+      - internalFileName
+      - externalFileName
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for an Attachment
       internalFileName:
         type: string
         maxLength: 2048
+        uniqueItems: true
         description: The physical location of the attachment on the file system.
       externalFileName:
         type: string
         maxLength: 2048
+        uniqueItems: true
         description: The name of the attachment as defined by the user in uploading the document.
       description:
         type: string
@@ -3944,39 +4005,46 @@ definitions:
     description: The history of updates made to an entity - e.g. a School Bus or a School Bus Owner
     required:
       - id
+      - historyText
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a History
       historyText:
         type: string
         maxLength: 2048
         description: The text of the history entry tracked against the related entity.
   Contact:
     type: object
+    description: A table of contacts related to various entities in the system. FK fields are used to link contacts to records in the system.
     required:
       - id
+      - givenName
+      - surname
+      - role
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a Contact
       givenName:
         type: string
-        maxLength: 255
+        maxLength: 50
         description: The given name of the contact.
       surname:
         type: string
-        maxLength: 255
+        maxLength: 50
         description: The surname of the contact.
       role:
         type: string
-        maxLength: 255
-        description: The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.
+        maxLength: 100
+        description: The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list - for initial implementation, the field is freeform.
       notes:
         type: string
-        maxLength: 2048
+        maxLength: 150
         description: A note about the contact maintained by the users.
       contactPhones:
         type: array
@@ -3988,53 +4056,59 @@ definitions:
           $ref: '#/definitions/ContactAddress'
   ContactPhone:
     type: object
+    description: SB Owner contact phone information
     required:
       - id
+      - type
+      - phoneNumber
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a ContactPhone
       type:
         type: string
-        maxLength: 255
-        description: The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.
+        maxLength: 100
+        description: The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.  Ex. Home, Cell, Work etc..
       phoneNumber:
         type: string
-        maxLength: 255
+        maxLength: 20
         description: The phone number of the contact. Entered as free form to support a range of formats.
   ContactAddress:
     type: object
+    description: SB Owner contact address information
     required:
       - id
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a ContactAddress
       type:
         type: string
-        maxLength: 255
-        description: The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.
+        maxLength: 100
+        description: The type of the address. UI controlled as to whether it is free form or selected from an enumerated list ex. Home, Office, etc..
       address1:
         type: string
-        maxLength: 255
+        maxLength: 80
         description: Address 1 line of the address.
       address2:
         type: string
-        maxLength: 255
+        maxLength: 80
         description: Address 2 line of the address.
       city:
         type: string
-        maxLength: 255
+        maxLength: 100
         description: The City of the address.
       province:
         type: string
-        maxLength: 255
+        maxLength: 50
         description: The Province of the address.
       postalCode:
         type: string
-        maxLength: 255
+        maxLength: 15
         description: The postal code of the address.
   UserFavourite:
     type: object
@@ -4045,7 +4119,8 @@ definitions:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a UserFavourite
       type:
         type: string
         maxLength: 255
@@ -4066,16 +4141,21 @@ definitions:
         description: The User who has this Favourite
   Region:
     type: object
+    description: The MOTI-defined Regions - must match the official MOTI List
     required:
       - id
+      - ministryRegionID
+      - name
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a Region
       ministryRegionID:
         format: int32
         type: integer
+        uniqueItems: true
         description: The Ministry ID for the Region
       name:
         type: string
@@ -4084,20 +4164,24 @@ definitions:
       startDate:
         type: string
         format: date-time
-        description: The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        description: The effective date of the Region record - NOT CURRENTLY ENFORCED IN SCHOOL BUS
       endDate:
         type: string
         format: date-time
-        description: The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        description: The end date of the Region record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
   District:
     type: object
+    description: The MOTI-defined Districts - must match the official MOTI List
     required:
       - id
+      - ministryDistrictID
+      - name
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a District
       ministryDistrictID:
         format: int32
         type: integer
@@ -4112,20 +4196,24 @@ definitions:
       startDate:
         type: string
         format: date-time
-        description: The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        description: The effective date of the District record - NOT CURRENTLY ENFORCED IN SCHOOL BUS
       endDate:
         type: string
         format: date-time
-        description: The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        description: The end date of the District record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
   ServiceArea:
     type: object
+    description: The MOTI-defined Service Areas - must match the official MOTI List
     required:
       - id
+      - ministryServiceAreaID
+      - name
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a ServiceArea
       ministryServiceAreaID:
         format: int32
         type: integer
@@ -4140,24 +4228,28 @@ definitions:
       startDate:
         type: string
         format: date-time
-        description: The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        description: The effective date of the Service Area record - NOT CURRENTLY ENFORCED IN SCHOOL BUS
       endDate:
         type: string
         format: date-time
-        description: The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        description: The end date of the Service Area record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
   SchoolDistrict:
     type: object
     description: A list of School Districts in the Province of BC. Authoritative source to be determined.
     required:
       - id
+      - name
+      - shortName
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a SchoolDistrict
       name:
         type: string
         maxLength: 255
+        uniqueItems: true
         description: The full name of the School District
       shortName:
         type: string
@@ -4172,7 +4264,8 @@ definitions:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a City
       name:
         type: string
         maxLength: 255
@@ -4180,56 +4273,70 @@ definitions:
       province:
         type: string
         maxLength: 255
-        description: Province
+        description: The name of the province of the city
   Notification:
     type: object
+    description: Users associated with specific notifications, created at the time the notification record is created because of the user&#39;s business relationship to the bus - e.g. the user is the currently assigned inspector, or the user is the manager for the District in which the bus is located. The rules for linking a user to a notification for a specific bus could vary over time based on the needs of the business. At minimum, it is expected the current inspector assigned to a bus will be notified of every notification for that bus.
     required:
       - id
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a Notification
       event:
         $ref: '#/definitions/NotificationEvent'
       event2:
         $ref: '#/definitions/NotificationEvent'
       hasBeenViewed:
         type: boolean
+        description: True if the user linked to the inspection has read the notification
       isWatchNotification:
         type: boolean
+        description: TO BE REMOVED
       isExpired:
         type: boolean
+        description: TO BE REMOVED
       isAllDay:
         type: boolean
+        description: TO BE REMOVED
       priorityCode:
         type: string
         maxLength: 255
+        description: TO BE REMOVED
       user:
         $ref: '#/definitions/User'
   NotificationEvent:
     type: object
+    description: Notifications associated about changes (mostly from CCW data) to information related to a specific school bus - e.g. change of owner at ICBC, change in NSC client rating, etc.
     required:
       - id
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a NotificationEvent
       eventTime:
         type: string
         format: date-time
+        description: The date&#x2F;time of the creation of the event that triggered the creation of the notification.
       eventTypeCode:
         type: string
         maxLength: 255
+        description: A categorization of the event for which the notification was created. The categories will be defined over time in code based on the requirements of the business. An example might be &quot;ICBCOwnerNameChange&quot; for when a change in the CCWData ICBC Owner Name field is changed.
       eventSubTypeCode:
         type: string
         maxLength: 255
+        description: A further categorization of the event for which the notification was created.
       notes:
         type: string
         maxLength: 2048
+        description: An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.
       notificationGenerated:
         type: boolean
+        description: TO BE REMOVED
       schoolBus:
         $ref: '#/definitions/SchoolBus'
   User:
@@ -4237,26 +4344,34 @@ definitions:
     description: Information about the users of the system.
     required:
       - id
+      - givenName
+      - surname
       - active
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        uniqueItems: true
+        description: A system-generated unique identifier for a User
       givenName:
         type: string
         maxLength: 255
+        description: Given name of the user.
       surname:
         type: string
-        maxLength: 255
+        maxLength: 50
+        description: Surname of the user.
       initials:
         type: string
-        maxLength: 255
+        maxLength: 10
+        description: Initials of the user, to be presented where screen space is at a premium.
       email:
         type: string
         maxLength: 255
+        description: The email address of the user in the system.
       active:
         type: boolean
+        description: A flag indicating the User is active in the system. Set false to remove access to the system for the user.
       smUserId:
         type: string
         maxLength: 255
@@ -4264,9 +4379,11 @@ definitions:
       guid:
         type: string
         maxLength: 255
+        description: The GUID unique to the user as provided by the authentication system. In this case, authentication is done by Siteminder and the GUID uniquely identifies the user within the user directories managed by Siteminder - e.g. IDIR and BCeID. The GUID is equivalent to the IDIR Id, but is guaranteed unique to a person, while the IDIR ID is not - IDIR IDs can be recycled.
       smAuthorizationDirectory:
         type: string
         maxLength: 255
+        description: The user directory service used by Siteminder to authenticate the user - usually IDIR or BCeID.
       userRoles:
         type: array
         items:
@@ -4277,6 +4394,7 @@ definitions:
           $ref: '#/definitions/GroupMembership'
   UserRole:
     type: object
+    description: A join table that provides allows each user to have any number of Roles in the system.  At login time the user is given the sum of the permissions of the roles assigned to that user. 
     required:
       - id
       - effectiveDate
@@ -4284,17 +4402,20 @@ definitions:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        description: A system-generated unique identifier for a UserRole
       effectiveDate:
         type: string
         format: date-time
+        description: The date on which the user was given the related role.
       expiryDate:
         type: string
         format: date-time
+        description: The date on which a role previously assigned to a user was removed from that user.
       role:
         $ref: '#/definitions/Role'
   Role:
     type: object
+    description: A table managed in the application by authorized users to create named Roles that can be assigned to Users as needed. Roles can be created as needed to support the users of the system and the roles they perform within the organization.
     required:
       - id
       - name
@@ -4303,13 +4424,15 @@ definitions:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        description: A system-generated unique identifier for a Role
       name:
         type: string
         maxLength: 255
+        description: The name of the Role, as established by the user creating the role.
       description:
         type: string
         maxLength: 255
+        description: A description of the role as set by the user creating&#x2F;updating the role.
       rolePermissions:
         type: array
         items:
@@ -4320,19 +4443,21 @@ definitions:
           $ref: '#/definitions/UserRole'
   RolePermission:
     type: object
+    description: The collection of permissions included in a role.
     required:
       - id
     properties:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        description: A system-generated unique identifier for a RolePermission
       role:
         $ref: '#/definitions/Role'
       permission:
         $ref: '#/definitions/Permission'
   Permission:
     type: object
+    description: The set of permissions defined in the application. Each permission is given a name and triggers some behavior defined in the application. For example, a permission might allow users to see data or to have access to functionality restricted to users without that permission. Permissions are created as needed to the application and are added to the permissions table by data migrations executed at the time the software that uses the permission is deployed.
     required:
       - id
       - code
@@ -4342,18 +4467,22 @@ definitions:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        description: A system-generated unique identifier for a Permission
       code:
         type: string
         maxLength: 255
+        description: The name of the permission referenced in the software of the application.
       name:
         type: string
         maxLength: 255
+        description: The &#39;user friendly&#39; name of the permission exposed to the user selecting the permissions to be included in a Role.
       description:
         type: string
         maxLength: 255
+        description: A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role.
   GroupMembership:
     type: object
+    description: The users associated with a given group that has been defined in the application.
     required:
       - id
       - active
@@ -4361,15 +4490,17 @@ definitions:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        description: A system-generated unique identifier for a GroupMembership
       active:
         type: boolean
+        description: A flag indicating the User is active in the group. Set false to remove the user from the designated group.
       group:
         $ref: '#/definitions/Group'
       user:
         $ref: '#/definitions/User'
   Group:
     type: object
+    description: A named entity that is used to created a collection of users into a group. For example, the School Bus Inspectors are in the group Inspectors. Groups, like permissions are defined by the application and referenced in the code of the application.
     required:
       - id
       - name
@@ -4378,13 +4509,15 @@ definitions:
       id:
         format: int32
         type: integer
-        description: Primary Key
+        description: A system-generated unique identifier for a Group
       name:
         type: string
         maxLength: 255
+        description: The name of the group, as refenced in the code.
       description:
         type: string
         maxLength: 255
+        description: A description of the group that is presented to the user when they are setting a user into a group.
   SchoolBusOwnerViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -4538,6 +4671,12 @@ definitions:
       expiryDate:
         type: string
         format: date-time
+      userId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
       roleId:
         format: int32
         type: integer
