@@ -202,7 +202,7 @@ definitions:
       ICBCVehicleType:
         type: string
         maxLength: 255
-        description: Designates Commercial &#x2F; Private &#x2F; Other Categories
+        description: ICBC defined field - designates Commercial, Private, Other Categories
       ICBCRateClass:
         type: string
         maxLength: 255

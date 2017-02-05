@@ -1484,7 +1484,7 @@
             "table": null
         },
         {
-            "Description": "Designates Commercial / Private / Other Categories",
+            "Description": "ICBC defined field - designates Commercial, Private, Other Categories",
             "Length": "255",
             "Name": "ICBCVehicleType",
             "RefDef": null,
