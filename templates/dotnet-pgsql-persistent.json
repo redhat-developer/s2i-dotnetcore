@@ -191,10 +191,6 @@
                                     {
                                         "name": "Data__DefaultConnection__ConnectionString",
                                         "value": "Host=${DATABASE_SERVICE_NAME};Database=${DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD}"
-                                    },
-                                    {
-                                        "name": "DOTNET_STARTUP_PROJECT",
-                                        "value": "${DOTNET_STARTUP_PROJECT}"
                                     }
                                 ],
                                 "resources": {
