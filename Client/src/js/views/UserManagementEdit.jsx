@@ -16,7 +16,7 @@ var UserManagementEdit = React.createClass({
 
   getInitialState() {
     return {
-      loading: false,
+      loading: true,
     };
   },
 

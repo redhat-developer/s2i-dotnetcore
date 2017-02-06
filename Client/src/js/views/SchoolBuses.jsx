@@ -71,7 +71,7 @@ var SchoolBuses = React.createClass({
 
   getInitialState() {
     return {
-      loading: false,
+      loading: true,
 
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
@@ -318,7 +318,7 @@ var SchoolBuses = React.createClass({
         ]}>
           {
             _.map(schoolBuses, (bus) => {
-              return <tr key={ bus.id } className={ bus.status != 'Active' ? 'info' : null }>
+              return <tr key={ bus.id } className={ bus.isActive ? null : 'info' }>
                 <td><a href={ bus.ownerPath }>{ bus.ownerName }</a></td>
                 <td>{ bus.districtName }</td>
                 <td>{ bus.homeTerminalCityPostal }</td>

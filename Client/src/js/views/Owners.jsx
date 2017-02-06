@@ -47,7 +47,7 @@ var Owners = React.createClass({
 
   getInitialState() {
     return {
-      loading: false,
+      loading: true,
 
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
@@ -191,7 +191,7 @@ var Owners = React.createClass({
         ]}>
           {
             _.map(ownerList, (owner) => {
-              return <tr key={ owner.id } className={ owner.status != 'Active' ? 'info' : null }>
+              return <tr key={ owner.id } className={ owner.isActive ? null : 'info' }>
                 <td>{ owner.name }</td>
                 <td>{ owner.primaryContactName }</td>
                 <td style={{ textAlign: 'center' }}>{ owner.numberOfBuses }</td>
