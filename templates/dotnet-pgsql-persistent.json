@@ -85,7 +85,6 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "namespace": "${NAMESPACE}",
                             "name": "${DOTNET_IMAGE_STREAM_TAG}"
                         },
                         "env": [
@@ -266,7 +265,6 @@
                             ],
                             "from": {
                                 "kind": "ImageStreamTag",
-                                "namespace": "${NAMESPACE}",
                                 "name": "postgresql:9.5"
                             }
                         }
@@ -370,13 +368,6 @@
             "description": "The name assigned to all of the frontend objects defined in this template.",
             "required": true,
             "value": "dotnet-pgsql-persistent"
-        },
-        {
-            "name": "NAMESPACE",
-            "displayName": "Namespace",
-            "required": true,
-            "description": "The OpenShift Namespace where the ImageStream resides.",
-            "value": "openshift"
         },
         {
             "name": "MEMORY_LIMIT",
