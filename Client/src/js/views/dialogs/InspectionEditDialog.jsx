@@ -10,6 +10,7 @@ import Moment from 'moment';
 import Promise from 'bluebird';
 
 import * as Api from '../../api';
+import * as Constant from '../../constants';
 
 import DateControl from '../../components/DateControl.jsx';
 import DropdownControl from '../../components/DropdownControl.jsx';
@@ -28,12 +29,8 @@ The "inspector" defaults to the current user if the current user is an inspector
 
 */
 
-
 const RESULT_PASSED = 'Passed';
 const RESULT_FAILED = 'Failed';
-
-const TYPE_ANNUAL = 'Annual';
-const TYPE_REINSPECTION = 'Re-Inspection';
 
 var InspectionEditDialog = React.createClass({
   propTypes: {
@@ -53,7 +50,7 @@ var InspectionEditDialog = React.createClass({
 
       inspectorId: this.props.inspection.inspector ? this.props.inspection.inspector.id : 0,
       inspectionDate: this.props.inspection.inspectionDate || today(),
-      inspectionTypeCode: this.props.inspection.inspectionTypeCode || TYPE_ANNUAL,
+      inspectionTypeCode: this.props.inspection.inspectionTypeCode || Constant.INSPECTION_TYPE_ANNUAL,
       inspectionResultCode: this.props.inspection.inspectionResultCode || '',
       nextInspectionDate: isNew ? '' : (this.props.inspection.schoolBus ? this.props.inspection.schoolBus.nextInspectionDate : ''),
       nextInspectionTypeCode: isNew ? '' : (this.props.inspection.schoolBus ? this.props.inspection.schoolBus.nextInspectionTypeCode : ''),
@@ -87,10 +84,10 @@ var InspectionEditDialog = React.createClass({
       // Remove time elements from date
       inspectionDate.startOf('d');
       var nextDate = '';
-      if (this.state.nextInspectionTypeCode === TYPE_REINSPECTION) {
+      if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION) {
         // 30 days from date
         nextDate = businessDayOnOrBefore(inspectionDate.add(30, 'd'));
-      } else if (this.state.nextInspectionTypeCode === TYPE_ANNUAL) {
+      } else if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_ANNUAL) {
         // A year from date
         nextDate = businessDayOnOrBefore(inspectionDate.add(1, 'y'));
       }
@@ -111,9 +108,9 @@ var InspectionEditDialog = React.createClass({
     var typeCode = '';
 
     if (resultCode === RESULT_FAILED) {
-      typeCode = TYPE_REINSPECTION;
+      typeCode = Constant.INSPECTION_TYPE_REINSPECTION;
     } else if (resultCode === RESULT_PASSED) {
-      typeCode = TYPE_ANNUAL;
+      typeCode = Constant.INSPECTION_TYPE_ANNUAL;
     }
 
     this.updateState({
@@ -176,7 +173,7 @@ var InspectionEditDialog = React.createClass({
       // Remove time elements from dates so day/month/year math works.
       var inspectionDate = Moment(this.state.inspectionDate).startOf('d');
       var nextInspectionDate = Moment(this.state.nextInspectionDate).startOf('d');
-      if (this.state.nextInspectionTypeCode === TYPE_REINSPECTION) {
+      if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION) {
         var diff = nextInspectionDate.diff(inspectionDate, 'd');
         if (diff <= 0) {
           // Cannot be before or on the date of the inspection.
@@ -187,7 +184,7 @@ var InspectionEditDialog = React.createClass({
           this.setState({ nextInspectionDateError: 'Re-inspection must be within 30 days of inspection' });
           valid = false;
         }
-      } else if (this.state.nextInspectionTypeCode === TYPE_ANNUAL) {
+      } else if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_ANNUAL) {
         if (nextInspectionDate.diff(inspectionDate, 'M') < 9) {
           // Cannot be less than 9 months from the date of the inspection,
           this.setState({ nextInspectionDateError: 'Annual inspection must be at least 9 months after inspection' });

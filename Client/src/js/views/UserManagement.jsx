@@ -49,7 +49,7 @@ var UserManagement = React.createClass({
 
   getInitialState() {
     return {
-      loading: false,
+      loading: true,
 
       search: {
         hideInactive: this.props.search.hideInactive !== false,

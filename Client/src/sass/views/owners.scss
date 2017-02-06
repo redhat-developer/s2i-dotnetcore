@@ -39,6 +39,10 @@
 #owners-detail {
   #owners-top {
     margin-bottom: 10px;
+
+    .btn {
+      margin-left: 5px;
+    }
   }
 
   .well {
@@ -51,14 +55,8 @@
     margin-right: 5px;
   }
 
-  .checkbox {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    height: 16px;
-  }
-
   .btn {
-    margin-left: 5px;
+    margin-left: 20px;
   }
 
   h1 {

@@ -13,6 +13,7 @@ import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
+import * as Constant from '../constants';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
@@ -28,8 +29,6 @@ import { formatDateTime } from '../utils/date';
 import { concat, plural } from '../utils/string';
 
 
-const DAYS_DUE_WARNING = 30;
-
 var SchoolBusesDetail = React.createClass({
   propTypes: {
     schoolBus: React.PropTypes.object,
@@ -41,9 +40,9 @@ var SchoolBusesDetail = React.createClass({
 
   getInitialState() {
     return {
-      loadingSchoolBus: false,
-      loadingSchoolBusCCW: false,
-      loadingSchoolBusInspections: false,
+      loadingSchoolBus: true,
+      loadingSchoolBusCCW: true,
+      loadingSchoolBusInspections: true,
 
       showEditDialog: false,
       showInspectionDialog: false,
@@ -101,7 +100,6 @@ var SchoolBusesDetail = React.createClass({
       if (callback) { callback(); }
     });
   },
-
 
   openEditDialog() {
     this.setState({ showEditDialog: true });
@@ -177,7 +175,7 @@ var SchoolBusesDetail = React.createClass({
       + daysToInspection + ' ' + plural(daysToInspection, 'day', 'days')
       + ' &ndash; ' + formatDateTime(bus.nextInspectionDate, 'YYYY-DD-MMM');
 
-    var inspectionStyle = bus.isOverdue ? 'danger' : (daysToInspection <= DAYS_DUE_WARNING ? 'warning' : 'success');
+    var inspectionStyle = bus.isOverdue ? 'danger' : (daysToInspection <= Constant.INSPECTION_DAYS_DUE_WARNING ? 'warning' : 'success');
 
     return <div id="school-buses-detail">
       <div>
@@ -206,7 +204,7 @@ var SchoolBusesDetail = React.createClass({
           return <div id="school-buses-header">
             <Row>
               <Col md={12}>
-                <h1>SB Owner: <small>{ bus.ownerName }</small></h1>
+                <h1>School Bus Owner: <small>{ bus.ownerName }</small></h1>
               </Col>
             </Row>
             <Row>
@@ -515,11 +513,11 @@ var SchoolBusesDetail = React.createClass({
           </Col>
         </Row>
       </div>
-      { this.state.showEditDialog ?
-        <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose= { this.closeEditDialog } /> : null
+      { this.state.showEditDialog &&
+        <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose= { this.closeEditDialog } />
       }
-      { this.state.showInspectionDialog ?
-        <InspectionEditDialog show={ this.state.showInspectionDialog } inspection={ this.state.inspection } onSave={ this.saveInspection } onClose= { this.closeInspectionDialog } /> : null
+      { this.state.showInspectionDialog &&
+        <InspectionEditDialog show={ this.state.showInspectionDialog } inspection={ this.state.inspection } onSave={ this.saveInspection } onClose= { this.closeInspectionDialog } />
       }
     </div>;
   },
