@@ -493,11 +493,15 @@ namespace SchoolBusAPI.Services.Impl
             var result = new List<SchoolBusOwnerViewModel>();
             foreach (SchoolBusOwner item in data)
             {
-                SchoolBusOwnerViewModel record = item.ToViewModel();
-                // populate the calculated fields.
-                record.nextInspectionDate = GetNextInspectionDate(item.Id); ;
-                record.numberOfBuses = GetNumberSchoolBuses(item.Id);
+                SchoolBusOwnerViewModel record = item.ToViewModel();                
                 result.Add(record);                
+            }
+            // second pass to get the calculated fields
+            foreach (SchoolBusOwnerViewModel item in result)
+            {                
+                // populate the calculated fields.
+                item.nextInspectionDate = GetNextInspectionDate(item.Id); ;
+                item.numberOfBuses = GetNumberSchoolBuses(item.Id);                
             }
             return new ObjectResult(result);
         }
