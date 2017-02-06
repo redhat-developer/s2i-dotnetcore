@@ -83,6 +83,9 @@ var OwnersDetail = React.createClass({
     });
   },
 
+  addSchoolBus() {
+  },
+
   openContactDialog(contact) {
     this.setState({
       contact: contact,
@@ -132,7 +135,9 @@ var OwnersDetail = React.createClass({
           return <div id="owners-header">
             <Row>
               <Col md={12}>
-                <h1>School Bus Owner: <small>{ owner.name }</small></h1>
+                <h1>School Bus Owner: <small>{ owner.name }</small>
+                  <Button title="edit" bsSize="small" onClick={ this.openEditDialog }><Glyphicon glyph="edit" /></Button>
+                </h1>
               </Col>
             </Row>
           </div>;
@@ -141,7 +146,7 @@ var OwnersDetail = React.createClass({
         <Row>
           <Col md={6}>
             <Well>
-              <h3>School Bus Data <span className="pull-right"><Button title="edit" bsSize="small" onClick={ this.openEditDialog }><Glyphicon glyph="edit" /></Button></span></h3>
+              <h3>School Bus Data <span className="pull-right"><Button title="add" bsSize="small" onClick={ this.addSchoolBus }><Glyphicon glyph="plus" /> Add School Bus</Button></span></h3>
               {(() => {
                 if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
