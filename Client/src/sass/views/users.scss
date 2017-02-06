@@ -1,5 +1,5 @@
-#owners-list {
-  #owners-search {
+#users-list {
+  #users-search {
     margin-top: -10px;
 
     > div {
@@ -12,13 +12,13 @@
       float: left;
     }
 
-    > button {
+    #search-button {
       margin-top: 10px;
       margin-left: 20px;
     }
   }
 
-  #owners-buttons {
+  #users-buttons {
     float: right;
 
     .btn {
@@ -26,18 +26,18 @@
     }
   }
 
-  #owners-faves {
+  #users-faves {
     float: right;
     margin-top: 10px;
   }
 
-  #owners-faves-dropdown {
+  #users-faves-dropdown {
     width: 79px;
   }
 }
 
-#owners-detail {
-  #owners-top {
+#users-detail {
+  #users-top {
     margin-bottom: 10px;
   }
 
@@ -72,7 +72,7 @@
   }
 }
 
-#owners-edit {
+#users-edit {
   [class*='col-'] {
     padding-left: 7px;
     padding-right: 7px;

@@ -1,17 +1,15 @@
+import * as Action from '../actionTypes';
+
 const DEFAULT_VERSION = {
-  applicationVersions: [{
-
-  }],
-  databaseVersions: [{
-
-  }],
+  applicationVersions: [{ }],
+  databaseVersions: [{ }],
 };
 
 export default function versionReducer(state = DEFAULT_VERSION, action) {
   var newState = {};
 
   switch(action.type) {
-    case 'UPDATE_VERSION':
+    case Action.UPDATE_VERSION:
       return { ...state, ...action.version };
   }
 

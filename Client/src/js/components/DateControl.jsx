@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormControl, ControlLabel, InputGroup, Button, Glyphicon } from 'react-bootstrap';
+import { FormControl, ControlLabel, InputGroup, Button, Glyphicon } from 'react-bootstrap';
 
 import Moment from 'moment';
 import DatePicker from 'react-datepicker';
@@ -12,12 +12,13 @@ class InputControl extends FormControl {
 
 var DateControl = React.createClass({
   propTypes: {
+    id: React.PropTypes.string.isRequired,
     date: React.PropTypes.string,
     format: React.PropTypes.string,
     className: React.PropTypes.string,
     label: React.PropTypes.string,
-    onChange: React.PropTypes.func.isRequired,
-    id: React.PropTypes.string,
+    onChange: React.PropTypes.func,
+    updateState: React.PropTypes.func,
     placeholder: React.PropTypes.string,
     title: React.PropTypes.string,
   },
@@ -28,7 +29,18 @@ var DateControl = React.createClass({
 
   dateChanged(moment) {
     var dateString = moment ? moment.format(this.props.format || 'YYYY-MM-DD') : '';
-    this.props.onChange(dateString);
+
+    // On change listener
+    if (this.props.onChange) {
+      this.props.onChange(dateString, this.props.id);
+    }
+
+    // Update state
+    if (this.props.updateState) {
+      this.props.updateState({
+        [this.props.id]: dateString,
+      });
+    }
   },
 
   render() {
@@ -37,8 +49,9 @@ var DateControl = React.createClass({
 
     var format = this.props.format || 'YYYY-MM-DD';
 
-    return <Form inline className={ `date-control ${this.props.className || ''}` } id={ this.props.id }>
+    return <div className={ `date-control ${this.props.className || ''}` } id={ this.props.id }>
       {(() => {
+        // Inline label
         if (this.props.label) { return <ControlLabel>{ this.props.label }</ControlLabel>; }
       })()}
       <InputGroup>
@@ -55,7 +68,7 @@ var DateControl = React.createClass({
           <Button onClick={ this.clicked }><Glyphicon glyph="calendar" title={ this.props.title }/></Button>
         </InputGroup.Button>
       </InputGroup>
-    </Form>;
+    </div>;
   },
 });
 

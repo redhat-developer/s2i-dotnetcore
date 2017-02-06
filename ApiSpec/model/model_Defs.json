@@ -1,13 +1,25 @@
 {
     "list": [
         {
-            "Description": "The School Bus entity, including only information that is of specific interest to the School Bus inspector and not tracked in other systems such as ICBC or NSC",
+            "Description": "The School Bus vehicle information supplementary to the vehicle information in ICBC",
             "Length": null,
             "Name": "SchoolBus",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -23,16 +35,28 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a SchoolBus",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -45,16 +69,28 @@
             "table": null
         },
         {
-            "Description": "The ICBC Registration number for the School Bus",
-            "Length": "255",
+            "Description": "The registration number of the vehicle as entered by the user and confirmed by the CCW Web Services",
+            "Length": "40",
             "Name": "ICBCRegistrationNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
-            "Unique": true,
+            "Unique": null,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -67,16 +103,28 @@
             "table": null
         },
         {
-            "Description": "The ICBC Plate Number for the School Bus",
-            "Length": "255",
+            "Description": "The License Plate Number for the vehicle",
+            "Length": "15",
             "Name": "licencePlateNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
-            "Unique": true,
+            "Unique": null,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -89,13 +137,25 @@
             "table": null
         },
         {
-            "Description": "The VIN for the School Bus",
+            "Description": " A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number.",
             "Length": "17",
             "Name": "VehicleIdentificationNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": true,
@@ -118,6 +178,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -133,16 +205,28 @@
             "table": null
         },
         {
-            "Description": "The (generated) permit number for the School Bus. This will be added by the Inspector before the School Bus Permit can be printed and the bus can go into service.",
-            "Length": "255",
+            "Description": "The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit",
+            "Length": "20",
             "Name": "permitNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -155,13 +239,25 @@
             "table": null
         },
         {
-            "Description": "Enumerated type of Status - Inactive,  Active,  Archived",
-            "Length": "255",
+            "Description": "Status of the school bus record - current values are Inactive, Active, Archived",
+            "Length": "20",
             "Name": "status",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -177,13 +273,25 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "True if the School Bus is registered within BC, else False",
             "Length": null,
             "Name": "isOutOfProvince",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -206,6 +314,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -221,13 +341,25 @@
             "table": null
         },
         {
-            "Description": "Address 1 of physical location of the School Bus.",
-            "Length": "255",
+            "Description": "Address Line 1 of physical location of the School Bus.",
+            "Length": "80",
             "Name": "homeTerminalAddress1",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -243,13 +375,25 @@
             "table": null
         },
         {
-            "Description": "Address 2 of physical location of the School Bus.",
-            "Length": "255",
+            "Description": "Address Line 2 of physical location of the School Bus.",
+            "Length": "80",
             "Name": "homeTerminalAddress2",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -272,6 +416,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -288,12 +444,24 @@
         },
         {
             "Description": "Province of physical location of the School Bus - free form.",
-            "Length": "255",
+            "Length": "40",
             "Name": "homeTerminalProvince",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -310,12 +478,24 @@
         },
         {
             "Description": "Postal Code of physical location of the School Bus.",
-            "Length": "255",
+            "Length": "15",
             "Name": "homeTerminalPostalCode",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -331,13 +511,25 @@
             "table": null
         },
         {
-            "Description": "A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection",
+            "Description": "A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection.",
             "Length": "2048",
             "Name": "homeTerminalComment",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -353,13 +545,25 @@
             "table": null
         },
         {
-            "Description": "Text of any restrictions to be printed on the school bus permit.",
+            "Description": "Text of any restrictions to be printed on the school bus permit. Standard comments are associated with the Permit Class but the inspector can enter free form text.",
             "Length": "2048",
             "Name": "restrictionsText",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -375,13 +579,25 @@
             "table": null
         },
         {
-            "Description": "The next inspection date for this School Bus. Set at the time an inspection is set.",
+            "Description": "The next inspection date for this School Bus which is set when inspection results are saved",
             "Length": null,
             "Name": "nextInspectionDate",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -397,13 +613,25 @@
             "table": null
         },
         {
-            "Description": "An enumerated type (by the UI) to indicate the type of the next inspection - Annual or Re-inspection based on the Pass/Fail status of the most recent inspection.",
-            "Length": "255",
+            "Description": " Annual or Re-inspection based on the Pass/Fail status of the most recent inspection - An enumerated type (by the UI) to indicate the type of the next inspection",
+            "Length": "30",
             "Name": "nextInspectionTypeCode",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -426,6 +654,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -448,6 +688,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -464,12 +716,24 @@
         },
         {
             "Description": "The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false.",
-            "Length": "255",
+            "Length": "120",
             "Name": "independentSchoolName",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -485,13 +749,25 @@
             "table": null
         },
         {
-            "Description": "The enumerated class of School Bus.",
-            "Length": "255",
+            "Description": "The enumerated class of School Bus from drop down",
+            "Length": "50",
             "Name": "permitClassCode",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -507,13 +783,25 @@
             "table": null
         },
         {
-            "Description": "The enumerated body type of the School Bus.",
-            "Length": "255",
+            "Description": "The enumerated body type of the School Bus from drop down",
+            "Length": "50",
             "Name": "bodyTypeCode",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -530,12 +818,24 @@
         },
         {
             "Description": "The unit number of the Bus as defined by the School Bus owner - freeform text.",
-            "Length": "255",
+            "Length": "30",
             "Name": "unitNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -551,13 +851,25 @@
             "table": null
         },
         {
-            "Description": "The maximum number of passengers in the bus based on the specific use of the bus. For example,  the same 2-per seat / 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.",
+            "Description": "The maximum number of passengers in the bus based on the specific use of the bus including the driver. For example,  the same 2-per seat / 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat.",
             "Length": null,
             "Name": "schoolBusSeatingCapacity",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -580,6 +892,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -602,6 +926,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -624,6 +960,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -646,6 +994,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -668,6 +1028,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
                 }
             ],
             "Unique": null,
@@ -683,13 +1055,22 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Demographic information about companies, organizations, school districts, or individuals who own or lease school buses",
             "Length": null,
             "Name": "SchoolBusOwner",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
             "Unique": null,
@@ -705,16 +1086,25 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a SchoolBusOwner",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -728,15 +1118,24 @@
         },
         {
             "Description": "The name of the School Bus owner as defined by the user/Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors.",
-            "Length": "255",
+            "Length": "150",
             "Name": "name",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -749,13 +1148,22 @@
             "table": null
         },
         {
-            "Description": "Status of the School Bus owner - enumerated value Active,  Archived",
-            "Length": "255",
+            "Description": "Status of the School Bus owner - enumerated value Active,  Inactive or Archived from drop down",
+            "Length": "30",
             "Name": "status",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
             "Unique": null,
@@ -771,13 +1179,22 @@
             "table": null
         },
         {
-            "Description": "The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.",
+            "Description": "The original create date and time of the owner record. The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.",
             "Length": null,
             "Name": "dateCreated",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
             "Unique": null,
@@ -800,6 +1217,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
             "Unique": null,
@@ -822,6 +1248,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
             "Unique": null,
@@ -844,6 +1279,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
             "Unique": null,
@@ -866,6 +1310,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
             "Unique": null,
@@ -888,6 +1341,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
             "Unique": null,
@@ -910,6 +1372,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "dateCreated"
                 }
             ],
             "Unique": null,
@@ -925,7 +1396,7 @@
             "table": null
         },
         {
-            "Description": "Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls.",
+            "Description": "Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls. The true source of the field definitions are in those other systems.",
             "Length": null,
             "Name": "CCWData",
             "RefDef": null,
@@ -947,7 +1418,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for CCWData",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -956,7 +1427,7 @@
                     "req": "id"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -969,7 +1440,7 @@
             "table": null
         },
         {
-            "Description": "The Registration Number (Regi) is the link between the CCW information and a specific School Bus",
+            "Description": "The Registration Number (Regi) is the link between the CCW vehicle information and a specific School Bus",
             "Length": "255",
             "Name": "ICBCRegistrationNumber",
             "RefDef": null,
@@ -978,7 +1449,7 @@
                     "req": "id"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -1013,7 +1484,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "ICBC defined field - designates Commercial, Private, Other Categories",
             "Length": "255",
             "Name": "ICBCVehicleType",
             "RefDef": null,
@@ -1035,7 +1506,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Defines usage such as pleasure only, business, delivery, etc..",
             "Length": "255",
             "Name": "ICBCRateClass",
             "RefDef": null,
@@ -1057,7 +1528,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Six monthly commercial vehicle inspection decal number",
             "Length": "255",
             "Name": "ICBCCVIPDecal",
             "RefDef": null,
@@ -1079,7 +1550,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The owner-defined number of the bus within their bus fleet.",
             "Length": null,
             "Name": "ICBCFleetUnitNo",
             "RefDef": null,
@@ -1101,7 +1572,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Vehicle gross weight in kgs",
             "Length": null,
             "Name": "ICBCGrossVehicleWeight",
             "RefDef": null,
@@ -1123,7 +1594,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Vehicle make",
             "Length": "255",
             "Name": "ICBCMake",
             "RefDef": null,
@@ -1145,7 +1616,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Vehicle body code",
             "Length": "255",
             "Name": "ICBCBody",
             "RefDef": null,
@@ -1167,7 +1638,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "ICBC coded field about whether or not the vehicle has been rebuilt and if so the nature of the rebuilding.",
             "Length": "255",
             "Name": "ICBCRebuiltStatus",
             "RefDef": null,
@@ -1189,7 +1660,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Expiry date of the last 6 month commercial vehicle inspection. ",
             "Length": null,
             "Name": "ICBCCVIPExpiry",
             "RefDef": null,
@@ -1211,7 +1682,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Vehicle net weight in kgs",
             "Length": null,
             "Name": "ICBCNetWt",
             "RefDef": null,
@@ -1233,7 +1704,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Vehicle model codes used by ICBC - for example: bus, scbus, dump, logtr",
             "Length": "255",
             "Name": "ICBCModel",
             "RefDef": null,
@@ -1255,7 +1726,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Fuel type gasoline, propane, diesel etc..",
             "Length": "255",
             "Name": "ICBCFuel",
             "RefDef": null,
@@ -1277,7 +1748,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Vehicle seating capacity including driver",
             "Length": null,
             "Name": "ICBCSeatingCapacity",
             "RefDef": null,
@@ -1299,7 +1770,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Vehicle color ex BLU, WHI, etc..",
             "Length": "255",
             "Name": "ICBCColour",
             "RefDef": null,
@@ -1321,7 +1792,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Notes and orders from ICBC about the vehicle.",
             "Length": "255",
             "Name": "ICBCNotesAndOrders",
             "RefDef": null,
@@ -1343,7 +1814,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "TO BE DETERMINED",
             "Length": null,
             "Name": "ICBCOrderedOn",
             "RefDef": null,
@@ -1365,7 +1836,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The name of the registered owner of the vehicle - per ICBC.",
             "Length": "255",
             "Name": "ICBCRegOwnerName",
             "RefDef": null,
@@ -1387,7 +1858,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Owners address line 1",
             "Length": "255",
             "Name": "ICBCRegOwnerAddr1",
             "RefDef": null,
@@ -1409,7 +1880,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Owners address line 2",
             "Length": "255",
             "Name": "ICBCRegOwnerAddr2",
             "RefDef": null,
@@ -1431,7 +1902,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Owners address city",
             "Length": "255",
             "Name": "ICBCRegOwnerCity",
             "RefDef": null,
@@ -1453,7 +1924,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Owners address Province ",
             "Length": "255",
             "Name": "ICBCRegOwnerProv",
             "RefDef": null,
@@ -1475,7 +1946,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Owners address Postal Code",
             "Length": "255",
             "Name": "ICBCRegOwnerPostalCode",
             "RefDef": null,
@@ -1497,7 +1968,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The status (as defined by ICBC) of the registered owner of the vehicle.",
             "Length": "255",
             "Name": "ICBCRegOwnerStatus",
             "RefDef": null,
@@ -1519,7 +1990,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Registered Owners Driver Licence number",
             "Length": "255",
             "Name": "ICBCRegOwnerRODL",
             "RefDef": null,
@@ -1541,7 +2012,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Previous Owners Driver Licence number",
             "Length": "255",
             "Name": "ICBCRegOwnerPool",
             "RefDef": null,
@@ -1563,7 +2034,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "National Safety Code Carrier Number on ICBC client system",
             "Length": "255",
             "Name": "NSCClientNum",
             "RefDef": null,
@@ -1585,7 +2056,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "National Safety Code Carrier Name on ICBC client system",
             "Length": "255",
             "Name": "NSCCarrierName",
             "RefDef": null,
@@ -1607,7 +2078,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Conditions imposed on the carrier (bus owner) within NSC",
             "Length": "255",
             "Name": "NSCCarrierConditions",
             "RefDef": null,
@@ -1629,7 +2100,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Carrier safety rating ex - satisfatory, SAT-unaudited etc..",
             "Length": "255",
             "Name": "NSCCarrierSafetyRating",
             "RefDef": null,
@@ -1651,7 +2122,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "From NSC: The number of the carrier (NSC Clients) necessary insurance required to operate the vehicle.",
             "Length": "255",
             "Name": "NSCPolicyNumber",
             "RefDef": null,
@@ -1673,7 +2144,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "From NSC: The effective data of the policy.",
             "Length": null,
             "Name": "NSCPolicyEffectiveDate",
             "RefDef": null,
@@ -1695,7 +2166,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "From NSC: The date the status of the policy was established.",
             "Length": null,
             "Name": "NSCPolicyStatusDate",
             "RefDef": null,
@@ -1717,7 +2188,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "From NSC: The data of expiration of the policy.",
             "Length": null,
             "Name": "NSCPolicyExpiryDate",
             "RefDef": null,
@@ -1739,7 +2210,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "From NSC: The latest status of the policy.",
             "Length": "255",
             "Name": "NSCPolicyStatus",
             "RefDef": null,
@@ -1761,7 +2232,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "From NSC: The plate decal as defined by NSC on the vehicle",
             "Length": "255",
             "Name": "NSCPlateDecal",
             "RefDef": null,
@@ -1783,13 +2254,25 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "School Bus inspection details supplementary to the RIP inspection",
             "Length": null,
             "Name": "Inspection",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
             "Unique": null,
@@ -1805,16 +2288,28 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key make this match the Inspection Details page",
+            "Description": "A system-generated unique identifier for an Inspection",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -1834,6 +2329,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
             "Unique": null,
@@ -1856,6 +2363,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
             "Unique": null,
@@ -1871,13 +2390,25 @@
             "table": null
         },
         {
-            "Description": "The date the inspection was conducted.",
+            "Description": "The date and time the inspection was conducted.",
             "Length": null,
             "Name": "inspectionDate",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
             "Unique": null,
@@ -1900,6 +2431,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
             "Unique": null,
@@ -1922,6 +2465,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
             "Unique": null,
@@ -1944,6 +2499,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
             "Unique": null,
@@ -1966,6 +2533,18 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
             "Unique": null,
@@ -1981,13 +2560,25 @@
             "table": null
         },
         {
-            "Description": "Record creation date",
+            "Description": "Record creation date and time",
             "Length": null,
             "Name": "createdDate",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "inspectionDate"
+                },
+                {
+                    "req": "inspectionTypeCode"
+                },
+                {
+                    "req": "inspectionResultCode"
+                },
+                {
+                    "req": "createdDate"
                 }
             ],
             "Unique": null,
@@ -2010,6 +2601,9 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "noteText"
                 }
             ],
             "Unique": null,
@@ -2025,16 +2619,19 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a Note",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "noteText"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2054,6 +2651,9 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "noteText"
                 }
             ],
             "Unique": null,
@@ -2076,6 +2676,9 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "noteText"
                 }
             ],
             "Unique": null,
@@ -2098,6 +2701,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "internalFileName"
+                },
+                {
+                    "req": "externalFileName"
                 }
             ],
             "Unique": null,
@@ -2113,16 +2722,22 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for an Attachment",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "internalFileName"
+                },
+                {
+                    "req": "externalFileName"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2142,9 +2757,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "internalFileName"
+                },
+                {
+                    "req": "externalFileName"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2164,9 +2785,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "internalFileName"
+                },
+                {
+                    "req": "externalFileName"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2186,6 +2813,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "internalFileName"
+                },
+                {
+                    "req": "externalFileName"
                 }
             ],
             "Unique": null,
@@ -2208,6 +2841,9 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "historyText"
                 }
             ],
             "Unique": null,
@@ -2223,16 +2859,19 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a History",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "historyText"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2252,6 +2891,9 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "historyText"
                 }
             ],
             "Unique": null,
@@ -2267,13 +2909,22 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A table of contacts related to various entities in the system. FK fields are used to link contacts to records in the system.",
             "Length": null,
             "Name": "Contact",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -2289,16 +2940,25 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a Contact",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "role"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2312,12 +2972,21 @@
         },
         {
             "Description": "The given name of the contact.",
-            "Length": "255",
+            "Length": "50",
             "Name": "givenName",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -2334,12 +3003,21 @@
         },
         {
             "Description": "The surname of the contact.",
-            "Length": "255",
+            "Length": "50",
             "Name": "surname",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -2355,13 +3033,22 @@
             "table": null
         },
         {
-            "Description": "The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.",
-            "Length": "255",
+            "Description": "The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list - for initial implementation, the field is freeform.",
+            "Length": "100",
             "Name": "role",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -2378,12 +3065,21 @@
         },
         {
             "Description": "A note about the contact maintained by the users.",
-            "Length": "2048",
+            "Length": "150",
             "Name": "notes",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -2406,6 +3102,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -2428,6 +3133,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -2443,13 +3157,19 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "SB Owner contact phone information",
             "Length": null,
             "Name": "ContactPhone",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "type"
+                },
+                {
+                    "req": "phoneNumber"
                 }
             ],
             "Unique": null,
@@ -2465,16 +3185,22 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a ContactPhone",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "type"
+                },
+                {
+                    "req": "phoneNumber"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2487,13 +3213,19 @@
             "table": null
         },
         {
-            "Description": "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.",
-            "Length": "255",
+            "Description": "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.  Ex. Home, Cell, Work etc..",
+            "Length": "100",
             "Name": "type",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "type"
+                },
+                {
+                    "req": "phoneNumber"
                 }
             ],
             "Unique": null,
@@ -2510,12 +3242,18 @@
         },
         {
             "Description": "The phone number of the contact. Entered as free form to support a range of formats.",
-            "Length": "255",
+            "Length": "20",
             "Name": "phoneNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "type"
+                },
+                {
+                    "req": "phoneNumber"
                 }
             ],
             "Unique": null,
@@ -2531,7 +3269,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "SB Owner contact address information",
             "Length": null,
             "Name": "ContactAddress",
             "RefDef": null,
@@ -2553,7 +3291,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a ContactAddress",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -2562,7 +3300,7 @@
                     "req": "id"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2575,8 +3313,8 @@
             "table": null
         },
         {
-            "Description": "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.",
-            "Length": "255",
+            "Description": "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list ex. Home, Office, etc..",
+            "Length": "100",
             "Name": "type",
             "RefDef": null,
             "Required": [
@@ -2598,7 +3336,7 @@
         },
         {
             "Description": "Address 1 line of the address.",
-            "Length": "255",
+            "Length": "80",
             "Name": "address1",
             "RefDef": null,
             "Required": [
@@ -2620,7 +3358,7 @@
         },
         {
             "Description": "Address 2 line of the address.",
-            "Length": "255",
+            "Length": "80",
             "Name": "address2",
             "RefDef": null,
             "Required": [
@@ -2642,7 +3380,7 @@
         },
         {
             "Description": "The City of the address.",
-            "Length": "255",
+            "Length": "100",
             "Name": "city",
             "RefDef": null,
             "Required": [
@@ -2664,7 +3402,7 @@
         },
         {
             "Description": "The Province of the address.",
-            "Length": "255",
+            "Length": "50",
             "Name": "province",
             "RefDef": null,
             "Required": [
@@ -2686,7 +3424,7 @@
         },
         {
             "Description": "The postal code of the address.",
-            "Length": "255",
+            "Length": "15",
             "Name": "postalCode",
             "RefDef": null,
             "Required": [
@@ -2729,7 +3467,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a UserFavourite",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -2738,7 +3476,7 @@
                     "req": "id"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2861,13 +3599,19 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The MOTI-defined Regions - must match the official MOTI List",
             "Length": null,
             "Name": "Region",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryRegionID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -2883,16 +3627,22 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a Region",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryRegionID"
+                },
+                {
+                    "req": "name"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2912,9 +3662,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryRegionID"
+                },
+                {
+                    "req": "name"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2934,6 +3690,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryRegionID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -2949,13 +3711,19 @@
             "table": null
         },
         {
-            "Description": "The effective date of the Region - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
+            "Description": "The effective date of the Region record - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
             "Length": null,
             "Name": "startDate",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryRegionID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -2971,13 +3739,19 @@
             "table": null
         },
         {
-            "Description": "The end date of the Region; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
+            "Description": "The end date of the Region record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
             "Length": null,
             "Name": "endDate",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryRegionID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -2993,13 +3767,19 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The MOTI-defined Districts - must match the official MOTI List",
             "Length": null,
             "Name": "District",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryDistrictID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3015,16 +3795,22 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a District",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryDistrictID"
+                },
+                {
+                    "req": "name"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -3044,6 +3830,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryDistrictID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3066,6 +3858,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryDistrictID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3088,6 +3886,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryDistrictID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3103,13 +3907,19 @@
             "table": null
         },
         {
-            "Description": "The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
+            "Description": "The effective date of the District record - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
             "Length": null,
             "Name": "startDate",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryDistrictID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3125,13 +3935,19 @@
             "table": null
         },
         {
-            "Description": "The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
+            "Description": "The end date of the District record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
             "Length": null,
             "Name": "endDate",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryDistrictID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3147,13 +3963,19 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The MOTI-defined Service Areas - must match the official MOTI List",
             "Length": null,
             "Name": "ServiceArea",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryServiceAreaID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3169,16 +3991,22 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a ServiceArea",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryServiceAreaID"
+                },
+                {
+                    "req": "name"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -3198,6 +4026,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryServiceAreaID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3220,6 +4054,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryServiceAreaID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3242,6 +4082,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryServiceAreaID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3257,13 +4103,19 @@
             "table": null
         },
         {
-            "Description": "The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
+            "Description": "The effective date of the Service Area record - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
             "Length": null,
             "Name": "startDate",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryServiceAreaID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3279,13 +4131,19 @@
             "table": null
         },
         {
-            "Description": "The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
+            "Description": "The end date of the Service Area record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
             "Length": null,
             "Name": "endDate",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "ministryServiceAreaID"
+                },
+                {
+                    "req": "name"
                 }
             ],
             "Unique": null,
@@ -3308,6 +4166,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "shortName"
                 }
             ],
             "Unique": null,
@@ -3323,16 +4187,22 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a SchoolDistrict",
             "Length": null,
             "Name": "id",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "shortName"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -3352,9 +4222,15 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "shortName"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -3374,6 +4250,12 @@
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "name"
+                },
+                {
+                    "req": "shortName"
                 }
             ],
             "Unique": null,
@@ -3411,7 +4293,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a City",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -3420,7 +4302,7 @@
                     "req": "id"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -3455,7 +4337,7 @@
             "table": null
         },
         {
-            "Description": "Province",
+            "Description": "The name of the province of the city",
             "Length": "255",
             "Name": "province",
             "RefDef": null,
@@ -3477,7 +4359,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Users associated with specific notifications, created at the time the notification record is created because of the user's business relationship to the bus - e.g. the user is the currently assigned inspector, or the user is the manager for the District in which the bus is located. The rules for linking a user to a notification for a specific bus could vary over time based on the needs of the business. At minimum, it is expected the current inspector assigned to a bus will be notified of every notification for that bus.",
             "Length": null,
             "Name": "Notification",
             "RefDef": null,
@@ -3499,7 +4381,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a Notification",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -3508,7 +4390,7 @@
                     "req": "id"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -3565,7 +4447,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "True if the user linked to the inspection has read the notification",
             "Length": null,
             "Name": "hasBeenViewed",
             "RefDef": null,
@@ -3587,7 +4469,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "TO BE REMOVED",
             "Length": null,
             "Name": "isWatchNotification",
             "RefDef": null,
@@ -3609,7 +4491,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "TO BE REMOVED",
             "Length": null,
             "Name": "isExpired",
             "RefDef": null,
@@ -3631,7 +4513,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "TO BE REMOVED",
             "Length": null,
             "Name": "isAllDay",
             "RefDef": null,
@@ -3653,7 +4535,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "TO BE REMOVED",
             "Length": "255",
             "Name": "priorityCode",
             "RefDef": null,
@@ -3697,7 +4579,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Notifications associated about changes (mostly from CCW data) to information related to a specific school bus - e.g. change of owner at ICBC, change in NSC client rating, etc.",
             "Length": null,
             "Name": "NotificationEvent",
             "RefDef": null,
@@ -3719,7 +4601,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a NotificationEvent",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -3728,7 +4610,7 @@
                     "req": "id"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -3741,7 +4623,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The date/time of the creation of the event that triggered the creation of the notification.",
             "Length": null,
             "Name": "eventTime",
             "RefDef": null,
@@ -3763,7 +4645,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A categorization of the event for which the notification was created. The categories will be defined over time in code based on the requirements of the business. An example might be \"ICBCOwnerNameChange\" for when a change in the CCWData ICBC Owner Name field is changed.",
             "Length": "255",
             "Name": "eventTypeCode",
             "RefDef": null,
@@ -3785,7 +4667,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A further categorization of the event for which the notification was created.",
             "Length": "255",
             "Name": "eventSubTypeCode",
             "RefDef": null,
@@ -3807,7 +4689,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.",
             "Length": "2048",
             "Name": "notes",
             "RefDef": null,
@@ -3829,7 +4711,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "TO BE REMOVED",
             "Length": null,
             "Name": "notificationGenerated",
             "RefDef": null,
@@ -3882,6 +4764,12 @@
                     "req": "id"
                 },
                 {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
                     "req": "active"
                 }
             ],
@@ -3898,7 +4786,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a User",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -3907,10 +4795,16 @@
                     "req": "id"
                 },
                 {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
                     "req": "active"
                 }
             ],
-            "Unique": null,
+            "Unique": true,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -3923,7 +4817,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Given name of the user.",
             "Length": "255",
             "Name": "givenName",
             "RefDef": null,
@@ -3932,6 +4826,12 @@
                     "req": "id"
                 },
                 {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
                     "req": "active"
                 }
             ],
@@ -3948,8 +4848,8 @@
             "table": null
         },
         {
-            "Description": null,
-            "Length": "255",
+            "Description": "Surname of the user.",
+            "Length": "50",
             "Name": "surname",
             "RefDef": null,
             "Required": [
@@ -3957,29 +4857,10 @@
                     "req": "id"
                 },
                 {
-                    "req": "active"
-                }
-            ],
-            "Unique": null,
-            "binary": null,
-            "boolean": null,
-            "datetime": null,
-            "float": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": "255",
-            "Name": "initials",
-            "RefDef": null,
-            "Required": [
+                    "req": "givenName"
+                },
                 {
-                    "req": "id"
+                    "req": "surname"
                 },
                 {
                     "req": "active"
@@ -3998,7 +4879,38 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "Initials of the user, to be presented where screen space is at a premium.",
+            "Length": "10",
+            "Name": "initials",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "active"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The email address of the user in the system.",
             "Length": "255",
             "Name": "email",
             "RefDef": null,
@@ -4007,6 +4919,12 @@
                     "req": "id"
                 },
                 {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
                     "req": "active"
                 }
             ],
@@ -4023,13 +4941,19 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A flag indicating the User is active in the system. Set false to remove access to the system for the user.",
             "Length": null,
             "Name": "active",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
                 },
                 {
                     "req": "active"
@@ -4057,29 +4981,10 @@
                     "req": "id"
                 },
                 {
-                    "req": "active"
-                }
-            ],
-            "Unique": null,
-            "binary": null,
-            "boolean": null,
-            "datetime": null,
-            "float": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": "string",
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": "255",
-            "Name": "guid",
-            "RefDef": null,
-            "Required": [
+                    "req": "givenName"
+                },
                 {
-                    "req": "id"
+                    "req": "surname"
                 },
                 {
                     "req": "active"
@@ -4098,13 +5003,50 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The GUID unique to the user as provided by the authentication system. In this case, authentication is done by Siteminder and the GUID uniquely identifies the user within the user directories managed by Siteminder - e.g. IDIR and BCeID. The GUID is equivalent to the IDIR Id, but is guaranteed unique to a person, while the IDIR ID is not - IDIR IDs can be recycled.",
+            "Length": "255",
+            "Name": "guid",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "active"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The user directory service used by Siteminder to authenticate the user - usually IDIR or BCeID.",
             "Length": "255",
             "Name": "smAuthorizationDirectory",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
                 },
                 {
                     "req": "active"
@@ -4132,6 +5074,12 @@
                     "req": "id"
                 },
                 {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
                     "req": "active"
                 }
             ],
@@ -4157,6 +5105,12 @@
                     "req": "id"
                 },
                 {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
                     "req": "active"
                 }
             ],
@@ -4173,7 +5127,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A join table that provides allows each user to have any number of Roles in the system.  At login time the user is given the sum of the permissions of the roles assigned to that user. ",
             "Length": null,
             "Name": "UserRole",
             "RefDef": null,
@@ -4198,7 +5152,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a UserRole",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -4223,7 +5177,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The date on which the user was given the related role.",
             "Length": null,
             "Name": "effectiveDate",
             "RefDef": null,
@@ -4248,7 +5202,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The date on which a role previously assigned to a user was removed from that user.",
             "Length": null,
             "Name": "expiryDate",
             "RefDef": null,
@@ -4298,7 +5252,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A table managed in the application by authorized users to create named Roles that can be assigned to Users as needed. Roles can be created as needed to support the users of the system and the roles they perform within the organization.",
             "Length": null,
             "Name": "Role",
             "RefDef": null,
@@ -4326,7 +5280,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a Role",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -4354,7 +5308,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The name of the Role, as established by the user creating the role.",
             "Length": "255",
             "Name": "name",
             "RefDef": null,
@@ -4382,7 +5336,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A description of the role as set by the user creating/updating the role.",
             "Length": "255",
             "Name": "description",
             "RefDef": null,
@@ -4466,7 +5420,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The collection of permissions included in a role.",
             "Length": null,
             "Name": "RolePermission",
             "RefDef": null,
@@ -4488,7 +5442,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a RolePermission",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -4554,7 +5508,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The set of permissions defined in the application. Each permission is given a name and triggers some behavior defined in the application. For example, a permission might allow users to see data or to have access to functionality restricted to users without that permission. Permissions are created as needed to the application and are added to the permissions table by data migrations executed at the time the software that uses the permission is deployed.",
             "Length": null,
             "Name": "Permission",
             "RefDef": null,
@@ -4585,7 +5539,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a Permission",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -4616,7 +5570,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The name of the permission referenced in the software of the application.",
             "Length": "255",
             "Name": "code",
             "RefDef": null,
@@ -4647,7 +5601,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The 'user friendly' name of the permission exposed to the user selecting the permissions to be included in a Role.",
             "Length": "255",
             "Name": "name",
             "RefDef": null,
@@ -4678,7 +5632,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role.",
             "Length": "255",
             "Name": "description",
             "RefDef": null,
@@ -4709,7 +5663,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The users associated with a given group that has been defined in the application.",
             "Length": null,
             "Name": "GroupMembership",
             "RefDef": null,
@@ -4734,7 +5688,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a GroupMembership",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -4759,7 +5713,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A flag indicating the User is active in the group. Set false to remove the user from the designated group.",
             "Length": null,
             "Name": "active",
             "RefDef": null,
@@ -4834,7 +5788,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A named entity that is used to created a collection of users into a group. For example, the School Bus Inspectors are in the group Inspectors. Groups, like permissions are defined by the application and referenced in the code of the application.",
             "Length": null,
             "Name": "Group",
             "RefDef": null,
@@ -4862,7 +5816,7 @@
             "table": "table"
         },
         {
-            "Description": "Primary Key",
+            "Description": "A system-generated unique identifier for a Group",
             "Length": null,
             "Name": "id",
             "RefDef": null,
@@ -4890,7 +5844,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "The name of the group, as refenced in the code.",
             "Length": "255",
             "Name": "name",
             "RefDef": null,
@@ -4918,7 +5872,7 @@
             "table": null
         },
         {
-            "Description": null,
+            "Description": "A description of the group that is presented to the user when they are setting a user into a group.",
             "Length": "255",
             "Name": "description",
             "RefDef": null,
