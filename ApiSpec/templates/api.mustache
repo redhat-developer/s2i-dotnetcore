@@ -180,28 +180,7 @@
               type: string
               format: url
           schema:
-            $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
-  /{{path}}/bulk:
-    post:
-      tags:
-        - {{tag}}
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
-      responses:
-        201:
-          description: {{tag}} created
+            $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"  
   /{{path}}/{id}:
     get:
       tags:

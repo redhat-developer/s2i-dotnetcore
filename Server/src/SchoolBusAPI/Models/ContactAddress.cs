@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// SB Owner contact address information
     /// </summary>
+        [MetaDataExtension (Description = "SB Owner contact address information")]
 
     public partial class ContactAddress : IEquatable<ContactAddress>
     {
@@ -39,8 +40,8 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactAddress" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Type">The type of the address. UI controlled as to whether it is free form or selected from an enumerated list..</param>
+        /// <param name="Id">A system-generated unique identifier for a ContactAddress (required).</param>
+        /// <param name="Type">The type of the address. UI controlled as to whether it is free form or selected from an enumerated list ex. Home, Office, etc...</param>
         /// <param name="Address1">Address 1 line of the address..</param>
         /// <param name="Address2">Address 2 line of the address..</param>
         /// <param name="City">The City of the address..</param>
@@ -58,18 +59,18 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a ContactAddress
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a ContactAddress</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a ContactAddress")]
         public int Id { get; set; }
         
         /// <summary>
-        /// The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.
+        /// The type of the address. UI controlled as to whether it is free form or selected from an enumerated list ex. Home, Office, etc..
         /// </summary>
-        /// <value>The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.</value>
-        [MetaDataExtension (Description = "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list.")]
-        [MaxLength(255)]
+        /// <value>The type of the address. UI controlled as to whether it is free form or selected from an enumerated list ex. Home, Office, etc..</value>
+        [MetaDataExtension (Description = "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list ex. Home, Office, etc..")]
+        [MaxLength(100)]
         
         public string Type { get; set; }
         
@@ -78,7 +79,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Address 1 line of the address.</value>
         [MetaDataExtension (Description = "Address 1 line of the address.")]
-        [MaxLength(255)]
+        [MaxLength(80)]
         
         public string Address1 { get; set; }
         
@@ -87,7 +88,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>Address 2 line of the address.</value>
         [MetaDataExtension (Description = "Address 2 line of the address.")]
-        [MaxLength(255)]
+        [MaxLength(80)]
         
         public string Address2 { get; set; }
         
@@ -96,7 +97,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The City of the address.</value>
         [MetaDataExtension (Description = "The City of the address.")]
-        [MaxLength(255)]
+        [MaxLength(100)]
         
         public string City { get; set; }
         
@@ -105,7 +106,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The Province of the address.</value>
         [MetaDataExtension (Description = "The Province of the address.")]
-        [MaxLength(255)]
+        [MaxLength(50)]
         
         public string Province { get; set; }
         
@@ -114,7 +115,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The postal code of the address.</value>
         [MetaDataExtension (Description = "The postal code of the address.")]
-        [MaxLength(255)]
+        [MaxLength(15)]
         
         public string PostalCode { get; set; }
         

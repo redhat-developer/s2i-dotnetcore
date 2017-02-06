@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// SB Owner contact phone information
     /// </summary>
+        [MetaDataExtension (Description = "SB Owner contact phone information")]
 
     public partial class ContactPhone : IEquatable<ContactPhone>
     {
@@ -39,29 +40,31 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactPhone" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Type">The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list..</param>
-        /// <param name="PhoneNumber">The phone number of the contact. Entered as free form to support a range of formats..</param>
-        public ContactPhone(int Id, string Type = null, string PhoneNumber = null)
+        /// <param name="Id">A system-generated unique identifier for a ContactPhone (required).</param>
+        /// <param name="Type">The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.  Ex. Home, Cell, Work etc.. (required).</param>
+        /// <param name="PhoneNumber">The phone number of the contact. Entered as free form to support a range of formats. (required).</param>
+        public ContactPhone(int Id, string Type, string PhoneNumber)
         {   
             this.Id = Id;
             this.Type = Type;
             this.PhoneNumber = PhoneNumber;
+
+
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a ContactPhone
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a ContactPhone</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a ContactPhone")]
         public int Id { get; set; }
         
         /// <summary>
-        /// The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.
+        /// The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.  Ex. Home, Cell, Work etc..
         /// </summary>
-        /// <value>The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.</value>
-        [MetaDataExtension (Description = "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.")]
-        [MaxLength(255)]
+        /// <value>The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.  Ex. Home, Cell, Work etc..</value>
+        [MetaDataExtension (Description = "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.  Ex. Home, Cell, Work etc..")]
+        [MaxLength(100)]
         
         public string Type { get; set; }
         
@@ -70,7 +73,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The phone number of the contact. Entered as free form to support a range of formats.</value>
         [MetaDataExtension (Description = "The phone number of the contact. Entered as free form to support a range of formats.")]
-        [MaxLength(255)]
+        [MaxLength(20)]
         
         public string PhoneNumber { get; set; }
         

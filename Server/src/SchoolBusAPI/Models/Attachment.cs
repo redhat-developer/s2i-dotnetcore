@@ -40,23 +40,25 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Attachment" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="InternalFileName">The physical location of the attachment on the file system..</param>
-        /// <param name="ExternalFileName">The name of the attachment as defined by the user in uploading the document..</param>
+        /// <param name="Id">A system-generated unique identifier for an Attachment (required).</param>
+        /// <param name="InternalFileName">The physical location of the attachment on the file system. (required).</param>
+        /// <param name="ExternalFileName">The name of the attachment as defined by the user in uploading the document. (required).</param>
         /// <param name="Description">A note about the attachment,  optionally maintained by the user..</param>
-        public Attachment(int Id, string InternalFileName = null, string ExternalFileName = null, string Description = null)
+        public Attachment(int Id, string InternalFileName, string ExternalFileName, string Description = null)
         {   
             this.Id = Id;
             this.InternalFileName = InternalFileName;
             this.ExternalFileName = ExternalFileName;
+
+
             this.Description = Description;
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for an Attachment
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for an Attachment</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for an Attachment")]
         public int Id { get; set; }
         
         /// <summary>

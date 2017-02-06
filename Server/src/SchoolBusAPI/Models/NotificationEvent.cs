@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// Notifications associated about changes (mostly from CCW data) to information related to a specific school bus - e.g. change of owner at ICBC, change in NSC client rating, etc.
     /// </summary>
+        [MetaDataExtension (Description = "Notifications associated about changes (mostly from CCW data) to information related to a specific school bus - e.g. change of owner at ICBC, change in NSC client rating, etc.")]
 
     public partial class NotificationEvent : IEquatable<NotificationEvent>
     {
@@ -39,12 +40,12 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationEvent" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="EventTime">EventTime.</param>
-        /// <param name="EventTypeCode">EventTypeCode.</param>
-        /// <param name="EventSubTypeCode">EventSubTypeCode.</param>
-        /// <param name="Notes">Notes.</param>
-        /// <param name="NotificationGenerated">NotificationGenerated.</param>
+        /// <param name="Id">A system-generated unique identifier for a NotificationEvent (required).</param>
+        /// <param name="EventTime">The date&amp;#x2F;time of the creation of the event that triggered the creation of the notification..</param>
+        /// <param name="EventTypeCode">A categorization of the event for which the notification was created. The categories will be defined over time in code based on the requirements of the business. An example might be &amp;quot;ICBCOwnerNameChange&amp;quot; for when a change in the CCWData ICBC Owner Name field is changed..</param>
+        /// <param name="EventSubTypeCode">A further categorization of the event for which the notification was created..</param>
+        /// <param name="Notes">An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen..</param>
+        /// <param name="NotificationGenerated">TO BE REMOVED.</param>
         /// <param name="SchoolBus">SchoolBus.</param>
         public NotificationEvent(int Id, DateTime? EventTime = null, string EventTypeCode = null, string EventSubTypeCode = null, string Notes = null, bool? NotificationGenerated = null, SchoolBus SchoolBus = null)
         {   
@@ -58,41 +59,51 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a NotificationEvent
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a NotificationEvent</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a NotificationEvent")]
         public int Id { get; set; }
         
         /// <summary>
-        /// Gets or Sets EventTime
+        /// The date&#x2F;time of the creation of the event that triggered the creation of the notification.
         /// </summary>
+        /// <value>The date&#x2F;time of the creation of the event that triggered the creation of the notification.</value>
+        [MetaDataExtension (Description = "The date&#x2F;time of the creation of the event that triggered the creation of the notification.")]
         public DateTime? EventTime { get; set; }
         
         /// <summary>
-        /// Gets or Sets EventTypeCode
+        /// A categorization of the event for which the notification was created. The categories will be defined over time in code based on the requirements of the business. An example might be &quot;ICBCOwnerNameChange&quot; for when a change in the CCWData ICBC Owner Name field is changed.
         /// </summary>
+        /// <value>A categorization of the event for which the notification was created. The categories will be defined over time in code based on the requirements of the business. An example might be &quot;ICBCOwnerNameChange&quot; for when a change in the CCWData ICBC Owner Name field is changed.</value>
+        [MetaDataExtension (Description = "A categorization of the event for which the notification was created. The categories will be defined over time in code based on the requirements of the business. An example might be &quot;ICBCOwnerNameChange&quot; for when a change in the CCWData ICBC Owner Name field is changed.")]
         [MaxLength(255)]
         
         public string EventTypeCode { get; set; }
         
         /// <summary>
-        /// Gets or Sets EventSubTypeCode
+        /// A further categorization of the event for which the notification was created.
         /// </summary>
+        /// <value>A further categorization of the event for which the notification was created.</value>
+        [MetaDataExtension (Description = "A further categorization of the event for which the notification was created.")]
         [MaxLength(255)]
         
         public string EventSubTypeCode { get; set; }
         
         /// <summary>
-        /// Gets or Sets Notes
+        /// An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.
         /// </summary>
+        /// <value>An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.</value>
+        [MetaDataExtension (Description = "An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.")]
         [MaxLength(2048)]
         
         public string Notes { get; set; }
         
         /// <summary>
-        /// Gets or Sets NotificationGenerated
+        /// TO BE REMOVED
         /// </summary>
+        /// <value>TO BE REMOVED</value>
+        [MetaDataExtension (Description = "TO BE REMOVED")]
         public bool? NotificationGenerated { get; set; }
         
         /// <summary>

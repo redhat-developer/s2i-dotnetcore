@@ -40,21 +40,22 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Note" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="NoteText">The contents of the note..</param>
+        /// <param name="Id">A system-generated unique identifier for a Note (required).</param>
+        /// <param name="NoteText">The contents of the note. (required).</param>
         /// <param name="IsNoLongerRelevant">A user set flag that the note is no longer relevant. Allows the note to be retained for historical reasons,  but identified to other users as no longer applicable..</param>
-        public Note(int Id, string NoteText = null, bool? IsNoLongerRelevant = null)
+        public Note(int Id, string NoteText, bool? IsNoLongerRelevant = null)
         {   
             this.Id = Id;
             this.NoteText = NoteText;
+
             this.IsNoLongerRelevant = IsNoLongerRelevant;
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a Note
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a Note</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a Note")]
         public int Id { get; set; }
         
         /// <summary>

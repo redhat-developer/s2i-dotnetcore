@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// Users associated with specific notifications, created at the time the notification record is created because of the user&amp;#39;s business relationship to the bus - e.g. the user is the currently assigned inspector, or the user is the manager for the District in which the bus is located. The rules for linking a user to a notification for a specific bus could vary over time based on the needs of the business. At minimum, it is expected the current inspector assigned to a bus will be notified of every notification for that bus.
     /// </summary>
+        [MetaDataExtension (Description = "Users associated with specific notifications, created at the time the notification record is created because of the user&amp;#39;s business relationship to the bus - e.g. the user is the currently assigned inspector, or the user is the manager for the District in which the bus is located. The rules for linking a user to a notification for a specific bus could vary over time based on the needs of the business. At minimum, it is expected the current inspector assigned to a bus will be notified of every notification for that bus.")]
 
     public partial class Notification : IEquatable<Notification>
     {
@@ -39,14 +40,14 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Notification" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
+        /// <param name="Id">A system-generated unique identifier for a Notification (required).</param>
         /// <param name="Event">Event.</param>
         /// <param name="Event2">Event2.</param>
-        /// <param name="HasBeenViewed">HasBeenViewed.</param>
-        /// <param name="IsWatchNotification">IsWatchNotification.</param>
-        /// <param name="IsExpired">IsExpired.</param>
-        /// <param name="IsAllDay">IsAllDay.</param>
-        /// <param name="PriorityCode">PriorityCode.</param>
+        /// <param name="HasBeenViewed">True if the user linked to the inspection has read the notification.</param>
+        /// <param name="IsWatchNotification">TO BE REMOVED.</param>
+        /// <param name="IsExpired">TO BE REMOVED.</param>
+        /// <param name="IsAllDay">TO BE REMOVED.</param>
+        /// <param name="PriorityCode">TO BE REMOVED.</param>
         /// <param name="User">User.</param>
         public Notification(int Id, NotificationEvent Event = null, NotificationEvent Event2 = null, bool? HasBeenViewed = null, bool? IsWatchNotification = null, bool? IsExpired = null, bool? IsAllDay = null, string PriorityCode = null, User User = null)
         {   
@@ -62,10 +63,10 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a Notification
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a Notification</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a Notification")]
         public int Id { get; set; }
         
         /// <summary>
@@ -91,28 +92,38 @@ namespace SchoolBusAPI.Models
         public int? Event2RefId { get; set; }
         
         /// <summary>
-        /// Gets or Sets HasBeenViewed
+        /// True if the user linked to the inspection has read the notification
         /// </summary>
+        /// <value>True if the user linked to the inspection has read the notification</value>
+        [MetaDataExtension (Description = "True if the user linked to the inspection has read the notification")]
         public bool? HasBeenViewed { get; set; }
         
         /// <summary>
-        /// Gets or Sets IsWatchNotification
+        /// TO BE REMOVED
         /// </summary>
+        /// <value>TO BE REMOVED</value>
+        [MetaDataExtension (Description = "TO BE REMOVED")]
         public bool? IsWatchNotification { get; set; }
         
         /// <summary>
-        /// Gets or Sets IsExpired
+        /// TO BE REMOVED
         /// </summary>
+        /// <value>TO BE REMOVED</value>
+        [MetaDataExtension (Description = "TO BE REMOVED")]
         public bool? IsExpired { get; set; }
         
         /// <summary>
-        /// Gets or Sets IsAllDay
+        /// TO BE REMOVED
         /// </summary>
+        /// <value>TO BE REMOVED</value>
+        [MetaDataExtension (Description = "TO BE REMOVED")]
         public bool? IsAllDay { get; set; }
         
         /// <summary>
-        /// Gets or Sets PriorityCode
+        /// TO BE REMOVED
         /// </summary>
+        /// <value>TO BE REMOVED</value>
+        [MetaDataExtension (Description = "TO BE REMOVED")]
         [MaxLength(255)]
         
         public string PriorityCode { get; set; }

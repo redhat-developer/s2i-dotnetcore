@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// A named entity that is used to created a collection of users into a group. For example, the School Bus Inspectors are in the group Inspectors. Groups, like permissions are defined by the application and referenced in the code of the application.
     /// </summary>
+        [MetaDataExtension (Description = "A named entity that is used to created a collection of users into a group. For example, the School Bus Inspectors are in the group Inspectors. Groups, like permissions are defined by the application and referenced in the code of the application.")]
 
     public partial class Group : IEquatable<Group>
     {
@@ -39,9 +40,9 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Group" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">Name (required).</param>
-        /// <param name="Description">Description (required).</param>
+        /// <param name="Id">A system-generated unique identifier for a Group (required).</param>
+        /// <param name="Name">The name of the group, as refenced in the code. (required).</param>
+        /// <param name="Description">A description of the group that is presented to the user when they are setting a user into a group. (required).</param>
         public Group(int Id, string Name, string Description)
         {   
             this.Id = Id;
@@ -52,22 +53,26 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a Group
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a Group</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a Group")]
         public int Id { get; set; }
         
         /// <summary>
-        /// Gets or Sets Name
+        /// The name of the group, as refenced in the code.
         /// </summary>
+        /// <value>The name of the group, as refenced in the code.</value>
+        [MetaDataExtension (Description = "The name of the group, as refenced in the code.")]
         [MaxLength(255)]
         
         public string Name { get; set; }
         
         /// <summary>
-        /// Gets or Sets Description
+        /// A description of the group that is presented to the user when they are setting a user into a group.
         /// </summary>
+        /// <value>A description of the group that is presented to the user when they are setting a user into a group.</value>
+        [MetaDataExtension (Description = "A description of the group that is presented to the user when they are setting a user into a group.")]
         [MaxLength(255)]
         
         public string Description { get; set; }

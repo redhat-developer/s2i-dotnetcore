@@ -40,21 +40,23 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="SchoolDistrict" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">The full name of the School District.</param>
-        /// <param name="ShortName">A short name for the School District useful in some areas of the UI. Usually with format \\&amp;amp;quot;SD 61\\&amp;amp;quot;..</param>
-        public SchoolDistrict(int Id, string Name = null, string ShortName = null)
+        /// <param name="Id">A system-generated unique identifier for a SchoolDistrict (required).</param>
+        /// <param name="Name">The full name of the School District (required).</param>
+        /// <param name="ShortName">A short name for the School District useful in some areas of the UI. Usually with format \\&amp;amp;quot;SD 61\\&amp;amp;quot;. (required).</param>
+        public SchoolDistrict(int Id, string Name, string ShortName)
         {   
             this.Id = Id;
             this.Name = Name;
             this.ShortName = ShortName;
+
+
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a SchoolDistrict
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a SchoolDistrict</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a SchoolDistrict")]
         public int Id { get; set; }
         
         /// <summary>

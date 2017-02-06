@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// A table managed in the application by authorized users to create named Roles that can be assigned to Users as needed. Roles can be created as needed to support the users of the system and the roles they perform within the organization.
     /// </summary>
+        [MetaDataExtension (Description = "A table managed in the application by authorized users to create named Roles that can be assigned to Users as needed. Roles can be created as needed to support the users of the system and the roles they perform within the organization.")]
 
     public partial class Role : IEquatable<Role>
     {
@@ -39,9 +40,9 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Role" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">Name (required).</param>
-        /// <param name="Description">Description (required).</param>
+        /// <param name="Id">A system-generated unique identifier for a Role (required).</param>
+        /// <param name="Name">The name of the Role, as established by the user creating the role. (required).</param>
+        /// <param name="Description">A description of the role as set by the user creating&amp;#x2F;updating the role. (required).</param>
         /// <param name="RolePermissions">RolePermissions.</param>
         /// <param name="UserRoles">UserRoles.</param>
         public Role(int Id, string Name, string Description, List<RolePermission> RolePermissions = null, List<UserRole> UserRoles = null)
@@ -56,22 +57,26 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a Role
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a Role</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a Role")]
         public int Id { get; set; }
         
         /// <summary>
-        /// Gets or Sets Name
+        /// The name of the Role, as established by the user creating the role.
         /// </summary>
+        /// <value>The name of the Role, as established by the user creating the role.</value>
+        [MetaDataExtension (Description = "The name of the Role, as established by the user creating the role.")]
         [MaxLength(255)]
         
         public string Name { get; set; }
         
         /// <summary>
-        /// Gets or Sets Description
+        /// A description of the role as set by the user creating&#x2F;updating the role.
         /// </summary>
+        /// <value>A description of the role as set by the user creating&#x2F;updating the role.</value>
+        [MetaDataExtension (Description = "A description of the role as set by the user creating&#x2F;updating the role.")]
         [MaxLength(255)]
         
         public string Description { get; set; }

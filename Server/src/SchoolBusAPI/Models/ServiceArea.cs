@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// The MOTI-defined Service Areas - must match the official MOTI List
     /// </summary>
+        [MetaDataExtension (Description = "The MOTI-defined Service Areas - must match the official MOTI List")]
 
     public partial class ServiceArea : IEquatable<ServiceArea>
     {
@@ -39,27 +40,29 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceArea" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="MinistryServiceAreaID">The Ministry ID for the Service Area.</param>
-        /// <param name="Name">The name of the Service Area.</param>
+        /// <param name="Id">A system-generated unique identifier for a ServiceArea (required).</param>
+        /// <param name="MinistryServiceAreaID">The Ministry ID for the Service Area (required).</param>
+        /// <param name="Name">The name of the Service Area (required).</param>
         /// <param name="District">The district in which the Service Area is found..</param>
-        /// <param name="StartDate">The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
-        /// <param name="EndDate">The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
-        public ServiceArea(int Id, int? MinistryServiceAreaID = null, string Name = null, District District = null, DateTime? StartDate = null, DateTime? EndDate = null)
+        /// <param name="StartDate">The effective date of the Service Area record - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
+        /// <param name="EndDate">The end date of the Service Area record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
+        public ServiceArea(int Id, int MinistryServiceAreaID, string Name, District District = null, DateTime? StartDate = null, DateTime? EndDate = null)
         {   
             this.Id = Id;
             this.MinistryServiceAreaID = MinistryServiceAreaID;
             this.Name = Name;
+
+
             this.District = District;
             this.StartDate = StartDate;
             this.EndDate = EndDate;
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a ServiceArea
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a ServiceArea</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a ServiceArea")]
         public int Id { get; set; }
         
         /// <summary>
@@ -67,7 +70,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The Ministry ID for the Service Area</value>
         [MetaDataExtension (Description = "The Ministry ID for the Service Area")]
-        public int? MinistryServiceAreaID { get; set; }
+        public int MinistryServiceAreaID { get; set; }
         
         /// <summary>
         /// The name of the Service Area
@@ -92,17 +95,17 @@ namespace SchoolBusAPI.Models
         public int? DistrictRefId { get; set; }
         
         /// <summary>
-        /// The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        /// The effective date of the Service Area record - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
-        /// <value>The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
-        [MetaDataExtension (Description = "The effective date of the Service Area - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
+        /// <value>The effective date of the Service Area record - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
+        [MetaDataExtension (Description = "The effective date of the Service Area record - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? StartDate { get; set; }
         
         /// <summary>
-        /// The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        /// The end date of the Service Area record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
-        /// <value>The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
-        [MetaDataExtension (Description = "The end date of the Service Area; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
+        /// <value>The end date of the Service Area record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
+        [MetaDataExtension (Description = "The end date of the Service Area record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? EndDate { get; set; }
         
         /// <summary>
@@ -163,7 +166,6 @@ namespace SchoolBusAPI.Models
                 ) &&                 
                 (
                     this.MinistryServiceAreaID == other.MinistryServiceAreaID ||
-                    this.MinistryServiceAreaID != null &&
                     this.MinistryServiceAreaID.Equals(other.MinistryServiceAreaID)
                 ) &&                 
                 (
@@ -200,11 +202,8 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                if (this.MinistryServiceAreaID != null)
-                {
-                    hash = hash * 59 + this.MinistryServiceAreaID.GetHashCode();
-                }                
-                                if (this.Name != null)
+                hash = hash * 59 + this.Id.GetHashCode();                                   
+                hash = hash * 59 + this.MinistryServiceAreaID.GetHashCode();                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
                 }                

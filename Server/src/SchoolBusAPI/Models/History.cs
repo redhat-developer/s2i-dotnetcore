@@ -40,19 +40,20 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="History" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="HistoryText">The text of the history entry tracked against the related entity..</param>
-        public History(int Id, string HistoryText = null)
+        /// <param name="Id">A system-generated unique identifier for a History (required).</param>
+        /// <param name="HistoryText">The text of the history entry tracked against the related entity. (required).</param>
+        public History(int Id, string HistoryText)
         {   
             this.Id = Id;
             this.HistoryText = HistoryText;
+
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a History
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a History</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a History")]
         public int Id { get; set; }
         
         /// <summary>
