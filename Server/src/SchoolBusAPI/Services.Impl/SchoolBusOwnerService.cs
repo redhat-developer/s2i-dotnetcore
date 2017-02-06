@@ -428,7 +428,10 @@ namespace SchoolBusAPI.Services.Impl
                 {
                     if (district != null)
                     {
-                        var buses = _context.SchoolBuss.Where(x => x.District.Id == district);
+                        var buses = _context.SchoolBuss
+                            .Include(x => x.District)
+                            .Include(x => x.SchoolBusOwner)
+                            .Where(x => x.District.Id == district);
                         foreach (var bus in buses)
                         {
                             if (bus.SchoolBusOwner != null)
@@ -457,7 +460,10 @@ namespace SchoolBusAPI.Services.Impl
                 {
                     if (inspector != null)
                     {
-                        var buses = _context.SchoolBuss.Where(x => x.Inspector.Id == inspector);
+                        var buses = _context.SchoolBuss
+                            .Include(x => x.Inspector)
+                            .Include( x => x.SchoolBusOwner)
+                            .Where(x => x.Inspector.Id == inspector);
                         foreach (var bus in buses)
                         {
                             if (bus.SchoolBusOwner != null)
