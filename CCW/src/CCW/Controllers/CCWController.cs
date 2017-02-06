@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SchoolBus.WS.CCW.Facade.Service;
+using SchoolBus.WS.CCW.Reference;
 
 namespace CCW.Controllers
 {
@@ -35,8 +36,15 @@ namespace CCW.Controllers
         [Route("GetByRegi/{regi}")]
         public virtual IActionResult GetByRegi([FromRoute] string regi)
         {
-            var result = service.GetBCVehicleForRegistrationNumber(regi);
-            return new ObjectResult(result);
+            try
+            {
+                var result = service.GetBCVehicleForRegistrationNumber(regi);
+                return new ObjectResult(result);
+            }
+            catch (System.ServiceModel.FaultException<CVSECommonException> cVSECcommonException)
+            {
+                return new ObjectResult(cVSECcommonException);
+            }            
         }
 
         [HttpGet]
