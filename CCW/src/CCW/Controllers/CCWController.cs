@@ -29,8 +29,25 @@ namespace CCW.Controllers
 
         public virtual IActionResult GetBySerial([FromRoute]string serial)
         {
-            var result = service.GetBCVehicleForSerialNumber(serial);
-            return new ObjectResult(result);
+            var result = new ObjectResult("");
+            try
+            {
+                result = new ObjectResult(service.GetBCVehicleForSerialNumber(serial));
+            }
+            catch (AggregateException ae)
+            {
+                ae.Handle((x) =>
+                {
+                    if (x is FaultException<CVSECommonException>) // From the web service.
+                    {
+                        result = new ObjectResult(x);
+                        return true;
+                    }
+                    return true; // ignore other exceptions
+                });
+            }
+
+            return new ObjectResult(result);            
         }
 
         [HttpGet]
@@ -63,7 +80,25 @@ namespace CCW.Controllers
         [Route("GetByPlate/{plate}")]
         public virtual IActionResult GetByPlate([FromRoute] string plate)
         {
-            var result = service.GetBCVehicleForLicensePlateNumber(plate);
+            var result = new ObjectResult("");
+            try
+            {
+                result = new ObjectResult(service.GetBCVehicleForLicensePlateNumber(plate));
+            }
+            catch (AggregateException ae)
+            {
+                ae.Handle((x) =>
+                {
+                    if (x is FaultException<CVSECommonException>) // From the web service.
+                    {
+                        result = new ObjectResult(x);
+                        return true;
+                    }
+                    return true; // ignore other exceptions
+                });
+            }
+
+
             return new ObjectResult(result);
         }
     }
