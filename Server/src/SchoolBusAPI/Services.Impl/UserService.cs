@@ -631,15 +631,35 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdRolesGetAsync(int id)
         {
-            var user = _context.Users.First(x => x.Id == id);
+            
+            var user = _context.Users
+                .Include(x => x.UserRoles)
+                .First(x => x.Id == id);
             if (user == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
             }
-
-            var data = user.UserRoles;            
-            return new ObjectResult(data);
+            var result = new List<UserRoleViewModel>();
+            var data = user.UserRoles;   
+            foreach (var item in data)
+            {
+                if (item != null)
+                {
+                    int userRoleId = item.Id;
+                    bool exists = _context.UserRoles.Any(x => x.Id == userRoleId);
+                    if (exists)
+                    {
+                        UserRole userRole = _context.UserRoles
+                            .Include (x => x.Role)
+                            .First(x => x.Id == userRoleId);
+                        UserRoleViewModel record = userRole.ToViewModel();
+                        record.UserId = user.Id;
+                        result.Add(record);
+                    }                    
+                }
+            }
+            return new ObjectResult(result);
         }
 
         /// <summary>
@@ -660,6 +680,10 @@ namespace SchoolBusAPI.Services.Impl
                 if (role_exists)
                 {
                     User user = _context.Users.First(x => x.Id == id);
+                    if (user.UserRoles == null)
+                    {
+                        user.UserRoles = new List<UserRole>();
+                    }
                     // create a new UserRole based on the view model.
                     UserRole userRole = new UserRole();
                     Role role = _context.Roles.First(x => x.Id == item.RoleId);
@@ -699,8 +723,28 @@ namespace SchoolBusAPI.Services.Impl
             bool success = false;
             if (exists)
             {
-                User user = _context.Users.First(x => x.Id == id);
-                user.UserRoles.Clear();
+                User user = _context.Users
+                    .Include(x=>x.UserRoles)
+                    .First(x => x.Id == id);
+                if (user.UserRoles == null)
+                {
+                    user.UserRoles = new List<UserRole>();
+                }
+                else
+                {
+                    // existing data, clear it.
+                    foreach (var userRole in user.UserRoles)
+                    {
+                        if (_context.UserRoles.Any ( x => x.Id == userRole.Id))
+                        {
+                            UserRole delete = _context.UserRoles.First(x => x.Id == userRole.Id);
+                            _context.Remove(delete);
+                        }                        
+                    }
+                    user.UserRoles.Clear();
+                }
+                
+                
                 foreach (var item in items)
                 {
                     // check the role id
@@ -711,6 +755,7 @@ namespace SchoolBusAPI.Services.Impl
                         UserRole userRole = new UserRole();
                         Role role = _context.Roles.First(x => x.Id == item.RoleId);
                         userRole.Role = role;
+                        userRole.EffectiveDate = DateTime.Now.ToUniversalTime();
 
                         if (!user.UserRoles.Contains(userRole))
                         {
@@ -719,14 +764,18 @@ namespace SchoolBusAPI.Services.Impl
 
                         success = true;
                     }
-                }                
-            }
-
-            if (success)
-            {
-                _context.SaveChanges();
-                return new StatusCodeResult(201);
-            }
+                }
+                if (success)
+                {
+                    _context.Update(user);
+                    _context.SaveChanges();
+                    return new StatusCodeResult(201);
+                }
+                else
+                {
+                    return new StatusCodeResult(400);
+                }
+            }            
             else
             {
                 return new StatusCodeResult(400);
