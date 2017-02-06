@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// The MOTI-defined Districts - must match the official MOTI List
     /// </summary>
+        [MetaDataExtension (Description = "The MOTI-defined Districts - must match the official MOTI List")]
 
     public partial class District : IEquatable<District>
     {
@@ -39,27 +40,29 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="District" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="MinistryDistrictID">The Ministry ID for the District.</param>
-        /// <param name="Name">The name of the District.</param>
+        /// <param name="Id">A system-generated unique identifier for a District (required).</param>
+        /// <param name="MinistryDistrictID">The Ministry ID for the District (required).</param>
+        /// <param name="Name">The name of the District (required).</param>
         /// <param name="Region">The region in which the District is found..</param>
-        /// <param name="StartDate">The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
-        /// <param name="EndDate">The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
-        public District(int Id, int? MinistryDistrictID = null, string Name = null, Region Region = null, DateTime? StartDate = null, DateTime? EndDate = null)
+        /// <param name="StartDate">The effective date of the District record - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
+        /// <param name="EndDate">The end date of the District record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS.</param>
+        public District(int Id, int MinistryDistrictID, string Name, Region Region = null, DateTime? StartDate = null, DateTime? EndDate = null)
         {   
             this.Id = Id;
             this.MinistryDistrictID = MinistryDistrictID;
             this.Name = Name;
+
+
             this.Region = Region;
             this.StartDate = StartDate;
             this.EndDate = EndDate;
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a District
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a District</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a District")]
         public int Id { get; set; }
         
         /// <summary>
@@ -67,7 +70,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The Ministry ID for the District</value>
         [MetaDataExtension (Description = "The Ministry ID for the District")]
-        public int? MinistryDistrictID { get; set; }
+        public int MinistryDistrictID { get; set; }
         
         /// <summary>
         /// The name of the District
@@ -92,17 +95,17 @@ namespace SchoolBusAPI.Models
         public int? RegionRefId { get; set; }
         
         /// <summary>
-        /// The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        /// The effective date of the District record - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
-        /// <value>The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
-        [MetaDataExtension (Description = "The effective date of the District ID - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
+        /// <value>The effective date of the District record - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
+        [MetaDataExtension (Description = "The effective date of the District record - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? StartDate { get; set; }
         
         /// <summary>
-        /// The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+        /// The end date of the District record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
         /// </summary>
-        /// <value>The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
-        [MetaDataExtension (Description = "The end date of the District; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
+        /// <value>The end date of the District record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS</value>
+        [MetaDataExtension (Description = "The end date of the District record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS")]
         public DateTime? EndDate { get; set; }
         
         /// <summary>
@@ -163,7 +166,6 @@ namespace SchoolBusAPI.Models
                 ) &&                 
                 (
                     this.MinistryDistrictID == other.MinistryDistrictID ||
-                    this.MinistryDistrictID != null &&
                     this.MinistryDistrictID.Equals(other.MinistryDistrictID)
                 ) &&                 
                 (
@@ -200,11 +202,8 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                if (this.MinistryDistrictID != null)
-                {
-                    hash = hash * 59 + this.MinistryDistrictID.GetHashCode();
-                }                
-                                if (this.Name != null)
+                hash = hash * 59 + this.Id.GetHashCode();                                   
+                hash = hash * 59 + this.MinistryDistrictID.GetHashCode();                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
                 }                

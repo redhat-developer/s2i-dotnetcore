@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// The collection of permissions included in a role.
     /// </summary>
+        [MetaDataExtension (Description = "The collection of permissions included in a role.")]
 
     public partial class RolePermission : IEquatable<RolePermission>
     {
@@ -39,7 +40,7 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="RolePermission" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
+        /// <param name="Id">A system-generated unique identifier for a RolePermission (required).</param>
         /// <param name="Role">Role.</param>
         /// <param name="Permission">Permission.</param>
         public RolePermission(int Id, Role Role = null, Permission Permission = null)
@@ -50,10 +51,10 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a RolePermission
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a RolePermission</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a RolePermission")]
         public int Id { get; set; }
         
         /// <summary>

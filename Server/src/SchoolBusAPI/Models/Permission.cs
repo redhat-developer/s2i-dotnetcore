@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// The set of permissions defined in the application. Each permission is given a name and triggers some behavior defined in the application. For example, a permission might allow users to see data or to have access to functionality restricted to users without that permission. Permissions are created as needed to the application and are added to the permissions table by data migrations executed at the time the software that uses the permission is deployed.
     /// </summary>
+        [MetaDataExtension (Description = "The set of permissions defined in the application. Each permission is given a name and triggers some behavior defined in the application. For example, a permission might allow users to see data or to have access to functionality restricted to users without that permission. Permissions are created as needed to the application and are added to the permissions table by data migrations executed at the time the software that uses the permission is deployed.")]
 
     public partial class Permission : IEquatable<Permission>
     {
@@ -39,10 +40,10 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Permission" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Code">Code (required).</param>
-        /// <param name="Name">Name (required).</param>
-        /// <param name="Description">Description (required).</param>
+        /// <param name="Id">A system-generated unique identifier for a Permission (required).</param>
+        /// <param name="Code">The name of the permission referenced in the software of the application. (required).</param>
+        /// <param name="Name">The &amp;#39;user friendly&amp;#39; name of the permission exposed to the user selecting the permissions to be included in a Role. (required).</param>
+        /// <param name="Description">A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role. (required).</param>
         public Permission(int Id, string Code, string Name, string Description)
         {   
             this.Id = Id;
@@ -55,29 +56,35 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a Permission
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a Permission</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a Permission")]
         public int Id { get; set; }
         
         /// <summary>
-        /// Gets or Sets Code
+        /// The name of the permission referenced in the software of the application.
         /// </summary>
+        /// <value>The name of the permission referenced in the software of the application.</value>
+        [MetaDataExtension (Description = "The name of the permission referenced in the software of the application.")]
         [MaxLength(255)]
         
         public string Code { get; set; }
         
         /// <summary>
-        /// Gets or Sets Name
+        /// The &#39;user friendly&#39; name of the permission exposed to the user selecting the permissions to be included in a Role.
         /// </summary>
+        /// <value>The &#39;user friendly&#39; name of the permission exposed to the user selecting the permissions to be included in a Role.</value>
+        [MetaDataExtension (Description = "The &#39;user friendly&#39; name of the permission exposed to the user selecting the permissions to be included in a Role.")]
         [MaxLength(255)]
         
         public string Name { get; set; }
         
         /// <summary>
-        /// Gets or Sets Description
+        /// A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role.
         /// </summary>
+        /// <value>A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role.</value>
+        [MetaDataExtension (Description = "A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role.")]
         [MaxLength(255)]
         
         public string Description { get; set; }

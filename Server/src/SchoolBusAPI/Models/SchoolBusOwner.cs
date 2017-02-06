@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// Demographic information about companies, organizations, school districts, or individuals who own or lease school buses
     /// </summary>
+        [MetaDataExtension (Description = "Demographic information about companies, organizations, school districts, or individuals who own or lease school buses")]
 
     public partial class SchoolBusOwner : IEquatable<SchoolBusOwner>
     {
@@ -39,22 +40,25 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="SchoolBusOwner" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Name">The name of the School Bus owner as defined by the user&amp;#x2F;Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors..</param>
-        /// <param name="Status">Status of the School Bus owner - enumerated value Active,  Archived.</param>
-        /// <param name="DateCreated">The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition..</param>
+        /// <param name="Id">A system-generated unique identifier for a SchoolBusOwner (required).</param>
+        /// <param name="Name">The name of the School Bus owner as defined by the user&amp;#x2F;Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors. (required).</param>
+        /// <param name="Status">Status of the School Bus owner - enumerated value Active,  Inactive or Archived from drop down (required).</param>
+        /// <param name="DateCreated">The original create date and time of the owner record. The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition. (required).</param>
         /// <param name="PrimaryContact">Link to the designated Primary Contact for the Inspector to the School Bus Owner organization..</param>
         /// <param name="District">The District to which this School Bus is affliated..</param>
         /// <param name="Contacts">The set of contacts related to the School Bus Owner..</param>
         /// <param name="Notes">The set of notes about the school bus owner entered by users..</param>
         /// <param name="Attachments">The set of attachments about the school bus owner uploaded by the users..</param>
         /// <param name="History">The history of updates made to the School Bus Owner data..</param>
-        public SchoolBusOwner(int Id, string Name = null, string Status = null, DateTime? DateCreated = null, Contact PrimaryContact = null, District District = null, List<Contact> Contacts = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null)
+        public SchoolBusOwner(int Id, string Name, string Status, DateTime DateCreated, Contact PrimaryContact = null, District District = null, List<Contact> Contacts = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null)
         {   
             this.Id = Id;
             this.Name = Name;
             this.Status = Status;
             this.DateCreated = DateCreated;
+
+
+
             this.PrimaryContact = PrimaryContact;
             this.District = District;
             this.Contacts = Contacts;
@@ -64,10 +68,10 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a SchoolBusOwner
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a SchoolBusOwner</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a SchoolBusOwner")]
         public int Id { get; set; }
         
         /// <summary>
@@ -75,25 +79,25 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The name of the School Bus owner as defined by the user&#x2F;Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors.</value>
         [MetaDataExtension (Description = "The name of the School Bus owner as defined by the user&#x2F;Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors.")]
-        [MaxLength(255)]
+        [MaxLength(150)]
         
         public string Name { get; set; }
         
         /// <summary>
-        /// Status of the School Bus owner - enumerated value Active,  Archived
+        /// Status of the School Bus owner - enumerated value Active,  Inactive or Archived from drop down
         /// </summary>
-        /// <value>Status of the School Bus owner - enumerated value Active,  Archived</value>
-        [MetaDataExtension (Description = "Status of the School Bus owner - enumerated value Active,  Archived")]
-        [MaxLength(255)]
+        /// <value>Status of the School Bus owner - enumerated value Active,  Inactive or Archived from drop down</value>
+        [MetaDataExtension (Description = "Status of the School Bus owner - enumerated value Active,  Inactive or Archived from drop down")]
+        [MaxLength(30)]
         
         public string Status { get; set; }
         
         /// <summary>
-        /// The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.
+        /// The original create date and time of the owner record. The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.
         /// </summary>
-        /// <value>The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.</value>
-        [MetaDataExtension (Description = "The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.")]
-        public DateTime? DateCreated { get; set; }
+        /// <value>The original create date and time of the owner record. The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.</value>
+        [MetaDataExtension (Description = "The original create date and time of the owner record. The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition.")]
+        public DateTime DateCreated { get; set; }
         
         /// <summary>
         /// Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.
@@ -276,11 +280,11 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Status.GetHashCode();
                 }                
-                                if (this.DateCreated != null)
+                                   
+                if (this.DateCreated != null)
                 {
                     hash = hash * 59 + this.DateCreated.GetHashCode();
-                }                
-                                   
+                }                   
                 if (this.PrimaryContact != null)
                 {
                     hash = hash * 59 + this.PrimaryContact.GetHashCode();

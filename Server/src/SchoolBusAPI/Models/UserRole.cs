@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// A join table that provides allows each user to have any number of Roles in the system.  At login time the user is given the sum of the permissions of the roles assigned to that user.
     /// </summary>
+        [MetaDataExtension (Description = "A join table that provides allows each user to have any number of Roles in the system.  At login time the user is given the sum of the permissions of the roles assigned to that user.")]
 
     public partial class UserRole : IEquatable<UserRole>
     {
@@ -39,9 +40,9 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="UserRole" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="EffectiveDate">EffectiveDate (required).</param>
-        /// <param name="ExpiryDate">ExpiryDate.</param>
+        /// <param name="Id">A system-generated unique identifier for a UserRole (required).</param>
+        /// <param name="EffectiveDate">The date on which the user was given the related role. (required).</param>
+        /// <param name="ExpiryDate">The date on which a role previously assigned to a user was removed from that user..</param>
         /// <param name="Role">Role.</param>
         public UserRole(int Id, DateTime EffectiveDate, DateTime? ExpiryDate = null, Role Role = null)
         {   
@@ -53,20 +54,24 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a UserRole
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a UserRole</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a UserRole")]
         public int Id { get; set; }
         
         /// <summary>
-        /// Gets or Sets EffectiveDate
+        /// The date on which the user was given the related role.
         /// </summary>
+        /// <value>The date on which the user was given the related role.</value>
+        [MetaDataExtension (Description = "The date on which the user was given the related role.")]
         public DateTime EffectiveDate { get; set; }
         
         /// <summary>
-        /// Gets or Sets ExpiryDate
+        /// The date on which a role previously assigned to a user was removed from that user.
         /// </summary>
+        /// <value>The date on which a role previously assigned to a user was removed from that user.</value>
+        [MetaDataExtension (Description = "The date on which a role previously assigned to a user was removed from that user.")]
         public DateTime? ExpiryDate { get; set; }
         
         /// <summary>

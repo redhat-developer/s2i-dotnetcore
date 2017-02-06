@@ -40,24 +40,26 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Active">Active (required).</param>
-        /// <param name="GivenName">GivenName.</param>
-        /// <param name="Surname">Surname.</param>
-        /// <param name="Initials">Initials.</param>
-        /// <param name="Email">Email.</param>
+        /// <param name="Id">A system-generated unique identifier for a User (required).</param>
+        /// <param name="GivenName">Given name of the user. (required).</param>
+        /// <param name="Surname">Surname of the user. (required).</param>
+        /// <param name="Active">A flag indicating the User is active in the system. Set false to remove access to the system for the user. (required).</param>
+        /// <param name="Initials">Initials of the user, to be presented where screen space is at a premium..</param>
+        /// <param name="Email">The email address of the user in the system..</param>
         /// <param name="SmUserId">Security Manager User ID.</param>
-        /// <param name="Guid">Guid.</param>
-        /// <param name="SmAuthorizationDirectory">SmAuthorizationDirectory.</param>
+        /// <param name="Guid">The GUID unique to the user as provided by the authentication system. In this case, authentication is done by Siteminder and the GUID uniquely identifies the user within the user directories managed by Siteminder - e.g. IDIR and BCeID. The GUID is equivalent to the IDIR Id, but is guaranteed unique to a person, while the IDIR ID is not - IDIR IDs can be recycled..</param>
+        /// <param name="SmAuthorizationDirectory">The user directory service used by Siteminder to authenticate the user - usually IDIR or BCeID..</param>
         /// <param name="UserRoles">UserRoles.</param>
         /// <param name="GroupMemberships">GroupMemberships.</param>
-        public User(int Id, bool Active, string GivenName = null, string Surname = null, string Initials = null, string Email = null, string SmUserId = null, string Guid = null, string SmAuthorizationDirectory = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null)
+        public User(int Id, string GivenName, string Surname, bool Active, string Initials = null, string Email = null, string SmUserId = null, string Guid = null, string SmAuthorizationDirectory = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null)
         {   
             this.Id = Id;
-            this.Active = Active;
-
             this.GivenName = GivenName;
             this.Surname = Surname;
+            this.Active = Active;
+
+
+
             this.Initials = Initials;
             this.Email = Email;
             this.SmUserId = SmUserId;
@@ -68,41 +70,51 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a User
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a User</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a User")]
         public int Id { get; set; }
         
         /// <summary>
-        /// Gets or Sets Active
+        /// Given name of the user.
         /// </summary>
-        public bool Active { get; set; }
-        
-        /// <summary>
-        /// Gets or Sets GivenName
-        /// </summary>
+        /// <value>Given name of the user.</value>
+        [MetaDataExtension (Description = "Given name of the user.")]
         [MaxLength(255)]
         
         public string GivenName { get; set; }
         
         /// <summary>
-        /// Gets or Sets Surname
+        /// Surname of the user.
         /// </summary>
-        [MaxLength(255)]
+        /// <value>Surname of the user.</value>
+        [MetaDataExtension (Description = "Surname of the user.")]
+        [MaxLength(50)]
         
         public string Surname { get; set; }
         
         /// <summary>
-        /// Gets or Sets Initials
+        /// A flag indicating the User is active in the system. Set false to remove access to the system for the user.
         /// </summary>
-        [MaxLength(255)]
+        /// <value>A flag indicating the User is active in the system. Set false to remove access to the system for the user.</value>
+        [MetaDataExtension (Description = "A flag indicating the User is active in the system. Set false to remove access to the system for the user.")]
+        public bool Active { get; set; }
+        
+        /// <summary>
+        /// Initials of the user, to be presented where screen space is at a premium.
+        /// </summary>
+        /// <value>Initials of the user, to be presented where screen space is at a premium.</value>
+        [MetaDataExtension (Description = "Initials of the user, to be presented where screen space is at a premium.")]
+        [MaxLength(10)]
         
         public string Initials { get; set; }
         
         /// <summary>
-        /// Gets or Sets Email
+        /// The email address of the user in the system.
         /// </summary>
+        /// <value>The email address of the user in the system.</value>
+        [MetaDataExtension (Description = "The email address of the user in the system.")]
         [MaxLength(255)]
         
         public string Email { get; set; }
@@ -117,15 +129,19 @@ namespace SchoolBusAPI.Models
         public string SmUserId { get; set; }
         
         /// <summary>
-        /// Gets or Sets Guid
+        /// The GUID unique to the user as provided by the authentication system. In this case, authentication is done by Siteminder and the GUID uniquely identifies the user within the user directories managed by Siteminder - e.g. IDIR and BCeID. The GUID is equivalent to the IDIR Id, but is guaranteed unique to a person, while the IDIR ID is not - IDIR IDs can be recycled.
         /// </summary>
+        /// <value>The GUID unique to the user as provided by the authentication system. In this case, authentication is done by Siteminder and the GUID uniquely identifies the user within the user directories managed by Siteminder - e.g. IDIR and BCeID. The GUID is equivalent to the IDIR Id, but is guaranteed unique to a person, while the IDIR ID is not - IDIR IDs can be recycled.</value>
+        [MetaDataExtension (Description = "The GUID unique to the user as provided by the authentication system. In this case, authentication is done by Siteminder and the GUID uniquely identifies the user within the user directories managed by Siteminder - e.g. IDIR and BCeID. The GUID is equivalent to the IDIR Id, but is guaranteed unique to a person, while the IDIR ID is not - IDIR IDs can be recycled.")]
         [MaxLength(255)]
         
         public string Guid { get; set; }
         
         /// <summary>
-        /// Gets or Sets SmAuthorizationDirectory
+        /// The user directory service used by Siteminder to authenticate the user - usually IDIR or BCeID.
         /// </summary>
+        /// <value>The user directory service used by Siteminder to authenticate the user - usually IDIR or BCeID.</value>
+        [MetaDataExtension (Description = "The user directory service used by Siteminder to authenticate the user - usually IDIR or BCeID.")]
         [MaxLength(255)]
         
         public string SmAuthorizationDirectory { get; set; }
@@ -149,9 +165,9 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class User {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Active: ").Append(Active).Append("\n");
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
             sb.Append("  Surname: ").Append(Surname).Append("\n");
+            sb.Append("  Active: ").Append(Active).Append("\n");
             sb.Append("  Initials: ").Append(Initials).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
@@ -202,10 +218,6 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) &&                 
                 (
-                    this.Active == other.Active ||
-                    this.Active.Equals(other.Active)
-                ) &&                 
-                (
                     this.GivenName == other.GivenName ||
                     this.GivenName != null &&
                     this.GivenName.Equals(other.GivenName)
@@ -214,6 +226,10 @@ namespace SchoolBusAPI.Models
                     this.Surname == other.Surname ||
                     this.Surname != null &&
                     this.Surname.Equals(other.Surname)
+                ) &&                 
+                (
+                    this.Active == other.Active ||
+                    this.Active.Equals(other.Active)
                 ) &&                 
                 (
                     this.Initials == other.Initials ||
@@ -264,9 +280,7 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                   
-                hash = hash * 59 + this.Active.GetHashCode();
-                                if (this.GivenName != null)
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();
                 }                
@@ -274,6 +288,8 @@ namespace SchoolBusAPI.Models
                 {
                     hash = hash * 59 + this.Surname.GetHashCode();
                 }                
+                                   
+                hash = hash * 59 + this.Active.GetHashCode();
                                 if (this.Initials != null)
                 {
                     hash = hash * 59 + this.Initials.GetHashCode();

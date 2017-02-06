@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// A table of contacts related to various entities in the system. FK fields are used to link contacts to records in the system.
     /// </summary>
+        [MetaDataExtension (Description = "A table of contacts related to various entities in the system. FK fields are used to link contacts to records in the system.")]
 
     public partial class Contact : IEquatable<Contact>
     {
@@ -39,29 +40,32 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Contact" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="GivenName">The given name of the contact..</param>
-        /// <param name="Surname">The surname of the contact..</param>
-        /// <param name="Role">The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list..</param>
+        /// <param name="Id">A system-generated unique identifier for a Contact (required).</param>
+        /// <param name="GivenName">The given name of the contact. (required).</param>
+        /// <param name="Surname">The surname of the contact. (required).</param>
+        /// <param name="Role">The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list - for initial implementation, the field is freeform. (required).</param>
         /// <param name="Notes">A note about the contact maintained by the users..</param>
         /// <param name="ContactPhones">ContactPhones.</param>
         /// <param name="ContactAddresses">ContactAddresses.</param>
-        public Contact(int Id, string GivenName = null, string Surname = null, string Role = null, string Notes = null, List<ContactPhone> ContactPhones = null, List<ContactAddress> ContactAddresses = null)
+        public Contact(int Id, string GivenName, string Surname, string Role, string Notes = null, List<ContactPhone> ContactPhones = null, List<ContactAddress> ContactAddresses = null)
         {   
             this.Id = Id;
             this.GivenName = GivenName;
             this.Surname = Surname;
             this.Role = Role;
+
+
+
             this.Notes = Notes;
             this.ContactPhones = ContactPhones;
             this.ContactAddresses = ContactAddresses;
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a Contact
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a Contact</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a Contact")]
         public int Id { get; set; }
         
         /// <summary>
@@ -69,7 +73,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The given name of the contact.</value>
         [MetaDataExtension (Description = "The given name of the contact.")]
-        [MaxLength(255)]
+        [MaxLength(50)]
         
         public string GivenName { get; set; }
         
@@ -78,16 +82,16 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>The surname of the contact.</value>
         [MetaDataExtension (Description = "The surname of the contact.")]
-        [MaxLength(255)]
+        [MaxLength(50)]
         
         public string Surname { get; set; }
         
         /// <summary>
-        /// The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.
+        /// The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list - for initial implementation, the field is freeform.
         /// </summary>
-        /// <value>The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.</value>
-        [MetaDataExtension (Description = "The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list.")]
-        [MaxLength(255)]
+        /// <value>The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list - for initial implementation, the field is freeform.</value>
+        [MetaDataExtension (Description = "The role of the contact. UI controlled as to whether it is free form or selected from an enumerated list - for initial implementation, the field is freeform.")]
+        [MaxLength(100)]
         
         public string Role { get; set; }
         
@@ -96,7 +100,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>A note about the contact maintained by the users.</value>
         [MetaDataExtension (Description = "A note about the contact maintained by the users.")]
-        [MaxLength(2048)]
+        [MaxLength(150)]
         
         public string Notes { get; set; }
         

@@ -46,28 +46,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/CCWData"
-  /ccwdata/bulk:
-    post:
-      tags:
-        - CCWData
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/CCWData"
-      responses:
-        201:
-          description: CCWData created
+            $ref: "#/definitions/CCWData"  
   /ccwdata/{id}:
     get:
       tags:
@@ -137,6 +116,28 @@ paths:
           description: id of CCWData to delete
           required: true
           type: integer
+
+  /ccwdata/bulk:
+    post:
+      tags:
+        - CCWData
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CCWData"
+      responses:
+        201:
+          description: CCWData created
   /inspections:
     get:
       tags:
@@ -177,28 +178,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Inspection"
-  /inspections/bulk:
-    post:
-      tags:
-        - Inspection
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Inspection"
-      responses:
-        201:
-          description: Inspection created
+            $ref: "#/definitions/Inspection"  
   /inspections/{id}:
     get:
       tags:
@@ -268,6 +248,28 @@ paths:
           description: id of Inspection to delete
           required: true
           type: integer
+
+  /inspections/bulk:
+    post:
+      tags:
+        - Inspection
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Inspection"
+      responses:
+        201:
+          description: Inspection created
   /schoolbuses:
     get:
       tags:
@@ -308,28 +310,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolBus"
-  /schoolbuses/bulk:
-    post:
-      tags:
-        - SchoolBus
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/SchoolBus"
-      responses:
-        201:
-          description: SchoolBus created
+            $ref: "#/definitions/SchoolBus"  
   /schoolbuses/{id}:
     get:
       tags:
@@ -399,6 +380,28 @@ paths:
           description: id of SchoolBus to delete
           required: true
           type: integer
+
+  /schoolbuses/bulk:
+    post:
+      tags:
+        - SchoolBus
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBus"
+      responses:
+        201:
+          description: SchoolBus created
   /notes:
     get:
       tags:
@@ -439,28 +442,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Note"
-  /notes/bulk:
-    post:
-      tags:
-        - Note
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Note"
-      responses:
-        201:
-          description: Note created
+            $ref: "#/definitions/Note"  
   /notes/{id}:
     get:
       tags:
@@ -530,6 +512,28 @@ paths:
           description: id of Note to delete
           required: true
           type: integer
+
+  /notes/bulk:
+    post:
+      tags:
+        - Note
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Note"
+      responses:
+        201:
+          description: Note created
   /attachments:
     get:
       tags:
@@ -570,28 +574,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Attachment"
-  /attachments/bulk:
-    post:
-      tags:
-        - Attachment
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Attachment"
-      responses:
-        201:
-          description: Attachment created
+            $ref: "#/definitions/Attachment"  
   /attachments/{id}:
     get:
       tags:
@@ -661,6 +644,28 @@ paths:
           description: id of Attachment to delete
           required: true
           type: integer
+
+  /attachments/bulk:
+    post:
+      tags:
+        - Attachment
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Attachment"
+      responses:
+        201:
+          description: Attachment created
   /histories:
     get:
       tags:
@@ -701,28 +706,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/History"
-  /histories/bulk:
-    post:
-      tags:
-        - History
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/History"
-      responses:
-        201:
-          description: History created
+            $ref: "#/definitions/History"  
   /histories/{id}:
     get:
       tags:
@@ -792,6 +776,28 @@ paths:
           description: id of History to delete
           required: true
           type: integer
+
+  /histories/bulk:
+    post:
+      tags:
+        - History
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/History"
+      responses:
+        201:
+          description: History created
   /notifications:
     get:
       tags:
@@ -832,28 +838,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Notification"
-  /notifications/bulk:
-    post:
-      tags:
-        - Notification
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Notification"
-      responses:
-        201:
-          description: Notification created
+            $ref: "#/definitions/Notification"  
   /notifications/{id}:
     get:
       tags:
@@ -923,6 +908,28 @@ paths:
           description: id of Notification to delete
           required: true
           type: integer
+
+  /notifications/bulk:
+    post:
+      tags:
+        - Notification
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Notification"
+      responses:
+        201:
+          description: Notification created
   /notificationevents:
     get:
       tags:
@@ -963,28 +970,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/NotificationEvent"
-  /notificationevents/bulk:
-    post:
-      tags:
-        - NotificationEvent
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/NotificationEvent"
-      responses:
-        201:
-          description: NotificationEvent created
+            $ref: "#/definitions/NotificationEvent"  
   /notificationevents/{id}:
     get:
       tags:
@@ -1054,6 +1040,28 @@ paths:
           description: id of NotificationEvent to delete
           required: true
           type: integer
+
+  /notificationevents/bulk:
+    post:
+      tags:
+        - NotificationEvent
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/NotificationEvent"
+      responses:
+        201:
+          description: NotificationEvent created
   /schoolbusowners:
     get:
       tags:
@@ -1094,28 +1102,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolBusOwner"
-  /schoolbusowners/bulk:
-    post:
-      tags:
-        - SchoolBusOwner
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/SchoolBusOwner"
-      responses:
-        201:
-          description: SchoolBusOwner created
+            $ref: "#/definitions/SchoolBusOwner"  
   /schoolbusowners/{id}:
     get:
       tags:
@@ -1185,6 +1172,28 @@ paths:
           description: id of SchoolBusOwner to delete
           required: true
           type: integer
+
+  /schoolbusowners/bulk:
+    post:
+      tags:
+        - SchoolBusOwner
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolBusOwner"
+      responses:
+        201:
+          description: SchoolBusOwner created
   /contacts:
     get:
       tags:
@@ -1225,28 +1234,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Contact"
-  /contacts/bulk:
-    post:
-      tags:
-        - Contact
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Contact"
-      responses:
-        201:
-          description: Contact created
+            $ref: "#/definitions/Contact"  
   /contacts/{id}:
     get:
       tags:
@@ -1316,6 +1304,28 @@ paths:
           description: id of Contact to delete
           required: true
           type: integer
+
+  /contacts/bulk:
+    post:
+      tags:
+        - Contact
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Contact"
+      responses:
+        201:
+          description: Contact created
   /groups:
     get:
       tags:
@@ -1356,28 +1366,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Group"
-  /groups/bulk:
-    post:
-      tags:
-        - Group
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Group"
-      responses:
-        201:
-          description: Group created
+            $ref: "#/definitions/Group"  
   /groups/{id}:
     get:
       tags:
@@ -1447,6 +1436,28 @@ paths:
           description: id of Group to delete
           required: true
           type: integer
+
+  /groups/bulk:
+    post:
+      tags:
+        - Group
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Group"
+      responses:
+        201:
+          description: Group created
   /permissions:
     get:
       tags:
@@ -1487,28 +1498,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/PermissionViewModel"
-  /permissions/bulk:
-    post:
-      tags:
-        - Permission
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/PermissionViewModel"
-      responses:
-        201:
-          description: Permission created
+            $ref: "#/definitions/PermissionViewModel"  
   /permissions/{id}:
     get:
       tags:
@@ -1640,28 +1630,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/RoleViewModel"
-  /roles/bulk:
-    post:
-      tags:
-        - Role
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/RoleViewModel"
-      responses:
-        201:
-          description: Role created
+            $ref: "#/definitions/RoleViewModel"  
   /roles/{id}:
     get:
       tags:
@@ -1859,28 +1828,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/Region"
-  /regions/bulk:
-    post:
-      tags:
-        - Region
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Region"
-      responses:
-        201:
-          description: Region created
+            $ref: "#/definitions/Region"  
   /regions/{id}:
     get:
       tags:
@@ -1950,6 +1898,28 @@ paths:
           description: id of Region to delete
           required: true
           type: integer
+
+  /regions/bulk:
+    post:
+      tags:
+        - Region
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Region"
+      responses:
+        201:
+          description: Region created
   /districts:
     get:
       tags:
@@ -1990,28 +1960,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/District"
-  /districts/bulk:
-    post:
-      tags:
-        - District
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/District"
-      responses:
-        201:
-          description: District created
+            $ref: "#/definitions/District"  
   /districts/{id}:
     get:
       tags:
@@ -2081,6 +2030,28 @@ paths:
           description: id of District to delete
           required: true
           type: integer
+
+  /districts/bulk:
+    post:
+      tags:
+        - District
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/District"
+      responses:
+        201:
+          description: District created
   /serviceareas:
     get:
       tags:
@@ -2121,28 +2092,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/ServiceArea"
-  /serviceareas/bulk:
-    post:
-      tags:
-        - ServiceArea
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/ServiceArea"
-      responses:
-        201:
-          description: ServiceArea created
+            $ref: "#/definitions/ServiceArea"  
   /serviceareas/{id}:
     get:
       tags:
@@ -2212,6 +2162,28 @@ paths:
           description: id of ServiceArea to delete
           required: true
           type: integer
+
+  /serviceareas/bulk:
+    post:
+      tags:
+        - ServiceArea
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ServiceArea"
+      responses:
+        201:
+          description: ServiceArea created
   /cities:
     get:
       tags:
@@ -2252,28 +2224,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/City"
-  /cities/bulk:
-    post:
-      tags:
-        - City
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/City"
-      responses:
-        201:
-          description: City created
+            $ref: "#/definitions/City"  
   /cities/{id}:
     get:
       tags:
@@ -2343,6 +2294,28 @@ paths:
           description: id of City to delete
           required: true
           type: integer
+
+  /cities/bulk:
+    post:
+      tags:
+        - City
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/City"
+      responses:
+        201:
+          description: City created
   /schooldistricts:
     get:
       tags:
@@ -2383,28 +2356,7 @@ paths:
               type: string
               format: url
           schema:
-            $ref: "#/definitions/SchoolDistrict"
-  /schooldistricts/bulk:
-    post:
-      tags:
-        - SchoolDistrict
-      consumes:
-        - application/json
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: items
-          in: body
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/SchoolDistrict"
-      responses:
-        201:
-          description: SchoolDistrict created
+            $ref: "#/definitions/SchoolDistrict"  
   /schooldistricts/{id}:
     get:
       tags:
@@ -2474,6 +2426,28 @@ paths:
           description: id of SchoolDistrict to delete
           required: true
           type: integer
+
+  /schooldistricts/bulk:
+    post:
+      tags:
+        - SchoolDistrict
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/SchoolDistrict"
+      responses:
+        201:
+          description: SchoolDistrict created
   /groups/{id}/users:
     get:
       summary: returns users in a given Group
@@ -3813,7 +3787,7 @@ definitions:
       ICBCModel:
         type: string
         maxLength: 255
-        description: Vehicle model codes used by ICBC - for example: bus, scbus, dump, logtr
+        description: Vehicle model codes used by ICBC - for example bus, scbus, dump, logtr
       ICBCFuel:
         type: string
         maxLength: 255
@@ -3866,7 +3840,7 @@ definitions:
         type: string
         maxLength: 255
         description: Registered Owners Driver Licence number
-      ICBCRegOwnerPool:
+      ICBCRegOwnerPODL:
         type: string
         maxLength: 255
         description: Previous Owners Driver Licence number
@@ -3889,27 +3863,27 @@ definitions:
       NSCPolicyNumber:
         type: string
         maxLength: 255
-        description: From NSC: The number of the carrier (NSC Clients) necessary insurance required to operate the vehicle.
+        description: From NSC - The number of the carrier (NSC Clients) necessary insurance required to operate the vehicle.
       NSCPolicyEffectiveDate:
         type: string
         format: date-time
-        description: From NSC: The effective data of the policy.
+        description: From NSC - The effective data of the policy.
       NSCPolicyStatusDate:
         type: string
         format: date-time
-        description: From NSC: The date the status of the policy was established.
+        description: From NSC - The date the status of the policy was established.
       NSCPolicyExpiryDate:
         type: string
         format: date-time
-        description: From NSC: The data of expiration of the policy.
+        description: From NSC - The data of expiration of the policy.
       NSCPolicyStatus:
         type: string
         maxLength: 255
-        description: From NSC: The latest status of the policy.
+        description: From NSC - The latest status of the policy.
       NSCPlateDecal:
         type: string
         maxLength: 255
-        description: From NSC: The plate decal as defined by NSC on the vehicle
+        description: From NSC - The plate decal as defined by NSC on the vehicle
   Inspection:
     type: object
     description: School Bus inspection details supplementary to the RIP inspection
@@ -4671,12 +4645,6 @@ definitions:
       expiryDate:
         type: string
         format: date-time
-      userId:
-        format: int32
-        type: integer
-        x-type-options:
-          min: 1
-          max: 1000
       roleId:
         format: int32
         type: integer

@@ -40,9 +40,9 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="City" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
+        /// <param name="Id">A system-generated unique identifier for a City (required).</param>
         /// <param name="Name">The name of the City.</param>
-        /// <param name="Province">Province.</param>
+        /// <param name="Province">The name of the province of the city.</param>
         public City(int Id, string Name = null, string Province = null)
         {   
             this.Id = Id;
@@ -51,10 +51,10 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a City
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a City</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a City")]
         public int Id { get; set; }
         
         /// <summary>
@@ -67,10 +67,10 @@ namespace SchoolBusAPI.Models
         public string Name { get; set; }
         
         /// <summary>
-        /// Province
+        /// The name of the province of the city
         /// </summary>
-        /// <value>Province</value>
-        [MetaDataExtension (Description = "Province")]
+        /// <value>The name of the province of the city</value>
+        [MetaDataExtension (Description = "The name of the province of the city")]
         [MaxLength(255)]
         
         public string Province { get; set; }

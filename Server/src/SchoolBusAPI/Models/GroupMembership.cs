@@ -23,8 +23,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SchoolBusAPI.Models
 {
     /// <summary>
-    /// 
+    /// The users associated with a given group that has been defined in the application.
     /// </summary>
+        [MetaDataExtension (Description = "The users associated with a given group that has been defined in the application.")]
 
     public partial class GroupMembership : IEquatable<GroupMembership>
     {
@@ -39,8 +40,8 @@ namespace SchoolBusAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupMembership" /> class.
         /// </summary>
-        /// <param name="Id">Primary Key (required).</param>
-        /// <param name="Active">Active (required).</param>
+        /// <param name="Id">A system-generated unique identifier for a GroupMembership (required).</param>
+        /// <param name="Active">A flag indicating the User is active in the group. Set false to remove the user from the designated group. (required).</param>
         /// <param name="Group">Group.</param>
         /// <param name="User">User.</param>
         public GroupMembership(int Id, bool Active, Group Group = null, User User = null)
@@ -53,15 +54,17 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Primary Key
+        /// A system-generated unique identifier for a GroupMembership
         /// </summary>
-        /// <value>Primary Key</value>
-        [MetaDataExtension (Description = "Primary Key")]
+        /// <value>A system-generated unique identifier for a GroupMembership</value>
+        [MetaDataExtension (Description = "A system-generated unique identifier for a GroupMembership")]
         public int Id { get; set; }
         
         /// <summary>
-        /// Gets or Sets Active
+        /// A flag indicating the User is active in the group. Set false to remove the user from the designated group.
         /// </summary>
+        /// <value>A flag indicating the User is active in the group. Set false to remove the user from the designated group.</value>
+        [MetaDataExtension (Description = "A flag indicating the User is active in the group. Set false to remove the user from the designated group.")]
         public bool Active { get; set; }
         
         /// <summary>
