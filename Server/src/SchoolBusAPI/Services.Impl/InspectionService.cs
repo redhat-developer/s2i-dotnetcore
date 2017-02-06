@@ -109,8 +109,17 @@ namespace SchoolBusAPI.Services.Impl
         public virtual IActionResult InspectionsGetAsync ()        
         {
             var result = _context.Inspections
-                .Include(x => x.Inspector)
-                .Include(x => x.SchoolBus)                
+                    .Include(x => x.Inspector)                    
+                    .Include(x => x.SchoolBus)
+                    .Include(x => x.SchoolBus.Attachments)
+                    .Include(x => x.SchoolBus.HomeTerminalCity)
+                    .Include(x => x.SchoolBus.SchoolDistrict)
+                    .Include(x => x.SchoolBus.SchoolBusOwner.PrimaryContact)
+                    .Include(x => x.SchoolBus.District.Region)
+                    .Include(x => x.SchoolBus.History)
+                    .Include(x => x.SchoolBus.Attachments)
+                    .Include(x => x.SchoolBus.Notes)
+                    .Include(x => x.SchoolBus.Inspector)
                 .ToList();
             return new ObjectResult(result);
         }
@@ -158,6 +167,15 @@ namespace SchoolBusAPI.Services.Impl
                 var result = _context.Inspections
                     .Include(x => x.Inspector)
                     .Include(x => x.SchoolBus)
+                    .Include(x => x.SchoolBus.Attachments)
+                    .Include(x => x.SchoolBus.HomeTerminalCity)
+                    .Include(x => x.SchoolBus.SchoolDistrict)
+                    .Include(x => x.SchoolBus.SchoolBusOwner.PrimaryContact)
+                    .Include(x => x.SchoolBus.District.Region)
+                    .Include(x => x.SchoolBus.History)
+                    .Include(x => x.SchoolBus.Attachments)
+                    .Include(x => x.SchoolBus.Notes)
+                    .Include(x => x.SchoolBus.Inspector)
                     .First(a => a.Id == id);
                 return new ObjectResult(result);
             }
