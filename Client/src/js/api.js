@@ -264,9 +264,6 @@ export function deleteInspection(inspection) {
 
 function parseOwner(owner) {
   owner.isActive = owner.status === Constant.STATUS_ACTIVE;
-  owner.numberOfBuses = 1;
-  owner.nextInspectionDate = '2017-02-21';
-  owner.nextInspectionTypeCode = Constant.INSPECTION_TYPE_REINSPECTION;
 
   owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
 
@@ -288,7 +285,7 @@ export function searchOwners(params) {
 }
 
 export function getOwner(ownerId) {
-  return new ApiRequest(`/schoolbusowners/${ ownerId }`).get().then(response => {
+  return new ApiRequest(`/schoolbusowners/${ ownerId }/view`).get().then(response => {
     var owner = response;
 
     // Add display fields
