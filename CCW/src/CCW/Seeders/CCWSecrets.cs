@@ -14,7 +14,7 @@ namespace CCW.Seeders
     {
         private string[] ProfileTriggers = { AllProfiles };
 
-        public CCWSecrets(IConfiguration configuration, IHostingEnvironment env, ILoggerFactory loggerFactory) 
+        public CCWSecrets(IConfigurationRoot configuration, IHostingEnvironment env, ILoggerFactory loggerFactory) 
             : base(configuration, env, loggerFactory)
         { }
 

@@ -77,6 +77,13 @@ namespace CCW
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                DbContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
+
+                Seeders.SeedFactory<DbAppContext> seederFactory = new Seeders.SeedFactory<DbAppContext>(Configuration, env, loggerFactory);
+                seederFactory.Seed(context as DbAppContext);
+            }
 
             if (env.IsDevelopment())
             {

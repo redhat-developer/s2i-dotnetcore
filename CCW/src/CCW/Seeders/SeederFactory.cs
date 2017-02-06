@@ -21,7 +21,7 @@ namespace CCW.Seeders
 
         private List<Seeder<T>> SeederInstances = new List<Seeder<T>>();
 
-        public SeedFactory(IConfiguration configuration, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public SeedFactory(IConfigurationRoot configuration, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             _env = env;
             _loggerFactory = loggerFactory;

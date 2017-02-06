@@ -15,7 +15,7 @@ namespace CCW.Seeders
         private IHostingEnvironment _env;
         protected ILogger _logger;
 
-        internal Seeder(IConfiguration configuration, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        internal Seeder(IConfigurationRoot configuration, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             _env = env;
             _logger = loggerFactory.CreateLogger(typeof(Seeder<T>));
