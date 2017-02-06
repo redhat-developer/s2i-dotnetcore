@@ -422,19 +422,20 @@
         {
             "name": "CONTEXT_DIR",
             "displayName": "Context Directory",
-            "description": "Set this to the relative path to your project if it is not in the root of your repository."
+            "description": "Set this to the relative path to your project if it is not in the root of your repository.",
+            "value": "samples/MusicStore"
         },
         {
             "name": "DOTNET_STARTUP_PROJECT",
             "displayName": "Startup Project",
             "description": "Set this to the folder containing your startup project.",
-            "value": "samples/MusicStore"
+            "value": "."
         },
         {
             "name": "DOTNET_RESTORE_ROOT",
             "displayName": "List of projects to restore",
             "description": "Specify the list of project folders to restore. Set this to '.' to restore all projects.",
-            "value": "samples/MusicStore"
+            "value": "."
         },
         {
             "name": "APPLICATION_DOMAIN",
