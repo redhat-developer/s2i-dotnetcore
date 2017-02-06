@@ -193,10 +193,6 @@
                                         "value": "Host=${DATABASE_SERVICE_NAME};Database=${DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD}"
                                     },
                                     {
-                                        "name": "ASPNETCORE_URLS",
-                                        "value": "http://*:8080"
-                                    },
-                                    {
                                         "name": "DOTNET_STARTUP_PROJECT",
                                         "value": "${DOTNET_STARTUP_PROJECT}"
                                     }
