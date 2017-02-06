@@ -10,6 +10,7 @@ import _ from 'lodash';
 import Promise from 'bluebird';
 
 import * as Api from '../../api';
+import * as Constant from '../../constants';
 
 import Confirm from '../../components/Confirm.jsx';
 import DropdownControl from '../../components/DropdownControl.jsx';
@@ -20,10 +21,6 @@ import OverlayTrigger from '../../components/OverlayTrigger.jsx';
 import Spinner from '../../components/Spinner.jsx';
 
 import { isBlank } from '../../utils/string';
-
-
-const STATUS_ACTIVE = 'Active';
-const STATUS_ARCHIVED = 'Archived';
 
 const PERMIT_CLASS_TYPE_1 = 'Type 1: Yellow and Black School Bus';
 const PERMIT_CLASS_TYPE_2 = 'Type 2: Special Activity Bus';
@@ -53,7 +50,7 @@ var SchoolBusesEditDialog = React.createClass({
 
       isNew: this.props.schoolBus.id === 0,
 
-      status: this.props.schoolBus.status || STATUS_ACTIVE,
+      status: this.props.schoolBus.status || Constant.STATUS_ACTIVE,
       ownerId: this.props.schoolBus.schoolBusOwner ? this.props.schoolBus.schoolBusOwner.id : 0,
       districtId: this.props.schoolBus.district ? this.props.schoolBus.district.id : 0,
       inspectorId: this.props.schoolBus.inspector ? this.props.schoolBus.inspector.id : 0,
@@ -231,7 +228,7 @@ var SchoolBusesEditDialog = React.createClass({
                 <FormGroup controlId="status">
                   <ControlLabel>Status</ControlLabel>
                   <DropdownControl id="status" title={ this.state.status } updateState={ this.updateState }
-                    items={[ STATUS_ACTIVE, STATUS_ARCHIVED ]}
+                    items={[ Constant.STATUS_ACTIVE, Constant.STATUS_ARCHIVED ]}
                   />
                 </FormGroup>
               </Col>
