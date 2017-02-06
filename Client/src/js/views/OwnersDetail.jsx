@@ -8,6 +8,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
 
+import OwnersEditDialog from './dialogs/OwnersEditDialog.jsx';
+
 import * as Action from '../actionTypes';
 import * as Api from '../api';
 import * as Constant from '../constants';
@@ -219,6 +221,9 @@ var OwnersDetail = React.createClass({
           </Col>
         </Row>
       </div>
+      { this.state.showEditDialog &&
+        <OwnersEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose= { this.closeEditDialog } />
+      }
     </div>;
   },
 });
