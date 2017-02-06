@@ -15,7 +15,7 @@ namespace CCW.Controllers
 
         ICCWService service;
 
-        public CCWController(IConfiguration configuration)
+        public CCWController(IConfigurationRoot configuration)
         {
             Configuration = configuration;
 

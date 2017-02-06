@@ -13,7 +13,7 @@ namespace SchoolBusCommon
     {
         private readonly IConfiguration _configuration;
 
-        public Config (IConfiguration configuration)
+        public Config (IConfigurationRoot configuration)
         {
             _configuration = configuration;
         }
@@ -29,7 +29,12 @@ namespace SchoolBusCommon
             {
                 // restrict option so it won't accidentally be used on production
 #if DEBUG
-                return Boolean.Parse(_configuration["UseFakeServices"]);
+                bool result = false;
+                if (_configuration != null)
+                { 
+                    result = Boolean.Parse(_configuration["UseFakeServices"]);
+                }
+                return result;
 #else
                     return false;
 #endif

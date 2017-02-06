@@ -43,7 +43,7 @@ namespace CCW
             services.AddSingleton<IDbAppContextFactory, DbAppContextFactory>(CreateDbAppContextFactory);
             // Add database context
             services.AddDbContext<DbAppContext>(options => options.UseNpgsql(GetConnectionString()));
-
+            services.AddSingleton(provider => Configuration);
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
