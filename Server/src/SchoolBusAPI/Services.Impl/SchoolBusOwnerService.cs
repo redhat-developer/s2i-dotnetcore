@@ -460,7 +460,7 @@ namespace SchoolBusAPI.Services.Impl
                         var buses = _context.SchoolBuss.Where(x => x.Inspector.Id == inspector);
                         foreach (var bus in buses)
                         {
-                            if (bus.Inspector != null)
+                            if (bus.SchoolBusOwner != null)
                             {
                                 ids.Add(bus.SchoolBusOwner.Id);
                             }
@@ -487,9 +487,18 @@ namespace SchoolBusAPI.Services.Impl
             if (includeInactive == null || includeInactive == false)
             {
                 data = data.Where(x => x.Status == "Active");
-            }            
+            }
 
-            var result = data.ToList();
+            // now convert the results to the view model.
+            var result = new List<SchoolBusOwnerViewModel>();
+            foreach (SchoolBusOwner item in data)
+            {
+                SchoolBusOwnerViewModel record = item.ToViewModel();
+                // populate the calculated fields.
+                record.nextInspectionDate = GetNextInspectionDate(item.Id); ;
+                record.numberOfBuses = GetNumberSchoolBuses(item.Id);
+                result.Add(record);                
+            }
             return new ObjectResult(result);
         }
     }
