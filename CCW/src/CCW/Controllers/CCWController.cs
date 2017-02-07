@@ -9,25 +9,45 @@ using SchoolBus.WS.CCW.Reference;
 using System.ServiceModel;
 using Microsoft.EntityFrameworkCore;
 using CCW.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace CCW.Controllers
 {
     [Route("api/[controller]")]
     public class CCWController : Controller
     {
-        readonly IConfiguration Configuration;
+        private readonly IConfiguration Configuration;
         private readonly DbAppContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        ICCWService _service;
 
-        ICCWService service;
+        private string userId;
+        private string guid;
+        private string directory;
 
-        public CCWController(IConfigurationRoot configuration, DbAppContext context)
+        public CCWController(IHttpContextAccessor httpContextAccessor, IConfigurationRoot configuration, DbAppContext context)
         {
             Configuration = configuration;
 
-            service = CCWServiceFactory.CreateService(configuration);
+            _service = CCWServiceFactory.CreateService(configuration);
+            _httpContextAccessor = httpContextAccessor;
             _context = context;
 
+            userId = getFromHeaders("SM_UNIVERSALID");
+            guid = getFromHeaders("SMGOV_USERGUID");
+            directory = getFromHeaders("SM_AUTHDIRNAME");
         }
+
+        private string getFromHeaders(string key)
+        {
+            string result = null;
+            if (Request.Headers.ContainsKey(key))
+            {
+                result = Request.Headers[key];
+            }
+            return result;
+        }
+
 
         [HttpGet]
         [Route("GetBySerial/{serial}")]
@@ -37,7 +57,7 @@ namespace CCW.Controllers
             var result = new ObjectResult("");
             try
             {
-                result = new ObjectResult(service.GetBCVehicleForSerialNumber(serial));
+                result = new ObjectResult(_service.GetBCVehicleForSerialNumber(userId, guid, directory, serial));
             }
             catch (AggregateException ae)
             {
@@ -62,7 +82,7 @@ namespace CCW.Controllers
             var result = new ObjectResult("");
             try
             {
-                result = new ObjectResult(service.GetBCVehicleForRegistrationNumber(regi));                
+                result = new ObjectResult(_service.GetBCVehicleForRegistrationNumber(userId, guid, directory, regi));                
             }
             catch (AggregateException ae)
             {
@@ -88,7 +108,7 @@ namespace CCW.Controllers
             var result = new ObjectResult("");
             try
             {
-                result = new ObjectResult(service.GetBCVehicleForLicensePlateNumber(plate));
+                result = new ObjectResult(_service.GetBCVehicleForLicensePlateNumber(userId, guid, directory, plate));
             }
             catch (AggregateException ae)
             {
@@ -111,6 +131,13 @@ namespace CCW.Controllers
         [Route("GetCCW")]
         public virtual IActionResult GetCCW([FromQuery] string regi, [FromQuery] string plate, [FromQuery] string vin)
         {
+
+            // check we have the right headers.
+            if (userId == null || guid == null || directory == null)
+            {
+                return new UnauthorizedResult();
+            }
+
             // Check for the following data:
             // 1. registration
             // 2. plate
@@ -121,7 +148,7 @@ namespace CCW.Controllers
             {
                 try
                 {
-                    vehicle = service.GetBCVehicleForRegistrationNumber(regi);
+                    vehicle = _service.GetBCVehicleForRegistrationNumber(userId, guid, directory, regi);
                 }
                 catch (Exception e)
                 {
@@ -132,7 +159,7 @@ namespace CCW.Controllers
             {
                 try
                 {
-                    vehicle = service.GetBCVehicleForLicensePlateNumber(plate);
+                    vehicle = _service.GetBCVehicleForLicensePlateNumber(userId, guid, directory, plate);
                 }
                 catch (Exception e)
                 {
@@ -143,7 +170,7 @@ namespace CCW.Controllers
             {
                 try
                 {
-                    vehicle = service.GetBCVehicleForSerialNumber(vin);
+                    vehicle = _service.GetBCVehicleForSerialNumber(userId, guid, directory, vin);
                 }
                 catch (Exception e)
                 {
@@ -227,5 +254,10 @@ namespace CCW.Controllers
                 }
                 return result;
             }
+
+        protected HttpRequest Request
+        {
+            get { return _httpContextAccessor.HttpContext.Request; }
         }
+    }
     }
