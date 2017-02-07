@@ -25,13 +25,14 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Specialized;
 using System.Net.Http;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.AspNetCore.Http;
 
 namespace SchoolBusAPI.Services.Impl
 {
     /// <summary>
     /// 
     /// </summary>
-    public class CCWDataService : ICCWDataService
+    public class CCWDataService : ServiceBase, ICCWDataService
     {
         private readonly DbAppContext _context;
         private readonly IConfiguration Configuration;
@@ -39,7 +40,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public CCWDataService(IConfiguration configuration, DbAppContext context)
+        public CCWDataService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context) : base(httpContextAccessor, context)
         {
             _context = context;
             Configuration = configuration;
@@ -114,7 +115,15 @@ namespace SchoolBusAPI.Services.Impl
                 HttpClient client = new HttpClient();
 
                 var request = new HttpRequestMessage(HttpMethod.Get, newUri);
-
+                request.Headers.Clear();
+                // transfer over the request headers.
+                foreach (var item in Request.Headers )
+                {
+                    string key = item.Key;
+                    string value = item.Value;                    
+                    request.Headers.Add(key, value);
+                }
+                
                 Task<HttpResponseMessage> responseTask = client.SendAsync(request);
                 responseTask.Wait();
 

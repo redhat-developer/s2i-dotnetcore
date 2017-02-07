@@ -8,12 +8,12 @@ namespace SchoolBus.WS.CCW.Facade.Service
 {
     public interface ICCWService
     {
-        VehicleDescription GetBCVehicleForSerialNumber(string serialNumber);
+        VehicleDescription GetBCVehicleForSerialNumber(string userId, string guid, string directory, string serialNumber);
 
-        VehicleDescription GetBCVehicleForRegistrationNumber(string registrationNumber);
+        VehicleDescription GetBCVehicleForRegistrationNumber(string userId, string guid, string directory, string registrationNumber);
 
-        VehicleDescription GetBCVehicleForLicensePlateNumber(string licensePlateNumber);
+        VehicleDescription GetBCVehicleForLicensePlateNumber(string userId, string guid, string directory, string licensePlateNumber);
 
-        VehicleDescription GetBCVehicleForDecalNumber(string decalNumber);
+        VehicleDescription GetBCVehicleForDecalNumber(string userId, string guid, string directory, string decalNumber);
     }
 }

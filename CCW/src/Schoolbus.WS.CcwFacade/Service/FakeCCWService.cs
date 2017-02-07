@@ -12,22 +12,22 @@ namespace SchoolBus.WS.CCW.Facade.Service
     /// </summary>
     public class FakeCCWService : ICCWService
     {
-        public VehicleDescription GetBCVehicleForSerialNumber(string serialNumber)
+        public VehicleDescription GetBCVehicleForSerialNumber(string userId, string guid, string directory, string serialNumber)
         {
             return MockVehicleDescription.GetVehicleDescription();
         }
 
-        public VehicleDescription GetBCVehicleForRegistrationNumber(string registrationNumber)
+        public VehicleDescription GetBCVehicleForRegistrationNumber(string userId, string guid, string directory, string registrationNumber)
         {
             return MockVehicleDescription.GetVehicleDescription();
         }
 
-        public VehicleDescription GetBCVehicleForLicensePlateNumber(string licensePlateNumber)
+        public VehicleDescription GetBCVehicleForLicensePlateNumber(string userId, string guid, string directory, string licensePlateNumber)
         {
             return MockVehicleDescription.GetVehicleDescription();
         }
 
-        public VehicleDescription GetBCVehicleForDecalNumber(string decalNumber)
+        public VehicleDescription GetBCVehicleForDecalNumber(string userId, string guid, string directory, string decalNumber)
         {
             return MockVehicleDescription.GetVehicleDescription();
         }

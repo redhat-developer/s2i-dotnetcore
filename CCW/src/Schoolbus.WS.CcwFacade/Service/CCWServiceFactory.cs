@@ -21,15 +21,12 @@ namespace SchoolBus.WS.CCW.Facade.Service
             }
             else
             {
-                string userId = configuration ["CCW_userId"];
-                string guid = configuration["CCW_guid"];
-                string directory = configuration["CCW_directory"];
                 string endpointURL = configuration["CCW_endpointURL"];
                 string applicationIdentifier = configuration["CCW_applicationIdentifier"];
                 string basicAuth_username = configuration["CCW_basicAuth_username"];
                 string basicAuth_password = configuration["CCW_basicAuth_password"];
 
-                return new CCWService(userId, guid, directory, endpointURL, applicationIdentifier, basicAuth_username, basicAuth_password);
+                return new CCWService(endpointURL, applicationIdentifier, basicAuth_username, basicAuth_password);
             }
         }
     }
