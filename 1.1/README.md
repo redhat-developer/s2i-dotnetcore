@@ -94,6 +94,19 @@ a `.s2i/environment` file inside your source code repository.
     `project.json`. Defaults to `.`.
     The application is built using the `dotnet publish` command.
 
+* **DOTNET_ASSEMBLY_NAME**
+
+    Used to select the assembly to run. This must NOT include the `.dll` extension.
+    Set this to the output assembly name specified in `project.json` (`name`, `buildOptions/outputName`).
+    For `project.json`, the assembly name defaults to the `project.json` parent folder. The name of the
+    parent folder is used as the default value for `DOTNET_ASSEMBLY_NAME`.
+
+    When `project.json` is at the `context-dir`, the parent folder name will be 'src'. So, by
+    default, this generates a 'src.dll' assembly. Setting `DOTNET_ASSEMBLY_NAME` will cause:
+    - the assembly to be <DOTNET_ASSEMBLY_NAME>.dll
+    - the application sources to be in subfolder `DOTNET_ASSEMBLY_NAME` in the deployed
+    container.
+
 * **DOTNET_NPM_TOOLS**
 
     Used to specify a list of npm packages to install before building the app.

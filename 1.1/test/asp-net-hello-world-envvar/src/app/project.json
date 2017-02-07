@@ -1,4 +1,5 @@
 {
+  "name": "SampleApp",
   "version": "1.0.0-*",
   "dependencies": {
     "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",

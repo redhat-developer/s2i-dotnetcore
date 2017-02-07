@@ -18,8 +18,21 @@ if [ -n "${DOTNET_NPM_TOOLS}" ]; then
   popd
 fi
 
+# project.json defaults to naming the assembly the same as the folder
+if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
+  mkdir "$DOTNET_ASSEMBLY_NAME"
+  cd "$DOTNET_ASSEMBLY_NAME"
+fi
+
 echo "---> Copying application source ..."
 cp -Rf /tmp/src/. ./
+
+# output assembly name
+if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
+  APP_DLL_NAME="${DOTNET_ASSEMBLY_NAME}.dll"
+else
+  APP_DLL_NAME="$(basename "$(realpath "${DOTNET_STARTUP_PROJECT}")").dll"
+fi
 
 echo "---> Installing dependencies ..."
 dotnet restore $DOTNET_RESTORE_ROOT
@@ -40,8 +53,13 @@ done
 
 rm -rf $DOTNET_REFERENCE_ASSEMBLIES_PATH
 
+# check if the assembly used by the script exists
+if [ ! -f "$DOTNET_PUBLISH_PATH/${APP_DLL_NAME}" ]; then
+  echo "error: Build output does not contain entrypoint assembly: ${APP_DLL_NAME}"
+  exit 1
+fi
+
 # Create run script in publish folder
-APP_DLL_NAME="$(basename "$(realpath "${DOTNET_STARTUP_PROJECT}")").dll"
 cat << EOF >"$DOTNET_RUN_SCRIPT"
 #!/bin/bash
 exec dotnet ${APP_DLL_NAME} \$@
