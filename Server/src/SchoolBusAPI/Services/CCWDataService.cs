@@ -37,6 +37,16 @@ namespace SchoolBusAPI.Services
         IActionResult CcwdataBulkPostAsync(CCWData[] items);
 
         /// <summary>
+        /// fetches data from the ICBC CCW system, and constructs a CCWData object from that.  Note that it does not perform the insert of that data into the database, only provides JSON data suitable for insertion. If a CCWData record exists in the schoolbus database then the id field will match that record, however all other data will be from the ICBC CCW system.
+        /// </summary>
+        /// <param name="regi">Registration Number (also known as Serial)</param>
+        /// <param name="vin">Vehicle Identification Number</param>
+        /// <param name="plate">License Plate String</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Vehicle not found in CCW system</response>
+        IActionResult CcwdataFetchGetAsync(string regi, string vin, string plate);
+
+        /// <summary>
         /// 
         /// </summary>
         /// <response code="200">OK</response>
