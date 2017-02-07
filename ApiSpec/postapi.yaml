@@ -1,3 +1,33 @@
+  /ccwdata/fetch:
+    get:
+      summary: fetches data from the ICBC CCW system, and constructs a CCWData object from that.  Note that it does not perform the insert of that data into the database, only provides JSON data suitable for insertion. If a CCWData record exists in the schoolbus database then the id field will match that record, however all other data will be from the ICBC CCW system.     
+      tags:
+        - CCWData
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:                
+        - name: regi
+          in: query
+          description: Registration Number (also known as Serial)
+          type: string
+        - name: vin
+          in: query
+          description: Vehicle Identification Number
+          type: string
+        - name: plate
+          in: query
+          description: License Plate String
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/CCWData"
+        404:
+          description: Vehicle not found in CCW system
   /groups/{id}/users:
     get:
       summary: returns users in a given Group

@@ -10,6 +10,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using SchoolBusCommon;
 
 namespace SchoolBusAPI.Models
 {
