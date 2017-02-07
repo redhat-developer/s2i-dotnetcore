@@ -192,7 +192,7 @@ namespace CCW.Controllers
                 ccwdata.ICBCRegOwnerAddr2 = vehicle.owner.mailingAddress2;
                 ccwdata.ICBCRegOwnerCity = vehicle.owner.mailingAddress3;
                 ccwdata.ICBCRegOwnerName = vehicle.owner.name1;
-                ccwdata.ICBCRegOwnerPool = "";
+                ccwdata.ICBCRegOwnerPODL = "";
                 ccwdata.ICBCRegOwnerPostalCode = vehicle.owner.postalCode;
                 ccwdata.ICBCRegOwnerProv = vehicle.owner.mailingAddress4;
                 ccwdata.ICBCRegOwnerRODL = "";
