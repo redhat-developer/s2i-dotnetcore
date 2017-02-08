@@ -91,7 +91,8 @@ namespace SchoolBusAPI.Test
             string initialName = "InitialName";
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/roles");
             RoleViewModel role = new RoleViewModel();
-            role.Name = initialName;            
+            role.Name = initialName;
+            role.Description = "test";           
             string jsonString = role.ToJson();
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 

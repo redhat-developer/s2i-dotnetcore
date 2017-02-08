@@ -9,7 +9,9 @@
  */
 
 using Newtonsoft.Json;
+using SchoolBusAPI.Mappings;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -62,9 +64,11 @@ namespace SchoolBusAPI.Test
             // change the name
             permission.Name = changedName;
 
+            PermissionViewModel permissionViewModel = permission.ToViewModel(); 
+
             // now do an update.
             request = new HttpRequestMessage(HttpMethod.Put, "/api/permissions/" + id);
-            request.Content = new StringContent(permission.ToJson(), Encoding.UTF8, "application/json");
+            request.Content = new StringContent(permissionViewModel.ToJson(), Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
