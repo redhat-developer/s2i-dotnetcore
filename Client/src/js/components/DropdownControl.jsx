@@ -25,6 +25,14 @@ var DropdownControl = React.createClass({
     };
   },
 
+  componentWillReceiveProps(nextProps) {
+    if (!_.isEqual(nextProps.items, this.props.items)) {
+      this.setState({ items: nextProps.items || [] });
+    } else if (!_.isEqual(nextProps.title, this.props.title)) {
+      this.setState({ title: this.buildTitle(nextProps.title) });
+    }
+  },
+
   buildTitle(keyEvent) {
     return keyEvent || this.props.placeholder || 'Select item';
   },

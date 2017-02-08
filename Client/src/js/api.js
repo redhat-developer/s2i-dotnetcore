@@ -112,6 +112,7 @@ function parseSchoolBus(bus) {
   bus.isOverdue = bus.daysToInspection < 0;
   bus.inspectorName = firstLastName(bus.inspector.givenName, bus.inspector.surname);
   bus.isReinspection = bus.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
+  bus.nextInspectionDateSort = sortableDateTime(bus.nextInspectionDate);
 }
 
 export function searchSchoolBuses(params) {
@@ -347,12 +348,11 @@ export function deleteInspection(inspection) {
 
 function parseOwner(owner) {
   owner.isActive = owner.status === Constant.STATUS_ACTIVE;
-
   owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
-
   owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
   owner.isOverdue = owner.daysToInspection < 0;
   owner.isReinspection = owner.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
+  owner.nextInspectionDateSort = sortableDateTime(owner.nextInspectionDate);
 }
 
 export function searchOwners(params) {
