@@ -28,14 +28,14 @@ namespace SchoolBus.WS.CCW.Facade.Service
             this.Client.ClientCredentials.UserName.Password = this.basicAuth_password;
         }
 
-        public VehicleDescription GetBCVehicleForSerialNumber(string userId, string guid, string directory, string serialNumber)
+        public VehicleDescription GetBCVehicleForSerialNumber(string serialNumber, string userId, string guid, string directory)
         {
             var task = this.Client.getBCVehicleForSerialNumberAsync(serialNumber, userId, guid, directory, applicationIdentifier);
             task.Wait();
             return task.Result;            
         }
 
-        public VehicleDescription GetBCVehicleForRegistrationNumber(string userId, string guid, string directory, string registrationNumber)
+        public VehicleDescription GetBCVehicleForRegistrationNumber(string registrationNumber, string userId, string guid, string directory)
         {
             var task = this.Client.getBCVehicleForRegistrationNumberAsync(registrationNumber, userId, guid, directory, applicationIdentifier);
             task.Wait();
@@ -43,14 +43,14 @@ namespace SchoolBus.WS.CCW.Facade.Service
         }
 
 
-        public VehicleDescription GetBCVehicleForLicensePlateNumber(string userId, string guid, string directory, string licensePlateNumber)
+        public VehicleDescription GetBCVehicleForLicensePlateNumber(string licensePlateNumber, string userId, string guid, string directory)
         {
             var task = this.Client.getBCVehicleForLicensePlateNumberAsync(licensePlateNumber, userId, guid, directory, applicationIdentifier);
             task.Wait();
             return task.Result;            
         }
 
-        public VehicleDescription GetBCVehicleForDecalNumber(string userId, string guid, string directory, string decalNumber)
+        public VehicleDescription GetBCVehicleForDecalNumber(string decalNumber, string userId, string guid, string directory)
         {
             var task = this.Client.getBCVehicleForDecalNumberAsync(decalNumber, userId, guid, directory, applicationIdentifier);
             task.Wait();
@@ -66,6 +66,13 @@ namespace SchoolBus.WS.CCW.Facade.Service
             {
                 Security = { Mode = BasicHttpSecurityMode.Transport, Transport = transport }                
             };
+        }
+
+        public ClientOrganization GetCurrentClientOrganization(string clientNumber, string organizationNameCode, string userId, string guid, string directory)
+        {
+            var task = this.Client.getCurrentClientOrganizationAsync(clientNumber, organizationNameCode, userId, guid, directory, applicationIdentifier);
+            task.Wait();
+            return task.Result;
         }
     }
 }

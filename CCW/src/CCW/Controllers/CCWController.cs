@@ -57,7 +57,7 @@ namespace CCW.Controllers
             var result = new ObjectResult("");
             try
             {
-                result = new ObjectResult(_service.GetBCVehicleForSerialNumber(userId, guid, directory, serial));
+                result = new ObjectResult(_service.GetBCVehicleForSerialNumber(serial, userId, guid, directory));
             }
             catch (AggregateException ae)
             {
@@ -82,7 +82,7 @@ namespace CCW.Controllers
             var result = new ObjectResult("");
             try
             {
-                result = new ObjectResult(_service.GetBCVehicleForRegistrationNumber(userId, guid, directory, regi));                
+                result = new ObjectResult(_service.GetBCVehicleForRegistrationNumber(regi, userId, guid, directory));                
             }
             catch (AggregateException ae)
             {
@@ -108,7 +108,7 @@ namespace CCW.Controllers
             var result = new ObjectResult("");
             try
             {
-                result = new ObjectResult(_service.GetBCVehicleForLicensePlateNumber(userId, guid, directory, plate));
+                result = new ObjectResult(_service.GetBCVehicleForLicensePlateNumber(plate, userId, guid, directory));
             }
             catch (AggregateException ae)
             {
@@ -133,7 +133,7 @@ namespace CCW.Controllers
         {
 
             // check we have the right headers.
-            if (userId == null || guid == null || directory == null)
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(guid) || string.IsNullOrEmpty(directory))
             {
                 return new UnauthorizedResult();
             }
@@ -148,7 +148,7 @@ namespace CCW.Controllers
             {
                 try
                 {
-                    vehicle = _service.GetBCVehicleForRegistrationNumber(userId, guid, directory, regi);
+                    vehicle = _service.GetBCVehicleForRegistrationNumber(regi, userId, guid, directory);
                 }
                 catch (Exception e)
                 {
@@ -159,7 +159,7 @@ namespace CCW.Controllers
             {
                 try
                 {
-                    vehicle = _service.GetBCVehicleForLicensePlateNumber(userId, guid, directory, plate);
+                    vehicle = _service.GetBCVehicleForLicensePlateNumber(plate, userId, guid, directory);
                 }
                 catch (Exception e)
                 {
@@ -170,7 +170,7 @@ namespace CCW.Controllers
             {
                 try
                 {
-                    vehicle = _service.GetBCVehicleForSerialNumber(userId, guid, directory, vin);
+                    vehicle = _service.GetBCVehicleForSerialNumber(vin, userId, guid, directory);
                 }
                 catch (Exception e)
                 {
@@ -203,7 +203,7 @@ namespace CCW.Controllers
                 ccwdata.ICBCCVIPDecal = vehicle.inspectionDecalNumber;
                 ccwdata.ICBCCVIPExpiry = vehicle.inspectionExpiryDate;
                 ccwdata.ICBCFleetUnitNo = SanitizeInt(vehicle.fleetUnitNumber);
-                ccwdata.ICBCFuel = vehicle.fuelType;
+                ccwdata.ICBCFuel = vehicle.fuelTypeDescription;
                 ccwdata.ICBCGrossVehicleWeight = SanitizeInt(vehicle.grossVehicleWeight);
                 ccwdata.ICBCMake = vehicle.make;
                 ccwdata.ICBCModel = vehicle.model;
@@ -211,26 +211,46 @@ namespace CCW.Controllers
                 ccwdata.ICBCModelYear = SanitizeInt(vehicle.modelYear);
                 ccwdata.ICBCNetWt = SanitizeInt(vehicle.netWeight);
                 ccwdata.ICBCNotesAndOrders = vehicle.cvipDataFromLastInspection;
-                ccwdata.ICBCOrderedOn = null;
+                ccwdata.ICBCOrderedOn = vehicle.firstOpenOrderDate;
                 ccwdata.ICBCRateClass = vehicle.rateClass;
-                ccwdata.ICBCRebuiltStatus = "";
+                ccwdata.ICBCRebuiltStatus = vehicle.statusCode;
                 ccwdata.ICBCRegistrationNumber = vehicle.registrationNumber;
                 ccwdata.ICBCRegOwnerAddr1 = vehicle.owner.mailingAddress1;
                 ccwdata.ICBCRegOwnerAddr2 = vehicle.owner.mailingAddress2;
                 ccwdata.ICBCRegOwnerCity = vehicle.owner.mailingAddress3;
                 ccwdata.ICBCRegOwnerName = vehicle.owner.name1;
-                ccwdata.ICBCRegOwnerPODL = "";
+                ccwdata.ICBCRegOwnerPODL = vehicle.principalOperatorDlNum;
                 ccwdata.ICBCRegOwnerPostalCode = vehicle.owner.postalCode;
                 ccwdata.ICBCRegOwnerProv = vehicle.owner.mailingAddress4;
-                ccwdata.ICBCRegOwnerRODL = "";
+                ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;
                 ccwdata.ICBCRegOwnerStatus = "";
                 ccwdata.ICBCSeatingCapacity = SanitizeInt(vehicle.seatingCapacity);
                 ccwdata.ICBCVehicleType = vehicle.vehicleType;
 
-                // get the nsc data.
+                ccwdata.NSCPlateDecal = vehicle.decalNumber;
+                ccwdata.NSCPolicyEffectiveDate = vehicle.policyStartDate;
+                ccwdata.NSCPolicyExpiryDate = vehicle.policyExpiryDate;
+                ccwdata.NSCPolicyStatus = vehicle.policyStatus;
+                ccwdata.NSCPolicyStatusDate = vehicle.policyAcquiredCurrentStatusDate;
+                
+
+                // get the nsc client organization data.
 
                 string nscnumber = vehicle.nscNumber;
-
+                string organizationNameCode = vehicle.ownerNameCode;
+                try
+                {
+                    ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(nscnumber, organizationNameCode, userId, guid, directory);
+                    ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
+                    ccwdata.NSCCarrierName = clientOrganization.name1;
+                    ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
+                    ccwdata.NSCClientNum = clientOrganization.nscInformation.certificationNumber;                                        
+                }
+                catch (Exception e)
+                {
+                    
+                }
+                
                 return new ObjectResult(ccwdata);
             }
 

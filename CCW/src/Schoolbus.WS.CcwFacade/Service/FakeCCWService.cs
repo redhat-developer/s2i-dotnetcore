@@ -1,4 +1,5 @@
-﻿using SchoolBus.WS.CCW.Reference;
+﻿using Schoolbus.WS.CcwFacade.Service.Mocks;
+using SchoolBus.WS.CCW.Reference;
 using SchoolBus.WS.CcwFacade.Service.Mocks;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,11 @@ namespace SchoolBus.WS.CCW.Facade.Service
         public VehicleDescription GetBCVehicleForDecalNumber(string userId, string guid, string directory, string decalNumber)
         {
             return MockVehicleDescription.GetVehicleDescription();
+        }
+
+        public ClientOrganization GetCurrentClientOrganization(string clientNumber, string organizationNameCode, string userId, string guid, string directory)
+        {
+            return MockClientOrganization.GetClientOrganization();
         }
     }
 }

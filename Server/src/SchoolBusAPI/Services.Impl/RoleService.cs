@@ -460,7 +460,9 @@ namespace SchoolBusAPI.Services.Impl
                         bool user_exists = _context.Users.Any(x => x.Id == item.UserId);
                         if (user_exists)
                         {
-                            User user = _context.Users.First(x => x.Id == item.UserId);
+                            User user = _context.Users
+                                .Include(x => x.UserRoles)
+                                .First(x => x.Id == item.UserId);
                             bool found = false;
                             if (user.UserRoles != null)
                             {
