@@ -757,8 +757,10 @@ namespace SchoolBusAPI.Services.Impl
                         userRole.Role = role;
                         userRole.EffectiveDate = DateTime.Now.ToUniversalTime();
 
+                        _context.Add(userRole);
+
                         if (!user.UserRoles.Contains(userRole))
-                        {
+                        {                            
                             user.UserRoles.Add(userRole);
                         }
 

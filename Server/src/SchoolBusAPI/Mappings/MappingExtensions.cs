@@ -44,7 +44,10 @@ namespace SchoolBusAPI.Mappings
             {
                 dto.EffectiveDate = model.EffectiveDate;
                 dto.ExpiryDate = model.ExpiryDate;
-                dto.RoleId = model.Role.Id;
+                if (model.Role != null)
+                {
+                    dto.RoleId = model.Role.Id;
+                }                
                 dto.Id = model.Id;
             }            
             return dto;

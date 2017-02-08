@@ -131,7 +131,12 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult RolesGetAsync()
         {
-            var result = _context.Roles.Select(x => x.ToViewModel()).ToList();
+            List<RoleViewModel> result = new List<RoleViewModel>();
+            var data = _context.Roles.Select(x => x);
+            foreach (var item in data)
+            {
+                result.Add(item.ToViewModel());
+            }
             return new ObjectResult(result);
         }
 
@@ -420,7 +425,7 @@ namespace SchoolBusAPI.Services.Impl
                         UserRole userRole = _context.UserRoles
                                 .Include (x => x.Role)
                                 .First(x => x.Id == item.Id);
-                        if (userRole.Role.Id == id && userRole.EffectiveDate <= DateTimeOffset.Now && (userRole.ExpiryDate == null || userRole.ExpiryDate > DateTimeOffset.Now))
+                        if (userRole.Role != null && userRole.Role.Id == id && userRole.EffectiveDate <= DateTimeOffset.Now && (userRole.ExpiryDate == null || userRole.ExpiryDate > DateTimeOffset.Now))
                         {
                             found = true;
                             break;
@@ -466,11 +471,19 @@ namespace SchoolBusAPI.Services.Impl
                             bool found = false;
                             if (user.UserRoles != null)
                             {
-                                foreach (UserRole userrole in user.UserRoles)
+                                foreach (UserRole item_role in user.UserRoles)
                                 {
-                                    if (userrole.Role.Id == item.RoleId)
+                                    // get the full record.
+
+                                    if (item_role.Id != null)
                                     {
-                                        found = true;
+                                        UserRole userRole = _context.UserRoles
+                                                .Include(x => x.Role)
+                                                .First(x => x.Id == item_role.Id);
+                                        if (userRole.Role != null && userRole.Role.Id == role.Id)
+                                        {
+                                            found = true;
+                                        }                                        
                                     }
                                 }
                             }
@@ -481,7 +494,7 @@ namespace SchoolBusAPI.Services.Impl
                                 newRole.Role = role;
                                 newRole.EffectiveDate = item.EffectiveDate;
                                 newRole.ExpiryDate = null;
-                                _context.Add(newRole);
+                                _context.UserRoles.Add(newRole);
 
                                 if (user.UserRoles == null)
                                 {
