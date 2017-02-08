@@ -32,6 +32,7 @@ import { concat, plural } from '../utils/string';
 var SchoolBusesDetail = React.createClass({
   propTypes: {
     schoolBus: React.PropTypes.object,
+    owner: React.PropTypes.object,
     schoolBusCCW: React.PropTypes.object,
     schoolBusInspections: React.PropTypes.object,
     ui: React.PropTypes.object,
@@ -49,7 +50,9 @@ var SchoolBusesDetail = React.createClass({
 
       inspection: {},
 
-      ui : {
+      isNew: this.props.params.schoolBusId == 0,
+
+      ui: {
         // Inspections
         sortField: this.props.ui.sortField || 'inspectionDateSort',
         sortDesc: this.props.ui.sortDesc != false, // defaults to true
@@ -58,7 +61,27 @@ var SchoolBusesDetail = React.createClass({
   },
 
   componentDidMount() {
-    this.fetch();
+    // Don't just check if this is new. Make sure we're coming in through the Owner screen and not
+    // via a refresh of the screen.
+    if (this.state.isNew && this.props.owner.id && this.props.schoolBusCCW.icbcRegistrationNumber) {
+      // Clear the spinners
+      this.setState({
+        loadingSchoolBus: false,
+        loadingSchoolBusCCW: false,
+        loadingSchoolBusInspections: false,
+      });
+      // Clear the school bus store, except for the fields
+      // we have from the owner and ccw data.
+      store.dispatch({ type: Action.UPDATE_BUS, schoolBus: {
+        id: 0,
+        schoolBusOwner: { id: this.props.owner.id },
+        icbcRegistrationNumber: this.props.schoolBusCCW.icbcRegistrationNumber,
+      }});
+      // Open editor to add new bus
+      this.openEditDialog();
+    } else {
+      this.fetch();
+    }
   },
 
   fetch() {
@@ -110,9 +133,17 @@ var SchoolBusesDetail = React.createClass({
   },
 
   saveEdit(schoolBus) {
-    Api.updateSchoolBus(schoolBus).finally(() => {
-      this.closeEditDialog();
-    });
+    if (schoolBus.id) {
+      Api.updateSchoolBus(schoolBus);
+    } else {
+      // Save the new school bus record
+      Api.addSchoolBus(schoolBus).then(() => {
+        // Save its related CCW record next
+        Api.addSchoolBusCCW(this.props.schoolBusCCW);
+      });
+    }
+
+    this.closeEditDialog();
   },
 
   openInspectionDialog(inspection) {
@@ -384,7 +415,7 @@ var SchoolBusesDetail = React.createClass({
                   <Row>
                     <ColLabel md={2}>Owner</ColLabel>
                     <ColField md={6}>{ ccw.icbcRegOwnerName }</ColField>
-                    <ColLabel md={2}>Is</ColLabel>
+                    <ColLabel md={2}>Status Is</ColLabel>
                     <ColField md={2}>{ ccw.icbcRegOwnerStatus }</ColField>
                   </Row>
                   <Row>
@@ -402,7 +433,7 @@ var SchoolBusesDetail = React.createClass({
                       return <div>{ ccw.icbcRegOwnerAddr1 }{ ccw.icbcRegOwnerAddr2 }</div>;
                     })()}</ColField>
                     <ColLabel md={2}>RODL #<br />PODL #</ColLabel>
-                    <ColField md={2}>{ ccw.icbcRegOwnerRODL }<br />{ ccw.icbcRegOwnerPool }</ColField>
+                    <ColField md={2}>{ ccw.icbcRegOwnerRODL }<br />{ ccw.icbcRegOwnerPODL }</ColField>
                   </Row>
                 </div>;
               })()}
@@ -526,6 +557,7 @@ var SchoolBusesDetail = React.createClass({
 function mapStateToProps(state) {
   return {
     schoolBus: state.models.schoolBus,
+    owner: state.models.owner,
     schoolBusCCW: state.models.schoolBusCCW,
     schoolBusInspections: state.models.schoolBusInspections,
     ui: state.ui.inspections,

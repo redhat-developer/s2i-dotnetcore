@@ -146,6 +146,17 @@ export function getSchoolBus(schoolBusId) {
   });
 }
 
+export function addSchoolBus(schoolBus) {
+  return new ApiRequest('/schoolbuses').post(schoolBus).then(response => {
+    var bus = response;
+
+    // Add display fields
+    parseSchoolBus(bus);
+
+    store.dispatch({ type: Action.ADD_BUS, schoolBus: bus });
+  });
+}
+
 export function updateSchoolBus(schoolBus) {
   return new ApiRequest(`/schoolbuses/${ schoolBus.id }`).put(schoolBus).then(response => {
     var bus = response;
@@ -163,6 +174,14 @@ export function getSchoolBusAttachments(schoolBusId) {
     var schoolBusAttachments = _.fromPairs(response.map(attachment => [ attachment.id, attachment ]));
 
     store.dispatch({ type: Action.UPDATE_BUS_ATTACHMENTS, schoolBusAttachments: schoolBusAttachments });
+  });
+}
+
+export function addSchoolBusCCW(ccw) {
+  return new ApiRequest('/ccwdata').post(ccw).then(response => {
+    var schoolBusCCW = response || {};
+
+    store.dispatch({ type: Action.ADD_BUS_CCW, schoolBusCCW: schoolBusCCW });
   });
 }
 
@@ -201,6 +220,70 @@ export function getSchoolBusNotes(schoolBusId) {
     var schoolBusNotes = _.fromPairs(response.map(note => [ note.id, note ]));
 
     store.dispatch({ type: Action.UPDATE_BUS_NOTES, schoolBusNotes: schoolBusNotes });
+  });
+}
+
+////////////////////
+// CCW
+////////////////////
+
+export function searchCCW(params) {
+  /*
+
+  For devenv testing
+
+  var ccwResponse = {
+    'id': 0,
+    'icbcRegistrationNumber': '09281972',
+    'icbcModelYear': 1982,
+    'icbcVehicleType': '2',
+    'icbcRateClass': '671',
+    'icbccvipDecal': 'DK66448',
+    'icbcFleetUnitNo': 6001,
+    'icbcGrossVehicleWeight': 12000,
+    'icbcMake': 'THOMAS',
+    'icbcBody': 'SCBUS',
+    'icbcRebuiltStatus': '',
+    'icbccvipExpiry': '2014-01-31T08:00:00Z',
+    'icbcNetWt': 6420,
+    'icbcModel': '',
+    'icbcFuel': 'D',
+    'icbcSeatingCapacity': 24,
+    'icbcColour': 'PLE',
+    'icbcNotesAndOrders': null,
+    'icbcOrderedOn': null,
+    'icbcRegOwnerName': 'JUNE EXPIRY',
+    'icbcRegOwnerAddr1': '1219 CAROL PL',
+    'icbcRegOwnerAddr2': 'GIBSONS                BC',
+    'icbcRegOwnerCity': '',
+    'icbcRegOwnerProv': '',
+    'icbcRegOwnerPostalCode': 'V0N1V4',
+    'icbcRegOwnerStatus': '',
+    'icbcRegOwnerRODL': '',
+    'icbcRegOwnerPODL': '',
+    'nscClientNum': null,
+    'nscCarrierName': null,
+    'nscCarrierConditions': null,
+    'nscCarrierSafetyRating': null,
+    'nscPolicyNumber': null,
+    'nscPolicyEffectiveDate': null,
+    'nscPolicyStatusDate': null,
+    'nscPolicyExpiryDate': null,
+    'nscPolicyStatus': null,
+    'nscPlateDecal': null,
+  };
+
+  return new ApiRequest('/version').get(params).then(response => {
+    var ccw = response || {};
+
+    store.dispatch({ type: Action.UPDATE_BUS_CCW, schoolBusCCW: ccwResponse });
+  });
+*/
+
+  return new ApiRequest('/ccwdata/fetch').get(params).then(response => {
+    var ccw = response || {};
+
+    store.dispatch({ type: Action.UPDATE_BUS_CCW, schoolBusCCW: ccw });
   });
 }
 

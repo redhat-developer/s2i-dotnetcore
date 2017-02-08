@@ -33,6 +33,7 @@ const RESTRICTION_NON_SCHEDULED_ONLY = 'Non-Scheduled Transportation Only';
 var SchoolBusesEditDialog = React.createClass({
   propTypes: {
     schoolBus: React.PropTypes.object,
+    owner: React.PropTypes.object,
     districts: React.PropTypes.object,
     inspectors: React.PropTypes.object,
     cities: React.PropTypes.object,
@@ -83,10 +84,15 @@ var SchoolBusesEditDialog = React.createClass({
   componentDidMount() {
     this.setState({ loading: true });
 
-    var inspectorsPromise = Api.getInspectors();
-    var ownersPromise = Api.getOwners();
+    var promises = [ Api.getInspectors() ];
 
-    Promise.all([inspectorsPromise, ownersPromise]).then(() => {
+    if (!this.state.isNew) {
+      // If it's new then we use the current owner and
+      // don't need the full list.
+      promises.push(Api.getOwners());
+    }
+
+    Promise.all(promises).then(() => {
       this.setState({ loading: false });
       this.input.focus();
     });
@@ -207,7 +213,9 @@ var SchoolBusesEditDialog = React.createClass({
     var inspectors = _.sortBy(this.props.inspectors, 'name');
     var cities = _.sortBy(this.props.cities, 'name');
     var schoolDistricts = _.sortBy(this.props.schoolDistricts, 'name');
-    var owners = _.sortBy(this.props.owners, 'name');
+
+    // Just the current owner if we're adding a new bus
+    var owners = this.state.isNew ? [ this.props.owner ] : _.sortBy(this.props.owners, 'name');
 
     return <EditDialog id="school-buses-edit" show={ this.props.show } bsSize="large"
       onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }
@@ -235,7 +243,7 @@ var SchoolBusesEditDialog = React.createClass({
               <Col md={3}>
                 <FormGroup controlId="ownerId">
                   <ControlLabel>Owner</ControlLabel>
-                  <FilterDropdown id="ownerId" placeholder="None"
+                  <FilterDropdown id="ownerId" placeholder="None" disabled={ this.state.isNew }
                     items={ owners } selectedId={ this.state.ownerId } updateState={ this.updateState } />
                 </FormGroup>
               </Col>
@@ -394,6 +402,7 @@ var SchoolBusesEditDialog = React.createClass({
 function mapStateToProps(state) {
   return {
     schoolBus: state.models.schoolBus,
+    owner: state.models.owner,
     districts: state.lookups.districts,
     inspectors: state.lookups.inspectors,
     cities: state.lookups.cities,

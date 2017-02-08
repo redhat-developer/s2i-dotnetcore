@@ -12,11 +12,12 @@ var FilterDropdown = React.createClass({
     items: React.PropTypes.array.isRequired,
     selectedId: React.PropTypes.number,
     className: React.PropTypes.string,
-    // Assumes the 'name' file dunless specified here.
+    // Assumes the 'name' field unless specified here.
     fieldName: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     // If blankLine is supplied, include an "empty" line at the top;
     blankLine: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
     onSelect: React.PropTypes.func,
     updateState: React.PropTypes.func,
   },
@@ -116,7 +117,9 @@ var FilterDropdown = React.createClass({
       });
     }
 
-    return <Dropdown className={ `filter-dropdown ${this.props.className || ''}` } id={ this.props.id } title={ this.state.title } open={ this.state.open } onToggle={ this.toggle }>
+    return <Dropdown className={ `filter-dropdown ${this.props.className || ''}` } id={ this.props.id } title={ this.state.title }
+      disabled={ this.props.disabled } open={ this.state.open } onToggle={ this.toggle }
+    >
       <Dropdown.Toggle title={this.state.title} />
       <RootCloseMenu bsRole="menu">
         <Well bsSize="small">

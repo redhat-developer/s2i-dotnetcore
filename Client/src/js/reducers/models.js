@@ -51,11 +51,17 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
     case Action.UPDATE_BUSES:
       return { ...state, schoolBuses: action.schoolBuses };
 
+    case Action.ADD_BUS:
+      return { ...state, schoolBus: action.schoolBus };
+
     case Action.UPDATE_BUS:
       return { ...state, schoolBus: action.schoolBus };
 
     case Action.UPDATE_BUS_ATTACHMENTS:
       return { ...state, schoolBusAttachments: action.schoolBusAttachments };
+
+    case Action.ADD_BUS_CCW:
+      return { ...state, schoolBusCCW: action.schoolBusCCW };
 
     case Action.UPDATE_BUS_CCW:
       return { ...state, schoolBusCCW: action.schoolBusCCW };
@@ -71,10 +77,10 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
 
     // Inspections
     case Action.ADD_INSPECTION:
-      return { ...state, inspection: { ...state.inspection, ...action.inspection } };
+      return { ...state, inspection: action.inspection };
 
     case Action.UPDATE_INSPECTION:
-      return { ...state, inspection: { ...state.inspection, ...action.inspection } };
+      return { ...state, inspection: action.inspection };
 
     case Action.DELETE_INSPECTION:
       return { ...state, inspection: _.omit(state.inspection, [ action.id ]) };

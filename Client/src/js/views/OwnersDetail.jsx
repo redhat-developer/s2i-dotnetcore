@@ -9,6 +9,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import _ from 'lodash';
 
 import OwnersEditDialog from './dialogs/OwnersEditDialog.jsx';
+import SchoolBusesAddDialog from './dialogs/SchoolBusesAddDialog.jsx';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
@@ -26,6 +27,7 @@ import Spinner from '../components/Spinner.jsx';
 import { formatDateTime } from '../utils/date';
 import { plural } from '../utils/string';
 
+
 var OwnersDetail = React.createClass({
   propTypes: {
     owner: React.PropTypes.object,
@@ -40,6 +42,7 @@ var OwnersDetail = React.createClass({
 
       showEditDialog: false,
       showContactDialog: false,
+      showSchoolBusDialog: false,
 
       contact: {},
 
@@ -83,7 +86,12 @@ var OwnersDetail = React.createClass({
     });
   },
 
-  addSchoolBus() {
+  openSchoolBusDialog() {
+    this.setState({ showSchoolBusDialog: true });
+  },
+
+  closeSchoolBusDialog() {
+    this.setState({ showSchoolBusDialog: false });
   },
 
   openContactDialog(contact) {
@@ -146,7 +154,9 @@ var OwnersDetail = React.createClass({
         <Row>
           <Col md={6}>
             <Well>
-              <h3>School Bus Data <span className="pull-right"><Button title="add" bsSize="small" onClick={ this.addSchoolBus }><Glyphicon glyph="plus" /> Add School Bus</Button></span></h3>
+              <h3>School Bus Data <span className="pull-right">
+                <Button title="add" bsSize="small" onClick={ this.openSchoolBusDialog }><Glyphicon glyph="plus" /> Add School Bus</Button>
+              </span></h3>
               {(() => {
                 if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
@@ -228,6 +238,9 @@ var OwnersDetail = React.createClass({
       </div>
       { this.state.showEditDialog &&
         <OwnersEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose= { this.closeEditDialog } />
+      }
+      { this.state.showSchoolBusDialog &&
+        <SchoolBusesAddDialog show={ this.state.showSchoolBusDialog } onSave={ this.closeSchoolBusDialog } onClose= { this.closeSchoolBusDialog } />
       }
     </div>;
   },

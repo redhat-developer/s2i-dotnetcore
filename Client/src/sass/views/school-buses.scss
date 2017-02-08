@@ -115,6 +115,49 @@
   }
 }
 
+#school-buses-add {
+  .well {
+    margin-top: 20px;
+    margin-bottom: 0px;
+  }
+
+  .modal-dialog {
+    width: 460px;
+  }
+
+  .btn-toolbar {
+    margin-left: 0px;
+  }
+
+  .btn-group {
+    float: right;
+  }
+
+  .has-error {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #a94442;
+
+    a {
+      margin-left: 10px;
+    }
+  }
+
+  .modal-footer {
+  }
+
+  .spinner {
+    position: absolute;
+    top: 20px;
+    left: 200px;
+    z-index: 1060;
+  }
+
+  h3 {
+    font-weight: 600;
+  }
+}
+
 #inspection-edit {
   #notes {
     height: 106px;

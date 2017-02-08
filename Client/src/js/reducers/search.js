@@ -2,6 +2,7 @@ import * as Action from '../actionTypes';
 
 const DEFAULT_SEARCHES = {
   schoolBuses: {},
+  schoolBusesCCW: {},
   owners: {},
   users: {},
 };
@@ -10,6 +11,9 @@ export default function searchReducer(state = DEFAULT_SEARCHES, action) {
   switch(action.type) {
     case Action.UPDATE_BUSES_SEARCH:
       return { ...state, schoolBuses: action.schoolBuses };
+
+    case Action.UPDATE_CCW_SEARCH:
+      return { ...state, schoolBusesCCW: action.schoolBusesCCW };
 
     case Action.UPDATE_OWNERS_SEARCH:
       return { ...state, owners: action.owners };
