@@ -25,6 +25,7 @@ export const UPDATE_CONTACTS_UI = 'UPDATE_CONTACTS_UI';
 
 // Search
 export const UPDATE_BUSES_SEARCH = 'UPDATE_BUSES_SEARCH';
+export const UPDATE_CCW_SEARCH = 'UPDATE_CCW_SEARCH';
 export const UPDATE_OWNERS_SEARCH = 'UPDATE_OWNERS_SEARCH';
 export const UPDATE_USERS_SEARCH = 'UPDATE_USERS_SEARCH';
 
@@ -44,10 +45,12 @@ export const UPDATE_USER = 'UPDATE_USER';
 // Inspectors
 export const UPDATE_INSPECTORS = 'UPDATE_INSPECTORS';
 
-// School buses
+// School Buses
 export const UPDATE_BUSES = 'UPDATE_BUSES';
+export const ADD_BUS = 'ADD_BUS';
 export const UPDATE_BUS = 'UPDATE_BUS';
 export const UPDATE_BUS_ATTACHMENTS = 'UPDATE_BUS_ATTACHMENTS';
+export const ADD_BUS_CCW = 'ADD_BUS_CCW';
 export const UPDATE_BUS_CCW = 'UPDATE_BUS_CCW';
 export const UPDATE_BUS_HISTORIES = 'UPDATE_BUS_HISTORIES';
 export const UPDATE_BUS_INSPECTIONS = 'UPDATE_BUS_INSPECTIONS';

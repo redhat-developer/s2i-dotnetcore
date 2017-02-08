@@ -25,7 +25,7 @@ var OwnersEditDialog = React.createClass({
 
   getInitialState() {
     return {
-      isNew: this.props.owner.id === 0,
+      isNew: this.props.owner.id == 0,
 
       status: this.props.owner.status || Constant.STATUS_ACTIVE,
       name: this.props.owner.name || '',
@@ -74,7 +74,7 @@ var OwnersEditDialog = React.createClass({
   render() {
     return <EditDialog id="owners-edit" show={ this.props.show }
       onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }
-      title= { <strong>School Bus Owner </strong> }>
+      title= { <strong>School Bus Owner</strong> }>
       {(() => {
         return <Form>
           <Grid fluid>

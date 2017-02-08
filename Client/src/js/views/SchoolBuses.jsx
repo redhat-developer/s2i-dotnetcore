@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { Well, Alert, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
-import { Form, InputGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
@@ -21,13 +20,12 @@ import DateControl from '../components/DateControl.jsx';
 import DropdownControl from '../components/DropdownControl.jsx';
 import Favourites from '../components/Favourites.jsx';
 import FilterDropdown from '../components/FilterDropdown.jsx';
-import FormInputControl from '../components/FormInputControl.jsx';
+import KeySearchControl from '../components/KeySearchControl.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTime } from '../utils/date';
-import { notBlank } from '../utils/string';
 
 /*
 
@@ -39,10 +37,6 @@ TODO:
 * Print / Email
 
 */
-
-const KEY_SEARCH_REGI = 'Registration';
-const KEY_SEARCH_VIN = 'VIN';
-const KEY_SEARCH_PLATE = 'Plate';
 
 const BEFORE_TODAY = 'Before Today';
 const BEFORE_END_OF_MONTH = 'Before End of Month';
@@ -80,8 +74,9 @@ var SchoolBuses = React.createClass({
         selectedSchoolDistrictsIds: this.props.search.selectedSchoolDistrictsIds || [],
         ownerId: this.props.search.ownerId || 0,
         ownerName: this.props.search.ownerName || 'Owner',
-        keySearchField: this.props.search.keySearchField || KEY_SEARCH_REGI,
-        searchText: this.props.search.searchText || '',
+        keySearchField: this.props.search.keySearchField,
+        keySearchText: this.props.search.keySearchText,
+        keySearchParams: this.props.search.keySearchParams,
         nextInspection: this.props.search.nextInspection || WITHIN_30_DAYS,
         startDate: this.props.search.startDate || '',
         endDate: this.props.search.endDate || '',
@@ -97,13 +92,9 @@ var SchoolBuses = React.createClass({
   },
 
   buildSearchParams() {
-    if (notBlank(this.state.search.searchText)) {
-      switch (this.state.search.keySearchField) {
-        case KEY_SEARCH_REGI: return { regi: this.state.search.searchText };
-        case KEY_SEARCH_VIN: return { vin: this.state.search.searchText };
-        case KEY_SEARCH_PLATE: return { plate: this.state.search.searchText };
-        // Let this fall through if key search field is not set for some reason.
-      }
+    if (this.state.search.keySearchParams) {
+      // Use key search control params if there
+      return this.state.search.keySearchParams;
     }
 
     var searchParams = {
@@ -253,14 +244,7 @@ var SchoolBuses = React.createClass({
                   items={ schoolDistricts } selectedIds={ this.state.search.selectedSchoolDistrictsIds } fieldName="shortName" updateState={ this.updateSearchState } showMaxItems={ 2 } />
                 <FilterDropdown id="ownerId" placeholder="Owner" blankLine
                   items={ owners } selectedId={ this.state.search.ownerId } updateState={ this.updateSearchState } />
-                <Form inline>
-                  <InputGroup id="school-buses-key-search">
-                    <DropdownControl id="keySearchField" componentClass={ InputGroup.Button } title={ this.state.search.keySearchField }
-                      updateState={ this.updateSearchState } items={[ KEY_SEARCH_REGI, KEY_SEARCH_VIN, KEY_SEARCH_PLATE ]}
-                    />
-                    <FormInputControl id="searchText" type="text" value={ this.state.search.searchText } updateState={ this.updateSearchState } />
-                  </InputGroup>
-                </Form>
+                <KeySearchControl id="school-buses-key-search" search={ this.state.search } updateState={ this.updateSearchState }/>
               </ButtonToolbar>
             </Row>
             <Row>
