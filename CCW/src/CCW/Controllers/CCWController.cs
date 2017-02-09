@@ -253,7 +253,10 @@ namespace CCW.Controllers
                     {
                         if (x is FaultException<CVSECommonException>) // From the web service.
                         {
-                            Console.WriteLine(JsonConvert.SerializeObject(this, Formatting.Indented));
+                            Console.WriteLine(JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
+                            {
+                                ReferenceLoopHandling = ReferenceLoopHandling.Serialize
+                            }));
                             return true;
                         }
                         return true; // ignore other exceptions
@@ -279,7 +282,10 @@ namespace CCW.Controllers
                     {
                         if (x is FaultException<CVSECommonException>) // From the web service.
                         {
-                            Console.WriteLine(JsonConvert.SerializeObject(this, Formatting.Indented));
+                            Console.WriteLine(JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
+                            {
+                                ReferenceLoopHandling = ReferenceLoopHandling.Serialize
+                            }));
                             return true;
                         }
                         return true; // ignore other exceptions
