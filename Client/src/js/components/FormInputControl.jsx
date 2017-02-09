@@ -23,7 +23,7 @@ var FormInputControl = React.createClass({
       // Use e.target.id insted of this.props.id because it comes from the controlId.
       var value = e.target.value;
       if (this.props.type === 'number' ) {
-        value = parseInt(value, 10);
+        value = e.target.valueAsNumber;
         if (_.isNaN(value)) {
           value = '';
         }

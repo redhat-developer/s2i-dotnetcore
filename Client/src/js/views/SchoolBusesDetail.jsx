@@ -37,6 +37,7 @@ var SchoolBusesDetail = React.createClass({
     schoolBusInspections: React.PropTypes.object,
     ui: React.PropTypes.object,
     params: React.PropTypes.object,
+    router: React.PropTypes.object,
   },
 
   getInitialState() {
@@ -132,7 +133,7 @@ var SchoolBusesDetail = React.createClass({
     this.setState({ showEditDialog: false });
   },
 
-  saveEdit(schoolBus) {
+  onSaveEdit(schoolBus) {
     if (schoolBus.id) {
       Api.updateSchoolBus(schoolBus);
     } else {
@@ -144,6 +145,16 @@ var SchoolBusesDetail = React.createClass({
     }
 
     this.closeEditDialog();
+  },
+
+  onCloseEdit() {
+    this.closeEditDialog();
+    if (this.state.isNew) {
+      // Go back to owner page if cancelling new school bus
+      this.props.router.push({
+        pathname: `owners/${ this.props.owner.id }`,
+      });
+    }
   },
 
   openInspectionDialog(inspection) {
@@ -545,7 +556,7 @@ var SchoolBusesDetail = React.createClass({
         </Row>
       </div>
       { this.state.showEditDialog &&
-        <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose= { this.closeEditDialog } />
+        <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.onSaveEdit } onClose= { this.onCloseEdit } />
       }
       { this.state.showInspectionDialog &&
         <InspectionEditDialog show={ this.state.showInspectionDialog } inspection={ this.state.inspection } onSave={ this.saveInspection } onClose= { this.closeInspectionDialog } />
