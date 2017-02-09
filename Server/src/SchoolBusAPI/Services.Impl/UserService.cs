@@ -41,6 +41,19 @@ namespace SchoolBusAPI.Services.Impl
             _context = context;
         }
 
+        private void AdjustUser(SchoolBusAPI.Models.User item)
+        {
+            if (item.District != null)
+            {
+                bool district_exists = _context.Districts.Any(x => x.Id == item.District.Id);
+                if (district_exists)
+                {
+                    District district = _context.Districts.First(x => x.Id == item.District.Id);
+                    item.District = district;
+                }
+            }
+        }        
+
         /// <summary>
         /// 
         /// </summary>
@@ -157,8 +170,10 @@ namespace SchoolBusAPI.Services.Impl
             {
                 return new BadRequestResult();
             }
+            
             foreach (User item in items)
             {
+                AdjustUser(item);
                 var exists = _context.Users.Any(a => a.Id == item.Id);
                 if (exists)
                 {
@@ -376,7 +391,9 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdGetAsync(int id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var user = _context.Users
+                .Include(x => x.District)
+                .FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
                 // Not Found

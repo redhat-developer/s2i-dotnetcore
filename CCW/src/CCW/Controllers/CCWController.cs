@@ -10,6 +10,7 @@ using System.ServiceModel;
 using Microsoft.EntityFrameworkCore;
 using CCW.Models;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace CCW.Controllers
 {
@@ -223,16 +224,16 @@ namespace CCW.Controllers
                 ccwdata.ICBCRegOwnerPostalCode = vehicle.owner.postalCode;
                 ccwdata.ICBCRegOwnerProv = vehicle.owner.mailingAddress4;
                 ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;
-                ccwdata.ICBCRegOwnerStatus = "";
                 ccwdata.ICBCSeatingCapacity = SanitizeInt(vehicle.seatingCapacity);
                 ccwdata.ICBCVehicleType = vehicle.vehicleType;
+                
+                ccwdata.ICBCVehicleIdentificationNumber = vehicle.serialNumber;
 
                 ccwdata.NSCPlateDecal = vehicle.decalNumber;
                 ccwdata.NSCPolicyEffectiveDate = vehicle.policyStartDate;
                 ccwdata.NSCPolicyExpiryDate = vehicle.policyExpiryDate;
                 ccwdata.NSCPolicyStatus = vehicle.policyStatus;
                 ccwdata.NSCPolicyStatusDate = vehicle.policyAcquiredCurrentStatusDate;
-                
 
                 // get the nsc client organization data.
 
@@ -246,11 +247,49 @@ namespace CCW.Controllers
                     ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
                     ccwdata.NSCClientNum = clientOrganization.nscInformation.certificationNumber;                                        
                 }
+                catch (AggregateException ae)
+                {
+                    ae.Handle((x) =>
+                    {
+                        if (x is FaultException<CVSECommonException>) // From the web service.
+                        {
+                            Console.WriteLine(JsonConvert.SerializeObject(this, Formatting.Indented));
+                            return true;
+                        }
+                        return true; // ignore other exceptions
+                    });
+                }
                 catch (Exception e)
                 {
-                    
+                    Console.WriteLine("Unknown Error retrieving NSC data.");
                 }
                 
+                // get the ICBC data
+
+                try
+                {
+                    IcbcVehicleDescription icbcVehicleDescription = _service.GetIcbcVehicleForRegistrationNumberAsync(vehicle.registrationNumber, DateTime.Now, userId, guid, directory);
+                    ccwdata.ICBCRegOwnerRODL = icbcVehicleDescription.regularOperatorLicenceNumber;
+                    ccwdata.ICBCLicencePlateNumber = icbcVehicleDescription.plateNumber;
+                    ccwdata.ICBCRegOwnerStatus = "";
+                }
+                catch (AggregateException ae)
+                {
+                    ae.Handle((x) =>
+                    {
+                        if (x is FaultException<CVSECommonException>) // From the web service.
+                        {
+                            Console.WriteLine(JsonConvert.SerializeObject(this, Formatting.Indented));
+                            return true;
+                        }
+                        return true; // ignore other exceptions
+                    });
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unknown error retrieving ICBC information.");
+                }
+
                 return new ObjectResult(ccwdata);
             }
 

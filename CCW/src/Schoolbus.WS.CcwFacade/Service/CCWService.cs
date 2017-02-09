@@ -14,13 +14,13 @@ namespace SchoolBus.WS.CCW.Facade.Service
         private readonly string applicationIdentifier;
         private readonly string basicAuth_username;
         private readonly string basicAuth_password;
-        
-        public CCWService (string endpointURL, string applicationIdentifier, string basicAuth_username, string basicAuth_password)
+
+        public CCWService(string endpointURL, string applicationIdentifier, string basicAuth_username, string basicAuth_password)
         {
             this.endpointURL = endpointURL;
             this.applicationIdentifier = applicationIdentifier;
             this.basicAuth_username = basicAuth_username;
-            this.basicAuth_password = basicAuth_password;            
+            this.basicAuth_password = basicAuth_password;
 
             this.Client = new CVSECommonClient(GetBinding(), new EndpointAddress(this.endpointURL));
 
@@ -32,14 +32,14 @@ namespace SchoolBus.WS.CCW.Facade.Service
         {
             var task = this.Client.getBCVehicleForSerialNumberAsync(serialNumber, userId, guid, directory, applicationIdentifier);
             task.Wait();
-            return task.Result;            
+            return task.Result;
         }
 
         public VehicleDescription GetBCVehicleForRegistrationNumber(string registrationNumber, string userId, string guid, string directory)
         {
             var task = this.Client.getBCVehicleForRegistrationNumberAsync(registrationNumber, userId, guid, directory, applicationIdentifier);
             task.Wait();
-            return task.Result;            
+            return task.Result;
         }
 
 
@@ -47,12 +47,19 @@ namespace SchoolBus.WS.CCW.Facade.Service
         {
             var task = this.Client.getBCVehicleForLicensePlateNumberAsync(licensePlateNumber, userId, guid, directory, applicationIdentifier);
             task.Wait();
-            return task.Result;            
+            return task.Result;
         }
 
         public VehicleDescription GetBCVehicleForDecalNumber(string decalNumber, string userId, string guid, string directory)
         {
             var task = this.Client.getBCVehicleForDecalNumberAsync(decalNumber, userId, guid, directory, applicationIdentifier);
+            task.Wait();
+            return task.Result;
+        }
+
+        public IcbcVehicleDescription GetIcbcVehicleForRegistrationNumberAsync(string registrationNumber, System.DateTime date, string userId, string guid, string directory)
+        {
+            var task = this.Client.getIcbcVehicleForRegistrationNumberAsync(registrationNumber, date, userId, guid, directory, applicationIdentifier);
             task.Wait();
             return task.Result;
         }
