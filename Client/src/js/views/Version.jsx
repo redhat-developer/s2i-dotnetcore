@@ -105,6 +105,10 @@ var Version = React.createClass({
               <ColLabel md={2}>Git Commit</ColLabel>
               <ColField md={10}>{ this.state.commit }</ColField>
             </Row>
+            <Row>
+              <ColLabel md={2}>User Agent</ColLabel>
+              <ColField md={10}>{ navigator.userAgent }</ColField>
+            </Row>
           </Well>
           <Well>
             <h3>Application</h3>
@@ -145,7 +149,7 @@ var Version = React.createClass({
             </Row>
           </Well>
           <Button onClick={ this.showRaw }>Show Raw Versions</Button>
-          <Well className={ this.state.showRawSection ? '' : 'hide' }>
+          <Well style={{ marginTop: '20px' }} className={ this.state.showRawSection ? '' : 'hide' }>
             <div>{ JSON.stringify(this.props.version) }</div>
           </Well>
         </div>;
