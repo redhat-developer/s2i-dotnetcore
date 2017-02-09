@@ -69,6 +69,8 @@ namespace CCW.Models
         /// <param name="ICBCRegOwnerStatus">The status (as defined by ICBC) of the registered owner of the vehicle..</param>
         /// <param name="ICBCRegOwnerRODL">Registered Owners Driver Licence number.</param>
         /// <param name="ICBCRegOwnerPODL">Previous Owners Driver Licence number.</param>
+        /// <param name="ICBCLicencePlateNumber">The License Plate Number for the vehicle.</param>
+        /// <param name="ICBCVehicleIdentificationNumber">A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number..</param>
         /// <param name="NSCClientNum">National Safety Code Carrier Number on ICBC client system.</param>
         /// <param name="NSCCarrierName">National Safety Code Carrier Name on ICBC client system.</param>
         /// <param name="NSCCarrierConditions">Conditions imposed on the carrier (bus owner) within NSC.</param>
@@ -79,7 +81,7 @@ namespace CCW.Models
         /// <param name="NSCPolicyExpiryDate">From NSC - The data of expiration of the policy..</param>
         /// <param name="NSCPolicyStatus">From NSC - The latest status of the policy..</param>
         /// <param name="NSCPlateDecal">From NSC - The plate decal as defined by NSC on the vehicle.</param>
-        public CCWData(int Id, string ICBCRegistrationNumber = null, int? ICBCModelYear = null, string ICBCVehicleType = null, string ICBCRateClass = null, string ICBCCVIPDecal = null, int? ICBCFleetUnitNo = null, int? ICBCGrossVehicleWeight = null, string ICBCMake = null, string ICBCBody = null, string ICBCRebuiltStatus = null, DateTime? ICBCCVIPExpiry = null, int? ICBCNetWt = null, string ICBCModel = null, string ICBCFuel = null, int? ICBCSeatingCapacity = null, string ICBCColour = null, string ICBCNotesAndOrders = null, DateTime? ICBCOrderedOn = null, string ICBCRegOwnerName = null, string ICBCRegOwnerAddr1 = null, string ICBCRegOwnerAddr2 = null, string ICBCRegOwnerCity = null, string ICBCRegOwnerProv = null, string ICBCRegOwnerPostalCode = null, string ICBCRegOwnerStatus = null, string ICBCRegOwnerRODL = null, string ICBCRegOwnerPODL = null, string NSCClientNum = null, string NSCCarrierName = null, string NSCCarrierConditions = null, string NSCCarrierSafetyRating = null, string NSCPolicyNumber = null, DateTime? NSCPolicyEffectiveDate = null, DateTime? NSCPolicyStatusDate = null, DateTime? NSCPolicyExpiryDate = null, string NSCPolicyStatus = null, string NSCPlateDecal = null)
+        public CCWData(int Id, string ICBCRegistrationNumber = null, int? ICBCModelYear = null, string ICBCVehicleType = null, string ICBCRateClass = null, string ICBCCVIPDecal = null, int? ICBCFleetUnitNo = null, int? ICBCGrossVehicleWeight = null, string ICBCMake = null, string ICBCBody = null, string ICBCRebuiltStatus = null, DateTime? ICBCCVIPExpiry = null, int? ICBCNetWt = null, string ICBCModel = null, string ICBCFuel = null, int? ICBCSeatingCapacity = null, string ICBCColour = null, string ICBCNotesAndOrders = null, DateTime? ICBCOrderedOn = null, string ICBCRegOwnerName = null, string ICBCRegOwnerAddr1 = null, string ICBCRegOwnerAddr2 = null, string ICBCRegOwnerCity = null, string ICBCRegOwnerProv = null, string ICBCRegOwnerPostalCode = null, string ICBCRegOwnerStatus = null, string ICBCRegOwnerRODL = null, string ICBCRegOwnerPODL = null, string ICBCLicencePlateNumber = null, string ICBCVehicleIdentificationNumber = null, string NSCClientNum = null, string NSCCarrierName = null, string NSCCarrierConditions = null, string NSCCarrierSafetyRating = null, string NSCPolicyNumber = null, DateTime? NSCPolicyEffectiveDate = null, DateTime? NSCPolicyStatusDate = null, DateTime? NSCPolicyExpiryDate = null, string NSCPolicyStatus = null, string NSCPlateDecal = null)
         {
             this.Id = Id;
             this.ICBCRegistrationNumber = ICBCRegistrationNumber;
@@ -109,6 +111,8 @@ namespace CCW.Models
             this.ICBCRegOwnerStatus = ICBCRegOwnerStatus;
             this.ICBCRegOwnerRODL = ICBCRegOwnerRODL;
             this.ICBCRegOwnerPODL = ICBCRegOwnerPODL;
+            this.ICBCLicencePlateNumber = ICBCLicencePlateNumber;
+            this.ICBCVehicleIdentificationNumber = ICBCVehicleIdentificationNumber;
             this.NSCClientNum = NSCClientNum;
             this.NSCCarrierName = NSCCarrierName;
             this.NSCCarrierConditions = NSCCarrierConditions;
@@ -358,6 +362,24 @@ namespace CCW.Models
         public string ICBCRegOwnerPODL { get; set; }
 
         /// <summary>
+        /// The License Plate Number for the vehicle
+        /// </summary>
+        /// <value>The License Plate Number for the vehicle</value>
+        [MetaDataExtension(Description = "The License Plate Number for the vehicle")]
+        [MaxLength(255)]
+
+        public string ICBCLicencePlateNumber { get; set; }
+
+        /// <summary>
+        /// A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number.
+        /// </summary>
+        /// <value>A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number.</value>
+        [MetaDataExtension(Description = "A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number.")]
+        [MaxLength(255)]
+
+        public string ICBCVehicleIdentificationNumber { get; set; }
+
+        /// <summary>
         /// National Safety Code Carrier Number on ICBC client system
         /// </summary>
         /// <value>National Safety Code Carrier Number on ICBC client system</value>
@@ -477,6 +499,8 @@ namespace CCW.Models
             sb.Append("  ICBCRegOwnerStatus: ").Append(ICBCRegOwnerStatus).Append("\n");
             sb.Append("  ICBCRegOwnerRODL: ").Append(ICBCRegOwnerRODL).Append("\n");
             sb.Append("  ICBCRegOwnerPODL: ").Append(ICBCRegOwnerPODL).Append("\n");
+            sb.Append("  ICBCLicencePlateNumber: ").Append(ICBCLicencePlateNumber).Append("\n");
+            sb.Append("  ICBCVehicleIdentificationNumber: ").Append(ICBCVehicleIdentificationNumber).Append("\n");
             sb.Append("  NSCClientNum: ").Append(NSCClientNum).Append("\n");
             sb.Append("  NSCCarrierName: ").Append(NSCCarrierName).Append("\n");
             sb.Append("  NSCCarrierConditions: ").Append(NSCCarrierConditions).Append("\n");
@@ -665,6 +689,16 @@ namespace CCW.Models
                     this.ICBCRegOwnerPODL.Equals(other.ICBCRegOwnerPODL)
                 ) &&
                 (
+                    this.ICBCLicencePlateNumber == other.ICBCLicencePlateNumber ||
+                    this.ICBCLicencePlateNumber != null &&
+                    this.ICBCLicencePlateNumber.Equals(other.ICBCLicencePlateNumber)
+                ) &&
+                (
+                    this.ICBCVehicleIdentificationNumber == other.ICBCVehicleIdentificationNumber ||
+                    this.ICBCVehicleIdentificationNumber != null &&
+                    this.ICBCVehicleIdentificationNumber.Equals(other.ICBCVehicleIdentificationNumber)
+                ) &&
+                (
                     this.NSCClientNum == other.NSCClientNum ||
                     this.NSCClientNum != null &&
                     this.NSCClientNum.Equals(other.NSCClientNum)
@@ -835,6 +869,14 @@ namespace CCW.Models
                 if (this.ICBCRegOwnerPODL != null)
                 {
                     hash = hash * 59 + this.ICBCRegOwnerPODL.GetHashCode();
+                }
+                if (this.ICBCLicencePlateNumber != null)
+                {
+                    hash = hash * 59 + this.ICBCLicencePlateNumber.GetHashCode();
+                }
+                if (this.ICBCVehicleIdentificationNumber != null)
+                {
+                    hash = hash * 59 + this.ICBCVehicleIdentificationNumber.GetHashCode();
                 }
                 if (this.NSCClientNum != null)
                 {

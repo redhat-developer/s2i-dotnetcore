@@ -17,5 +17,7 @@ namespace SchoolBus.WS.CCW.Facade.Service
         VehicleDescription GetBCVehicleForDecalNumber(string decalNumber, string userId, string guid, string directory);
 
         ClientOrganization GetCurrentClientOrganization(string clientNumber, string organizationNameCode, string userId, string guid, string directory);
+
+        IcbcVehicleDescription GetIcbcVehicleForRegistrationNumberAsync(string registrationNumber, System.DateTime date, string userId, string guid, string directory);
     }
 }

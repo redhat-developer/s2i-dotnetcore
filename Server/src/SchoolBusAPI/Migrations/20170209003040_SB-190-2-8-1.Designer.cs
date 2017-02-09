@@ -8,9 +8,10 @@ using SchoolBusAPI.Models;
 namespace SchoolBusAPI.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    partial class DbAppContextModelSnapshot : ModelSnapshot
+    [Migration("20170209003040_SB-190-2-8-1")]
+    partial class SB190281
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -856,9 +857,6 @@ namespace SchoolBusAPI.Migrations
                     b.Property<bool>("Active")
                         .HasColumnName("ACTIVE");
 
-                    b.Property<int?>("DistrictRefId")
-                        .HasColumnName("DISTRICT_REF_ID");
-
                     b.Property<string>("Email")
                         .HasColumnName("EMAIL")
                         .HasMaxLength(255);
@@ -888,8 +886,6 @@ namespace SchoolBusAPI.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DistrictRefId");
 
                     b.ToTable("SBI_USER");
                 });
@@ -1103,13 +1099,6 @@ namespace SchoolBusAPI.Migrations
                 });
 
             modelBuilder.Entity("SchoolBusAPI.Models.ServiceArea", b =>
-                {
-                    b.HasOne("SchoolBusAPI.Models.District", "District")
-                        .WithMany()
-                        .HasForeignKey("DistrictRefId");
-                });
-
-            modelBuilder.Entity("SchoolBusAPI.Models.User", b =>
                 {
                     b.HasOne("SchoolBusAPI.Models.District", "District")
                         .WithMany()
