@@ -24,6 +24,7 @@ const App = <Provider store={ store }>
     <Route path="/" component={ Main }>
       <Route path="home" component={ Home }/>
       <Route path="school-buses" component={ SchoolBuses }/>
+      <Route path="school-buses/owned-by/:ownerId" component={ SchoolBuses }/>
       <Route path="school-buses/:schoolBusId" component={ SchoolBusesDetail }/>
       <Route path="owners" component={ Owners }/>
       <Route path="owners/:ownerId" component={ OwnersDetail }/>

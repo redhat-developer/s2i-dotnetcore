@@ -46,6 +46,8 @@ var OwnersDetail = React.createClass({
 
       contact: {},
 
+      isNew: this.props.params.ownerId == 0,
+
       ui : {
         // Contacts
         sortField: this.props.ui.sortField || 'name',
@@ -125,7 +127,9 @@ var OwnersDetail = React.createClass({
         <Row id="owners-top">
           <Col md={10}>
             <Label bsStyle={ owner.isActive ? 'success' : 'danger'}>{ owner.isActive ? 'Verified Active' : owner.status }</Label>
-            <span className={ `label label-${inspectionStyle}` } dangerouslySetInnerHTML={{ __html: inspectionNotice }}></span>
+            { owner.nextInspectionDate &&
+              <span className={ `label label-${inspectionStyle}` } dangerouslySetInnerHTML={{ __html: inspectionNotice }}></span>
+            }
           </Col>
           <Col md={2}>
             <div className="pull-right">
@@ -163,7 +167,7 @@ var OwnersDetail = React.createClass({
                 return <div id="owners-data">
                   <Row>
                     <ColLabel md={4}>Number of School Buses</ColLabel>
-                    <ColField md={8}>{ owner.numberOfBuses }</ColField>
+                    <ColField md={8}><a href={ `#school-buses/owned-by/${ owner.id }` }>{ owner.numberOfBuses }</a></ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Owner Added On</ColLabel>

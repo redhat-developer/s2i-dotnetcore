@@ -9,15 +9,19 @@ import { LinkContainer } from 'react-router-bootstrap';
 import _ from 'lodash';
 import Promise from 'bluebird';
 
+import OwnersAddDialog from './dialogs/OwnersAddDialog.jsx';
+
 import * as Action from '../actionTypes';
 import * as Api from '../api';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
 import CheckboxControl from '../components/CheckboxControl.jsx';
+import Confirm from '../components/Confirm.jsx';
 import Favourites from '../components/Favourites.jsx';
 import FilterDropdown from '../components/FilterDropdown.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
+import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
@@ -37,17 +41,21 @@ TODO:
 var Owners = React.createClass({
   propTypes: {
     ownerList: React.PropTypes.object,
+    owner: React.PropTypes.object,
     districts: React.PropTypes.object,
     inspectors: React.PropTypes.object,
     owners: React.PropTypes.object,
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
+    router: React.PropTypes.object,
   },
 
   getInitialState() {
     return {
       loading: true,
+
+      showAddDialog: false,
 
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
@@ -125,8 +133,27 @@ var Owners = React.createClass({
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
 
-  add() {
+  openAddDialog() {
+    this.setState({ showAddDialog: true });
+  },
 
+  closeAddDialog() {
+    this.setState({ showAddDialog: false });
+  },
+
+  saveNewOwner(owner) {
+    Api.addOwner(owner).then(() => {
+      // Open it up
+      this.props.router.push({
+        pathname: `owners/${ this.props.owner.id }`,
+      });
+    });
+  },
+
+  delete(owner) {
+    Api.deleteOwner(owner).then(() => {
+      this.fetch();
+    });
   },
 
   email() {
@@ -143,73 +170,84 @@ var Owners = React.createClass({
     var owners = _.sortBy(this.props.owners, 'name');
 
     return <div id="owners-list">
-      <Well id="owners-bar" bsSize="small" className="clearfix">
-        <Row>
-          <Col md={10}>
-            <ButtonToolbar id="owners-search">
-              <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
-                items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
-              <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors"
-                items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
-              <FilterDropdown id="ownerId" placeholder="Owner" blankLine
-                items={ owners } selectedId={ this.state.search.ownerId } updateState={ this.updateSearchState } />
-              <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
-              <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
-            </ButtonToolbar>
-          </Col>
-          <Col md={1}>
-            <Favourites id="owners-faves-dropdown" type="owner" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } />
-          </Col>
-          <Col md={1}>
-            <div id="owners-buttons">
-              <ButtonGroup>
-                <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
-                <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
-              </ButtonGroup>
-            </div>
-          </Col>
-        </Row>
-      </Well>
+      <div>
+        <Well id="owners-bar" bsSize="small" className="clearfix">
+          <Row>
+            <Col md={10}>
+              <ButtonToolbar id="owners-search">
+                <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
+                  items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
+                <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors"
+                  items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
+                <FilterDropdown id="ownerId" placeholder="Owner" blankLine
+                  items={ owners } selectedId={ this.state.search.ownerId } updateState={ this.updateSearchState } />
+                <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
+                <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
+              </ButtonToolbar>
+            </Col>
+            <Col md={1}>
+              <Favourites id="owners-faves-dropdown" type="owner" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } />
+            </Col>
+            <Col md={1}>
+              <div id="owners-buttons">
+                <ButtonGroup>
+                  <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
+                  <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
+                </ButtonGroup>
+              </div>
+            </Col>
+          </Row>
+        </Well>
 
-      {(() => {
-        if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-        if (Object.keys(this.props.ownerList).length === 0) { return <Alert bsStyle="success">No owners</Alert>; }
+        {(() => {
+          if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+          if (Object.keys(this.props.ownerList).length === 0) { return <Alert bsStyle="success">No owners</Alert>; }
 
-        var ownerList = _.sortBy(this.props.ownerList, this.state.ui.sortField);
-        if (this.state.ui.sortDesc) {
-          _.reverse(ownerList);
-        }
-
-        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={[
-          { field: 'name',                   title: 'Name'            },
-          { field: 'primaryContactName',     title: 'Primary Contact' },
-          { field: 'numberOfBuses',          title: 'School Buses',    style: { textAlign: 'center' } },
-          { field: 'nextInspectionDateSort', title: 'Next Inspection', style: { textAlign: 'center' } },
-          { field: 'addOwner',               title: 'Add Owner',       style: { textAlign: 'right'  },
-            children: [ <Button key="add" title="add" bsSize="xsmall" onClick={ this.add }><Glyphicon glyph="plus" /></Button> ],
-          },
-        ]}>
-          {
-            _.map(ownerList, (owner) => {
-              return <tr key={ owner.id } className={ owner.isActive ? null : 'info' }>
-                <td>{ owner.name }</td>
-                <td>{ owner.primaryContactName }</td>
-                <td style={{ textAlign: 'center' }}>{ owner.numberOfBuses }</td>
-                <td style={{ textAlign: 'center' }}>{ formatDateTime(owner.nextInspectionDate, 'MM/DD/YYYY') }
-                  { owner.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
-                  { owner.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }
-                </td>
-                <td style={{ textAlign: 'right' }}>
-                  <LinkContainer to={{ pathname: 'owners/' + owner.id }}>
-                    <Button title="edit" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
-                  </LinkContainer>
-                </td>
-              </tr>;
-            })
+          var ownerList = _.sortBy(this.props.ownerList, this.state.ui.sortField);
+          if (this.state.ui.sortDesc) {
+            _.reverse(ownerList);
           }
-        </SortTable>;
-      })()}
 
+          return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={[
+            { field: 'name',                   title: 'Name'            },
+            { field: 'primaryContactName',     title: 'Primary Contact' },
+            { field: 'numberOfBuses',          title: 'School Buses',    style: { textAlign: 'center' } },
+            { field: 'nextInspectionDateSort', title: 'Next Inspection' },
+            { field: 'addOwner',               title: 'Add Owner',       style: { textAlign: 'right'  },
+              node: <Button title="add" bsSize="xsmall" onClick={ this.openAddDialog }><Glyphicon glyph="plus" /></Button>,
+            },
+          ]}>
+            {
+              _.map(ownerList, (owner) => {
+                return <tr key={ owner.id } className={ owner.isActive ? null : 'info' }>
+                  <td>{ owner.name }</td>
+                  <td>{ owner.primaryContactName }</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <a href={ `#school-buses/owned-by/${ owner.id }` }>{ owner.numberOfBuses }</a>
+                  </td>
+                  <td>{ formatDateTime(owner.nextInspectionDate, 'MM/DD/YYYY') }
+                    { owner.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
+                    { owner.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }
+                  </td>
+                  <td style={{ textAlign: 'right' }}>
+                    <ButtonGroup>
+                      <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, owner) }/> }>
+                        <Button className={ owner.canDelete ? '' : 'hidden' } title="deleteOwner" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                      </OverlayTrigger>
+                      <LinkContainer to={{ pathname: 'owners/' + owner.id }}>
+                        <Button title="edit" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                      </LinkContainer>
+                    </ButtonGroup>
+                  </td>
+                </tr>;
+              })
+            }
+          </SortTable>;
+        })()}
+      </div>
+      { this.state.showAddDialog &&
+        <OwnersAddDialog show={ this.state.showAddDialog } onSave={ this.saveNewOwner } onClose= { this.closeAddDialog } />
+      }
     </div>;
   },
 });
@@ -218,6 +256,7 @@ var Owners = React.createClass({
 function mapStateToProps(state) {
   return {
     ownerList: state.models.owners,
+    owner: state.models.owner,
     districts: state.lookups.districts,
     inspectors: state.lookups.inspectors,
     owners: state.lookups.owners,
