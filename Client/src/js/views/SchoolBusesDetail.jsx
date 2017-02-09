@@ -77,6 +77,8 @@ var SchoolBusesDetail = React.createClass({
         id: 0,
         schoolBusOwner: { id: this.props.owner.id },
         icbcRegistrationNumber: this.props.schoolBusCCW.icbcRegistrationNumber,
+        licencePlateNumber: this.props.schoolBusCCW.icbcLicencePlateNumber,
+        vehicleIdentificationNumber: this.props.schoolBusCCW.icbcVehicleIdentificationNumber,
       }});
       // Open editor to add new bus
       this.openEditDialog();
