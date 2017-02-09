@@ -137,19 +137,7 @@
                   {
                     "name": "MIDDLEWARE_NAME",
                     "value": "${BACKEND_NAME}:8080"
-                  },
-                  {
-                    "name": "BACKEND_NAME",
-                    "value": "${BACKEND_NAME}:8080"
-                  },
-                  {
-                    "name": "POSTGRESQL_DATABASE",
-                    "value": "${DATABASE_NAME}"
-                  },
-                  {
-                    "name": "ADMINPW",
-                    "value": "${SCHOOLBUS_ADMINPW}"
-                  }
+                  }                  
                 ],
                 "readinessProbe": {
                   "timeoutSeconds": 3000,
@@ -182,9 +170,9 @@
       "kind": "Service",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${MIDDLEWARE_NAME}",
+        "name": "${CCW_NAME}",
         "annotations": {
-          "description": "Exposes and load balances the middleware pods"
+          "description": "Exposes and load balances the CCW pods"
         }
       },
       "spec": {
@@ -194,175 +182,146 @@
 				"protocol": "TCP",
 				"port": 8080,
 				"targetPort": 8080
-			},
-			{
-				"name": "metrics",
-				"containerPort": 9779,
-				"port": 9779,
-				"protocol": "TCP"
-			},
-			{
-				"name": "jolokia",
-				"containerPort": 8778,
-				"port": 8778,				
-				"protocol": "TCP"
 			}
         ],
         "selector": {
-          "app": "${MIDDLEWARE_NAME}"
+          "name": "${CCW_NAME}"
         }
       }
     },
-    {
-		"kind": "DeploymentConfig",
-		"apiVersion": "v1",
-		"metadata": {
-			"name": "${MIDDLEWARE_NAME}",
-			"generation": 1,
-			"creationTimestamp": null,
-			"labels": {
-				"app": "${MIDDLEWARE_NAME}",
-				"component": "fuse-server",
-				"container": "java",
-				"group": "quickstarts",
-				"project": "fuse-server",
-				"provider": "s2i",
-				"version": "2.2.0.redhat-079"
-			}
-		},
-		"spec": {
-			"strategy": {
-				"type": "Rolling",
-				"rollingParams": {
-					"updatePeriodSeconds": 1,
-					"intervalSeconds": 1,
-					"timeoutSeconds": 600,
-					"maxUnavailable": "25%",
-					"maxSurge": "25%"
-				},
-				"resources": {}
-			},
-			"triggers": [
-				{
-					"type": "ConfigChange"
-				},
-				{
-					"type": "ImageChange",
-					"imageChangeParams": {
-						"automatic": true,
-						"containerNames": [
-							"${MIDDLEWARE_NAME}"
-						],
-						"from": {
-							"kind": "ImageStreamTag",
-							"namespace": "${APP_IMAGE_NAMESPACE}",
-							"name": "${MIDDLEWARE_IMAGE_NAME}:${APP_DEPLOYMENT_TAG}"
-						}
-					}
-				}
-			],
-			"replicas": 1,
-			"test": false,
-			"selector": {
-				"component": "${MIDDLEWARE_NAME}",
-				"container": "java",
-				"deploymentconfig": "${MIDDLEWARE_NAME}",
-				"group": "quickstarts",
-				"project": "${MIDDLEWARE_NAME}",
-				"provider": "s2i",
-				"version": "2.2.0.redhat-079"
-			},
-			"template": {
-				"metadata": {
-					"creationTimestamp": null,
-					"labels": {
-						"app": "${MIDDLEWARE_NAME}",
-						"component": "${MIDDLEWARE_NAME}",
-						"container": "java",
-						"deploymentconfig": "${MIDDLEWARE_NAME}",
-						"group": "quickstarts",
-						"project": "${MIDDLEWARE_NAME}",
-						"provider": "s2i",
-						"version": "2.2.0.redhat-079"
-					},
-					"annotations": {
-						"openshift.io/generated-by": "OpenShiftNewApp"
-					}
-				},
-				"spec": {
-					"containers": [
-						{
-							"name": "${MIDDLEWARE_NAME}",
-							"image": "library/fuse-server:latest",
-							"ports": [
-								{
-									"name": "http",
-									"containerPort": 8080,
-									"protocol": "TCP"
-								},
-								{
-									"name": "metrics",
-									"containerPort": 9779,
-									"protocol": "TCP"
-								},
-								{
-									"name": "jolokia",
-									"containerPort": 8778,
-									"protocol": "TCP"
-								}
-							],
-							"env": [
-								{
-									"name": "HTTP_PORT",
-									"value": "8080"
-								},
-								{
-									"name": "BACKEND_NAME",
-									"value": "${BACKEND_NAME}:8080"
-								}
-							],
-							"resources": {},
-							"readinessProbe": {
-								"exec": {
-									"command": [
-										"/bin/bash",
-										"-c",
-										"(curl -f 127.0.0.1:8080) \u003e/dev/null 2\u003e\u00261; test $? != 7"
-									]
-								},
-								"initialDelaySeconds": 30,
-								"timeoutSeconds": 5,
-								"periodSeconds": 10,
-								"successThreshold": 1,
-								"failureThreshold": 3
-							},
-							"livenessProbe": {
-								"exec": {
-									"command": [
-										"/bin/bash",
-										"-c",
-										"(curl -f 127.0.0.1:8080) \u003e/dev/null 2\u003e\u00261; test $? != 7"
-									]
-								},
-								"initialDelaySeconds": 30,
-								"timeoutSeconds": 5,
-								"periodSeconds": 10,
-								"successThreshold": 1,
-								"failureThreshold": 3
-							},
-							"terminationMessagePath": "/dev/termination-log",
-							"imagePullPolicy": "Always"
-						}
-					],
-					"restartPolicy": "Always",
-					"terminationGracePeriodSeconds": 30,
-					"dnsPolicy": "ClusterFirst",
-					"securityContext": {}
-				}
-			}
-		},
-		"status": {}
-	},	
+	{
+    "kind": "DeploymentConfig",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${CCW_NAME}",
+        "generation": 1,
+        "creationTimestamp": null,
+        "labels": {
+            "template": "schoolbus-environment"
+        },
+        "annotations": {
+            "description": "Defines how to deploy the ccw server"
+        }
+    },
+    "spec": {
+        "strategy": {
+            "type": "Rolling",
+            "rollingParams": {
+                "updatePeriodSeconds": 1,
+                "intervalSeconds": 1,
+                "timeoutSeconds": 600,
+                "maxUnavailable": "25%",
+                "maxSurge": "25%"
+            },
+            "resources": {}
+        },
+        "triggers": [
+            {
+                "type": "ConfigChange"
+            },
+            {
+                "type": "ImageChange",
+                "imageChangeParams": {
+                    "automatic": true,
+                    "containerNames": [
+                        "${CCW_NAME}"
+                    ],
+                    "from": {
+                        "kind": "ImageStreamTag",
+                        "namespace": "tran-schoolbus-tools",
+                        "name": "${CCW_NAME}:${APP_DEPLOYMENT_TAG}"
+                    }
+                }
+            }
+        ],
+        "replicas": 1,
+        "test": false,
+        "selector": {
+            "name": "${CCW_NAME}"
+        },
+        "template": {
+            "metadata": {
+                "name": "${CCW_NAME}",
+                "creationTimestamp": null,
+                "labels": {
+                    "name": "${CCW_NAME}"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "secret-volume",
+                        "secret": {
+                            "secretName": "ccw-secret",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "${CCW_NAME}",
+                        "image": " ",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "DATABASE_SERVICE_NAME",
+                                "value": "postgresql"
+                            },
+                            {
+                                "name": "POSTGRESQL_USER",
+                                "value": "userUXN"
+                            },
+                            {
+                                "name": "POSTGRESQL_PASSWORD",
+                                "value": "83s1gsJMS4x5fonm"
+                            },
+                            {
+                                "name": "POSTGRESQL_DATABASE",
+                                "value": "schoolbus"
+                            },
+                            {
+                                "name": "ADMINPW",
+                                "value": "plbJL5buxF710vCh"
+                            },
+                            {
+                                "name": "CCWInitializationFile",
+                                "value": "/secrets/ccw.json"
+                            },
+                            {
+                                "name": "ASPNETCORE_ENVIRONMENT",
+                                "value": "Staging"
+                            }
+                        ],
+                        "resources": {
+                            "limits": {
+                                "memory": "512Mi"
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "name": "secret-volume",
+                                "readOnly": true,
+                                "mountPath": "/secrets"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "IfNotPresent"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "securityContext": {}
+            }
+        }
+    },
+    "status": {}
+    },
 	{
       "kind": "Service",
       "apiVersion": "v1",
@@ -407,7 +366,7 @@
             },
             "resources": {}
         },
-        "triggers": [		
+        "triggers": [
           {
             "type": "ConfigChange"
           },
@@ -474,6 +433,10 @@
                     "value": "/secrets/users.json"
                   },
 				  {
+				    "name": "CCW_SERVICE_NAME",
+					"value": "${CCW_NAME}"
+				  },
+				  {
 				    "name": "ASPNETCORE_ENVIRONMENT",
 					"value": "Development"
 				  }
@@ -522,7 +485,7 @@
               {
                 "name": "secret-volume",
                 "secret": {
-                  "secretName": "secret-volume"
+                  "secretName": "schoolbus-secret"
                 }
               }
             ]
@@ -837,11 +800,11 @@
       "value": "frontend"
     },
 	{
-      "name": "MIDDLEWARE_NAME",
-      "displayName": "Middleware Name",
-      "description": "The name assigned to all of the middleware objects defined in this template.",
+      "name": "CCW_NAME",
+      "displayName": "CCW Name",
+      "description": "The name assigned to all of the CCW microservice objects defined in this template.",
       "required": true,
-      "value": "api-proxy"
+      "value": "ccw"
     },
 	{
       "name": "BACKEND_NAME",
@@ -941,14 +904,14 @@
       "name": "FRONTEND_READINESS_PROBE_URL",
       "displayName": "Frontend Readiness probe URL",
       "description": "URL that can be used to determine if application is 'ready'.",
-      "value": "/",
+      "value": "/test/headers",
       "required": true
     },
     {
       "name": "FRONTEND_LIVENESS_PROBE_URL",
       "displayName": "Frontend Liveness probe URL",
       "description": "URL that can be used to determine if application is 'live'.",
-      "value": "/",
+      "value": "/test/headers",
       "required": true
     },	
 	{
