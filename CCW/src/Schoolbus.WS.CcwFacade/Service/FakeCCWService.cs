@@ -38,6 +38,11 @@ namespace SchoolBus.WS.CCW.Facade.Service
             return MockClientOrganization.GetClientOrganization();
         }
 
+        public ClientIndividual GetCurrentClientIndividual(string clientNumber, string organizationNameCode, string userId, string guid, string directory)
+        {
+            return new ClientIndividual();
+        }
+
         public IcbcVehicleDescription GetIcbcVehicleForRegistrationNumberAsync(string registrationNumber, System.DateTime date, string userId, string guid, string directory)
         {
             return new IcbcVehicleDescription();
