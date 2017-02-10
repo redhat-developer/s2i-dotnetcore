@@ -8,6 +8,21 @@ import * as Api from '../api';
 
 import Spinner from '../components/Spinner.jsx';
 
+/*
+
+For a given user (accessed by clicking on a user from the user search screen) show:
+  First Name
+  Surname
+  SM Id (IDIR)
+  Home Service Area
+  Active/Not Active status
+
+Enable editing the data so that the user can update all the fields.
+
+It should be possible to invoke the screen in add mode for adding a new user to the system.
+
+*/
+
 var UserManagementEdit = React.createClass({
   propTypes: {
     user: React.PropTypes.object,

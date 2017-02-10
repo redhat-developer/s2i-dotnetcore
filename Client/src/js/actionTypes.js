@@ -42,6 +42,8 @@ export const DELETE_FAVOURITE = 'DELETE_FAVOURITE';
 // Users
 export const UPDATE_USERS = 'UPDATE_USERS';
 export const UPDATE_USER = 'UPDATE_USER';
+export const ADD_USER = 'ADD_USER';
+export const DELETE_USER = 'DELETE_USER';
 
 // Inspectors
 export const UPDATE_INSPECTORS = 'UPDATE_INSPECTORS';
@@ -50,6 +52,7 @@ export const UPDATE_INSPECTORS = 'UPDATE_INSPECTORS';
 export const UPDATE_BUSES = 'UPDATE_BUSES';
 export const ADD_BUS = 'ADD_BUS';
 export const UPDATE_BUS = 'UPDATE_BUS';
+export const DELETE_BUS = 'DELETE_BUS';
 export const UPDATE_BUS_ATTACHMENTS = 'UPDATE_BUS_ATTACHMENTS';
 export const ADD_BUS_CCW = 'ADD_BUS_CCW';
 export const UPDATE_BUS_CCW = 'UPDATE_BUS_CCW';

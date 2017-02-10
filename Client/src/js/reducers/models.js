@@ -44,6 +44,12 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
     case Action.UPDATE_USER:
       return { ...state, user: action.user };
 
+    case Action.ADD_USER:
+      return { ...state, user: action.user };
+
+    case Action.DELETE_USER:
+      return { ...state, user: action.user };
+
     case Action.UPDATE_INSPECTORS:
       return { ...state, inspectors: action.inspectors };
 
@@ -55,6 +61,9 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
       return { ...state, schoolBus: action.schoolBus };
 
     case Action.UPDATE_BUS:
+      return { ...state, schoolBus: action.schoolBus };
+
+    case Action.DELETE_BUS:
       return { ...state, schoolBus: action.schoolBus };
 
     case Action.UPDATE_BUS_ATTACHMENTS:
