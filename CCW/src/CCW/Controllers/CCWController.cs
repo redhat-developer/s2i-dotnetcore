@@ -246,7 +246,7 @@ namespace CCW.Controllers
                 // get the nsc client organization data.
 
                 string nscnumber = vehicle.nscNumber;
-                string organizationNameCode = "LE";
+                string organizationNameCode = vehicle.ownerNameCode;
                 try
                 {
                     ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(nscnumber, organizationNameCode, userId, guid, directory);
