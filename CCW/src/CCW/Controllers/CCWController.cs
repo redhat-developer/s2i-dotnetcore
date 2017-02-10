@@ -263,10 +263,10 @@ namespace CCW.Controllers
                         if (x is FaultException<CVSECommonException>) // From the web service.
                         {
                             _logger.LogDebug("CVSECommonException:");
-                            _logger.LogDebug(JsonConvert.SerializeObject(x, Formatting.Indented, new JsonSerializerSettings
-                            {
-                                ReferenceLoopHandling = ReferenceLoopHandling.Serialize
-                            }));
+                            FaultException < CVSECommonException > fault =(FaultException<CVSECommonException>) x;
+                            _logger.LogDebug("errorId: {0}", fault.Detail.errorId );
+                            _logger.LogDebug("errorMessage: {0}", fault.Detail.errorMessage);
+                            _logger.LogDebug("systemError: {0}", fault.Detail.systemError);
                             return true;
                         }
                         return true; // ignore other exceptions
@@ -294,10 +294,10 @@ namespace CCW.Controllers
                         if (x is FaultException<CVSECommonException>) // From the web service.
                         {
                             _logger.LogDebug("CVSECommonException:");
-                            _logger.LogDebug(JsonConvert.SerializeObject(x, Formatting.Indented, new JsonSerializerSettings
-                            {
-                                ReferenceLoopHandling = ReferenceLoopHandling.Serialize
-                            }));
+                            FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
+                            _logger.LogDebug("errorId: {0}", fault.Detail.errorId);
+                            _logger.LogDebug("errorMessage: {0}", fault.Detail.errorMessage);
+                            _logger.LogDebug("systemError: {0}", fault.Detail.systemError);
                             return true;
                         }
                         return true; // ignore other exceptions
