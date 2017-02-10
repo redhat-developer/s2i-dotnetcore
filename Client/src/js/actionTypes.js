@@ -2,6 +2,7 @@
 export const REQUESTS_BEGIN = 'REQUESTS_BEGIN';
 export const REQUESTS_END = 'REQUESTS_END';
 export const REQUESTS_ERROR = 'REQUESTS_ERROR';
+export const REQUESTS_CLEAR = 'REQUESTS_CLEAR';
 
 // Current User
 export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER';
