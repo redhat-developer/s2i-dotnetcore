@@ -51,9 +51,7 @@ namespace SampleApp
                 })
                 .UseUrls("http://0.0.0.0:8080")
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                // Specify the startup class by Assembly name
-                // The assembly is named correctly by setting DOTNET_ASSEMBLY_NAME
-                .UseStartup("SampleApp")
+                .UseStartup<Startup>()
                 .Build();
 
             // The following section should be used to demo sockets
