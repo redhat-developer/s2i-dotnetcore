@@ -245,8 +245,9 @@ namespace CCW.Controllers
 
                 // get the nsc client organization data.
 
-                string nscnumber = vehicle.nscNumber;
-                string organizationNameCode = vehicle.ownerNameCode;
+                string nscnumber = vehicle.nscNGetCurrentClientOrganizationumber;
+                
+                string organizationNameCode = "LE";
                 try
                 {
                     ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(nscnumber, organizationNameCode, userId, guid, directory);
@@ -284,7 +285,7 @@ namespace CCW.Controllers
                     IcbcVehicleDescription icbcVehicleDescription = _service.GetIcbcVehicleForRegistrationNumberAsync(vehicle.registrationNumber, DateTime.Now, userId, guid, directory);
                     ccwdata.ICBCRegOwnerRODL = icbcVehicleDescription.regularOperatorLicenceNumber;
                     ccwdata.ICBCLicencePlateNumber = icbcVehicleDescription.plateNumber;
-                    ccwdata.ICBCRegOwnerStatus = "";
+                    ccwdata.ICBCRegOwnerStatus = "";                    
                 }
                 catch (AggregateException ae)
                 {
