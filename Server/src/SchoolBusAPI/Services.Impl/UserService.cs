@@ -393,6 +393,12 @@ namespace SchoolBusAPI.Services.Impl
         {
             var user = _context.Users
                 .Include(x => x.District)
+                .Include(x => x.GroupMemberships)
+                .ThenInclude(y => y.Group)
+                .Include(x => x.UserRoles)
+                .ThenInclude(y => y.Role)
+                .ThenInclude(z => z.RolePermissions)
+                .ThenInclude(z => z.Permission)
                 .FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
@@ -620,7 +626,15 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdPutAsync(int id, UserViewModel item)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var user = _context.Users                
+                .Include(x => x.District)
+                .Include(x => x.GroupMemberships)
+                .ThenInclude(y => y.Group)
+                .Include(x => x.UserRoles)
+                .ThenInclude(y => y.Role)
+                .ThenInclude(z => z.RolePermissions)
+                .ThenInclude(z => z.Permission)
+                .FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
                 // Not Found
@@ -629,9 +643,20 @@ namespace SchoolBusAPI.Services.Impl
 
             user.Active = item.Active;
             user.Email = item.Email;
-            user.GivenName = item.GivenName;
-            user.Initials = item.Initials;
+            user.GivenName = item.GivenName;            
             user.Surname = item.Surname;
+
+            if (item.District != null)
+            {
+                bool district_exists = _context.Districts.Any(x => x.Id == item.District.Id);
+                if (district_exists)
+                {
+                    District district = _context.Districts
+                        .Include(x => x.Region)
+                        .First(x => x.Id == item.District.Id);
+                    user.District = district;
+                }
+            }
 
             // Save changes
             _context.Users.Update(user);

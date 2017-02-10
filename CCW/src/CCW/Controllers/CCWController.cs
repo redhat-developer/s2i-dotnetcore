@@ -204,7 +204,6 @@ namespace CCW.Controllers
                     _logger.LogInformation("Creating new record");
                     ccwdata = new CCWData();
                 }
-
                 // update the ccw record.
 
                 ccwdata.ICBCBody = vehicle.bodyCode;
@@ -242,40 +241,81 @@ namespace CCW.Controllers
                 ccwdata.NSCPolicyExpiryDate = vehicle.policyExpiryDate;
                 ccwdata.NSCPolicyStatus = vehicle.policyStatus;
                 ccwdata.NSCPolicyStatusDate = vehicle.policyAcquiredCurrentStatusDate;
-
+                ccwdata.NSCPolicyNumber = vehicle.nscNumber;
                 // get the nsc client organization data.
 
-                string nscnumber = vehicle.nscNumber;
-                
-                string organizationNameCode = "LE";
-                try
+                bool foundNSCData = false;
+
+                if (!string.IsNullOrEmpty(ccwdata.NSCPolicyNumber)) 
                 {
-                    ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(nscnumber, organizationNameCode, userId, guid, directory);
-                    ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
-                    ccwdata.NSCCarrierName = clientOrganization.name1;
-                    ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
-                    ccwdata.NSCClientNum = clientOrganization.nscInformation.certificationNumber;                                        
-                }
-                catch (AggregateException ae)
-                {
-                    _logger.LogInformation("Aggregate Exception occured during GetCurrentClientOrganization");
-                    ae.Handle((x) =>
+                    string organizationNameCode = "LE";
+                    try
                     {
-                        if (x is FaultException<CVSECommonException>) // From the web service.
+                        ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(ccwdata.NSCPolicyNumber, organizationNameCode, userId, guid, directory);
+                        foundNSCData = true;
+                        ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
+                        ccwdata.NSCCarrierName = clientOrganization.name1;
+                        ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
+                        ccwdata.NSCClientNum = clientOrganization.nscInformation.certificationNumber;
+                    }
+                    catch (AggregateException ae)
+                    {
+                        _logger.LogInformation("Aggregate Exception occured during GetCurrentClientOrganization");
+                        ae.Handle((x) =>
                         {
-                            _logger.LogDebug("CVSECommonException:");
-                            FaultException < CVSECommonException > fault =(FaultException<CVSECommonException>) x;
-                            _logger.LogDebug("errorId: {0}", fault.Detail.errorId );
-                            _logger.LogDebug("errorMessage: {0}", fault.Detail.errorMessage);
-                            _logger.LogDebug("systemError: {0}", fault.Detail.systemError);
-                            return true;
+                            if (x is FaultException<CVSECommonException>) // From the web service.
+                            {
+                                _logger.LogDebug("CVSECommonException:");
+                                FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
+                                _logger.LogDebug("errorId: {0}", fault.Detail.errorId);
+                                _logger.LogDebug("errorMessage: {0}", fault.Detail.errorMessage);
+                                _logger.LogDebug("systemError: {0}", fault.Detail.systemError);
+                                return true;
+                            }
+                            return true; // ignore other exceptions
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogInformation("Unknown Error retrieving NSC data.");
+                    }
+
+                    // now try the individual service if there was no match.
+
+                    if (foundNSCData == false)
+                    {
+                        try
+                        {
+                            ClientIndividual clientIndividual = _service.GetCurrentClientIndividual(ccwdata.NSCPolicyNumber, organizationNameCode, userId, guid, directory);
+                            foundNSCData = true;
+                            ccwdata.NSCCarrierConditions = clientIndividual.nscInformation.carrierStatus;
+                            ccwdata.NSCCarrierName = clientIndividual.displayName;
+                            ccwdata.NSCCarrierSafetyRating = clientIndividual.nscInformation.safetyRating;
+                            ccwdata.NSCClientNum = clientIndividual.nscInformation.certificationNumber;
                         }
-                        return true; // ignore other exceptions
-                    });
-                }
-                catch (Exception e)
-                {
-                    _logger.LogInformation("Unknown Error retrieving NSC data.");
+                        catch (AggregateException ae)
+                        {
+                            _logger.LogInformation("Aggregate Exception occured during GetCurrentClientIndividual");
+                            ae.Handle((x) =>
+                            {
+                                if (x is FaultException<CVSECommonException>) // From the web service.
+                                {
+                                    _logger.LogDebug("CVSECommonException:");
+                                    FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
+                                    _logger.LogDebug("errorId: {0}", fault.Detail.errorId);
+                                    _logger.LogDebug("errorMessage: {0}", fault.Detail.errorMessage);
+                                    _logger.LogDebug("systemError: {0}", fault.Detail.systemError);
+                                    return true;
+                                }
+                                return true; // ignore other exceptions
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.LogInformation("Unknown Error retrieving Individual NSC data.");
+                        }
+                    }
+
                 }
                 
                 // get the ICBC data

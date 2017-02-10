@@ -23,6 +23,8 @@ using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using SchoolBusAPI.Mappings;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -194,20 +196,27 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult UsersCurrentGetAsync ()        
         {
-            
-            var result = new CurrentUserViewModel();
-            
-            // get the name for the current logged in user
-            result.GivenName = User.FindFirst (ClaimTypes.GivenName).Value;
-            result.Surname = User.FindFirst(ClaimTypes.Surname).Value; 
-
-            result.FullName = result.GivenName + " " + result.Surname;
-
             // get the current user id
             int? id = GetCurrentUserId();
 
             if (id != null)
             {
+                User currentUser = _context.Users
+                                        .Include(x => x.District)
+                                        .Include(x => x.GroupMemberships)
+                                        .ThenInclude(y => y.Group)
+                                        .Include(x => x.UserRoles)
+                                        .ThenInclude(y => y.Role)
+                                        .ThenInclude(z => z.RolePermissions)
+                                        .ThenInclude(z => z.Permission)
+                                        .First(x => x.Id == id);
+
+                var result = currentUser.ToCurrentUserViewModel();
+
+                // get the name for the current logged in user
+                result.GivenName = User.FindFirst(ClaimTypes.GivenName).Value;
+                result.Surname = User.FindFirst(ClaimTypes.Surname).Value;
+
                 int overdue = _context.SchoolBuss
                 .Where(x => x.Inspector.Id == id)
                 .Where(x => x.NextInspectionDate <= DateTime.Now)
@@ -229,14 +238,15 @@ namespace SchoolBusAPI.Services.Impl
 
 
                 result.OverdueInspections = overdue;
-                result.DueNextMonthInspections = nextMonth;
-                result.DistrictName = "Victoria";
+                result.DueNextMonthInspections = nextMonth;                
                 result.ScheduledInspections = scheduledInspections;
+
+                return new ObjectResult(result);
             }            
-
-            // get the number of inspections available for the current logged in user
-
-            return new ObjectResult(result);
+            else
+            {
+                return new StatusCodeResult(404); // no current user ID
+            }                        
         }
     }
 }

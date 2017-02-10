@@ -81,5 +81,13 @@ namespace SchoolBus.WS.CCW.Facade.Service
             task.Wait();
             return task.Result;
         }
+
+
+        public ClientIndividual GetCurrentClientIndividual(string clientNumber, string organizationNameCode, string userId, string guid, string directory)
+        {
+            var task = this.Client.getCurrentClientIndividualAsync(clientNumber, organizationNameCode, userId, guid, directory, applicationIdentifier);
+            task.Wait();
+            return task.Result;
+        }
     }
 }

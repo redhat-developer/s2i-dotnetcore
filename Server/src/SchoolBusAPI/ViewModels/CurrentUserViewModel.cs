@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
 {
@@ -43,46 +44,74 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="OverdueInspections">OverdueInspections.</param>
         /// <param name="ScheduledInspections">ScheduledInspections.</param>
         /// <param name="DueNextMonthInspections">DueNextMonthInspections.</param>
-        public CurrentUserViewModel(string GivenName = null, string Surname = null, string FullName = null, string DistrictName = null, int? OverdueInspections = null, int? ScheduledInspections = null, int? DueNextMonthInspections = null)
+        public CurrentUserViewModel(int Id, string GivenName, string Surname, bool Active, string Email = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null, int? OverdueInspections = null, int? ScheduledInspections = null, int? DueNextMonthInspections = null)
         {
+            this.Id = Id;
             this.GivenName = GivenName;
-            this.Surname = Surname;
-            this.FullName = FullName;
-            this.DistrictName = DistrictName;
+            this.Surname = Surname;                        
+            this.Email = Email;
+            this.UserRoles = UserRoles;
+            this.GroupMemberships = GroupMemberships;
+            this.District = District;
+            this.UserRoles = UserRoles;
+            this.GroupMemberships = GroupMemberships;
             this.OverdueInspections = OverdueInspections;
             this.ScheduledInspections = ScheduledInspections;
-            this.DueNextMonthInspections = DueNextMonthInspections;
-            
+            this.DueNextMonthInspections = DueNextMonthInspections;            
         }
 
-        /// <summary>
-        /// Gets or Sets GivenName
-        /// </summary>
-        [DataMember(Name="givenName")]
-        public string GivenName { get; set; }
 
-        /// <summary>
-        /// Gets or Sets Surname
-        /// </summary>
-        [DataMember(Name="surname")]
-        public string Surname { get; set; }
+    /// <summary>
+    /// A system-generated unique identifier for a User
+    /// </summary>
+    /// <value>A system-generated unique identifier for a User</value>
+    [DataMember(Name = "Id")]
+    public int Id { get; set; }
 
-        /// <summary>
-        /// Gets or Sets FullName
-        /// </summary>
-        [DataMember(Name="fullName")]
-        public string FullName { get; set; }
+    /// <summary>
+    /// Given name of the user.
+    /// </summary>
+    /// <value>Given name of the user.</value>
+    [DataMember(Name = "GivenName")]
+    public string GivenName { get; set; }
 
-        /// <summary>
-        /// Gets or Sets DistrictName
-        /// </summary>
-        [DataMember(Name="districtName")]
-        public string DistrictName { get; set; }
+    /// <summary>
+    /// Surname of the user.
+    /// </summary>
+    /// <value>Surname of the user.</value>
+    [DataMember(Name = "Surname")]
+    public string Surname { get; set; }
 
-        /// <summary>
-        /// Gets or Sets OverdueInspections
-        /// </summary>
-        [DataMember(Name="overdueInspections")]
+    /// <summary>
+    /// The email address of the user in the system.
+    /// </summary>
+    /// <value>The email address of the user in the system.</value>
+    [DataMember(Name = "Email")]
+    public string Email { get; set; }
+
+    /// <summary>
+    /// Gets or Sets UserRoles
+    /// </summary>
+    [DataMember(Name = "UserRoles")]
+    public List<UserRole> UserRoles { get; set; }
+
+    /// <summary>
+    /// Gets or Sets GroupMemberships
+    /// </summary>
+    [DataMember(Name = "GroupMemberships")]
+    public List<GroupMembership> GroupMemberships { get; set; }
+
+    /// <summary>
+    /// The District that the User belongs to
+    /// </summary>
+    /// <value>The District that the User belongs to</value>
+    [DataMember(Name = "District")]
+    public District District { get; set; }
+
+    /// <summary>
+    /// Gets or Sets OverdueInspections
+    /// </summary>
+    [DataMember(Name="overdueInspections")]
         public int? OverdueInspections { get; set; }
 
         /// <summary>
@@ -106,9 +135,8 @@ namespace SchoolBusAPI.ViewModels
             var sb = new StringBuilder();
             sb.Append("class CurrentUserViewModel {\n");
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
-            sb.Append("  Surname: ").Append(Surname).Append("\n");
-            sb.Append("  FullName: ").Append(FullName).Append("\n");
-            sb.Append("  DistrictName: ").Append(DistrictName).Append("\n");
+            sb.Append("  Surname: ").Append(Surname).Append("\n");            
+            sb.Append("  DistrictName: ").Append(District.ToString()).Append("\n");
             sb.Append("  OverdueInspections: ").Append(OverdueInspections).Append("\n");
             sb.Append("  ScheduledInspections: ").Append(ScheduledInspections).Append("\n");
             sb.Append("  DueNextMonthInspections: ").Append(DueNextMonthInspections).Append("\n");
@@ -159,17 +187,7 @@ namespace SchoolBusAPI.ViewModels
                     this.Surname == other.Surname ||
                     this.Surname != null &&
                     this.Surname.Equals(other.Surname)
-                ) && 
-                (
-                    this.FullName == other.FullName ||
-                    this.FullName != null &&
-                    this.FullName.Equals(other.FullName)
-                ) && 
-                (
-                    this.DistrictName == other.DistrictName ||
-                    this.DistrictName != null &&
-                    this.DistrictName.Equals(other.DistrictName)
-                ) && 
+                ) &&
                 (
                     this.OverdueInspections == other.OverdueInspections ||
                     this.OverdueInspections != null &&
@@ -205,14 +223,6 @@ namespace SchoolBusAPI.ViewModels
                 if (this.Surname != null)
                 {
                     hash = hash * 59 + this.Surname.GetHashCode();
-                }
-                if (this.FullName != null)
-                {
-                    hash = hash * 59 + this.FullName.GetHashCode();
-                }
-                if (this.DistrictName != null)
-                {
-                    hash = hash * 59 + this.DistrictName.GetHashCode();
                 }
                 if (this.OverdueInspections != null)
                 {

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
 {
@@ -42,17 +43,19 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="Surname">Surname.</param>
         /// <param name="Initials">Initials.</param>
         /// <param name="Email">Email.</param>
-        public UserViewModel(int Id, bool Active, string GivenName = null, string Surname = null, string Initials = null, string Email = null)
+        public UserViewModel(int Id, string GivenName, string Surname, bool Active, string Email = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null)
         {
-            
+
             this.Id = Id;
-            
-            this.Active = Active;
             this.GivenName = GivenName;
             this.Surname = Surname;
-            this.Initials = Initials;
             this.Email = Email;
-            
+            this.Active = Active;
+            this.UserRoles = UserRoles;
+            this.GroupMemberships = GroupMemberships;
+            this.District = District;
+            this.UserRoles = UserRoles;
+
         }
 
         /// <summary>
@@ -80,16 +83,29 @@ namespace SchoolBusAPI.ViewModels
         public string Surname { get; set; }
 
         /// <summary>
-        /// Gets or Sets Initials
-        /// </summary>
-        [DataMember(Name="initials")]
-        public string Initials { get; set; }
-
-        /// <summary>
         /// Gets or Sets Email
         /// </summary>
         [DataMember(Name="email")]
         public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or Sets UserRoles
+        /// </summary>
+        [DataMember(Name = "UserRoles")]
+        public List<UserRole> UserRoles { get; set; }
+
+        /// <summary>
+        /// Gets or Sets GroupMemberships
+        /// </summary>
+        [DataMember(Name = "GroupMemberships")]
+        public List<GroupMembership> GroupMemberships { get; set; }
+
+        /// <summary>
+        /// The District that the User belongs to
+        /// </summary>
+        /// <value>The District that the User belongs to</value>
+        [DataMember(Name = "District")]
+        public District District { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -102,9 +118,9 @@ namespace SchoolBusAPI.ViewModels
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Active: ").Append(Active).Append("\n");
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
-            sb.Append("  Surname: ").Append(Surname).Append("\n");
-            sb.Append("  Initials: ").Append(Initials).Append("\n");
+            sb.Append("  Surname: ").Append(Surname).Append("\n");           
             sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  District: ").Append(this.District.ToString()).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -163,14 +179,14 @@ namespace SchoolBusAPI.ViewModels
                     this.Surname.Equals(other.Surname)
                 ) && 
                 (
-                    this.Initials == other.Initials ||
-                    this.Initials != null &&
-                    this.Initials.Equals(other.Initials)
-                ) && 
-                (
                     this.Email == other.Email ||
                     this.Email != null &&
                     this.Email.Equals(other.Email)
+                ) &&
+                (
+                    this.District == other.District ||
+                    this.District != null &&
+                    this.District.Equals(other.District)
                 );
         }
 
@@ -195,14 +211,14 @@ namespace SchoolBusAPI.ViewModels
                 if (this.Surname != null)
                 {
                     hash = hash * 59 + this.Surname.GetHashCode();
-                }
-                if (this.Initials != null)
-                {
-                    hash = hash * 59 + this.Initials.GetHashCode();
-                }
+                }                
                 if (this.Email != null)
                 {
                     hash = hash * 59 + this.Email.GetHashCode();
+                }
+                if (this.Email != null)
+                {
+                    hash = hash * 59 + this.District.GetHashCode();
                 }
                 return hash;
             }
