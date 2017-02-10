@@ -245,7 +245,7 @@ namespace CCW.Controllers
 
                 // get the nsc client organization data.
 
-                string nscnumber = vehicle.nscNGetCurrentClientOrganizationumber;
+                string nscnumber = vehicle.nscNumber;
                 
                 string organizationNameCode = "LE";
                 try
