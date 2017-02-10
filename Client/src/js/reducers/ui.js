@@ -17,6 +17,8 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
   var newState = {};
 
   switch(action.type) {
+    // Requests
+
     case Action.REQUESTS_BEGIN:
       return { ...state, requests: {
         waiting: true,
@@ -29,7 +31,10 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
     case Action.REQUESTS_ERROR:
       return { ...state, requests: { ...state.requests, ...{ error: action.error } } };
 
+    case Action.REQUESTS_CLEAR:
+      return { ...state, requests: { waiting: false, error: {} } };
 
+    // Screens
 
     case Action.UPDATE_BUSES_UI:
       return { ...state, schoolBuses: action.schoolBuses };

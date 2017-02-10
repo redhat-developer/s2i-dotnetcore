@@ -46,7 +46,7 @@ var KeySearchControl = React.createClass({
     return null;
   },
 
-  updated(state, callback) {
+  updated(state) {
     // update state
     this.setState(state, () => {
       // then update params
@@ -54,7 +54,7 @@ var KeySearchControl = React.createClass({
         keySearchParams: this.getParams(),
       }, () => {
         // then update parent state
-        this.props.updateState(this.state, callback);
+        this.props.updateState(this.state);
       });
     });
   },

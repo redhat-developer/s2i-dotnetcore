@@ -79,7 +79,6 @@ export function request(path, options) {
     xhr.addEventListener('load', function() {
       if(xhr.status >= 400) {
         var err = new HttpError(`API ${method} ${path} failed (${xhr.status}) "${xhr.responseText}"`, method, path, xhr.status, xhr.responseText);
-        store.dispatch({ type: 'REQUEST_ERROR', error: err });
         reject(err);
       } else {
         resolve(xhr);

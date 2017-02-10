@@ -35,7 +35,7 @@ var SchoolBusAddDialog = React.createClass({
 
   getInitialState() {
     return {
-      loading: false,
+      loading: 0,
 
       search: {
         keySearchField: this.props.search.keySearchField,
@@ -44,25 +44,31 @@ var SchoolBusAddDialog = React.createClass({
       },
 
       busInSystemId: 0,
+
       ccwFound: false,
-      ccwNotFound: false,
+      ccwError: false,
     };
   },
 
-  updateSearchState(state, callback) {
-    this.setState({ search: { ...this.state.search, ...state }}, () =>{
+  updateSearchState(state) {
+    this.setState({
+      search: { ...this.state.search, ...state },
+      // Clear error when they change field
+      ccwError: false,
+    }, () =>{
       store.dispatch({ type: Action.UPDATE_CCW_SEARCH, schoolBusesCCW: this.state.search });
-      if (callback) { callback(); }
     });
   },
 
   fetch() {
     if (this.state.search.keySearchParams) {
       this.setState({
-        loading: true,
+        // Need to count the "loads" because we've got more than one call and
+        // don't want to stop the spinner prematurely.
+        loading: 1,
         busInSystemId: 0,
         ccwFound: false,
-        ccwNotFound: false,
+        ccwError: false,
       });
       Api.searchSchoolBuses(this.state.search.keySearchParams).then(() => {
         if (_.keys(this.props.schoolBuses).length > 0) {
@@ -70,19 +76,31 @@ var SchoolBusAddDialog = React.createClass({
             busInSystemId: _.first(_.keys(this.props.schoolBuses)),
           });
         } else {
-          this.setState({ loading: true });
+          this.setState({ loading: this.state.loading + 1 });
           Api.searchCCW(this.state.search.keySearchParams).then(() => {
             var found = this.props.schoolBusCCW.icbcRegistrationNumber ? true : false;
             this.setState({
               ccwFound: found,
-              ccwNotFound: !found,
+              ccwError: !found,
+            });
+          }).catch((/* err */) => {
+            // CCW will return a 404 if it doesn't find the vehicle!
+
+            // Suppress showing the error in the top header.
+            store.dispatch({ type: Action.REQUESTS_CLEAR });
+
+            // Show generic not found message. Can be more specific later
+            // (eg. timed out, service unavailable, etc.) if necessary.
+            this.setState({
+              ccwFound: false,
+              ccwError: true,
             });
           }).finally(() => {
-            this.setState({ loading: false });
+            this.setState({ loading: this.state.loading - 1 });
           });
         }
       }).finally(() => {
-        this.setState({ loading: false });
+        this.setState({ loading: this.state.loading - 1 });
       });
     }
   },
@@ -122,10 +140,10 @@ var SchoolBusAddDialog = React.createClass({
               </div>;
             }
 
-            if (this.state.ccwNotFound) {
+            if (this.state.ccwError) {
               return <div>
                 <Row className="has-error">
-                  <span>Could not find this vehicle in the ICBC CCW system.</span>
+                  <span>Could not find this { this.state.search.keySearchField } in the ICBC repository of vehicles.</span>
                 </Row>
               </div>;
             }
