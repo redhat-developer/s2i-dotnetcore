@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using CCW.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 
 namespace CCW.Controllers
 {
@@ -26,7 +27,9 @@ namespace CCW.Controllers
         private string guid;
         private string directory;
 
-        public CCWController(IHttpContextAccessor httpContextAccessor, IConfigurationRoot configuration, DbAppContext context)
+        protected ILogger _logger;
+
+        public CCWController(IHttpContextAccessor httpContextAccessor, IConfigurationRoot configuration, DbAppContext context, ILoggerFactory loggerFactory)
         {
             Configuration = configuration;
 
@@ -37,6 +40,8 @@ namespace CCW.Controllers
             userId = getFromHeaders("SM_UNIVERSALID");
             guid = getFromHeaders("SMGOV_USERGUID");
             directory = getFromHeaders("SM_AUTHDIRNAME");
+
+            _logger = loggerFactory.CreateLogger(typeof(CCWController));
         }
 
         private string getFromHeaders(string key)
@@ -131,7 +136,7 @@ namespace CCW.Controllers
         [HttpGet]
         [Route("GetCCW")]
         public virtual IActionResult GetCCW([FromQuery] string regi, [FromQuery] string plate, [FromQuery] string vin)
-        {
+        {                        
 
             // check we have the right headers.
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(guid) || string.IsNullOrEmpty(directory))
@@ -191,9 +196,12 @@ namespace CCW.Controllers
                 {
                     ccwdata = _context.CCWDatas.First(x => x.ICBCRegistrationNumber == icbcRegistrationNumber);
                     existing = true;
+
+                    _logger.LogInformation("Found record for Registration # " + ccwdata.ICBCRegistrationNumber);
                 }
                 else
                 {
+                    _logger.LogInformation("Creating new record");
                     ccwdata = new CCWData();
                 }
 
@@ -238,7 +246,8 @@ namespace CCW.Controllers
                 // get the nsc client organization data.
 
                 string nscnumber = vehicle.nscNumber;
-                string organizationNameCode = vehicle.ownerNameCode;
+                
+                string organizationNameCode = "LE";
                 try
                 {
                     ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(nscnumber, organizationNameCode, userId, guid, directory);
@@ -249,14 +258,16 @@ namespace CCW.Controllers
                 }
                 catch (AggregateException ae)
                 {
+                    _logger.LogInformation("Aggregate Exception occured during GetCurrentClientOrganization");
                     ae.Handle((x) =>
                     {
                         if (x is FaultException<CVSECommonException>) // From the web service.
                         {
-                            Console.WriteLine(JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
-                            {
-                                ReferenceLoopHandling = ReferenceLoopHandling.Serialize
-                            }));
+                            _logger.LogDebug("CVSECommonException:");
+                            FaultException < CVSECommonException > fault =(FaultException<CVSECommonException>) x;
+                            _logger.LogDebug("errorId: {0}", fault.Detail.errorId );
+                            _logger.LogDebug("errorMessage: {0}", fault.Detail.errorMessage);
+                            _logger.LogDebug("systemError: {0}", fault.Detail.systemError);
                             return true;
                         }
                         return true; // ignore other exceptions
@@ -264,7 +275,7 @@ namespace CCW.Controllers
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Unknown Error retrieving NSC data.");
+                    _logger.LogInformation("Unknown Error retrieving NSC data.");
                 }
                 
                 // get the ICBC data
@@ -274,18 +285,20 @@ namespace CCW.Controllers
                     IcbcVehicleDescription icbcVehicleDescription = _service.GetIcbcVehicleForRegistrationNumberAsync(vehicle.registrationNumber, DateTime.Now, userId, guid, directory);
                     ccwdata.ICBCRegOwnerRODL = icbcVehicleDescription.regularOperatorLicenceNumber;
                     ccwdata.ICBCLicencePlateNumber = icbcVehicleDescription.plateNumber;
-                    ccwdata.ICBCRegOwnerStatus = "";
+                    ccwdata.ICBCRegOwnerStatus = "";                    
                 }
                 catch (AggregateException ae)
                 {
+                    _logger.LogInformation("Aggregate Exception occured during GetIcbcVehicleForRegistrationNumberAsync");
                     ae.Handle((x) =>
                     {
                         if (x is FaultException<CVSECommonException>) // From the web service.
                         {
-                            Console.WriteLine(JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
-                            {
-                                ReferenceLoopHandling = ReferenceLoopHandling.Serialize
-                            }));
+                            _logger.LogDebug("CVSECommonException:");
+                            FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
+                            _logger.LogDebug("errorId: {0}", fault.Detail.errorId);
+                            _logger.LogDebug("errorMessage: {0}", fault.Detail.errorMessage);
+                            _logger.LogDebug("systemError: {0}", fault.Detail.systemError);
                             return true;
                         }
                         return true; // ignore other exceptions
@@ -293,7 +306,7 @@ namespace CCW.Controllers
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Unknown error retrieving ICBC information.");
+                    _logger.LogDebug("Unknown error retrieving ICBC information.");
                 }
 
                 return new ObjectResult(ccwdata);
