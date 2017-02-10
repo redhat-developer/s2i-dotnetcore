@@ -83,13 +83,19 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
       return { ...state, inspection: action.inspection };
 
     case Action.DELETE_INSPECTION:
-      return { ...state, inspection: _.omit(state.inspection, [ action.id ]) };
+      return { ...state, inspection: action.inspection };
 
     // Owners
     case Action.UPDATE_OWNERS:
       return { ...state, owners: action.owners };
 
+    case Action.ADD_OWNER:
+      return { ...state, owner: action.owner };
+
     case Action.UPDATE_OWNER:
+      return { ...state, owner: action.owner };
+
+    case Action.DELETE_OWNER:
       return { ...state, owner: action.owner };
   }
 

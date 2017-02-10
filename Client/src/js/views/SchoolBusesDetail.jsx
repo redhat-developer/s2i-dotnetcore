@@ -227,7 +227,9 @@ var SchoolBusesDetail = React.createClass({
           <Col md={10}>
             <Label bsStyle={ bus.isActive ? 'success' : 'danger'}>{ bus.isActive ? 'Verified Active' : bus.status }</Label>
             <Label className={ bus.isOutOfProvince ? '' : 'hide' }>Out of Province</Label>
-            <span className={ `label label-${inspectionStyle}` } dangerouslySetInnerHTML={{ __html: inspectionNotice }}></span>
+            { bus.nextInspectionDate &&
+              <span className={ `label label-${inspectionStyle}` } dangerouslySetInnerHTML={{ __html: inspectionNotice }}></span>
+            }
             <Button title="Notes" onClick={ this.showNotes }>Notes ({ bus.notes ? bus.notes.length : 0 })</Button>
             <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ bus.attachments ? bus.attachments.length : 0 })</Button>
             <Button title="History" onClick={ this.showHistory }>History</Button>
@@ -370,10 +372,10 @@ var SchoolBusesDetail = React.createClass({
                           <td>{ inspection.inspectorName }</td>
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
-                            <Button className={ inspection.canEdit ? '' : 'hidden' } title="editInspection" bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, inspection) }><Glyphicon glyph="pencil" /></Button>
                             <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteInspection.bind(this, inspection) }/> }>
                               <Button className={ inspection.canDelete ? '' : 'hidden' } title="deleteInspection" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                             </OverlayTrigger>
+                            <Button className={ inspection.canEdit ? '' : 'hidden' } title="editInspection" bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, inspection) }><Glyphicon glyph="pencil" /></Button>
                           </ButtonGroup>
                         </td>
                       </tr>;

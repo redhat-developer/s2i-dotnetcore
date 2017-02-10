@@ -61,11 +61,14 @@ var SchoolBuses = React.createClass({
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
+    params: React.PropTypes.object,
   },
 
   getInitialState() {
     return {
       loading: true,
+
+      ownedById: this.props.params.ownerId,
 
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
@@ -176,15 +179,35 @@ var SchoolBuses = React.createClass({
     var favouritesPromise = Api.getFavourites('schoolBus');
 
     Promise.all([inspectorsPromise, ownersPromise, favouritesPromise]).then(() => {
-      // If this is the first load, then look for a default favourite
-      if (!this.props.search.loaded) {
-        var favourite = _.find(this.props.favourites, (favourite) => { return favourite.isDefault; });
-        if (favourite) {
-          this.loadFavourite(favourite);
-          return;
+      if (this.state.ownedById) {
+        // We're looking for a specific owner's school buses, so we'll set up state accordingly
+        this.updateSearchState({
+          ownerId: parseInt(this.state.ownedById, 10),
+          selectedDistrictsIds: [],
+          selectedInspectorsIds: [],
+          selectedCitiesIds: [],
+          selectedSchoolDistrictsIds: [],
+          ownerName: this.props.owners[this.state.ownedById] ? this.props.owners[this.state.ownedById].name : '',
+          keySearchField: this.props.search.keySearchField,
+          keySearchText: '',
+          keySearchParams: null,
+          nextInspection: ALL,
+          startDate: '',
+          endDate: '',
+          hideInactive: false,
+          justReInspections: false,
+        }, this.fetch);
+      } else {
+        if (!this.props.search.loaded) {
+          // This is the first load so look for a default favourite
+          var favourite = _.find(this.props.favourites, (favourite) => { return favourite.isDefault; });
+          if (favourite) {
+            this.loadFavourite(favourite);
+            return;
+          }
         }
+        this.fetch();
       }
-      this.fetch();
     });
   },
 
@@ -328,7 +351,6 @@ var SchoolBuses = React.createClass({
     </div>;
   },
 });
-
 
 function mapStateToProps(state) {
   return {

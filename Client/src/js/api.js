@@ -337,8 +337,13 @@ export function updateInspection(inspection) {
 
 export function deleteInspection(inspection) {
   return new ApiRequest(`/inspections/${ inspection.id }/delete`).post().then(response => {
-    // No needs to normalize, as we just want the id from the response.
-    store.dispatch({ type: Action.DELETE_INSPECTION, id: response.id });
+    // Normalize the response
+    var inspection = _.fromPairs([[ response.id, response ]]);
+
+    // Add display fields
+    parseInspection(inspection);
+
+    store.dispatch({ type: Action.DELETE_INSPECTION, inspection: inspection });
   });
 }
 
@@ -353,6 +358,7 @@ function parseOwner(owner) {
   owner.isOverdue = owner.daysToInspection < 0;
   owner.isReinspection = owner.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   owner.nextInspectionDateSort = sortableDateTime(owner.nextInspectionDate);
+  owner.canDelete = owner.numberOfBuses === 0 && hoursAgo(owner.dateCreated) <= Constant.OWNER_DELETE_GRACE_PERIOD_HOURS;
 }
 
 export function searchOwners(params) {
@@ -390,6 +396,17 @@ export function getOwners() {
   });
 }
 
+export function addOwner(owner) {
+  return new ApiRequest('/schoolbusowners').post(owner).then(response => {
+    var owner = response;
+
+    // Add display fields
+    parseOwner(owner);
+
+    store.dispatch({ type: Action.ADD_OWNER, owner: owner });
+  });
+}
+
 export function updateOwner(owner) {
   return new ApiRequest(`/schoolbusowners/${ owner.id }`).put(owner).then(response => {
     var owner = response;
@@ -398,6 +415,17 @@ export function updateOwner(owner) {
     parseOwner(owner);
 
     store.dispatch({ type: Action.UPDATE_OWNER, owner: owner });
+  });
+}
+
+export function deleteOwner(owner) {
+  return new ApiRequest(`/schoolbusowners/${ owner.id }/delete`).post().then(response => {
+    var owner = response;
+
+    // Add display fields
+    parseOwner(owner);
+
+    store.dispatch({ type: Action.DELETE_OWNER, owner: owner });
   });
 }
 
