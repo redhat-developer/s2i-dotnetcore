@@ -9,6 +9,48 @@ namespace SchoolBusAPI.Models
 {
     public static class IDbAppContextExtensions
     {
+
+        /// <summary>
+        /// Returns a district for a given Ministry Id
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="id">The Ministry Id</param>
+        /// <returns>District</returns>
+        public static District GetDistrictByMinistryDistrictId(this IDbAppContext context, int id)
+        {
+            District district = context.Districts.Where(x => x.MinistryDistrictID == id)
+                    .Include(x => x.Region)                    
+                    .FirstOrDefault();
+            return district;
+        }
+
+        /// <summary>
+        /// Returns a region for a given Ministry Id
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="id">The Ministry Id</param>
+        /// <returns>Region</returns>
+        public static Region GetRegionByMinistryRegionId(this IDbAppContext context, int id)
+        {
+            Region region = context.Regions.Where(x => x.MinistryRegionID == id)
+                    .FirstOrDefault();
+            return region;
+        }
+
+        /// <summary>
+        /// Returns a service area for a given Ministry Id
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="id">The Ministry Id</param>
+        /// <returns>Region</returns>
+        public static ServiceArea GetServiceAreaByMinistryServiceAreaId(this IDbAppContext context, int id)
+        {
+            ServiceArea serviceArea = context.ServiceAreas.Where(x => x.MinistryServiceAreaID == id)
+                    .Include(x => x.District.Region)
+                    .FirstOrDefault();
+            return serviceArea;
+        }
+
         public static Role GetRole(this IDbAppContext context, string name)
         {
             Role role = context.Roles.Where(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
@@ -82,6 +124,7 @@ namespace SchoolBusAPI.Models
             user.SmAuthorizationDirectory = initialUser.SmAuthorizationDirectory;
             user.SmUserId = initialUser.SmUserId;
             user.Surname = initialUser.Surname;
+            user.District = initialUser.District;            
 
             string[] userRoles = initialUser.UserRoles.Select(x => x.Role.Name).ToArray();
             if (user.UserRoles == null)
@@ -122,6 +165,232 @@ namespace SchoolBusAPI.Models
             context.Users.Add(user);
         }
 
+
+        public static void AddInitialRegionsFromFile(this IDbAppContext context, string regionJsonPath)
+        {
+            if (!string.IsNullOrEmpty(regionJsonPath) && File.Exists(regionJsonPath))
+            {
+                string regionJson = File.ReadAllText(regionJsonPath);
+                context.AddInitialRegions(regionJson);
+            }
+        }
+
+        private static void AddInitialRegions(this IDbAppContext context, string regionJson)
+        {
+            List<Region> regions = JsonConvert.DeserializeObject<List<Region>>(regionJson);
+            if (regions != null)
+            {
+                context.AddInitialRegions(regions);
+            }
+        }
+
+        private static void AddInitialRegions(this IDbAppContext context, List<Region> regions)
+        {
+            regions.ForEach(u => context.AddInitialRegion(u));
+        }
+
+        /// <summary>
+        /// Adds a region to the system, only if it does not exist.
+        /// </summary>
+        private static void AddInitialRegion(this IDbAppContext context, Region initialRegion)
+        {
+            Region region = context.GetRegionByMinistryRegionId(initialRegion.MinistryRegionID);
+            if (region != null)
+            {
+                return;
+            }
+
+            region = new Region();
+            region.MinistryRegionID = initialRegion.MinistryRegionID;
+            region.Name = initialRegion.Name;
+            region.StartDate = initialRegion.StartDate;
+
+            context.Regions.Add(region);
+        }
+
+        /// <summary>
+        /// Adds initial districts from a file
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="districtJsonPath"></param>
+        public static void AddInitialDistrictsFromFile(this IDbAppContext context, string districtJsonPath)
+        {
+            if (!string.IsNullOrEmpty(districtJsonPath) && File.Exists(districtJsonPath))
+            {
+                string districtJson = File.ReadAllText(districtJsonPath);
+                context.AddInitialDistricts(districtJson);
+            }
+        }
+
+        private static void AddInitialDistricts(this IDbAppContext context, string districtJson)
+        {
+            List<District> districts = JsonConvert.DeserializeObject<List<District>>(districtJson);
+            if (districts != null)
+            {
+                context.AddInitialDistricts(districts);
+            }
+        }
+
+        private static void AddInitialDistricts(this IDbAppContext context, List<District> districts)
+        {
+            districts.ForEach(u => context.AddInitialDistrict(u));
+        }
+
+        /// <summary>
+        /// Adds a district to the system, only if it does not exist.
+        /// </summary>
+        private static void AddInitialDistrict(this IDbAppContext context, District initialDistrict)
+        {
+            District district = context.GetDistrictByMinistryDistrictId(initialDistrict.MinistryDistrictID);
+            if (district != null)
+            {
+                return;
+            }
+
+            district = new District();
+            district.MinistryDistrictID = initialDistrict.MinistryDistrictID;
+            district.Name = initialDistrict.Name;
+            district.StartDate = initialDistrict.StartDate;
+            if (initialDistrict.Region != null)
+            {
+                Region region = context.GetRegionByMinistryRegionId(initialDistrict.Region.MinistryRegionID);
+                district.Region = region;
+            }
+            else
+            {
+                district.Region = null;
+            }            
+
+            context.Districts.Add(district);
+        }
+
+
+        public static void AddInitialServiceAreasFromFile(this IDbAppContext context, string districtJsonPath)
+        {
+            if (!string.IsNullOrEmpty(districtJsonPath) && File.Exists(districtJsonPath))
+            {
+                string serviceAreaJson = File.ReadAllText(districtJsonPath);
+                context.AddInitialServiceAreas(serviceAreaJson);
+            }
+        }
+
+        private static void AddInitialServiceAreas(this IDbAppContext context, string serviceAreaJson)
+        {
+            List<ServiceArea> serviceAreas = JsonConvert.DeserializeObject<List<ServiceArea>>(serviceAreaJson);
+            if (serviceAreas != null)
+            {
+                context.AddInitialServiceAreas(serviceAreas);
+            }
+        }
+
+        private static void AddInitialServiceAreas(this IDbAppContext context, List<ServiceArea> serviceAreas)
+        {
+            serviceAreas.ForEach(u => context.AddInitialServiceArea(u));
+        }
+
+        /// <summary>
+        /// Adds a service area to the system, only if it does not exist.
+        /// </summary>
+        private static void AddInitialServiceArea(this IDbAppContext context, ServiceArea initialServiceArea)
+        {
+            ServiceArea serviceArea = context.GetServiceAreaByMinistryServiceAreaId(initialServiceArea.MinistryServiceAreaID);
+            if (serviceArea != null)
+            {
+                return;
+            }
+
+            serviceArea = new ServiceArea();
+            serviceArea.MinistryServiceAreaID = initialServiceArea.MinistryServiceAreaID;
+            serviceArea.Name = initialServiceArea.Name;
+            serviceArea.StartDate = initialServiceArea.StartDate;
+            if (initialServiceArea.District != null)
+            {
+                District district = context.GetDistrictByMinistryDistrictId(initialServiceArea.District.MinistryDistrictID);
+                serviceArea.District = district;
+            }
+            else
+            {
+                serviceArea.District = null;
+            }
+
+            context.ServiceAreas.Add(serviceArea);
+        }
+
+        public static void UpdateSeedDistrictInfo(this DbAppContext context, District districtInfo)
+        {
+            // Adjust the region.
+
+            int ministry_region_id = districtInfo.Region.MinistryRegionID;
+            var exists = context.Regions.Any(a => a.MinistryRegionID == ministry_region_id);
+            if (exists)
+            {
+                Region region = context.Regions.First(a => a.MinistryRegionID == ministry_region_id);
+                districtInfo.Region = region;
+            }
+            else
+            {
+                districtInfo.Region = null;
+            }
+
+            District district = context.GetDistrictByMinistryDistrictId(districtInfo.MinistryDistrictID);
+            if (district == null)
+            {
+                context.Districts.Add(districtInfo);
+            }
+            else
+            {
+                district.Name = districtInfo.Name;
+                district.Region = districtInfo.Region;
+                district.StartDate = districtInfo.StartDate;
+            }
+        }
+
+
+        public static void UpdateSeedRegionInfo(this DbAppContext context, Region regionInfo)
+        {            
+
+            Region region = context.GetRegionByMinistryRegionId(regionInfo.MinistryRegionID);
+            if (region == null)
+            {
+                context.Regions.Add(regionInfo);
+            }
+            else
+            {
+                region.Name = regionInfo.Name;
+                region.StartDate = regionInfo.StartDate;
+            }
+        }
+
+        public static void UpdateSeedServiceAreaInfo(this DbAppContext context, ServiceArea serviceAreaInfo)
+        {
+
+            // Adjust the district.
+
+            int ministry_district_id = serviceAreaInfo.District.MinistryDistrictID;
+            var exists = context.Districts.Any(a => a.MinistryDistrictID == ministry_district_id);
+            if (exists)
+            {
+                District district = context.Districts.First(a => a.MinistryDistrictID == ministry_district_id);
+                serviceAreaInfo.District = district;
+            }
+            else
+            {
+                serviceAreaInfo.District = null;
+            }
+
+            ServiceArea serviceArea = context.GetServiceAreaByMinistryServiceAreaId(serviceAreaInfo.MinistryServiceAreaID);
+            if (serviceArea == null)
+            {
+                context.ServiceAreas.Add(serviceAreaInfo);
+            }
+            else
+            {
+                serviceArea.Name = serviceAreaInfo.Name;
+                serviceArea.StartDate = serviceAreaInfo.StartDate;
+                serviceArea.District = serviceAreaInfo.District;
+            }
+        }
+
         public static void UpdateSeedUserInfo(this DbAppContext context, User userInfo)
         {
             User user = context.GetUserByGuid(userInfo.Guid);
@@ -139,6 +408,7 @@ namespace SchoolBusAPI.Models
                 user.SmAuthorizationDirectory = userInfo.SmAuthorizationDirectory;
                 user.SmUserId = userInfo.SmUserId;
                 user.Surname = userInfo.Surname;
+                user.District = userInfo.District;
 
                 // Sync Roles
                 if (user.UserRoles != null)
