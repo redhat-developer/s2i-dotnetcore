@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Well, Alert, Row, Col } from 'react-bootstrap';
-import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, Button, ButtonGroup, Glyphicon, InputGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
@@ -16,6 +16,8 @@ import store from '../store';
 import CheckboxControl from '../components/CheckboxControl.jsx';
 import Confirm from '../components/Confirm.jsx';
 import Favourites from '../components/Favourites.jsx';
+import FormInputControl from '../components/FormInputControl.jsx';
+import MultiDropdown from '../components/MultiDropdown.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
@@ -40,9 +42,9 @@ TODO:
 */
 var UserManagement = React.createClass({
   propTypes: {
-    currentUser: React.PropTypes.object,
     users: React.PropTypes.object,
     user: React.PropTypes.object,
+    districts: React.PropTypes.object,
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
@@ -56,6 +58,8 @@ var UserManagement = React.createClass({
       showAddDialog: false,
 
       search: {
+        selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
+        surname: this.props.search.surname || '',
         hideInactive: this.props.search.hideInactive !== false,
       },
 
@@ -69,7 +73,12 @@ var UserManagement = React.createClass({
   buildSearchParams() {
     var searchParams = {
       includeInactive: !this.state.search.hideInactive,
+      surname: this.state.search.surname,
     };
+
+    if (this.state.search.selectedDistrictsIds.length > 0) {
+      searchParams.districts = this.state.search.selectedDistrictsIds;
+    }
 
     return searchParams;
   },
@@ -94,7 +103,7 @@ var UserManagement = React.createClass({
 
   fetch() {
     this.setState({ loading: true });
-    Api.getUsers(this.buildSearchParams()).finally(() => {
+    Api.searchUsers(this.buildSearchParams()).finally(() => {
       this.setState({ loading: false });
     });
   },
@@ -127,7 +136,7 @@ var UserManagement = React.createClass({
 
   saveNewUser(user) {
     Api.addUser(user).then(() => {
-      // Open it up
+      // Open it up? Or back to listing?
       this.props.router.push({
         pathname: `user-management/${ this.props.user.id }`,
       });
@@ -149,12 +158,20 @@ var UserManagement = React.createClass({
   },
 
   render() {
+    var districts = _.sortBy(this.props.districts, 'name');
+
     return <div id="users-list">
       <div>
         <Well id="users-bar" bsSize="small" className="clearfix">
           <Row>
             <Col md={10}>
               <ButtonToolbar id="users-search">
+                <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
+                  items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
+                <InputGroup>
+                  <InputGroup.Addon>Surname</InputGroup.Addon>
+                  <FormInputControl id="surname" type="text" value={ this.state.search.surname } updateState={ this.updateSearchState }/>
+                </InputGroup>
                 <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
                 <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
               </ButtonToolbar>
@@ -183,10 +200,11 @@ var UserManagement = React.createClass({
           }
 
           return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={[
-            { field: 'surname',   title: 'Surname'    },
-            { field: 'givenName', title: 'First Name' },
-            { field: 'initials',  title: 'Initials'   },
-            { field: 'addUser',   title: 'Add USer',  style: { textAlign: 'right'  },
+            { field: 'surname',      title: 'Surname'    },
+            { field: 'givenName',    title: 'First Name' },
+            { field: 'smUserId',     title: 'User ID'    },
+            { field: 'districtName', title: 'District'   },
+            { field: 'addUser',      title: 'Add User',  style: { textAlign: 'right'  },
               node: <Button title="add" bsSize="xsmall" onClick={ this.openAddDialog }><Glyphicon glyph="plus" />&nbsp;<strong>Add User</strong></Button>,
             },
           ]}>
@@ -195,7 +213,8 @@ var UserManagement = React.createClass({
                 return <tr key={ user.id } className={ user.active ? null : 'info' }>
                   <td>{ user.surname }</td>
                   <td>{ user.givenName }</td>
-                  <td>{ user.initials }</td>
+                  <td>{ user.smUserId }</td>
+                  <td>{ user.districtName }</td>
                   <td style={{ textAlign: 'right' }}>
                     <ButtonGroup>
                       <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, user) }/> }>
@@ -218,9 +237,9 @@ var UserManagement = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.user,
     users: state.models.users,
     user: state.models.user,
+    districts: state.lookups.districts,
     favourites: state.models.favourites,
     search: state.search.users,
     ui: state.ui.users,

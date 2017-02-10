@@ -25,9 +25,24 @@ export function getCurrentUser() {
 ////////////////////
 
 function parseUser(user) {
+  if (!user.district) { user.district = { id: '', name: '' }; }
+
   user.name = lastFirstName(user.surname, user.givenName);
+  user.districtName = user.district.name;
   user.canEdit = true;
   user.canDelete = true;
+}
+
+export function searchUsers(params) {
+  return new ApiRequest('/users/search').get(params).then(response => {
+    // Normalize the response
+    var users = _.fromPairs(response.map(user => [ user.id, user ]));
+
+    // Add display fields
+    _.map(users, user => { parseUser(user); });
+
+    store.dispatch({ type: Action.UPDATE_USERS, users: users });
+  });
 }
 
 export function getUsers() {
