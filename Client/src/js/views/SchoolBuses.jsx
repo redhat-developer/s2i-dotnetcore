@@ -16,12 +16,14 @@ import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
 import CheckboxControl from '../components/CheckboxControl.jsx';
+import Confirm from '../components/Confirm.jsx';
 import DateControl from '../components/DateControl.jsx';
 import DropdownControl from '../components/DropdownControl.jsx';
 import Favourites from '../components/Favourites.jsx';
 import FilterDropdown from '../components/FilterDropdown.jsx';
 import KeySearchControl from '../components/KeySearchControl.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
+import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
@@ -236,6 +238,12 @@ var SchoolBuses = React.createClass({
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
 
+  delete(bus) {
+    Api.deleteSchoolBus(bus).then(() => {
+      this.fetch();
+    });
+  },
+
   email() {
 
   },
@@ -338,9 +346,15 @@ var SchoolBuses = React.createClass({
                 </td>
                 <td>{ bus.inspectorName }</td>
                 <td style={{ textAlign: 'right' }}>
-                  <LinkContainer to={{ pathname: 'school-buses/' + bus.id }}>
-                    <Button title="edit" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
-                  </LinkContainer>
+                  <ButtonGroup>
+                    <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, bus) }/> }>
+                      <Button className={ bus.canDelete ? '' : 'hidden' } title="deleteBus" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                    </OverlayTrigger>
+                    <LinkContainer to={{ pathname: 'school-buses/' + bus.id }}>
+                      <Button className={ bus.canEdit ? '' : 'hidden' } title="editBus" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                    </LinkContainer>
+
+                  </ButtonGroup>
                 </td>
               </tr>;
             })

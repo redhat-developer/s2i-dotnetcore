@@ -235,7 +235,7 @@ var Owners = React.createClass({
                         <Button className={ owner.canDelete ? '' : 'hidden' } title="deleteOwner" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                       </OverlayTrigger>
                       <LinkContainer to={{ pathname: 'owners/' + owner.id }}>
-                        <Button title="edit" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                        <Button className={ owner.canEdit ? '' : 'hidden' } title="editOwner" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
                       </LinkContainer>
                     </ButtonGroup>
                   </td>

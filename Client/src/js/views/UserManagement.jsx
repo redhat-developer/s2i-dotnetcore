@@ -42,14 +42,18 @@ var UserManagement = React.createClass({
   propTypes: {
     currentUser: React.PropTypes.object,
     users: React.PropTypes.object,
+    user: React.PropTypes.object,
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
+    router: React.PropTypes.object,
   },
 
   getInitialState() {
     return {
       loading: true,
+
+      showAddDialog: false,
 
       search: {
         hideInactive: this.props.search.hideInactive !== false,
@@ -71,6 +75,8 @@ var UserManagement = React.createClass({
   },
 
   componentDidMount() {
+    this.setState({ loading: true });
+
     var favouritesPromise = Api.getFavourites('user');
 
     Promise.all([favouritesPromise]).then(() => {
@@ -111,6 +117,29 @@ var UserManagement = React.createClass({
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
 
+  openAddDialog() {
+    this.setState({ showAddDialog: true });
+  },
+
+  closeAddDialog() {
+    this.setState({ showAddDialog: false });
+  },
+
+  saveNewUser(user) {
+    Api.addUser(user).then(() => {
+      // Open it up
+      this.props.router.push({
+        pathname: `user-management/${ this.props.user.id }`,
+      });
+    });
+  },
+
+  delete(user) {
+    Api.deleteUser(user).then(() => {
+      this.fetch();
+    });
+  },
+
   email() {
 
   },
@@ -119,71 +148,70 @@ var UserManagement = React.createClass({
 
   },
 
-  delete(user) {
-    console.debug(`delete ${user.name}!`);
-  },
-
   render() {
     return <div id="users-list">
-      <Well id="users-bar" bsSize="small" className="clearfix">
-        <Row>
-          <Col md={10}>
-            <ButtonToolbar id="users-search">
-              <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
-              <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
-            </ButtonToolbar>
-          </Col>
-          <Col md={1}>
-            <Favourites id="users-faves-dropdown" type="user" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } />
-          </Col>
-          <Col md={1}>
-            <div id="users-buttons">
-              <ButtonGroup>
-                <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
-                <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
-              </ButtonGroup>
-            </div>
-          </Col>
-        </Row>
-      </Well>
+      <div>
+        <Well id="users-bar" bsSize="small" className="clearfix">
+          <Row>
+            <Col md={10}>
+              <ButtonToolbar id="users-search">
+                <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
+                <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
+              </ButtonToolbar>
+            </Col>
+            <Col md={1}>
+              <Favourites id="users-faves-dropdown" type="user" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } />
+            </Col>
+            <Col md={1}>
+              <div id="users-buttons">
+                <ButtonGroup>
+                  <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
+                  <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
+                </ButtonGroup>
+              </div>
+            </Col>
+          </Row>
+        </Well>
 
-      {(() => {
-        if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-        if (Object.keys(this.props.users).length === 0) { return <Alert bsStyle="success">No users</Alert>; }
+        {(() => {
+          if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+          if (Object.keys(this.props.users).length === 0) { return <Alert bsStyle="success">No users</Alert>; }
 
-        var users = _.sortBy(this.props.users, this.state.ui.sortField);
-        if (this.state.ui.sortDesc) {
-          _.reverse(users);
-        }
-
-        return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={[
-          { field: 'surname',   title: 'Surname'    },
-          { field: 'givenName', title: 'First Name' },
-          { field: 'initials',  title: 'Initials'   },
-          { field: 'blank' },
-        ]}>
-          {
-            _.map(users, (user) => {
-              return <tr key={ user.id } className={ user.active ? null : 'info' }>
-                <td>{ user.surname }</td>
-                <td>{ user.givenName }</td>
-                <td>{ user.initials }</td>
-                <td style={{ textAlign: 'right' }}>
-                  <ButtonGroup>
-                    <LinkContainer to={{ pathname: 'user-management/' + user.id }}>
-                      <Button title="edit" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
-                    </LinkContainer>
-                    <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, user) }/> }>
-                      <Button title="delete" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
-                    </OverlayTrigger>
-                  </ButtonGroup>
-                </td>
-              </tr>;
-            })
+          var users = _.sortBy(this.props.users, this.state.ui.sortField);
+          if (this.state.ui.sortDesc) {
+            _.reverse(users);
           }
-        </SortTable>;
-      })()}
 
+          return <SortTable sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={[
+            { field: 'surname',   title: 'Surname'    },
+            { field: 'givenName', title: 'First Name' },
+            { field: 'initials',  title: 'Initials'   },
+            { field: 'addUser',   title: 'Add USer',  style: { textAlign: 'right'  },
+              node: <Button title="add" bsSize="xsmall" onClick={ this.openAddDialog }><Glyphicon glyph="plus" />&nbsp;<strong>Add User</strong></Button>,
+            },
+          ]}>
+            {
+              _.map(users, (user) => {
+                return <tr key={ user.id } className={ user.active ? null : 'info' }>
+                  <td>{ user.surname }</td>
+                  <td>{ user.givenName }</td>
+                  <td>{ user.initials }</td>
+                  <td style={{ textAlign: 'right' }}>
+                    <ButtonGroup>
+                      <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, user) }/> }>
+                        <Button className={ user.canDelete ? '' : 'hidden' } title="deleteUser" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                      </OverlayTrigger>
+                      <LinkContainer to={{ pathname: 'user-management/' + user.id }}>
+                        <Button className={ user.canEdit ? '' : 'hidden' } title="editUser" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                      </LinkContainer>
+                    </ButtonGroup>
+                  </td>
+                </tr>;
+              })
+            }
+          </SortTable>;
+        })()}
+      </div>
     </div>;
   },
 });
@@ -192,6 +220,7 @@ function mapStateToProps(state) {
   return {
     currentUser: state.user,
     users: state.models.users,
+    user: state.models.user,
     favourites: state.models.favourites,
     search: state.search.users,
     ui: state.ui.users,

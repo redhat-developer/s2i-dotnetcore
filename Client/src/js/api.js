@@ -26,6 +26,8 @@ export function getCurrentUser() {
 
 function parseUser(user) {
   user.name = lastFirstName(user.surname, user.givenName);
+  user.canEdit = true;
+  user.canDelete = true;
 }
 
 export function getUsers() {
@@ -113,6 +115,8 @@ function parseSchoolBus(bus) {
   bus.inspectorName = firstLastName(bus.inspector.givenName, bus.inspector.surname);
   bus.isReinspection = bus.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   bus.nextInspectionDateSort = sortableDateTime(bus.nextInspectionDate);
+  bus.canEdit = true;
+  bus.canDelete = false;
 }
 
 export function searchSchoolBuses(params) {
@@ -166,6 +170,17 @@ export function updateSchoolBus(schoolBus) {
     parseSchoolBus(bus);
 
     store.dispatch({ type: Action.UPDATE_BUS, schoolBus: bus });
+  });
+}
+
+export function deleteSchoolBus(schoolBus) {
+  return new ApiRequest(`/schoolbuses/${ schoolBus.id }/delete`).post().then(response => {
+    var bus = response;
+
+    // Add display fields
+    parseSchoolBus(bus);
+
+    store.dispatch({ type: Action.DELETE_BUS, schoolBus: bus });
   });
 }
 
@@ -358,6 +373,7 @@ function parseOwner(owner) {
   owner.isOverdue = owner.daysToInspection < 0;
   owner.isReinspection = owner.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   owner.nextInspectionDateSort = sortableDateTime(owner.nextInspectionDate);
+  owner.canEdit = true;
   owner.canDelete = owner.numberOfBuses === 0 && hoursAgo(owner.dateCreated) <= Constant.OWNER_DELETE_GRACE_PERIOD_HOURS;
 }
 
