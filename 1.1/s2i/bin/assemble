@@ -5,7 +5,6 @@ set -e
 # User settable environment
 DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
 DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
-DOTNET_RESTORE_ROOT="${DOTNET_RESTORE_ROOT:-.}"
 
 # Private environment
 DOTNET_FRAMEWORK="netcoreapp1.1"
@@ -35,7 +34,7 @@ else
 fi
 
 echo "---> Installing dependencies ..."
-dotnet restore $DOTNET_RESTORE_ROOT
+dotnet restore
 
 # The publish operation fails when .NET framework targets are included in project.json
 # See https://github.com/dotnet/cli/issues/3636
