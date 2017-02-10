@@ -42,15 +42,15 @@ dotnet restore
 export DOTNET_REFERENCE_ASSEMBLIES_PATH=/tmp/reference_assemblies
 mkdir -p $DOTNET_REFERENCE_ASSEMBLIES_PATH/.NETFramework/{v1.1,v2.0,v3.5,v4.0,v4.0.3,v4.5,v4.5.1,v4.5.2,v4.6,v4.6.1,v4.6.2}
 
-echo "---> Building application from source ..."
-dotnet publish -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT" -o "$DOTNET_PUBLISH_PATH"
-
+# run tests
 for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
     echo "---> Running test project: $TEST_PROJECT..."
     dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK"
 done
 
-rm -rf $DOTNET_REFERENCE_ASSEMBLIES_PATH
+# publish application
+echo "---> Publishing application ..."
+dotnet publish -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT" -o "$DOTNET_PUBLISH_PATH"
 
 # check if the assembly used by the script exists
 if [ ! -f "$DOTNET_PUBLISH_PATH/${APP_DLL_NAME}" ]; then
@@ -64,6 +64,9 @@ cat << EOF >"$DOTNET_RUN_SCRIPT"
 exec dotnet ${APP_DLL_NAME} \$@
 EOF
 chmod +x "$DOTNET_RUN_SCRIPT"
+
+# cleanup
+rm -rf $DOTNET_REFERENCE_ASSEMBLIES_PATH
 
 # Fix source directory permissions
 fix-permissions ./
