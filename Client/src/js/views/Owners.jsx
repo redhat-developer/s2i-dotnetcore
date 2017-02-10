@@ -214,7 +214,7 @@ var Owners = React.createClass({
             { field: 'numberOfBuses',          title: 'School Buses',    style: { textAlign: 'center' } },
             { field: 'nextInspectionDateSort', title: 'Next Inspection' },
             { field: 'addOwner',               title: 'Add Owner',       style: { textAlign: 'right'  },
-              node: <Button title="add" bsSize="xsmall" onClick={ this.openAddDialog }><Glyphicon glyph="plus" /></Button>,
+              node: <Button title="add" bsSize="xsmall" onClick={ this.openAddDialog }><Glyphicon glyph="plus" />&nbsp;<strong>Add Owner</strong></Button>,
             },
           ]}>
             {
