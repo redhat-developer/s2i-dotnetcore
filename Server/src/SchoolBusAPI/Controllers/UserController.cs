@@ -334,5 +334,22 @@ namespace SchoolBusAPI.Controllers
         {
             return this._service.UsersPostAsync(item);
         }
+
+        /// <summary>
+        /// Searches Users
+        /// </summary>
+        /// <remarks>Used for the search users.</remarks>
+        /// <param name="districts">Districts (array of id numbers)</param>
+        /// <param name="surname"></param>
+        /// <param name="includeInactive">True if Inactive users will be returned</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/users/search")]
+        [SwaggerOperation("UsersSearchGet")]
+        [SwaggerResponse(200, type: typeof(List<UserViewModel>))]
+        public virtual IActionResult UsersSearchGet([FromQuery]int?[] districts, [FromQuery]string surname, [FromQuery]bool? includeInactive)
+        {
+            return this._service.UsersSearchGetAsync(districts, surname, includeInactive);
+        }
     }
 }

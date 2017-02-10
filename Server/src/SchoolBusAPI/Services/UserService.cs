@@ -196,5 +196,15 @@ namespace SchoolBusAPI.Services
         /// <param name="item"></param>
         /// <response code="201">User created</response>
         IActionResult UsersPostAsync(User item);
+
+        /// <summary>
+        /// Searches Users
+        /// </summary>
+        /// <remarks>Used for the search users.</remarks>
+        /// <param name="districts">Districts (array of id numbers)</param>
+        /// <param name="surname"></param>
+        /// <param name="includeInactive">True if Inactive users will be returned</param>
+        /// <response code="200">OK</response>
+        IActionResult UsersSearchGetAsync(int?[] districts, string surname, bool? includeInactive);
     }
 }
