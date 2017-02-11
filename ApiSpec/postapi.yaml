@@ -710,6 +710,41 @@
       responses:
         200:
           description: OK
+  /users/search:
+    get:
+      summary: Searches Users
+      description:
+        Used for the search users.
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:        
+        - name: districts
+          in: query
+          description: Districts (array of id numbers)
+          collectionFormat: multi
+          type: array
+          items:
+            type: integer       
+        - name: surname
+          in: query
+          type: string
+        - name: includeInactive
+          in: query
+          description: True if Inactive users will be returned
+          type: boolean
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserViewModel"  
   /users/{id}:
     get:
       description: Returns data for a particular user

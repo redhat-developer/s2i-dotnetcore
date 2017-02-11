@@ -834,8 +834,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="201">User created</response>
         public virtual IActionResult UsersPostAsync(User item)
         {
-            bool exists = _context.Users.Any(x => x.Id == item.Id);
-            bool success = false;
+            bool exists = _context.Users.Any(x => x.Id == item.Id);          
             if (exists)
             {
                 _context.Users.Update(item);
@@ -848,5 +847,60 @@ namespace SchoolBusAPI.Services.Impl
             _context.SaveChanges();
             return new ObjectResult(item);
         }
-    }
+
+        /// <summary>
+        /// Searches Users
+        /// </summary>
+        /// <remarks>Used for the search users.</remarks>
+        /// <param name="districts">Districts (array of id numbers)</param>
+        /// <param name="surname"></param>
+        /// <param name="includeInactive">True if Inactive users will be returned</param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult UsersSearchGetAsync(int?[] districts, string surname, bool? includeInactive)
+        {
+            // Eager loading of related data
+            var data = _context.Users
+                .Include(x => x.District)
+                .Include(x => x.GroupMemberships)
+                .ThenInclude(y => y.Group)
+                .Include(x => x.UserRoles)
+                .ThenInclude(y => y.Role)
+                .ThenInclude(z => z.RolePermissions)
+                .ThenInclude(z => z.Permission)
+                .Select(x => x);
+
+            // Note that Districts searches SchoolBus Districts, not SchoolBusOwner Districts
+            if (districts != null)
+            {
+                               
+                foreach (int? district in districts)
+                {
+                    if (district != null)
+                    {
+                        data = data.Where(x => x.District.Id == district);
+                    }
+                }                
+            }            
+            
+            if (surname != null)
+            {
+                data = data.Where(x => x.Surname.ToLower().Contains (surname.ToLower()));
+            }
+
+            if (includeInactive == null || includeInactive == false)
+            {
+                data = data.Where(x => x.Active == true);
+            }
+
+            // now convert the results to the view model.
+            var result = new List<UserViewModel>();
+            foreach (User item in data)
+            {
+                UserViewModel record = item.ToViewModel();
+                result.Add(record);
+            }
+            
+            return new ObjectResult(result);
+        }
+    }    
 }
