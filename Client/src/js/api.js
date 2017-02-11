@@ -11,16 +11,6 @@ import _ from 'lodash';
 
 
 ////////////////////
-// Current User
-////////////////////
-
-export function getCurrentUser() {
-  return new ApiRequest('/users/current').get().then(response => {
-    store.dispatch({ type: Action.UPDATE_CURRENT_USER, user: response });
-  });
-}
-
-////////////////////
 // Users
 ////////////////////
 
@@ -28,9 +18,21 @@ function parseUser(user) {
   if (!user.district) { user.district = { id: '', name: '' }; }
 
   user.name = lastFirstName(user.surname, user.givenName);
+  user.fullName = firstLastName(user.givenName, user.surname);
   user.districtName = user.district.name;
   user.canEdit = true;
   user.canDelete = true;
+}
+
+export function getCurrentUser() {
+  return new ApiRequest('/users/current').get().then(response => {
+    var user = response;
+
+    // Add display fields
+    parseUser(user);
+
+    store.dispatch({ type: Action.UPDATE_CURRENT_USER, user: user });
+  });
 }
 
 export function searchUsers(params) {
