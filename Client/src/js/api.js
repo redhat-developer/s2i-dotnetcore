@@ -16,12 +16,19 @@ import _ from 'lodash';
 
 function parseUser(user) {
   if (!user.district) { user.district = { id: '', name: '' }; }
+  if (!user.groupMemberships) { user.groupMemberships = []; }
 
   user.name = lastFirstName(user.surname, user.givenName);
   user.fullName = firstLastName(user.givenName, user.surname);
   user.districtName = user.district.name;
   user.canEdit = true;
   user.canDelete = true;
+
+  var inspectorGroupId = getInspectorGroupId();
+  var isInspector = _.find(user.groupMemberships, (membership) => {
+    return (membership.group && membership.group.id === inspectorGroupId);
+  });
+  user.isInspector = isInspector !== undefined;
 }
 
 export function getCurrentUser() {
@@ -521,10 +528,9 @@ export function getGroups() {
 }
 
 export function getInspectors() {
-  var inspectorGroup = _.find(store.getState().lookups.groups, { name: 'Inspector' });
-  var groupId = inspectorGroup ? inspectorGroup.id : 0;
+  var inspectorGroupId = getInspectorGroupId();
 
-  return new ApiRequest(`/groups/${ groupId }/users`).get().then(response => {
+  return new ApiRequest(`/groups/${ inspectorGroupId }/users`).get().then(response => {
     // Normalize the response
     var users = _.fromPairs(response.map(user => [ user.id, user ]));
 
@@ -543,4 +549,13 @@ export function getVersion() {
   return new ApiRequest('/version').get().then(response => {
     store.dispatch({ type: Action.UPDATE_VERSION, version: response });
   });
+}
+
+////////////////////
+// Utilities
+////////////////////
+
+function getInspectorGroupId() {
+  var inspectorGroup = _.find(store.getState().lookups.groups, { name: 'Inspector' });
+  return inspectorGroup ? inspectorGroup.id : 0;
 }
