@@ -24,7 +24,6 @@ var FilterDropdown = React.createClass({
 
   getInitialState() {
     return {
-      items: this.props.items || [],
       selectedId: this.props.selectedId || '',
       title: '',
       filterTerm: '',
@@ -35,27 +34,28 @@ var FilterDropdown = React.createClass({
 
   componentDidMount() {
     // Have to wait until state is ready before initializing title.
-    var title = this.buildTitle(this.state.selectedId);
+    var title = this.buildTitle(this.props.items, this.state.selectedId);
     this.setState({ title: title });
   },
 
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(nextProps.items, this.props.items)) {
+      var items = nextProps.items || [];
       this.setState({
-        items: nextProps.items || [],
-        title: this.buildTitle(this.state.selectedId),
+        items: items,
+        title: this.buildTitle(items, this.state.selectedId),
       });
     } else if (nextProps.selectedId !== this.props.selectedId) {
       this.setState({
         selectedId: nextProps.selectedId,
-        title: this.buildTitle(nextProps.selectedId),
+        title: this.buildTitle(this.props.items, nextProps.selectedId),
       });
     }
   },
 
-  buildTitle(selectedId) {
+  buildTitle(items, selectedId) {
     if (selectedId) {
-      var selected = _.find(this.props.items, { id: selectedId });
+      var selected = _.find(items, { id: selectedId });
       if (selected) {
         return selected[this.state.fieldName];
       }
@@ -68,7 +68,7 @@ var FilterDropdown = React.createClass({
 
     this.setState({
       selectedId: selectedId || '',
-      title: this.buildTitle(selectedId),
+      title: this.buildTitle(this.props.items, selectedId),
     });
 
     this.sendSelected(selectedId);
@@ -109,7 +109,7 @@ var FilterDropdown = React.createClass({
   },
 
   render() {
-    var items = this.state.items;
+    var items = this.props.items;
 
     if (this.state.filterTerm.length > 0) {
       items = _.filter(items, item => {

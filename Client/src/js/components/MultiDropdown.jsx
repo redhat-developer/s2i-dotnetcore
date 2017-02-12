@@ -28,7 +28,6 @@ var MultiDropdown = React.createClass({
     var fieldName = this.props.fieldName || 'name';
 
     return {
-      items: items,
       selectedIds: selectedIds,
       title: '',
       filterTerm: '',
@@ -41,30 +40,26 @@ var MultiDropdown = React.createClass({
 
   componentDidMount() {
     // Have to wait until state is ready before initializing title.
-    var title = this.buildTitle(this.state.selectedIds);
+    var title = this.buildTitle(this.props.items, this.state.selectedIds);
     this.setState({ title: title });
   },
 
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(nextProps.items, this.props.items)) {
       var items = nextProps.items || [];
-      var title = this.buildTitle(this.state.selectedIds);
-
       this.setState({
         items: items,
-        title: title,
+        title: this.buildTitle(items, this.state.selectedIds),
       });
     } else if (!_.isEqual(nextProps.selectedIds, this.props.selectedIds)) {
-      title = this.buildTitle(nextProps.selectedIds);
-
       this.setState({
         selectedIds: nextProps.selectedIds,
-        title: title,
+        title: this.buildTitle(this.props.items, nextProps.selectedIds),
       });
     }
   },
 
-  buildTitle(selectedIds) {
+  buildTitle(items, selectedIds) {
     var num = selectedIds.length;
 
     if (num === 0) {
@@ -72,7 +67,7 @@ var MultiDropdown = React.createClass({
     } else if (num > this.state.maxItemsForTitle) {
       return `(${num}) selected`;
     } else {
-      return _.map(_.pickBy(this.props.items, item => selectedIds.includes(item.id)), this.state.fieldName).join(', ');
+      return _.map(_.pickBy(items, item => selectedIds.includes(item.id)), this.state.fieldName).join(', ');
     }
   },
 
@@ -88,27 +83,27 @@ var MultiDropdown = React.createClass({
 
     this.setState({
       selectedIds: selectedIds,
-      title: this.buildTitle(selectedIds),
-      allSelected: selectedIds.length === this.state.items.length,
+      title: this.buildTitle(this.props.items, selectedIds),
+      allSelected: selectedIds.length === this.props.items.length,
     });
 
     this.sendSelected(selectedIds);
   },
 
   selectAll(e) {
-    var selectedIds = e.target.checked ? _.map(this.state.items, 'id') : [];
+    var selectedIds = e.target.checked ? _.map(this.props.items, 'id') : [];
 
     this.setState({
       selectedIds: selectedIds,
       allSelected: e.target.checked,
-      title: this.buildTitle(selectedIds),
+      title: this.buildTitle(this.props.items, selectedIds),
     });
 
     this.sendSelected(selectedIds);
   },
 
   sendSelected(selectedIds) {
-    var selected = this.state.items.filter(item => selectedIds.includes(item.id));
+    var selected = this.props.items.filter(item => selectedIds.includes(item.id));
 
     // Send selected items to change listener
     if (this.props.onChange) {
@@ -138,7 +133,7 @@ var MultiDropdown = React.createClass({
   },
 
   render() {
-    var items = this.state.items;
+    var items = this.props.items;
 
     if (this.state.filterTerm.length > 0) {
       items = _.filter(items, item => {

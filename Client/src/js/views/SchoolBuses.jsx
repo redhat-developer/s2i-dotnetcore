@@ -69,12 +69,15 @@ var SchoolBuses = React.createClass({
   },
 
   getInitialState() {
+    var defaultSelectedInspectors = this.props.currentUser.isInspector ? [ this.props.currentUser.id ] : [];
+    var defaultSelectedDistricts = (this.props.currentUser.isInspector || !this.props.currentUser.district.id) ? [] : [ this.props.currentUser.district.id ];
+
     return {
       loading: true,
 
       search: {
-        selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
-        selectedInspectorsIds: this.props.search.selectedInspectorsIds || (this.props.currentUser.isInspector ? [ this.props.currentUser.id ] : []),
+        selectedDistrictsIds: this.props.search.selectedDistrictsIds || defaultSelectedDistricts,
+        selectedInspectorsIds: this.props.search.selectedInspectorsIds || defaultSelectedInspectors,
         selectedCitiesIds: this.props.search.selectedCitiesIds || [],
         selectedSchoolDistrictsIds: this.props.search.selectedSchoolDistrictsIds || [],
         ownerId: this.props.search.ownerId || 0,
