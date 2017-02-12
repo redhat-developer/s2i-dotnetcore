@@ -19,6 +19,7 @@ var MultiDropdown = React.createClass({
     onChange: React.PropTypes.func,
     updateState: React.PropTypes.func,
     showMaxItems: React.PropTypes.number,
+    disabled: React.PropTypes.bool,
   },
 
   getInitialState() {
@@ -145,7 +146,9 @@ var MultiDropdown = React.createClass({
       });
     }
 
-    return <Dropdown className={ `multi-dropdown ${this.props.className || ''}` } id={ this.props.id } title={ this.state.title } open={ this.state.open } onToggle={ this.toggle }>
+    return <Dropdown className={ `multi-dropdown ${this.props.className || ''}` } id={ this.props.id }
+      title={ this.state.title } open={ this.state.open } onToggle={ this.toggle } disabled={ this.props.disabled }
+    >
       <Dropdown.Toggle title={this.state.title} />
       <RootCloseMenu bsRole="menu">
         <Well bsSize="small">

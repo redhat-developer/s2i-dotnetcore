@@ -13,6 +13,7 @@ import OwnersAddDialog from './dialogs/OwnersAddDialog.jsx';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
+import * as Constant from '../constants';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
@@ -40,6 +41,7 @@ TODO:
 
 var Owners = React.createClass({
   propTypes: {
+    currentUser: React.PropTypes.object,
     ownerList: React.PropTypes.object,
     owner: React.PropTypes.object,
     districts: React.PropTypes.object,
@@ -59,7 +61,7 @@ var Owners = React.createClass({
 
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
-        selectedInspectorsIds: this.props.search.selectedInspectorsIds || [],
+        selectedInspectorsIds: this.props.search.selectedInspectorsIds || (this.props.currentUser.isInspector ? [ this.props.currentUser.id ] : []),
         ownerId: this.props.search.ownerId || 0,
         ownerName: this.props.search.ownerName || 'Owner',
         hideInactive: this.props.search.hideInactive !== false,
@@ -177,7 +179,7 @@ var Owners = React.createClass({
               <ButtonToolbar id="owners-search">
                 <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
                   items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
-                <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors"
+                <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors" disabled={ this.props.currentUser.isInspector }
                   items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
                 <FilterDropdown id="ownerId" placeholder="Owner" blankLine
                   items={ owners } selectedId={ this.state.search.ownerId } updateState={ this.updateSearchState } />
@@ -223,7 +225,7 @@ var Owners = React.createClass({
                   <td>{ owner.name }</td>
                   <td>{ owner.primaryContactName }</td>
                   <td style={{ textAlign: 'center' }}>
-                    <a href={ `#school-buses/owned-by/${ owner.id }` }>{ owner.numberOfBuses }</a>
+                    <a href={ `#school-buses?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a>
                   </td>
                   <td>{ formatDateTime(owner.nextInspectionDate, 'MM/DD/YYYY') }
                     { owner.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
@@ -255,6 +257,7 @@ var Owners = React.createClass({
 
 function mapStateToProps(state) {
   return {
+    currentUser: state.user,
     ownerList: state.models.owners,
     owner: state.models.owner,
     districts: state.lookups.districts,

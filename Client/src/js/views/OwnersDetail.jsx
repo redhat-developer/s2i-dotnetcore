@@ -167,7 +167,7 @@ var OwnersDetail = React.createClass({
                 return <div id="owners-data">
                   <Row>
                     <ColLabel md={4}>Number of School Buses</ColLabel>
-                    <ColField md={8}><a href={ `#school-buses/owned-by/${ owner.id }` }>{ owner.numberOfBuses }</a></ColField>
+                    <ColField md={8}><a href={ `#school-buses?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a></ColField>
                   </Row>
                   <Row>
                     <ColLabel md={4}>Owner Added On</ColLabel>

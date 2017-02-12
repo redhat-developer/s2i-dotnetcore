@@ -12,6 +12,7 @@ import Promise from 'bluebird';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
+import * as Constant from '../constants';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
@@ -54,6 +55,7 @@ const ALL = 'All';
 
 var SchoolBuses = React.createClass({
   propTypes: {
+    currentUser: React.PropTypes.object,
     schoolBuses: React.PropTypes.object,
     districts: React.PropTypes.object,
     inspectors: React.PropTypes.object,
@@ -63,18 +65,16 @@ var SchoolBuses = React.createClass({
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
-    params: React.PropTypes.object,
+    location: React.PropTypes.object,
   },
 
   getInitialState() {
     return {
       loading: true,
 
-      ownedById: this.props.params.ownerId,
-
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
-        selectedInspectorsIds: this.props.search.selectedInspectorsIds || [],
+        selectedInspectorsIds: this.props.search.selectedInspectorsIds || (this.props.currentUser.isInspector ? [ this.props.currentUser.id ] : []),
         selectedCitiesIds: this.props.search.selectedCitiesIds || [],
         selectedSchoolDistrictsIds: this.props.search.selectedSchoolDistrictsIds || [],
         ownerId: this.props.search.ownerId || 0,
@@ -181,24 +181,47 @@ var SchoolBuses = React.createClass({
     var favouritesPromise = Api.getFavourites('schoolBus');
 
     Promise.all([inspectorsPromise, ownersPromise, favouritesPromise]).then(() => {
-      if (this.state.ownedById) {
-        // We're looking for a specific owner's school buses, so we'll set up state accordingly
-        this.updateSearchState({
-          ownerId: parseInt(this.state.ownedById, 10),
+      if (this.props.location.search) {
+        // Check for specific school bus query
+        var state = {
           selectedDistrictsIds: [],
-          selectedInspectorsIds: [],
+          selectedInspectorsIds: this.props.currentUser.isInspector ? [ this.props.currentUser.id ] : [],
           selectedCitiesIds: [],
           selectedSchoolDistrictsIds: [],
-          ownerName: this.props.owners[this.state.ownedById] ? this.props.owners[this.state.ownedById].name : '',
+          ownerId: 0,
+          ownerName: 'Owner',
           keySearchField: this.props.search.keySearchField,
           keySearchText: '',
           keySearchParams: null,
-          nextInspection: ALL,
+          nextInspection: WITHIN_30_DAYS,
           startDate: '',
           endDate: '',
-          hideInactive: false,
+          hideInactive: true,
           justReInspections: false,
-        }, this.fetch);
+        };
+/*
+
+Overdue: Next Inspections before today, inspector = current user
+Re-Inspections: Next inspections all dates, inspector = current user, inspection type = re-inspections
+Upcoming inspections: Next inspections - before the next 30 day, inspector = current user
+
+*/
+
+        if (this.props.location.query[Constant.SCHOOL_BUS_OWNER_QUERY]) {
+          var ownerId = this.props.location.query[Constant.SCHOOL_BUS_OWNER_QUERY];
+          state.ownerId = parseInt(ownerId, 10);
+          state.ownerName = this.props.owners[ownerId] ? this.props.owners[ownerId].name : '';
+          state.nextInspection = ALL;
+        } else if (this.props.location.query[Constant.SCHOOL_BUS_OVERDUE_QUERY]) {
+          state.nextInspection = BEFORE_TODAY;
+        } else if (this.props.location.query[Constant.SCHOOL_BUS_REINSPECTIONS_QUERY]) {
+          state.nextInspection = ALL;
+          state.justReInspections = true;
+        } else if (this.props.location.query[Constant.SCHOOL_BUS_NEXT_30_DAYS_QUERY]) {
+          state.nextInspection = WITHIN_30_DAYS;
+        }
+
+        this.updateSearchState(state, this.fetch);
       } else {
         if (!this.props.search.loaded) {
           // This is the first load so look for a default favourite
@@ -267,7 +290,7 @@ var SchoolBuses = React.createClass({
               <ButtonToolbar id="school-buses-search">
                 <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
                   items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
-                <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors"
+                <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors" disabled={ this.props.currentUser.isInspector }
                   items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
                 <MultiDropdown id="selectedCitiesIds" placeholder="Cities"
                   items={ cities } selectedIds={ this.state.search.selectedCitiesIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
@@ -368,6 +391,7 @@ var SchoolBuses = React.createClass({
 
 function mapStateToProps(state) {
   return {
+    currentUser: state.user,
     schoolBuses: state.models.schoolBuses,
     districts: state.lookups.districts,
     inspectors: state.lookups.inspectors,
