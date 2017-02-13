@@ -5,4 +5,4 @@
 #       some world-writable perms :(
 chgrp -R 0 $1
 chmod -R og+rw $1
-find $1 -type d -exec chmod g+x {} +
+find $1 -type d ! -type l -exec chmod g+x {} +
