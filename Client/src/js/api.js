@@ -77,6 +77,39 @@ export function getUser(userId) {
   });
 }
 
+export function addUser(user) {
+  return new ApiRequest('/users').post(user).then(response => {
+    var user = response;
+
+    // Add display fields
+    parseUser(user);
+
+    store.dispatch({ type: Action.ADD_USER, user: user });
+  });
+}
+
+export function updateUser(user) {
+  return new ApiRequest(`/users/${ user.id }`).put(user).then(response => {
+    var user = response;
+
+    // Add display fields
+    parseUser(user);
+
+    store.dispatch({ type: Action.UPDATE_USER, user: user });
+  });
+}
+
+export function deleteUser(user) {
+  return new ApiRequest(`/users/${ user.id }/delete`).post().then(response => {
+    var user = response;
+
+    // Add display fields
+    parseUser(user);
+
+    store.dispatch({ type: Action.DELETE_USER, user: user });
+  });
+}
+
 ////////////////////
 // Favourites
 ////////////////////
