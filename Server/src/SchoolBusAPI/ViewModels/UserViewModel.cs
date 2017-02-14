@@ -43,7 +43,7 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="Surname">Surname.</param>
         /// <param name="Initials">Initials.</param>
         /// <param name="Email">Email.</param>
-        public UserViewModel(int Id, string GivenName, string Surname, bool Active, string Email = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null)
+        public UserViewModel(int Id, string GivenName, string Surname, bool Active, string SmUserId, string Email = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null)
         {
 
             this.Id = Id;
@@ -69,6 +69,12 @@ namespace SchoolBusAPI.ViewModels
         /// </summary>
         [DataMember(Name="active")]
         public bool Active { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SmUserId
+        /// </summary>
+        [DataMember(Name="smUserId")]
+        public string SmUserId { get; set; }
 
         /// <summary>
         /// Gets or Sets GivenName

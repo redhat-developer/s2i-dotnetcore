@@ -23,13 +23,14 @@ namespace SchoolBusAPI.Mappings
             if (model != null)
             {
                 dto.Active = model.Active;
+                dto.SmUserId = model.SmUserId;
                 dto.Email = model.Email;
                 dto.GivenName = model.GivenName;                
                 dto.Surname = model.Surname;
                 dto.Id = model.Id;
                 dto.District = model.District;
                 dto.GroupMemberships = model.GroupMemberships;
-                dto.UserRoles = model.UserRoles;
+                dto.UserRoles = model.UserRoles;                
             }            
             return dto;
         }

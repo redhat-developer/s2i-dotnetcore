@@ -410,7 +410,8 @@ namespace SchoolBusAPI.Services.Impl
             List < User > result = new List<User>();
 
             List<User> users = _context.Users
-                    .Include( x => x.UserRoles)                     
+                    .Include( x => x.UserRoles)
+                    .ThenInclude( y => y.Role)                                        
                     .ToList();
 
             foreach (User user in users)
@@ -420,11 +421,8 @@ namespace SchoolBusAPI.Services.Impl
                 if (user.UserRoles != null)
                 {
                     // ef core does not support lazy loading, so we need to explicitly get data here.
-                    foreach (var item in user.UserRoles)
-                    {
-                        UserRole userRole = _context.UserRoles
-                                .Include (x => x.Role)
-                                .First(x => x.Id == item.Id);
+                    foreach (UserRole userRole in user.UserRoles)
+                    {                        
                         if (userRole.Role != null && userRole.Role.Id == id && userRole.EffectiveDate <= DateTimeOffset.Now && (userRole.ExpiryDate == null || userRole.ExpiryDate > DateTimeOffset.Now))
                         {
                             found = true;
@@ -453,63 +451,68 @@ namespace SchoolBusAPI.Services.Impl
         public virtual IActionResult RolesIdUsersPutAsync(int id, UserRoleViewModel[] items)
         {
             bool role_exists = _context.Roles.Any(x => x.Id == id);
+            bool data_changed = false;
             if (role_exists)
             {
                 Role role = _context.Roles.First(x => x.Id == id);
 
-                foreach (UserRoleViewModel item in items)
+                // scan through users
+
+                var users = _context.Users
+                        .Include(x => x.UserRoles)
+                        .ThenInclude(y => y.Role);
+                
+                foreach (User user in users)
                 {
-                    if (item != null)
+                    // first see if it is one of our matches.                    
+                    UserRoleViewModel foundItem = null;                    
+                    foreach (var item in items)
                     {
-                        // see if there is a matching user
-                        bool user_exists = _context.Users.Any(x => x.Id == item.UserId);
-                        if (user_exists)
+                        if (item.UserId == user.Id)
                         {
-                            User user = _context.Users
-                                .Include(x => x.UserRoles)
-                                .First(x => x.Id == item.UserId);
-                            bool found = false;
-                            if (user.UserRoles != null)
+                            foundItem = item;
+                            break;
+                        }                        
+                    }
+
+                    if (foundItem == null) // delete the user role if it exists.
+                    {
+                        foreach (UserRole userRole in user.UserRoles)
+                        {
+                            if (userRole.Role.Id == id)
                             {
-                                foreach (UserRole item_role in user.UserRoles)
-                                {
-                                    // get the full record.
-
-                                    if (item_role.Id != null)
-                                    {
-                                        UserRole userRole = _context.UserRoles
-                                                .Include(x => x.Role)
-                                                .First(x => x.Id == item_role.Id);
-                                        if (userRole.Role != null && userRole.Role.Id == role.Id)
-                                        {
-                                            found = true;
-                                        }                                        
-                                    }
-                                }
-                            }
-                            
-                            if (found == false) // add the user role
-                            {
-                                UserRole newRole = new UserRole();
-                                newRole.Role = role;
-                                newRole.EffectiveDate = item.EffectiveDate;
-                                newRole.ExpiryDate = null;
-                                _context.UserRoles.Add(newRole);
-
-                                if (user.UserRoles == null)
-                                {
-                                    user.UserRoles = new List<UserRole>();
-                                }
-
-                                user.UserRoles.Add(newRole);
-                                // update the user.
-                                _context.Update(user);
+                                user.UserRoles.Remove(userRole);
+                                _context.Users.Update(user);
+                                data_changed = true;
                             }
                         }
-
+                    }
+                    else // add the user role if it does not exist.
+                    {
+                        bool found = false;
+                        foreach (UserRole userRole in user.UserRoles)
+                        {
+                            if (userRole.Role.Id == id)
+                            {
+                                found = true;
+                            }
+                        }
+                        if (found == false)
+                        {
+                            UserRole newUserRole = new UserRole();
+                            newUserRole.EffectiveDate = DateTime.Now;
+                            newUserRole.Role = role;
+                            user.UserRoles.Add(newUserRole);
+                            _context.Users.Update(user);
+                            data_changed = true;
+                        }
                     }
                 }
-                _context.SaveChanges();
+                if (data_changed)
+                {
+                    _context.SaveChanges();
+                }
+                
                 return new StatusCodeResult(200);
             }
             else
