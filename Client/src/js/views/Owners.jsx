@@ -182,7 +182,7 @@ var Owners = React.createClass({
               <ButtonToolbar id="owners-search">
                 <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
                   items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
-                <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors" disabled={ this.props.currentUser.isInspector }
+                <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors"
                   items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
                 <FilterDropdown id="ownerId" placeholder="Owner" blankLine
                   items={ owners } selectedId={ this.state.search.ownerId } updateState={ this.updateSearchState } />

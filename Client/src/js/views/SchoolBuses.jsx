@@ -293,7 +293,7 @@ Upcoming inspections: Next inspections - before the next 30 day, inspector = cur
               <ButtonToolbar id="school-buses-search">
                 <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
                   items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
-                <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors" disabled={ this.props.currentUser.isInspector }
+                <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors"
                   items={ inspectors } selectedIds={ this.state.search.selectedInspectorsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
                 <MultiDropdown id="selectedCitiesIds" placeholder="Cities"
                   items={ cities } selectedIds={ this.state.search.selectedCitiesIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
