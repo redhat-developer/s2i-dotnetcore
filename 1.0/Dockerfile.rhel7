@@ -40,7 +40,7 @@ RUN yum install -y yum-utils && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-dotnet-rpms && \
     yum-config-manager --enable rhel-7-server-rpms && \
-    yum-config-manager --enable rhel-7-server-ose-3.0-rpms && \
+    yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \
     yum install -y --setopt=tsflags=nodocs rh-dotnetcore10 nss_wrapper tar rh-nodejs4-npm && \
     yum clean all && \
     mkdir -p /opt/app-root/src /opt/app-root/publish && \
