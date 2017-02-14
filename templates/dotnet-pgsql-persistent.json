@@ -85,6 +85,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
+                            "namespace": "${NAMESPACE}",
                             "name": "${DOTNET_IMAGE_STREAM_TAG}"
                         },
                         "env": [
@@ -261,6 +262,7 @@
                             ],
                             "from": {
                                 "kind": "ImageStreamTag",
+                                "namespace": "openshift",
                                 "name": "postgresql:9.5"
                             }
                         }
@@ -392,6 +394,13 @@
             "required": true,
             "description": "The image stream tag which is used to build the code.",
             "value": "dotnet:1.1"
+        },
+        {
+            "name": "NAMESPACE",
+            "displayName": "Namespace",
+            "required": true,
+            "description": "The OpenShift Namespace where the .NET builder ImageStream resides.",
+            "value": "openshift"
         },
         {
             "name": "SOURCE_REPOSITORY_URL",
