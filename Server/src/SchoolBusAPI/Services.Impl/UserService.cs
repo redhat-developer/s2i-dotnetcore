@@ -213,6 +213,7 @@ namespace SchoolBusAPI.Services.Impl
         {
             var user = _context.Users
                 .Include(x => x.UserRoles)
+                .Include(x => x.GroupMemberships)
                 .FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
@@ -226,6 +227,15 @@ namespace SchoolBusAPI.Services.Impl
                     _context.UserRoles.Remove(item);
                 }
             }
+
+            if (user.GroupMemberships != null)
+            {
+                foreach (var item in user.GroupMemberships)
+                {
+                    _context.GroupMemberships.Remove(item);
+                }
+            }
+
             _context.Users.Remove(user);
             _context.SaveChanges();
             return new ObjectResult(user.ToViewModel());
