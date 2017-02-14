@@ -645,6 +645,7 @@ namespace SchoolBusAPI.Services.Impl
             user.Email = item.Email;
             user.GivenName = item.GivenName;            
             user.Surname = item.Surname;
+            user.SmUserId = item.SmUserId;
 
             if (item.District != null)
             {
