@@ -52,6 +52,9 @@
         format: int32
         type: integer
         description: The number of buses for which this owner is associated with       
+      nextInspectionTypeCode:
+        format: string
+        description: Type Code for the Next InspectionType.  Null if there are no next inspections.
   UserViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -70,14 +73,25 @@
         x-chance-type: name
       surname:
         type: string
-        x-chance-type: name
-      initials:
-        type: string
+        x-chance-type: name      
       email:
         type: string
         x-chance-type: email
       active:
         type: boolean
+      smUserId:
+        type: string
+      userRoles:
+        type: array
+        items:
+          $ref: '#/definitions/UserRole'
+      groupMemberships:
+        type: array
+        items:
+          $ref: '#/definitions/GroupMembership'
+      district:
+        $ref: '#/definitions/District'
+        description: The District to which this User is affliated.
   CurrentUserViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -87,11 +101,23 @@
         x-chance-type: name
       surname:
         type: string
-        x-chance-type: name
-      fullName:
+        x-chance-type: name      
+      email:
         type: string
-      districtName:
-        type: string
+        x-chance-type: email
+      active:
+        type: boolean
+      userRoles:
+        type: array
+        items:
+          $ref: '#/definitions/UserRole'
+      groupMemberships:
+        type: array
+        items:
+          $ref: '#/definitions/GroupMembership'
+      district:
+        $ref: '#/definitions/District'
+        description: The District to which this User is affliated.
       overdueInspections:
         format: int32
         type: integer
@@ -151,12 +177,6 @@
       expiryDate:
         type: string
         format: date-time
-      userId:
-        format: int32
-        type: integer
-        x-type-options:
-          min: 1
-          max: 1000
       roleId:
         format: int32
         type: integer

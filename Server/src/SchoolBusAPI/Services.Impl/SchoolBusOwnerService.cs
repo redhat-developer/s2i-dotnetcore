@@ -104,7 +104,7 @@ namespace SchoolBusAPI.Services.Impl
         /// 
         /// </summary>
 
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">SchoolBusOwners created</response>
 
         public virtual IActionResult SchoolbusownersBulkPostAsync (SchoolBusOwner[] items)        
@@ -140,7 +140,14 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersGetAsync ()        
         {
-            var result = _context.SchoolBusOwners.ToList();
+            var result = _context.SchoolBusOwners
+                .Include(x => x.Attachments)
+                .Include(x => x.Contacts)
+                .Include(x => x.District.Region)
+                .Include(x => x.History)
+                .Include(x => x.Notes)
+                .Include(x => x.PrimaryContact)
+                .ToList();
             return new ObjectResult(result);
         }
         /// <summary>
@@ -155,7 +162,9 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners.First(a => a.Id == id);
+                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners
+                    .Include(x => x.Attachments)                    
+                    .First(a => a.Id == id);
                 var result = schoolBusOwner.Notes;
                 return new ObjectResult(result);
             }
@@ -178,7 +187,10 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 List<ContactAddress> result = new List<ContactAddress>();
-                var owner = _context.SchoolBusOwners.Where(a => a.Id == id).First();
+                var owner = _context.SchoolBusOwners
+                    .Include(x => x.Contacts)
+                    .ThenInclude(y => y.ContactAddresses)
+                    .Where(a => a.Id == id).First();
                 var contacts = owner.Contacts;
                 foreach (Contact contact in contacts)
                 {
@@ -206,7 +218,10 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 List<ContactPhone> result = new List<ContactPhone>();
-                var owner = _context.SchoolBusOwners.Where(a => a.Id == id).First();
+                var owner = _context.SchoolBusOwners
+                    .Include(x => x.Contacts)
+                    .ThenInclude(y => y.ContactPhones)
+                    .Where(a => a.Id == id).First();
                 var contacts = owner.Contacts;
                 foreach (Contact contact in contacts)
                 {
@@ -258,7 +273,14 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.SchoolBusOwners.First(a => a.Id == id);
+                var result = _context.SchoolBusOwners
+                    .Include(x => x.Attachments)
+                    .Include(x => x.Contacts)
+                    .Include(x => x.District.Region)
+                    .Include(x => x.History)
+                    .Include(x => x.Notes)
+                    .Include(x => x.PrimaryContact)                    
+                    .First(a => a.Id == id);
                 return new ObjectResult(result);
             }
             else
@@ -279,7 +301,9 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners.First(a => a.Id == id);
+                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners
+                    .Include(x => x.Notes)
+                    .First(a => a.Id == id);
                 var result = schoolBusOwner.Notes;
                 return new ObjectResult(result);
             }
@@ -357,6 +381,22 @@ namespace SchoolBusAPI.Services.Impl
             return result;
         }
 
+        private string GetNextInspectionTypeCode(int schoolBusOwnerId)
+        {
+            string result = null;
+
+            // next inspection is drawn from the inspections table.
+            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
+            if (exists)
+            {
+                var record = _context.SchoolBuss                    
+                    .OrderByDescending(x => x.NextInspectionDate)
+                    .First(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
+                result = record.NextInspectionTypeCode;                
+            }
+            return result;
+        }
+
         /// <summary>
         /// View service used by the view school bus owner page
         /// </summary>
@@ -372,6 +412,7 @@ namespace SchoolBusAPI.Services.Impl
                 // populate the calculated fields.
                 result.nextInspectionDate = GetNextInspectionDate(id); ;
                 result.numberOfBuses = GetNumberSchoolBuses(id);
+                result.nextInspectionTypeCode = GetNextInspectionTypeCode(id);
                 return new ObjectResult(result);
             }
             else
@@ -507,7 +548,8 @@ namespace SchoolBusAPI.Services.Impl
             {                
                 // populate the calculated fields.
                 item.nextInspectionDate = GetNextInspectionDate(item.Id); ;
-                item.numberOfBuses = GetNumberSchoolBuses(item.Id);                
+                item.numberOfBuses = GetNumberSchoolBuses(item.Id);
+                item.nextInspectionTypeCode = GetNextInspectionTypeCode(item.Id);              
             }
             return new ObjectResult(result);
         }

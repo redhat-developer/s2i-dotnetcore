@@ -71,7 +71,7 @@ namespace SchoolBusAPI.Test
             Group group = new Group();
 
             group.Name = "initialName";
-            jsonString = user.ToJson();
+            jsonString = group.ToJson();
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
@@ -80,19 +80,19 @@ namespace SchoolBusAPI.Test
             jsonString = await response.Content.ReadAsStringAsync();
             group = JsonConvert.DeserializeObject<Group>(jsonString);
             // get the id
-            int group_id = user.Id;
+            int group_id = group.Id;
 
             // assign user to group
 
-            GroupMembership groupMembership = new GroupMembership();
-            groupMembership.User = user;
-            groupMembership.Group = group;
+            GroupMembershipViewModel groupMembership = new GroupMembershipViewModel();
+            groupMembership.UserId = user.Id;
+            groupMembership.GroupId = group.Id;
 
-            GroupMembership[] items = new GroupMembership[1];
+            GroupMembershipViewModel[] items = new GroupMembershipViewModel[1];
             items[0] = groupMembership;
 
             // send the request.
-            request = new HttpRequestMessage(HttpMethod.Post, "/api/users/" + user_id + "/groups");
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/users/" + user_id + "/groups");
             jsonString = JsonConvert.SerializeObject(items, Formatting.Indented);
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
@@ -118,7 +118,7 @@ namespace SchoolBusAPI.Test
             Assert.Equal(found, true);
 
             // remove the user from the group
-            items = new GroupMembership[0];
+            items = new GroupMembershipViewModel[0];
             request = new HttpRequestMessage(HttpMethod.Put, "/api/users/" + user_id + "/groups");
             jsonString = JsonConvert.SerializeObject(items, Formatting.Indented);
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");

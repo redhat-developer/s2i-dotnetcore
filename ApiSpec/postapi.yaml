@@ -53,7 +53,7 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/User"          
+              $ref: "#/definitions/UserViewModel"          
   /schoolbuses/search:
     get:
       summary: Searches school buses
@@ -1050,7 +1050,7 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/GroupMembership"
+              $ref: "#/definitions/GroupMembershipViewModel"
       responses:
         200:
           description: OK
@@ -1076,13 +1076,11 @@
           description: id of User to update
           required: true
           type: integer
-        - name: items
+        - name: item
           in: body
           required: true
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/GroupMembership"
+            $ref: "#/definitions/GroupMembershipViewModel"
       responses:
         200:
           description: OK

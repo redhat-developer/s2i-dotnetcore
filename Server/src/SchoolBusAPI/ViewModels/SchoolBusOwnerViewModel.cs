@@ -136,6 +136,12 @@ namespace SchoolBusAPI.ViewModels
         [DataMember(Name = "numberOfBuses")]
         public int numberOfBuses { get; set; }
 
+        /// <summary>
+        /// Type code for the next inspection, or null if there is no next inspection
+        /// </summary>
+        [DataMember(Name = "nextInspectionTypeCode")]
+        public string nextInspectionTypeCode { get; set; }
+
 
         /// <summary>
         /// Returns the string presentation of the object
