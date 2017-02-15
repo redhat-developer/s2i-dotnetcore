@@ -128,13 +128,15 @@ wait_for_cid() {
 }
 
 test_s2i_usage() {
-  info "Testing 's2i usage' ..."
-  s2i usage ${s2i_args} ${IMAGE_NAME} 2>&1 | grep https://github.com/redhat-developer/s2i-dotnetcore.git 2>&1 > /dev/null
+  local expected="$1"
+  info "Testing 's2i usage (${expected})' ..."
+  s2i usage ${s2i_args} ${IMAGE_NAME} 2>&1 | grep "${expected}" 2>&1 > /dev/null
 }
 
 test_docker_run_usage() {
-  info "Testing 'docker run' usage ..."
-  docker run ${IMAGE_NAME} 2>&1 | grep https://github.com/redhat-developer/s2i-dotnetcore.git 2>&1 >/dev/null
+  local expected="$1"
+  info "Testing 'docker run' usage (${expected}) ..."
+  docker run ${IMAGE_NAME} 2>&1 | grep "${expected}" 2>&1 >/dev/null
 }
 
 test_pid_1() {
@@ -392,11 +394,16 @@ info "Testing ${IMAGE_NAME}"
 s2i_args="--force-pull=false"
 
 # Verify the 'usage' script is working properly when running the base image with 's2i usage ...'
-test_s2i_usage
+exp="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
+if [ ${OPENSHIFT_ONLY} = true ]; then
+  # Old released images still have s2i-dotnetcore's Hello World app.
+  exp="https://github.com/redhat-developer/s2i-dotnetcore.git"
+fi
+test_s2i_usage "${exp}"
 check_result $?
 
 # Verify the 'usage' script is working properly when running the base image with 'docker run ...'
-test_docker_run_usage
+test_docker_run_usage "${exp}"
 check_result $?
 
 # Verify OpenShift's hello-world runs
