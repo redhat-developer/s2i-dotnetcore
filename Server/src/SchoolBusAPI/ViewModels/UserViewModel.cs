@@ -126,7 +126,10 @@ namespace SchoolBusAPI.ViewModels
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
             sb.Append("  Surname: ").Append(Surname).Append("\n");           
             sb.Append("  Email: ").Append(Email).Append("\n");
-            sb.Append("  District: ").Append(this.District.ToString()).Append("\n");
+            if (this.District != null)
+            {
+                sb.Append("  District: ").Append(this.District.ToString()).Append("\n");
+            }            
             sb.Append("}\n");
             return sb.ToString();
         }

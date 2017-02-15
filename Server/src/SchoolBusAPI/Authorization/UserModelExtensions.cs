@@ -38,13 +38,23 @@ namespace SchoolBusAPI.Models
             if (permissions.Any())
                 claims.AddRange(permissions);
 
-            var roles = user.GetActiveRoles().Select(r => new Claim(ClaimTypes.Role, r.Name)).ToList();
-            if (roles.Any())
-                claims.AddRange(roles);
+            var roleSelect = user.GetActiveRoles().Select(r => new Claim(ClaimTypes.Role, r.Name));
+            if (roleSelect != null)
+            {
+                var roles = roleSelect.ToList();
+                if (roles.Any())
+                    claims.AddRange(roles);
+            }
 
-            var groups = user.GetActiveGroups().Select(g => new Claim(ClaimTypes.GroupSid, g.Name)).ToList();
-            if (groups.Any())
-                claims.AddRange(groups);
+            var groupSelect = user.GetActiveGroups().Select(g => new Claim(ClaimTypes.GroupSid, g.Name));
+            if (groupSelect != null)
+            {
+                var groups = groupSelect.ToList();
+                if (groups.Any())
+                {
+                    claims.AddRange(groups);
+                }                    
+            }
 
             return claims;
         }
