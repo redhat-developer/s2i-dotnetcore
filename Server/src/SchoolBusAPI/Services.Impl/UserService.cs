@@ -198,7 +198,15 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersGetAsync()
         {
-            var result = _context.Users.Select(x => x.ToViewModel()).ToList();
+            var result = _context.Users
+                .Include(x => x.District)
+                .Include(x => x.GroupMemberships)
+                .ThenInclude(y => y.Group)
+                .Include(x => x.UserRoles)
+                .ThenInclude(y => y.Role)
+                .ThenInclude(z => z.RolePermissions)
+                .ThenInclude(z => z.Permission)
+                .Select(x => x.ToViewModel()).ToList();
             return new ObjectResult(result);
         }
 
@@ -456,7 +464,15 @@ namespace SchoolBusAPI.Services.Impl
             {
                 // update the given user's group membership.
 
-                User user = _context.Users.First(a => a.Id == id);
+                User user = _context.Users
+                    .Include(x => x.District)
+                .Include(x => x.GroupMemberships)
+                .ThenInclude(y => y.Group)
+                .Include(x => x.UserRoles)
+                .ThenInclude(y => y.Role)
+                .ThenInclude(z => z.RolePermissions)
+                .ThenInclude(z => z.Permission)
+                    .First(a => a.Id == id);
                 var data = _context.GroupMemberships
                     .Where(x => x.User.Id == user.Id);
                 foreach (GroupMembership item in data)
@@ -622,8 +638,38 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdPermissionsGetAsync(int id)
         {
-            var result = "";
-            return new ObjectResult(result);
+            var user = _context.Users
+                .Include(x => x.District)
+                .Include(x => x.GroupMemberships)
+                .ThenInclude(y => y.Group)
+                .Include(x => x.UserRoles)
+                .ThenInclude(y => y.Role)
+                .ThenInclude(z => z.RolePermissions)
+                .ThenInclude(z => z.Permission)
+                .FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                // Not Found
+                return new StatusCodeResult(404);
+            }
+
+            List<PermissionViewModel> permissions = new List<PermissionViewModel>();
+
+            if (user.UserRoles != null)
+            {
+                foreach (var item in user.UserRoles)
+                {
+                    if (item.Role != null && item.Role.RolePermissions != null)
+                    {
+                        foreach (var permission in item.Role.RolePermissions)
+                        {
+                            permissions.Add(permission.Permission.ToViewModel());
+                        }
+                    }
+                }
+            }
+            return new ObjectResult(permissions);
+
         }
 
         /// <summary>
@@ -687,6 +733,7 @@ namespace SchoolBusAPI.Services.Impl
             
             var user = _context.Users
                 .Include(x => x.UserRoles)
+                .ThenInclude( y => y.Role)
                 .First(x => x.Id == id);
             if (user == null)
             {
@@ -732,7 +779,15 @@ namespace SchoolBusAPI.Services.Impl
                 bool role_exists = _context.Roles.Any(x => x.Id == item.RoleId);
                 if (role_exists)
                 {
-                    User user = _context.Users.First(x => x.Id == id);
+                    User user = _context.Users
+                        .Include(x => x.District)
+                        .Include(x => x.GroupMemberships)
+                        .ThenInclude(y => y.Group)
+                        .Include(x => x.UserRoles)
+                        .ThenInclude(y => y.Role)
+                        .ThenInclude(z => z.RolePermissions)
+                        .ThenInclude(z => z.Permission)
+                        .First(x => x.Id == id);
                     if (user.UserRoles == null)
                     {
                         user.UserRoles = new List<UserRole>();
@@ -746,6 +801,7 @@ namespace SchoolBusAPI.Services.Impl
                     {
                         user.UserRoles.Add(userRole);
                     }
+                    _context.Update(user);
                     _context.SaveChanges();
                     success = true;
                 }
@@ -777,7 +833,13 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 User user = _context.Users
-                    .Include(x=>x.UserRoles)
+                    .Include(x => x.District)
+                    .Include(x => x.GroupMemberships)
+                    .ThenInclude(y => y.Group)
+                    .Include(x => x.UserRoles)
+                    .ThenInclude(y => y.Role)
+                    .ThenInclude(z => z.RolePermissions)
+                    .ThenInclude(z => z.Permission)                    
                     .First(x => x.Id == id);
                 if (user.UserRoles == null)
                 {
@@ -845,9 +907,11 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="201">User created</response>
         public virtual IActionResult UsersPostAsync(User item)
         {
+            AdjustUser(item);
             bool exists = _context.Users.Any(x => x.Id == item.Id);          
             if (exists)
             {
+                
                 _context.Users.Update(item);
             }
             else
