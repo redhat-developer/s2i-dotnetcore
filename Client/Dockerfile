@@ -30,9 +30,8 @@ RUN npm install
 # copy the full source
 COPY . /app/out/src
 
-# compile the source
+# compile will happen at the next build stage (frontend)
+# otherwise there is no git commit in the environment.
 
-RUN /bin/bash -c 'set'
 
-RUN /bin/bash -c './node_modules/.bin/gulp --production --commit=$OPENSHIFT_BUILD_COMMIT'
 
