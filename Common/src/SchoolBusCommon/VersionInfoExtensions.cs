@@ -42,7 +42,7 @@ namespace SchoolBusCommon
 
         public static ApplicationVersionInfo GetApplicationVersionInfo(this Assembly assembly, string commit = null)
         {
-            DateTime creationTime = File.GetCreationTime(assembly.Location);
+            DateTime creationTime = File.GetLastWriteTimeUtc(assembly.Location);
 
             ApplicationVersionInfo info = new ApplicationVersionInfo()
             {
@@ -52,7 +52,7 @@ namespace SchoolBusCommon
                 Commit = commit,
                 Description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>().Description,
                 FileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version,
-                FileCreationTime = creationTime.ToString("MMMM dd, yyyy HH:mm:ss"),
+                FileCreationTime = creationTime.ToString(),
                 InformationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion,
                 TargetFramework = assembly.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName,
                 Title = assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title,
