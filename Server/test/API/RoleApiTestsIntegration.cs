@@ -180,7 +180,6 @@ namespace SchoolBusAPI.Test
         public async void TestRolePermissions()
         {
             // first create a role.
-
             string initialName = "InitialName";
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/roles");
             RoleViewModel roleViewModel = new RoleViewModel();

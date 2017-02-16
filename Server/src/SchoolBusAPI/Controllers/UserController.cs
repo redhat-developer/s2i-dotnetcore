@@ -201,7 +201,7 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/users/{id}/groups")]
         [SwaggerOperation("UsersIdGroupsPost")]
         [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
-        public virtual IActionResult UsersIdGroupsPost([FromRoute]int id, [FromBody]GroupMembership[] items)
+        public virtual IActionResult UsersIdGroupsPost([FromRoute]int id, [FromBody]GroupMembershipViewModel items)
         {
             return this._service.UsersIdGroupsPostAsync(id, items);
         }
@@ -218,7 +218,7 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/users/{id}/groups")]
         [SwaggerOperation("UsersIdGroupsPut")]
         [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
-        public virtual IActionResult UsersIdGroupsPut([FromRoute]int id, [FromBody]GroupMembership[] items)
+        public virtual IActionResult UsersIdGroupsPut([FromRoute]int id, [FromBody]GroupMembershipViewModel[] items)
         {
             return this._service.UsersIdGroupsPutAsync(id, items);
         }

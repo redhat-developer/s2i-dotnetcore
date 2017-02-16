@@ -145,7 +145,10 @@ namespace SchoolBusAPI.Mappings
             if (model != null)
             {
                 dto.Active = model.Active;
-                dto.GroupId = model.Group.Id;
+                if (model.Group != null)
+                {
+                    dto.GroupId = model.Group.Id;
+                }                
                 dto.UserId = model.User.Id;
                 dto.Id = model.Id;
             }            

@@ -339,15 +339,15 @@ namespace SchoolBusAPI.Test
 
             // assign user to group
 
-            GroupMembership groupMembership = new GroupMembership();
-            groupMembership.User = newUser;
-            groupMembership.Group = group;
+            GroupMembershipViewModel groupMembership = new GroupMembershipViewModel();
+            groupMembership.UserId = newUser.Id;
+            groupMembership.GroupId = group.Id;
 
-            GroupMembership[] groupmembershipItems = new GroupMembership[1];
+            GroupMembershipViewModel[] groupmembershipItems = new GroupMembershipViewModel[1];
             groupmembershipItems[0] = groupMembership;
 
             // send the request.
-            request = new HttpRequestMessage(HttpMethod.Post, "/api/users/" + user_id + "/groups");
+            request = new HttpRequestMessage(HttpMethod.Put, "/api/users/" + user_id + "/groups");
             jsonString = JsonConvert.SerializeObject(groupmembershipItems, Formatting.Indented);
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             response = await _client.SendAsync(request);
@@ -429,6 +429,23 @@ namespace SchoolBusAPI.Test
             role = JsonConvert.DeserializeObject<RoleViewModel>(jsonString);
             // get the role id
             var role_id = role.Id;
+
+            // now create a Group
+
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/groups");
+            Group group = new Group();
+
+            group.Name = "initialName";
+            jsonString = group.ToJson();
+            request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+            group = JsonConvert.DeserializeObject<Group>(jsonString);
+            // get the id
+            int group_id = group.Id;
 
             // create a user.
             request = new HttpRequestMessage(HttpMethod.Post, "/api/users");
@@ -561,6 +578,16 @@ namespace SchoolBusAPI.Test
             }
             Assert.Equal(found, true);
 
+            // update groups for the user.  start by getting existing groups
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/users/" + id + "/groups");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // parse as JSON.
+            jsonString = await response.Content.ReadAsStringAsync();
+            returnedItems = JsonConvert.DeserializeObject<UserRoleViewModel[]>(jsonString);
+
+
             // delete the user
             request = new HttpRequestMessage(HttpMethod.Post, "/api/users/" + id + "/delete");
             response = await _client.SendAsync(request);
@@ -578,6 +605,16 @@ namespace SchoolBusAPI.Test
 
             // should get a 404 if we try a get now.
             request = new HttpRequestMessage(HttpMethod.Get, "/api/roles/" + role_id);
+            response = await _client.SendAsync(request);
+            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
+
+            // Delete group
+            request = new HttpRequestMessage(HttpMethod.Post, "/api/groups/" + group_id + "/delete");
+            response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            // should get a 404 if we try a get now.
+            request = new HttpRequestMessage(HttpMethod.Get, "/api/groups/" + group_id);
             response = await _client.SendAsync(request);
             Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
         }

@@ -51,17 +51,18 @@ namespace SchoolBusAPI.Services.Impl
             bool exists = _context.Groups.Any(a => a.Id == id);
             if (exists)
             {
-                var result = new List<User>();
+                var result = new List<UserViewModel>();
                 var data = _context.GroupMemberships
                     .Include("User")
+                    .Include("Group")
                     .Where(x => x.Group.Id == id);
                 
                 // extract the users
                 foreach (var item in data)
                 {
-                    result.Add(item.User);
+                    result.Add(item.User.ToViewModel());
                 }
-                return new ObjectResult(result.ToList());
+                return new ObjectResult(result);
             }
             else
             {

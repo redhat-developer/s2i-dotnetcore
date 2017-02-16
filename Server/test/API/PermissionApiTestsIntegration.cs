@@ -46,9 +46,9 @@ namespace SchoolBusAPI.Test
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/permissions");
 
             // create a new object.
-            Permission permission = new Permission();
-            permission.Name = initialName;
-            string jsonString = permission.ToJson();
+            PermissionViewModel newPermission = new PermissionViewModel();
+            newPermission.Name = initialName;
+            string jsonString = newPermission.ToJson();
 
             request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
@@ -58,7 +58,7 @@ namespace SchoolBusAPI.Test
             // parse as JSON.
             jsonString = await response.Content.ReadAsStringAsync();
 
-            permission = JsonConvert.DeserializeObject<Permission>(jsonString);
+            Permission permission = JsonConvert.DeserializeObject<Permission>(jsonString);
             // get the id
             var id = permission.Id;
             // change the name
