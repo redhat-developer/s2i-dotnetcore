@@ -8,6 +8,7 @@
  * 
  */
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,7 @@ using System.Reflection;
 
 namespace SchoolBusAPI.Controllers
 {
+    [Authorize]
     [Route("api")]
     public class VersionController : Controller
     {
@@ -39,7 +41,8 @@ namespace SchoolBusAPI.Controllers
                 return _configuration[_commitKey];
             }
         }
-
+     
+        [AllowAnonymous]
         [HttpGet]
         [Route("version")]
         public virtual IActionResult GetServerVersionInfo()
@@ -50,6 +53,7 @@ namespace SchoolBusAPI.Controllers
             return Ok(info);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("server/version")]
         public virtual IActionResult GetServerVersion()
