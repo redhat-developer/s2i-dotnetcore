@@ -52,7 +52,7 @@ namespace SchoolBusCommon
                 Commit = commit,
                 Description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>().Description,
                 FileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version,
-                FileCreationTime = creationTime.ToString(),
+                FileCreationTime = creationTime.ToString("O"), // Use the round trip format as it includes the time zone.
                 InformationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion,
                 TargetFramework = assembly.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName,
                 Title = assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title,
