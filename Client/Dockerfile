@@ -32,5 +32,7 @@ COPY . /app/out/src
 
 # compile the source
 
+RUN /bin/bash -c 'set'
+
 RUN /bin/bash -c './node_modules/.bin/gulp --production --commit=$OPENSHIFT_BUILD_COMMIT'
 
