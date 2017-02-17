@@ -194,16 +194,16 @@ namespace SchoolBusAPI.Controllers
         /// </summary>
         /// <remarks>Add to the active set of groups for a user</remarks>
         /// <param name="id">id of User to update</param>
-        /// <param name="items"></param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
         [HttpPost]
         [Route("/api/users/{id}/groups")]
         [SwaggerOperation("UsersIdGroupsPost")]
         [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
-        public virtual IActionResult UsersIdGroupsPost([FromRoute]int id, [FromBody]GroupMembershipViewModel items)
+        public virtual IActionResult UsersIdGroupsPost([FromRoute]int id, [FromBody]GroupMembershipViewModel item)
         {
-            return this._service.UsersIdGroupsPostAsync(id, items);
+            return this._service.UsersIdGroupsPostAsync(id, item);
         }
 
         /// <summary>

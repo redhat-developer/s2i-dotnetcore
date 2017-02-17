@@ -127,6 +127,25 @@ namespace SchoolBusAPI.Services.Impl
                     item.Inspector = null;
                 }
             }
+
+            // adjust CCWData
+
+            if (item.CCWData != null)
+            {
+                int ccwdata_id = item.CCWData.Id;                
+                bool ccwdata_exists = _context.CCWDatas.Any(a => a.Id == ccwdata_id);
+                if (ccwdata_exists)
+                {
+                    CCWData ccwdata = _context.CCWDatas.First(a => a.Id == ccwdata_id);
+                    item.CCWData = ccwdata;
+                }
+                else
+                // invalid data
+                {
+                    item.CCWData = null;
+                }
+            }
+
         }
 
         /// <summary>
@@ -181,6 +200,7 @@ namespace SchoolBusAPI.Services.Impl
                     .Include(x => x.SchoolBusOwner.PrimaryContact)
                     .Include(x => x.District.Region)
                     .Include(x => x.Inspector)
+                    .Include(x => x.CCWData)
                     .First(a => a.Id == id);
                 return new ObjectResult(result);
             }
@@ -203,6 +223,7 @@ namespace SchoolBusAPI.Services.Impl
                 .Include(x => x.SchoolBusOwner.PrimaryContact)
                 .Include(x => x.District.Region)
                 .Include(x => x.Inspector)
+                .Include(x => x.CCWData)
                 .ToList();
             return new ObjectResult(result);
         }
@@ -454,6 +475,7 @@ namespace SchoolBusAPI.Services.Impl
                 .Include(x => x.SchoolBusOwner.PrimaryContact)
                 .Include(x => x.District.Region)
                 .Include(x => x.Inspector)
+                .Include(x => x.CCWData)
                 .Select(x => x);
 
             bool keySearch = false;
