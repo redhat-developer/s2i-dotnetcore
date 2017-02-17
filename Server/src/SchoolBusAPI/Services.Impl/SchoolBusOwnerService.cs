@@ -353,7 +353,7 @@ namespace SchoolBusAPI.Services.Impl
             bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
             if (exists)
             {
-                SchoolBus schoolbus = _context.SchoolBuss.Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId)
+                SchoolBus schoolbus = _context.SchoolBuss.Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null)
                     .OrderByDescending(x => x.NextInspectionDate)
                     .First();
                 result = schoolbus.NextInspectionDate;
@@ -389,9 +389,10 @@ namespace SchoolBusAPI.Services.Impl
             bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
             if (exists)
             {
-                var record = _context.SchoolBuss                    
+                var record = _context.SchoolBuss
+                    .Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null)
                     .OrderByDescending(x => x.NextInspectionDate)
-                    .First(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
+                    .First();
                 result = record.NextInspectionTypeCode;                
             }
             return result;
