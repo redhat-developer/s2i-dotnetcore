@@ -1,4 +1,9 @@
 FROM tran-schoolbus-tools/client
+# compile the client
+
+WORKDIR /app/out/src
+RUN /bin/bash -c './node_modules/.bin/gulp --production --commit=$OPENSHIFT_BUILD_COMMIT'
+
 # Dockerfile for package SchoolBusClient
  
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
