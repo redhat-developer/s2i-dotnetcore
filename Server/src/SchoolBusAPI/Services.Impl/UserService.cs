@@ -818,7 +818,7 @@ namespace SchoolBusAPI.Services.Impl
         {
             bool exists = _context.Users.Any(x => x.Id == id);
             bool success = false;
-            if (exists)
+            if (exists && items != null)
             {
                 User user = _context.Users
                     .Include(x => x.District)
