@@ -124,7 +124,15 @@ namespace SchoolBusAPI.Models
             user.SmAuthorizationDirectory = initialUser.SmAuthorizationDirectory;
             user.SmUserId = initialUser.SmUserId;
             user.Surname = initialUser.Surname;
-            user.District = initialUser.District;            
+
+            District district = null;
+
+            if (initialUser.District != null)
+            {
+                district = context.GetDistrictByMinistryDistrictId(initialUser.District.MinistryDistrictID);
+            }
+
+            user.District = district;            
 
             string[] userRoles = initialUser.UserRoles.Select(x => x.Role.Name).ToArray();
             if (user.UserRoles == null)
