@@ -37,6 +37,7 @@ namespace SchoolBusAPI.Models
     public interface IDbAppContext
     {
         DbSet<CCWData> CCWDatas { get; set; }
+        DbSet<CCWJurisdiction> CCWJurisdictions { get; set; }
         DbSet<City> Cities { get; set; }
         DbSet<District> Districts { get; set; }
         DbSet<Group> Groups { get; set; }
@@ -96,6 +97,7 @@ namespace SchoolBusAPI.Models
         // For example:
 
         public virtual DbSet<CCWData> CCWDatas { get; set; }
+        public virtual DbSet<CCWJurisdiction> CCWJurisdictions { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<District> Districts { get; set; }
         public virtual DbSet<Group> Groups { get; set; }

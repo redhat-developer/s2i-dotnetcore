@@ -2052,6 +2052,138 @@ paths:
       responses:
         201:
           description: District created
+  /ccwjurisdictions:
+    get:
+      tags:
+        - CCWJurisdiction
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CCWJurisdiction"
+    post:
+      tags:
+        - CCWJurisdiction
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CCWJurisdiction"
+      responses:
+        201:
+          description: CCWJurisdiction created
+          headers:
+            Location:
+              description: A link to the CCWJurisdiction
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/CCWJurisdiction"  
+  /ccwjurisdictions/{id}:
+    get:
+      tags:
+        - CCWJurisdiction
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/CCWJurisdiction"
+        404:
+          description: CCWJurisdiction not found
+      parameters:
+        - name: id
+          in: path
+          description: id of CCWJurisdiction to fetch
+          required: true
+          type: integer
+    put:
+      tags:
+        - CCWJurisdiction
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/CCWJurisdiction"
+        404:
+          description: CCWJurisdiction not found
+      parameters:
+        - name: id
+          in: path
+          description: id of CCWJurisdiction to fetch
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CCWJurisdiction"
+  /ccwjurisdictions/{id}/delete:
+    post:
+      tags:
+        - CCWJurisdiction
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        200:
+          description: OK
+        404:
+          description: CCWJurisdiction not found
+      parameters:
+        - name: id
+          in: path
+          description: id of CCWJurisdiction to delete
+          required: true
+          type: integer
+
+  /ccwjurisdictions/bulk:
+    post:
+      tags:
+        - CCWJurisdiction
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: items
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CCWJurisdiction"
+      responses:
+        201:
+          description: CCWJurisdiction created
   /serviceareas:
     get:
       tags:
@@ -2503,7 +2635,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/User"          
+              $ref: "#/definitions/UserViewModel"          
   /schoolbuses/search:
     get:
       summary: Searches school buses
@@ -3120,7 +3252,7 @@ paths:
         - name: type
           in: path
           description: type of favourite to return
-          required: false
+          required: true
           type: string
   /users/current/favourites/{id}/delete:
     post:
@@ -3160,6 +3292,41 @@ paths:
       responses:
         200:
           description: OK
+  /users/search:
+    get:
+      summary: Searches Users
+      description:
+        Used for the search users.
+      tags:
+        - User
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:        
+        - name: districts
+          in: query
+          description: Districts (array of id numbers)
+          collectionFormat: multi
+          type: array
+          items:
+            type: integer       
+        - name: surname
+          in: query
+          type: string
+        - name: includeInactive
+          in: query
+          description: True if Inactive users will be returned
+          type: boolean
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserViewModel"  
   /users/{id}:
     get:
       description: Returns data for a particular user
@@ -3465,7 +3632,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/GroupMembership"
+              $ref: "#/definitions/GroupMembershipViewModel"
       responses:
         200:
           description: OK
@@ -3491,13 +3658,11 @@ paths:
           description: id of User to update
           required: true
           type: integer
-        - name: items
+        - name: item
           in: body
           required: true
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/GroupMembership"
+            $ref: "#/definitions/GroupMembershipViewModel"
       responses:
         200:
           description: OK
@@ -3616,6 +3781,9 @@ definitions:
       isOutOfProvince:
         type: boolean
         description: True if the School Bus is registered within BC, else False
+      CCWJurisdiction:
+        $ref: '#/definitions/CCWJurisdiction'
+        description: The Jurisdication of an Out Of Province Bus. Needed for querying CCW.
       District:
         $ref: '#/definitions/District'
       homeTerminalAddress1:
@@ -3701,6 +3869,9 @@ definitions:
         items:
           $ref: '#/definitions/History'
         description: The history of updates made to the School Bus.
+      CCWData:
+        $ref: '#/definitions/CCWData'
+        description: CCWData for this School Bus
   SchoolBusOwner:
     type: object
     description: Demographic information about companies, organizations, school districts, or individuals who own or lease school buses
@@ -3874,6 +4045,14 @@ definitions:
         type: string
         maxLength: 255
         description: Previous Owners Driver Licence number
+      ICBCLicencePlateNumber:
+        type: string
+        maxLength: 255
+        description: The License Plate Number for the vehicle
+      ICBCVehicleIdentificationNumber:
+        type: string
+        maxLength: 255
+        description:  A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number.
       NSCClientNum:
         type: string
         maxLength: 255
@@ -4278,6 +4457,40 @@ definitions:
         type: string
         maxLength: 255
         description: The name of the province of the city
+  CCWJurisdiction:
+    type: object
+    description: The contents of the Jurisdiction table from CCW so that the user can select a Jurisdiction for passing to CCW on certain Out of Province School Bus Web Service calls
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        uniqueItems: true
+        description: A system-generated unique identifier for a CCWJurisdiction
+      jurisdictionId:
+        format: int32
+        type: integer
+        description: The CCW system-generated unique identifier for a CCWJurisdiction. Needed for updating the table from CCW if necessary.
+      effectiveDate:
+        type: string
+        format: date-time
+        description: The effective date of the CCWJurisdiction record - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+      expiryDate:
+        type: string
+        format: date-time
+        description: The end date of the CCWJurisdiction record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+      activeFlag:
+        type: boolean
+        description: Flag from CCW indicating if the record is still active - Y indicating it is active. NOT CURRENTLY ENFORCED IN SCHOOL BUS
+      code:
+        type: string
+        maxLength: 10
+        description: A short version of the Jurisdiction - the familiar two-letter province or state code
+      description:
+        type: string
+        maxLength: 50
+        description: The full version of the Jurisdiction name.
   Notification:
     type: object
     description: Users associated with specific notifications, created at the time the notification record is created because of the user&#39;s business relationship to the bus - e.g. the user is the currently assigned inspector, or the user is the manager for the District in which the bus is located. The rules for linking a user to a notification for a specific bus could vary over time based on the needs of the business. At minimum, it is expected the current inspector assigned to a bus will be notified of every notification for that bus.
@@ -4396,6 +4609,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/GroupMembership'
+      district:
+        $ref: '#/definitions/District'
+        description: The District that the User belongs to
   UserRole:
     type: object
     description: A join table that provides allows each user to have any number of Roles in the system.  At login time the user is given the sum of the permissions of the roles assigned to that user. 
@@ -4576,6 +4792,9 @@ definitions:
         format: int32
         type: integer
         description: The number of buses for which this owner is associated with       
+      nextInspectionTypeCode:
+        format: string
+        description: Type Code for the Next InspectionType.  Null if there are no next inspections.
   UserViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -4594,14 +4813,25 @@ definitions:
         x-chance-type: name
       surname:
         type: string
-        x-chance-type: name
-      initials:
-        type: string
+        x-chance-type: name      
       email:
         type: string
         x-chance-type: email
       active:
         type: boolean
+      smUserId:
+        type: string
+      userRoles:
+        type: array
+        items:
+          $ref: '#/definitions/UserRole'
+      groupMemberships:
+        type: array
+        items:
+          $ref: '#/definitions/GroupMembership'
+      district:
+        $ref: '#/definitions/District'
+        description: The District to which this User is affliated.
   CurrentUserViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -4611,11 +4841,23 @@ definitions:
         x-chance-type: name
       surname:
         type: string
-        x-chance-type: name
-      fullName:
+        x-chance-type: name      
+      email:
         type: string
-      districtName:
-        type: string
+        x-chance-type: email
+      active:
+        type: boolean
+      userRoles:
+        type: array
+        items:
+          $ref: '#/definitions/UserRole'
+      groupMemberships:
+        type: array
+        items:
+          $ref: '#/definitions/GroupMembership'
+      district:
+        $ref: '#/definitions/District'
+        description: The District to which this User is affliated.
       overdueInspections:
         format: int32
         type: integer

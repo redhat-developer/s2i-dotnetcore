@@ -670,7 +670,7 @@
         - name: type
           in: path
           description: type of favourite to return
-          required: false
+          required: true
           type: string
   /users/current/favourites/{id}/delete:
     post:
