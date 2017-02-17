@@ -782,6 +782,8 @@ namespace SchoolBusAPI.Services.Impl
                     UserRole userRole = new UserRole();
                     Role role = _context.Roles.First(x => x.Id == item.RoleId);
                     userRole.Role = role;
+                    userRole.EffectiveDate = item.EffectiveDate;
+                    userRole.ExpiryDate = item.ExpiryDate;
 
                     if (! user.UserRoles.Contains (userRole))
                     {
