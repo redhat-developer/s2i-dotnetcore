@@ -120,7 +120,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/groups/{id}/users")]
         [SwaggerOperation("GroupsIdUsersGet")]
-        [SwaggerResponse(200, type: typeof(List<User>))]
+        [SwaggerResponse(200, type: typeof(List<UserViewModel>))]
         public virtual IActionResult GroupsIdUsersGet([FromRoute]int id)
         {
             return this._service.GroupsIdUsersGetAsync(id);

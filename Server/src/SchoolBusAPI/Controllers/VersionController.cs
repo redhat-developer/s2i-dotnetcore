@@ -61,6 +61,7 @@ namespace SchoolBusAPI.Controllers
             return Ok(GetApplicationVersionInfo());
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("database/version")]
         public virtual IActionResult GetDatabaseVersion()

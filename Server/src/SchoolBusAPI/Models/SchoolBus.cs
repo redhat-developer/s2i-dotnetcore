@@ -70,7 +70,8 @@ namespace SchoolBusAPI.Models
         /// <param name="Notes">The set of notes about the school bus entered by users..</param>
         /// <param name="Attachments">The set of attachments about the school bus uploaded by the users..</param>
         /// <param name="History">The history of updates made to the School Bus..</param>
-        public SchoolBus(int Id, string Status, string PermitClassCode, string BodyTypeCode, int SchoolBusSeatingCapacity, string ICBCRegistrationNumber = null, string LicencePlateNumber = null, string VehicleIdentificationNumber = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, bool? IsOutOfProvince = null, District District = null, string HomeTerminalAddress1 = null, string HomeTerminalAddress2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string RestrictionsText = null, DateTime? NextInspectionDate = null, string NextInspectionTypeCode = null, SchoolDistrict SchoolDistrict = null, bool? IsIndependentSchool = null, string IndependentSchoolName = null, string UnitNumber = null, int? MobilityAidCapacity = null, User Inspector = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null)
+        /// <param name="CCWData">CCW Data for this School Bus.</param>
+        public SchoolBus(int Id, string Status, string PermitClassCode, string BodyTypeCode, int SchoolBusSeatingCapacity, string ICBCRegistrationNumber = null, string LicencePlateNumber = null, string VehicleIdentificationNumber = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, bool? IsOutOfProvince = null, District District = null, string HomeTerminalAddress1 = null, string HomeTerminalAddress2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string RestrictionsText = null, DateTime? NextInspectionDate = null, string NextInspectionTypeCode = null, SchoolDistrict SchoolDistrict = null, bool? IsIndependentSchool = null, string IndependentSchoolName = null, string UnitNumber = null, int? MobilityAidCapacity = null, User Inspector = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null, CCWData CCWData = null)
         {   
             this.Id = Id;
             this.Status = Status;
@@ -106,6 +107,7 @@ namespace SchoolBusAPI.Models
             this.Notes = Notes;
             this.Attachments = Attachments;
             this.History = History;
+            this.CCWData = CCWData;
         }
 
         /// <summary>
@@ -377,6 +379,19 @@ namespace SchoolBusAPI.Models
         public List<History> History { get; set; }
         
         /// <summary>
+        /// CCW Data for this School Bus
+        /// </summary>
+        /// <value>CCW Data for this School Bus</value>
+        [MetaDataExtension (Description = "CCW Data for this School Bus")]
+        public CCWData CCWData { get; set; }
+        
+        /// <summary>
+        /// Foreign key for CCWData 
+        /// </summary>       
+        [ForeignKey("CCWData")]
+        public int? CCWDataRefId { get; set; }
+        
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -414,6 +429,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  Notes: ").Append(Notes).Append("\n");
             sb.Append("  Attachments: ").Append(Attachments).Append("\n");
             sb.Append("  History: ").Append(History).Append("\n");
+            sb.Append("  CCWData: ").Append(CCWData).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -599,6 +615,11 @@ namespace SchoolBusAPI.Models
                     this.History == other.History ||
                     this.History != null &&
                     this.History.SequenceEqual(other.History)
+                ) &&                 
+                (
+                    this.CCWData == other.CCWData ||
+                    this.CCWData != null &&
+                    this.CCWData.Equals(other.CCWData)
                 );
         }
 
@@ -727,6 +748,10 @@ namespace SchoolBusAPI.Models
                 if (this.History != null)
                 {
                     hash = hash * 59 + this.History.GetHashCode();
+                }                   
+                if (this.CCWData != null)
+                {
+                    hash = hash * 59 + this.CCWData.GetHashCode();
                 }
                 return hash;
             }

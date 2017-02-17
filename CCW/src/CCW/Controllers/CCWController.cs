@@ -349,6 +349,17 @@ namespace CCW.Controllers
                     _logger.LogDebug("Unknown error retrieving ICBC information.");
                 }
 
+                if (ccwdata.Id > 0)
+                {
+                    _context.Update(ccwdata);
+                }
+                else
+                {
+                    _context.Add(ccwdata);
+                }
+                _context.SaveChanges();
+                
+
                 return new ObjectResult(ccwdata);
             }
 
