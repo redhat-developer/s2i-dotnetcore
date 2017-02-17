@@ -51,6 +51,7 @@ namespace SchoolBusAPI.Models
         /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
         /// <param name="PermitNumber">The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit.</param>
         /// <param name="IsOutOfProvince">True if the School Bus is registered within BC, else False.</param>
+        /// <param name="CCWJurisdiction">The Jurisdication of an Out Of Province Bus. Needed for querying CCW..</param>
         /// <param name="District">District.</param>
         /// <param name="HomeTerminalAddress1">Address Line 1 of physical location of the School Bus..</param>
         /// <param name="HomeTerminalAddress2">Address Line 2 of physical location of the School Bus..</param>
@@ -70,8 +71,8 @@ namespace SchoolBusAPI.Models
         /// <param name="Notes">The set of notes about the school bus entered by users..</param>
         /// <param name="Attachments">The set of attachments about the school bus uploaded by the users..</param>
         /// <param name="History">The history of updates made to the School Bus..</param>
-        /// <param name="CCWData">CCW Data for this School Bus.</param>
-        public SchoolBus(int Id, string Status, string PermitClassCode, string BodyTypeCode, int SchoolBusSeatingCapacity, string ICBCRegistrationNumber = null, string LicencePlateNumber = null, string VehicleIdentificationNumber = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, bool? IsOutOfProvince = null, District District = null, string HomeTerminalAddress1 = null, string HomeTerminalAddress2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string RestrictionsText = null, DateTime? NextInspectionDate = null, string NextInspectionTypeCode = null, SchoolDistrict SchoolDistrict = null, bool? IsIndependentSchool = null, string IndependentSchoolName = null, string UnitNumber = null, int? MobilityAidCapacity = null, User Inspector = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null, CCWData CCWData = null)
+        /// <param name="CCWData">CCWData for this School Bus.</param>
+        public SchoolBus(int Id, string Status, string PermitClassCode, string BodyTypeCode, int SchoolBusSeatingCapacity, string ICBCRegistrationNumber = null, string LicencePlateNumber = null, string VehicleIdentificationNumber = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, bool? IsOutOfProvince = null, CCWJurisdiction CCWJurisdiction = null, District District = null, string HomeTerminalAddress1 = null, string HomeTerminalAddress2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string RestrictionsText = null, DateTime? NextInspectionDate = null, string NextInspectionTypeCode = null, SchoolDistrict SchoolDistrict = null, bool? IsIndependentSchool = null, string IndependentSchoolName = null, string UnitNumber = null, int? MobilityAidCapacity = null, User Inspector = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null, CCWData CCWData = null)
         {   
             this.Id = Id;
             this.Status = Status;
@@ -88,6 +89,7 @@ namespace SchoolBusAPI.Models
             this.SchoolBusOwner = SchoolBusOwner;
             this.PermitNumber = PermitNumber;
             this.IsOutOfProvince = IsOutOfProvince;
+            this.CCWJurisdiction = CCWJurisdiction;
             this.District = District;
             this.HomeTerminalAddress1 = HomeTerminalAddress1;
             this.HomeTerminalAddress2 = HomeTerminalAddress2;
@@ -204,6 +206,19 @@ namespace SchoolBusAPI.Models
         /// <value>True if the School Bus is registered within BC, else False</value>
         [MetaDataExtension (Description = "True if the School Bus is registered within BC, else False")]
         public bool? IsOutOfProvince { get; set; }
+        
+        /// <summary>
+        /// The Jurisdication of an Out Of Province Bus. Needed for querying CCW.
+        /// </summary>
+        /// <value>The Jurisdication of an Out Of Province Bus. Needed for querying CCW.</value>
+        [MetaDataExtension (Description = "The Jurisdication of an Out Of Province Bus. Needed for querying CCW.")]
+        public CCWJurisdiction CCWJurisdiction { get; set; }
+        
+        /// <summary>
+        /// Foreign key for CCWJurisdiction 
+        /// </summary>       
+        [ForeignKey("CCWJurisdiction")]
+        public int? CCWJurisdictionRefId { get; set; }
         
         /// <summary>
         /// Gets or Sets District
@@ -379,10 +394,10 @@ namespace SchoolBusAPI.Models
         public List<History> History { get; set; }
         
         /// <summary>
-        /// CCW Data for this School Bus
+        /// CCWData for this School Bus
         /// </summary>
-        /// <value>CCW Data for this School Bus</value>
-        [MetaDataExtension (Description = "CCW Data for this School Bus")]
+        /// <value>CCWData for this School Bus</value>
+        [MetaDataExtension (Description = "CCWData for this School Bus")]
         public CCWData CCWData { get; set; }
         
         /// <summary>
@@ -410,6 +425,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
             sb.Append("  PermitNumber: ").Append(PermitNumber).Append("\n");
             sb.Append("  IsOutOfProvince: ").Append(IsOutOfProvince).Append("\n");
+            sb.Append("  CCWJurisdiction: ").Append(CCWJurisdiction).Append("\n");
             sb.Append("  District: ").Append(District).Append("\n");
             sb.Append("  HomeTerminalAddress1: ").Append(HomeTerminalAddress1).Append("\n");
             sb.Append("  HomeTerminalAddress2: ").Append(HomeTerminalAddress2).Append("\n");
@@ -520,6 +536,11 @@ namespace SchoolBusAPI.Models
                     this.IsOutOfProvince == other.IsOutOfProvince ||
                     this.IsOutOfProvince != null &&
                     this.IsOutOfProvince.Equals(other.IsOutOfProvince)
+                ) &&                 
+                (
+                    this.CCWJurisdiction == other.CCWJurisdiction ||
+                    this.CCWJurisdiction != null &&
+                    this.CCWJurisdiction.Equals(other.CCWJurisdiction)
                 ) &&                 
                 (
                     this.District == other.District ||
@@ -673,6 +694,10 @@ namespace SchoolBusAPI.Models
                     hash = hash * 59 + this.IsOutOfProvince.GetHashCode();
                 }                
                                    
+                if (this.CCWJurisdiction != null)
+                {
+                    hash = hash * 59 + this.CCWJurisdiction.GetHashCode();
+                }                   
                 if (this.District != null)
                 {
                     hash = hash * 59 + this.District.GetHashCode();
