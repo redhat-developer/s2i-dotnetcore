@@ -17,6 +17,7 @@ import * as Api from '../api';
 import * as Constant from '../constants';
 import store from '../store';
 
+import CheckboxControl from '../components/CheckboxControl.jsx';
 import ColDisplay from '../components/ColDisplay.jsx';
 import DateControl from '../components/DateControl.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
@@ -24,7 +25,7 @@ import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 import { daysFromToday, formatDateTime, today, isValidDate } from '../utils/date';
-import { isBlank } from '../utils/string';
+import { isBlank, notBlank } from '../utils/string';
 
 
 var UsersDetail = React.createClass({
@@ -49,6 +50,7 @@ var UsersDetail = React.createClass({
         // Roles
         sortField: this.props.ui.sortField || 'roleName',
         sortDesc: this.props.ui.sortDesc != false, // defaults to true
+        showExpiredOnly: false,
       },
     };
   },
@@ -209,14 +211,22 @@ var UsersDetail = React.createClass({
         </Row>
         <Row>
           <Col md={12}>
-            <Well>
-              <h3>Access</h3>
+            <Well id="users-access">
+              <h3>Access
+                <CheckboxControl inline id="showExpiredOnly" checked={ this.state.ui.showExpiredOnly } updateState={ this.updateUIState }>Show Expired Only</CheckboxControl>
+              </h3>
               {(() => {
                 if (this.state.loading ) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
                 var addUserRoleButton = <Button title="addUserRole" onClick={ this.openUserRoleDialog } bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add Role</strong></Button>;
 
-                var userRoles = _.filter(user.userRoles, 'roleName');
+                var userRoles = _.filter(user.userRoles, userRole => {
+                  var include = notBlank(userRole.roleName);
+                  if (this.state.ui.showExpiredOnly) {
+                    include = include && userRole.expiryDate && daysFromToday(userRole.expiryDate) < 0;
+                  }
+                  return include;
+                });
                 if (userRoles.length === 0) { return <Alert bsStyle="success">No roles { addUserRoleButton }</Alert>; }
 
                 userRoles = _.sortBy(userRoles, this.state.ui.sortField);
