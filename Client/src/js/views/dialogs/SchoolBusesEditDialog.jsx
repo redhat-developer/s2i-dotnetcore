@@ -93,8 +93,9 @@ var SchoolBusesEditDialog = React.createClass({
     }
 
     Promise.all(promises).then(() => {
-      this.setState({ loading: false });
-      this.input.focus();
+      this.setState({ loading: false }, () => {
+        this.input.focus();
+      });
     });
   },
 

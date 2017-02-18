@@ -5,11 +5,15 @@ import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Form, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 
+import _ from 'lodash';
+
+import * as Api from '../../api';
 import * as Constant from '../../constants';
 
 import DropdownControl from '../../components/DropdownControl.jsx';
 import EditDialog from '../../components/EditDialog.jsx';
 import FormInputControl from '../../components/FormInputControl.jsx';
+import Spinner from '../../components/Spinner.jsx';
 
 import { isBlank } from '../../utils/string';
 
@@ -25,7 +29,7 @@ var OwnersEditDialog = React.createClass({
 
   getInitialState() {
     return {
-      isNew: this.props.owner.id == 0,
+      loading: false,
 
       status: this.props.owner.status || Constant.STATUS_ACTIVE,
       name: this.props.owner.name || '',
@@ -35,7 +39,12 @@ var OwnersEditDialog = React.createClass({
   },
 
   componentDidMount() {
-    this.input.focus();
+    this.setState({ loading: true });
+    Api.getOwners().finally(() => {
+      this.setState({ loading: false }, () =>{
+        this.input.focus();
+      });
+    });
   },
 
   updateState(state, callback) {
@@ -54,14 +63,23 @@ var OwnersEditDialog = React.createClass({
       nameError: false,
     });
 
-    var valid = true;
-
     if (isBlank(this.state.name)) {
       this.setState({ nameError: 'Name is required' });
-      valid = false;
+      return false;
     }
 
-    return valid;
+    // Does the name already exist?
+    var name = this.state.name.toLowerCase().trim();
+    var owner = _.find(this.props.owners, (owner) => {
+      return owner.name.toLowerCase().trim() === name;
+    });
+    // Make sure it isn't this owner
+    if (owner && owner.id !== this.props.owner.id) {
+      this.setState({ nameError: 'This owner already exists in the system' });
+      return false;
+    }
+
+    return true;
   },
 
   onSave() {
@@ -72,6 +90,8 @@ var OwnersEditDialog = React.createClass({
   },
 
   render() {
+    if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+
     return <EditDialog id="owners-edit" show={ this.props.show }
       onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }
       title= { <strong>School Bus Owner</strong> }>

@@ -39,6 +39,10 @@
   #users-faves-dropdown {
     width: 79px;
   }
+
+  .alert .btn {
+    float: right;
+  }
 }
 
 #users-detail {
@@ -66,6 +70,18 @@
     margin-left: 5px;
   }
 
+  .col-display-label {
+    width: 100px;
+  }
+
+  .alert {
+    top-margin: 10px;
+
+    .btn {
+      float: right;
+    }
+  }
+
   h1 {
     small {
       font-size: 85%;
@@ -74,6 +90,12 @@
 
   h3 {
     font-weight: 600;
+  }
+}
+
+#users-role-popover {
+  .date-control {
+    margin-right: 10px;
   }
 }
 

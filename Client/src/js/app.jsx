@@ -11,8 +11,8 @@ import SchoolBusesDetail from './views/SchoolBusesDetail.jsx';
 import Owners from './views/Owners.jsx';
 import OwnersDetail from './views/OwnersDetail.jsx';
 import Notifications from './views/Notifications.jsx';
-import UserManagement from './views/UserManagement.jsx';
-import UserManagementEdit from './views/UserManagementEdit.jsx';
+import Users from './views/Users.jsx';
+import UsersDetail from './views/UsersDetail.jsx';
 import RolesPermissions from './views/RolesPermissions.jsx';
 import Version from './views/Version.jsx';
 import FourOhFour from './views/404.jsx';
@@ -28,8 +28,8 @@ const App = <Provider store={ store }>
       <Route path="owners" component={ Owners }/>
       <Route path="owners/:ownerId" component={ OwnersDetail }/>
       <Route path="notifications" component={ Notifications }/>
-      <Route path="user-management" component={ UserManagement }/>
-      <Route path="user-management/:userId" component={ UserManagementEdit }/>
+      <Route path="users" component={ Users }/>
+      <Route path="users/:userId" component={ UsersDetail }/>
       <Route path="roles-permissions" component={ RolesPermissions }/>
       <Route path="version" component={ Version }/>
       <Route path="*" component={ FourOhFour }/>

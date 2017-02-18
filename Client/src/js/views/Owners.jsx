@@ -28,16 +28,6 @@ import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTime } from '../utils/date';
 
-/*
-
-Default search rules:
-  Set the "Inspector" field if the user is an inspector
-  Set the "District" field if the user is NOT an inspector to the users home district
-
-TODO:
-* Print / Email
-
-*/
 
 var Owners = React.createClass({
   propTypes: {
@@ -206,7 +196,11 @@ var Owners = React.createClass({
 
         {(() => {
           if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-          if (Object.keys(this.props.ownerList).length === 0) { return <Alert bsStyle="success">No owners</Alert>; }
+
+          var addOwnerButton = <Button title="add" bsSize="xsmall" onClick={ this.openAddDialog }><Glyphicon glyph="plus" />&nbsp;<strong>Add Owner</strong></Button>;
+          if (Object.keys(this.props.ownerList).length === 0) {
+            return <Alert bsStyle="success">No owners { addOwnerButton }</Alert>;
+          }
 
           var ownerList = _.sortBy(this.props.ownerList, this.state.ui.sortField);
           if (this.state.ui.sortDesc) {
@@ -219,7 +213,7 @@ var Owners = React.createClass({
             { field: 'numberOfBuses',          title: 'School Buses',    style: { textAlign: 'center' } },
             { field: 'nextInspectionDateSort', title: 'Next Inspection' },
             { field: 'addOwner',               title: 'Add Owner',       style: { textAlign: 'right'  },
-              node: <Button title="add" bsSize="xsmall" onClick={ this.openAddDialog }><Glyphicon glyph="plus" />&nbsp;<strong>Add Owner</strong></Button>,
+              node: addOwnerButton,
             },
           ]}>
             {
@@ -230,7 +224,7 @@ var Owners = React.createClass({
                   <td style={{ textAlign: 'center' }}>
                     <a href={ `#school-buses?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a>
                   </td>
-                  <td>{ formatDateTime(owner.nextInspectionDate, 'MM/DD/YYYY') }
+                  <td>{ formatDateTime(owner.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }
                     { owner.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
                     { owner.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }
                   </td>

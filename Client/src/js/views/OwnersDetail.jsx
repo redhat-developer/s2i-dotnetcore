@@ -17,8 +17,7 @@ import * as Constant from '../constants';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
-import ColField from '../components/ColField.jsx';
-import ColLabel from '../components/ColLabel.jsx';
+import ColDisplay from '../components/ColDisplay.jsx';
 import Confirm from '../components/Confirm.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
@@ -46,7 +45,7 @@ var OwnersDetail = React.createClass({
 
       contact: {},
 
-      isNew: this.props.params.ownerId == 0,
+      isNew: this.props.params.ownerId === '0',
 
       ui : {
         // Contacts
@@ -118,7 +117,7 @@ var OwnersDetail = React.createClass({
 
     var inspectionNotice = (owner.isReinspection ? '&reg; ' : '') + (owner.isOverdue ? 'Overdue &ndash; ' : '')
       + daysToInspection + ' ' + plural(daysToInspection, 'day', 'days')
-      + ' &ndash; ' + formatDateTime(owner.nextInspectionDate, 'YYYY-DD-MMM');
+      + ' &ndash; ' + formatDateTime(owner.nextInspectionDate, Constant.DATE_FULL_MONTH_DAY_YEAR);
 
     var inspectionStyle = owner.isOverdue ? 'danger' : (daysToInspection <= Constant.INSPECTION_DAYS_DUE_WARNING ? 'warning' : 'success');
 
@@ -166,23 +165,19 @@ var OwnersDetail = React.createClass({
 
                 return <div id="owners-data">
                   <Row>
-                    <ColLabel md={4}>Number of School Buses</ColLabel>
-                    <ColField md={8}><a href={ `#school-buses?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a></ColField>
+                    <ColDisplay md={12} label="Number of School Buses"><a href={ `#school-buses?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a></ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Owner Added On</ColLabel>
-                    <ColField md={8}>{ formatDateTime(owner.dateCreated, 'YYYY-MM-DD') }</ColField>
+                    <ColDisplay md={12} label="Owner Added On">{ formatDateTime(owner.dateCreated, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Next Inspection</ColLabel>
-                    <ColField md={8}>{ formatDateTime(owner.nextInspectionDate, 'YYYY-MM-DD') }
+                    <ColDisplay md={12} label="Next Inspection">{ formatDateTime(owner.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }
                       { owner.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
                       { owner.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }
-                    </ColField>
+                    </ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Main Contact</ColLabel>
-                    <ColField md={8}>{ owner.primaryContactName }</ColField>
+                    <ColDisplay md={12} label="Main Contact">{ owner.primaryContactName }</ColDisplay>
                   </Row>
                 </div>;
               })()}

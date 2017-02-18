@@ -7,9 +7,9 @@ import { PageHeader, Well, Row, Button } from 'react-bootstrap';
 import $ from 'jquery';
 
 import * as Api from '../api';
+import * as Constant from '../constants';
 
-import ColField from '../components/ColField.jsx';
-import ColLabel from '../components/ColLabel.jsx';
+import ColDisplay from '../components/ColDisplay.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTime } from '../utils/date';
@@ -88,64 +88,51 @@ var Version = React.createClass({
           <Well>
             <h3>Client</h3>
             <Row>
-              <ColLabel md={2}>Name</ColLabel>
-              <ColField md={10}>MOTI School Bus Inspection Tracking System</ColField>
+              <ColDisplay md={12} label="Name">MOTI School Bus Inspection Tracking System</ColDisplay>
             </Row>
             <Row>
-              <ColLabel md={2}>Build Time</ColLabel>
-              <ColField md={10}>{ formatDateTime(this.state.buildTime) }</ColField>
+              <ColDisplay md={12} label="Build Time">{ formatDateTime(this.state.buildTime, Constant.DATE_TIME_READABLE) }</ColDisplay>
             </Row>
 {/*
             <Row>
-              <ColLabel md={2}>Version</ColLabel>
-              <ColField md={10}>{ this.state.version }</ColField>
+              <ColDisplay md={12} label="Version">{ this.state.version }</ColDisplay>
             </Row>
 */}
             <Row>
-              <ColLabel md={2}>Git Commit</ColLabel>
-              <ColField md={10}>{ this.state.commit }</ColField>
+              <ColDisplay md={12} label="Git Commit">{ this.state.commit }</ColDisplay>
             </Row>
             <Row>
-              <ColLabel md={2}>User Agent</ColLabel>
-              <ColField md={10}>{ navigator.userAgent }</ColField>
+              <ColDisplay md={12} label="User Agent">{ navigator.userAgent }</ColDisplay>
             </Row>
           </Well>
           <Well>
             <h3>Application</h3>
             <Row>
-              <ColLabel md={2}>Name</ColLabel>
-              <ColField md={10}>{ applicationVersion.title }</ColField>
+              <ColDisplay md={12} label="Name">{ applicationVersion.title }</ColDisplay>
             </Row>
             <Row>
-              <ColLabel md={2}>Build Time</ColLabel>
-              <ColField md={10}>{ formatDateTime(applicationVersion.fileCreationTime) }</ColField>
+              <ColDisplay md={12} label="Build Time">{ formatDateTime(applicationVersion.fileCreationTime, Constant.DATE_TIME_READABLE) }</ColDisplay>
             </Row>
             <Row>
-              <ColLabel md={2}>Version</ColLabel>
-              <ColField md={10}>{ applicationVersion.informationalVersion }</ColField>
+              <ColDisplay md={12} label="Version">{ applicationVersion.informationalVersion }</ColDisplay>
             </Row>
             <Row>
-              <ColLabel md={2}>Git Commit</ColLabel>
-              <ColField md={10}>{ applicationVersion.commit }</ColField>
+              <ColDisplay md={12} label="Git Commit">{ applicationVersion.commit }</ColDisplay>
             </Row>
           </Well>
           <Well>
             <h3>Database</h3>
             <Row>
-              <ColLabel md={2}>Name</ColLabel>
-              <ColField md={10}>{ databaseVersion.database }</ColField>
+              <ColDisplay md={12} label="Name">{ databaseVersion.database }</ColDisplay>
             </Row>
             <Row>
-              <ColLabel md={2}>Server</ColLabel>
-              <ColField md={10}>{ databaseVersion.server }</ColField>
+              <ColDisplay md={12} label="Server">{ databaseVersion.server }</ColDisplay>
             </Row>
             <Row>
-              <ColLabel md={2}>Version</ColLabel>
-              <ColField md={10}>{ databaseVersion.version }</ColField>
+              <ColDisplay md={12} label="Version">{ databaseVersion.version }</ColDisplay>
             </Row>
             <Row>
-              <ColLabel md={2}>Last Migration</ColLabel>
-              <ColField md={10}>{ lastMigration }</ColField>
+              <ColDisplay md={12} label="Last Migration">{ lastMigration }</ColDisplay>
             </Row>
           </Well>
           <Button onClick={ this.showRaw }>Show Raw Versions</Button>
