@@ -1,5 +1,8 @@
 import Moment from 'moment';
 
+import * as Constant from '../constants';
+
+
 export function dateIsBetween(date, startDate, endDate) {
   if (startDate && date.isBefore(startDate)) { return false; }
   if (endDate && date.isAfter(endDate)) { return false; }
@@ -10,7 +13,7 @@ export function formatDateTime(dateTime, format) {
   if (!dateTime) { return ''; }
   var dt = Moment(dateTime);
   if (!dt || !dt.isValid()) { return ''; }
-  if (!format) { format = 'YYYY-MM-DDTHH:mm:ss'; }
+  if (!format) { format = Constant.DATE_TIME_ISO_8601; }
   return dt.format(format);
 }
 
@@ -37,7 +40,7 @@ export function hoursAgo(dateTime) {
 }
 
 export function today(format) {
-  if (!format) { format = 'YYYY-MM-DDTHH:mm:ss'; }
+  if (!format) { format = Constant.DATE_TIME_ISO_8601; }
   var dt = Moment().startOf('d');
   return dt.format(format);
 }
@@ -53,7 +56,7 @@ export function businessDayOnOrBefore(dateTime, format) {
     dt.subtract(2, 'd');
   }
   // TODO: Holidays
-  if (!format) { format = 'YYYY-MM-DDTHH:mm:ss'; }
+  if (!format) { format = Constant.DATE_TIME_ISO_8601; }
   return dt.format(format);
 }
 

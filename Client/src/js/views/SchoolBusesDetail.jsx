@@ -18,8 +18,7 @@ import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
 import CheckboxControl from '../components/CheckboxControl.jsx';
-import ColField from '../components/ColField.jsx';
-import ColLabel from '../components/ColLabel.jsx';
+import ColDisplay from '../components/ColDisplay.jsx';
 import Confirm from '../components/Confirm.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
@@ -51,7 +50,7 @@ var SchoolBusesDetail = React.createClass({
 
       inspection: {},
 
-      isNew: this.props.params.schoolBusId == 0,
+      isNew: this.props.params.schoolBusId === '0',
 
       ui: {
         // Inspections
@@ -142,7 +141,12 @@ var SchoolBusesDetail = React.createClass({
       // Save the new school bus record
       Api.addSchoolBus(schoolBus).then(() => {
         // Save its related CCW record next
-        Api.addSchoolBusCCW(this.props.schoolBusCCW);
+        Api.addSchoolBusCCW(this.props.schoolBusCCW).then(() => {
+          // Reload the screen with new school bus id
+          this.props.router.push({
+            pathname: `school-buses/${ this.props.schoolBus.id }`,
+          });
+        });
       });
     }
 
@@ -217,7 +221,7 @@ var SchoolBusesDetail = React.createClass({
 
     var inspectionNotice = (bus.isReinspection ? '&reg; ' : '') + (bus.isOverdue ? 'Overdue &ndash; ' : '')
       + daysToInspection + ' ' + plural(daysToInspection, 'day', 'days')
-      + ' &ndash; ' + formatDateTime(bus.nextInspectionDate, 'YYYY-DD-MMM');
+      + ' &ndash; ' + formatDateTime(bus.nextInspectionDate, Constant.DATE_FULL_MONTH_DAY_YEAR);
 
     var inspectionStyle = bus.isOverdue ? 'danger' : (daysToInspection <= Constant.INSPECTION_DAYS_DUE_WARNING ? 'warning' : 'success');
 
@@ -281,60 +285,46 @@ var SchoolBusesDetail = React.createClass({
 
                 return <div id="school-buses-data">
                   <Row>
-                    <ColLabel md={4}>District</ColLabel>
-                    <ColField md={8}>{ bus.districtName }</ColField>
+                    <ColDisplay md={12} label="District">{ bus.districtName }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Inspector</ColLabel>
-                    <ColField md={8}>{ bus.inspectorName }</ColField>
+                    <ColDisplay md={12} label="Inspector">{ bus.inspectorName }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Home Terminal</ColLabel>
-                    <ColField md={8}>{ bus.homeTerminalAddress }</ColField>
+                    <ColDisplay md={12} label="Home Terminal">{ bus.homeTerminalAddress }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>City, Province</ColLabel>
-                    <ColField md={8}>{ bus.homeTerminalCityProv }</ColField>
+                    <ColDisplay md={12} label="City, Province">{ bus.homeTerminalCityProv }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Postal Code</ColLabel>
-                    <ColField md={8}>{ bus.homeTerminalPostalCode }</ColField>
+                    <ColDisplay md={12} label="Postal Code">{ bus.homeTerminalPostalCode }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Description</ColLabel>
-                    <ColField md={8}>{ bus.homeTerminalComment }</ColField>
+                    <ColDisplay md={12} label="Description">{ bus.homeTerminalComment }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Permit Class</ColLabel>
-                    <ColField md={8}>{ bus.permitClassCode }</ColField>
+                    <ColDisplay md={12} label="Permit Class">{ bus.permitClassCode }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Body Type</ColLabel>
-                    <ColField md={8}>{ bus.bodyTypeCode }</ColField>
+                    <ColDisplay md={12} label="Body Type">{ bus.bodyTypeCode }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Restrictions</ColLabel>
-                    <ColField md={8}>{ bus.restrictionsText }</ColField>
+                    <ColDisplay md={12} label="Restrictions">{ bus.restrictionsText }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>School District</ColLabel>
-                    <ColField md={8}>{ bus.schoolDistrictName }</ColField>
+                    <ColDisplay md={12} label="School District">{ bus.schoolDistrictName }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Independent School</ColLabel>
-                    <ColField md={1}><CheckboxControl checked={ bus.isIndependentSchool } disabled></CheckboxControl></ColField>
-                    <ColField md={6}>{ bus.independentSchoolName }</ColField>
+                    <ColDisplay md={4} label="Independent School"><CheckboxControl checked={ bus.isIndependentSchool } disabled></CheckboxControl></ColDisplay>
+                    <ColDisplay md={8}>{ bus.independentSchoolName }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Unit Number</ColLabel>
-                    <ColField md={8}>{ bus.unitNumber }</ColField>
+                    <ColDisplay md={12} label="Unit Number">{ bus.unitNumber }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Seating Capacity</ColLabel>
-                    <ColField md={1}>{ bus.schoolBusSeatingCapacity }</ColField>
-                    <ColLabel md={4}>Mobile Aid Capacity</ColLabel>
-                    <ColField md={1}>{ bus.mobilityAidCapacity }</ColField>
-                    <Col md={2}></Col>
+                    <ColDisplay md={4} label="Seating Capacity">{ bus.schoolBusSeatingCapacity }</ColDisplay>
+                    <ColDisplay md={4} label="Mobile Aid Capacity">{ bus.mobilityAidCapacity }</ColDisplay>
+                    <Col md={4}></Col>
                   </Row>
                 </div>;
               })()}
@@ -364,12 +354,12 @@ var SchoolBusesDetail = React.createClass({
                   {
                     _.map(inspections, (inspection) => {
                       return <tr key={ inspection.id }>
-                        <td>{ formatDateTime(inspection.inspectionDate, 'YYYY-MM-DD') }</td>
+                        <td>{ formatDateTime(inspection.inspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</td>
                         <td>{ inspection.inspectionTypeCode }
                           { inspection.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
                         </td>
                         <td>{ inspection.inspectionResultCode }</td>
-                          <td>{ inspection.inspectorName }</td>
+                        <td>{ inspection.inspectorName }</td>
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
                             <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteInspection.bind(this, inspection) }/> }>
@@ -396,20 +386,14 @@ var SchoolBusesDetail = React.createClass({
 
                 return <div id="school-buses-policy">
                   <Row>
-                    <ColLabel md={2}>Policy #</ColLabel>
-                    <ColField md={2}>{ ccw.nscPolicyNumber }</ColField>
-                    <ColLabel md={2}>Status Date</ColLabel>
-                    <ColField md={2}>{ formatDateTime(ccw.nscPolicyStatusDate, 'YYYY-MMM-DD') }</ColField>
-                    <ColLabel md={2}>Status Is</ColLabel>
-                    <ColField md={2}>{ ccw.nscPolicyStatus }</ColField>
+                    <ColDisplay md={4} label="Policy #">{ ccw.nscPolicyNumber }</ColDisplay>
+                    <ColDisplay md={4} label="Status Date">{ formatDateTime(ccw.nscPolicyStatusDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
+                    <ColDisplay md={4} label="Status Is">{ ccw.nscPolicyStatus }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={2}>Effective Date</ColLabel>
-                    <ColField md={2}>{ formatDateTime(ccw.nscPolicyEffectiveDate, 'YYYY-MMM-DD') }</ColField>
-                    <ColLabel md={2}>Expiry Date</ColLabel>
-                    <ColField md={2}>{ formatDateTime(ccw.nscPolicyExpiryDate, 'YYYY-MMM-DD') }</ColField>
-                    <ColLabel md={2}>Plate Decal #</ColLabel>
-                    <ColField md={2}>{ ccw.nscPlateDecal }</ColField>
+                    <ColDisplay md={4} label="Effective Date">{ formatDateTime(ccw.nscPolicyEffectiveDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
+                    <ColDisplay md={4} label="Expiry Date">{ formatDateTime(ccw.nscPolicyExpiryDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
+                    <ColDisplay md={4} label="Plate Decal #">{ ccw.nscPlateDecal }</ColDisplay>
                   </Row>
                 </div>;
               })()}
@@ -428,14 +412,11 @@ var SchoolBusesDetail = React.createClass({
 
                 return <div id="school-buses-icbc-owner">
                   <Row>
-                    <ColLabel md={2}>Owner</ColLabel>
-                    <ColField md={6}>{ ccw.icbcRegOwnerName }</ColField>
-                    <ColLabel md={2}>Status Is</ColLabel>
-                    <ColField md={2}>{ ccw.icbcRegOwnerStatus }</ColField>
+                    <ColDisplay md={8} label="Owner">{ ccw.icbcRegOwnerName }</ColDisplay>
+                    <ColDisplay md={4} label="Status Is">{ ccw.icbcRegOwnerStatus }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={2}>Address</ColLabel>
-                    <ColField md={6}>{(() => {
+                    <ColDisplay md={8} label="Address">{(() => {
                       if (ccw.icbcRegOwnerAddr1 && ccw.icbcRegOwnerAddr2 && city) {
                         return <div>{ ccw.icbcRegOwnerAddr1 }<br />{ ccw.icbcRegOwnerAddr2 }<br />{ city }</div>;
                       }
@@ -446,9 +427,8 @@ var SchoolBusesDetail = React.createClass({
                         return <div>{ ccw.icbcRegOwnerAddr1 }{ ccw.icbcRegOwnerAddr2 }<br />{ city }</div>;
                       }
                       return <div>{ ccw.icbcRegOwnerAddr1 }{ ccw.icbcRegOwnerAddr2 }</div>;
-                    })()}</ColField>
-                    <ColLabel md={2}>RODL #<br />PODL #</ColLabel>
-                    <ColField md={2}>{ ccw.icbcRegOwnerRODL }<br />{ ccw.icbcRegOwnerPODL }</ColField>
+                    })()}</ColDisplay>
+                    <ColDisplay md={4} label={ <span>RODL #<br />PODL #</span> }>{ ccw.icbcRegOwnerRODL }<br />{ ccw.icbcRegOwnerPODL }</ColDisplay>
                   </Row>
                 </div>;
               })()}
@@ -462,20 +442,16 @@ var SchoolBusesDetail = React.createClass({
 
                 return <div id="school-buses-nsc">
                   <Row>
-                    <ColLabel md={4}>NSC #</ColLabel>
-                    <ColField md={8}>{ ccw.nscClientNum }</ColField>
+                    <ColDisplay md={12} label="NSC #">{ ccw.nscClientNum }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Carrier Name</ColLabel>
-                    <ColField md={8}>{ ccw.nscCarrierName }</ColField>
+                    <ColDisplay md={12} label="Carrier Name">{ ccw.nscCarrierName }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Carrier Conditions</ColLabel>
-                    <ColField md={8}>{ ccw.nscCarrierConditions }</ColField>
+                    <ColDisplay md={12} label="Carrier Conditions">{ ccw.nscCarrierConditions }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColLabel md={4}>Carrier Safety Rating</ColLabel>
-                    <ColField md={8}>{ ccw.nscCarrierSafetyRating }</ColField>
+                    <ColDisplay md={12} label="Carrier Safety Rating">{ ccw.nscCarrierSafetyRating }</ColDisplay>
                   </Row>
                 </div>;
               })()}
@@ -491,67 +467,34 @@ var SchoolBusesDetail = React.createClass({
 
                 return <div id="school-buses-icbc-vehicle">
                   <Row>
-                    <Col md={6}>
-                     <Row>
-                        <ColLabel md={3}>Year</ColLabel>
-                        <ColField md={3}>{ ccw.icbcModelYear }</ColField>
-                        <ColLabel md={3}>GVW</ColLabel>
-                        <ColField md={3}>{ ccw.icbcGrossVehicleWeight }</ColField>
-                      </Row>
-                      <Row>
-                        <ColLabel md={3}>Vehicle Type</ColLabel>
-                        <ColField md={3}>{ ccw.icbcVehicleType }</ColField>
-                        <ColLabel md={3}>Make</ColLabel>
-                        <ColField md={3}>{ ccw.icbcMake }</ColField>
-                      </Row>
-                      <Row>
-                        <ColLabel md={3}>Rate Class</ColLabel>
-                        <ColField md={3}>{ ccw.icbcRateClass }</ColField>
-                        <ColLabel md={3}>Body</ColLabel>
-                        <ColField md={3}>{ ccw.icbcBody }</ColField>
-                      </Row>
-                      <Row>
-                        <ColLabel md={3}>CVIP Decal</ColLabel>
-                        <ColField md={3}>{ ccw.icbccvipDecal }</ColField>
-                        <ColLabel md={3}>Rebuilt Status</ColLabel>
-                        <ColField md={3}>{ ccw.icbcRebuiltStatus }</ColField>
-                      </Row>
-                      <Row>
-                        <ColLabel md={3}>Fleet Unit #</ColLabel>
-                        <ColField md={3}>{ ccw.icbcFleetUnitNo }</ColField>
-                        <ColLabel md={3}>CVIP Expiry</ColLabel>
-                        <ColField md={3}>{ formatDateTime(ccw.icbccvipExpiry, 'YYYY-MMM-DD') }</ColField>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Row>
-                        <ColLabel md={3}>Net Wt</ColLabel>
-                        <ColField md={3}>{ ccw.icbcNetWt }</ColField>
-                        <Col md={6}></Col>
-                      </Row>
-                      <Row>
-                        <ColLabel md={3}>Model</ColLabel>
-                        <ColField md={3}>{ ccw.icbcModel }</ColField>
-                        <ColLabel md={3}>Colour</ColLabel>
-                        <ColField md={3}>{ ccw.icbcColour }</ColField>
-                      </Row>
-                      <Row>
-                        <ColLabel md={3}>Fuel</ColLabel>
-                        <ColField md={3}>{ ccw.icbcFuel }</ColField>
-                        <Col md={6}></Col>
-                      </Row>
-                      <Row>
-                        <ColLabel md={3}>Seating Capacity</ColLabel>
-                        <ColField md={3}>{ ccw.icbcSeatingCapacity }</ColField>
-                        <Col md={6}></Col>
-                      </Row>
-                      <Row>
-                        <ColLabel md={3}>N&amp;O</ColLabel>
-                        <ColField md={3}>{ ccw.icbcNotesAndOrders }</ColField>
-                        <ColLabel md={3}>Ordered On</ColLabel>
-                        <ColField md={3}>{ formatDateTime(ccw.icbcOrderedOn, 'YYYY-MMM-DD') }</ColField>
-                      </Row>
-                    </Col>
+                    <ColDisplay md={3} label="Year">{ ccw.icbcModelYear }</ColDisplay>
+                    <ColDisplay md={3} label="GVW">{ ccw.icbcGrossVehicleWeight }</ColDisplay>
+                    <ColDisplay md={3} label="Net Wt">{ ccw.icbcNetWt }</ColDisplay>
+                    <Col md={3}></Col>
+                  </Row>
+                  <Row>
+                    <ColDisplay md={3} label="Vehicle Type">{ ccw.icbcVehicleType }</ColDisplay>
+                    <ColDisplay md={3} label="Make">{ ccw.icbcMake }</ColDisplay>
+                    <ColDisplay md={3} label="Model">{ ccw.icbcModel }</ColDisplay>
+                    <ColDisplay md={3} label="Colour">{ ccw.icbcColour }</ColDisplay>
+                  </Row>
+                  <Row>
+                    <ColDisplay md={3} label="Rate Class">{ ccw.icbcRateClass }</ColDisplay>
+                    <ColDisplay md={3} label="Body">{ ccw.icbcBody }</ColDisplay>
+                    <ColDisplay md={3} label="Fuel">{ ccw.icbcFuel }</ColDisplay>
+                    <Col md={6}></Col>
+                  </Row>
+                  <Row>
+                    <ColDisplay md={3} label="CVIP Decal">{ ccw.icbccvipDecal }</ColDisplay>
+                    <ColDisplay md={3} label="Rebuilt Status">{ ccw.icbcRebuiltStatus }</ColDisplay>
+                    <ColDisplay md={3} label="Seating Capacity">{ ccw.icbcSeatingCapacity }</ColDisplay>
+                    <Col md={6}></Col>
+                  </Row>
+                  <Row>
+                    <ColDisplay md={3} label="Fleet Unit #">{ ccw.icbcFleetUnitNo }</ColDisplay>
+                    <ColDisplay md={3} label="CVIP Expiry">{ formatDateTime(ccw.icbccvipExpiry, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
+                    <ColDisplay md={3} label="N&amp;O">{ ccw.icbcNotesAndOrders }</ColDisplay>
+                    <ColDisplay md={3} label="Ordered On">{ formatDateTime(ccw.icbcOrderedOn, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
                   </Row>
                 </div>;
               })()}

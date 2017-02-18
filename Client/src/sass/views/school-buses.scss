@@ -63,6 +63,12 @@
     margin-bottom: 10px;
   }
 
+  #school-buses-data {
+    .col-display-label {
+      width: 140px;
+    }
+  }
+
   #inspection-list {
     height: 216px;
     width: 100%;
@@ -70,8 +76,30 @@
     margin-bottom: 10px;
   }
 
+  #school-buses-policy {
+    .col-display-label {
+      width: 140px;
+    }
+  }
+
   #school-buses-icbc-owner {
     min-height: 80px;
+
+    .col-display-label {
+      width: 60px;
+    }
+  }
+
+  #school-buses-nsc {
+    .col-display-label {
+      width: 145px;
+    }
+  }
+
+  #school-buses-icbc-vehicle {
+    .col-display-label {
+      width: 120px;
+    }
   }
 
   .well {
