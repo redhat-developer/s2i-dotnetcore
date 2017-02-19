@@ -198,6 +198,7 @@ var SchoolBuses = React.createClass({
           state.ownerId = parseInt(ownerId, 10);
           state.ownerName = this.props.owners[ownerId] ? this.props.owners[ownerId].name : '';
           state.nextInspection = ALL;
+          state.selectedInspectorsIds = [];
         } else if (this.props.location.query[Constant.SCHOOL_BUS_OVERDUE_QUERY]) {
           state.nextInspection = BEFORE_TODAY;
         } else if (this.props.location.query[Constant.SCHOOL_BUS_REINSPECTIONS_QUERY]) {
