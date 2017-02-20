@@ -23,6 +23,7 @@ import Confirm from '../components/Confirm.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
 
 import { formatDateTime } from '../utils/date';
 import { concat, plural } from '../utils/string';
@@ -234,13 +235,21 @@ var SchoolBusesDetail = React.createClass({
             { bus.nextInspectionDate &&
               <span className={ `label label-${inspectionStyle}` } dangerouslySetInnerHTML={{ __html: inspectionNotice }}></span>
             }
-            <Button title="Notes" onClick={ this.showNotes }>Notes ({ bus.notes ? bus.notes.length : 0 })</Button>
-            <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ bus.attachments ? bus.attachments.length : 0 })</Button>
-            <Button title="History" onClick={ this.showHistory }>History</Button>
+            <Unimplemented>
+              <Button title="Notes" onClick={ this.showNotes }>Notes ({ bus.notes ? bus.notes.length : 0 })</Button>
+            </Unimplemented>
+            <Unimplemented>
+              <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ bus.attachments ? bus.attachments.length : 0 })</Button>
+            </Unimplemented>
+            <Unimplemented>
+              <Button title="History" onClick={ this.showHistory }>History</Button>
+            </Unimplemented>
           </Col>
           <Col md={2}>
             <div className="pull-right">
-              <Button><Glyphicon glyph="print" title="Print" /></Button>
+              <Unimplemented>
+                <Button><Glyphicon glyph="print" title="Print" /></Button>
+              </Unimplemented>
               <LinkContainer to={{ pathname: 'school-buses' }}>
                 <Button title="Return to List"><Glyphicon glyph="arrow-left" /> Return to List</Button>
               </LinkContainer>
@@ -264,12 +273,14 @@ var SchoolBusesDetail = React.createClass({
                   &nbsp;Plate: <small>{ bus.licencePlateNumber }</small>
                   &nbsp;VIN: <small>{ bus.vehicleIdentificationNumber }</small>
                   &nbsp;Permit: <small>{ bus.permitNumber }</small>
-                  {(() => {
-                    if (bus.permitNumber) {
-                      return <Button bsSize="small">Print Permit</Button>;
-                    }
-                    return <Button bsSize="small">Generate Permit</Button>;
-                  })()}
+                  <Unimplemented>
+                    {(() => {
+                      if (bus.permitNumber) {
+                        return <Button bsSize="small">Print Permit</Button>;
+                      }
+                      return <Button bsSize="small">Generate Permit</Button>;
+                    })()}
+                  </Unimplemented>
                 </h1>
               </Col>
             </Row>
@@ -332,10 +343,13 @@ var SchoolBusesDetail = React.createClass({
           </Col>
           <Col md={6}>
             <Well>
-              <h3>Inspection History <span className="pull-right"><Button title="addInspection" onClick={ this.addInspection } bsSize="small"><Glyphicon glyph="plus" /></Button></span></h3>
+              <h3>Inspection History</h3>
               {(() => {
                 if (this.state.loadingSchoolBusInspections ) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-                if (Object.keys(this.props.schoolBusInspections).length === 0) { return <Alert bsStyle="success" style={{ marginTop: 10 }}>No inspections</Alert>; }
+
+                var addInspectionButton = <Button title="addInspection" onClick={ this.addInspection } bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add</strong></Button>;
+
+                if (Object.keys(this.props.schoolBusInspections).length === 0) { return <Alert bsStyle="success">No inspections { addInspectionButton }</Alert>; }
 
                 var inspections = _.sortBy(this.props.schoolBusInspections, this.state.ui.sortField);
                 if (this.state.ui.sortDesc) {
@@ -347,7 +361,9 @@ var SchoolBusesDetail = React.createClass({
                   { field: 'inspectionTypeCode',   title: 'Type'            },
                   { field: 'inspectionResultCode', title: 'Status'          },
                   { field: 'inspectorName',        title: 'Inspector'       },
-                  { field: 'blank' },
+                  { field: 'addInspection',        title: 'Add Inspection', style: { textAlign: 'right'  },
+                    node: addInspectionButton,
+                  },
                 ];
 
                 return <SortTable id="inspection-list" sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
@@ -373,7 +389,11 @@ var SchoolBusesDetail = React.createClass({
                   }
                 </SortTable>;
               })()}
-              <div className="text-right"><Button target="_blank" href="http://google.com/search?q=CTMS-Web">CTMS-Web</Button></div>
+              <div className="text-right">
+                <Unimplemented>
+                  <Button target="_blank" href="http://google.com/search?q=CTMS-Web">CTMS-Web</Button>
+                </Unimplemented>
+              </div>
             </Well>
           </Col>
         </Row>
