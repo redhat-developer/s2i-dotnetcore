@@ -22,6 +22,7 @@ import Confirm from '../components/Confirm.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
 
 import { formatDateTime } from '../utils/date';
 import { plural } from '../utils/string';
@@ -132,7 +133,9 @@ var OwnersDetail = React.createClass({
           </Col>
           <Col md={2}>
             <div className="pull-right">
-              <Button><Glyphicon glyph="print" title="Print" /></Button>
+              <Unimplemented>
+                <Button><Glyphicon glyph="print" title="Print" /></Button>
+              </Unimplemented>
               <LinkContainer to={{ pathname: 'owners' }}>
                 <Button title="Return to List"><Glyphicon glyph="arrow-left" /> Return to List</Button>
               </LinkContainer>
@@ -183,7 +186,11 @@ var OwnersDetail = React.createClass({
               })()}
             </Well>
             <Well>
-              <h3>Contacts <span className="pull-right"><Button title="addInspection" onClick={ this.addContact } bsSize="small"><Glyphicon glyph="plus" /></Button></span></h3>
+              <h3>Contacts <span className="pull-right">
+                <Unimplemented>
+                  <Button title="addInspection" onClick={ this.addContact } bsSize="small"><Glyphicon glyph="plus" /></Button>
+                </Unimplemented>
+              </span></h3>
               {(() => {
                 if (this.state.loading ) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
                 if (!owner.contacts || owner.contacts.length === 0) { return <Alert bsStyle="success" style={{ marginTop: 10 }}>No contacts</Alert>; }

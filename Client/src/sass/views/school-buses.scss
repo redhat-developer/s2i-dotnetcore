@@ -126,6 +126,14 @@
     margin-left: -1px;
   }
 
+  .alert {
+    top-margin: 10px;
+
+    .btn {
+      float: right;
+    }
+  }
+
   h1 {
     small {
       font-size: 85%;

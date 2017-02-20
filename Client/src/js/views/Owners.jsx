@@ -25,6 +25,7 @@ import MultiDropdown from '../components/MultiDropdown.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
 
 import { formatDateTime } from '../utils/date';
 
@@ -186,8 +187,12 @@ var Owners = React.createClass({
             <Col md={1}>
               <div id="owners-buttons">
                 <ButtonGroup>
-                  <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
-                  <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
+                  <Unimplemented>
+                    <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
+                  </Unimplemented>
+                  <Unimplemented>
+                    <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
+                  </Unimplemented>
                 </ButtonGroup>
               </div>
             </Col>

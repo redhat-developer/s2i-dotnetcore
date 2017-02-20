@@ -12,6 +12,7 @@ var Notifications = React.createClass({
   render: function() {
     return <div id="notifications">
       <PageHeader>Notifications</PageHeader>
+      This feature has not been released yet.
     </div>;
   },
 });

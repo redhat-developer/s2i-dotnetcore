@@ -23,6 +23,7 @@ import DateControl from '../components/DateControl.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
 
 import { daysFromToday, formatDateTime, today, isValidDate } from '../utils/date';
 import { isBlank, notBlank } from '../utils/string';
@@ -167,7 +168,9 @@ var UsersDetail = React.createClass({
           </Col>
           <Col md={2}>
             <div className="pull-right">
-              <Button><Glyphicon glyph="print" title="Print" /></Button>
+              <Unimplemented>
+                <Button><Glyphicon glyph="print" title="Print" /></Button>
+              </Unimplemented>
               <LinkContainer to={{ pathname: 'users' }}>
                 <Button title="Return to List"><Glyphicon glyph="arrow-left" /> Return to List</Button>
               </LinkContainer>
