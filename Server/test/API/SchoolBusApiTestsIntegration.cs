@@ -262,7 +262,7 @@ namespace SchoolBusAPI.Test
             schoolbus.SchoolBusOwner = schoolBusOwner;
             schoolbus.VehicleIdentificationNumber = "1234";
             schoolbus.LicencePlateNumber = "12345";
-            DateTime nextInspection = DateTime.Now.ToUniversalTime();
+            DateTime nextInspection = DateTime.UtcNow;
             schoolbus.NextInspectionDate = nextInspection;
 
             jsonString = schoolbus.ToJson();

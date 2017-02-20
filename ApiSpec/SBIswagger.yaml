@@ -2829,6 +2829,26 @@ paths:
           in: path
           description: id of SchoolBus to fetch CCWData for
           required: true
+          type: integer
+  /schoolbuses/{id}/newpermit:
+    put:
+      description:  Obtains a new permit number for the indicated Schoolbus.  Returns the updated SchoolBus record.
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CCWData'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to obtain a new permit number for
+          required: true
           type: integer          
   /schoolbusowners/{id}/attachments:
     get:
@@ -3770,8 +3790,8 @@ definitions:
       schoolBusOwner:
         $ref: '#/definitions/SchoolBusOwner'
       permitNumber:
-        type: string
-        maxLength: 20
+        format: int32
+        type: integer
         uniqueItems: true
         description: The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.
       permitIssueDate:

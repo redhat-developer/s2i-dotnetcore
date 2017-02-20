@@ -92,7 +92,7 @@ namespace SchoolBusAPI.Services.Impl
                 else
                 {
                     // Inspection has a special field, createdDate which is set to now.
-                    item.CreatedDate = DateTime.Now;
+                    item.CreatedDate = DateTime.UtcNow;
                     _context.Inspections.Add(item);
                 }                
             }
@@ -292,7 +292,7 @@ namespace SchoolBusAPI.Services.Impl
                 else
                 {
                     // Inspection has a special field, createdDate which is set to now.
-                    item.CreatedDate = DateTime.Now;
+                    item.CreatedDate = DateTime.UtcNow;
                     _context.Inspections.Add(item);
                 }
 

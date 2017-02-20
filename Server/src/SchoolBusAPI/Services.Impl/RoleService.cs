@@ -500,7 +500,7 @@ namespace SchoolBusAPI.Services.Impl
                         if (found == false)
                         {
                             UserRole newUserRole = new UserRole();
-                            newUserRole.EffectiveDate = DateTime.Now;
+                            newUserRole.EffectiveDate = DateTime.UtcNow;
                             newUserRole.Role = role;
                             user.UserRoles.Add(newUserRole);
                             _context.Users.Update(user);

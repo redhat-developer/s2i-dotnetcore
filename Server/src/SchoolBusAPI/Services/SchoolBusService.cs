@@ -94,6 +94,14 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Obtains a new permit number for the indicated Schoolbus.  Returns the updated SchoolBus record.</remarks>
+        /// <param name="id">id of SchoolBus to obtain a new permit number for</param>
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusesIdNewpermitPutAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns notes for a particular SchoolBus.</remarks>
         /// <param name="id">id of SchoolBus to fetch notes for</param>
         /// <response code="200">OK</response>
