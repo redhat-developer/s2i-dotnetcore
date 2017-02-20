@@ -219,20 +219,20 @@ namespace SchoolBusAPI.Services.Impl
 
                 int overdue = _context.SchoolBuss
                 .Where(x => x.Inspector.Id == id)
-                .Where(x => x.NextInspectionDate <= DateTime.Now)
+                .Where(x => x.NextInspectionDate <= DateTime.UtcNow)
                 .Select(x => x)
                 .Count();
 
                 int nextMonth = _context.SchoolBuss
                     .Where(x => x.Inspector.Id == id)
-                    .Where(x => x.NextInspectionDate >= DateTime.Now)
-                    .Where(x => x.NextInspectionDate <= DateTime.Now.AddMonths(1))
+                    .Where(x => x.NextInspectionDate >= DateTime.UtcNow)
+                    .Where(x => x.NextInspectionDate <= DateTime.UtcNow.AddMonths(1))
                     .Select(x => x)
                     .Count();
 
                 int scheduledInspections = _context.Inspections
                     .Where(x => x.Inspector.Id == id)
-                    .Where(x => x.InspectionDate >= DateTime.Now)
+                    .Where(x => x.InspectionDate >= DateTime.UtcNow)
                     .Select(x => x)
                     .Count();
 

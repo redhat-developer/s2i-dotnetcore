@@ -49,8 +49,9 @@ namespace SchoolBusAPI.Models
         /// <param name="LicencePlateNumber">The License Plate Number for the vehicle.</param>
         /// <param name="VehicleIdentificationNumber">A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number..</param>
         /// <param name="SchoolBusOwner">SchoolBusOwner.</param>
-        /// <param name="PermitNumber">The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit.</param>
-        /// <param name="IsOutOfProvince">True if the School Bus is registered within BC, else False.</param>
+        /// <param name="PermitNumber">The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format..</param>
+        /// <param name="PermitIssueDate">The date a permit number was established for this School Bus..</param>
+        /// <param name="IsOutOfProvince">True if the School Bus is registered outside of BC..</param>
         /// <param name="CCWJurisdiction">The Jurisdication of an Out Of Province Bus. Needed for querying CCW..</param>
         /// <param name="District">District.</param>
         /// <param name="HomeTerminalAddress1">Address Line 1 of physical location of the School Bus..</param>
@@ -72,7 +73,7 @@ namespace SchoolBusAPI.Models
         /// <param name="Attachments">The set of attachments about the school bus uploaded by the users..</param>
         /// <param name="History">The history of updates made to the School Bus..</param>
         /// <param name="CCWData">CCWData for this School Bus.</param>
-        public SchoolBus(int Id, string Status, string PermitClassCode, string BodyTypeCode, int SchoolBusSeatingCapacity, string ICBCRegistrationNumber = null, string LicencePlateNumber = null, string VehicleIdentificationNumber = null, SchoolBusOwner SchoolBusOwner = null, string PermitNumber = null, bool? IsOutOfProvince = null, CCWJurisdiction CCWJurisdiction = null, District District = null, string HomeTerminalAddress1 = null, string HomeTerminalAddress2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string RestrictionsText = null, DateTime? NextInspectionDate = null, string NextInspectionTypeCode = null, SchoolDistrict SchoolDistrict = null, bool? IsIndependentSchool = null, string IndependentSchoolName = null, string UnitNumber = null, int? MobilityAidCapacity = null, User Inspector = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null, CCWData CCWData = null)
+        public SchoolBus(int Id, string Status, string PermitClassCode, string BodyTypeCode, int SchoolBusSeatingCapacity, string ICBCRegistrationNumber = null, string LicencePlateNumber = null, string VehicleIdentificationNumber = null, SchoolBusOwner SchoolBusOwner = null, int? PermitNumber = null, DateTime? PermitIssueDate = null, bool? IsOutOfProvince = null, CCWJurisdiction CCWJurisdiction = null, District District = null, string HomeTerminalAddress1 = null, string HomeTerminalAddress2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string RestrictionsText = null, DateTime? NextInspectionDate = null, string NextInspectionTypeCode = null, SchoolDistrict SchoolDistrict = null, bool? IsIndependentSchool = null, string IndependentSchoolName = null, string UnitNumber = null, int? MobilityAidCapacity = null, User Inspector = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null, CCWData CCWData = null)
         {   
             this.Id = Id;
             this.Status = Status;
@@ -88,6 +89,7 @@ namespace SchoolBusAPI.Models
             this.VehicleIdentificationNumber = VehicleIdentificationNumber;
             this.SchoolBusOwner = SchoolBusOwner;
             this.PermitNumber = PermitNumber;
+            this.PermitIssueDate = PermitIssueDate;
             this.IsOutOfProvince = IsOutOfProvince;
             this.CCWJurisdiction = CCWJurisdiction;
             this.District = District;
@@ -192,19 +194,24 @@ namespace SchoolBusAPI.Models
         public int? SchoolBusOwnerRefId { get; set; }
         
         /// <summary>
-        /// The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit
+        /// The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.
         /// </summary>
-        /// <value>The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit</value>
-        [MetaDataExtension (Description = "The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit")]
-        [MaxLength(20)]
-        
-        public string PermitNumber { get; set; }
+        /// <value>The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.</value>
+        [MetaDataExtension (Description = "The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.")]
+        public int? PermitNumber { get; set; }
         
         /// <summary>
-        /// True if the School Bus is registered within BC, else False
+        /// The date a permit number was established for this School Bus.
         /// </summary>
-        /// <value>True if the School Bus is registered within BC, else False</value>
-        [MetaDataExtension (Description = "True if the School Bus is registered within BC, else False")]
+        /// <value>The date a permit number was established for this School Bus.</value>
+        [MetaDataExtension (Description = "The date a permit number was established for this School Bus.")]
+        public DateTime? PermitIssueDate { get; set; }
+        
+        /// <summary>
+        /// True if the School Bus is registered outside of BC.
+        /// </summary>
+        /// <value>True if the School Bus is registered outside of BC.</value>
+        [MetaDataExtension (Description = "True if the School Bus is registered outside of BC.")]
         public bool? IsOutOfProvince { get; set; }
         
         /// <summary>
@@ -424,6 +431,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  VehicleIdentificationNumber: ").Append(VehicleIdentificationNumber).Append("\n");
             sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
             sb.Append("  PermitNumber: ").Append(PermitNumber).Append("\n");
+            sb.Append("  PermitIssueDate: ").Append(PermitIssueDate).Append("\n");
             sb.Append("  IsOutOfProvince: ").Append(IsOutOfProvince).Append("\n");
             sb.Append("  CCWJurisdiction: ").Append(CCWJurisdiction).Append("\n");
             sb.Append("  District: ").Append(District).Append("\n");
@@ -531,6 +539,11 @@ namespace SchoolBusAPI.Models
                     this.PermitNumber == other.PermitNumber ||
                     this.PermitNumber != null &&
                     this.PermitNumber.Equals(other.PermitNumber)
+                ) &&                 
+                (
+                    this.PermitIssueDate == other.PermitIssueDate ||
+                    this.PermitIssueDate != null &&
+                    this.PermitIssueDate.Equals(other.PermitIssueDate)
                 ) &&                 
                 (
                     this.IsOutOfProvince == other.IsOutOfProvince ||
@@ -688,6 +701,10 @@ namespace SchoolBusAPI.Models
                 }                if (this.PermitNumber != null)
                 {
                     hash = hash * 59 + this.PermitNumber.GetHashCode();
+                }                
+                                if (this.PermitIssueDate != null)
+                {
+                    hash = hash * 59 + this.PermitIssueDate.GetHashCode();
                 }                
                                 if (this.IsOutOfProvince != null)
                 {

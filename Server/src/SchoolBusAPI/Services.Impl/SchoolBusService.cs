@@ -449,6 +449,53 @@ namespace SchoolBusAPI.Services.Impl
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Obtains a new permit number for the indicated Schoolbus.  Returns the updated SchoolBus record.</remarks>
+        /// <param name="id">id of SchoolBus to obtain a new permit number for</param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult SchoolbusesIdNewpermitPutAsync(int id)
+        {
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                // get the current max permit number.
+
+                int permit = 36000;
+                var maxPermitRecord = _context.SchoolBuss
+                    .OrderByDescending(x => x.PermitNumber)
+                    .FirstOrDefault(x => x.PermitNumber != null);
+
+                if (maxPermitRecord != null)
+                {
+                    permit = (int)maxPermitRecord.PermitNumber + 1;
+                }
+
+                var item = _context.SchoolBuss
+                    .Include(x => x.HomeTerminalCity)
+                    .Include(x => x.SchoolDistrict)
+                    .Include(x => x.SchoolBusOwner.PrimaryContact)
+                    .Include(x => x.District.Region)
+                    .Include(x => x.Inspector)
+                    .Include(x => x.CCWData)                   
+                    .First(a => a.Id == id);
+
+                item.PermitNumber = permit;
+                item.PermitIssueDate = DateTime.UtcNow;
+
+                _context.SchoolBuss.Update(item);
+                _context.SaveChanges();
+
+                return new ObjectResult(item);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
+        /// <summary>
         /// Searches school buses
         /// </summary>
         /// <remarks>Used for the search schoolbus page.</remarks>        

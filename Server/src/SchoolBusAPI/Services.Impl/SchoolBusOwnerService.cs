@@ -433,7 +433,7 @@ namespace SchoolBusAPI.Services.Impl
         public virtual IActionResult SchoolbusownersPostAsync (SchoolBusOwner body)        
         {
             AdjustSchoolBusOwner(body);
-            body.DateCreated = DateTime.Now;
+            body.DateCreated = DateTime.UtcNow;
             _context.SchoolBusOwners.Add(body);
             _context.SaveChanges();
             return new ObjectResult(body);

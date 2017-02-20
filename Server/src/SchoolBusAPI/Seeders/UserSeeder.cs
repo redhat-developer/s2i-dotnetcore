@@ -103,7 +103,7 @@ namespace SchoolBusAPI.Seeders
                     {
                         new UserRole
                         {
-                            EffectiveDate = DateTime.Now,
+                            EffectiveDate = DateTime.UtcNow,
                             Role = context.GetRole("User")
                         }
                     }
