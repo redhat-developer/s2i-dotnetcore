@@ -554,17 +554,17 @@ namespace SchoolBusAPI.Services.Impl
 
                 if (includeInactive == null)
                 {
-                    data = data.Where(x => x.Status == "Active");
+                    data = data.Where(x => x.Status.ToLower() == "active");
                 }
 
                 if (includeInactive == null || (includeInactive != null && includeInactive == false))
                 {
-                    data = data.Where(x => x.Status == "Active");
+                    data = data.Where(x => x.Status.ToLower() == "active");
                 }
 
                 if (onlyReInspections != null && onlyReInspections == true)
                 {
-                    data = data.Where(x => x.NextInspectionTypeCode == "Re-inspection");
+                    data = data.Where(x => x.NextInspectionTypeCode.ToLower() == "re-inspection");
                 }
 
                 if (startDate != null)
