@@ -350,7 +350,7 @@ namespace SchoolBusAPI.Services.Impl
             DateTime? result = null;
 
             // next inspection is drawn from the schoolbus table
-            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
+            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null);
             if (exists)
             {
                 SchoolBus schoolbus = _context.SchoolBuss.Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null)
@@ -386,7 +386,7 @@ namespace SchoolBusAPI.Services.Impl
             string result = null;
 
             // next inspection is drawn from the inspections table.
-            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
+            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null);
             if (exists)
             {
                 var record = _context.SchoolBuss
