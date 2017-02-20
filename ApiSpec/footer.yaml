@@ -1,3 +1,25 @@
+  AttachmentViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - id      
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+      fileName:
+        type: string
+        maxLength: 2048
+        description: Filename as passed by the user uploading the file    
+      description:
+        type: string
+        maxLength: 2048
+        description: A note about the attachment,  optionally maintained by the user.
+      type:
+        type: string
+        maxLength: 255
+        description: Type of attachment
   SchoolBusOwnerViewModel:
     type: object
     x-codegen-viewmodel: true

@@ -53,6 +53,7 @@ namespace SchoolBusAPI
             services.AddTransient<IServiceAreaService, ServiceAreaService>();
             services.AddTransient<IUserService, UserService>();            
             services.AddTransient<ITestService, TestService>();
+            services.AddTransient<IAttachmentUploadService,AttachmentUploadService>();
             return services;
         }
     }

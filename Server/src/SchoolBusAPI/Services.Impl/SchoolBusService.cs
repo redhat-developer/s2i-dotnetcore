@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using SchoolBusAPI.Mappings;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -243,7 +244,7 @@ namespace SchoolBusAPI.Services.Impl
                 SchoolBus schoolBus = _context.SchoolBuss
                     .Include(x => x.Attachments)
                     .First(a => a.Id == id);
-                var result = schoolBus.Attachments;
+                var result = MappingExtensions.GetAttachmentListAsViewModel(schoolBus.Attachments); 
                 return new ObjectResult(result);
             }
             else
@@ -253,6 +254,8 @@ namespace SchoolBusAPI.Services.Impl
             }
 
         }
+
+
         /// <summary>
         /// 
         /// </summary>
