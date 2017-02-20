@@ -1,12 +1,16 @@
-@import "../../node_modules/react-datepicker/dist/react-datepicker";
+@import "../../node_modules/react-datetime/css/react-datetime";
 
 .date-control {
-  .react-datepicker__input-container {
+  .rdt {
     display: inline;
   }
 
+  .rdtPicker {
+    top: 34px;
+  }
+
   .form-control {
-    width: 100px !important;
+    width: 102px !important;
   }
 
   .input-group-btn {
@@ -18,5 +22,14 @@
     margin-top: 7px;
     margin-right: 5px;
     font-weight: normal;
+  }
+}
+
+.has-error .date-control {
+  .btn {
+    color: #a94442;
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
   }
 }

@@ -22,26 +22,10 @@ import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 
-/*
-Create a search screen for user management. Search criteria can be just name for now, and we can add additional criteria later.
 
-List of results should include:
-
-First Name
-Surname
-SM User ID
-home Service Area.
-
-Include an "Add" button the screen to add a new user.
-
-By default, show only active users, but include a checkbox to "Show Inactive" and show them when checked.
-
-TODO:
-* Print / Email
-
-*/
 var UserManagement = React.createClass({
   propTypes: {
+    currentUser: React.PropTypes.object,
     users: React.PropTypes.object,
     user: React.PropTypes.object,
     districts: React.PropTypes.object,
@@ -54,8 +38,6 @@ var UserManagement = React.createClass({
   getInitialState() {
     return {
       loading: true,
-
-      showAddDialog: false,
 
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
@@ -126,23 +108,6 @@ var UserManagement = React.createClass({
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   },
 
-  openAddDialog() {
-    this.setState({ showAddDialog: true });
-  },
-
-  closeAddDialog() {
-    this.setState({ showAddDialog: false });
-  },
-
-  saveNewUser(user) {
-    Api.addUser(user).then(() => {
-      // Open it up? Or back to listing?
-      this.props.router.push({
-        pathname: `user-management/${ this.props.user.id }`,
-      });
-    });
-  },
-
   delete(user) {
     Api.deleteUser(user).then(() => {
       this.fetch();
@@ -192,7 +157,11 @@ var UserManagement = React.createClass({
 
         {(() => {
           if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-          if (Object.keys(this.props.users).length === 0) { return <Alert bsStyle="success">No users</Alert>; }
+
+          var addUserButton = <LinkContainer to={{ pathname: 'users/0' }}>
+            <Button title="add" bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add User</strong></Button>
+          </LinkContainer>;
+          if (Object.keys(this.props.users).length === 0) { return <Alert bsStyle="success">No users { addUserButton }</Alert>; }
 
           var users = _.sortBy(this.props.users, this.state.ui.sortField);
           if (this.state.ui.sortDesc) {
@@ -205,7 +174,7 @@ var UserManagement = React.createClass({
             { field: 'smUserId',     title: 'User ID'    },
             { field: 'districtName', title: 'District'   },
             { field: 'addUser',      title: 'Add User',  style: { textAlign: 'right'  },
-              node: <Button title="add" bsSize="xsmall" onClick={ this.openAddDialog }><Glyphicon glyph="plus" />&nbsp;<strong>Add User</strong></Button>,
+              node: addUserButton,
             },
           ]}>
             {
@@ -220,7 +189,7 @@ var UserManagement = React.createClass({
                       <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, user) }/> }>
                         <Button className={ user.canDelete ? '' : 'hidden' } title="deleteUser" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                       </OverlayTrigger>
-                      <LinkContainer to={{ pathname: 'user-management/' + user.id }}>
+                      <LinkContainer to={{ pathname: 'users/' + user.id }}>
                         <Button className={ user.canEdit ? '' : 'hidden' } title="editUser" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
                       </LinkContainer>
                     </ButtonGroup>
@@ -237,6 +206,7 @@ var UserManagement = React.createClass({
 
 function mapStateToProps(state) {
   return {
+    currentUser: state.user,
     users: state.models.users,
     user: state.models.user,
     districts: state.lookups.districts,

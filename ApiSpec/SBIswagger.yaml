@@ -3773,14 +3773,18 @@ definitions:
         type: string
         maxLength: 20
         uniqueItems: true
-        description: The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit
+        description: The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.
+      permitIssueDate:
+        type: string
+        format: date-time
+        description: The date a permit number was established for this School Bus.
       status:
         type: string
         maxLength: 20
         description: Status of the school bus record - current values are Inactive, Active, Archived
       isOutOfProvince:
         type: boolean
-        description: True if the School Bus is registered within BC, else False
+        description: True if the School Bus is registered outside of BC.
       CCWJurisdiction:
         $ref: '#/definitions/CCWJurisdiction'
         description: The Jurisdication of an Out Of Province Bus. Needed for querying CCW.

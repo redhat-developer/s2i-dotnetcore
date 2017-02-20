@@ -30,16 +30,6 @@ import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTime } from '../utils/date';
 
-/*
-
-* System default should be:
-** If user is an inspector, Inspector == Current User else not used
-** If the user is not an inspector, Districts in home district, else not used
-
-TODO:
-* Print / Email
-
-*/
 
 const BEFORE_TODAY = 'Before Today';
 const BEFORE_END_OF_MONTH = 'Before End of Month';
@@ -167,10 +157,10 @@ var SchoolBuses = React.createClass({
     }
 
     if (startDate && startDate.isValid()) {
-      searchParams.startDate = startDate.format('YYYY-MM-DDT00:00:00');
+      searchParams.startDate = startDate.format(Constant.DATE_ZULU);
     }
     if (endDate && endDate.isValid()) {
-      searchParams.endDate = endDate.format('YYYY-MM-DDT00:00:00');
+      searchParams.endDate = endDate.format(Constant.DATE_ZULU);
     }
 
     return searchParams;
@@ -202,19 +192,13 @@ var SchoolBuses = React.createClass({
           hideInactive: true,
           justReInspections: false,
         };
-/*
-
-Overdue: Next Inspections before today, inspector = current user
-Re-Inspections: Next inspections all dates, inspector = current user, inspection type = re-inspections
-Upcoming inspections: Next inspections - before the next 30 day, inspector = current user
-
-*/
 
         if (this.props.location.query[Constant.SCHOOL_BUS_OWNER_QUERY]) {
           var ownerId = this.props.location.query[Constant.SCHOOL_BUS_OWNER_QUERY];
           state.ownerId = parseInt(ownerId, 10);
           state.ownerName = this.props.owners[ownerId] ? this.props.owners[ownerId].name : '';
           state.nextInspection = ALL;
+          state.selectedInspectorsIds = [];
         } else if (this.props.location.query[Constant.SCHOOL_BUS_OVERDUE_QUERY]) {
           state.nextInspection = BEFORE_TODAY;
         } else if (this.props.location.query[Constant.SCHOOL_BUS_REINSPECTIONS_QUERY]) {
@@ -366,7 +350,7 @@ Upcoming inspections: Next inspections - before the next 30 day, inspector = cur
                 <td>{ bus.icbcRegistrationNumber }</td>
                 <td>{ bus.unitNumber }</td>
                 <td>{ bus.permitNumber }</td>
-                <td>{ formatDateTime(bus.nextInspectionDate, 'MM/DD/YYYY') }
+                <td>{ formatDateTime(bus.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }
                   { bus.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
                   { bus.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }
                 </td>

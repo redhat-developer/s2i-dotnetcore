@@ -16,16 +16,41 @@ import _ from 'lodash';
 
 function parseUser(user) {
   if (!user.district) { user.district = { id: '', name: '' }; }
+  if (!user.userRoles) { user.userRoles = []; }
   if (!user.groupMemberships) { user.groupMemberships = []; }
 
   user.name = lastFirstName(user.surname, user.givenName);
   user.fullName = firstLastName(user.givenName, user.surname);
   user.districtName = user.district.name;
+
+  user.groupNames = _.chain(user.groupMemberships).filter(membership => {
+    return membership.group && membership.group.name;
+  }).map(membership =>{
+    return membership.group.name;
+  }).sortBy(name =>{
+    return name;
+  }).join(', ').value();
+
+  // This field is formatted to be used in updateUserGroups(), which expects
+  // [ { groupId: 1 }, { groupId: 2 }, ... ]
+  user.groupIds = _.filter(user.groupMemberships, membership => {
+    return membership.group && membership.group.id;
+  }).map(membership =>{
+    return { groupId: membership.group.id };
+  });
+
+  _.each(user.userRoles, userRole =>{
+    userRole.roleId = userRole.role && userRole.role.id ? userRole.role.id : 0;
+    userRole.roleName = userRole.role && userRole.role.name ? userRole.role.name : '';
+    userRole.effectiveDateSort = sortableDateTime(user.effectiveDate);
+    userRole.expiryDateSort = sortableDateTime(user.expiryDate);
+  });
+
   user.canEdit = true;
   user.canDelete = true;
 
   var inspectorGroupId = getInspectorGroupId();
-  var isInspector = _.find(user.groupMemberships, (membership) => {
+  var isInspector = _.find(user.groupMemberships, membership => {
     return (membership.group && membership.group.id === inspectorGroupId);
   });
   user.isInspector = isInspector !== undefined;
@@ -109,6 +134,28 @@ export function deleteUser(user) {
     store.dispatch({ type: Action.DELETE_USER, user: user });
   });
 }
+
+export function updateUserGroups(user) {
+  return new ApiRequest(`/users/${ user.id }/groups`).put(user.groupIds).then(() => {
+    // After updating the user's group, refresh the user state.
+    return getUser(user.id);
+  });
+}
+
+export function addUserRole(userId, userRole) {
+  return new ApiRequest(`/users/${ userId }/roles`).post(userRole).then(() => {
+    // After updating the user's role, refresh the user state.
+    return getUser(userId);
+  });
+}
+
+export function updateUserRoles(userId, userRoleArray) {
+  return new ApiRequest(`/users/${ userId }/roles`).put(userRoleArray).then(() => {
+    // After updating the user's role, refresh the user state.
+    return getUser(userId);
+  });
+}
+
 
 ////////////////////
 // Favourites
@@ -571,6 +618,15 @@ export function getInspectors() {
     _.map(users, user => { parseUser(user); });
 
     store.dispatch({ type: Action.UPDATE_INSPECTORS_LOOKUP, inspectors: users });
+  });
+}
+
+export function getRoles() {
+  return new ApiRequest('/roles').get().then(response => {
+    // Normalize the response
+    var roles = _.fromPairs(response.map(role => [ role.id, role ]));
+
+    store.dispatch({ type: Action.UPDATE_ROLES_LOOKUP, roles: roles });
   });
 }
 

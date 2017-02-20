@@ -33,14 +33,21 @@ definitions:
         type: string
         maxLength: 20
         uniqueItems: true
-        description: The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit
+        description: The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.
+      permitIssueDate:
+        type: string
+        format: date-time
+        description: The date a permit number was established for this School Bus.
       status:
         type: string
         maxLength: 20
         description: Status of the school bus record - current values are Inactive, Active, Archived
       isOutOfProvince:
         type: boolean
-        description: True if the School Bus is registered within BC, else False
+        description: True if the School Bus is registered outside of BC.
+      CCWJurisdiction:
+        $ref: '#/definitions/CCWJurisdiction'
+        description: The Jurisdication of an Out Of Province Bus. Needed for querying CCW.
       District:
         $ref: '#/definitions/District'
       homeTerminalAddress1:
@@ -126,6 +133,9 @@ definitions:
         items:
           $ref: '#/definitions/History'
         description: The history of updates made to the School Bus.
+      CCWData:
+        $ref: '#/definitions/CCWData'
+        description: CCWData for this School Bus
   SchoolBusOwner:
     type: object
     description: Demographic information about companies, organizations, school districts, or individuals who own or lease school buses
@@ -242,7 +252,7 @@ definitions:
       ICBCModel:
         type: string
         maxLength: 255
-        description: Vehicle model codes used by ICBC - for example: bus, scbus, dump, logtr
+        description: Vehicle model codes used by ICBC - for example bus, scbus, dump, logtr
       ICBCFuel:
         type: string
         maxLength: 255
@@ -295,10 +305,18 @@ definitions:
         type: string
         maxLength: 255
         description: Registered Owners Driver Licence number
-      ICBCRegOwnerPool:
+      ICBCRegOwnerPODL:
         type: string
         maxLength: 255
         description: Previous Owners Driver Licence number
+      ICBCLicencePlateNumber:
+        type: string
+        maxLength: 255
+        description: The License Plate Number for the vehicle
+      ICBCVehicleIdentificationNumber:
+        type: string
+        maxLength: 255
+        description:  A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number.
       NSCClientNum:
         type: string
         maxLength: 255
@@ -318,27 +336,27 @@ definitions:
       NSCPolicyNumber:
         type: string
         maxLength: 255
-        description: From NSC: The number of the carrier (NSC Clients) necessary insurance required to operate the vehicle.
+        description: From NSC - The number of the carrier (NSC Clients) necessary insurance required to operate the vehicle.
       NSCPolicyEffectiveDate:
         type: string
         format: date-time
-        description: From NSC: The effective data of the policy.
+        description: From NSC - The effective data of the policy.
       NSCPolicyStatusDate:
         type: string
         format: date-time
-        description: From NSC: The date the status of the policy was established.
+        description: From NSC - The date the status of the policy was established.
       NSCPolicyExpiryDate:
         type: string
         format: date-time
-        description: From NSC: The data of expiration of the policy.
+        description: From NSC - The data of expiration of the policy.
       NSCPolicyStatus:
         type: string
         maxLength: 255
-        description: From NSC: The latest status of the policy.
+        description: From NSC - The latest status of the policy.
       NSCPlateDecal:
         type: string
         maxLength: 255
-        description: From NSC: The plate decal as defined by NSC on the vehicle
+        description: From NSC - The plate decal as defined by NSC on the vehicle
   Inspection:
     type: object
     description: School Bus inspection details supplementary to the RIP inspection
@@ -703,6 +721,40 @@ definitions:
         type: string
         maxLength: 255
         description: The name of the province of the city
+  CCWJurisdiction:
+    type: object
+    description: The contents of the Jurisdiction table from CCW so that the user can select a Jurisdiction for passing to CCW on certain Out of Province School Bus Web Service calls
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        uniqueItems: true
+        description: A system-generated unique identifier for a CCWJurisdiction
+      jurisdictionId:
+        format: int32
+        type: integer
+        description: The CCW system-generated unique identifier for a CCWJurisdiction. Needed for updating the table from CCW if necessary.
+      effectiveDate:
+        type: string
+        format: date-time
+        description: The effective date of the CCWJurisdiction record - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+      expiryDate:
+        type: string
+        format: date-time
+        description: The end date of the CCWJurisdiction record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS
+      activeFlag:
+        type: boolean
+        description: Flag from CCW indicating if the record is still active - Y indicating it is active. NOT CURRENTLY ENFORCED IN SCHOOL BUS
+      code:
+        type: string
+        maxLength: 10
+        description: A short version of the Jurisdiction - the familiar two-letter province or state code
+      description:
+        type: string
+        maxLength: 50
+        description: The full version of the Jurisdiction name.
   Notification:
     type: object
     description: Users associated with specific notifications, created at the time the notification record is created because of the user&#39;s business relationship to the bus - e.g. the user is the currently assigned inspector, or the user is the manager for the District in which the bus is located. The rules for linking a user to a notification for a specific bus could vary over time based on the needs of the business. At minimum, it is expected the current inspector assigned to a bus will be notified of every notification for that bus.
@@ -821,6 +873,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/GroupMembership'
+      district:
+        $ref: '#/definitions/District'
+        description: The District that the User belongs to
   UserRole:
     type: object
     description: A join table that provides allows each user to have any number of Roles in the system.  At login time the user is given the sum of the permissions of the roles assigned to that user. 

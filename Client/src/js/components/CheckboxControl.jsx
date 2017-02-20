@@ -28,7 +28,7 @@ var CheckboxControl = React.createClass({
   render() {
     var props = _.omit(this.props, 'updateState');
 
-    return <Checkbox { ...props } onChange={ this.changed }>
+    return <Checkbox className="checkbox-control" { ...props } onChange={ this.changed }>
       { this.props.children }
     </Checkbox>;
   },

@@ -205,7 +205,7 @@
             "table": null
         },
         {
-            "Description": "The (generated) permit number for the School Bus. The number will be assigned sequentially by the system when the inspector generates a permit",
+            "Description": "The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.",
             "Length": "20",
             "Name": "permitNumber",
             "RefDef": null,
@@ -236,6 +236,40 @@
             "links": null,
             "ref": null,
             "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The date a permit number was established for this School Bus.",
+            "Length": null,
+            "Name": "permitIssueDate",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": "datetime",
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
             "table": null
         },
         {
@@ -273,7 +307,7 @@
             "table": null
         },
         {
-            "Description": "True if the School Bus is registered within BC, else False",
+            "Description": "True if the School Bus is registered outside of BC.",
             "Length": null,
             "Name": "isOutOfProvince",
             "RefDef": null,
@@ -303,6 +337,40 @@
             "integer": null,
             "links": null,
             "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The Jurisdication of an Out Of Province Bus. Needed for querying CCW.",
+            "Length": null,
+            "Name": "CCWJurisdiction",
+            "RefDef": "CCWJurisdiction",
+            "Required": [
+                {
+                    "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": "ref",
             "string": null,
             "table": null
         },
@@ -1055,6 +1123,40 @@
             "table": null
         },
         {
+            "Description": "CCWData for this School Bus",
+            "Length": null,
+            "Name": "CCWData",
+            "RefDef": "CCWData",
+            "Required": [
+                {
+                    "req": "id"
+                },
+                {
+                    "req": "status"
+                },
+                {
+                    "req": "permitClassCode"
+                },
+                {
+                    "req": "bodyTypeCode"
+                },
+                {
+                    "req": "schoolBusSeatingCapacity"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": "ref",
+            "string": null,
+            "table": null
+        },
+        {
             "Description": "Demographic information about companies, organizations, school districts, or individuals who own or lease school buses",
             "Length": null,
             "Name": "SchoolBusOwner",
@@ -1704,7 +1806,7 @@
             "table": null
         },
         {
-            "Description": "Vehicle model codes used by ICBC - for example: bus, scbus, dump, logtr",
+            "Description": "Vehicle model codes used by ICBC - for example bus, scbus, dump, logtr",
             "Length": "255",
             "Name": "ICBCModel",
             "RefDef": null,
@@ -2014,7 +2116,51 @@
         {
             "Description": "Previous Owners Driver Licence number",
             "Length": "255",
-            "Name": "ICBCRegOwnerPool",
+            "Name": "ICBCRegOwnerPODL",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The License Plate Number for the vehicle",
+            "Length": "255",
+            "Name": "ICBCLicencePlateNumber",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": " A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number.",
+            "Length": "255",
+            "Name": "ICBCVehicleIdentificationNumber",
             "RefDef": null,
             "Required": [
                 {
@@ -2122,7 +2268,7 @@
             "table": null
         },
         {
-            "Description": "From NSC: The number of the carrier (NSC Clients) necessary insurance required to operate the vehicle.",
+            "Description": "From NSC - The number of the carrier (NSC Clients) necessary insurance required to operate the vehicle.",
             "Length": "255",
             "Name": "NSCPolicyNumber",
             "RefDef": null,
@@ -2144,7 +2290,7 @@
             "table": null
         },
         {
-            "Description": "From NSC: The effective data of the policy.",
+            "Description": "From NSC - The effective data of the policy.",
             "Length": null,
             "Name": "NSCPolicyEffectiveDate",
             "RefDef": null,
@@ -2166,7 +2312,7 @@
             "table": null
         },
         {
-            "Description": "From NSC: The date the status of the policy was established.",
+            "Description": "From NSC - The date the status of the policy was established.",
             "Length": null,
             "Name": "NSCPolicyStatusDate",
             "RefDef": null,
@@ -2188,7 +2334,7 @@
             "table": null
         },
         {
-            "Description": "From NSC: The data of expiration of the policy.",
+            "Description": "From NSC - The data of expiration of the policy.",
             "Length": null,
             "Name": "NSCPolicyExpiryDate",
             "RefDef": null,
@@ -2210,7 +2356,7 @@
             "table": null
         },
         {
-            "Description": "From NSC: The latest status of the policy.",
+            "Description": "From NSC - The latest status of the policy.",
             "Length": "255",
             "Name": "NSCPolicyStatus",
             "RefDef": null,
@@ -2232,7 +2378,7 @@
             "table": null
         },
         {
-            "Description": "From NSC: The plate decal as defined by NSC on the vehicle",
+            "Description": "From NSC - The plate decal as defined by NSC on the vehicle",
             "Length": "255",
             "Name": "NSCPlateDecal",
             "RefDef": null,
@@ -4359,6 +4505,182 @@
             "table": null
         },
         {
+            "Description": "The contents of the Jurisdiction table from CCW so that the user can select a Jurisdiction for passing to CCW on certain Out of Province School Bus Web Service calls",
+            "Length": null,
+            "Name": "CCWJurisdiction",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": "table"
+        },
+        {
+            "Description": "A system-generated unique identifier for a CCWJurisdiction",
+            "Length": null,
+            "Name": "id",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": true,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": "id",
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The CCW system-generated unique identifier for a CCWJurisdiction. Needed for updating the table from CCW if necessary.",
+            "Length": null,
+            "Name": "jurisdictionId",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": "integer",
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The effective date of the CCWJurisdiction record - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
+            "Length": null,
+            "Name": "effectiveDate",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": "datetime",
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The end date of the CCWJurisdiction record; null if active - NOT CURRENTLY ENFORCED IN SCHOOL BUS",
+            "Length": null,
+            "Name": "expiryDate",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": "datetime",
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "Flag from CCW indicating if the record is still active - Y indicating it is active. NOT CURRENTLY ENFORCED IN SCHOOL BUS",
+            "Length": null,
+            "Name": "activeFlag",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": "boolean",
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "A short version of the Jurisdiction - the familiar two-letter province or state code",
+            "Length": "10",
+            "Name": "code",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The full version of the Jurisdiction name.",
+            "Length": "50",
+            "Name": "description",
+            "RefDef": null,
+            "Required": [
+                {
+                    "req": "id"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
             "Description": "Users associated with specific notifications, created at the time the notification record is created because of the user's business relationship to the bus - e.g. the user is the currently assigned inspector, or the user is the manager for the District in which the bus is located. The rules for linking a user to a notification for a specific bus could vary over time based on the needs of the business. At minimum, it is expected the current inspector assigned to a bus will be notified of every notification for that bus.",
             "Length": null,
             "Name": "Notification",
@@ -5123,6 +5445,37 @@
             "integer": null,
             "links": "links",
             "ref": null,
+            "string": null,
+            "table": null
+        },
+        {
+            "Description": "The District that the User belongs to",
+            "Length": null,
+            "Name": "district",
+            "RefDef": "District",
+            "Required": [
+                {
+                    "req": "id"
+                },
+                {
+                    "req": "givenName"
+                },
+                {
+                    "req": "surname"
+                },
+                {
+                    "req": "active"
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": "ref",
             "string": null,
             "table": null
         },
