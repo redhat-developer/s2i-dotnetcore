@@ -206,7 +206,7 @@
         },
         {
             "Description": "The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.",
-            "Length": "20",
+            "Length": null,
             "Name": "permitNumber",
             "RefDef": null,
             "Required": [
@@ -232,10 +232,10 @@
             "datetime": null,
             "float": null,
             "id": null,
-            "integer": null,
+            "integer": "integer",
             "links": null,
             "ref": null,
-            "string": "string",
+            "string": null,
             "table": null
         },
         {
@@ -2847,12 +2847,6 @@
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "internalFileName"
-                },
-                {
-                    "req": "externalFileName"
                 }
             ],
             "Unique": null,
@@ -2875,12 +2869,6 @@
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "internalFileName"
-                },
-                {
-                    "req": "externalFileName"
                 }
             ],
             "Unique": true,
@@ -2896,22 +2884,16 @@
             "table": null
         },
         {
-            "Description": "The physical location of the attachment on the file system.",
+            "Description": "Filename as passed by the user uploading the file",
             "Length": "2048",
-            "Name": "internalFileName",
+            "Name": "fileName",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "internalFileName"
-                },
-                {
-                    "req": "externalFileName"
                 }
             ],
-            "Unique": true,
+            "Unique": null,
             "binary": null,
             "boolean": null,
             "datetime": null,
@@ -2924,23 +2906,17 @@
             "table": null
         },
         {
-            "Description": "The name of the attachment as defined by the user in uploading the document.",
-            "Length": "2048",
-            "Name": "externalFileName",
+            "Description": "Binary contents of the file",
+            "Length": null,
+            "Name": "fileContents",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "internalFileName"
-                },
-                {
-                    "req": "externalFileName"
                 }
             ],
-            "Unique": true,
-            "binary": null,
+            "Unique": null,
+            "binary": "binary",
             "boolean": null,
             "datetime": null,
             "float": null,
@@ -2948,7 +2924,7 @@
             "integer": null,
             "links": null,
             "ref": null,
-            "string": "string",
+            "string": null,
             "table": null
         },
         {
@@ -2959,12 +2935,28 @@
             "Required": [
                 {
                     "req": "id"
-                },
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "Type of attachment",
+            "Length": "255",
+            "Name": "type",
+            "RefDef": null,
+            "Required": [
                 {
-                    "req": "internalFileName"
-                },
-                {
-                    "req": "externalFileName"
+                    "req": "id"
                 }
             ],
             "Unique": null,
@@ -3062,15 +3054,6 @@
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "givenName"
-                },
-                {
-                    "req": "surname"
-                },
-                {
-                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -3093,15 +3076,6 @@
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "givenName"
-                },
-                {
-                    "req": "surname"
-                },
-                {
-                    "req": "role"
                 }
             ],
             "Unique": true,
@@ -3124,15 +3098,6 @@
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "givenName"
-                },
-                {
-                    "req": "surname"
-                },
-                {
-                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -3155,15 +3120,28 @@
             "Required": [
                 {
                     "req": "id"
-                },
+                }
+            ],
+            "Unique": null,
+            "binary": null,
+            "boolean": null,
+            "datetime": null,
+            "float": null,
+            "id": null,
+            "integer": null,
+            "links": null,
+            "ref": null,
+            "string": "string",
+            "table": null
+        },
+        {
+            "Description": "The organization name of the contact.",
+            "Length": "150",
+            "Name": "organizationName",
+            "RefDef": null,
+            "Required": [
                 {
-                    "req": "givenName"
-                },
-                {
-                    "req": "surname"
-                },
-                {
-                    "req": "role"
+                    "req": "id"
                 }
             ],
             "Unique": null,
@@ -3186,15 +3164,6 @@
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "givenName"
-                },
-                {
-                    "req": "surname"
-                },
-                {
-                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -3217,15 +3186,6 @@
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "givenName"
-                },
-                {
-                    "req": "surname"
-                },
-                {
-                    "req": "role"
                 }
             ],
             "Unique": null,
@@ -3241,137 +3201,13 @@
             "table": null
         },
         {
-            "Description": null,
-            "Length": null,
-            "Name": "contactPhones",
-            "RefDef": "ContactPhone",
-            "Required": [
-                {
-                    "req": "id"
-                },
-                {
-                    "req": "givenName"
-                },
-                {
-                    "req": "surname"
-                },
-                {
-                    "req": "role"
-                }
-            ],
-            "Unique": null,
-            "binary": null,
-            "boolean": null,
-            "datetime": null,
-            "float": null,
-            "id": null,
-            "integer": null,
-            "links": "links",
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": null,
-            "Length": null,
-            "Name": "contactAddresses",
-            "RefDef": "ContactAddress",
-            "Required": [
-                {
-                    "req": "id"
-                },
-                {
-                    "req": "givenName"
-                },
-                {
-                    "req": "surname"
-                },
-                {
-                    "req": "role"
-                }
-            ],
-            "Unique": null,
-            "binary": null,
-            "boolean": null,
-            "datetime": null,
-            "float": null,
-            "id": null,
-            "integer": null,
-            "links": "links",
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "SB Owner contact phone information",
-            "Length": null,
-            "Name": "ContactPhone",
+            "Description": "The email address for the contact.",
+            "Length": "255",
+            "Name": "emailAddress",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "type"
-                },
-                {
-                    "req": "phoneNumber"
-                }
-            ],
-            "Unique": null,
-            "binary": null,
-            "boolean": null,
-            "datetime": null,
-            "float": null,
-            "id": null,
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "A system-generated unique identifier for a ContactPhone",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                },
-                {
-                    "req": "type"
-                },
-                {
-                    "req": "phoneNumber"
-                }
-            ],
-            "Unique": true,
-            "binary": null,
-            "boolean": null,
-            "datetime": null,
-            "float": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
-            "table": null
-        },
-        {
-            "Description": "The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.  Ex. Home, Cell, Work etc..",
-            "Length": "100",
-            "Name": "type",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                },
-                {
-                    "req": "type"
-                },
-                {
-                    "req": "phoneNumber"
                 }
             ],
             "Unique": null,
@@ -3387,19 +3223,13 @@
             "table": null
         },
         {
-            "Description": "The phone number of the contact. Entered as free form to support a range of formats.",
+            "Description": "The work phone number for the contact.",
             "Length": "20",
-            "Name": "phoneNumber",
+            "Name": "workPhoneNumber",
             "RefDef": null,
             "Required": [
                 {
                     "req": "id"
-                },
-                {
-                    "req": "type"
-                },
-                {
-                    "req": "phoneNumber"
                 }
             ],
             "Unique": null,
@@ -3415,9 +3245,9 @@
             "table": null
         },
         {
-            "Description": "SB Owner contact address information",
-            "Length": null,
-            "Name": "ContactAddress",
+            "Description": "The mobile phone number for the contact.",
+            "Length": "20",
+            "Name": "mobilePhoneNumber",
             "RefDef": null,
             "Required": [
                 {
@@ -3433,35 +3263,13 @@
             "integer": null,
             "links": null,
             "ref": null,
-            "string": null,
-            "table": "table"
-        },
-        {
-            "Description": "A system-generated unique identifier for a ContactAddress",
-            "Length": null,
-            "Name": "id",
-            "RefDef": null,
-            "Required": [
-                {
-                    "req": "id"
-                }
-            ],
-            "Unique": true,
-            "binary": null,
-            "boolean": null,
-            "datetime": null,
-            "float": null,
-            "id": "id",
-            "integer": null,
-            "links": null,
-            "ref": null,
-            "string": null,
+            "string": "string",
             "table": null
         },
         {
-            "Description": "The type of the address. UI controlled as to whether it is free form or selected from an enumerated list ex. Home, Office, etc..",
-            "Length": "100",
-            "Name": "type",
+            "Description": "The fax phone number for the contact.",
+            "Length": "20",
+            "Name": "faxPhoneNumber",
             "RefDef": null,
             "Required": [
                 {
