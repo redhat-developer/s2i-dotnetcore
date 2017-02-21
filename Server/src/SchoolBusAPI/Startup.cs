@@ -10,6 +10,7 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
@@ -60,6 +61,12 @@ namespace SchoolBusAPI
             // Add database context
             // - Pattern should be using Configuration.GetConnectionString("Schoolbus") directly; see GetConnectionString for more details.
             services.AddDbContext<DbAppContext>(options => options.UseNpgsql(GetConnectionString()));
+
+            // allow for large files to be uploaded
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 1073741824; // 1 GB
+            });
 
             // Add framework services.
             services.AddMvc(options => options.AddDefaultAuthorizationPolicyFilter())

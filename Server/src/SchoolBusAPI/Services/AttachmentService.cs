@@ -51,6 +51,14 @@ namespace SchoolBusAPI.Services
         IActionResult AttachmentsIdDeletePostAsync(int id);
 
         /// <summary>
+        /// Returns the binary file component of an attachment
+        /// </summary>
+        /// <param name="id">Attachment Id</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Attachment not found in CCW system</response>
+        IActionResult AttachmentsIdDownloadGetAsync(int id);
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="id">id of Attachment to fetch</param>

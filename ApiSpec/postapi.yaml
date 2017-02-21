@@ -1,3 +1,21 @@
+  /attachments/{id}/download:
+    get:
+      summary: Returns the binary file component of an attachment
+      tags:
+        - Attachment
+      consumes: []
+      produces:      
+        - application/octet-stream        
+      parameters:                
+        - name: id
+          in: path
+          description: Attachment Id
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Attachment not found in CCW system    
   /ccwdata/fetch:
     get:
       summary: fetches data from the ICBC CCW system, and constructs a CCWData object from that.  Note that it does not perform the insert of that data into the database, only provides JSON data suitable for insertion. If a CCWData record exists in the schoolbus database then the id field will match that record, however all other data will be from the ICBC CCW system.     
@@ -197,7 +215,7 @@
           schema:
             type: array
             items:
-              $ref: '#/definitions/Attachment'
+              $ref: '#/definitions/AttachmentViewModel'
         "404":
            description: SchoolBus not found
       parameters:
@@ -205,7 +223,7 @@
           in: path
           description: id of SchoolBus to fetch attachments for
           required: true
-          type: integer
+          type: integer    
   /schoolbuses/{id}/history:
     get:
       description: Returns History for a particular SchoolBus
@@ -246,6 +264,26 @@
         - name: id
           in: path
           description: id of SchoolBus to fetch CCWData for
+          required: true
+          type: integer
+  /schoolbuses/{id}/newpermit:
+    put:
+      description:  Obtains a new permit number for the indicated Schoolbus.  Returns the updated SchoolBus record.
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SchoolBus'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to obtain a new permit number for
           required: true
           type: integer          
   /schoolbusowners/{id}/attachments:

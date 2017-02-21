@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using System.Net.Http;
+using Microsoft.Net.Http.Headers;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -95,10 +97,37 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
+        /// <summary>
+        /// Returns the binary file component of an attachment
+        /// </summary>
+        /// <param name="id">Attachment Id</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Attachment not found in system</response>
+        public virtual IActionResult AttachmentsIdDownloadGetAsync(int id)
+        {
+            var exists = _context.Attachments.Any(a => a.Id == id);
+            if (exists)
+            {
+                var attachment = _context.Attachments.First(a => a.Id == id);
+                // 
+                // MOTI has requested that files be stored in the database.
+                //                                           
+                var result = new FileContentResult(attachment.FileContents, "application/octet-stream");
+                result.FileDownloadName = attachment.FileName;
+                
+                return result;
+            }
+            else
+            {
+                return new StatusCodeResult(404);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
-        
+
         /// <param name="id">id of Attachment to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">Attachment not found</response>

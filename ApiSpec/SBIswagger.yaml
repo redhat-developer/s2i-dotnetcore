@@ -2580,6 +2580,24 @@ paths:
       responses:
         201:
           description: SchoolDistrict created
+  /attachments/{id}/download:
+    get:
+      summary: Returns the binary file component of an attachment
+      tags:
+        - Attachment
+      consumes: []
+      produces:      
+        - application/octet-stream        
+      parameters:                
+        - name: id
+          in: path
+          description: Attachment Id
+          type: integer
+      responses:
+        200:
+          description: OK
+        404:
+          description: Attachment not found in CCW system    
   /ccwdata/fetch:
     get:
       summary: fetches data from the ICBC CCW system, and constructs a CCWData object from that.  Note that it does not perform the insert of that data into the database, only provides JSON data suitable for insertion. If a CCWData record exists in the schoolbus database then the id field will match that record, however all other data will be from the ICBC CCW system.     
@@ -2787,7 +2805,7 @@ paths:
           in: path
           description: id of SchoolBus to fetch attachments for
           required: true
-          type: integer
+          type: integer    
   /schoolbuses/{id}/history:
     get:
       description: Returns History for a particular SchoolBus
@@ -2843,7 +2861,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/CCWData'
+            $ref: '#/definitions/SchoolBus'
       parameters:
         - name: id
           in: path
@@ -4185,28 +4203,28 @@ definitions:
     description: Attachments uploaded by users about instance of entities - e.g. School Buses and School Bus Owners
     required:
       - id
-      - internalFileName
-      - externalFileName
     properties:
       id:
         format: int32
         type: integer
         uniqueItems: true
         description: A system-generated unique identifier for an Attachment
-      internalFileName:
+      fileName:
         type: string
         maxLength: 2048
-        uniqueItems: true
-        description: The physical location of the attachment on the file system.
-      externalFileName:
+        description: Filename as passed by the user uploading the file
+      fileContents:
         type: string
-        maxLength: 2048
-        uniqueItems: true
-        description: The name of the attachment as defined by the user in uploading the document.
+        format: binary
+        description: Binary contents of the file
       description:
         type: string
         maxLength: 2048
         description: A note about the attachment,  optionally maintained by the user.
+      type:
+        type: string
+        maxLength: 255
+        description: Type of attachment
   History:
     type: object
     description: The history of updates made to an entity - e.g. a School Bus or a School Bus Owner
@@ -4762,6 +4780,28 @@ definitions:
         type: string
         maxLength: 255
         description: A description of the group that is presented to the user when they are setting a user into a group.
+  AttachmentViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - id      
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: Primary Key
+      fileName:
+        type: string
+        maxLength: 2048
+        description: Filename as passed by the user uploading the file    
+      description:
+        type: string
+        maxLength: 2048
+        description: A note about the attachment,  optionally maintained by the user.
+      type:
+        type: string
+        maxLength: 255
+        description: Type of attachment
   SchoolBusOwnerViewModel:
     type: object
     x-codegen-viewmodel: true

@@ -41,17 +41,17 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="Attachment" /> class.
         /// </summary>
         /// <param name="Id">A system-generated unique identifier for an Attachment (required).</param>
-        /// <param name="InternalFileName">The physical location of the attachment on the file system. (required).</param>
-        /// <param name="ExternalFileName">The name of the attachment as defined by the user in uploading the document. (required).</param>
+        /// <param name="FileName">Filename as passed by the user uploading the file.</param>
+        /// <param name="FileContents">Binary contents of the file.</param>
         /// <param name="Description">A note about the attachment,  optionally maintained by the user..</param>
-        public Attachment(int Id, string InternalFileName, string ExternalFileName, string Description = null)
+        /// <param name="Type">Type of attachment.</param>
+        public Attachment(int Id, string FileName = null, byte[] FileContents = null, string Description = null, string Type = null)
         {   
             this.Id = Id;
-            this.InternalFileName = InternalFileName;
-            this.ExternalFileName = ExternalFileName;
-
-
+            this.FileName = FileName;
+            this.FileContents = FileContents;
             this.Description = Description;
+            this.Type = Type;
         }
 
         /// <summary>
@@ -62,22 +62,20 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
         
         /// <summary>
-        /// The physical location of the attachment on the file system.
+        /// Filename as passed by the user uploading the file
         /// </summary>
-        /// <value>The physical location of the attachment on the file system.</value>
-        [MetaDataExtension (Description = "The physical location of the attachment on the file system.")]
+        /// <value>Filename as passed by the user uploading the file</value>
+        [MetaDataExtension (Description = "Filename as passed by the user uploading the file")]
         [MaxLength(2048)]
         
-        public string InternalFileName { get; set; }
+        public string FileName { get; set; }
         
         /// <summary>
-        /// The name of the attachment as defined by the user in uploading the document.
+        /// Binary contents of the file
         /// </summary>
-        /// <value>The name of the attachment as defined by the user in uploading the document.</value>
-        [MetaDataExtension (Description = "The name of the attachment as defined by the user in uploading the document.")]
-        [MaxLength(2048)]
-        
-        public string ExternalFileName { get; set; }
+        /// <value>Binary contents of the file</value>
+        [MetaDataExtension (Description = "Binary contents of the file")]
+        public byte[] FileContents { get; set; }
         
         /// <summary>
         /// A note about the attachment,  optionally maintained by the user.
@@ -89,6 +87,15 @@ namespace SchoolBusAPI.Models
         public string Description { get; set; }
         
         /// <summary>
+        /// Type of attachment
+        /// </summary>
+        /// <value>Type of attachment</value>
+        [MetaDataExtension (Description = "Type of attachment")]
+        [MaxLength(255)]
+        
+        public string Type { get; set; }
+        
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -97,9 +104,10 @@ namespace SchoolBusAPI.Models
             var sb = new StringBuilder();
             sb.Append("class Attachment {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  InternalFileName: ").Append(InternalFileName).Append("\n");
-            sb.Append("  ExternalFileName: ").Append(ExternalFileName).Append("\n");
+            sb.Append("  FileName: ").Append(FileName).Append("\n");
+            sb.Append("  FileContents: ").Append(FileContents).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -143,19 +151,24 @@ namespace SchoolBusAPI.Models
                     this.Id.Equals(other.Id)
                 ) &&                 
                 (
-                    this.InternalFileName == other.InternalFileName ||
-                    this.InternalFileName != null &&
-                    this.InternalFileName.Equals(other.InternalFileName)
+                    this.FileName == other.FileName ||
+                    this.FileName != null &&
+                    this.FileName.Equals(other.FileName)
                 ) &&                 
                 (
-                    this.ExternalFileName == other.ExternalFileName ||
-                    this.ExternalFileName != null &&
-                    this.ExternalFileName.Equals(other.ExternalFileName)
+                    this.FileContents == other.FileContents ||
+                    this.FileContents != null &&
+                    this.FileContents.Equals(other.FileContents)
                 ) &&                 
                 (
                     this.Description == other.Description ||
                     this.Description != null &&
                     this.Description.Equals(other.Description)
+                ) &&                 
+                (
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 );
         }
 
@@ -171,17 +184,21 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                if (this.InternalFileName != null)
+                hash = hash * 59 + this.Id.GetHashCode();                if (this.FileName != null)
                 {
-                    hash = hash * 59 + this.InternalFileName.GetHashCode();
+                    hash = hash * 59 + this.FileName.GetHashCode();
                 }                
-                                if (this.ExternalFileName != null)
+                                if (this.FileContents != null)
                 {
-                    hash = hash * 59 + this.ExternalFileName.GetHashCode();
+                    hash = hash * 59 + this.FileContents.GetHashCode();
                 }                
                                 if (this.Description != null)
                 {
                     hash = hash * 59 + this.Description.GetHashCode();
+                }                
+                                if (this.Type != null)
+                {
+                    hash = hash * 59 + this.Type.GetHashCode();
                 }                
                 
                 return hash;

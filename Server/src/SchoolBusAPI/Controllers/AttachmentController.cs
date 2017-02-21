@@ -81,6 +81,20 @@ namespace SchoolBusAPI.Controllers
         }
 
         /// <summary>
+        /// Returns the binary file component of an attachment
+        /// </summary>
+        /// <param name="id">Attachment Id</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">Attachment not found in CCW system</response>
+        [HttpGet]
+        [Route("/api/attachments/{id}/download")]
+        [SwaggerOperation("AttachmentsIdDownloadGet")]
+        public virtual IActionResult AttachmentsIdDownloadGet([FromRoute]int id)
+        {
+            return this._service.AttachmentsIdDownloadGetAsync(id);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="id">id of Attachment to fetch</param>
