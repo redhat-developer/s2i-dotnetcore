@@ -43,7 +43,6 @@ var SchoolBusesDetail = React.createClass({
   getInitialState() {
     return {
       loadingSchoolBus: true,
-      loadingSchoolBusCCW: true,
       loadingSchoolBusInspections: true,
 
       showEditDialog: false,
@@ -63,12 +62,11 @@ var SchoolBusesDetail = React.createClass({
 
   componentDidMount() {
     // Don't just check if this is new. Make sure we're coming in through the Owner screen and not
-    // via a refresh of the screen.
+    // via a refresh of the screen. Also, make sure we have CCW data.
     if (this.state.isNew && this.props.owner.id && this.props.schoolBusCCW.icbcRegistrationNumber) {
       // Clear the spinners
       this.setState({
         loadingSchoolBus: false,
-        loadingSchoolBusCCW: false,
         loadingSchoolBusInspections: false,
       });
       // Clear the school bus store, except for the fields
@@ -76,9 +74,10 @@ var SchoolBusesDetail = React.createClass({
       store.dispatch({ type: Action.UPDATE_BUS, schoolBus: {
         id: 0,
         schoolBusOwner: { id: this.props.owner.id },
-        icbcRegistrationNumber: this.props.schoolBusCCW.icbcRegistrationNumber,
-        licencePlateNumber: this.props.schoolBusCCW.icbcLicencePlateNumber,
-        vehicleIdentificationNumber: this.props.schoolBusCCW.icbcVehicleIdentificationNumber,
+        icbcRegistrationNumber: this.props.schoolBusCCW.icbcRegistrationNumber || '',
+        licencePlateNumber: this.props.schoolBusCCW.icbcLicencePlateNumber || '',
+        vehicleIdentificationNumber: this.props.schoolBusCCW.icbcVehicleIdentificationNumber || '',
+        ccwData: this.props.schoolBusCCW,
       }});
       // Open editor to add new bus
       this.openEditDialog();
@@ -90,7 +89,6 @@ var SchoolBusesDetail = React.createClass({
   fetch() {
     this.setState({
       loadingSchoolBus: true,
-      loadingSchoolBusCCW: true,
       loadingSchoolBusInspections: true,
     });
 
@@ -98,9 +96,6 @@ var SchoolBusesDetail = React.createClass({
 
     Api.getSchoolBus(id).finally(() => {
       this.setState({ loadingSchoolBus: false });
-    });
-    Api.getSchoolBusCCW(id).finally(() => {
-      this.setState({ loadingSchoolBusCCW: false });
     });
     Api.getSchoolBusInspections(id).finally(() => {
       this.setState({ loadingSchoolBusInspections: false });
@@ -128,12 +123,9 @@ var SchoolBusesDetail = React.createClass({
     } else {
       // Save the new school bus record
       Api.addSchoolBus(schoolBus).then(() => {
-        // Save its related CCW record next
-        Api.addSchoolBusCCW(this.props.schoolBusCCW).then(() => {
-          // Reload the screen with new school bus id
-          this.props.router.push({
-            pathname: `school-buses/${ this.props.schoolBus.id }`,
-          });
+        // Reload the screen with new school bus id
+        this.props.router.push({
+          pathname: `school-buses/${ this.props.schoolBus.id }`,
         });
       });
     }
@@ -225,7 +217,7 @@ var SchoolBusesDetail = React.createClass({
 
   render() {
     var bus = this.props.schoolBus;
-    var ccw = this.props.schoolBusCCW;
+    var ccw = this.props.schoolBus.ccwData || {};
 
     var daysToInspection = bus.daysToInspection;
     if (bus.isOverdue) { daysToInspection *= -1; }
@@ -364,7 +356,7 @@ var SchoolBusesDetail = React.createClass({
                 }
 
                 var headers = [
-                  { field: 'inspectionDateSort',   title: 'Inspection Date' },
+                  { field: 'inspectionDateSort',   title: 'Date' },
                   { field: 'inspectionTypeCode',   title: 'Type'            },
                   { field: 'inspectionResultCode', title: 'Status'          },
                   { field: 'inspectorName',        title: 'Inspector'       },
@@ -409,7 +401,7 @@ var SchoolBusesDetail = React.createClass({
             <Well>
               <h3>Policy</h3>
               {(() => {
-                if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+                if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
                 return <div id="school-buses-policy">
                   <Row>
@@ -432,7 +424,7 @@ var SchoolBusesDetail = React.createClass({
             <Well>
               <h3>ICBC Registered Owner</h3>
               {(() => {
-                if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+                if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
                 var city = concat(ccw.icbcRegOwnerCity, ccw.icbcRegOwnerProv);
                 city = concat(city, ccw.icbcRegOwnerPostalCode);
@@ -465,7 +457,7 @@ var SchoolBusesDetail = React.createClass({
             <Well>
               <h3>NSC</h3>
               {(() => {
-                if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+                if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
                 return <div id="school-buses-nsc">
                   <Row>
@@ -490,7 +482,7 @@ var SchoolBusesDetail = React.createClass({
             <Well>
               <h3>ICBC Vehicle Data</h3>
               {(() => {
-                if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+                if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
                 return <div id="school-buses-icbc-vehicle">
                   <Row>
