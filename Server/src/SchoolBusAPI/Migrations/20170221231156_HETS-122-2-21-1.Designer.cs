@@ -8,9 +8,10 @@ using SchoolBusAPI.Models;
 namespace SchoolBusAPI.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    partial class DbAppContextModelSnapshot : ModelSnapshot
+    [Migration("20170221231156_HETS-122-2-21-1")]
+    partial class HETS1222211
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -28,6 +29,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION")
@@ -57,6 +64,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("TYPE")
                         .HasMaxLength(255);
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SchoolBusId");
@@ -78,6 +91,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<string>("ICBCBody")
                         .HasColumnName("ICBCBODY")
@@ -232,6 +251,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<DateTime?>("NSCPolicyStatusDate")
                         .HasColumnName("NSCPOLICY_STATUS_DATE");
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.ToTable("SBI_CCWDATA");
@@ -257,6 +282,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION")
                         .HasMaxLength(50);
@@ -277,6 +308,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("LAST_UPDATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.ToTable("SBI_CCWJURISDICTION");
@@ -295,6 +332,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<DateTime>("LastUpdateTimestamp")
                         .HasColumnName("LAST_UPDATE_TIMESTAMP");
 
@@ -309,6 +352,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Province")
                         .HasColumnName("PROVINCE")
                         .HasMaxLength(255);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -327,6 +376,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<string>("GivenName")
                         .HasColumnName("GIVEN_NAME")
@@ -353,6 +408,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Surname")
                         .HasColumnName("SURNAME")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -389,6 +450,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<DateTime>("LastUpdateTimestamp")
                         .HasColumnName("LAST_UPDATE_TIMESTAMP");
 
@@ -407,6 +474,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Type")
                         .HasColumnName("TYPE")
                         .HasMaxLength(100);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -431,6 +504,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<DateTime>("LastUpdateTimestamp")
                         .HasColumnName("LAST_UPDATE_TIMESTAMP");
 
@@ -445,6 +524,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Type")
                         .HasColumnName("TYPE")
                         .HasMaxLength(100);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -465,6 +550,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnName("END_DATE");
@@ -489,6 +580,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnName("START_DATE");
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RegionRefId");
@@ -509,6 +606,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION")
                         .HasMaxLength(255);
@@ -523,6 +626,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnName("NAME")
                         .HasMaxLength(255);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -545,6 +654,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<int?>("GroupRefId")
                         .HasColumnName("GROUP_REF_ID");
 
@@ -554,6 +669,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("LastUpdateUserid")
                         .HasColumnName("LAST_UPDATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.Property<int?>("UserRefId")
                         .HasColumnName("USER_REF_ID");
@@ -580,6 +701,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<string>("HistoryText")
                         .HasColumnName("HISTORY_TEXT")
                         .HasMaxLength(2048);
@@ -596,6 +723,12 @@ namespace SchoolBusAPI.Migrations
 
                     b.Property<int?>("SchoolBusOwnerId")
                         .HasColumnName("SCHOOL_BUS_OWNER_ID");
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -619,8 +752,14 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnName("CREATED_DATE");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<DateTime>("InspectionDate")
                         .HasColumnName("INSPECTION_DATE");
@@ -654,6 +793,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<int?>("SchoolBusRefId")
                         .HasColumnName("SCHOOL_BUS_REF_ID");
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InspectorRefId");
@@ -676,6 +821,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<bool?>("IsNoLongerRelevant")
                         .HasColumnName("IS_NO_LONGER_RELEVANT");
 
@@ -695,6 +846,12 @@ namespace SchoolBusAPI.Migrations
 
                     b.Property<int?>("SchoolBusOwnerId")
                         .HasColumnName("SCHOOL_BUS_OWNER_ID");
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -717,6 +874,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<int?>("Event2RefId")
                         .HasColumnName("EVENT2_REF_ID");
@@ -747,6 +910,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("PRIORITY_CODE")
                         .HasMaxLength(255);
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.Property<int?>("UserRefId")
                         .HasColumnName("USER_REF_ID");
 
@@ -773,6 +942,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<string>("EventSubTypeCode")
                         .HasColumnName("EVENT_SUB_TYPE_CODE")
@@ -802,6 +977,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<int?>("SchoolBusRefId")
                         .HasColumnName("SCHOOL_BUS_REF_ID");
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SchoolBusRefId");
@@ -826,6 +1007,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION")
                         .HasMaxLength(255);
@@ -840,6 +1027,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnName("NAME")
                         .HasMaxLength(255);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -858,6 +1051,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnName("END_DATE");
@@ -879,6 +1078,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnName("START_DATE");
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.ToTable("SBI_REGION");
@@ -897,6 +1102,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION")
                         .HasMaxLength(255);
@@ -911,6 +1122,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnName("NAME")
                         .HasMaxLength(255);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -930,6 +1147,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<DateTime>("LastUpdateTimestamp")
                         .HasColumnName("LAST_UPDATE_TIMESTAMP");
 
@@ -942,6 +1165,12 @@ namespace SchoolBusAPI.Migrations
 
                     b.Property<int?>("RoleRefId")
                         .HasColumnName("ROLE_REF_ID");
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -974,6 +1203,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<int?>("DistrictRefId")
                         .HasColumnName("DISTRICT_REF_ID");
@@ -1070,6 +1305,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("UNIT_NUMBER")
                         .HasMaxLength(30);
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.Property<string>("VehicleIdentificationNumber")
                         .HasColumnName("VEHICLE_IDENTIFICATION_NUMBER")
                         .HasMaxLength(17);
@@ -1106,6 +1347,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnName("DATE_CREATED");
 
@@ -1130,6 +1377,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("STATUS")
                         .HasMaxLength(30);
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DistrictRefId");
@@ -1152,6 +1405,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<DateTime>("LastUpdateTimestamp")
                         .HasColumnName("LAST_UPDATE_TIMESTAMP");
 
@@ -1166,6 +1425,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("ShortName")
                         .HasColumnName("SHORT_NAME")
                         .HasMaxLength(255);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -1184,6 +1449,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<int?>("DistrictRefId")
                         .HasColumnName("DISTRICT_REF_ID");
@@ -1208,6 +1479,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnName("START_DATE");
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DistrictRefId");
@@ -1230,6 +1507,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("CreateUserid")
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
 
                     b.Property<int?>("DistrictRefId")
                         .HasColumnName("DISTRICT_REF_ID");
@@ -1269,6 +1552,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("SURNAME")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DistrictRefId");
@@ -1289,6 +1578,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<bool?>("IsDefault")
                         .HasColumnName("IS_DEFAULT");
 
@@ -1306,6 +1601,12 @@ namespace SchoolBusAPI.Migrations
                     b.Property<string>("Type")
                         .HasColumnName("TYPE")
                         .HasMaxLength(255);
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.Property<int?>("UserRefId")
                         .HasColumnName("USER_REF_ID");
@@ -1334,6 +1635,12 @@ namespace SchoolBusAPI.Migrations
                         .HasColumnName("CREATE_USERID")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("CREATED_BY_ID");
+
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnName("CREATED_TIMESTAMP");
+
                     b.Property<DateTime>("EffectiveDate")
                         .HasColumnName("EFFECTIVE_DATE");
 
@@ -1349,6 +1656,12 @@ namespace SchoolBusAPI.Migrations
 
                     b.Property<int?>("RoleRefId")
                         .HasColumnName("ROLE_REF_ID");
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("UPDATED_BY_ID");
+
+                    b.Property<DateTime>("UpdatedTimestamp")
+                        .HasColumnName("UPDATED_TIMESTAMP");
 
                     b.Property<int?>("UserId")
                         .HasColumnName("USER_ID");

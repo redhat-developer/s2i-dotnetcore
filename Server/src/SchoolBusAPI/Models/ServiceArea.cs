@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The MOTI-defined Service Areas - must match the official MOTI List")]
 
-    public partial class ServiceArea : IEquatable<ServiceArea>
+    public partial class ServiceArea : AuditableEntity,  IEquatable<ServiceArea>
     {
         /// <summary>
         /// Default constructor, required by entity framework

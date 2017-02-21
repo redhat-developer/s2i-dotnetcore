@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "Information about the users of the system.")]
 
-    public partial class User : IEquatable<User>
+    public partial class User : AuditableEntity,  IEquatable<User>
     {
         /// <summary>
         /// Default constructor, required by entity framework

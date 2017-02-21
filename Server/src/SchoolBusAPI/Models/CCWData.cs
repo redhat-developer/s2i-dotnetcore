@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "Data pulled in from external sources (ICBC, NSC, etc) about School Buses and retained but not updated in the School Bus app. All data elements are simply copied from the comparable fields in the WSDLs of the Web Service Calls. The true source of the field definitions are in those other systems.")]
 
-    public partial class CCWData : IEquatable<CCWData>
+    public partial class CCWData : AuditableEntity,  IEquatable<CCWData>
     {
         /// <summary>
         /// Default constructor, required by entity framework

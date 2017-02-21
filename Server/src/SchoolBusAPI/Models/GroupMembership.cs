@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The users associated with a given group that has been defined in the application.")]
 
-    public partial class GroupMembership : IEquatable<GroupMembership>
+    public partial class GroupMembership : AuditableEntity,  IEquatable<GroupMembership>
     {
         /// <summary>
         /// Default constructor, required by entity framework

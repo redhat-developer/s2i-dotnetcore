@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The MOTI-defined Regions - must match the official MOTI List")]
 
-    public partial class Region : IEquatable<Region>
+    public partial class Region : AuditableEntity,  IEquatable<Region>
     {
         /// <summary>
         /// Default constructor, required by entity framework

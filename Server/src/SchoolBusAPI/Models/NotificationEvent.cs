@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "Notifications associated about changes (mostly from CCW data) to information related to a specific school bus - e.g. change of owner at ICBC, change in NSC client rating, etc.")]
 
-    public partial class NotificationEvent : IEquatable<NotificationEvent>
+    public partial class NotificationEvent : AuditableEntity,  IEquatable<NotificationEvent>
     {
         /// <summary>
         /// Default constructor, required by entity framework
