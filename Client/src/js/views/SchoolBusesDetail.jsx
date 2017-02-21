@@ -107,19 +107,6 @@ var SchoolBusesDetail = React.createClass({
     });
   },
 
-  showNotes() {
-  },
-
-  showAttachments() {
-  },
-
-  showHistory() {
-  },
-
-  print() {
-
-  },
-
   updateUIState(state, callback) {
     this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
       store.dispatch({ type: Action.UPDATE_INSPECTIONS_UI, inspections: this.state.ui });
@@ -213,6 +200,29 @@ var SchoolBusesDetail = React.createClass({
     });
   },
 
+  showNotes() {
+  },
+
+  showAttachments() {
+  },
+
+  showHistory() {
+  },
+
+  print() {
+  },
+
+  generatePermit() {
+    // This API call will update the school bus state after generating a permit.
+    this.setState({ loadingSchoolBus: true });
+    Api.newSchoolBusPermit(this.props.params.schoolBusId).finally(() => {
+      this.setState({ loadingSchoolBus: false });
+    });
+  },
+
+  printPermit() {
+  },
+
   render() {
     var bus = this.props.schoolBus;
     var ccw = this.props.schoolBusCCW;
@@ -273,14 +283,11 @@ var SchoolBusesDetail = React.createClass({
                   &nbsp;Plate: <small>{ bus.licencePlateNumber }</small>
                   &nbsp;VIN: <small>{ bus.vehicleIdentificationNumber }</small>
                   &nbsp;Permit: <small>{ bus.permitNumber }</small>
-                  <Unimplemented>
-                    {(() => {
-                      if (bus.permitNumber) {
-                        return <Button bsSize="small">Print Permit</Button>;
-                      }
-                      return <Button bsSize="small">Generate Permit</Button>;
-                    })()}
-                  </Unimplemented>
+                  {
+                    bus.permitNumber ?
+                      <Unimplemented><Button onClick={ this.printPermit } bsSize="small">Print Permit</Button></Unimplemented> :
+                      <Button onClick={ this.generatePermit } bsSize="small">Generate Permit</Button>
+                  }
                 </h1>
               </Col>
             </Row>

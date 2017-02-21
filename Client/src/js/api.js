@@ -343,6 +343,17 @@ export function getSchoolBusNotes(schoolBusId) {
   });
 }
 
+export function newSchoolBusPermit(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${ schoolBusId }/newpermit`).put().then(response => {
+    var bus = response;
+
+    // Add display fields
+    parseSchoolBus(bus);
+
+    store.dispatch({ type: Action.UPDATE_BUS, schoolBus: bus });
+  });
+}
+
 ////////////////////
 // CCW
 ////////////////////
