@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The set of permissions defined in the application. Each permission is given a name and triggers some behavior defined in the application. For example, a permission might allow users to see data or to have access to functionality restricted to users without that permission. Permissions are created as needed to the application and are added to the permissions table by data migrations executed at the time the software that uses the permission is deployed.")]
 
-    public partial class Permission : IEquatable<Permission>
+    public partial class Permission : AuditableEntity,  IEquatable<Permission>
     {
         /// <summary>
         /// Default constructor, required by entity framework

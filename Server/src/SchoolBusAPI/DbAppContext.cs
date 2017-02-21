@@ -8,12 +8,17 @@
  * 
  */
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using SchoolBusCommon;
+using System;
+using System.Linq;
+using System.Security.Claims;
 
 namespace SchoolBusAPI.Models
-{
+{    
     public interface IDbAppContextFactory
     {
         IDbAppContext Create();
@@ -22,15 +27,17 @@ namespace SchoolBusAPI.Models
     public class DbAppContextFactory : IDbAppContextFactory
     {
         DbContextOptions<DbAppContext> _options;
+        IHttpContextAccessor _httpContextAccessor;
 
-        public DbAppContextFactory(DbContextOptions<DbAppContext> options)
+        public DbAppContextFactory(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options)
         {
             _options = options;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IDbAppContext Create()
         {
-            return new DbAppContext(_options);
+            return new DbAppContext(_httpContextAccessor, _options);
         }
     }
 
@@ -77,12 +84,16 @@ namespace SchoolBusAPI.Models
 
     public class DbAppContext : DbContext, IDbAppContext
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         /// <summary>
         /// Constructor for Class used for Entity Framework access.
         /// </summary>
-        public DbAppContext(DbContextOptions<DbAppContext> options)
+        public DbAppContext(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options)
                                 : base(options)
-        { }
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
 
         /// <summary>
         /// Override for OnModelCreating - used to change the database naming convention.
@@ -140,6 +151,68 @@ namespace SchoolBusAPI.Models
                 transaction = this.Database.BeginTransaction();
             }
             return new DbContextTransactionWrapper(transaction, existingTransaction);
+        }
+
+        /// <summary>
+        /// Returns the current web user
+        /// </summary>
+        protected ClaimsPrincipal HttpContextUser
+        {
+            get { return _httpContextAccessor.HttpContext.User; }
+        }
+
+        /// <summary>
+        /// Returns the current user ID 
+        /// </summary>
+        /// <returns></returns>
+        protected string GetCurrentUserId()
+        {
+            string result = null;
+
+            try
+            {
+                result = HttpContextUser.FindFirst(ClaimTypes.Name).Value;
+            }
+            catch (Exception e)
+            {
+                result = null;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Override for Save Changes to implement the audit log
+        /// </summary>
+        /// <returns></returns>
+        public override int SaveChanges()
+        {
+            // update the audit fields for this item.
+            string smUserId = null;
+            if (_httpContextAccessor != null)
+                smUserId = GetCurrentUserId();
+
+            var modifiedEntries = ChangeTracker.Entries()
+                    .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+            DateTime currentTime = DateTime.UtcNow;
+
+            foreach (var entry in modifiedEntries)
+            {
+                if (entry.Entity.GetType().InheritsOrImplements(typeof (AuditableEntity)))
+                {
+                    var theObject = (AuditableEntity)entry.Entity;
+                    theObject.LastUpdateUserid = smUserId;
+                    theObject.LastUpdateTimestamp = currentTime;
+
+                    if (entry.State == EntityState.Added)
+                    {
+                        theObject.CreateUserid = smUserId;
+                        theObject.CreateTimestamp = currentTime;
+                    }
+                }                
+            }
+
+            return base.SaveChanges();
         }
     }
 }

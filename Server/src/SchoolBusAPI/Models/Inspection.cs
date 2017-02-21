@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "School Bus inspection details supplementary to the RIP inspection")]
 
-    public partial class Inspection : IEquatable<Inspection>
+    public partial class Inspection : AuditableEntity,  IEquatable<Inspection>
     {
         /// <summary>
         /// Default constructor, required by entity framework

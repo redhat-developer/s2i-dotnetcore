@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.")]
 
-    public partial class UserFavourite : IEquatable<UserFavourite>
+    public partial class UserFavourite : AuditableEntity,  IEquatable<UserFavourite>
     {
         /// <summary>
         /// Default constructor, required by entity framework

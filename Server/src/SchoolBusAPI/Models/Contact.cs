@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "A table of contacts related to various entities in the system. FK fields are used to link contacts to records in the system.")]
 
-    public partial class Contact : IEquatable<Contact>
+    public partial class Contact : AuditableEntity,  IEquatable<Contact>
     {
         /// <summary>
         /// Default constructor, required by entity framework

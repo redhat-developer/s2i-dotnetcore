@@ -165,7 +165,7 @@ namespace SchoolBusAPI.Services.Impl
                 SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners
                     .Include(x => x.Attachments)                    
                     .First(a => a.Id == id);
-                var result = schoolBusOwner.Notes;
+                var result = MappingExtensions.GetAttachmentListAsViewModel(schoolBusOwner.Attachments);
                 return new ObjectResult(result);
             }
             else

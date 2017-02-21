@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "A list of School Districts in the Province of BC. Authoritative source to be determined.")]
 
-    public partial class SchoolDistrict : IEquatable<SchoolDistrict>
+    public partial class SchoolDistrict : AuditableEntity,  IEquatable<SchoolDistrict>
     {
         /// <summary>
         /// Default constructor, required by entity framework

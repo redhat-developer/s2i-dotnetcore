@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "Notes entered by users about instance of entities - e.g. School Buses and School Bus Owners")]
 
-    public partial class Note : IEquatable<Note>
+    public partial class Note : AuditableEntity,  IEquatable<Note>
     {
         /// <summary>
         /// Default constructor, required by entity framework

@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The collection of permissions included in a role.")]
 
-    public partial class RolePermission : IEquatable<RolePermission>
+    public partial class RolePermission : AuditableEntity,  IEquatable<RolePermission>
     {
         /// <summary>
         /// Default constructor, required by entity framework

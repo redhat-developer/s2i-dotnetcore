@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "Attachments uploaded by users about instance of entities - e.g. School Buses and School Bus Owners")]
 
-    public partial class Attachment : IEquatable<Attachment>
+    public partial class Attachment : AuditableEntity,  IEquatable<Attachment>
     {
         /// <summary>
         /// Default constructor, required by entity framework

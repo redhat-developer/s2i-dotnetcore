@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The MOTI-defined Districts - must match the official MOTI List")]
 
-    public partial class District : IEquatable<District>
+    public partial class District : AuditableEntity,  IEquatable<District>
     {
         /// <summary>
         /// Default constructor, required by entity framework

@@ -76,7 +76,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/schoolbuses/{id}/attachments")]
         [SwaggerOperation("SchoolbusesIdAttachmentsGet")]
-        [SwaggerResponse(200, type: typeof(List<Attachment>))]
+        [SwaggerResponse(200, type: typeof(List<AttachmentViewModel>))]
         public virtual IActionResult SchoolbusesIdAttachmentsGet([FromRoute]int id)
         {
             return this._service.SchoolbusesIdAttachmentsGetAsync(id);
@@ -165,7 +165,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPut]
         [Route("/api/schoolbuses/{id}/newpermit")]
         [SwaggerOperation("SchoolbusesIdNewpermitPut")]
-        [SwaggerResponse(200, type: typeof(CCWData))]
+        [SwaggerResponse(200, type: typeof(SchoolBus))]
         public virtual IActionResult SchoolbusesIdNewpermitPut([FromRoute]int id)
         {
             return this._service.SchoolbusesIdNewpermitPutAsync(id);

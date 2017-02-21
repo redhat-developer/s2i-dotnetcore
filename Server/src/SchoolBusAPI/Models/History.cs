@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The history of updates made to an entity - e.g. a School Bus or a School Bus Owner")]
 
-    public partial class History : IEquatable<History>
+    public partial class History : AuditableEntity,  IEquatable<History>
     {
         /// <summary>
         /// Default constructor, required by entity framework

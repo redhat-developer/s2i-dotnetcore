@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "SB Owner contact phone information")]
 
-    public partial class ContactPhone : IEquatable<ContactPhone>
+    public partial class ContactPhone : AuditableEntity,  IEquatable<ContactPhone>
     {
         /// <summary>
         /// Default constructor, required by entity framework

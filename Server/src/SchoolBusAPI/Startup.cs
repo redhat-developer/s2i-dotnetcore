@@ -10,6 +10,7 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -55,7 +56,8 @@ namespace SchoolBusAPI
         {
             services.AddAuthorization();
             services.RegisterPermissionHandler();
-            services.AddSingleton<IDbAppContextFactory, DbAppContextFactory>(CreateDbAppContextFactory);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IDbAppContextFactory, DbAppContextFactory>(CreateDbAppContextFactory);            
             services.AddSingleton<IConfiguration>(Configuration);
 
             // Add database context
@@ -205,7 +207,7 @@ namespace SchoolBusAPI
         {
             DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
             options.UseNpgsql(GetConnectionString());
-            DbAppContextFactory dbAppContextFactory = new DbAppContextFactory(options.Options);
+            DbAppContextFactory dbAppContextFactory = new DbAppContextFactory(null, options.Options);
             return dbAppContextFactory;
         }
     }

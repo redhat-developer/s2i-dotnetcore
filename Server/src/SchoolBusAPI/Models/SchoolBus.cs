@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The School Bus vehicle information supplementary to the vehicle information in ICBC")]
 
-    public partial class SchoolBus : IEquatable<SchoolBus>
+    public partial class SchoolBus : AuditableEntity,  IEquatable<SchoolBus>
     {
         /// <summary>
         /// Default constructor, required by entity framework

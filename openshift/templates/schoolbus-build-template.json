@@ -512,7 +512,8 @@
             {
               "kind": "ImageStreamTag",
               "name": "${CLIENT_NAME}:${DEPLOYMENT_TYPE}"
-            }
+            },
+			"noCache": true
           }
         },
         "output":

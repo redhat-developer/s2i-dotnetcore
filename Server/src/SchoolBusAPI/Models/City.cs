@@ -27,7 +27,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "A list of cities in BC. Authoritative source to be determined.")]
 
-    public partial class City : IEquatable<City>
+    public partial class City : AuditableEntity,  IEquatable<City>
     {
         /// <summary>
         /// Default constructor, required by entity framework
