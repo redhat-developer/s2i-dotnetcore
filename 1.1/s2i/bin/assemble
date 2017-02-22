@@ -33,6 +33,29 @@ else
   APP_DLL_NAME="$(basename "$(realpath "${DOTNET_STARTUP_PROJECT}")").dll"
 fi
 
+# Generate Nuget.Config in source root if DOTNET_NUGET_SOURCES is set
+if [[ ! -z "$DOTNET_NUGET_SOURCES" ]]; then
+    echo "DOTNET_NUGET_SOURCES set to '$DOTNET_NUGET_SOURCES'"
+    # Test case-insensitive if nuget.config exists in source root
+    NUGET_CONFIG=`find ./ -maxdepth 1 -iname nuget.config`
+    if [[ ! -n  $NUGET_CONFIG ]];  then
+        NUGET_CONFIG="NuGet.config"
+        echo "Generating NuGet.config"
+        echo '<?xml version="1.0" encoding="utf-8"?>' > $NUGET_CONFIG
+        echo '<configuration>' >> $NUGET_CONFIG
+        echo '  <packageSources>' >> $NUGET_CONFIG
+        echo '    <clear /> <!-- ensure only the sources defined below are used -->' >> $NUGET_CONFIG
+        for source in $DOTNET_NUGET_SOURCES; do
+            echo "    <add key=\"$source\" value=\"$source\" />" >> $NUGET_CONFIG
+        done
+        echo '  </packageSources>' >> $NUGET_CONFIG
+        echo '</configuration>' >> $NUGET_CONFIG
+    else
+        echo "Not overwriting existing NuGet.config with content:"
+    fi
+    cat $NUGET_CONFIG
+fi
+
 echo "---> Installing dependencies ..."
 dotnet restore
 
