@@ -24,7 +24,7 @@ RUN dotnet restore
 # compile the client
 WORKDIR /app/out/src
 # copy the full source for the client
-COPY . /app/out/src
+COPY Client /app/out/src
 RUN /bin/bash -c './node_modules/.bin/gulp --production --commit=$OPENSHIFT_BUILD_COMMIT'
 
 WORKDIR /app/FrontEnd/src/SchoolBusClient/
