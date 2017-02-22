@@ -1,16 +1,10 @@
 FROM tran-schoolbus-tools/client
-# compile the client
+# Dockerfile for the application front end
 
-WORKDIR /app/out/src
-RUN /bin/bash -c './node_modules/.bin/gulp --production --commit=$OPENSHIFT_BUILD_COMMIT'
-
-# Dockerfile for package SchoolBusClient
- 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 
 # This setting is a workaround for issues with dotnet and certain docker versions
 ENV LTTNG_UST_REGISTER_TIMEOUT 0
-
 
 COPY Common /app/Common
 WORKDIR /app/Common/src/SchoolBusCommon
@@ -27,6 +21,13 @@ WORKDIR /app/FrontEnd/src/SchoolBusClient/
 
 RUN dotnet restore
 
+# compile the client
+WORKDIR /app/out/src
+# copy the full source for the client
+COPY . /app/out/src
+RUN /bin/bash -c './node_modules/.bin/gulp --production --commit=$OPENSHIFT_BUILD_COMMIT'
+
+WORKDIR /app/FrontEnd/src/SchoolBusClient/
 COPY FrontEnd /app/FrontEnd
 
 ENV ASPNETCORE_ENVIRONMENT Staging

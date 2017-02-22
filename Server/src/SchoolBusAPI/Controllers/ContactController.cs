@@ -69,36 +69,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns address contacts for a particular SchoolBusOwner</remarks>
-        /// <param name="id">id of SchoolBusOwner to fetch contact address for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/contacts/{id}/contactaddresses")]
-        [SwaggerOperation("ContactsIdContactaddressesGet")]
-        [SwaggerResponse(200, type: typeof(List<ContactAddress>))]
-        public virtual IActionResult ContactsIdContactaddressesGet([FromRoute]int id)
-        {
-            return this._service.ContactsIdContactaddressesGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns phone contacts for a particular SchoolBusOwner</remarks>
-        /// <param name="id">id of SchoolBusOwner to fetch contact phone for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/contacts/{id}/contactphones")]
-        [SwaggerOperation("ContactsIdContactphonesGet")]
-        [SwaggerResponse(200, type: typeof(List<ContactPhone>))]
-        public virtual IActionResult ContactsIdContactphonesGet([FromRoute]int id)
-        {
-            return this._service.ContactsIdContactphonesGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of Contact to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Contact not found</response>

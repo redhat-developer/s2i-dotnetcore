@@ -43,7 +43,7 @@ namespace SchoolBusAPI.Test
 		{
 
             DbContextOptions<DbAppContext> options = new DbContextOptions<DbAppContext>();
-            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(options);
+            Mock<DbAppContext> dbAppContext = new Mock<DbAppContext>(null, options);
 			
                     /*
 			

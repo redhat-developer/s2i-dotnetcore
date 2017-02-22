@@ -174,75 +174,8 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns address contacts for a particular SchoolBusOwner</remarks>
-        /// <param name="id">id of SchoolBusOwner to fetch contact address for</param>
-        /// <response code="200">OK</response>
-
-        public virtual IActionResult SchoolbusownersIdContactaddressesGetAsync (int id)        
-        {
-            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
-            if (exists)
-            {
-                List<ContactAddress> result = new List<ContactAddress>();
-                var owner = _context.SchoolBusOwners
-                    .Include(x => x.Contacts)
-                    .ThenInclude(y => y.ContactAddresses)
-                    .Where(a => a.Id == id).First();
-                var contacts = owner.Contacts;
-                foreach (Contact contact in contacts)
-                {
-                    // merge the lists
-                    result = result.Concat ( contact.ContactAddresses).ToList();
-                }
-                return new ObjectResult(result);
-            }
-            else
-            {
-                // record not found
-                return new StatusCodeResult(404);
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns phone contacts for a particular SchoolBusOwner</remarks>
-        /// <param name="id">id of SchoolBusOwner to fetch contact phone for</param>
-        /// <response code="200">OK</response>
-
-        public virtual IActionResult SchoolbusownersIdContactphonesGetAsync (int id)        
-        {
-            var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
-            if (exists)
-            {
-                List<ContactPhone> result = new List<ContactPhone>();
-                var owner = _context.SchoolBusOwners
-                    .Include(x => x.Contacts)
-                    .ThenInclude(y => y.ContactPhones)
-                    .Where(a => a.Id == id).First();
-                var contacts = owner.Contacts;
-                foreach (Contact contact in contacts)
-                {
-                    // merge the lists
-                    result = result.Concat(contact.ContactPhones).ToList();
-                }
-                return new ObjectResult(result);                
-            }
-            else
-            {
-                // record not found
-                return new StatusCodeResult(404);
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
         
-        /// <param name="id">id of SchoolBusOwner to delete</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">SchoolBusOwner not found</response>
+        
 
         public virtual IActionResult SchoolbusownersIdDeletePostAsync (int id)        
         {

@@ -62,8 +62,6 @@ namespace SchoolBusAPI.Models
         DbSet<Note> Notes { get; set; }
         DbSet<SchoolBusOwner> SchoolBusOwners { get; set; }        
         DbSet<Contact> Contacts { get; set; }
-        DbSet<ContactAddress> ContactAddresss { get; set; }
-        DbSet<ContactPhone> ContactPhones { get; set; }
         DbSet<SchoolDistrict> SchoolDistricts { get; set; }
         DbSet<ServiceArea> ServiceAreas { get; set; }
         DbSet<User> Users { get; set; }
@@ -126,8 +124,6 @@ namespace SchoolBusAPI.Models
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<SchoolBusOwner> SchoolBusOwners { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
-        public virtual DbSet<ContactAddress> ContactAddresss { get; set; }
-        public virtual DbSet<ContactPhone> ContactPhones { get; set; }
         public virtual DbSet<SchoolDistrict> SchoolDistricts { get; set; }
         public virtual DbSet<ServiceArea> ServiceAreas { get; set; }
         public virtual DbSet<User> Users { get; set; }
