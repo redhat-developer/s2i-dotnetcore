@@ -48,6 +48,13 @@ for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
     dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK"
 done
 
+# If DOTNET_TEST_PROJECTS is not defined and test/ folder exists, try to test everything in there
+if [[ -z "$DOTNET_TEST_PROJECTS" ]] && [[ -d test/ ]]; then
+    for src in test/*/; do
+        dotnet test $src
+    done
+fi
+
 # publish application
 echo "---> Publishing application ..."
 dotnet publish -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT" -o "$DOTNET_PUBLISH_PATH"
