@@ -68,16 +68,7 @@ namespace SchoolBusAPI.Test
 
             // make a change.   
             Contact contact = new Contact();
-            ContactPhone contactPhone = new ContactPhone();
-            contactPhone.PhoneNumber = initialNumber;
-            ContactAddress contactAddress = new ContactAddress();
-            contactAddress.Address1 = initialAddress;
-            contact.ContactAddresses = new List<ContactAddress>();
-            contact.ContactPhones = new List<ContactPhone>();
-
-            contact.ContactAddresses.Add(contactAddress);
-            contact.ContactPhones.Add(contactPhone);
-
+            
             schoolBusOwner.PrimaryContact = contact;
 
             // now do an update.

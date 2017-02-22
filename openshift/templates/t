@@ -1,0 +1,812 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "metadata": {},
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "PersistentVolumeClaim",
+            "metadata": {
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "postgresql-pvc"
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "resources": {
+                    "requests": {
+                        "storage": "1Gi"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "PersistentVolumeClaim",
+            "metadata": {
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "server-docs-pvc"
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "resources": {
+                    "requests": {
+                        "storage": "1Gi"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "annotations": {
+                    "description": "Exposes and load balances the client"
+                },
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "frontend"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "app": "frontend"
+                }
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "DeploymentConfig",
+            "metadata": {
+                "annotations": {
+                    "description": "Defines how to deploy the frontend server"
+                },
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "frontend"
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "name": "frontend"
+                },
+                "strategy": {
+                    "resources": {},
+                    "rollingParams": {
+                        "intervalSeconds": 1,
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%",
+                        "timeoutSeconds": 600,
+                        "updatePeriodSeconds": 1
+                    },
+                    "type": "Rolling"
+                },
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "app": "frontend",
+                            "name": "frontend"
+                        },
+                        "name": "frontend"
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "MIDDLEWARE_NAME",
+                                        "value": "server:8080"
+                                    }
+                                ],
+                                "image": " ",
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/test/headers",
+                                        "port": 8080
+                                    },
+                                    "initialDelaySeconds": 30,
+                                    "timeoutSeconds": 3000
+                                },
+                                "name": "frontend",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "readinessProbe": {
+                                    "httpGet": {
+                                        "path": "/test/headers",
+                                        "port": 8080
+                                    },
+                                    "initialDelaySeconds": 3,
+                                    "timeoutSeconds": 3000
+                                },
+                                "resources": {
+                                    "limits": {
+                                        "memory": "512Mi"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "frontend"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "frontend:test",
+                                "namespace": "tran-schoolbus-tools"
+                            }
+                        },
+                        "type": "ImageChange"
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "annotations": {
+                    "description": "Exposes and load balances the CCW pods"
+                },
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "ccw"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "name": "ccw"
+                }
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "DeploymentConfig",
+            "metadata": {
+                "annotations": {
+                    "description": "Defines how to deploy the ccw server"
+                },
+                "creationTimestamp": null,
+                "generation": 1,
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "ccw"
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "name": "ccw"
+                },
+                "strategy": {
+                    "resources": {},
+                    "rollingParams": {
+                        "intervalSeconds": 1,
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%",
+                        "timeoutSeconds": 600,
+                        "updatePeriodSeconds": 1
+                    },
+                    "type": "Rolling"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "name": "ccw"
+                        },
+                        "name": "ccw"
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "DATABASE_SERVICE_NAME",
+                                        "value": "postgresql"
+                                    },
+                                    {
+                                        "name": "POSTGRESQL_USER",
+                                        "value": "userUXN"
+                                    },
+                                    {
+                                        "name": "POSTGRESQL_PASSWORD",
+                                        "value": "83s1gsJMS4x5fonm"
+                                    },
+                                    {
+                                        "name": "POSTGRESQL_DATABASE",
+                                        "value": "schoolbus"
+                                    },
+                                    {
+                                        "name": "ADMINPW",
+                                        "value": "plbJL5buxF710vCh"
+                                    },
+                                    {
+                                        "name": "CCWInitializationFile",
+                                        "value": "/secrets/ccw.json"
+                                    },
+                                    {
+                                        "name": "ASPNETCORE_ENVIRONMENT",
+                                        "value": "Staging"
+                                    }
+                                ],
+                                "image": " ",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "ccw",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "memory": "512Mi"
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/secrets",
+                                        "name": "secret-volume",
+                                        "readOnly": true
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "name": "secret-volume",
+                                "secret": {
+                                    "defaultMode": 420,
+                                    "secretName": "ccw-secret"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "test": false,
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "server"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "ccw:test",
+                                "namespace": "tran-schoolbus-tools"
+                            }
+                        },
+                        "type": "ImageChange"
+                    }
+                ]
+            },
+            "status": {}
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "annotations": {
+                    "description": "Exposes and load balances the application pods"
+                },
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "server"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "name": "server"
+                }
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "DeploymentConfig",
+            "metadata": {
+                "annotations": {
+                    "description": "Defines how to deploy the backend server"
+                },
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "server"
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "name": "server"
+                },
+                "strategy": {
+                    "resources": {},
+                    "rollingParams": {
+                        "intervalSeconds": 1,
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%",
+                        "timeoutSeconds": 600,
+                        "updatePeriodSeconds": 1
+                    },
+                    "type": "Rolling"
+                },
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "name": "server"
+                        },
+                        "name": "server"
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "DATABASE_SERVICE_NAME",
+                                        "value": "postgresql"
+                                    },
+                                    {
+                                        "name": "POSTGRESQL_USER",
+                                        "value": "user7KU"
+                                    },
+                                    {
+                                        "name": "POSTGRESQL_PASSWORD",
+                                        "value": "EK4kK8GFaMPvWB4V"
+                                    },
+                                    {
+                                        "name": "POSTGRESQL_DATABASE",
+                                        "value": "schoolbus"
+                                    },
+                                    {
+                                        "name": "ADMINPW",
+                                        "value": "yBpqoY0LIrWoeYg7"
+                                    },
+                                    {
+                                        "name": "UserInitializationFile",
+                                        "value": "/secrets/users.json"
+                                    },
+                                    {
+                                        "name": "CCW_SERVICE_NAME",
+                                        "value": "ccw"
+                                    },
+                                    {
+                                        "name": "ASPNETCORE_ENVIRONMENT",
+                                        "value": "Development"
+                                    }
+                                ],
+                                "image": " ",
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/",
+                                        "port": 8080
+                                    },
+                                    "initialDelaySeconds": 30,
+                                    "timeoutSeconds": 3000
+                                },
+                                "name": "server",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "readinessProbe": {
+                                    "httpGet": {
+                                        "path": "/",
+                                        "port": 8080
+                                    },
+                                    "initialDelaySeconds": 3,
+                                    "timeoutSeconds": 3000
+                                },
+                                "resources": {
+                                    "limits": {
+                                        "memory": "512Mi"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/uploads",
+                                        "name": "server-docs"
+                                    },
+                                    {
+                                        "mountPath": "/secrets",
+                                        "name": "secret-volume",
+                                        "readOnly": true
+                                    }
+                                ]
+                            }
+                        ],
+                        "volumes": [
+                            {
+                                "name": "server-docs",
+                                "persistentVolumeClaim": {
+                                    "claimName": "server-docs-pvc"
+                                }
+                            },
+                            {
+                                "name": "secret-volume",
+                                "secret": {
+                                    "secretName": "secret-volume"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "server"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "server:test",
+                                "namespace": "tran-schoolbus-tools"
+                            }
+                        },
+                        "type": "ImageChange"
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "annotations": {
+                    "description": "Exposes the database server"
+                },
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "postgresql"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "postgres",
+                        "nodePort": 0,
+                        "port": 5432,
+                        "protocol": "TCP",
+                        "targetPort": 5432
+                    }
+                ],
+                "selector": {
+                    "app": "postgresql"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "DeploymentConfig",
+            "metadata": {
+                "annotations": {
+                    "description": "Defines how to deploy the database",
+                    "openshift.io/container.postgresql.image.entrypoint": "[\"container-entrypoint\",\"run-postgresql\"]"
+                },
+                "creationTimestamp": null,
+                "generation": 1,
+                "labels": {
+                    "app": "postgresql",
+                    "template": "schoolbus-deployment"
+                },
+                "name": "postgresql"
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "app": "postgresql",
+                    "deploymentconfig": "postgresql"
+                },
+                "status": {},
+                "strategy": {
+                    "type": "Recreate"
+                },
+                "template": {
+                    "dnsPolicy": "ClusterFirst",
+                    "metadata": {
+                        "annotations": {
+                            "openshift.io/container.postgresql.image.entrypoint": "[\"container-entrypoint\",\"run-postgresql\"]"
+                        },
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "postgresql",
+                            "deploymentconfig": "postgresql"
+                        }
+                    },
+                    "restartPolicy": "Always",
+                    "spec": {
+                        "containers": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "POSTGRESQL_DATABASE",
+                                        "value": "schoolbus"
+                                    },
+                                    {
+                                        "name": "POSTGRESQL_PASSWORD",
+                                        "value": "EK4kK8GFaMPvWB4V"
+                                    },
+                                    {
+                                        "name": "POSTGRESQL_USER",
+                                        "value": "user7KU"
+                                    }
+                                ],
+                                "image": "registry.access.redhat.com/rhscl/postgresql-94-rhel7",
+                                "imagePullPolicy": "Always",
+                                "livenessProbe": {
+                                    "initialDelaySeconds": 30,
+                                    "tcpSocket": {
+                                        "port": 5432
+                                    },
+                                    "timeoutSeconds": 1
+                                },
+                                "name": "postgres",
+                                "ports": [
+                                    {
+                                        "containerPort": 5432,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "readinessProbe": {
+                                    "exec": {
+                                        "command": [
+                                            "/bin/sh",
+                                            "-i",
+                                            "-c",
+                                            "psql -h 127.0.0.1 -U user7KU -q -d schoolbus -c 'SELECT 1'"
+                                        ]
+                                    },
+                                    "initialDelaySeconds": 3,
+                                    "timeoutSeconds": 1
+                                },
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/var/lib/pgsql/data",
+                                        "name": "postgresql-data"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "securityContext": {
+                            "capabilities": {},
+                            "privileged": false
+                        },
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "name": "postgresql-data",
+                                "persistentVolumeClaim": {
+                                    "claimName": "postgresql-pvc"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "test": false,
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "postgres"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "postgres:9.4",
+                                "namespace": "openshift"
+                            }
+                        },
+                        "type": "ImageChange"
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "annotations": {
+                    "description": "Exposes and load balances the reverse proxy used for SiteMinder"
+                },
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "cerberus"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "app": "cerberus"
+                }
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Route",
+            "metadata": {
+                "labels": {
+                    "template": "schoolbus-deployment"
+                },
+                "name": "cerberus"
+            },
+            "spec": {
+                "host": "",
+                "tls": {
+                    "termination": "edge"
+                },
+                "to": {
+                    "kind": "Service",
+                    "name": "cerberus"
+                },
+                "wildcardPolicy": "None"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "DeploymentConfig",
+            "metadata": {
+                "creationTimestamp": null,
+                "generation": 1,
+                "labels": {
+                    "app": "cerberus",
+                    "template": "schoolbus-deployment"
+                },
+                "name": "cerberus"
+            },
+            "spec": {
+                "replicas": 2,
+                "selector": {
+                    "app": "cerberus",
+                    "deploymentconfig": "cerberus"
+                },
+                "strategy": {
+                    "resources": {},
+                    "rollingParams": {
+                        "intervalSeconds": 1,
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%",
+                        "timeoutSeconds": 600,
+                        "updatePeriodSeconds": 1
+                    },
+                    "type": "Rolling"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "cerberus",
+                            "deploymentconfig": "cerberus"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "NGINX_PROXY_HOST",
+                                        "value": "cerberus"
+                                    },
+                                    {
+                                        "name": "NGINX_PROXY_URL",
+                                        "value": "http://frontend:8080"
+                                    }
+                                ],
+                                "image": " ",
+                                "imagePullPolicy": "Always",
+                                "name": "cerberus",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log"
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30
+                    }
+                },
+                "test": false,
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "cerberus"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "cerberus:test",
+                                "namespace": "tran-schoolbus-tools"
+                            }
+                        },
+                        "type": "ImageChange"
+                    }
+                ]
+            },
+            "status": {}
+        }
+    ]
+}

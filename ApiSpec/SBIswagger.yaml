@@ -2975,50 +2975,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/SchoolBusOwner"  
-  /contacts/{id}/contactphones:
-    get:
-      description: Returns phone contacts for a particular SchoolBusOwner
-      tags:
-        - Contact
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ContactPhone'
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwner to fetch contact phone for
-          required: true
-          type: integer
-  /contacts/{id}/contactaddresses:
-    get:
-      description: Returns address contacts for a particular SchoolBusOwner
-      tags:
-        - Contact
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ContactAddress'
-      parameters:
-        - name: id
-          in: path
-          description: id of SchoolBusOwner to fetch contact address for
-          required: true
-          type: integer
   /roles/{id}/permissions:
     get:
       description: Get all the permissions for a role
