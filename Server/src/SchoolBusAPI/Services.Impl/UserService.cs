@@ -816,8 +816,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdRolesPutAsync(int id, UserRoleViewModel[] items)
         {
-            bool exists = _context.Users.Any(x => x.Id == id);
-            bool success = false;
+            bool exists = _context.Users.Any(x => x.Id == id);            
             if (exists && items != null)
             {
                 User user = _context.Users
@@ -858,7 +857,8 @@ namespace SchoolBusAPI.Services.Impl
                         UserRole userRole = new UserRole();
                         Role role = _context.Roles.First(x => x.Id == item.RoleId);
                         userRole.Role = role;
-                        userRole.EffectiveDate = DateTime.UtcNow;
+                        userRole.EffectiveDate = item.EffectiveDate;
+                        userRole.ExpiryDate = item.ExpiryDate;
 
                         _context.Add(userRole);
 
