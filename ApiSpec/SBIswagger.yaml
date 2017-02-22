@@ -2797,7 +2797,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Attachment'
+              $ref: '#/definitions/AttachmentViewModel'
         "404":
            description: SchoolBus not found
       parameters:
@@ -4246,9 +4246,6 @@ definitions:
     description: A table of contacts related to various entities in the system. FK fields are used to link contacts to records in the system.
     required:
       - id
-      - givenName
-      - surname
-      - role
     properties:
       id:
         format: int32
@@ -4263,6 +4260,10 @@ definitions:
         type: string
         maxLength: 50
         description: The surname of the contact.
+      organizationName:
+        type: string
+        maxLength: 150
+        description: The organization name of the contact.
       role:
         type: string
         maxLength: 100
@@ -4271,50 +4272,22 @@ definitions:
         type: string
         maxLength: 150
         description: A note about the contact maintained by the users.
-      contactPhones:
-        type: array
-        items:
-          $ref: '#/definitions/ContactPhone'
-      contactAddresses:
-        type: array
-        items:
-          $ref: '#/definitions/ContactAddress'
-  ContactPhone:
-    type: object
-    description: SB Owner contact phone information
-    required:
-      - id
-      - type
-      - phoneNumber
-    properties:
-      id:
-        format: int32
-        type: integer
-        uniqueItems: true
-        description: A system-generated unique identifier for a ContactPhone
-      type:
+      emailAddress:
         type: string
-        maxLength: 100
-        description: The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.  Ex. Home, Cell, Work etc..
-      phoneNumber:
+        maxLength: 255
+        description: The email address for the contact.
+      workPhoneNumber:
         type: string
         maxLength: 20
-        description: The phone number of the contact. Entered as free form to support a range of formats.
-  ContactAddress:
-    type: object
-    description: SB Owner contact address information
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        uniqueItems: true
-        description: A system-generated unique identifier for a ContactAddress
-      type:
+        description: The work phone number for the contact.
+      mobilePhoneNumber:
         type: string
-        maxLength: 100
-        description: The type of the address. UI controlled as to whether it is free form or selected from an enumerated list ex. Home, Office, etc..
+        maxLength: 20
+        description: The mobile phone number for the contact.
+      faxPhoneNumber:
+        type: string
+        maxLength: 20
+        description: The fax phone number for the contact.
       address1:
         type: string
         maxLength: 80

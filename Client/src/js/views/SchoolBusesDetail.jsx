@@ -23,6 +23,7 @@ import Confirm from '../components/Confirm.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
 
 import { formatDateTime } from '../utils/date';
 import { concat, plural } from '../utils/string';
@@ -42,7 +43,6 @@ var SchoolBusesDetail = React.createClass({
   getInitialState() {
     return {
       loadingSchoolBus: true,
-      loadingSchoolBusCCW: true,
       loadingSchoolBusInspections: true,
 
       showEditDialog: false,
@@ -62,12 +62,11 @@ var SchoolBusesDetail = React.createClass({
 
   componentDidMount() {
     // Don't just check if this is new. Make sure we're coming in through the Owner screen and not
-    // via a refresh of the screen.
+    // via a refresh of the screen. Also, make sure we have CCW data.
     if (this.state.isNew && this.props.owner.id && this.props.schoolBusCCW.icbcRegistrationNumber) {
       // Clear the spinners
       this.setState({
         loadingSchoolBus: false,
-        loadingSchoolBusCCW: false,
         loadingSchoolBusInspections: false,
       });
       // Clear the school bus store, except for the fields
@@ -75,9 +74,10 @@ var SchoolBusesDetail = React.createClass({
       store.dispatch({ type: Action.UPDATE_BUS, schoolBus: {
         id: 0,
         schoolBusOwner: { id: this.props.owner.id },
-        icbcRegistrationNumber: this.props.schoolBusCCW.icbcRegistrationNumber,
-        licencePlateNumber: this.props.schoolBusCCW.icbcLicencePlateNumber,
-        vehicleIdentificationNumber: this.props.schoolBusCCW.icbcVehicleIdentificationNumber,
+        icbcRegistrationNumber: this.props.schoolBusCCW.icbcRegistrationNumber || '',
+        licencePlateNumber: this.props.schoolBusCCW.icbcLicencePlateNumber || '',
+        vehicleIdentificationNumber: this.props.schoolBusCCW.icbcVehicleIdentificationNumber || '',
+        ccwData: this.props.schoolBusCCW,
       }});
       // Open editor to add new bus
       this.openEditDialog();
@@ -89,7 +89,6 @@ var SchoolBusesDetail = React.createClass({
   fetch() {
     this.setState({
       loadingSchoolBus: true,
-      loadingSchoolBusCCW: true,
       loadingSchoolBusInspections: true,
     });
 
@@ -98,25 +97,9 @@ var SchoolBusesDetail = React.createClass({
     Api.getSchoolBus(id).finally(() => {
       this.setState({ loadingSchoolBus: false });
     });
-    Api.getSchoolBusCCW(id).finally(() => {
-      this.setState({ loadingSchoolBusCCW: false });
-    });
     Api.getSchoolBusInspections(id).finally(() => {
       this.setState({ loadingSchoolBusInspections: false });
     });
-  },
-
-  showNotes() {
-  },
-
-  showAttachments() {
-  },
-
-  showHistory() {
-  },
-
-  print() {
-
   },
 
   updateUIState(state, callback) {
@@ -140,12 +123,9 @@ var SchoolBusesDetail = React.createClass({
     } else {
       // Save the new school bus record
       Api.addSchoolBus(schoolBus).then(() => {
-        // Save its related CCW record next
-        Api.addSchoolBusCCW(this.props.schoolBusCCW).then(() => {
-          // Reload the screen with new school bus id
-          this.props.router.push({
-            pathname: `school-buses/${ this.props.schoolBus.id }`,
-          });
+        // Reload the screen with new school bus id
+        this.props.router.push({
+          pathname: `school-buses/${ this.props.schoolBus.id }`,
         });
       });
     }
@@ -212,9 +192,32 @@ var SchoolBusesDetail = React.createClass({
     });
   },
 
+  showNotes() {
+  },
+
+  showAttachments() {
+  },
+
+  showHistory() {
+  },
+
+  print() {
+  },
+
+  generatePermit() {
+    // This API call will update the school bus state after generating a permit.
+    this.setState({ loadingSchoolBus: true });
+    Api.newSchoolBusPermit(this.props.params.schoolBusId).finally(() => {
+      this.setState({ loadingSchoolBus: false });
+    });
+  },
+
+  printPermit() {
+  },
+
   render() {
     var bus = this.props.schoolBus;
-    var ccw = this.props.schoolBusCCW;
+    var ccw = this.props.schoolBus.ccwData || {};
 
     var daysToInspection = bus.daysToInspection;
     if (bus.isOverdue) { daysToInspection *= -1; }
@@ -234,13 +237,21 @@ var SchoolBusesDetail = React.createClass({
             { bus.nextInspectionDate &&
               <span className={ `label label-${inspectionStyle}` } dangerouslySetInnerHTML={{ __html: inspectionNotice }}></span>
             }
-            <Button title="Notes" onClick={ this.showNotes }>Notes ({ bus.notes ? bus.notes.length : 0 })</Button>
-            <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ bus.attachments ? bus.attachments.length : 0 })</Button>
-            <Button title="History" onClick={ this.showHistory }>History</Button>
+            <Unimplemented>
+              <Button title="Notes" onClick={ this.showNotes }>Notes ({ bus.notes ? bus.notes.length : 0 })</Button>
+            </Unimplemented>
+            <Unimplemented>
+              <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ bus.attachments ? bus.attachments.length : 0 })</Button>
+            </Unimplemented>
+            <Unimplemented>
+              <Button title="History" onClick={ this.showHistory }>History</Button>
+            </Unimplemented>
           </Col>
           <Col md={2}>
             <div className="pull-right">
-              <Button><Glyphicon glyph="print" title="Print" /></Button>
+              <Unimplemented>
+                <Button><Glyphicon glyph="print" title="Print" /></Button>
+              </Unimplemented>
               <LinkContainer to={{ pathname: 'school-buses' }}>
                 <Button title="Return to List"><Glyphicon glyph="arrow-left" /> Return to List</Button>
               </LinkContainer>
@@ -264,12 +275,11 @@ var SchoolBusesDetail = React.createClass({
                   &nbsp;Plate: <small>{ bus.licencePlateNumber }</small>
                   &nbsp;VIN: <small>{ bus.vehicleIdentificationNumber }</small>
                   &nbsp;Permit: <small>{ bus.permitNumber }</small>
-                  {(() => {
-                    if (bus.permitNumber) {
-                      return <Button bsSize="small">Print Permit</Button>;
-                    }
-                    return <Button bsSize="small">Generate Permit</Button>;
-                  })()}
+                  {
+                    bus.permitNumber ?
+                      <Unimplemented><Button onClick={ this.printPermit } bsSize="small">Print Permit</Button></Unimplemented> :
+                      <Button onClick={ this.generatePermit } bsSize="small">Generate Permit</Button>
+                  }
                 </h1>
               </Col>
             </Row>
@@ -332,10 +342,13 @@ var SchoolBusesDetail = React.createClass({
           </Col>
           <Col md={6}>
             <Well>
-              <h3>Inspection History <span className="pull-right"><Button title="addInspection" onClick={ this.addInspection } bsSize="small"><Glyphicon glyph="plus" /></Button></span></h3>
+              <h3>Inspection History</h3>
               {(() => {
                 if (this.state.loadingSchoolBusInspections ) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-                if (Object.keys(this.props.schoolBusInspections).length === 0) { return <Alert bsStyle="success" style={{ marginTop: 10 }}>No inspections</Alert>; }
+
+                var addInspectionButton = <Button title="addInspection" onClick={ this.addInspection } bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add</strong></Button>;
+
+                if (Object.keys(this.props.schoolBusInspections).length === 0) { return <Alert bsStyle="success">No inspections { addInspectionButton }</Alert>; }
 
                 var inspections = _.sortBy(this.props.schoolBusInspections, this.state.ui.sortField);
                 if (this.state.ui.sortDesc) {
@@ -343,11 +356,13 @@ var SchoolBusesDetail = React.createClass({
                 }
 
                 var headers = [
-                  { field: 'inspectionDateSort',   title: 'Inspection Date' },
+                  { field: 'inspectionDateSort',   title: 'Date' },
                   { field: 'inspectionTypeCode',   title: 'Type'            },
                   { field: 'inspectionResultCode', title: 'Status'          },
                   { field: 'inspectorName',        title: 'Inspector'       },
-                  { field: 'blank' },
+                  { field: 'addInspection',        title: 'Add Inspection', style: { textAlign: 'right'  },
+                    node: addInspectionButton,
+                  },
                 ];
 
                 return <SortTable id="inspection-list" sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
@@ -373,7 +388,11 @@ var SchoolBusesDetail = React.createClass({
                   }
                 </SortTable>;
               })()}
-              <div className="text-right"><Button target="_blank" href="http://google.com/search?q=CTMS-Web">CTMS-Web</Button></div>
+              <div className="text-right">
+                <Unimplemented>
+                  <Button target="_blank" href="http://google.com/search?q=CTMS-Web">CTMS-Web</Button>
+                </Unimplemented>
+              </div>
             </Well>
           </Col>
         </Row>
@@ -382,7 +401,7 @@ var SchoolBusesDetail = React.createClass({
             <Well>
               <h3>Policy</h3>
               {(() => {
-                if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+                if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
                 return <div id="school-buses-policy">
                   <Row>
@@ -405,7 +424,7 @@ var SchoolBusesDetail = React.createClass({
             <Well>
               <h3>ICBC Registered Owner</h3>
               {(() => {
-                if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+                if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
                 var city = concat(ccw.icbcRegOwnerCity, ccw.icbcRegOwnerProv);
                 city = concat(city, ccw.icbcRegOwnerPostalCode);
@@ -438,7 +457,7 @@ var SchoolBusesDetail = React.createClass({
             <Well>
               <h3>NSC</h3>
               {(() => {
-                if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+                if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
                 return <div id="school-buses-nsc">
                   <Row>
@@ -463,7 +482,7 @@ var SchoolBusesDetail = React.createClass({
             <Well>
               <h3>ICBC Vehicle Data</h3>
               {(() => {
-                if (this.state.loadingSchoolBusCCW) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
+                if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
                 return <div id="school-buses-icbc-vehicle">
                   <Row>

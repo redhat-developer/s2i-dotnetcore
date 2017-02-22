@@ -341,7 +341,11 @@
     },
     {
         "attachments": [],
-        "contacts": "#N/A",
+        "contacts": [
+            {
+                "id": "200016"
+            }
+        ],
         "dateCreated": "2/20/2005",
         "district": {
             "id": "200010"
@@ -350,7 +354,9 @@
         "id": "200017",
         "name": "Success Is Yours",
         "notes": [],
-        "primaryContact": "#N/A",
+        "primaryContact": {
+            "id": "200016"
+        },
         "status": "Active"
     }
 ]

@@ -12,6 +12,7 @@ var RolesPermissions = React.createClass({
   render: function() {
     return <div id="roles-permissions">
       <PageHeader>Roles and Permissions</PageHeader>
+      This feature has not been released yet.
     </div>;
   },
 });

@@ -30,8 +30,8 @@ definitions:
       schoolBusOwner:
         $ref: '#/definitions/SchoolBusOwner'
       permitNumber:
-        type: string
-        maxLength: 20
+        format: int32
+        type: integer
         uniqueItems: true
         description: The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.
       permitIssueDate:
@@ -425,28 +425,28 @@ definitions:
     description: Attachments uploaded by users about instance of entities - e.g. School Buses and School Bus Owners
     required:
       - id
-      - internalFileName
-      - externalFileName
     properties:
       id:
         format: int32
         type: integer
         uniqueItems: true
         description: A system-generated unique identifier for an Attachment
-      internalFileName:
+      fileName:
         type: string
         maxLength: 2048
-        uniqueItems: true
-        description: The physical location of the attachment on the file system.
-      externalFileName:
+        description: Filename as passed by the user uploading the file
+      fileContents:
         type: string
-        maxLength: 2048
-        uniqueItems: true
-        description: The name of the attachment as defined by the user in uploading the document.
+        format: binary
+        description: Binary contents of the file
       description:
         type: string
         maxLength: 2048
         description: A note about the attachment,  optionally maintained by the user.
+      type:
+        type: string
+        maxLength: 255
+        description: Type of attachment
   History:
     type: object
     description: The history of updates made to an entity - e.g. a School Bus or a School Bus Owner
@@ -468,9 +468,6 @@ definitions:
     description: A table of contacts related to various entities in the system. FK fields are used to link contacts to records in the system.
     required:
       - id
-      - givenName
-      - surname
-      - role
     properties:
       id:
         format: int32
@@ -485,6 +482,10 @@ definitions:
         type: string
         maxLength: 50
         description: The surname of the contact.
+      organizationName:
+        type: string
+        maxLength: 150
+        description: The organization name of the contact.
       role:
         type: string
         maxLength: 100
@@ -493,50 +494,22 @@ definitions:
         type: string
         maxLength: 150
         description: A note about the contact maintained by the users.
-      contactPhones:
-        type: array
-        items:
-          $ref: '#/definitions/ContactPhone'
-      contactAddresses:
-        type: array
-        items:
-          $ref: '#/definitions/ContactAddress'
-  ContactPhone:
-    type: object
-    description: SB Owner contact phone information
-    required:
-      - id
-      - type
-      - phoneNumber
-    properties:
-      id:
-        format: int32
-        type: integer
-        uniqueItems: true
-        description: A system-generated unique identifier for a ContactPhone
-      type:
+      emailAddress:
         type: string
-        maxLength: 100
-        description: The type of the phone number. UI controlled as to whether it is free form or selected from an enumerated list.  Ex. Home, Cell, Work etc..
-      phoneNumber:
+        maxLength: 255
+        description: The email address for the contact.
+      workPhoneNumber:
         type: string
         maxLength: 20
-        description: The phone number of the contact. Entered as free form to support a range of formats.
-  ContactAddress:
-    type: object
-    description: SB Owner contact address information
-    required:
-      - id
-    properties:
-      id:
-        format: int32
-        type: integer
-        uniqueItems: true
-        description: A system-generated unique identifier for a ContactAddress
-      type:
+        description: The work phone number for the contact.
+      mobilePhoneNumber:
         type: string
-        maxLength: 100
-        description: The type of the address. UI controlled as to whether it is free form or selected from an enumerated list ex. Home, Office, etc..
+        maxLength: 20
+        description: The mobile phone number for the contact.
+      faxPhoneNumber:
+        type: string
+        maxLength: 20
+        description: The fax phone number for the contact.
       address1:
         type: string
         maxLength: 80
