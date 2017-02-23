@@ -82,6 +82,70 @@ namespace SchoolBusAPI.Models
             return user;
         }
 
+
+        public static CCWJurisdiction GetCCWJurisdictionByCode(this IDbAppContext context, string code)
+        {
+            CCWJurisdiction item = context.CCWJurisdictions.Where(x => x.Code != null && x.Code.Equals(code, StringComparison.OrdinalIgnoreCase))                    
+                    .FirstOrDefault();
+            return item;
+        }
+
+        
+
+        /// <summary>
+        /// Adds initial CCWJurisdictions from a file
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="CCWJurisdictionJsonPath"></param>
+        public static void AddInitialCCWJurisdictionsFromFile(this IDbAppContext context, string CCWJurisdictionJsonPath)
+        {
+            if (!string.IsNullOrEmpty(CCWJurisdictionJsonPath) && File.Exists(CCWJurisdictionJsonPath))
+            {
+                string CCWJurisdictionJson = File.ReadAllText(CCWJurisdictionJsonPath);
+                context.AddInitialCCWJurisdictions(CCWJurisdictionJson);
+            }
+        }
+
+        private static void AddInitialCCWJurisdictions(this IDbAppContext context, string CCWJurisdictionJson)
+        {
+            List<CCWJurisdiction> CCWJurisdictions = JsonConvert.DeserializeObject<List<CCWJurisdiction>>(CCWJurisdictionJson);
+            if (CCWJurisdictions != null)
+            {
+                context.AddInitialCCWJurisdictions(CCWJurisdictions);
+            }
+        }
+
+        private static void AddInitialCCWJurisdictions(this IDbAppContext context, List<CCWJurisdiction> CCWJurisdictions)
+        {
+            CCWJurisdictions.ForEach(u => context.AddInitialCCWJurisdiction(u));
+        }
+
+        /// <summary>
+        /// Adds a CCWJurisdiction to the system, only if it does not exist.
+        /// </summary>
+        private static void AddInitialCCWJurisdiction(this IDbAppContext context, CCWJurisdiction initialCCWJurisdiction)
+        {
+            CCWJurisdiction CCWJurisdiction = context.GetCCWJurisdictionByCode(initialCCWJurisdiction.Code);
+            if (CCWJurisdiction != null)
+            {
+                return;
+            }
+
+            CCWJurisdiction = new CCWJurisdiction();
+            CCWJurisdiction.ActiveFlag = initialCCWJurisdiction.ActiveFlag;
+            CCWJurisdiction.Code = initialCCWJurisdiction.Code;
+            CCWJurisdiction.Description = initialCCWJurisdiction.Description;
+            CCWJurisdiction.EffectiveDate = initialCCWJurisdiction.EffectiveDate;
+            CCWJurisdiction.ExpiryDate = initialCCWJurisdiction.ExpiryDate;
+
+            context.CCWJurisdictions.Add(CCWJurisdiction);
+        }
+
+        /// <summary>
+        /// Adds initial users from a specified file
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="userJsonPath"></param>
         public static void AddInitialUsersFromFile(this IDbAppContext context, string userJsonPath)
         {
             if (!string.IsNullOrEmpty(userJsonPath) && File.Exists(userJsonPath))
@@ -91,6 +155,11 @@ namespace SchoolBusAPI.Models
             }
         }
 
+        /// <summary>
+        /// Adds initial users from a specified json string
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="userJson"></param>
         private static void AddInitialUsers(this IDbAppContext context, string userJson)
         {
             List<User> users = JsonConvert.DeserializeObject<List<User>>(userJson);
@@ -100,6 +169,11 @@ namespace SchoolBusAPI.Models
             }
         }
 
+        /// <summary>
+        /// Adds initial users from a list of users
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="users"></param>
         private static void AddInitialUsers(this IDbAppContext context, List<User> users)
         {
             users.ForEach(u => context.AddInitialUser(u));
@@ -322,6 +396,28 @@ namespace SchoolBusAPI.Models
             }
 
             context.ServiceAreas.Add(serviceArea);
+        }
+
+        /// <summary>
+        /// Update a seed item
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="item"></param>
+        public static void UpdateSeedCCWJurisdictionInfo(this DbAppContext context, CCWJurisdiction item)
+        { 
+            CCWJurisdiction ccwjurisdiction = context.GetCCWJurisdictionByCode(item.Code);
+            if (ccwjurisdiction == null)
+            {
+                context.CCWJurisdictions.Add(item);
+            }
+            else
+            {
+                ccwjurisdiction.Code = item.Code;
+                ccwjurisdiction.ActiveFlag = item.ActiveFlag;
+                ccwjurisdiction.Description = item.Description;
+                ccwjurisdiction.EffectiveDate = item.EffectiveDate;
+                ccwjurisdiction.ExpiryDate = item.ExpiryDate;                
+            }
         }
 
         public static void UpdateSeedDistrictInfo(this DbAppContext context, District districtInfo)

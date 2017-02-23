@@ -433,6 +433,18 @@
                     "value": "/secrets/users.json"
                   },
 				  {
+                    "name": "DistrictInitializationFile",
+                    "value": "/secrets/districts.json"
+                  },
+				  {
+                    "name": "RegionInitializationFile",
+                    "value": "/secrets/regions.json"
+                  },
+				  {
+                    "name": "CCWJurisdictionInitializationFile",
+                    "value": "/secrets/ccwjurisdictions.json"
+                  },
+				  {
 				    "name": "CCW_SERVICE_NAME",
 					"value": "${CCW_NAME}"
 				  },
