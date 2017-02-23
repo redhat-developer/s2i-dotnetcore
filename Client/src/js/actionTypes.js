@@ -24,6 +24,7 @@ export const UPDATE_OWNERS_UI = 'UPDATE_OWNERS_UI';
 export const UPDATE_USERS_UI = 'UPDATE_USERS_UI';
 export const UPDATE_INSPECTIONS_UI = 'UPDATE_INSPECTIONS_UI';
 export const UPDATE_CONTACTS_UI = 'UPDATE_CONTACTS_UI';
+export const UPDATE_USER_ROLES_UI = 'UPDATE_USER_ROLES_UI';
 export const UPDATE_ROLES_UI = 'UPDATE_ROLES_UI';
 
 // Search
@@ -31,6 +32,7 @@ export const UPDATE_BUSES_SEARCH = 'UPDATE_BUSES_SEARCH';
 export const UPDATE_CCW_SEARCH = 'UPDATE_CCW_SEARCH';
 export const UPDATE_OWNERS_SEARCH = 'UPDATE_OWNERS_SEARCH';
 export const UPDATE_USERS_SEARCH = 'UPDATE_USERS_SEARCH';
+export const UPDATE_ROLES_SEARCH = 'UPDATE_ROLES_SEARCH';
 
 // Version
 export const UPDATE_VERSION = 'UPDATE_VERSION';
@@ -46,6 +48,12 @@ export const UPDATE_USERS = 'UPDATE_USERS';
 export const UPDATE_USER = 'UPDATE_USER';
 export const ADD_USER = 'ADD_USER';
 export const DELETE_USER = 'DELETE_USER';
+
+// Roles
+export const UPDATE_ROLES = 'UPDATE_ROLES';
+export const UPDATE_ROLE = 'UPDATE_ROLE';
+export const ADD_ROLE = 'ADD_ROLE';
+export const DELETE_ROLE = 'DELETE_ROLE';
 
 // Inspectors
 export const UPDATE_INSPECTORS = 'UPDATE_INSPECTORS';

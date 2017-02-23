@@ -15,7 +15,7 @@ var DropdownControl = React.createClass({
     items: React.PropTypes.array.isRequired,
 
     // If present, then items is an array of objects with ids
-    selectedId: React.PropTypes.number,
+    selectedId: React.PropTypes.any,
 
     // If present. then items is an array of strings
     title: React.PropTypes.string,

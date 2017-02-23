@@ -1,0 +1,72 @@
+#roles-list {
+  #roles-search {
+    margin-top: -10px;
+
+    .search-control {
+      width: 350px;
+      margin-top: 10px;
+      margin-left: 5px;
+    }
+  }
+
+  #roles-buttons {
+    float: right;
+
+    .btn {
+      width: 40px;
+    }
+  }
+
+  .alert .btn {
+    float: right;
+  }
+}
+
+#roles-detail {
+  #roles-top {
+    margin-bottom: 10px;
+  }
+
+  .well {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .label {
+    font-size: 100%;
+    margin-right: 5px;
+  }
+
+  .btn {
+    margin-left: 5px;
+  }
+
+  .col-display-label {
+    width: 100px;
+  }
+
+  .alert {
+    top-margin: 10px;
+
+    .btn {
+      float: right;
+    }
+  }
+
+  h1 {
+    small {
+      font-size: 85%;
+    }
+  }
+
+  h3 {
+    font-weight: 600;
+  }
+}
+
+#roles-edit {
+  [class*='col-'] {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+}
