@@ -5,6 +5,7 @@ const DEFAULT_SEARCHES = {
   schoolBusesCCW: {},
   owners: {},
   users: {},
+  roles: {},
 };
 
 export default function searchReducer(state = DEFAULT_SEARCHES, action) {
@@ -21,6 +22,8 @@ export default function searchReducer(state = DEFAULT_SEARCHES, action) {
     case Action.UPDATE_USERS_SEARCH:
       return { ...state, users: action.users };
 
+    case Action.UPDATE_ROLES_SEARCH:
+      return { ...state, roles: action.roles };
   }
 
   return state;
