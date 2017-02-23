@@ -34,12 +34,9 @@ else
 fi
 
 RESTORE_OPTIONS=
-if [[ ! -z "$DOTNET_NUGET_SOURCES" ]]; then
-    echo "DOTNET_NUGET_SOURCES set to '$DOTNET_NUGET_SOURCES'"
-    for source in $DOTNET_NUGET_SOURCES; do
-    	RESTORE_OPTIONS="$RESTORE_OPTIONS --source \"$source\""
-    done
-fi
+for source in $DOTNET_RESTORE_SOURCES; do
+  RESTORE_OPTIONS="$RESTORE_OPTIONS --source \"$source\""
+done
 
 echo "---> Installing dependencies ..."
 dotnet restore $RESTORE_OPTIONS
