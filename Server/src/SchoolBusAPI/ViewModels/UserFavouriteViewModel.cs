@@ -17,6 +17,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
@@ -41,22 +43,20 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="Name">Context Name.</param>
         /// <param name="Value">Saved search.</param>
         /// <param name="IsDefault">IsDefault.</param>
-        /// <param name="FavouriteContextTypeId">FavouriteContextTypeId.</param>
-        public UserFavouriteViewModel(int Id, string Name = null, string Value = null, bool? IsDefault = null, string Type = null)
-        {
-            this.Id = Id;
+        /// <param name="Type">Type of favourite.</param>
+        public UserFavouriteViewModel(int? Id = null, string Name = null, string Value = null, bool? IsDefault = null, string Type = null)
+        {               this.Id = Id;
             this.Name = Name;
             this.Value = Value;
             this.IsDefault = IsDefault;
             this.Type = Type;
-            
         }
 
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
         [DataMember(Name="id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Context Name
@@ -81,9 +81,11 @@ namespace SchoolBusAPI.ViewModels
         public bool? IsDefault { get; set; }
 
         /// <summary>
-        /// Gets or Sets FavouriteContextTypeId
+        /// Type of favourite
         /// </summary>
+        /// <value>Type of favourite</value>
         [DataMember(Name="type")]
+        [MetaDataExtension (Description = "Type of favourite")]
         public string Type { get; set; }
 
         /// <summary>
@@ -98,7 +100,7 @@ namespace SchoolBusAPI.ViewModels
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("  IsDefault: ").Append(IsDefault).Append("\n");
-            sb.Append("  FavouriteContextTypeId: ").Append(Type).Append("\n");
+            sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -136,26 +138,27 @@ namespace SchoolBusAPI.ViewModels
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
-                    this.Id == other.Id ||                    
+                    this.Id == other.Id ||
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
-                ) && 
+                ) &&                 
                 (
                     this.Value == other.Value ||
                     this.Value != null &&
                     this.Value.Equals(other.Value)
-                ) && 
+                ) &&                 
                 (
                     this.IsDefault == other.IsDefault ||
                     this.IsDefault != null &&
                     this.IsDefault.Equals(other.IsDefault)
-                ) && 
+                ) &&                 
                 (
                     this.Type == other.Type ||
                     this.Type != null &&
@@ -177,34 +180,47 @@ namespace SchoolBusAPI.ViewModels
                 if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
-                }
-                if (this.Name != null)
+                }                
+                                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
-                }
-                if (this.Value != null)
+                }                
+                                if (this.Value != null)
                 {
                     hash = hash * 59 + this.Value.GetHashCode();
-                }
-                if (this.IsDefault != null)
+                }                
+                                if (this.IsDefault != null)
                 {
                     hash = hash * 59 + this.IsDefault.GetHashCode();
-                }
-                if (this.Type != null)
+                }                
+                                if (this.Type != null)
                 {
                     hash = hash * 59 + this.Type.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(UserFavouriteViewModel left, UserFavouriteViewModel right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(UserFavouriteViewModel left, UserFavouriteViewModel right)
         {
             return !Equals(left, right);

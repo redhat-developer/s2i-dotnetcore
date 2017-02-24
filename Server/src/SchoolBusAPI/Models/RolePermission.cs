@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -27,7 +28,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The collection of permissions included in a role.")]
 
-    public partial class RolePermission : AuditableEntity,  IEquatable<RolePermission>
+    public partial class RolePermission : AuditableEntity, IEquatable<RolePermission>
     {
         /// <summary>
         /// Default constructor, required by entity framework

@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -27,7 +28,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "School Bus inspection details supplementary to the RIP inspection")]
 
-    public partial class Inspection : AuditableEntity,  IEquatable<Inspection>
+    public partial class Inspection : AuditableEntity, IEquatable<Inspection>
     {
         /// <summary>
         /// Default constructor, required by entity framework

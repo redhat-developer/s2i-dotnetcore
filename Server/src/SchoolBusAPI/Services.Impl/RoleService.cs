@@ -218,7 +218,7 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdPermissionsPutAsync(int id, Permission[] items)
+        public virtual IActionResult RolesIdPermissionsPutAsync(int id, PermissionViewModel[] items)
         {
             using (var txn = _context.BeginTransaction())
             {
@@ -236,14 +236,14 @@ namespace SchoolBusAPI.Services.Impl
                 }
 
                 var allPermissions = _context.Permissions.ToList();
-                var permissionCodes = items.Select(x => x.Code).ToList();
-                var existingPermissionCodes = role.RolePermissions.Select(x => x.Permission.Code).ToList();
-                var permissionCodesToAdd = permissionCodes.Where(x => !existingPermissionCodes.Contains(x)).ToList();
+                var permissionIds = items.Select(x => x.Id).ToList();
+                var existingPermissionIds = role.RolePermissions.Select(x => x.Permission.Id).ToList();
+                var permissionIdsToAdd = permissionIds.Where(x => !existingPermissionIds.Contains((int) x)).ToList();
 
                 // Permissions to add
-                foreach (var code in permissionCodesToAdd)
+                foreach (var permissionId in permissionIdsToAdd)
                 {
-                    var permToAdd = allPermissions.FirstOrDefault(x => x.Code == code);
+                    var permToAdd = allPermissions.FirstOrDefault(x => x.Id == permissionId);
                     if (permToAdd == null)
                     {
                         // TODO throw new BusinessLayerException(string.Format("Invalid Permission Code {0}", code));
@@ -252,7 +252,7 @@ namespace SchoolBusAPI.Services.Impl
                 }
 
                 // Permissions to remove
-                List<RolePermission> permissionsToRemove = role.RolePermissions.Where(x => !permissionCodes.Contains(x.Permission.Code)).ToList();
+                List<RolePermission> permissionsToRemove = role.RolePermissions.Where(x => !permissionIds.Contains(x.Permission.Id)).ToList();
                 foreach (RolePermission perm in permissionsToRemove)
                 {
                     role.RemovePermission(perm.Permission);
@@ -297,21 +297,21 @@ namespace SchoolBusAPI.Services.Impl
                 }
 
                 var allPermissions = _context.Permissions.ToList();
-                var permissionCodes = items.Select(x => x.Code).ToList();
-                var existingPermissionCodes = role.RolePermissions.Select(x => x.Permission.Code).ToList();
-                var permissionCodesToAdd = permissionCodes.Where(x => !existingPermissionCodes.Contains(x)).ToList();
+                var permissionIds = items.Select(x => x.Id).ToList();
+                var existingPermissionIds = role.RolePermissions.Select(x => x.Permission.Id).ToList();
+                var permissionIdsToAdd = permissionIds.Where(x => !existingPermissionIds.Contains((int)x)).ToList();
 
                 // Permissions to add
-                foreach (var code in permissionCodesToAdd)
+                foreach (var permissionId in permissionIdsToAdd)
                 {
-                    var permToAdd = allPermissions.FirstOrDefault(x => x.Code == code);
+                    var permToAdd = allPermissions.FirstOrDefault(x => x.Id == permissionId);
                     if (permToAdd == null)
                     {
                         // TODO throw new BusinessLayerException(string.Format("Invalid Permission Code {0}", code));
                     }
                     role.AddPermission(permToAdd);
                 }
-                
+
                 _context.Roles.Update(role);
                 _context.SaveChanges();
                 txn.Commit();
@@ -329,10 +329,10 @@ namespace SchoolBusAPI.Services.Impl
         /// </summary>
         /// <remarks>Adds permissions to a role</remarks>
         /// <param name="id">id of Role to update</param>
-        /// <param name="items"></param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdPermissionsPostAsync(int id, Permission item)
+        public virtual IActionResult RolesIdPermissionsPostAsync(int id, PermissionViewModel item)
         {
             using (var txn = _context.BeginTransaction())
             {
@@ -423,7 +423,7 @@ namespace SchoolBusAPI.Services.Impl
                     // ef core does not support lazy loading, so we need to explicitly get data here.
                     foreach (UserRole userRole in user.UserRoles)
                     {                        
-                        if (userRole.Role != null && userRole.Role.Id == id && userRole.EffectiveDate <= DateTimeOffset.Now && (userRole.ExpiryDate == null || userRole.ExpiryDate > DateTimeOffset.Now))
+                        if (userRole.Role != null && userRole.Role.Id == id && userRole.EffectiveDate <= DateTime.UtcNow && (userRole.ExpiryDate == null || userRole.ExpiryDate > DateTime.UtcNow))
                         {
                             found = true;
                             break;

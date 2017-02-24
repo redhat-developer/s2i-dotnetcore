@@ -17,6 +17,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
 {
@@ -37,21 +40,19 @@ namespace SchoolBusAPI.ViewModels
         /// Initializes a new instance of the <see cref="UserRoleViewModel" /> class.
         /// </summary>
         /// <param name="EffectiveDate">EffectiveDate (required).</param>
-        /// <param name="UserId">UserId (required).</param>
         /// <param name="RoleId">RoleId (required).</param>
+        /// <param name="UserId">UserId (required).</param>
         /// <param name="Id">Id.</param>
         /// <param name="ExpiryDate">ExpiryDate.</param>
-        public UserRoleViewModel(DateTime EffectiveDate, int UserId, int RoleId, int? Id = null, DateTime? ExpiryDate = null)
-        {
-            
+        public UserRoleViewModel(DateTime EffectiveDate, int RoleId, int UserId, int? Id = null, DateTime? ExpiryDate = null)
+        {   
             this.EffectiveDate = EffectiveDate;
-            
-            this.UserId = UserId;
-            
             this.RoleId = RoleId;
+            this.UserId = UserId;
+
+
             this.Id = Id;
             this.ExpiryDate = ExpiryDate;
-            
         }
 
         /// <summary>
@@ -61,16 +62,16 @@ namespace SchoolBusAPI.ViewModels
         public DateTime EffectiveDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets UserId
-        /// </summary>
-        [DataMember(Name="userId")]
-        public int UserId { get; set; }
-
-        /// <summary>
         /// Gets or Sets RoleId
         /// </summary>
         [DataMember(Name="roleId")]
         public int RoleId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets UserId
+        /// </summary>
+        [DataMember(Name="userId")]
+        public int UserId { get; set; }
 
         /// <summary>
         /// Gets or Sets Id
@@ -93,8 +94,8 @@ namespace SchoolBusAPI.ViewModels
             var sb = new StringBuilder();
             sb.Append("class UserRoleViewModel {\n");
             sb.Append("  EffectiveDate: ").Append(EffectiveDate).Append("\n");
-            sb.Append("  UserId: ").Append(UserId).Append("\n");
             sb.Append("  RoleId: ").Append(RoleId).Append("\n");
+            sb.Append("  UserId: ").Append(UserId).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  ExpiryDate: ").Append(ExpiryDate).Append("\n");
             sb.Append("}\n");
@@ -134,24 +135,25 @@ namespace SchoolBusAPI.ViewModels
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.EffectiveDate == other.EffectiveDate ||
+                    this.EffectiveDate != null &&
                     this.EffectiveDate.Equals(other.EffectiveDate)
-                ) && 
-                (
-                    this.UserId == other.UserId ||
-                    this.UserId.Equals(other.UserId)
-                ) && 
+                ) &&                 
                 (
                     this.RoleId == other.RoleId ||
                     this.RoleId.Equals(other.RoleId)
-                ) && 
+                ) &&                 
+                (
+                    this.UserId == other.UserId ||
+                    this.UserId.Equals(other.UserId)
+                ) &&                 
                 (
                     this.Id == other.Id ||
-                    
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.ExpiryDate == other.ExpiryDate ||
                     this.ExpiryDate != null &&
@@ -170,31 +172,44 @@ namespace SchoolBusAPI.ViewModels
             {
                 int hash = 41;
                 // Suitable nullity checks
-                hash = hash * 59 + this.EffectiveDate.GetHashCode();
-                
-                hash = hash * 59 + this.UserId.GetHashCode();
-                
-                hash = hash * 59 + this.RoleId.GetHashCode();
-                
-                if (this.Id != null)
+                   
+                if (this.EffectiveDate != null)
+                {
+                    hash = hash * 59 + this.EffectiveDate.GetHashCode();
+                }                                   
+                hash = hash * 59 + this.RoleId.GetHashCode();                                   
+                hash = hash * 59 + this.UserId.GetHashCode();                if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
-                }
-                if (this.ExpiryDate != null)
+                }                
+                                if (this.ExpiryDate != null)
                 {
                     hash = hash * 59 + this.ExpiryDate.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(UserRoleViewModel left, UserRoleViewModel right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(UserRoleViewModel left, UserRoleViewModel right)
         {
             return !Equals(left, right);

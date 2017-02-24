@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -27,7 +28,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The MOTI-defined Regions - must match the official MOTI List")]
 
-    public partial class Region : AuditableEntity,  IEquatable<Region>
+    public partial class Region : AuditableEntity, IEquatable<Region>
     {
         /// <summary>
         /// Default constructor, required by entity framework

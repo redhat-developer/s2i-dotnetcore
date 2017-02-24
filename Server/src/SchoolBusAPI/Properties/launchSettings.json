@@ -15,6 +15,7 @@
         "Key": "Value",
         "CCW_SERVICE_NAME": "CCW:8080",
         "RegionInitializationFile": "C:\\repo\\secrets\\regions.json",
+        "CCWJurisdictionInitializationFile": "C:\\repo\\secrets\\ccwjurisdictions.json",
         "DistrictInitializationFile": "C:\\repo\\secrets\\districts.json",
         "POSTGRESQL_DATABASE": "schoolbus",
         "ASPNETCORE_ENVIRONMENT": "Development",

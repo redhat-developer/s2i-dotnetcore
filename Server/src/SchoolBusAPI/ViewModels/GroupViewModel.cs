@@ -17,6 +17,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
 {
@@ -40,13 +43,11 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="Description">Description (required).</param>
         /// <param name="Id">Id.</param>
         public GroupViewModel(string Name, string Description, int? Id = null)
-        {
-            
+        {   
             this.Name = Name;
-            
             this.Description = Description;
+
             this.Id = Id;
-            
         }
 
         /// <summary>
@@ -115,20 +116,20 @@ namespace SchoolBusAPI.ViewModels
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
-                ) && 
+                ) &&                 
                 (
                     this.Description == other.Description ||
                     this.Description != null &&
                     this.Description.Equals(other.Description)
-                ) && 
+                ) &&                 
                 (
                     this.Id == other.Id ||
-                    
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 );
         }
@@ -147,26 +148,39 @@ namespace SchoolBusAPI.ViewModels
                 if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
-                }
-                if (this.Description != null)
+                }                
+                                if (this.Description != null)
                 {
                     hash = hash * 59 + this.Description.GetHashCode();
-                }
-                if (this.Id != null)
+                }                
+                                if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(GroupViewModel left, GroupViewModel right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(GroupViewModel left, GroupViewModel right)
         {
             return !Equals(left, right);

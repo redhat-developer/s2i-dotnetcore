@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -27,7 +28,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "A list of School Districts in the Province of BC. Authoritative source to be determined.")]
 
-    public partial class SchoolDistrict : AuditableEntity,  IEquatable<SchoolDistrict>
+    public partial class SchoolDistrict : AuditableEntity, IEquatable<SchoolDistrict>
     {
         /// <summary>
         /// Default constructor, required by entity framework

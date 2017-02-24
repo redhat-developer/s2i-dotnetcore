@@ -17,6 +17,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
 {
@@ -40,13 +43,11 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="PermissionId">PermissionId (required).</param>
         /// <param name="Id">Id.</param>
         public RolePermissionViewModel(int RoleId, int PermissionId, int? Id = null)
-        {
-            
+        {   
             this.RoleId = RoleId;
-            
             this.PermissionId = PermissionId;
+
             this.Id = Id;
-            
         }
 
         /// <summary>
@@ -115,20 +116,18 @@ namespace SchoolBusAPI.ViewModels
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.RoleId == other.RoleId ||
-                    this.RoleId != null &&
                     this.RoleId.Equals(other.RoleId)
-                ) && 
+                ) &&                 
                 (
                     this.PermissionId == other.PermissionId ||
-                    this.PermissionId != null &&
                     this.PermissionId.Equals(other.PermissionId)
-                ) && 
+                ) &&                 
                 (
                     this.Id == other.Id ||
-                    
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 );
         }
@@ -144,29 +143,36 @@ namespace SchoolBusAPI.ViewModels
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.RoleId != null)
-                {
-                    hash = hash * 59 + this.RoleId.GetHashCode();
-                }
-                if (this.PermissionId != null)
-                {
-                    hash = hash * 59 + this.PermissionId.GetHashCode();
-                }
-                if (this.Id != null)
+                                   
+                hash = hash * 59 + this.RoleId.GetHashCode();                                   
+                hash = hash * 59 + this.PermissionId.GetHashCode();                if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(RolePermissionViewModel left, RolePermissionViewModel right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(RolePermissionViewModel left, RolePermissionViewModel right)
         {
             return !Equals(left, right);

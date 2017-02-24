@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -27,7 +28,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "A table of contacts related to various entities in the system. FK fields are used to link contacts to records in the system.")]
 
-    public partial class Contact : AuditableEntity,  IEquatable<Contact>
+    public partial class Contact : AuditableEntity, IEquatable<Contact>
     {
         /// <summary>
         /// Default constructor, required by entity framework

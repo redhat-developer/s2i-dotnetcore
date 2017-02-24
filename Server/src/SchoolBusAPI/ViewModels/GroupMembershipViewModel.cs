@@ -17,6 +17,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
 {
@@ -41,15 +44,13 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="UserId">UserId (required).</param>
         /// <param name="Id">Id.</param>
         public GroupMembershipViewModel(bool Active, int GroupId, int UserId, int? Id = null)
-        {
-            
+        {   
             this.Active = Active;
-            
             this.GroupId = GroupId;
-            
             this.UserId = UserId;
+
+
             this.Id = Id;
-            
         }
 
         /// <summary>
@@ -125,25 +126,22 @@ namespace SchoolBusAPI.ViewModels
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Active == other.Active ||
-                    this.Active != null &&
                     this.Active.Equals(other.Active)
-                ) && 
+                ) &&                 
                 (
                     this.GroupId == other.GroupId ||
-                    this.GroupId != null &&
                     this.GroupId.Equals(other.GroupId)
-                ) && 
+                ) &&                 
                 (
                     this.UserId == other.UserId ||
-                    this.UserId != null &&
                     this.UserId.Equals(other.UserId)
-                ) && 
+                ) &&                 
                 (
                     this.Id == other.Id ||
-                    
+                    this.Id != null &&
                     this.Id.Equals(other.Id)
                 );
         }
@@ -159,33 +157,38 @@ namespace SchoolBusAPI.ViewModels
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.Active != null)
-                {
-                    hash = hash * 59 + this.Active.GetHashCode();
-                }
-                if (this.GroupId != null)
-                {
-                    hash = hash * 59 + this.GroupId.GetHashCode();
-                }
-                if (this.UserId != null)
-                {
-                    hash = hash * 59 + this.UserId.GetHashCode();
-                }
-                if (this.Id != null)
+                   
+                hash = hash * 59 + this.Active.GetHashCode();
+                                                   
+                hash = hash * 59 + this.GroupId.GetHashCode();                                   
+                hash = hash * 59 + this.UserId.GetHashCode();                if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(GroupMembershipViewModel left, GroupMembershipViewModel right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(GroupMembershipViewModel left, GroupMembershipViewModel right)
         {
             return !Equals(left, right);

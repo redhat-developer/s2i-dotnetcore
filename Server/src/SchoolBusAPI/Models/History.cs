@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -27,7 +28,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The history of updates made to an entity - e.g. a School Bus or a School Bus Owner")]
 
-    public partial class History : AuditableEntity,  IEquatable<History>
+    public partial class History : AuditableEntity, IEquatable<History>
     {
         /// <summary>
         /// Default constructor, required by entity framework

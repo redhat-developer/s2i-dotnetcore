@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -27,7 +28,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "The contents of the Jurisdiction table from CCW so that the user can select a Jurisdiction for passing to CCW on certain Out of Province School Bus Web Service calls")]
 
-    public partial class CCWJurisdiction : AuditableEntity,  IEquatable<CCWJurisdiction>
+    public partial class CCWJurisdiction : AuditableEntity, IEquatable<CCWJurisdiction>
     {
         /// <summary>
         /// Default constructor, required by entity framework

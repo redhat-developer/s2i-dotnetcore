@@ -342,11 +342,11 @@ namespace SchoolBusAPI.Services.Impl
             if (exists)
             {
                 SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners.First(a => a.Id == id);
-                var result = schoolBusOwner.ToViewModel();
+                SchoolBusOwnerViewModel result = schoolBusOwner.ToViewModel();
                 // populate the calculated fields.
-                result.nextInspectionDate = GetNextInspectionDate(id); ;
-                result.numberOfBuses = GetNumberSchoolBuses(id);
-                result.nextInspectionTypeCode = GetNextInspectionTypeCode(id);
+                result.NextInspectionDate = GetNextInspectionDate(id); ;
+                result.NumberOfBuses = GetNumberSchoolBuses(id);
+                result.NextInspectionTypeCode = GetNextInspectionTypeCode(id);
                 return new ObjectResult(result);
             }
             else
@@ -481,9 +481,9 @@ namespace SchoolBusAPI.Services.Impl
             foreach (SchoolBusOwnerViewModel item in result)
             {                
                 // populate the calculated fields.
-                item.nextInspectionDate = GetNextInspectionDate(item.Id); ;
-                item.numberOfBuses = GetNumberSchoolBuses(item.Id);
-                item.nextInspectionTypeCode = GetNextInspectionTypeCode(item.Id);              
+                item.NextInspectionDate = GetNextInspectionDate(item.Id); ;
+                item.NumberOfBuses = GetNumberSchoolBuses(item.Id);
+                item.NextInspectionTypeCode = GetNextInspectionTypeCode(item.Id);              
             }
             return new ObjectResult(result);
         }
