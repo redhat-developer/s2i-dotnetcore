@@ -23,6 +23,7 @@ const DEFAULT_MODELS = {
 
   roles: {},
   role: {},
+  rolePermissions: {},
 };
 
 export default function modelsReducer(state = DEFAULT_MODELS, action) {
@@ -110,7 +111,7 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
     case Action.DELETE_OWNER:
       return { ...state, owner: action.owner };
 
-    // Roles
+    // Roles/Permissions
     case Action.UPDATE_ROLES:
       return { ...state, roles: action.roles };
 
@@ -122,6 +123,9 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
 
     case Action.DELETE_ROLE:
       return { ...state, role: action.role };
+
+    case Action.UPDATE_ROLE_PERMISSIONS:
+      return { ...state, rolePermissions: action.rolePermissions };
   }
 
   return state;
