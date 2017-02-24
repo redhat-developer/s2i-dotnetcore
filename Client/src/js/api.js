@@ -15,7 +15,7 @@ import _ from 'lodash';
 ////////////////////
 
 function parseUser(user) {
-  if (!user.district) { user.district = { id: '', name: '' }; }
+  if (!user.district) { user.district = { id: 0, name: '' }; }
   if (!user.userRoles) { user.userRoles = []; }
   if (!user.groupMemberships) { user.groupMemberships = []; }
 
@@ -279,11 +279,11 @@ export function deleteFavourite(favourite) {
 ////////////////////
 
 function parseSchoolBus(bus) {
-  if (!bus.schoolBusOwner)   { bus.schoolBusOwner   = { id: '', name: '' }; }
-  if (!bus.district)         { bus.district         = { id: '', name: '' }; }
-  if (!bus.schoolDistrict)   { bus.schoolDistrict   = { id: '', name: '', shortName: '' }; }
-  if (!bus.homeTerminalCity) { bus.homeTerminalCity = { id: '', name: '' }; }
-  if (!bus.inspector)        { bus.inspector        = { id: '', givenName: '', surname: '' }; }
+  if (!bus.schoolBusOwner)   { bus.schoolBusOwner   = { id: 0, name: '' }; }
+  if (!bus.district)         { bus.district         = { id: 0, name: '' }; }
+  if (!bus.schoolDistrict)   { bus.schoolDistrict   = { id: 0, name: '', shortName: '' }; }
+  if (!bus.homeTerminalCity) { bus.homeTerminalCity = { id: 0, name: '' }; }
+  if (!bus.inspector)        { bus.inspector        = { id: 0, givenName: '', surname: '' }; }
 
   bus.isActive = bus.status === Constant.STATUS_ACTIVE;
   bus.ownerName = bus.schoolBusOwner.name;

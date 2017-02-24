@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Well, Row, Col  } from 'react-bootstrap';
-import { Alert, Label, Button, ButtonGroup, Glyphicon  } from 'react-bootstrap';
+import { Alert, Label, Button, ButtonGroup, Glyphicon, Checkbox  } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
@@ -17,7 +17,6 @@ import * as Constant from '../constants';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
-import CheckboxControl from '../components/CheckboxControl.jsx';
 import ColDisplay from '../components/ColDisplay.jsx';
 import Confirm from '../components/Confirm.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
@@ -31,6 +30,7 @@ import { concat, plural } from '../utils/string';
 
 var SchoolBusesDetail = React.createClass({
   propTypes: {
+    currentUser: React.PropTypes.object,
     schoolBus: React.PropTypes.object,
     owner: React.PropTypes.object,
     schoolBusCCW: React.PropTypes.object,
@@ -165,7 +165,7 @@ var SchoolBusesDetail = React.createClass({
     this.openInspectionDialog({
       id: 0,
       schoolBus: this.props.schoolBus,
-      inspector: { id: 0 }, // current user if inspector
+      inspector: { id: this.props.currentUser.isInspector ? this.props.currentUser.id : 0 },
     });
   },
 
@@ -183,7 +183,7 @@ var SchoolBusesDetail = React.createClass({
       // Refresh the inspections table
       this.getInspections();
       // Save next inspection data to this school bus record
-      Api.updateSchoolBus({ ...this.props.schoolBus, ...{
+      return Api.updateSchoolBus({ ...this.props.schoolBus, ...{
         nextInspectionDate: inspection.nextInspectionDate,
         nextInspectionTypeCode: inspection.nextInspectionTypeCode,
       }});
@@ -325,7 +325,7 @@ var SchoolBusesDetail = React.createClass({
                     <ColDisplay md={12} label="School District">{ bus.schoolDistrictName }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColDisplay md={4} label="Independent School"><CheckboxControl checked={ bus.isIndependentSchool } disabled></CheckboxControl></ColDisplay>
+                    <ColDisplay md={4} label="Independent School"><Checkbox defaultChecked={ bus.isIndependentSchool } disabled></Checkbox></ColDisplay>
                     <ColDisplay md={8}>{ bus.independentSchoolName }</ColDisplay>
                   </Row>
                   <Row>
@@ -533,6 +533,7 @@ var SchoolBusesDetail = React.createClass({
 
 function mapStateToProps(state) {
   return {
+    currentUser: state.user,
     schoolBus: state.models.schoolBus,
     owner: state.models.owner,
     schoolBusCCW: state.models.schoolBusCCW,

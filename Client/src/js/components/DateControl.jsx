@@ -52,7 +52,7 @@ var DateControl = React.createClass({
         if (this.props.label) { return <ControlLabel>{ this.props.label }</ControlLabel>; }
       })()}
       <InputGroup>
-        <DateTime defaultValue={ date } dateFormat={ format } timeFormat={ false } closeOnSelect={ true } onChange={ this.dateChanged }
+        <DateTime value={ date } dateFormat={ format } timeFormat={ false } closeOnSelect={ true } onChange={ this.dateChanged }
           inputProps={{ placeholder: placeholder, ref: input => { this.input = input; } }}
         />
         <InputGroup.Button>
