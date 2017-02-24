@@ -33,7 +33,8 @@ else
   APP_DLL_NAME="$(basename "$(realpath "${DOTNET_STARTUP_PROJECT}")").dll"
 fi
 
-RESTORE_OPTIONS=
+# Build nuget sources list for when doing the restore
+RESTORE_OPTIONS=""
 for SOURCE in $DOTNET_RESTORE_SOURCES; do
   RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
 done
