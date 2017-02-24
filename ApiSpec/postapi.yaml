@@ -437,7 +437,7 @@
           schema:
             type: array
             items:
-              $ref: "#/definitions/Permission"
+              $ref: "#/definitions/PermissionViewModel"
       responses:
         200:
           description: OK
@@ -467,7 +467,7 @@
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Permission"
+            $ref: "#/definitions/PermissionViewModel"
       responses:
         200:
           description: OK

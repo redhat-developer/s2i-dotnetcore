@@ -62,7 +62,7 @@ namespace SchoolBusAPI.Seeders
                     {
                         Permission = p
                     }).ToList()
-                },
+                }
             };
 
             _logger.LogDebug("Updating roles ...");

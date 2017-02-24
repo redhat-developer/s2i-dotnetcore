@@ -206,7 +206,10 @@ namespace SchoolBusAPI.Models
                 district = context.GetDistrictByMinistryDistrictId(initialUser.District.MinistryDistrictID);
             }
 
-            user.District = district;            
+            user.District = district;
+
+            context.Users.Add(user);
+            context.SaveChanges();
 
             string[] userRoles = initialUser.UserRoles.Select(x => x.Role.Name).ToArray();
             if (user.UserRoles == null)
@@ -244,7 +247,7 @@ namespace SchoolBusAPI.Models
                 }
             }
 
-            context.Users.Add(user);
+            context.Users.Update(user);
         }
 
 
