@@ -107,6 +107,11 @@ a `.s2i/environment` file inside your source code repository.
     - the application sources to be in subfolder `DOTNET_ASSEMBLY_NAME` in the deployed
     container.
 
+* **DOTNET_RESTORE_SOURCES**
+
+    Used to specify the list of NuGet package sources used during the restore operation. This overrides 
+    all of the sources specified in the NuGet.config file.
+
 * **DOTNET_NPM_TOOLS**
 
     Used to specify a list of npm packages to install before building the app.
