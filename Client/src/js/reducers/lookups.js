@@ -7,6 +7,7 @@ const DEFAULT_LOOKUPS = {
   schoolDistricts: {},
   serviceAreas: {},
   groups: {},
+  permissions: {},
 
   owners: {},
   inspectors: {},
@@ -36,6 +37,9 @@ export default function lookupsReducer(state = DEFAULT_LOOKUPS, action) {
 
     case Action.UPDATE_GROUPS_LOOKUP:
       return { ...state, groups: action.groups };
+
+    case Action.UPDATE_PERMISSIONS_LOOKUP:
+      return { ...state, permissions: action.permissions };
 
     // Not typical lookups, because they can change within the app, so
     // ensure they're loaded/updated as needed.
