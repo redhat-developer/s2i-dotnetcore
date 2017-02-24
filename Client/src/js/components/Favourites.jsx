@@ -101,6 +101,7 @@ var Favourites = React.createClass({
       favourites: this.props.favourites,
       favouriteToEdit: {},
       showEditDialog: false,
+      open: false,
     };
   },
 
@@ -149,6 +150,7 @@ var Favourites = React.createClass({
   },
 
   selectFavourite(favourite) {
+    this.toggle(false);
     this.props.onSelect(favourite);
   },
 
@@ -160,9 +162,15 @@ var Favourites = React.createClass({
     this.setState({ showEditDialog: false });
   },
 
+  toggle(open) {
+    this.setState({ open: open });
+  },
+
   render() {
     var title = this.props.title || 'Faves';
-    return <Dropdown id={ this.props.id } className={ `favourites ${ this.props.className || '' }` } title={ title }  pullRight={ this.props.pullRight }>
+    return <Dropdown id={ this.props.id } className={ `favourites ${ this.props.className || '' }` } title={ title }  pullRight={ this.props.pullRight }
+      open={ this.state.open } onToggle={ this.toggle }
+    >
       <Dropdown.Toggle>{ title }</Dropdown.Toggle>
       <RootCloseMenu bsRole="menu">
         <div className="favourites-button-bar">

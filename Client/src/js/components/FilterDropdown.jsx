@@ -24,7 +24,7 @@ var FilterDropdown = React.createClass({
 
   getInitialState() {
     return {
-      selectedId: this.props.selectedId || '',
+      selectedId: this.props.selectedId || 0,
       title: '',
       filterTerm: '',
       fieldName: this.props.fieldName || 'name',
