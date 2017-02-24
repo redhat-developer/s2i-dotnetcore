@@ -34,8 +34,8 @@ else
 fi
 
 RESTORE_OPTIONS=
-for source in $DOTNET_RESTORE_SOURCES; do
-  RESTORE_OPTIONS="$RESTORE_OPTIONS --source $source"
+for SOURCE in $DOTNET_RESTORE_SOURCES; do
+  RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
 done
 
 echo "---> Installing dependencies ..."
