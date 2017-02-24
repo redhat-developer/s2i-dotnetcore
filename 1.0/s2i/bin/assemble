@@ -33,8 +33,14 @@ else
   APP_DLL_NAME="$(basename "$(realpath "${DOTNET_STARTUP_PROJECT}")").dll"
 fi
 
+# Build nuget sources list for when doing the restore
+RESTORE_OPTIONS=""
+for SOURCE in $DOTNET_RESTORE_SOURCES; do
+  RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
+done
+
 echo "---> Installing dependencies ..."
-dotnet restore
+dotnet restore $RESTORE_OPTIONS
 
 # The publish operation fails when .NET framework targets are included in project.json
 # See https://github.com/dotnet/cli/issues/3636
