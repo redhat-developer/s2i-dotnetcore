@@ -75,7 +75,7 @@
         type: integer
         description: The number of buses for which this owner is associated with       
       nextInspectionTypeCode:
-        format: string
+        type: string
         description: Type Code for the Next InspectionType.  Null if there are no next inspections.
   UserViewModel:
     type: object
@@ -118,6 +118,12 @@
     type: object
     x-codegen-viewmodel: true
     properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
       givenName:
         type: string
         x-chance-type: name
@@ -205,6 +211,12 @@
         x-type-options:
           min: 1
           max: 1000
+      userId:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
   RoleViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -258,6 +270,12 @@
       - name
       - description
     properties:
+      id:
+        format: int32
+        type: integer
+        x-type-options:
+          min: 1
+          max: 1000
       code:
         type: string
       name:
@@ -333,12 +351,9 @@
         x-chance-type: word
       isDefault:
         type: boolean
-      favouriteContextTypeId:
-        format: int32
-        type: integer
-        x-type-options:
-          min: 1
-          max: 1000
+      type:
+        type: string
+        description:  Type of favourite        
   NotificationViewModel:
     type: object
     x-codegen-viewmodel: true

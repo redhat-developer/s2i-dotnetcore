@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -27,7 +28,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "User specific settings for a specific location in the UI. The location and saved settings are internally defined by the UI.")]
 
-    public partial class UserFavourite : AuditableEntity,  IEquatable<UserFavourite>
+    public partial class UserFavourite : AuditableEntity, IEquatable<UserFavourite>
     {
         /// <summary>
         /// Default constructor, required by entity framework

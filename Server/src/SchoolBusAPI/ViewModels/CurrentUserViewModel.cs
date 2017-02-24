@@ -17,6 +17,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
@@ -37,81 +39,85 @@ namespace SchoolBusAPI.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="CurrentUserViewModel" /> class.
         /// </summary>
+        /// <param name="Id">Id.</param>
         /// <param name="GivenName">GivenName.</param>
         /// <param name="Surname">Surname.</param>
-        /// <param name="FullName">FullName.</param>
-        /// <param name="DistrictName">DistrictName.</param>
+        /// <param name="Email">Email.</param>
+        /// <param name="Active">Active.</param>
+        /// <param name="UserRoles">UserRoles.</param>
+        /// <param name="GroupMemberships">GroupMemberships.</param>
+        /// <param name="District">The District to which this User is affliated..</param>
         /// <param name="OverdueInspections">OverdueInspections.</param>
         /// <param name="ScheduledInspections">ScheduledInspections.</param>
         /// <param name="DueNextMonthInspections">DueNextMonthInspections.</param>
-        public CurrentUserViewModel(int Id, string GivenName, string Surname, bool Active, string Email = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null, int? OverdueInspections = null, int? ScheduledInspections = null, int? DueNextMonthInspections = null)
-        {
-            this.Id = Id;
+        public CurrentUserViewModel(int? Id = null, string GivenName = null, string Surname = null, string Email = null, bool? Active = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null, int? OverdueInspections = null, int? ScheduledInspections = null, int? DueNextMonthInspections = null)
+        {               this.Id = Id;
             this.GivenName = GivenName;
-            this.Surname = Surname;                        
+            this.Surname = Surname;
             this.Email = Email;
+            this.Active = Active;
             this.UserRoles = UserRoles;
             this.GroupMemberships = GroupMemberships;
             this.District = District;
-            this.UserRoles = UserRoles;
-            this.GroupMemberships = GroupMemberships;
             this.OverdueInspections = OverdueInspections;
             this.ScheduledInspections = ScheduledInspections;
-            this.DueNextMonthInspections = DueNextMonthInspections;            
+            this.DueNextMonthInspections = DueNextMonthInspections;
         }
 
+        /// <summary>
+        /// Gets or Sets Id
+        /// </summary>
+        [DataMember(Name="id")]
+        public int? Id { get; set; }
 
-    /// <summary>
-    /// A system-generated unique identifier for a User
-    /// </summary>
-    /// <value>A system-generated unique identifier for a User</value>
-    [DataMember(Name = "Id")]
-    public int Id { get; set; }
+        /// <summary>
+        /// Gets or Sets GivenName
+        /// </summary>
+        [DataMember(Name="givenName")]
+        public string GivenName { get; set; }
 
-    /// <summary>
-    /// Given name of the user.
-    /// </summary>
-    /// <value>Given name of the user.</value>
-    [DataMember(Name = "GivenName")]
-    public string GivenName { get; set; }
+        /// <summary>
+        /// Gets or Sets Surname
+        /// </summary>
+        [DataMember(Name="surname")]
+        public string Surname { get; set; }
 
-    /// <summary>
-    /// Surname of the user.
-    /// </summary>
-    /// <value>Surname of the user.</value>
-    [DataMember(Name = "Surname")]
-    public string Surname { get; set; }
+        /// <summary>
+        /// Gets or Sets Email
+        /// </summary>
+        [DataMember(Name="email")]
+        public string Email { get; set; }
 
-    /// <summary>
-    /// The email address of the user in the system.
-    /// </summary>
-    /// <value>The email address of the user in the system.</value>
-    [DataMember(Name = "Email")]
-    public string Email { get; set; }
+        /// <summary>
+        /// Gets or Sets Active
+        /// </summary>
+        [DataMember(Name="active")]
+        public bool? Active { get; set; }
 
-    /// <summary>
-    /// Gets or Sets UserRoles
-    /// </summary>
-    [DataMember(Name = "UserRoles")]
-    public List<UserRole> UserRoles { get; set; }
+        /// <summary>
+        /// Gets or Sets UserRoles
+        /// </summary>
+        [DataMember(Name="userRoles")]
+        public List<UserRole> UserRoles { get; set; }
 
-    /// <summary>
-    /// Gets or Sets GroupMemberships
-    /// </summary>
-    [DataMember(Name = "GroupMemberships")]
-    public List<GroupMembership> GroupMemberships { get; set; }
+        /// <summary>
+        /// Gets or Sets GroupMemberships
+        /// </summary>
+        [DataMember(Name="groupMemberships")]
+        public List<GroupMembership> GroupMemberships { get; set; }
 
-    /// <summary>
-    /// The District that the User belongs to
-    /// </summary>
-    /// <value>The District that the User belongs to</value>
-    [DataMember(Name = "District")]
-    public District District { get; set; }
+        /// <summary>
+        /// The District to which this User is affliated.
+        /// </summary>
+        /// <value>The District to which this User is affliated.</value>
+        [DataMember(Name="district")]
+        [MetaDataExtension (Description = "The District to which this User is affliated.")]
+        public District District { get; set; }
 
-    /// <summary>
-    /// Gets or Sets OverdueInspections
-    /// </summary>
-    [DataMember(Name="overdueInspections")]
+        /// <summary>
+        /// Gets or Sets OverdueInspections
+        /// </summary>
+        [DataMember(Name="overdueInspections")]
         public int? OverdueInspections { get; set; }
 
         /// <summary>
@@ -134,9 +140,14 @@ namespace SchoolBusAPI.ViewModels
         {
             var sb = new StringBuilder();
             sb.Append("class CurrentUserViewModel {\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
-            sb.Append("  Surname: ").Append(Surname).Append("\n");            
-            sb.Append("  DistrictName: ").Append(District.ToString()).Append("\n");
+            sb.Append("  Surname: ").Append(Surname).Append("\n");
+            sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  Active: ").Append(Active).Append("\n");
+            sb.Append("  UserRoles: ").Append(UserRoles).Append("\n");
+            sb.Append("  GroupMemberships: ").Append(GroupMemberships).Append("\n");
+            sb.Append("  District: ").Append(District).Append("\n");
             sb.Append("  OverdueInspections: ").Append(OverdueInspections).Append("\n");
             sb.Append("  ScheduledInspections: ").Append(ScheduledInspections).Append("\n");
             sb.Append("  DueNextMonthInspections: ").Append(DueNextMonthInspections).Append("\n");
@@ -177,27 +188,57 @@ namespace SchoolBusAPI.ViewModels
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
+                (
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
+                ) &&                 
                 (
                     this.GivenName == other.GivenName ||
                     this.GivenName != null &&
                     this.GivenName.Equals(other.GivenName)
-                ) && 
+                ) &&                 
                 (
                     this.Surname == other.Surname ||
                     this.Surname != null &&
                     this.Surname.Equals(other.Surname)
-                ) &&
+                ) &&                 
+                (
+                    this.Email == other.Email ||
+                    this.Email != null &&
+                    this.Email.Equals(other.Email)
+                ) &&                 
+                (
+                    this.Active == other.Active ||
+                    this.Active != null &&
+                    this.Active.Equals(other.Active)
+                ) && 
+                (
+                    this.UserRoles == other.UserRoles ||
+                    this.UserRoles != null &&
+                    this.UserRoles.SequenceEqual(other.UserRoles)
+                ) && 
+                (
+                    this.GroupMemberships == other.GroupMemberships ||
+                    this.GroupMemberships != null &&
+                    this.GroupMemberships.SequenceEqual(other.GroupMemberships)
+                ) &&                 
+                (
+                    this.District == other.District ||
+                    this.District != null &&
+                    this.District.Equals(other.District)
+                ) &&                 
                 (
                     this.OverdueInspections == other.OverdueInspections ||
                     this.OverdueInspections != null &&
                     this.OverdueInspections.Equals(other.OverdueInspections)
-                ) && 
+                ) &&                 
                 (
                     this.ScheduledInspections == other.ScheduledInspections ||
                     this.ScheduledInspections != null &&
                     this.ScheduledInspections.Equals(other.ScheduledInspections)
-                ) && 
+                ) &&                 
                 (
                     this.DueNextMonthInspections == other.DueNextMonthInspections ||
                     this.DueNextMonthInspections != null &&
@@ -216,37 +257,74 @@ namespace SchoolBusAPI.ViewModels
             {
                 int hash = 41;
                 // Suitable nullity checks
-                if (this.GivenName != null)
+                if (this.Id != null)
+                {
+                    hash = hash * 59 + this.Id.GetHashCode();
+                }                
+                                if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();
-                }
-                if (this.Surname != null)
+                }                
+                                if (this.Surname != null)
                 {
                     hash = hash * 59 + this.Surname.GetHashCode();
-                }
-                if (this.OverdueInspections != null)
+                }                
+                                if (this.Email != null)
+                {
+                    hash = hash * 59 + this.Email.GetHashCode();
+                }                
+                                if (this.Active != null)
+                {
+                    hash = hash * 59 + this.Active.GetHashCode();
+                }                
+                                   
+                if (this.UserRoles != null)
+                {
+                    hash = hash * 59 + this.UserRoles.GetHashCode();
+                }                   
+                if (this.GroupMemberships != null)
+                {
+                    hash = hash * 59 + this.GroupMemberships.GetHashCode();
+                }                   
+                if (this.District != null)
+                {
+                    hash = hash * 59 + this.District.GetHashCode();
+                }                if (this.OverdueInspections != null)
                 {
                     hash = hash * 59 + this.OverdueInspections.GetHashCode();
-                }
-                if (this.ScheduledInspections != null)
+                }                
+                                if (this.ScheduledInspections != null)
                 {
                     hash = hash * 59 + this.ScheduledInspections.GetHashCode();
-                }
-                if (this.DueNextMonthInspections != null)
+                }                
+                                if (this.DueNextMonthInspections != null)
                 {
                     hash = hash * 59 + this.DueNextMonthInspections.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(CurrentUserViewModel left, CurrentUserViewModel right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(CurrentUserViewModel left, CurrentUserViewModel right)
         {
             return !Equals(left, right);

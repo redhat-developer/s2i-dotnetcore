@@ -17,6 +17,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
@@ -41,21 +43,23 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="Active">Active (required).</param>
         /// <param name="GivenName">GivenName.</param>
         /// <param name="Surname">Surname.</param>
-        /// <param name="Initials">Initials.</param>
         /// <param name="Email">Email.</param>
-        public UserViewModel(int Id, string GivenName, string Surname, bool Active, string SmUserId, string Email = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null)
-        {
-
+        /// <param name="SmUserId">SmUserId.</param>
+        /// <param name="UserRoles">UserRoles.</param>
+        /// <param name="GroupMemberships">GroupMemberships.</param>
+        /// <param name="District">The District to which this User is affliated..</param>
+        public UserViewModel(int Id, bool Active, string GivenName = null, string Surname = null, string Email = null, string SmUserId = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null)
+        {   
             this.Id = Id;
+            this.Active = Active;
+
             this.GivenName = GivenName;
             this.Surname = Surname;
             this.Email = Email;
-            this.Active = Active;
+            this.SmUserId = SmUserId;
             this.UserRoles = UserRoles;
             this.GroupMemberships = GroupMemberships;
             this.District = District;
-            this.UserRoles = UserRoles;
-
         }
 
         /// <summary>
@@ -69,12 +73,6 @@ namespace SchoolBusAPI.ViewModels
         /// </summary>
         [DataMember(Name="active")]
         public bool Active { get; set; }
-
-        /// <summary>
-        /// Gets or Sets SmUserId
-        /// </summary>
-        [DataMember(Name="smUserId")]
-        public string SmUserId { get; set; }
 
         /// <summary>
         /// Gets or Sets GivenName
@@ -95,22 +93,29 @@ namespace SchoolBusAPI.ViewModels
         public string Email { get; set; }
 
         /// <summary>
+        /// Gets or Sets SmUserId
+        /// </summary>
+        [DataMember(Name="smUserId")]
+        public string SmUserId { get; set; }
+
+        /// <summary>
         /// Gets or Sets UserRoles
         /// </summary>
-        [DataMember(Name = "UserRoles")]
+        [DataMember(Name="userRoles")]
         public List<UserRole> UserRoles { get; set; }
 
         /// <summary>
         /// Gets or Sets GroupMemberships
         /// </summary>
-        [DataMember(Name = "GroupMemberships")]
+        [DataMember(Name="groupMemberships")]
         public List<GroupMembership> GroupMemberships { get; set; }
 
         /// <summary>
-        /// The District that the User belongs to
+        /// The District to which this User is affliated.
         /// </summary>
-        /// <value>The District that the User belongs to</value>
-        [DataMember(Name = "District")]
+        /// <value>The District to which this User is affliated.</value>
+        [DataMember(Name="district")]
+        [MetaDataExtension (Description = "The District to which this User is affliated.")]
         public District District { get; set; }
 
         /// <summary>
@@ -124,12 +129,12 @@ namespace SchoolBusAPI.ViewModels
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Active: ").Append(Active).Append("\n");
             sb.Append("  GivenName: ").Append(GivenName).Append("\n");
-            sb.Append("  Surname: ").Append(Surname).Append("\n");           
+            sb.Append("  Surname: ").Append(Surname).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
-            if (this.District != null)
-            {
-                sb.Append("  District: ").Append(this.District.ToString()).Append("\n");
-            }            
+            sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
+            sb.Append("  UserRoles: ").Append(UserRoles).Append("\n");
+            sb.Append("  GroupMemberships: ").Append(GroupMemberships).Append("\n");
+            sb.Append("  District: ").Append(District).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -167,31 +172,45 @@ namespace SchoolBusAPI.ViewModels
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
-                    
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.Active == other.Active ||
                     this.Active.Equals(other.Active)
-                ) && 
+                ) &&                 
                 (
                     this.GivenName == other.GivenName ||
                     this.GivenName != null &&
                     this.GivenName.Equals(other.GivenName)
-                ) && 
+                ) &&                 
                 (
                     this.Surname == other.Surname ||
                     this.Surname != null &&
                     this.Surname.Equals(other.Surname)
-                ) && 
+                ) &&                 
                 (
                     this.Email == other.Email ||
                     this.Email != null &&
                     this.Email.Equals(other.Email)
-                ) &&
+                ) &&                 
+                (
+                    this.SmUserId == other.SmUserId ||
+                    this.SmUserId != null &&
+                    this.SmUserId.Equals(other.SmUserId)
+                ) && 
+                (
+                    this.UserRoles == other.UserRoles ||
+                    this.UserRoles != null &&
+                    this.UserRoles.SequenceEqual(other.UserRoles)
+                ) && 
+                (
+                    this.GroupMemberships == other.GroupMemberships ||
+                    this.GroupMemberships != null &&
+                    this.GroupMemberships.SequenceEqual(other.GroupMemberships)
+                ) &&                 
                 (
                     this.District == other.District ||
                     this.District != null &&
@@ -209,23 +228,36 @@ namespace SchoolBusAPI.ViewModels
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;
-                hash = hash * 59 + this.Id.GetHashCode();
-
                 // Suitable nullity checks
-
-                if (this.GivenName != null)
+                                   
+                hash = hash * 59 + this.Id.GetHashCode();                   
+                hash = hash * 59 + this.Active.GetHashCode();
+                                if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();
-                }
-                if (this.Surname != null)
+                }                
+                                if (this.Surname != null)
                 {
                     hash = hash * 59 + this.Surname.GetHashCode();
                 }                
-                if (this.Email != null)
+                                if (this.Email != null)
                 {
                     hash = hash * 59 + this.Email.GetHashCode();
-                }
-                if (this.Email != null)
+                }                
+                                if (this.SmUserId != null)
+                {
+                    hash = hash * 59 + this.SmUserId.GetHashCode();
+                }                
+                                   
+                if (this.UserRoles != null)
+                {
+                    hash = hash * 59 + this.UserRoles.GetHashCode();
+                }                   
+                if (this.GroupMemberships != null)
+                {
+                    hash = hash * 59 + this.GroupMemberships.GetHashCode();
+                }                   
+                if (this.District != null)
                 {
                     hash = hash * 59 + this.District.GetHashCode();
                 }
@@ -234,12 +266,24 @@ namespace SchoolBusAPI.ViewModels
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(UserViewModel left, UserViewModel right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(UserViewModel left, UserViewModel right)
         {
             return !Equals(left, right);

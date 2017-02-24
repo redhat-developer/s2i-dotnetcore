@@ -17,6 +17,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
 {
@@ -46,8 +49,7 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="PriorityCode">PriorityCode.</param>
         /// <param name="UserId">UserId.</param>
         public NotificationViewModel(int? Id = null, int? EventId = null, int? Event2Id = null, bool? HasBeenViewed = null, bool? IsWatchNotification = null, bool? IsExpired = null, bool? IsAllDay = null, string PriorityCode = null, int? UserId = null)
-        {
-            this.Id = Id;
+        {               this.Id = Id;
             this.EventId = EventId;
             this.Event2Id = Event2Id;
             this.HasBeenViewed = HasBeenViewed;
@@ -56,7 +58,6 @@ namespace SchoolBusAPI.ViewModels
             this.IsAllDay = IsAllDay;
             this.PriorityCode = PriorityCode;
             this.UserId = UserId;
-            
         }
 
         /// <summary>
@@ -167,47 +168,47 @@ namespace SchoolBusAPI.ViewModels
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return 
+            return                 
                 (
                     this.Id == other.Id ||
                     this.Id != null &&
                     this.Id.Equals(other.Id)
-                ) && 
+                ) &&                 
                 (
                     this.EventId == other.EventId ||
                     this.EventId != null &&
                     this.EventId.Equals(other.EventId)
-                ) && 
+                ) &&                 
                 (
                     this.Event2Id == other.Event2Id ||
                     this.Event2Id != null &&
                     this.Event2Id.Equals(other.Event2Id)
-                ) && 
+                ) &&                 
                 (
                     this.HasBeenViewed == other.HasBeenViewed ||
                     this.HasBeenViewed != null &&
                     this.HasBeenViewed.Equals(other.HasBeenViewed)
-                ) && 
+                ) &&                 
                 (
                     this.IsWatchNotification == other.IsWatchNotification ||
                     this.IsWatchNotification != null &&
                     this.IsWatchNotification.Equals(other.IsWatchNotification)
-                ) && 
+                ) &&                 
                 (
                     this.IsExpired == other.IsExpired ||
                     this.IsExpired != null &&
                     this.IsExpired.Equals(other.IsExpired)
-                ) && 
+                ) &&                 
                 (
                     this.IsAllDay == other.IsAllDay ||
                     this.IsAllDay != null &&
                     this.IsAllDay.Equals(other.IsAllDay)
-                ) && 
+                ) &&                 
                 (
                     this.PriorityCode == other.PriorityCode ||
                     this.PriorityCode != null &&
                     this.PriorityCode.Equals(other.PriorityCode)
-                ) && 
+                ) &&                 
                 (
                     this.UserId == other.UserId ||
                     this.UserId != null &&
@@ -229,50 +230,63 @@ namespace SchoolBusAPI.ViewModels
                 if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
-                }
-                if (this.EventId != null)
+                }                
+                                if (this.EventId != null)
                 {
                     hash = hash * 59 + this.EventId.GetHashCode();
-                }
-                if (this.Event2Id != null)
+                }                
+                                if (this.Event2Id != null)
                 {
                     hash = hash * 59 + this.Event2Id.GetHashCode();
-                }
-                if (this.HasBeenViewed != null)
+                }                
+                                if (this.HasBeenViewed != null)
                 {
                     hash = hash * 59 + this.HasBeenViewed.GetHashCode();
-                }
-                if (this.IsWatchNotification != null)
+                }                
+                                if (this.IsWatchNotification != null)
                 {
                     hash = hash * 59 + this.IsWatchNotification.GetHashCode();
-                }
-                if (this.IsExpired != null)
+                }                
+                                if (this.IsExpired != null)
                 {
                     hash = hash * 59 + this.IsExpired.GetHashCode();
-                }
-                if (this.IsAllDay != null)
+                }                
+                                if (this.IsAllDay != null)
                 {
                     hash = hash * 59 + this.IsAllDay.GetHashCode();
-                }
-                if (this.PriorityCode != null)
+                }                
+                                if (this.PriorityCode != null)
                 {
                     hash = hash * 59 + this.PriorityCode.GetHashCode();
-                }
-                if (this.UserId != null)
+                }                
+                                if (this.UserId != null)
                 {
                     hash = hash * 59 + this.UserId.GetHashCode();
-                }
+                }                
+                
                 return hash;
             }
         }
 
         #region Operators
-
+        
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(NotificationViewModel left, NotificationViewModel right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not Equals
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(NotificationViewModel left, NotificationViewModel right)
         {
             return !Equals(left, right);

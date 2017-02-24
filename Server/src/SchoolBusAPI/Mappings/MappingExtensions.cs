@@ -165,6 +165,7 @@ namespace SchoolBusAPI.Mappings
             var dto = new PermissionViewModel();
             if (model != null)
             {
+                dto.Id = model.Id;
                 dto.Code = model.Code;
                 dto.Name = model.Name;
                 dto.Description = model.Description;

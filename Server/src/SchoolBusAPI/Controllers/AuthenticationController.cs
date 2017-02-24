@@ -41,7 +41,7 @@ namespace SchoolBusAPI.Controllers
             {
                 CookieOptions options = new CookieOptions();
                 options.Path = "/";
-                options.Expires = DateTimeOffset.Now.AddDays(7);
+                options.Expires = DateTime.UtcNow.AddDays(7);
                 Response.Cookies.Append(_devAuthenticationTokenKey, userId, options);
                 return Ok();
             }

@@ -81,7 +81,7 @@ namespace SchoolBusAPI.Services
         /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        IActionResult RolesIdPermissionsPostAsync(int id, Permission item);
+        IActionResult RolesIdPermissionsPostAsync(int id, PermissionViewModel item);
 
         /// <summary>
         /// 
@@ -91,7 +91,7 @@ namespace SchoolBusAPI.Services
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        IActionResult RolesIdPermissionsPutAsync(int id, Permission[] items);
+        IActionResult RolesIdPermissionsPutAsync(int id, PermissionViewModel[] items);
 
         /// <summary>
         /// 

@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -27,7 +28,7 @@ namespace SchoolBusAPI.Models
     /// </summary>
         [MetaDataExtension (Description = "Attachments uploaded by users about instance of entities - e.g. School Buses and School Bus Owners")]
 
-    public partial class Attachment : AuditableEntity,  IEquatable<Attachment>
+    public partial class Attachment : AuditableEntity, IEquatable<Attachment>
     {
         /// <summary>
         /// Default constructor, required by entity framework
