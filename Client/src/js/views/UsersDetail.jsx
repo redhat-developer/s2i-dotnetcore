@@ -48,7 +48,7 @@ var UsersDetail = React.createClass({
       isNew: this.props.params.userId === '0',
 
       ui: {
-        // Roles
+        // User roles
         sortField: this.props.ui.sortField || 'roleName',
         sortDesc: this.props.ui.sortDesc != false, // defaults to true
         showExpiredOnly: false,
@@ -84,7 +84,7 @@ var UsersDetail = React.createClass({
 
   updateUIState(state, callback) {
     this.setState({ ui: { ...this.state.ui, ...state }}, () =>{
-      store.dispatch({ type: Action.UPDATE_ROLES_UI, roles: this.state.ui });
+      store.dispatch({ type: Action.UPDATE_USER_ROLES_UI, userRoles: this.state.ui });
       if (callback) { callback(); }
     });
   },

@@ -77,7 +77,7 @@ var SchoolBusAddDialog = React.createClass({
           });
         } else {
           this.setState({ loading: this.state.loading + 1 });
-          Api.searchCCW(this.state.search.keySearchParams).then(() => {
+          return Api.searchCCW(this.state.search.keySearchParams).then(() => {
             var found = this.props.schoolBusCCW.icbcRegistrationNumber ? true : false;
             this.setState({
               ccwFound: found,

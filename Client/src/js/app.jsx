@@ -13,7 +13,8 @@ import OwnersDetail from './views/OwnersDetail.jsx';
 import Notifications from './views/Notifications.jsx';
 import Users from './views/Users.jsx';
 import UsersDetail from './views/UsersDetail.jsx';
-import RolesPermissions from './views/RolesPermissions.jsx';
+import Roles from './views/Roles.jsx';
+import RolesDetail from './views/RolesDetail.jsx';
 import Version from './views/Version.jsx';
 import FourOhFour from './views/404.jsx';
 
@@ -30,7 +31,8 @@ const App = <Provider store={ store }>
       <Route path="notifications" component={ Notifications }/>
       <Route path="users" component={ Users }/>
       <Route path="users/:userId" component={ UsersDetail }/>
-      <Route path="roles-permissions" component={ RolesPermissions }/>
+      <Route path="roles" component={ Roles }/>
+      <Route path="roles/:roleId" component={ RolesDetail }/>
       <Route path="version" component={ Version }/>
       <Route path="*" component={ FourOhFour }/>
     </Route>

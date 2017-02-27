@@ -33,7 +33,6 @@ var UserManagement = React.createClass({
     favourites: React.PropTypes.object,
     search: React.PropTypes.object,
     ui: React.PropTypes.object,
-    router: React.PropTypes.object,
   },
 
   getInitialState() {
