@@ -105,11 +105,18 @@ namespace SchoolBusAPI.Authentication
             string username = this.SiteMinderUserId;
             string siteMinderGuid = this.SiteMinderGuid;
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(siteMinderGuid))
+            if (string.IsNullOrEmpty(username))
             {
                 // Defer to another layer ...
-                _logger.LogWarning($"Missing one or the other or both of username and guid!");
-                return Task.FromResult(AuthenticateResult.Fail("Missing required authentication information!"));
+                _logger.LogWarning($"Missing username");
+                return Task.FromResult(AuthenticateResult.Fail("Missing SiteMinder UserId!"));
+            }
+
+            if (string.IsNullOrEmpty(siteMinderGuid))
+            {
+                // Defer to another layer ...
+                _logger.LogWarning($"Missing guid!");
+                return Task.FromResult(AuthenticateResult.Fail("Missing SiteMinder Guid!"));
             }
 
             var user = _context.LoadUser(username, siteMinderGuid);
