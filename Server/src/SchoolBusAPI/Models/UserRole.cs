@@ -82,9 +82,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for Role 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("Role")]
-        public int? RoleRefId { get; set; }
+		[JsonIgnore]
+        public int? RoleId { get; set; }
         
         /// <summary>
         /// Returns the string presentation of the object

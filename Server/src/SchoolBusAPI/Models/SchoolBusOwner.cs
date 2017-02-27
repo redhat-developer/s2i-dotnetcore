@@ -109,9 +109,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for PrimaryContact 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("PrimaryContact")]
-        public int? PrimaryContactRefId { get; set; }
+		[JsonIgnore]
+        public int? PrimaryContactId { get; set; }
         
         /// <summary>
         /// The District to which this School Bus is affliated.
@@ -122,9 +123,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for District 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("District")]
-        public int? DistrictRefId { get; set; }
+		[JsonIgnore]
+        public int? DistrictId { get; set; }
         
         /// <summary>
         /// The set of contacts related to the School Bus Owner.

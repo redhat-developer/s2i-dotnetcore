@@ -77,9 +77,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for Event 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("Event")]
-        public int? EventRefId { get; set; }
+		[JsonIgnore]
+        public int? EventId { get; set; }
         
         /// <summary>
         /// Gets or Sets Event2
@@ -88,9 +89,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for Event2 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("Event2")]
-        public int? Event2RefId { get; set; }
+		[JsonIgnore]
+        public int? Event2Id { get; set; }
         
         /// <summary>
         /// True if the user linked to the inspection has read the notification
@@ -136,9 +138,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for User 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("User")]
-        public int? UserRefId { get; set; }
+		[JsonIgnore]
+        public int? UserId { get; set; }
         
         /// <summary>
         /// Returns the string presentation of the object

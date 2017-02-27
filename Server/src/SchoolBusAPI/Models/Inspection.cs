@@ -113,9 +113,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for SchoolBus 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("SchoolBus")]
-        public int? SchoolBusRefId { get; set; }
+		[JsonIgnore]
+        public int? SchoolBusId { get; set; }
         
         /// <summary>
         /// Defaults for a new inspection to the current user,  but can be changed as needed.
@@ -126,9 +127,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for Inspector 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("Inspector")]
-        public int? InspectorRefId { get; set; }
+		[JsonIgnore]
+        public int? InspectorId { get; set; }
         
         /// <summary>
         /// A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application.

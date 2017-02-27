@@ -91,9 +91,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for Region 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("Region")]
-        public int? RegionRefId { get; set; }
+		[JsonIgnore]
+        public int? RegionId { get; set; }
         
         /// <summary>
         /// The effective date of the District record - NOT CURRENTLY ENFORCED IN SCHOOL BUS
