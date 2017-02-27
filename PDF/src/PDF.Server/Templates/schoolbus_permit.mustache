@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <style>
+    body {
+        background-color: white;
+        color: black;
+        font-family: sans-serif;
+        padding: 30px;
+    }
+
+    #header {
+        position: relative;
+    }
+
+    #logo {
+        float: left;
+        width: 160px;
+        height: 50px;
+        background-color: #AAA;
+        border-right: 1px solid black;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    #word-mark {
+        margin-left: 10px;
+        margin-top: 15px;
+        font-family: serif;
+        float: left;
+        font-size: 14px;
+    }
+
+    #permit-num {
+        margin-top: 10px;
+        float: right;
+        white-space: nowrap;
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    #permit-num-box {
+        display: inline-block;
+        border: 1px solid #999;
+        font-size: 20px;
+        padding: 10px;
+    }
+
+
+    h1 {
+        text-align: center;
+        margin: 10px;
+        font-size: 36px;
+    }
+
+    p {
+        margin: 10px 0;
+        font-size: 11px;
+    }
+
+
+    #info-box {
+        border: 3px solid black;
+        padding: 5px 25px;
+        font-size: 12px;
+    }
+
+    .row {
+        margin: 2px 0;
+    }
+
+    .row .label {
+        margin-top: 5px;
+        float: left;
+        width: 190px;
+    }
+
+    .row .label.in {
+        padding-left: 60px;
+        width: 130px;
+    }
+
+    .row .value {
+        float: right;
+        border: 1px solid #999;
+        padding: 3px 5px;
+        font-weight: bold;
+        width: calc(100% - 210px);
+    }
+
+    .col-1 {
+        float: left;
+        width: 58%;
+    }
+
+    .col-2 {
+        float: right;
+        width: 38%;
+    }
+
+    .col-2 .label {
+        width: 100px;
+    }
+
+    .col-2 .value {
+        width: calc(100% - 120px);
+    }
+
+
+    #restrictions .label {
+        height: 50px;
+        line-height: 50px;
+        width: 70px;
+    }
+
+    #restrictions .value {
+        height: 50px;
+        width: calc(100% - 100px);
+    }
+
+
+    #notice {
+        text-transform: uppercase;
+    }
+
+    #footer {
+        position: relative;
+    }
+
+    #form-number {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        font-size: 6px;
+    }
+
+    #issued-by {
+        text-align: center;
+        position: absolute;
+        right: 0;
+        top: -10px;
+        font-size: 10px;
+    }
+
+    #permit-location {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+
+    .clearfix:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    </style>
+</head>
+<body>
+
+<div id="box">
+    <div id="inner">
+        <div id="header" class="clearfix">
+            <div id="logo">
+                British<br>Columbia
+            </div>
+            <div id="word-mark">
+                Ministry of Transportation<br>and Infastructure
+            </div>
+            <div id="permit-num">
+                PERMIT NO.: <div id="permit-num-box">{{permitNumber}}</div>
+            </div>
+        </div>
+        <h1>SCHOOL BUS PERMIT</h1>
+        <p>Under the provisions of <i>Motor Vehicle Act Regulations,</i> Division 11.03,
+        authorization is hereby granted to the registered owner of lessee, as described below,
+        to operate a school bus:</p>
+        <div id="info-box">
+            <div class="row clearfix">
+                <div class="label in">Owner/Lessee Name:</div>
+                <div class="value">{{schoolBusOwnerName}}</div>
+            </div>
+            <div class="row clearfix">
+                <div class="label in">Address:</div>
+                <div class="value">{{schoolBusOwnerAddressLine1}}</div>
+            </div>
+            <div class="row clearfix">
+                <div class="label in">City, Prov, PC:</div>
+                <div class="value">{{schoolBusOwnerAddressLine2}}</div>
+            </div>
+            <div class="two-column clearfix">
+                <div class="col-1">
+                    <div class="row clearfix">
+                        <div class="label">Vehicle Registration Number:</div>
+                        <div class="value">{{icbcRegistrationNumber}}</div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="label">Vehicle Identification Number:</div>
+                        <div class="value">{{vehicleIdentificationNumber}}</div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="label">Vehicle Year, Make:</div>
+                        <div class="value">{{icbcModelYear}} {{icbcMake}}</div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="row clearfix">
+                        <div class="label">Date Issued:</div>
+                        <div class="value">{{permitIssueDate}}</div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="label">School District:</div>
+                        <div class="value">{{schoolDistrictshortName}}</div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="label">SB Capacity:</div>
+                        <div class="value">{{schoolBusSeatingCapacity}}</div>
+                    </div>
+                </div>
+            </div>
+            <div id="restrictions" class="row clearfix">
+                <div class="label">Restrictions:</div>
+                <div class="value">{{restrictionsText}}</div>
+            </div>
+        </div>
+    </div>
+
+    <p id="notice">This permit is not transferable - If change in ownership/leasse occurs, contact
+    commercial vehicle safety and enforcement immediately to cancel this permit.
+
+    <div id="footer">
+        <div id="form-number">MV3033 (092014)</div>
+        <p id="permit-location">This permit must be carried in bus</p>
+        <div id="issued-by">
+            <b>Issued by the</b><br>
+            Director, Commercial Vehicle Safety<br>
+            and Enforcement
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
