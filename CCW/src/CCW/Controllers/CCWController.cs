@@ -241,7 +241,9 @@ namespace CCW.Controllers
                 ccwdata.NSCPolicyExpiryDate = vehicle.policyExpiryDate;
                 ccwdata.NSCPolicyStatus = vehicle.policyStatus;
                 ccwdata.NSCPolicyStatusDate = vehicle.policyAcquiredCurrentStatusDate;
-                ccwdata.NSCPolicyNumber = vehicle.nscNumber;
+                ccwdata.NSCPolicyNumber = vehicle.policyNumber;
+                ccwdata.NSCClientNum = vehicle.nscNumber;
+
                 // get the nsc client organization data.
 
                 bool foundNSCData = false;
