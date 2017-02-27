@@ -4093,6 +4093,10 @@ definitions:
         type: string
         maxLength: 255
         description: From NSC - The plate decal as defined by NSC on the vehicle
+      dateFetched:
+        type: string
+        format: date-time
+        description: The datetime of when the record was most recently fetched from the upstream CCW service
   Inspection:
     type: object
     description: School Bus inspection details supplementary to the RIP inspection
