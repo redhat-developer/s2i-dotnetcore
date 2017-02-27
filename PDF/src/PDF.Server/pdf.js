@@ -1,42 +1,35 @@
-module.exports = function (callback) {
+fs = require('fs')
+// https://www.npmjs.com/package/mustache
+var mustache = require ('mustache');
+// https://www.npmjs.com/package/html-pdf
+var pdf = require('html-pdf');
 
-	// https://www.npmjs.com/package/mustache
-	var mustache = require ('mustache');
-	// https://www.npmjs.com/package/html-pdf
-	var pdf = require('html-pdf');
-	
-	// setup mustache template	
-	fs = require('fs');
-	fs.readFile('Templates/sample.mst', 'utf8', function (err,template) {	
-		if (err)
-		{
-			callback (err, null);
-		}
-		else
-		{	
-			// fake view for example purposes.
-			var view = {
-				title: "Hello World"
-			};
-			
-			// render
-			
-			var html = mustache.render( template, view )		
-			
+const DEFAULT_PDF_OPTIONS = {
+	format: 'Letter',
+	orientation: 'landscape', // portrait or landscape
+}
+
+function buildPDF(templateName, viewData, pdfOptions) {
+	return new Promise(function(resolve, reject) {
+		// read mustache template
+		fs.readFile(`Templates/${templateName}.mustache`, 'utf8', function(err, template) {
+			if (err) { return reject(err); }
+
+			// Process mustache template
+			var html = mustache.render(template, viewData);
+
 			// PDF options
-			var options = { format: 'Letter' };
-			
+			var options = Object.assign({}, DEFAULT_PDF_OPTIONS, pdfOptions);
+
 			// export as PDF
-			pdf.create(html).toBuffer(function(err, buffer){
-				if (err)
-				{
-					callback (err, null);
-				}
-				else
-				{					
-					callback (null, buffer.toJSON());
-				}
-			});	    
-		}
-	});	
+			pdf.create(html, options).toBuffer(function(err, buffer) {
+				if (err) { return reject(err); }
+
+				resolve(buffer)
+			});
+		});
+	});
 };
+
+
+module.exports = buildPDF;
