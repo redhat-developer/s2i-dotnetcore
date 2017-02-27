@@ -15,6 +15,7 @@ var EditDialog = React.createClass({
     onClose: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
     className: React.PropTypes.string,
+    readOnly: React.PropTypes.bool,
     saveText: React.PropTypes.string,
     closeText: React.PropTypes.string,
     children: React.PropTypes.node,
@@ -36,7 +37,9 @@ var EditDialog = React.createClass({
     return <ModalDialog className={ `edit-dialog ${this.props.className || ''}` } { ...props } footer={
       <span>
         <Button onClick={ this.props.onClose }>{ this.props.closeText || 'Close' }</Button>
-        <Button bsStyle="primary" onClick={ this.save }>{ this.props.saveText || 'Save' }</Button>
+        {
+          this.props.readOnly || <Button bsStyle="primary" onClick={ this.save }>{ this.props.saveText || 'Save' }</Button>
+        }
       </span>
     }/>;
   },
