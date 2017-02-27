@@ -65,9 +65,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for Role 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("Role")]
-        public int? RoleRefId { get; set; }
+		[JsonIgnore]
+        public int? RoleId { get; set; }
         
         /// <summary>
         /// Gets or Sets Permission
@@ -76,9 +77,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for Permission 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("Permission")]
-        public int? PermissionRefId { get; set; }
+		[JsonIgnore]
+        public int? PermissionId { get; set; }
         
         /// <summary>
         /// Returns the string presentation of the object

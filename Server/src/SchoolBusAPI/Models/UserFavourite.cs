@@ -107,9 +107,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for User 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("User")]
-        public int? UserRefId { get; set; }
+		[JsonIgnore]
+        public int? UserId { get; set; }
         
         /// <summary>
         /// Returns the string presentation of the object

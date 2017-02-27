@@ -168,9 +168,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for District 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("District")]
-        public int? DistrictRefId { get; set; }
+		[JsonIgnore]
+        public int? DistrictId { get; set; }
         
         /// <summary>
         /// Returns the string presentation of the object

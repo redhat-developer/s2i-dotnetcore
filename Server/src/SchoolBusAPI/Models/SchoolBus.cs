@@ -190,9 +190,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for SchoolBusOwner 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("SchoolBusOwner")]
-        public int? SchoolBusOwnerRefId { get; set; }
+		[JsonIgnore]
+        public int? SchoolBusOwnerId { get; set; }
         
         /// <summary>
         /// The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format.
@@ -224,9 +225,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for CCWJurisdiction 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("CCWJurisdiction")]
-        public int? CCWJurisdictionRefId { get; set; }
+		[JsonIgnore]
+        public int? CCWJurisdictionId { get; set; }
         
         /// <summary>
         /// Gets or Sets District
@@ -235,9 +237,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for District 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("District")]
-        public int? DistrictRefId { get; set; }
+		[JsonIgnore]
+        public int? DistrictId { get; set; }
         
         /// <summary>
         /// Address Line 1 of physical location of the School Bus.
@@ -266,9 +269,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for HomeTerminalCity 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("HomeTerminalCity")]
-        public int? HomeTerminalCityRefId { get; set; }
+		[JsonIgnore]
+        public int? HomeTerminalCityId { get; set; }
         
         /// <summary>
         /// Province of physical location of the School Bus - free form.
@@ -331,9 +335,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for SchoolDistrict 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("SchoolDistrict")]
-        public int? SchoolDistrictRefId { get; set; }
+		[JsonIgnore]
+        public int? SchoolDistrictId { get; set; }
         
         /// <summary>
         /// True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field.
@@ -376,9 +381,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for Inspector 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("Inspector")]
-        public int? InspectorRefId { get; set; }
+		[JsonIgnore]
+        public int? InspectorId { get; set; }
         
         /// <summary>
         /// The set of notes about the school bus entered by users.
@@ -410,9 +416,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for CCWData 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("CCWData")]
-        public int? CCWDataRefId { get; set; }
+		[JsonIgnore]
+        public int? CCWDataId { get; set; }
         
         /// <summary>
         /// Returns the string presentation of the object

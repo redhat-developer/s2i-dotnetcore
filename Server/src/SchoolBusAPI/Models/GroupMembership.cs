@@ -75,9 +75,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for Group 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("Group")]
-        public int? GroupRefId { get; set; }
+		[JsonIgnore]
+        public int? GroupId { get; set; }
         
         /// <summary>
         /// Gets or Sets User
@@ -86,9 +87,10 @@ namespace SchoolBusAPI.Models
         
         /// <summary>
         /// Foreign key for User 
-        /// </summary>       
+        /// </summary>   
         [ForeignKey("User")]
-        public int? UserRefId { get; set; }
+		[JsonIgnore]
+        public int? UserId { get; set; }
         
         /// <summary>
         /// Returns the string presentation of the object
