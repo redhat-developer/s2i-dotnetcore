@@ -112,6 +112,7 @@ namespace SchoolBusAPI.Models
         /// </summary>   
         [ForeignKey("PrimaryContact")]
 		[JsonIgnore]
+		[MetaDataExtension (Description = "Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.")]
         public int? PrimaryContactId { get; set; }
         
         /// <summary>
@@ -126,6 +127,7 @@ namespace SchoolBusAPI.Models
         /// </summary>   
         [ForeignKey("District")]
 		[JsonIgnore]
+		[MetaDataExtension (Description = "The District to which this School Bus is affliated.")]
         public int? DistrictId { get; set; }
         
         /// <summary>

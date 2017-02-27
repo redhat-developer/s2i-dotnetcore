@@ -46,7 +46,7 @@ namespace SchoolBusAPI.Models
         /// <param name="InspectionTypeCode">The type of the inspection - enumerated type of Annual or Re-inspection,  pulled from the School Bus record at the time the inspection record is created (required).</param>
         /// <param name="InspectionResultCode">The result of the inspection - enumerated type of Passed or Failed. The detailed results of the inspection are in RIP and not duplicated here. (required).</param>
         /// <param name="CreatedDate">Record creation date and time (required).</param>
-        /// <param name="SchoolBus">SchoolBus.</param>
+        /// <param name="SchoolBus">A foreign key reference to the system-generated unique identifier for a School Bus.</param>
         /// <param name="Inspector">Defaults for a new inspection to the current user,  but can be changed as needed..</param>
         /// <param name="Notes">A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application..</param>
         /// <param name="RIPInspectionId">The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details..</param>
@@ -107,8 +107,10 @@ namespace SchoolBusAPI.Models
         public DateTime CreatedDate { get; set; }
         
         /// <summary>
-        /// Gets or Sets SchoolBus
+        /// A foreign key reference to the system-generated unique identifier for a School Bus
         /// </summary>
+        /// <value>A foreign key reference to the system-generated unique identifier for a School Bus</value>
+        [MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a School Bus")]
         public SchoolBus SchoolBus { get; set; }
         
         /// <summary>
@@ -116,6 +118,7 @@ namespace SchoolBusAPI.Models
         /// </summary>   
         [ForeignKey("SchoolBus")]
 		[JsonIgnore]
+		[MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a School Bus")]
         public int? SchoolBusId { get; set; }
         
         /// <summary>
@@ -130,6 +133,7 @@ namespace SchoolBusAPI.Models
         /// </summary>   
         [ForeignKey("Inspector")]
 		[JsonIgnore]
+		[MetaDataExtension (Description = "Defaults for a new inspection to the current user,  but can be changed as needed.")]
         public int? InspectorId { get; set; }
         
         /// <summary>
