@@ -15,10 +15,13 @@ var DateControl = React.createClass({
     updateState: React.PropTypes.func,
     placeholder: React.PropTypes.string,
     title: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
   },
 
   clicked() {
-    this.input.focus();
+    if (!this.props.disabled) {
+      this.input.focus();
+    }
   },
 
   dateChanged(date) {
@@ -45,6 +48,7 @@ var DateControl = React.createClass({
     var format = this.props.format || 'YYYY-MM-DD';
 
     var placeholder = this.props.placeholder;
+    var disabled = this.props.disabled;
 
     return <div className={ `date-control ${this.props.className || ''}` } id={ this.props.id }>
       {(() => {
@@ -53,7 +57,7 @@ var DateControl = React.createClass({
       })()}
       <InputGroup>
         <DateTime value={ date } dateFormat={ format } timeFormat={ false } closeOnSelect={ true } onChange={ this.dateChanged }
-          inputProps={{ placeholder: placeholder, ref: input => { this.input = input; } }}
+          inputProps={{ placeholder: placeholder, disabled: disabled, ref: input => { this.input = input; } }}
         />
         <InputGroup.Button>
           <Button onClick={ this.clicked }><Glyphicon glyph="calendar" title={ this.props.title }/></Button>
