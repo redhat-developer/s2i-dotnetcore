@@ -230,16 +230,23 @@ namespace SchoolBusAPI.Services.Impl
                     .Select(x => x)
                     .Count();
 
-                int scheduledInspections = _context.Inspections
+                int scheduledInspections = _context.SchoolBuss
                     .Where(x => x.Inspector.Id == id)
-                    .Where(x => x.InspectionDate >= DateTime.UtcNow)
+                    .Where(x => x.NextInspectionDate >= DateTime.UtcNow)
                     .Select(x => x)
                     .Count();
 
+                int reInspections = _context.SchoolBuss
+                    .Where(x => x.Inspector.Id == id)
+                    .Where(x => x.NextInspectionTypeCode == "Re-Inspection")                    
+                    .Select(x => x)
+                    .Count();
 
                 result.OverdueInspections = overdue;
                 result.DueNextMonthInspections = nextMonth;                
                 result.ScheduledInspections = scheduledInspections;
+                result.ReInspections = reInspections;
+
 
                 return new ObjectResult(result);
             }            

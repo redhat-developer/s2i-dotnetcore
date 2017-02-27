@@ -35,9 +35,10 @@ namespace SchoolBusAPI.Seeders
             foreach (Region Region in seedUsers)
             {
                 context.UpdateSeedRegionInfo(Region);
+                context.SaveChanges();
             }
             AddInitialRegions(context);
-            context.SaveChanges();
+            
         }
 
         private void AddInitialRegions(DbAppContext context)

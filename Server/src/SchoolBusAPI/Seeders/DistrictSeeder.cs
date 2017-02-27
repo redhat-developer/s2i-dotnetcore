@@ -43,9 +43,9 @@ namespace SchoolBusAPI.Seeders
             foreach (District district in seedUsers)
             {
                 context.UpdateSeedDistrictInfo(district);
+                context.SaveChanges();
             }
-            AddInitialDistricts(context);
-            context.SaveChanges();
+            AddInitialDistricts(context);            
         }
 
         private void AddInitialDistricts(DbAppContext context)
