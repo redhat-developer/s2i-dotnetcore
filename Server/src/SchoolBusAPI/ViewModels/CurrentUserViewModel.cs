@@ -50,7 +50,8 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="OverdueInspections">OverdueInspections.</param>
         /// <param name="ScheduledInspections">ScheduledInspections.</param>
         /// <param name="DueNextMonthInspections">DueNextMonthInspections.</param>
-        public CurrentUserViewModel(int? Id = null, string GivenName = null, string Surname = null, string Email = null, bool? Active = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null, int? OverdueInspections = null, int? ScheduledInspections = null, int? DueNextMonthInspections = null)
+        /// <param name="ReInspections">ReInspections.</param>
+        public CurrentUserViewModel(int? Id = null, string GivenName = null, string Surname = null, string Email = null, bool? Active = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null, int? OverdueInspections = null, int? ScheduledInspections = null, int? DueNextMonthInspections = null, int? ReInspections = null)
         {               this.Id = Id;
             this.GivenName = GivenName;
             this.Surname = Surname;
@@ -62,6 +63,7 @@ namespace SchoolBusAPI.ViewModels
             this.OverdueInspections = OverdueInspections;
             this.ScheduledInspections = ScheduledInspections;
             this.DueNextMonthInspections = DueNextMonthInspections;
+            this.ReInspections = ReInspections;
         }
 
         /// <summary>
@@ -133,6 +135,12 @@ namespace SchoolBusAPI.ViewModels
         public int? DueNextMonthInspections { get; set; }
 
         /// <summary>
+        /// Gets or Sets ReInspections
+        /// </summary>
+        [DataMember(Name="reInspections")]
+        public int? ReInspections { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -151,6 +159,7 @@ namespace SchoolBusAPI.ViewModels
             sb.Append("  OverdueInspections: ").Append(OverdueInspections).Append("\n");
             sb.Append("  ScheduledInspections: ").Append(ScheduledInspections).Append("\n");
             sb.Append("  DueNextMonthInspections: ").Append(DueNextMonthInspections).Append("\n");
+            sb.Append("  ReInspections: ").Append(ReInspections).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -243,6 +252,11 @@ namespace SchoolBusAPI.ViewModels
                     this.DueNextMonthInspections == other.DueNextMonthInspections ||
                     this.DueNextMonthInspections != null &&
                     this.DueNextMonthInspections.Equals(other.DueNextMonthInspections)
+                ) &&                 
+                (
+                    this.ReInspections == other.ReInspections ||
+                    this.ReInspections != null &&
+                    this.ReInspections.Equals(other.ReInspections)
                 );
         }
 
@@ -300,6 +314,10 @@ namespace SchoolBusAPI.ViewModels
                                 if (this.DueNextMonthInspections != null)
                 {
                     hash = hash * 59 + this.DueNextMonthInspections.GetHashCode();
+                }                
+                                if (this.ReInspections != null)
+                {
+                    hash = hash * 59 + this.ReInspections.GetHashCode();
                 }                
                 
                 return hash;

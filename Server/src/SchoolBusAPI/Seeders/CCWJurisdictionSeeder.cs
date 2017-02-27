@@ -43,9 +43,9 @@ namespace SchoolBusAPI.Seeders
             foreach (CCWJurisdiction CCWJurisdiction in seedUsers)
             {
                 context.UpdateSeedCCWJurisdictionInfo(CCWJurisdiction);
+                context.SaveChanges();
             }
-            AddInitialCCWJurisdictions(context);
-            context.SaveChanges();
+            AddInitialCCWJurisdictions(context);            
         }
 
         private void AddInitialCCWJurisdictions(DbAppContext context)

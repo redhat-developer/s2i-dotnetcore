@@ -139,6 +139,7 @@ namespace SchoolBusAPI.Models
             CCWJurisdiction.ExpiryDate = initialCCWJurisdiction.ExpiryDate;
 
             context.CCWJurisdictions.Add(CCWJurisdiction);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -248,6 +249,7 @@ namespace SchoolBusAPI.Models
             }
 
             context.Users.Update(user);
+            context.SaveChanges();
         }
 
 
@@ -291,6 +293,7 @@ namespace SchoolBusAPI.Models
             region.StartDate = initialRegion.StartDate;
 
             context.Regions.Add(region);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -347,6 +350,7 @@ namespace SchoolBusAPI.Models
             }            
 
             context.Districts.Add(district);
+            context.SaveChanges();
         }
 
 
@@ -399,6 +403,7 @@ namespace SchoolBusAPI.Models
             }
 
             context.ServiceAreas.Add(serviceArea);
+            context.SaveChanges();
         }
 
         /// <summary>
