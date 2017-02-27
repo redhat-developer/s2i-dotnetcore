@@ -388,11 +388,6 @@ var SchoolBusesDetail = React.createClass({
                   }
                 </SortTable>;
               })()}
-              <div className="text-right">
-                <Unimplemented>
-                  <Button target="_blank" href="http://google.com/search?q=CTMS-Web">CTMS-Web</Button>
-                </Unimplemented>
-              </div>
             </Well>
           </Col>
         </Row>
