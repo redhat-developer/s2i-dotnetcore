@@ -3763,6 +3763,7 @@ definitions:
         description:  A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number.
       schoolBusOwner:
         $ref: '#/definitions/SchoolBusOwner'
+        description: A foreign key reference to the system-generated unique identifier for School Bus Owner
       permitNumber:
         format: int32
         type: integer
@@ -3784,6 +3785,7 @@ definitions:
         description: The Jurisdication of an Out Of Province Bus. Needed for querying CCW.
       District:
         $ref: '#/definitions/District'
+        description: A foreign key reference to the system-generated unique identifier for a 
       homeTerminalAddress1:
         type: string
         maxLength: 80
@@ -4108,6 +4110,7 @@ definitions:
         description: A system-generated unique identifier for an Inspection
       schoolBus:
         $ref: '#/definitions/SchoolBus'
+        description: A foreign key reference to the system-generated unique identifier for a School Bus
       inspector:
         $ref: '#/definitions/User'
         description: Defaults for a new inspection to the current user,  but can be changed as needed.
@@ -4475,8 +4478,10 @@ definitions:
         description: A system-generated unique identifier for a Notification
       event:
         $ref: '#/definitions/NotificationEvent'
+        description: A foreign key reference to the system-generated unique identifier for a Notification Event
       event2:
         $ref: '#/definitions/NotificationEvent'
+        description: A foreign key reference to the system-generated unique identifier for a Notification Event
       hasBeenViewed:
         type: boolean
         description: True if the user linked to the inspection has read the notification
@@ -4495,6 +4500,7 @@ definitions:
         description: TO BE REMOVED
       user:
         $ref: '#/definitions/User'
+        description: A foreign key reference to the system-generated unique identifier for a User
   NotificationEvent:
     type: object
     description: Notifications associated about changes (mostly from CCW data) to information related to a specific school bus - e.g. change of owner at ICBC, change in NSC client rating, etc.
@@ -4527,6 +4533,7 @@ definitions:
         description: TO BE REMOVED
       schoolBus:
         $ref: '#/definitions/SchoolBus'
+        description: A foreign key reference to the system-generated unique identifier for a School Bus
   User:
     type: object
     description: Information about the users of the system.
@@ -4604,6 +4611,7 @@ definitions:
         description: The date on which a role previously assigned to a user was removed from that user.
       role:
         $ref: '#/definitions/Role'
+        description: A foreign key reference to the system-generated unique identifier for a Role
   Role:
     type: object
     description: A table managed in the application by authorized users to create named Roles that can be assigned to Users as needed. Roles can be created as needed to support the users of the system and the roles they perform within the organization.
@@ -4644,8 +4652,10 @@ definitions:
         description: A system-generated unique identifier for a RolePermission
       role:
         $ref: '#/definitions/Role'
+        description: A foreign key reference to the system-generated unique identifier for a Role
       permission:
         $ref: '#/definitions/Permission'
+        description: A foreign key reference to the system-generated unique identifier for a Permission
   Permission:
     type: object
     description: The set of permissions defined in the application. Each permission is given a name and triggers some behavior defined in the application. For example, a permission might allow users to see data or to have access to functionality restricted to users without that permission. Permissions are created as needed to the application and are added to the permissions table by data migrations executed at the time the software that uses the permission is deployed.
@@ -4687,8 +4697,10 @@ definitions:
         description: A flag indicating the User is active in the group. Set false to remove the user from the designated group.
       group:
         $ref: '#/definitions/Group'
+        description: A foreign key reference to the system-generated unique identifier for a Group
       user:
         $ref: '#/definitions/User'
+        description: A foreign key reference to the system-generated unique identifier for a User
   Group:
     type: object
     description: A named entity that is used to created a collection of users into a group. For example, the School Bus Inspectors are in the group Inspectors. Groups, like permissions are defined by the application and referenced in the code of the application.
@@ -4864,6 +4876,9 @@ definitions:
         format: int32
         type: integer
       dueNextMonthInspections:
+        format: int32
+        type: integer
+      reInspections:
         format: int32
         type: integer
   UserDetailsViewModel:
