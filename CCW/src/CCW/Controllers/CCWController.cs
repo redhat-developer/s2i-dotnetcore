@@ -244,6 +244,8 @@ namespace CCW.Controllers
                 ccwdata.NSCPolicyNumber = vehicle.policyNumber;
                 ccwdata.NSCClientNum = vehicle.nscNumber;
 
+                ccwdata.DateFetched = DateTime.UtcNow;
+
                 // get the nsc client organization data.
 
                 bool foundNSCData = false;

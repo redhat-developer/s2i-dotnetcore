@@ -81,7 +81,8 @@ namespace SchoolBusAPI.Models
         /// <param name="NSCPolicyExpiryDate">From NSC - The data of expiration of the policy..</param>
         /// <param name="NSCPolicyStatus">From NSC - The latest status of the policy..</param>
         /// <param name="NSCPlateDecal">From NSC - The plate decal as defined by NSC on the vehicle.</param>
-        public CCWData(int Id, string ICBCRegistrationNumber = null, int? ICBCModelYear = null, string ICBCVehicleType = null, string ICBCRateClass = null, string ICBCCVIPDecal = null, int? ICBCFleetUnitNo = null, int? ICBCGrossVehicleWeight = null, string ICBCMake = null, string ICBCBody = null, string ICBCRebuiltStatus = null, DateTime? ICBCCVIPExpiry = null, int? ICBCNetWt = null, string ICBCModel = null, string ICBCFuel = null, int? ICBCSeatingCapacity = null, string ICBCColour = null, string ICBCNotesAndOrders = null, DateTime? ICBCOrderedOn = null, string ICBCRegOwnerName = null, string ICBCRegOwnerAddr1 = null, string ICBCRegOwnerAddr2 = null, string ICBCRegOwnerCity = null, string ICBCRegOwnerProv = null, string ICBCRegOwnerPostalCode = null, string ICBCRegOwnerStatus = null, string ICBCRegOwnerRODL = null, string ICBCRegOwnerPODL = null, string ICBCLicencePlateNumber = null, string ICBCVehicleIdentificationNumber = null, string NSCClientNum = null, string NSCCarrierName = null, string NSCCarrierConditions = null, string NSCCarrierSafetyRating = null, string NSCPolicyNumber = null, DateTime? NSCPolicyEffectiveDate = null, DateTime? NSCPolicyStatusDate = null, DateTime? NSCPolicyExpiryDate = null, string NSCPolicyStatus = null, string NSCPlateDecal = null)
+        /// <param name="DateFetched">The datetime of when the record was most recently fetched from the upstream CCW service.</param>
+        public CCWData(int Id, string ICBCRegistrationNumber = null, int? ICBCModelYear = null, string ICBCVehicleType = null, string ICBCRateClass = null, string ICBCCVIPDecal = null, int? ICBCFleetUnitNo = null, int? ICBCGrossVehicleWeight = null, string ICBCMake = null, string ICBCBody = null, string ICBCRebuiltStatus = null, DateTime? ICBCCVIPExpiry = null, int? ICBCNetWt = null, string ICBCModel = null, string ICBCFuel = null, int? ICBCSeatingCapacity = null, string ICBCColour = null, string ICBCNotesAndOrders = null, DateTime? ICBCOrderedOn = null, string ICBCRegOwnerName = null, string ICBCRegOwnerAddr1 = null, string ICBCRegOwnerAddr2 = null, string ICBCRegOwnerCity = null, string ICBCRegOwnerProv = null, string ICBCRegOwnerPostalCode = null, string ICBCRegOwnerStatus = null, string ICBCRegOwnerRODL = null, string ICBCRegOwnerPODL = null, string ICBCLicencePlateNumber = null, string ICBCVehicleIdentificationNumber = null, string NSCClientNum = null, string NSCCarrierName = null, string NSCCarrierConditions = null, string NSCCarrierSafetyRating = null, string NSCPolicyNumber = null, DateTime? NSCPolicyEffectiveDate = null, DateTime? NSCPolicyStatusDate = null, DateTime? NSCPolicyExpiryDate = null, string NSCPolicyStatus = null, string NSCPlateDecal = null, DateTime? DateFetched = null)
         {   
             this.Id = Id;
             this.ICBCRegistrationNumber = ICBCRegistrationNumber;
@@ -123,6 +124,7 @@ namespace SchoolBusAPI.Models
             this.NSCPolicyExpiryDate = NSCPolicyExpiryDate;
             this.NSCPolicyStatus = NSCPolicyStatus;
             this.NSCPlateDecal = NSCPlateDecal;
+            this.DateFetched = DateFetched;
         }
 
         /// <summary>
@@ -464,6 +466,13 @@ namespace SchoolBusAPI.Models
         public string NSCPlateDecal { get; set; }
         
         /// <summary>
+        /// The datetime of when the record was most recently fetched from the upstream CCW service
+        /// </summary>
+        /// <value>The datetime of when the record was most recently fetched from the upstream CCW service</value>
+        [MetaDataExtension (Description = "The datetime of when the record was most recently fetched from the upstream CCW service")]
+        public DateTime? DateFetched { get; set; }
+        
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -511,6 +520,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  NSCPolicyExpiryDate: ").Append(NSCPolicyExpiryDate).Append("\n");
             sb.Append("  NSCPolicyStatus: ").Append(NSCPolicyStatus).Append("\n");
             sb.Append("  NSCPlateDecal: ").Append(NSCPlateDecal).Append("\n");
+            sb.Append("  DateFetched: ").Append(DateFetched).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -747,6 +757,11 @@ namespace SchoolBusAPI.Models
                     this.NSCPlateDecal == other.NSCPlateDecal ||
                     this.NSCPlateDecal != null &&
                     this.NSCPlateDecal.Equals(other.NSCPlateDecal)
+                ) &&                 
+                (
+                    this.DateFetched == other.DateFetched ||
+                    this.DateFetched != null &&
+                    this.DateFetched.Equals(other.DateFetched)
                 );
         }
 
@@ -917,6 +932,10 @@ namespace SchoolBusAPI.Models
                                 if (this.NSCPlateDecal != null)
                 {
                     hash = hash * 59 + this.NSCPlateDecal.GetHashCode();
+                }                
+                                if (this.DateFetched != null)
+                {
+                    hash = hash * 59 + this.DateFetched.GetHashCode();
                 }                
                 
                 return hash;
