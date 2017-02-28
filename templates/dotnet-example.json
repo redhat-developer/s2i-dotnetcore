@@ -275,7 +275,7 @@
         {
             "name": "APPLICATION_DOMAIN",
             "displayName": "Application Hostname",
-            "description": "The exposed hostname that will route to the Node.js service, if left blank a value will be defaulted.",
+            "description": "The exposed hostname that will route to the .NET Core service, if left blank a value will be defaulted.",
             "value": ""
         },
         {
