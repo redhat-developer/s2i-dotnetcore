@@ -54,22 +54,28 @@ for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
     dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK"
 done
 
-# publish application
-echo "---> Publishing application ..."
-dotnet publish -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT" -o "$DOTNET_PUBLISH_PATH"
+if [ "$DOTNET_PUBLISH" == "Y" ]; then
+  # publish application
+  echo "---> Publishing application ..."
+  dotnet publish -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT" -o "$DOTNET_PUBLISH_PATH"
 
-# check if the assembly used by the script exists
-if [ ! -f "$DOTNET_PUBLISH_PATH/${APP_DLL_NAME}" ]; then
-  echo "error: Build output does not contain entrypoint assembly: ${APP_DLL_NAME}"
-  exit 1
-fi
+  # check if the assembly used by the script exists
+  if [ ! -f "$DOTNET_PUBLISH_PATH/${APP_DLL_NAME}" ]; then
+    echo "error: Build output does not contain entrypoint assembly: ${APP_DLL_NAME}"
+    exit 1
+  fi
 
-# Create run script in publish folder
-cat << EOF >"$DOTNET_RUN_SCRIPT"
+  # Create run script in publish folder
+  cat << EOF >"$DOTNET_RUN_SCRIPT"
 #!/bin/bash
 exec dotnet ${APP_DLL_NAME} \$@
 EOF
-chmod +x "$DOTNET_RUN_SCRIPT"
+  chmod +x "$DOTNET_RUN_SCRIPT"
+else
+  # build application
+  echo "---> Building application ..."
+  dotnet build -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT"
+fi
 
 # cleanup
 rm -rf $DOTNET_REFERENCE_ASSEMBLIES_PATH

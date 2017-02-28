@@ -15,11 +15,5 @@
     "netcoreapp1.0": {
       "imports": "dnxcore50"
     }
-  },
-  "publishOptions": {
-    "include": [
-      "quotes.txt",
-      "appsettings.json"
-    ]
   }
 }

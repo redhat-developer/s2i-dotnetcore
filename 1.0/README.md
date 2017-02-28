@@ -92,7 +92,15 @@ a `.s2i/environment` file inside your source code repository.
 
     Used to select the project to run. This must be the folder containing
     `project.json`. Defaults to `.`.
-    The application is built using the `dotnet publish` command.
+
+* **DOTNET_PUBLISH**
+
+    Used to control whether the application should be build by executing
+    `dotnet build` or `dotnet publish`. To publish the application set the
+    value to `Y`. It is recommended to publish your application. For
+    backwards compatibility, the default is ``. In the next major release
+    of the builder, this variable will be removed and the builder will
+    always publish the application.
 
 * **DOTNET_ASSEMBLY_NAME**
 
@@ -125,8 +133,7 @@ a `.s2i/environment` file inside your source code repository.
 * **DOTNET_CONFIGURATION**
 
     Used to run the application in Debug or Release mode. This should be either
-    `Release` or `Debug`.  This is passed to the `dotnet publish` invocation.
-    Defaults to `Release`.
+    `Release` or `Debug`.
 
 * **ASPNETCORE_URLS**
 
