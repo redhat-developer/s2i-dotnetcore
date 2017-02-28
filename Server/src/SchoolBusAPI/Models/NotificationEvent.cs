@@ -47,7 +47,7 @@ namespace SchoolBusAPI.Models
         /// <param name="EventSubTypeCode">A further categorization of the event for which the notification was created..</param>
         /// <param name="Notes">An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen..</param>
         /// <param name="NotificationGenerated">TO BE REMOVED.</param>
-        /// <param name="SchoolBus">SchoolBus.</param>
+        /// <param name="SchoolBus">A foreign key reference to the system-generated unique identifier for a School Bus.</param>
         public NotificationEvent(int Id, DateTime? EventTime = null, string EventTypeCode = null, string EventSubTypeCode = null, string Notes = null, bool? NotificationGenerated = null, SchoolBus SchoolBus = null)
         {   
             this.Id = Id;
@@ -108,8 +108,10 @@ namespace SchoolBusAPI.Models
         public bool? NotificationGenerated { get; set; }
         
         /// <summary>
-        /// Gets or Sets SchoolBus
+        /// A foreign key reference to the system-generated unique identifier for a School Bus
         /// </summary>
+        /// <value>A foreign key reference to the system-generated unique identifier for a School Bus</value>
+        [MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a School Bus")]
         public SchoolBus SchoolBus { get; set; }
         
         /// <summary>
@@ -117,6 +119,7 @@ namespace SchoolBusAPI.Models
         /// </summary>   
         [ForeignKey("SchoolBus")]
 		[JsonIgnore]
+		[MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a School Bus")]
         public int? SchoolBusId { get; set; }
         
         /// <summary>

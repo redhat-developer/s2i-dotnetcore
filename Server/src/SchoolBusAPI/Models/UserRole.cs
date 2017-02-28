@@ -44,7 +44,7 @@ namespace SchoolBusAPI.Models
         /// <param name="Id">A system-generated unique identifier for a UserRole (required).</param>
         /// <param name="EffectiveDate">The date on which the user was given the related role. (required).</param>
         /// <param name="ExpiryDate">The date on which a role previously assigned to a user was removed from that user..</param>
-        /// <param name="Role">Role.</param>
+        /// <param name="Role">A foreign key reference to the system-generated unique identifier for a Role.</param>
         public UserRole(int Id, DateTime EffectiveDate, DateTime? ExpiryDate = null, Role Role = null)
         {   
             this.Id = Id;
@@ -76,8 +76,10 @@ namespace SchoolBusAPI.Models
         public DateTime? ExpiryDate { get; set; }
         
         /// <summary>
-        /// Gets or Sets Role
+        /// A foreign key reference to the system-generated unique identifier for a Role
         /// </summary>
+        /// <value>A foreign key reference to the system-generated unique identifier for a Role</value>
+        [MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a Role")]
         public Role Role { get; set; }
         
         /// <summary>
@@ -85,6 +87,7 @@ namespace SchoolBusAPI.Models
         /// </summary>   
         [ForeignKey("Role")]
 		[JsonIgnore]
+		[MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a Role")]
         public int? RoleId { get; set; }
         
         /// <summary>

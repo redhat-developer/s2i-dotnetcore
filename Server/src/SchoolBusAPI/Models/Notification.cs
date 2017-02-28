@@ -42,14 +42,14 @@ namespace SchoolBusAPI.Models
         /// Initializes a new instance of the <see cref="Notification" /> class.
         /// </summary>
         /// <param name="Id">A system-generated unique identifier for a Notification (required).</param>
-        /// <param name="Event">Event.</param>
-        /// <param name="Event2">Event2.</param>
+        /// <param name="Event">A foreign key reference to the system-generated unique identifier for a Notification Event.</param>
+        /// <param name="Event2">A foreign key reference to the system-generated unique identifier for a Notification Event.</param>
         /// <param name="HasBeenViewed">True if the user linked to the inspection has read the notification.</param>
         /// <param name="IsWatchNotification">TO BE REMOVED.</param>
         /// <param name="IsExpired">TO BE REMOVED.</param>
         /// <param name="IsAllDay">TO BE REMOVED.</param>
         /// <param name="PriorityCode">TO BE REMOVED.</param>
-        /// <param name="User">User.</param>
+        /// <param name="User">A foreign key reference to the system-generated unique identifier for a User.</param>
         public Notification(int Id, NotificationEvent Event = null, NotificationEvent Event2 = null, bool? HasBeenViewed = null, bool? IsWatchNotification = null, bool? IsExpired = null, bool? IsAllDay = null, string PriorityCode = null, User User = null)
         {   
             this.Id = Id;
@@ -71,8 +71,10 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
         
         /// <summary>
-        /// Gets or Sets Event
+        /// A foreign key reference to the system-generated unique identifier for a Notification Event
         /// </summary>
+        /// <value>A foreign key reference to the system-generated unique identifier for a Notification Event</value>
+        [MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a Notification Event")]
         public NotificationEvent Event { get; set; }
         
         /// <summary>
@@ -80,11 +82,14 @@ namespace SchoolBusAPI.Models
         /// </summary>   
         [ForeignKey("Event")]
 		[JsonIgnore]
+		[MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a Notification Event")]
         public int? EventId { get; set; }
         
         /// <summary>
-        /// Gets or Sets Event2
+        /// A foreign key reference to the system-generated unique identifier for a Notification Event
         /// </summary>
+        /// <value>A foreign key reference to the system-generated unique identifier for a Notification Event</value>
+        [MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a Notification Event")]
         public NotificationEvent Event2 { get; set; }
         
         /// <summary>
@@ -92,6 +97,7 @@ namespace SchoolBusAPI.Models
         /// </summary>   
         [ForeignKey("Event2")]
 		[JsonIgnore]
+		[MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a Notification Event")]
         public int? Event2Id { get; set; }
         
         /// <summary>
@@ -132,8 +138,10 @@ namespace SchoolBusAPI.Models
         public string PriorityCode { get; set; }
         
         /// <summary>
-        /// Gets or Sets User
+        /// A foreign key reference to the system-generated unique identifier for a User
         /// </summary>
+        /// <value>A foreign key reference to the system-generated unique identifier for a User</value>
+        [MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a User")]
         public User User { get; set; }
         
         /// <summary>
@@ -141,6 +149,7 @@ namespace SchoolBusAPI.Models
         /// </summary>   
         [ForeignKey("User")]
 		[JsonIgnore]
+		[MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a User")]
         public int? UserId { get; set; }
         
         /// <summary>
