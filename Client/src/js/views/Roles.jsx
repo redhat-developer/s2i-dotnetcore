@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { Well, Alert, Row, Col } from 'react-bootstrap';
+import { PageHeader, Well, Alert, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -85,11 +85,23 @@ var Roles = React.createClass({
   },
 
   render: function() {
+    var numRoles = this.state.loading ? '...' : Object.keys(this.props.roles).length;
+
     return <div id="roles-list">
+      <PageHeader>Roles ({ numRoles })
+        <ButtonGroup id="roles-buttons">
+          <Unimplemented>
+            <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
+          </Unimplemented>
+          <Unimplemented>
+            <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
+          </Unimplemented>
+        </ButtonGroup>
+      </PageHeader>
       <div>
         <Well id="roles-bar" bsSize="small" className="clearfix">
           <Row>
-            <Col md={11}>
+            <Col md={12}>
               <ButtonToolbar id="roles-search">
                 <SearchControl id="search" search={ this.state.search } updateState={ this.updateSearchState }
                   items={[
@@ -99,18 +111,6 @@ var Roles = React.createClass({
                 />
               </ButtonToolbar>
             </Col>
-            <Col md={1}>
-              <div id="roles-buttons">
-                <ButtonGroup>
-                  <Unimplemented>
-                    <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
-                  </Unimplemented>
-                  <Unimplemented>
-                    <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
-                  </Unimplemented>
-                </ButtonGroup>
-              </div>
-            </Col>
           </Row>
         </Well>
 
@@ -118,7 +118,7 @@ var Roles = React.createClass({
           if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
           var addRoleButton = <LinkContainer to={{ pathname: 'roles/0' }}>
-            <Button title="add" bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add Role</strong></Button>
+            <Button title="Add Role" bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add Role</strong></Button>
           </LinkContainer>;
           if (Object.keys(this.props.roles).length === 0) { return <Alert bsStyle="success">No roles { addRoleButton }</Alert>; }
 
@@ -148,10 +148,10 @@ var Roles = React.createClass({
                   <td style={{ textAlign: 'right' }}>
                     <ButtonGroup>
                       <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, role) }/> }>
-                        <Button className={ role.canDelete ? '' : 'hidden' } title="deleteRole" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                        <Button className={ role.canDelete ? '' : 'hidden' } title="Delete Role" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                       </OverlayTrigger>
                       <LinkContainer to={{ pathname: 'roles/' + role.id }}>
-                        <Button className={ role.canEdit ? '' : 'hidden' } title="editRole" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                        <Button className={ role.canEdit ? '' : 'hidden' } title="Edit Role" bsSize="xsmall"><Glyphicon glyph="pencil" /></Button>
                       </LinkContainer>
                     </ButtonGroup>
                   </td>

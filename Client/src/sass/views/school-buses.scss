@@ -1,5 +1,5 @@
 #school-buses-list {
-  #school-buses-search {
+  #school-buses-filters {
     margin-top: -10px;
 
     > div {
@@ -46,7 +46,6 @@
 
   #school-buses-faves {
     float: right;
-    margin-top: 10px;
   }
 
   #school-buses-faves-dropdown {
@@ -55,6 +54,8 @@
 
   #search-button {
     float:right;
+    width: 79px;
+    margin-top: 10px;
   }
 }
 
