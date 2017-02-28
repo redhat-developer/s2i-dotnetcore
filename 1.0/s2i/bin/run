@@ -3,7 +3,7 @@ source /opt/app-root/etc/generate_container_user
 
 set -e
 
-if [ "$DOTNET_PUBLISH" == "Y" ]; then
+if [ "$DOTNET_PUBLISH" == "true" ]; then
   cd $DOTNET_PUBLISH_PATH
 
   echo "---> Running application ..."

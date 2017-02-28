@@ -54,7 +54,7 @@ for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
     dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK"
 done
 
-if [ "$DOTNET_PUBLISH" == "Y" ]; then
+if [ "$DOTNET_PUBLISH" == "true" ]; then
   # publish application
   echo "---> Publishing application ..."
   dotnet publish -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" "$DOTNET_STARTUP_PROJECT" -o "$DOTNET_PUBLISH_PATH"
