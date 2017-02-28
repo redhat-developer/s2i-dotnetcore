@@ -106,6 +106,10 @@
                             {
                                 "name": "DOTNET_CONFIGURATION",
                                 "value": "${DOTNET_CONFIGURATION}"
+                            },
+                            {
+                                "name": "DOTNET_PUBLISH",
+                                "value": "Y"
                             }
                         ]
                     }
