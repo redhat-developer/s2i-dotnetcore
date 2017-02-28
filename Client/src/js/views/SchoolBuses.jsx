@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { Well, Alert, Row, Col } from 'react-bootstrap';
+import { PageHeader, Well, Alert, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -270,12 +270,24 @@ var SchoolBuses = React.createClass({
     var schoolDistricts = _.sortBy(this.props.schoolDistricts, 'name');
     var owners = _.sortBy(this.props.owners, 'name');
 
+    var numBuses = this.state.loading ? '...' : Object.keys(this.props.schoolBuses).length;
+
     return <div id="school-buses-list">
+      <PageHeader>School Buses ({ numBuses })
+        <ButtonGroup id="school-buses-buttons">
+          <Unimplemented>
+            <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
+          </Unimplemented>
+          <Unimplemented>
+            <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
+          </Unimplemented>
+        </ButtonGroup>
+      </PageHeader>
       <Well id="school-buses-bar" bsSize="small" className="clearfix">
         <Row>
           <Col md={11}>
             <Row>
-              <ButtonToolbar id="school-buses-search">
+              <ButtonToolbar id="school-buses-filters">
                 <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
                   items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
                 <MultiDropdown id="selectedInspectorsIds" placeholder="Inspectors"
@@ -297,30 +309,22 @@ var SchoolBuses = React.createClass({
                 {(() => {
                   if (this.state.search.nextInspection === CUSTOM) {
                     return <span>
-                      <DateControl id="startDate" date={ this.state.search.startDate } updateState={ this.updateSearchState } placeholder="mm/dd/yyyy" label="From:" title="start date"/>
-                      <DateControl id="endDate" date={ this.state.search.endDate } updateState={ this.updateSearchState } placeholder="mm/dd/yyyy" label="To:" title="end date"/>
+                      <DateControl id="startDate" date={ this.state.search.startDate } updateState={ this.updateSearchState } placeholder="mm/dd/yyyy" label="From:" title="Start Date"/>
+                      <DateControl id="endDate" date={ this.state.search.endDate } updateState={ this.updateSearchState } placeholder="mm/dd/yyyy" label="To:" title="End date"/>
                     </span>;
                   }
                 })()}
                 <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
                 <CheckboxControl inline id="justReInspections" checked={ this.state.search.justReInspections } updateState={ this.updateSearchState }>Just Re-Inspections</CheckboxControl>
-                <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
               </ButtonToolbar>
             </Row>
           </Col>
           <Col md={1}>
-            <Row id="school-buses-buttons">
-              <ButtonGroup>
-                <Unimplemented>
-                  <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
-                </Unimplemented>
-                <Unimplemented>
-                  <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
-                </Unimplemented>
-              </ButtonGroup>
-            </Row>
             <Row id="school-buses-faves">
               <Favourites id="school-buses-faves-dropdown" type="schoolBus" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } pullRight />
+            </Row>
+            <Row id="school-buses-search">
+              <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
             </Row>
           </Col>
         </Row>
@@ -363,10 +367,10 @@ var SchoolBuses = React.createClass({
                 <td style={{ textAlign: 'right' }}>
                   <ButtonGroup>
                     <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, bus) }/> }>
-                      <Button className={ bus.canDelete ? '' : 'hidden' } title="deleteBus" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                      <Button className={ bus.canDelete ? '' : 'hidden' } title="Delete Bus" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                     </OverlayTrigger>
                     <LinkContainer to={{ pathname: 'school-buses/' + bus.id }}>
-                      <Button className={ bus.canEdit ? '' : 'hidden' } title="editBus" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                      <Button className={ bus.canEdit ? '' : 'hidden' } title="View Bus" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
                     </LinkContainer>
 
                   </ButtonGroup>

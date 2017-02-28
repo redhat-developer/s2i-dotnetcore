@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { Well, Alert, Row, Col } from 'react-bootstrap';
+import { PageHeader, Well, Alert, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, Button, ButtonGroup, Glyphicon, InputGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -125,11 +125,23 @@ var UserManagement = React.createClass({
   render() {
     var districts = _.sortBy(this.props.districts, 'name');
 
+    var numUsers = this.state.loading ? '...' : Object.keys(this.props.users).length;
+
     return <div id="users-list">
+      <PageHeader>Users ({ numUsers })
+        <ButtonGroup id="users-buttons">
+          <Unimplemented>
+            <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
+          </Unimplemented>
+          <Unimplemented>
+            <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
+          </Unimplemented>
+        </ButtonGroup>
+      </PageHeader>
       <div>
         <Well id="users-bar" bsSize="small" className="clearfix">
           <Row>
-            <Col md={10}>
+            <Col md={11}>
               <ButtonToolbar id="users-search">
                 <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
                   items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
@@ -142,19 +154,9 @@ var UserManagement = React.createClass({
               </ButtonToolbar>
             </Col>
             <Col md={1}>
-              <Favourites id="users-faves-dropdown" type="user" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } />
-            </Col>
-            <Col md={1}>
-              <div id="users-buttons">
-                <ButtonGroup>
-                  <Unimplemented>
-                    <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
-                  </Unimplemented>
-                  <Unimplemented>
-                    <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
-                  </Unimplemented>
-                </ButtonGroup>
-              </div>
+              <Row id="users-faves">
+                <Favourites id="users-faves-dropdown" type="user" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } />
+              </Row>
             </Col>
           </Row>
         </Well>
@@ -163,7 +165,7 @@ var UserManagement = React.createClass({
           if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
           var addUserButton = <LinkContainer to={{ pathname: 'users/0' }}>
-            <Button title="add" bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add User</strong></Button>
+            <Button title="Add User" bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add User</strong></Button>
           </LinkContainer>;
           if (Object.keys(this.props.users).length === 0) { return <Alert bsStyle="success">No users { addUserButton }</Alert>; }
 
@@ -191,10 +193,10 @@ var UserManagement = React.createClass({
                   <td style={{ textAlign: 'right' }}>
                     <ButtonGroup>
                       <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, user) }/> }>
-                        <Button className={ user.canDelete ? '' : 'hidden' } title="deleteUser" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                        <Button className={ user.canDelete ? '' : 'hidden' } title="Delete User" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                       </OverlayTrigger>
                       <LinkContainer to={{ pathname: 'users/' + user.id }}>
-                        <Button className={ user.canEdit ? '' : 'hidden' } title="editUser" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                        <Button className={ user.canEdit ? '' : 'hidden' } title="View User" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
                       </LinkContainer>
                     </ButtonGroup>
                   </td>

@@ -192,7 +192,7 @@ var UsersDetail = React.createClass({
         <Row>
           <Col md={12}>
             <Well>
-              <h3>General <span className="pull-right"><Button title="edit" bsSize="small" onClick={ this.openEditDialog }><Glyphicon glyph="edit" /></Button></span></h3>
+              <h3>General <span className="pull-right"><Button title="Edit User" bsSize="small" onClick={ this.openEditDialog }><Glyphicon glyph="pencil" /></Button></span></h3>
               {(() => {
                 if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
@@ -221,7 +221,7 @@ var UsersDetail = React.createClass({
               {(() => {
                 if (this.state.loading ) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
-                var addUserRoleButton = <Button title="addUserRole" onClick={ this.openUserRoleDialog } bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add Role</strong></Button>;
+                var addUserRoleButton = <Button title="Add User Role" onClick={ this.openUserRoleDialog } bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add Role</strong></Button>;
 
                 var userRoles = _.filter(user.userRoles, userRole => {
                   var include = notBlank(userRole.roleName);
@@ -261,7 +261,7 @@ var UsersDetail = React.createClass({
                           <OverlayTrigger trigger="click" placement="left" rootClose
                             overlay={ <ExpireOverlay userRole={ userRole } onSave={ this.updateUserRole }/> }
                           >
-                            <Button title="expireUserRole" bsSize="xsmall"><Glyphicon glyph="pencil" />&nbsp;Expire</Button>
+                            <Button title="Expire User Role" bsSize="xsmall"><Glyphicon glyph="pencil" />&nbsp;Expire</Button>
                           </OverlayTrigger>
                         }
                         </td>
@@ -321,10 +321,10 @@ var ExpireOverlay = React.createClass({
 
   render() {
     var props = _.omit(this.props, 'onSave', 'hide', 'userRole');
-    return <Popover id="users-role-popover" title="Set expiry date" { ...props }>
+    return <Popover id="users-role-popover" title="Set Expiry Date" { ...props }>
       <Form inline>
         <FormGroup controlId="expiryDate" validationState={ this.state.expiryDateError ? 'error' : null }>
-          <DateControl id="expiryDate" date={ this.state.expiryDate } updateState={ this.updateState } placeholder="mm/dd/yyyy" title="expiry date"/>
+          <DateControl id="expiryDate" date={ this.state.expiryDate } updateState={ this.updateState } placeholder="mm/dd/yyyy" title="Expiry Date"/>
           <HelpBlock>{ this.state.expiryDateError }</HelpBlock>
         </FormGroup>
         <Button bsStyle="primary" onClick={ this.saveUserRole } className="pull-right">Save</Button>

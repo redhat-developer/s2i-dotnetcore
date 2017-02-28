@@ -2,7 +2,9 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { PageHeader, Well, Row, Button } from 'react-bootstrap';
+import { PageHeader, Well, Row, Col } from 'react-bootstrap';
+import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+
 
 import $ from 'jquery';
 
@@ -11,6 +13,7 @@ import * as Constant from '../constants';
 
 import ColDisplay from '../components/ColDisplay.jsx';
 import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
 
 import { formatDateTime } from '../utils/date';
 import { request } from '../utils/http';
@@ -64,9 +67,34 @@ var Version = React.createClass({
     }
   },
 
+  email() {
+
+  },
+
+  print() {
+
+  },
+
   render: function() {
     return <div id="version">
-      <PageHeader>Version</PageHeader>
+      <PageHeader>
+        <Row id="version-header">
+          <Col md={11}>Version</Col>
+          <Col md={1}>
+            <div id="version-buttons">
+              <ButtonGroup>
+                <Unimplemented>
+                  <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
+                </Unimplemented>
+                <Unimplemented>
+                  <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
+                </Unimplemented>
+              </ButtonGroup>
+            </div>
+          </Col>
+        </Row>
+      </PageHeader>
+
 
       {(() => {
         if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }

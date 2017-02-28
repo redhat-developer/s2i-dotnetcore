@@ -150,7 +150,7 @@ var OwnersDetail = React.createClass({
             <Row>
               <Col md={12}>
                 <h1>School Bus Owner: <small>{ owner.name }</small>
-                  <Button title="edit" bsSize="small" onClick={ this.openEditDialog }><Glyphicon glyph="edit" /></Button>
+                  <Button title="Edit Owner" bsSize="small" onClick={ this.openEditDialog }><Glyphicon glyph="pencil" /></Button>
                 </h1>
               </Col>
             </Row>
@@ -161,7 +161,7 @@ var OwnersDetail = React.createClass({
           <Col md={6}>
             <Well>
               <h3>School Bus Data <span className="pull-right">
-                <Button title="add" bsSize="small" onClick={ this.openSchoolBusDialog }><Glyphicon glyph="plus" /> Add School Bus</Button>
+                <Button title="Add Bus" bsSize="small" onClick={ this.openSchoolBusDialog }><Glyphicon glyph="plus" /> Add School Bus</Button>
               </span></h3>
               {(() => {
                 if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
@@ -188,7 +188,7 @@ var OwnersDetail = React.createClass({
             <Well>
               <h3>Contacts <span className="pull-right">
                 <Unimplemented>
-                  <Button title="addInspection" onClick={ this.addContact } bsSize="small"><Glyphicon glyph="plus" /></Button>
+                  <Button title="Add Contact" onClick={ this.addContact } bsSize="small"><Glyphicon glyph="plus" /></Button>
                 </Unimplemented>
               </span></h3>
               {(() => {
@@ -208,7 +208,7 @@ var OwnersDetail = React.createClass({
                   { field: 'blank' },
                 ];
 
-                return <SortTable id="inspection-list" sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
+                return <SortTable id="contacts-list" sortField={ this.state.ui.sortField } sortDesc={ this.state.ui.sortDesc } onSort={ this.updateUIState } headers={ headers }>
                   {
                     _.map(contacts, (contact) => {
                       return <tr key={ contact.id }>
@@ -218,9 +218,9 @@ var OwnersDetail = React.createClass({
                         <td>{ contact.role }</td>
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
-                            <Button className={ contact.canEdit ? '' : 'hidden' } title="editInspection" bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, contact) }><Glyphicon glyph="pencil" /></Button>
+                            <Button className={ contact.canEdit ? '' : 'hidden' } title="Edit Contact" bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, contact) }><Glyphicon glyph="pencil" /></Button>
                             <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteInspection.bind(this, contact) }/> }>
-                              <Button className={ contact.canDelete ? '' : 'hidden' } title="deleteInspection" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                              <Button className={ contact.canDelete ? '' : 'hidden' } title="Delete Contact" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                             </OverlayTrigger>
                           </ButtonGroup>
                         </td>
