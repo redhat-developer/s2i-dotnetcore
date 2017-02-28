@@ -289,7 +289,7 @@ var SchoolBusesDetail = React.createClass({
         <Row>
           <Col md={6}>
             <Well>
-              <h3>School Bus Data <span className="pull-right"><Button title="edit" bsSize="small" onClick={ this.openEditDialog }><Glyphicon glyph="edit" /></Button></span></h3>
+              <h3>School Bus Data <span className="pull-right"><Button title="Edit Bus" bsSize="small" onClick={ this.openEditDialog }><Glyphicon glyph="pencil" /></Button></span></h3>
               {(() => {
                 if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
@@ -346,7 +346,7 @@ var SchoolBusesDetail = React.createClass({
               {(() => {
                 if (this.state.loadingSchoolBusInspections ) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
-                var addInspectionButton = <Button title="addInspection" onClick={ this.addInspection } bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add</strong></Button>;
+                var addInspectionButton = <Button title="Add Inspection" onClick={ this.addInspection } bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add</strong></Button>;
 
                 if (Object.keys(this.props.schoolBusInspections).length === 0) { return <Alert bsStyle="success">No inspections { addInspectionButton }</Alert>; }
 
@@ -378,9 +378,11 @@ var SchoolBusesDetail = React.createClass({
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
                             <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteInspection.bind(this, inspection) }/> }>
-                              <Button className={ inspection.canDelete ? '' : 'hidden' } title="deleteInspection" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
+                              <Button className={ inspection.canDelete ? '' : 'hidden' } title="Delete Inspection" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                             </OverlayTrigger>
-                            <Button className={ inspection.canEdit ? '' : 'hidden' } title="editInspection" bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, inspection) }><Glyphicon glyph="pencil" /></Button>
+                            <Button title={ inspection.canEdit ? 'Edit Inspection' : 'View Inspection' } bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, inspection) }>
+                              <Glyphicon glyph={ inspection.canEdit ? 'pencil' : 'edit' } />
+                            </Button>
                           </ButtonGroup>
                         </td>
                       </tr>;
@@ -388,11 +390,6 @@ var SchoolBusesDetail = React.createClass({
                   }
                 </SortTable>;
               })()}
-              <div className="text-right">
-                <Unimplemented>
-                  <Button target="_blank" href="http://google.com/search?q=CTMS-Web">CTMS-Web</Button>
-                </Unimplemented>
-              </div>
             </Well>
           </Col>
         </Row>
