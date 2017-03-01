@@ -211,7 +211,8 @@ var InspectionEditDialog = React.createClass({
   render() {
     var inspectors = _.sortBy(this.props.inspectors, 'name');
 
-    var isReadOnly = !this.props.inspection.canEdit;
+    // Read-only if the user cannot edit the inspection
+    var isReadOnly = !this.props.inspection.canEdit && this.props.inspection.id !== 0;
 
     return <EditDialog id="inspection-edit" show={ this.props.show } readOnly={ isReadOnly }
       onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }

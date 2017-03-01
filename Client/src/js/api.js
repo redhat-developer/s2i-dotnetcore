@@ -438,13 +438,15 @@ export function newSchoolBusPermit(schoolBusId) {
 ////////////////////
 
 export function searchCCW(params) {
-  /*
 
+/*
   // For devenv testing
 
   var ccwResponse = {
     'id': 0,
     'icbcRegistrationNumber': '09281972',
+    'icbcLicencePlateNumber': 'KHS 774',
+    'icbcVehicleIdentificationNumber': '4UZABRCS48CY61422',
     'icbcModelYear': 1982,
     'icbcVehicleType': '2',
     'icbcRateClass': '671',
