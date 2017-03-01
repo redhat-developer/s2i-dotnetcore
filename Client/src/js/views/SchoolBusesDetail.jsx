@@ -43,6 +43,7 @@ var SchoolBusesDetail = React.createClass({
   getInitialState() {
     return {
       loadingSchoolBus: true,
+      loadingSchoolBusCCW: true,
       loadingSchoolBusInspections: true,
 
       showEditDialog: false,
@@ -67,6 +68,7 @@ var SchoolBusesDetail = React.createClass({
       // Clear the spinners
       this.setState({
         loadingSchoolBus: false,
+        loadingSchoolBusCCW: false,
         loadingSchoolBusInspections: false,
       });
       // Clear the school bus store, except for the fields
@@ -94,7 +96,26 @@ var SchoolBusesDetail = React.createClass({
 
     var id = this.props.params.schoolBusId;
 
-    Api.getSchoolBus(id).finally(() => {
+    Api.getSchoolBus(id).then(() => {
+      // Fetch CCW to make sure it's up to date
+      var params = null;
+      if (this.props.schoolBus.icbcRegistrationNumber) {
+        params = { regi: this.props.schoolBus.icbcRegistrationNumber };
+      } else if (this.props.schoolBus.licencePlateNumber) {
+        params = { plate: this.props.schoolBus.licencePlateNumber };
+      } else if (this.props.schoolBus.vehicleIdentificationNumber) {
+        params = { vin: this.props.schoolBus.vehicleIdentificationNumber };
+      }
+      if (params) {
+        this.setState({ loadingSchoolBusCCW: true });
+        return Api.searchCCW(params).then(() => {
+          // Chicanery: push the CCW data into our school bus store.
+          store.dispatch({ type: Action.UPDATE_BUS, schoolBus: { ...this.props.schoolBus, ccwData: this.props.schoolBusCCW }});
+        }).finally(() => {
+          this.setState({ loadingSchoolBusCCW: false });
+        });
+      }
+    }).finally(() => {
       this.setState({ loadingSchoolBus: false });
     });
     Api.getSchoolBusInspections(id).finally(() => {
@@ -332,9 +353,10 @@ var SchoolBusesDetail = React.createClass({
                     <ColDisplay md={12} label="Unit Number">{ bus.unitNumber }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColDisplay md={4} label="Seating Capacity">{ bus.schoolBusSeatingCapacity }</ColDisplay>
-                    <ColDisplay md={4} label="Mobile Aid Capacity">{ bus.mobilityAidCapacity }</ColDisplay>
-                    <Col md={4}></Col>
+                    <ColDisplay md={12} label="Seating Capacity">{ bus.schoolBusSeatingCapacity }</ColDisplay>
+                  </Row>
+                  <Row>
+                    <ColDisplay md={12} label="Mobile Aid Capacity">{ bus.mobilityAidCapacity }</ColDisplay>
                   </Row>
                 </div>;
               })()}
@@ -404,7 +426,7 @@ var SchoolBusesDetail = React.createClass({
                   <Row>
                     <ColDisplay md={4} label="Policy #">{ ccw.nscPolicyNumber }</ColDisplay>
                     <ColDisplay md={4} label="Status Date">{ formatDateTime(ccw.nscPolicyStatusDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
-                    <ColDisplay md={4} label="Status Is">{ ccw.nscPolicyStatus }</ColDisplay>
+                    <ColDisplay md={4} label="Status">{ ccw.nscPolicyStatus }</ColDisplay>
                   </Row>
                   <Row>
                     <ColDisplay md={4} label="Effective Date">{ formatDateTime(ccw.nscPolicyEffectiveDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
@@ -429,7 +451,7 @@ var SchoolBusesDetail = React.createClass({
                 return <div id="school-buses-icbc-owner">
                   <Row>
                     <ColDisplay md={8} label="Owner">{ ccw.icbcRegOwnerName }</ColDisplay>
-                    <ColDisplay md={4} label="Status Is">{ ccw.icbcRegOwnerStatus }</ColDisplay>
+                    <ColDisplay md={4} label="Status">{ ccw.icbcRegOwnerStatus }</ColDisplay>
                   </Row>
                   <Row>
                     <ColDisplay md={8} label="Address">{(() => {
@@ -517,6 +539,13 @@ var SchoolBusesDetail = React.createClass({
             </Well>
           </Col>
         </Row>
+        { this.state.loadingSchoolBus || this.state.loadingSchoolBusCCW || !ccw.dateFetched ||
+          <Row>
+            <Col md={12}>
+              <span id="school-buses-ccw-fetched">ICBC data last fetched on { formatDateTime(ccw.dateFetched, Constant.DATE_TIME_READABLE) }</span>
+            </Col>
+          </Row>
+        }
       </div>
       { this.state.showEditDialog &&
         <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.onSaveEdit } onClose= { this.onCloseEdit } />

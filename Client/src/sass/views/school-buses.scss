@@ -71,7 +71,7 @@
   }
 
   #inspection-list {
-    height: 216px;
+    height: 271px;
     width: 100%;
     overflow-y: scroll;
     margin-bottom: 10px;
@@ -101,6 +101,13 @@
     .col-display-label {
       width: 120px;
     }
+  }
+
+  #school-buses-ccw-fetched {
+    float: right;
+    font-size: 13px;
+    font-style: italic;
+    padding-right: 5px;
   }
 
   .well {
@@ -158,6 +165,7 @@
   }
 
   #school-buses-top {
+    font-size: 13.5px;
     padding-top: 20px;
     border-top: 1px solid lightgray;
 
@@ -179,6 +187,14 @@
     .col-display-label {
       width: 110px;
     }
+  }
+
+  #school-buses-ccw-fetched {
+    float: right;
+    font-size: 12.5px;
+    font-style: italic;
+    margin-top: 10px;
+    padding-right: 5px;
   }
 
   .well {

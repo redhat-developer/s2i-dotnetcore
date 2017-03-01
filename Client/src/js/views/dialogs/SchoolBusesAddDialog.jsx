@@ -237,6 +237,13 @@ var SchoolBusAddDialog = React.createClass({
                     })()}
                   </Well>
                 </Row>
+                { ccw.dateFetched &&
+                  <Row>
+                    <Col md={12}>
+                      <span id="school-buses-ccw-fetched">ICBC data last fetched on { formatDateTime(ccw.dateFetched, Constant.DATE_TIME_READABLE) }</span>
+                    </Col>
+                  </Row>
+                }
               </div>;
             }
           })()}
