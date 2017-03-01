@@ -224,8 +224,7 @@ namespace SchoolBusAPI.Services.Impl
                 .Count();
 
                 int nextMonth = _context.SchoolBuss
-                    .Where(x => x.Inspector.Id == id)
-                    .Where(x => x.NextInspectionDate >= DateTime.UtcNow)
+                    .Where(x => x.Inspector.Id == id)                    
                     .Where(x => x.NextInspectionDate <= DateTime.UtcNow.AddMonths(1))
                     .Select(x => x)
                     .Count();
