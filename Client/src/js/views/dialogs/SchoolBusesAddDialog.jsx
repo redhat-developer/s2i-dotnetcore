@@ -151,7 +151,12 @@ var SchoolBusAddDialog = React.createClass({
             if (this.state.ccwFound) {
               var ccw = this.props.schoolBusCCW;
 
-              return <div id="school-bus-ccw">
+              return <div id="school-buses-ccw">
+                <Row id="school-buses-top">
+                  <ColDisplay label="Registration">{ ccw.icbcRegistrationNumber || <span>&nbsp;</span> }</ColDisplay>
+                  <ColDisplay label="Plate">{ ccw.icbcLicencePlateNumber || <span>&nbsp;</span> }</ColDisplay>
+                  <ColDisplay label="VIN">{ ccw.icbcVehicleIdentificationNumber || <span>&nbsp;</span> }</ColDisplay>
+                </Row>
                 <Row>
                   <Well>
                     <h3>ICBC Registered Owner</h3>
@@ -162,7 +167,7 @@ var SchoolBusAddDialog = React.createClass({
                       return <div id="school-buses-icbc-owner">
                         <Row>
                           <ColDisplay md={8} label="Owner">{ ccw.icbcRegOwnerName }</ColDisplay>
-                          <ColDisplay md={4} label="Status Is">{ ccw.icbcRegOwnerStatus }</ColDisplay>
+                          <ColDisplay md={4} label="Status">{ ccw.icbcRegOwnerStatus }</ColDisplay>
                         </Row>
                         <Row>
                           <ColDisplay md={8} label="Address">{(() => {
@@ -193,36 +198,36 @@ var SchoolBusAddDialog = React.createClass({
                           <ColDisplay md={6} label="GVW">{ ccw.icbcGrossVehicleWeight }</ColDisplay>
                         </Row>
                         <Row>
-                          <ColDisplay md={6} label="Vehicle Type">{ ccw.icbcVehicleType }</ColDisplay>
-                          <ColDisplay md={6} label="Make">{ ccw.icbcMake }</ColDisplay>
-                        </Row>
-                        <Row>
-                          <ColDisplay md={6} label="Rate Class">{ ccw.icbcRateClass }</ColDisplay>
-                          <ColDisplay md={6} label="Body">{ ccw.icbcBody }</ColDisplay>
-                        </Row>
-                        <Row>
-                          <ColDisplay md={6} label="CVIP Decal">{ ccw.icbccvipDecal }</ColDisplay>
-                          <ColDisplay md={6} label="Rebuilt Status">{ ccw.icbcRebuiltStatus }</ColDisplay>
-                        </Row>
-                        <Row>
-                          <ColDisplay md={6} label="Fleet Unit #">{ ccw.icbcFleetUnitNo }</ColDisplay>
-                          <ColDisplay md={6} label="CVIP Expiry">{ formatDateTime(ccw.icbccvipExpiry, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
-                        </Row>
-                        <Row>
                           <ColDisplay md={6} label="Net Wt">{ ccw.icbcNetWt }</ColDisplay>
                           <Col md={6}></Col>
+                        </Row>
+                        <Row>
+                          <ColDisplay md={6} label="Vehicle Type">{ ccw.icbcVehicleType }</ColDisplay>
+                          <ColDisplay md={6} label="Make">{ ccw.icbcMake }</ColDisplay>
                         </Row>
                         <Row>
                           <ColDisplay md={6} label="Model">{ ccw.icbcModel }</ColDisplay>
                           <ColDisplay md={6} label="Colour">{ ccw.icbcColour }</ColDisplay>
                         </Row>
                         <Row>
+                          <ColDisplay md={6} label="Rate Class">{ ccw.icbcRateClass }</ColDisplay>
+                          <ColDisplay md={6} label="Body">{ ccw.icbcBody }</ColDisplay>
+                        </Row>
+                        <Row>
                           <ColDisplay md={6} label="Fuel">{ ccw.icbcFuel }</ColDisplay>
                           <Col md={6}></Col>
                         </Row>
                         <Row>
+                          <ColDisplay md={6} label="CVIP Decal">{ ccw.icbccvipDecal }</ColDisplay>
+                          <ColDisplay md={6} label="Rebuilt Status">{ ccw.icbcRebuiltStatus }</ColDisplay>
+                        </Row>
+                        <Row>
                           <ColDisplay md={6} label="Seating Capacity">{ ccw.icbcSeatingCapacity }</ColDisplay>
                           <Col md={6}></Col>
+                        </Row>
+                        <Row>
+                          <ColDisplay md={6} label="Fleet Unit #">{ ccw.icbcFleetUnitNo }</ColDisplay>
+                          <ColDisplay md={6} label="CVIP Expiry">{ formatDateTime(ccw.icbccvipExpiry, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>
                         </Row>
                         <Row>
                           <ColDisplay md={6} label="N&amp;O">{ ccw.icbcNotesAndOrders }</ColDisplay>

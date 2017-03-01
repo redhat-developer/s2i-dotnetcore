@@ -153,13 +153,41 @@
 }
 
 #school-buses-add {
+  #school-buses-ccw {
+    margin-top: 15px;
+  }
+
+  #school-buses-top {
+    padding-top: 20px;
+    border-top: 1px solid lightgray;
+
+    .col-display-field {
+      padding-left: 5px !important;
+      padding-right: 10px;
+    }
+  }
+
+  #school-buses-icbc-owner {
+    min-height: 80px;
+
+    .col-display-label {
+      width: 55px;
+    }
+  }
+
+  #school-buses-icbc-vehicle {
+    .col-display-label {
+      width: 110px;
+    }
+  }
+
   .well {
     margin-top: 20px;
     margin-bottom: 0px;
   }
 
   .modal-dialog {
-    width: 460px;
+    width: 500px;
   }
 
   .btn-toolbar {
@@ -178,9 +206,6 @@
     a {
       margin-left: 10px;
     }
-  }
-
-  .modal-footer {
   }
 
   .spinner {
