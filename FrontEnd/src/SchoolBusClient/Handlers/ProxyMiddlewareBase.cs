@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Proxy;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace SchoolBusClient.Handlers
         public ProxyMiddlewareBase(RequestDelegate next, IOptions<TOptions> serverOptions, ILoggerFactory loggerFactory)
         {
             _pathKey = serverOptions.Value.PathKey;
-            _apiUri = serverOptions.Value.ToUri().AbsoluteUri;
+            _apiUri = serverOptions.Value.ToUri().AbsoluteUri;            
             _proxy = new ProxyMiddleware(next, serverOptions.Value.ToProxyOptions());
             _logger = loggerFactory.CreateLogger<ApiProxyMiddleware>();
         }
@@ -32,9 +33,16 @@ namespace SchoolBusClient.Handlers
             try
             {
                 string requestPath = context.Request.Path.Value;
-                int indexOfApi = requestPath.IndexOf(_pathKey);
+                int indexOfApi = requestPath.IndexOf(_pathKey);                
                 context.Request.Path = requestPath.Remove(0, indexOfApi);
-                await _proxy.Invoke(context);
+                
+                // Set security headers
+                context.Response.Headers[HeaderNames.CacheControl] = "no-cache";
+                context.Response.Headers["X-Frame-Options"] = "SAMEORIGIN";
+                context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
+                context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+                
+                await _proxy.Invoke(context);                
             }
             catch (Exception e)
             {
