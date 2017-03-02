@@ -239,7 +239,7 @@ namespace CCW.Controllers
                 ccwdata.NSCPlateDecal = vehicle.decalNumber;
                 ccwdata.NSCPolicyEffectiveDate = vehicle.policyStartDate;
                 ccwdata.NSCPolicyExpiryDate = vehicle.policyExpiryDate;
-                ccwdata.NSCPolicyStatus = vehicle.policyStatus;
+                ccwdata.NSCPolicyStatus = vehicle.policyStatus + " - " + vehicle.policyStatusDescription;
                 ccwdata.NSCPolicyStatusDate = vehicle.policyAcquiredCurrentStatusDate;
                 ccwdata.NSCPolicyNumber = vehicle.policyNumber;
                 ccwdata.NSCClientNum = vehicle.nscNumber;
