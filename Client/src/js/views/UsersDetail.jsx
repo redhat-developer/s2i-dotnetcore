@@ -25,7 +25,7 @@ import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
 
-import { daysFromToday, formatDateTime, today, isValidDate, toUTC } from '../utils/date';
+import { daysFromToday, formatDateTime, today, isValidDate, toZuluTime } from '../utils/date';
 import { isBlank, notBlank } from '../utils/string';
 
 
@@ -312,7 +312,7 @@ var ExpireOverlay = React.createClass({
       this.setState({ expiryDateError: 'Expiry date not valid' });
     } else {
       this.props.onSave({ ...this.props.userRole, ...{
-        expiryDate: toUTC(this.state.expiryDate),
+        expiryDate: toZuluTime(this.state.expiryDate),
         roleId: this.props.userRole.role.id,
       }});
       this.props.hide();
