@@ -6,6 +6,7 @@
   
   "dependencies": {
     "Microsoft.AspNetCore.Antiforgery": "1.1.0",
+    "Microsoft.AspNetCore.Authentication": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
     "Microsoft.AspNetCore.Mvc": "1.1.0",
@@ -31,7 +32,7 @@
     "Microsoft.Extensions.Logging.Debug": "1.1.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0",
     "Npgsql.EntityFrameworkCore.PostgreSQL": "1.1.0",
-    "SonarAnalyzer.CSharp": "1.20.0",
+    "SchoolBusCommon": "1.0.0-*",
     "Swashbuckle.SwaggerGen": "6.0.0-beta901",
     "Swashbuckle.SwaggerUi": "6.0.0-beta901",
     "System.Xml.XmlDocument": "4.3.0",
@@ -73,14 +74,6 @@
           "type": "platform"
         }
       },
-      "imports": [
-        "dotnet5.6",
-        "dnxcore50",
-        "netstandard1.6",
-        "portable-net452+win81"
-      ]
-    },  
-    "netcore5.0": {
       "imports": [
         "dotnet5.6",
         "dnxcore50",

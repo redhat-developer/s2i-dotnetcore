@@ -111,6 +111,14 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns a PDF version of the permit for the selected Schoolbus</remarks>
+        /// <param name="id">id of SchoolBus to obtain the PDF permit for</param>
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusesIdPdfpermitGetAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id">id of SchoolBus to fetch</param>
         /// <param name="item"></param>
         /// <response code="200">OK</response>

@@ -21,23 +21,31 @@ using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using SchoolBusAPI.Mappings;
+using SchoolBusAPI.ViewModels;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http;
+using System.Text;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace SchoolBusAPI.Services.Impl
 { 
     /// <summary>
     /// 
     /// </summary>
-    public class SchoolBusService : ISchoolBusService
+    public class SchoolBusService : ServiceBase, ISchoolBusService
     {
 
         private readonly DbAppContext _context;
+        private readonly IConfiguration Configuration;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusService (DbAppContext context)
+        public SchoolBusService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context) : base(httpContextAccessor, context)
         {
             _context = context;
+            Configuration = configuration;
         }
 	
         /// <summary>
@@ -376,6 +384,114 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
+        /// <summary>
+        /// Returns a PDF Permit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual IActionResult SchoolbusesIdPdfpermitGetAsync (int id)        
+        {
+            FileContentResult result = null;
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                SchoolBus schoolBus = _context.SchoolBuss
+                    .Include(x => x.CCWData)
+                    .Include(x => x.SchoolBusOwner.PrimaryContact)
+                    .Include(x => x.SchoolDistrict)
+                    .First(a => a.Id == id);
+
+                // construct the view model.
+
+                PermitViewModel permitViewModel = new PermitViewModel();
+
+                // only do the ICBC fields if the CCW data is available.
+
+                if (schoolBus.CCWData != null)
+                {
+                    permitViewModel.IcbcMake = schoolBus.CCWData.ICBCMake;
+                    permitViewModel.IcbcModelYear = schoolBus.CCWData.ICBCModelYear;
+                    permitViewModel.IcbcRegistrationNumber = schoolBus.CCWData.ICBCRegistrationNumber;
+                    permitViewModel.VehicleIdentificationNumber = schoolBus.CCWData.ICBCVehicleIdentificationNumber;                    
+                }
+                permitViewModel.PermitIssueDate = schoolBus.PermitIssueDate;
+                permitViewModel.PermitNumber = schoolBus.PermitNumber;
+                permitViewModel.RestrictionsText = schoolBus.RestrictionsText;
+
+                if (schoolBus.SchoolBusOwner != null && schoolBus.SchoolBusOwner.PrimaryContact != null)
+                {
+                    permitViewModel.SchoolBusOwnerAddressLine1 = schoolBus.SchoolBusOwner.PrimaryContact.Address1;
+                    permitViewModel.SchoolBusOwnerAddressLine2 = schoolBus.SchoolBusOwner.PrimaryContact.Address2;
+                    permitViewModel.SchoolBusOwnerName = schoolBus.SchoolBusOwner.Name;
+                }
+                permitViewModel.SchoolBusSeatingCapacity = schoolBus.SchoolBusSeatingCapacity;
+                if (schoolBus.SchoolDistrict != null)
+                {
+                    permitViewModel.SchoolDistrictshortName = schoolBus.SchoolDistrict.ShortName;
+                }
+
+                //return new ObjectResult(permitViewModel);
+                string payload = JsonConvert.SerializeObject(permitViewModel);
+
+                // pass the request on to the PDF Micro Service
+                string pdfHost = Configuration["PDF_SERVICE_NAME"];
+                
+                string targetUrl = pdfHost + "/api/PDF/GetPDF";
+                
+                // call the microservice
+                try
+                {
+                    HttpClient client = new HttpClient();
+
+                    var request = new HttpRequestMessage(HttpMethod.Post, targetUrl);
+                    request.Content = new StringContent(payload, Encoding.UTF8, "application/json"); 
+                                        
+                    request.Headers.Clear();
+                    // transfer over the request headers.
+                    foreach (var item in Request.Headers)
+                    {
+                        string key = item.Key;
+                        string value = item.Value;
+                        request.Headers.Add(key, value);
+                    }
+
+                    Task<HttpResponseMessage> responseTask = client.SendAsync(request);
+                    responseTask.Wait();
+
+                    HttpResponseMessage response = responseTask.Result;
+                    if (response.StatusCode == HttpStatusCode.OK) // success
+                    {
+                        var bytetask = response.Content.ReadAsByteArrayAsync();
+                        bytetask.Wait();
+                        
+                        result = new FileContentResult(bytetask.Result, "application/pdf");
+                        result.FileDownloadName = "Permit-" + schoolBus.PermitNumber + ".pdf";                        
+                    }
+                }
+                catch (Exception e)
+                {
+                    result = null;
+                }
+
+                // check that the result has a value
+                if (result != null)
+                {
+                    return result;
+                }
+                else
+                {
+                    return new StatusCodeResult(400); // problem occured
+                }
+
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+        }
+
         /// <summary>
         /// Updates a single school bus object
         /// </summary>

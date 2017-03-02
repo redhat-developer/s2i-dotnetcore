@@ -190,6 +190,20 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns a PDF version of the permit for the selected Schoolbus</remarks>
+        /// <param name="id">id of SchoolBus to obtain the PDF permit for</param>
+        /// <response code="200">OK</response>
+        [HttpGet]
+        [Route("/api/schoolbuses/{id}/pdfpermit")]
+        [SwaggerOperation("SchoolbusesIdPdfpermitGet")]
+        public virtual IActionResult SchoolbusesIdPdfpermitGet([FromRoute]int id)
+        {
+            return this._service.SchoolbusesIdPdfpermitGetAsync(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id">id of SchoolBus to fetch</param>
         /// <param name="item"></param>
         /// <response code="200">OK</response>
