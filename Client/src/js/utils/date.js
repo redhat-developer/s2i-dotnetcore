@@ -64,3 +64,9 @@ export function isValidDate(dateTime) {
   var dt = Moment(dateTime);
   return (dt && dt.isValid());
 }
+
+export function toUTC(dateTime) {
+  var dt = Moment(dateTime);
+  if (!dt || !dt.isValid()) { return ''; }
+  return dt.utc().format(Constant.DATE_ZULU);
+}

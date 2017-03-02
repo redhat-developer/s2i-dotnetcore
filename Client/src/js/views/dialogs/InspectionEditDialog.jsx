@@ -20,7 +20,7 @@ import FormInputControl from '../../components/FormInputControl.jsx';
 import LinkControl from '../../components/LinkControl.jsx';
 import Spinner from '../../components/Spinner.jsx';
 
-import { today, businessDayOnOrBefore, daysFromToday, isValidDate } from '../../utils/date';
+import { today, businessDayOnOrBefore, daysFromToday, isValidDate, toUTC } from '../../utils/date';
 import { isBlank } from '../../utils/string';
 
 
@@ -198,10 +198,10 @@ var InspectionEditDialog = React.createClass({
   onSave() {
     this.props.onSave({ ...this.props.inspection, ...{
       inspector: { id: this.state.inspectorId },
-      inspectionDate: this.state.inspectionDate,
+      inspectionDate: toUTC(this.state.inspectionDate),
       inspectionTypeCode: this.state.inspectionTypeCode,
       inspectionResultCode: this.state.inspectionResultCode,
-      nextInspectionDate: this.state.nextInspectionDate,
+      nextInspectionDate: toUTC(this.state.nextInspectionDate),
       nextInspectionTypeCode: this.state.nextInspectionTypeCode,
       notes: this.state.notes,
       ripInspectionId: this.state.ripInspectionId,

@@ -25,7 +25,7 @@ export const DATE_SHORT_MONTH_DAY_YEAR = 'MMM D, YYYY';
 export const DATE_YEAR_SHORT_MONTH_DAY = 'YYYY-MMM-DD';
 export const DATE_ISO_8601 = 'YYYY-MM-DD';
 
-export const DATE_ZULU = 'YYYY-MM-DDT00:00:00Z';
+export const DATE_ZULU = 'YYYY-MM-DDThh:mm:ss[Z]';
 
 export const DATE_TIME_ISO_8601 = 'YYYY-MM-DDTHH:mm:ss';
 export const DATE_TIME_READABLE = 'MMMM D, YYYY [at] h:mm:ss A';

@@ -14,7 +14,7 @@ import EditDialog from '../../components/EditDialog.jsx';
 import DropdownControl from '../../components/DropdownControl.jsx';
 import Spinner from '../../components/Spinner.jsx';
 
-import { isValidDate } from '../../utils/date';
+import { isValidDate, toUTC } from '../../utils/date';
 import { isBlank, notBlank } from '../../utils/string';
 
 
@@ -91,8 +91,8 @@ var UserRoleAddDialog = React.createClass({
   onSave() {
     this.props.onSave({
       roleId: this.state.roleId,
-      effectiveDate: this.state.effectiveDate,
-      expiryDate: this.state.expiryDate,
+      effectiveDate: toUTC(this.state.effectiveDate),
+      expiryDate: toUTC(this.state.expiryDate),
     });
   },
 
