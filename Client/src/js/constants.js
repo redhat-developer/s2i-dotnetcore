@@ -29,3 +29,8 @@ export const DATE_ZULU = 'YYYY-MM-DDThh:mm:ss[Z]';
 
 export const DATE_TIME_ISO_8601 = 'YYYY-MM-DDTHH:mm:ss';
 export const DATE_TIME_READABLE = 'MMMM D, YYYY [at] h:mm:ss A';
+
+// CCW Search Fields
+export const CCW_REGISTRATION = 'regi';
+export const CCW_PLATE = 'plate';
+export const CCW_VIN = 'vin';

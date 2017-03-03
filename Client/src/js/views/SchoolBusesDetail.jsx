@@ -98,15 +98,17 @@ var SchoolBusesDetail = React.createClass({
 
     Api.getSchoolBus(id).then(() => {
       // Fetch CCW to make sure it's up to date
-      var params = null;
+      var params = {};
       if (this.props.schoolBus.icbcRegistrationNumber) {
-        params = { regi: this.props.schoolBus.icbcRegistrationNumber };
-      } else if (this.props.schoolBus.licencePlateNumber) {
-        params = { plate: this.props.schoolBus.licencePlateNumber };
-      } else if (this.props.schoolBus.vehicleIdentificationNumber) {
-        params = { vin: this.props.schoolBus.vehicleIdentificationNumber };
+        params[Constant.CCW_REGISTRATION] = this.props.schoolBus.icbcRegistrationNumber;
       }
-      if (params) {
+      if (this.props.schoolBus.licencePlateNumber) {
+        params[Constant.CCW_PLATE] = this.props.schoolBus.licencePlateNumber;
+      }
+      if (this.props.schoolBus.vehicleIdentificationNumber) {
+        params[Constant.CCW_VIN] = this.props.schoolBus.vehicleIdentificationNumber;
+      }
+      if (Object.keys(params).length > 0) {
         this.setState({ loadingSchoolBusCCW: true });
         return Api.searchCCW(params).then(() => {
           // Chicanery: push the CCW data into our school bus store.
