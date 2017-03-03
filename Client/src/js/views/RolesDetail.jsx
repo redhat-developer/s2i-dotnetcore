@@ -12,6 +12,7 @@ import Promise from 'bluebird';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
+import * as Constant from '../constants';
 import store from '../store';
 
 import FormInputControl from '../components/FormInputControl.jsx';
@@ -140,7 +141,7 @@ var RolesDetail = React.createClass({
 
   returnToList() {
     this.props.router.push({
-      pathname: 'roles',
+      pathname: Constant.ROLES_PATHNAME,
     });
   },
 
@@ -179,7 +180,7 @@ var RolesDetail = React.createClass({
             <Unimplemented>
               <Button><Glyphicon glyph="print" title="Print" /></Button>
             </Unimplemented>
-            <LinkContainer to={{ pathname: 'roles' }}>
+            <LinkContainer to={{ pathname: Constant.ROLES_PATHNAME }}>
               <Button title="Return to List"><Glyphicon glyph="arrow-left" /> Return to List</Button>
             </LinkContainer>
           </div>

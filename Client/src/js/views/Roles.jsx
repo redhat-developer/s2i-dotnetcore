@@ -10,6 +10,7 @@ import _ from 'lodash';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
+import * as Constant from '../constants';
 import store from '../store';
 
 import Confirm from '../components/Confirm.jsx';
@@ -117,7 +118,7 @@ var Roles = React.createClass({
         {(() => {
           if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
-          var addRoleButton = <LinkContainer to={{ pathname: 'roles/0' }}>
+          var addRoleButton = <LinkContainer to={{ pathname: `${ Constant.ROLES_PATHNAME }/0` }}>
             <Button title="Add Role" bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add Role</strong></Button>
           </LinkContainer>;
           if (Object.keys(this.props.roles).length === 0) { return <Alert bsStyle="success">No roles { addRoleButton }</Alert>; }
@@ -150,7 +151,7 @@ var Roles = React.createClass({
                       <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, role) }/> }>
                         <Button className={ role.canDelete ? '' : 'hidden' } title="Delete Role" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                       </OverlayTrigger>
-                      <LinkContainer to={{ pathname: 'roles/' + role.id }}>
+                      <LinkContainer to={{ pathname: `${ Constant.ROLES_PATHNAME }/${ role.id }` }}>
                         <Button className={ role.canEdit ? '' : 'hidden' } title="Edit Role" bsSize="xsmall"><Glyphicon glyph="pencil" /></Button>
                       </LinkContainer>
                     </ButtonGroup>

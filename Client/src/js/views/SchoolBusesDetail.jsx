@@ -14,6 +14,7 @@ import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
 import * as Action from '../actionTypes';
 import * as Api from '../api';
 import * as Constant from '../constants';
+import * as History from '../history';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
@@ -50,6 +51,8 @@ var SchoolBusesDetail = React.createClass({
       showInspectionDialog: false,
 
       inspection: {},
+
+      history: null,
 
       isNew: this.props.params.schoolBusId === '0',
 
@@ -148,7 +151,7 @@ var SchoolBusesDetail = React.createClass({
       Api.addSchoolBus(schoolBus).then(() => {
         // Reload the screen with new school bus id
         this.props.router.push({
-          pathname: `school-buses/${ this.props.schoolBus.id }`,
+          pathname: `${ Constant.BUSES_PATHNAME }/${ this.props.schoolBus.id }`,
         });
       });
     }
@@ -161,7 +164,7 @@ var SchoolBusesDetail = React.createClass({
     if (this.state.isNew) {
       // Go back to owner page if cancelling new school bus
       this.props.router.push({
-        pathname: `owners/${ this.props.owner.id }`,
+        pathname: `${ Constant.OWNERS_PATHNAME }/${ this.props.owner.id }`,
       });
     }
   },
@@ -222,6 +225,15 @@ var SchoolBusesDetail = React.createClass({
   },
 
   showHistory() {
+    var logged = History.log(Constant.BUSES_PATHNAME, this.props.schoolBus.id, {
+      text: 'Testing School Bus {0} history.',
+      fields: [{
+        text: `(VIN ${ this.props.schoolBus.vehicleIdentificationNumber })`,
+        path: `${ Constant.BUSES_PATHNAME }/${ this.props.schoolBus.id }`,
+      }],
+    });
+
+    this.setState({ history: History.renderEvent(logged) });
   },
 
   print() {
@@ -273,15 +285,15 @@ var SchoolBusesDetail = React.createClass({
           <Col md={2}>
             <div className="pull-right">
               <Unimplemented>
-                <Button><Glyphicon glyph="print" title="Print" /></Button>
+                <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
               </Unimplemented>
-              <LinkContainer to={{ pathname: 'school-buses' }}>
+              <LinkContainer to={{ pathname: Constant.BUSES_PATHNAME }}>
                 <Button title="Return to List"><Glyphicon glyph="arrow-left" /> Return to List</Button>
               </LinkContainer>
             </div>
           </Col>
         </Row>
-
+        <Row>{ this.state.history }</Row>
         {(() => {
           if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 

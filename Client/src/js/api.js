@@ -287,7 +287,7 @@ function parseSchoolBus(bus) {
 
   bus.isActive = bus.status === Constant.STATUS_ACTIVE;
   bus.ownerName = bus.schoolBusOwner.name;
-  bus.ownerPath = bus.schoolBusOwner.id ? '#/owners/' + bus.schoolBusOwner.id : '';
+  bus.ownerPath = bus.schoolBusOwner.id ? `#/${ Constant.OWNERS_PATHNAME }/${ bus.schoolBusOwner.id }` : '';
   bus.districtName = bus.district.name;
   bus.schoolDistrictName = bus.schoolDistrict.name;
   bus.homeTerminalAddress = concat(bus.homeTerminalAddress1, bus.homeTerminalAddress2, ', ');

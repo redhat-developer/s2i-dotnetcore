@@ -141,7 +141,7 @@ var Owners = React.createClass({
     Api.addOwner(owner).then(() => {
       // Open it up
       this.props.router.push({
-        pathname: `owners/${ this.props.owner.id }`,
+        pathname: `${ Constant.OWNERS_PATHNAME }/${ this.props.owner.id }`,
       });
     });
   },
@@ -229,7 +229,7 @@ var Owners = React.createClass({
                   <td>{ owner.name }</td>
                   <td>{ owner.primaryContactName }</td>
                   <td style={{ textAlign: 'center' }}>
-                    <a href={ `#school-buses?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a>
+                    <a href={ `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a>
                   </td>
                   <td>{ formatDateTime(owner.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }
                     { owner.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
@@ -240,7 +240,7 @@ var Owners = React.createClass({
                       <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, owner) }/> }>
                         <Button className={ owner.canDelete ? '' : 'hidden' } title="Delete Owner" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                       </OverlayTrigger>
-                      <LinkContainer to={{ pathname: 'owners/' + owner.id }}>
+                      <LinkContainer to={{ pathname: `${ Constant.OWNERS_PATHNAME }/${ owner.id }` }}>
                         <Button className={ owner.canEdit ? '' : 'hidden' } title="View Owner" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
                       </LinkContainer>
                     </ButtonGroup>
