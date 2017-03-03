@@ -40,5 +40,11 @@ ENV ASPNETCORE_URLS http://*:8080
 EXPOSE 8080
 
 RUN dotnet publish -c Release -o /app/out
+# copy the node.js portion of the application
+COPY PDF/src/PDF.Server/pdf.js /app/out
+COPY PDF/src/PDF.Server/package.json /app/out
 WORKDIR /app/out
+# restore Node packages.
+RUN npm install
+
 ENTRYPOINT ["dotnet", "/app/out/PDF.Server.dll"]

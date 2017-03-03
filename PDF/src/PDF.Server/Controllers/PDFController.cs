@@ -63,36 +63,12 @@ namespace PDF.Controllers
         public async Task<IActionResult> GetPDF([FromServices] INodeServices nodeServices, [FromBody]  Object rawdata )
         {
             JSONResponse result = null;
-            var options = new { format="letter", orientation= "landscape" };
-
-            var sampleData = new
-            {
-                permitNumber = 29332,
-                permitIssueDate = "2017/03/02",
-                schoolBusOwnerName = "Sample Owner",
-                schoolBusOwnerAddressLine1 = "Sample Address 1",
-                schoolBusOwnerAddressLine2 = "Sample Address 2",
-                icbcRegistrationNumber = "123456",
-                vehicleIdentificationNumber = "VIN123456",
-                icbcModelYear = "2001",
-                icbcMake = "Chevrolet",
-                restrictionsText = "No Restrictions",
-                schoolDistrictshortName = "SD 38",
-                schoolBusSeatingCapacity = 72
-            };
+            var options = new { format="letter", orientation= "landscape" };            
 
             // execute the Node.js component
-            if (rawdata != null)
-            {                
-                result = await nodeServices.InvokeAsync<JSONResponse>("./pdf", "schoolbus_permit", rawdata, options); 
-            }
-            else
-            {
-                result = await nodeServices.InvokeAsync<JSONResponse>("./pdf", "schoolbus_permit", sampleData, options); 
-            }            
-
+            result = await nodeServices.InvokeAsync<JSONResponse>("./pdf", "schoolbus_permit", rawdata, options); 
+            
             HttpContext.Response.ContentType = "application/pdf";
-
             string filename = @"output.pdf";
             HttpContext.Response.Headers.Add("x-filename", filename);
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "x-filename");
