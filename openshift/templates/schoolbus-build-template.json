@@ -187,6 +187,29 @@
       },
       "status": {}
     },
+	{
+      "kind": "ImageStream",
+      "apiVersion": "v1",
+      "metadata":
+      {
+        "name": "${PDF_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+      },
+      "spec":
+      {
+        "tags": [
+          {
+            "name": "${DEPLOYMENT_TYPE}",
+            "annotations": null,
+            "generation": null,
+            "importPolicy": {}
+          }
+
+        ]
+      },
+      "status": {}
+    },
     {
       "kind": "BuildConfig",
       "apiVersion": "v1",
@@ -434,6 +457,66 @@
             "kind": "ImageStreamTag",
             "namespace": "tran-schoolbus-tools",
             "name": "${CLIENT_NAME}:${DEPLOYMENT_TYPE}"
+          }
+        },
+        "resources": {},
+        "postCommit": {},
+        "nodeSelector": null
+      },
+      "status":
+      {
+        "lastVersion": 0
+      }
+    },
+	{
+      "kind": "BuildConfig",
+      "apiVersion": "v1",
+      "metadata":
+      {
+        "name": "${PDF_NAME}",
+        "creationTimestamp": null,
+        "labels":
+        {
+          "app": "${PDF_NAME}"
+        }
+      },
+      "spec":
+      {
+        "triggers": [
+          {
+            "type": "ImageChange",
+            "imageChange": {}
+          },
+          {
+            "type": "ConfigChange"
+          }
+        ],
+        "runPolicy": "Serial",
+        "source":
+        {
+          "type": "Git",
+          "git":
+          {
+            "uri": "${SRC_REPO}",
+			"ref": "${GIT_REFERENCE}"			
+          },
+          "contextDir": "/PDF"
+        },
+        "strategy":
+        {
+          "type": "Docker",
+          "dockerStrategy":
+          {
+			"dockerfilePath" : "PDF.Dockerfile"
+          }
+        },
+        "output":
+        {
+          "to":
+          {
+            "kind": "ImageStreamTag",
+            "namespace": "tran-schoolbus-tools",
+            "name": "${PDF_NAME}:${DEPLOYMENT_TYPE}"
           }
         },
         "resources": {},
@@ -782,6 +865,13 @@
       "description": "The name assigned to all of the backend objects defined in this template.",
       "required": true,
       "value": "server"
+    },
+	{
+      "name": "PDF_NAME",
+      "displayName": "PDF Server Name",
+      "description": "The name assigned to all of the PDF Server objects defined in this template.",
+      "required": true,
+      "value": "pdf"
     },
     {
       "name": "RPROXY_NAME",

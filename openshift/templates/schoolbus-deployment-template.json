@@ -326,7 +326,139 @@
       "kind": "Service",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${BACKEND_NAME}",
+        "name": "${PDF_NAME}",
+        "annotations": {
+          "description": "Exposes and load balances the PDF pods"
+        }
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "web",
+			"protocol": "TCP",
+            "port": 8080,
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "name": "${PDF_NAME}"
+        }
+      }
+    },
+	{
+    "kind": "DeploymentConfig",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "${PDF_NAME}",
+        "generation": 1,
+        "creationTimestamp": null,
+        "labels": {
+            "template": "schoolbus-environment"
+        },
+        "annotations": {
+            "description": "Defines how to deploy the PDF server"
+        }
+    },
+    "spec": {
+        "strategy": {
+            "type": "Rolling",
+            "rollingParams": {
+                "updatePeriodSeconds": 1,
+                "intervalSeconds": 1,
+                "timeoutSeconds": 600,
+                "maxUnavailable": "25%",
+                "maxSurge": "25%"
+            },
+            "resources": {}
+        },
+        "triggers": [
+            {
+                "type": "ConfigChange"
+            },
+            {
+                "type": "ImageChange",
+                "imageChangeParams": {
+                    "automatic": true,
+                    "containerNames": [
+                        "${PDF_NAME}"
+                    ],
+                    "from": {
+                        "kind": "ImageStreamTag",
+                        "namespace": "tran-schoolbus-tools",
+                        "name": "${PDF_NAME}:${APP_DEPLOYMENT_TAG}"
+                    }
+                }
+            }
+        ],
+        "replicas": 1,
+        "test": false,
+        "selector": {
+            "name": "${PDF_NAME}"
+        },
+        "template": {
+            "metadata": {
+                "name": "${PDF_NAME}",
+                "creationTimestamp": null,
+                "labels": {
+                    "name": "${PDF_NAME}"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "${PDF_NAME}",
+                        "image": " ",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "ASPNETCORE_ENVIRONMENT",
+                                "value": "Staging"
+                            },
+                            {
+                                "name": "DATABASE_SERVICE_NAME",
+                                "value": "${DATABASE_SERVICE_NAME}"
+                            },
+                            {
+                                "name": "POSTGRESQL_USER",
+                                "value": "${DATABASE_USER}"
+                            },
+                            {
+                                "name": "POSTGRESQL_PASSWORD",
+                                "value": "${DATABASE_PASSWORD}"
+                            },
+                            {
+                                "name": "POSTGRESQL_DATABASE",
+                                "value": "${DATABASE_NAME}"
+                            }
+                        ],
+                        "resources": {
+                            "limits": {
+                                "memory": "512Mi"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "IfNotPresent"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "securityContext": {}
+            }
+        }
+    },
+    "status": {}
+    },
+	{
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${PDF_NAME}",
         "annotations": {
           "description": "Exposes and load balances the application pods"
         }
@@ -341,7 +473,7 @@
           }
         ],
         "selector": {
-          "name": "${BACKEND_NAME}"
+          "name": "${PDF_NAME}"
         }
       }
     },
@@ -447,6 +579,10 @@
 				  {
 				    "name": "CCW_SERVICE_NAME",
 					"value": "${CCW_NAME}"
+				  },
+				  {
+				    "name": "PDF_SERVICE_NAME",
+					"value": "${PDF_NAME}"
 				  },
 				  {
 				    "name": "ASPNETCORE_ENVIRONMENT",
@@ -817,6 +953,13 @@
       "description": "The name assigned to all of the CCW microservice objects defined in this template.",
       "required": true,
       "value": "ccw"
+    },
+	{
+      "name": "PDF_NAME",
+      "displayName": "PDF Name",
+      "description": "The name assigned to all of the PDF microservice objects defined in this template.",
+      "required": true,
+      "value": "pdf"
     },
 	{
       "name": "BACKEND_NAME",
