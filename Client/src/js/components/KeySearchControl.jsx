@@ -2,13 +2,15 @@ import React from 'react';
 
 import _ from 'lodash';
 
+import * as Constant from '../constants';
+
 import SearchControl from '../components/SearchControl.jsx';
 
 
 const KEY_SEARCH_ITEMS = [
-  { id: 'regi',  name: 'Registration' },
-  { id: 'vin',   name: 'VIN' },
-  { id: 'plate', name: 'Plate' },
+  { id: Constant.CCW_REGISTRATION, name: 'Registration' },
+  { id: Constant.CCW_VIN,          name: 'VIN' },
+  { id: Constant.CCW_PLATE,        name: 'Plate' },
 ];
 
 var KeySearchControl = React.createClass({
