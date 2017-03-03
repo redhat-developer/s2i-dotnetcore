@@ -29,7 +29,7 @@ import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
 
-import { formatDateTime } from '../utils/date';
+import { formatDateTime, toZuluTime } from '../utils/date';
 
 
 const BEFORE_TODAY = 'Before Today';
@@ -158,10 +158,10 @@ var SchoolBuses = React.createClass({
     }
 
     if (startDate && startDate.isValid()) {
-      searchParams.startDate = startDate.format(Constant.DATE_ZULU);
+      searchParams.startDate = toZuluTime(startDate.startOf('day'));
     }
     if (endDate && endDate.isValid()) {
-      searchParams.endDate = endDate.format(Constant.DATE_ZULU);
+      searchParams.endDate = toZuluTime(endDate.startOf('day'));
     }
 
     return searchParams;
