@@ -243,6 +243,11 @@ namespace CCW.Controllers
                 ccwdata.NSCPolicyStatusDate = vehicle.policyAcquiredCurrentStatusDate;
                 ccwdata.NSCPolicyNumber = vehicle.policyNumber;
                 ccwdata.NSCClientNum = vehicle.nscNumber;
+                if (vehicle.owner != null)
+                {
+                    ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;                    
+                }                
+                ccwdata.ICBCLicencePlateNumber = vehicle.policyNumber;
 
                 ccwdata.DateFetched = DateTime.UtcNow;
 
@@ -255,7 +260,7 @@ namespace CCW.Controllers
                     string organizationNameCode = "LE";
                     try
                     {
-                        ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(ccwdata.NSCPolicyNumber, organizationNameCode, userId, guid, directory);
+                        ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
                         foundNSCData = true;
                         ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
                         ccwdata.NSCCarrierName = clientOrganization.name1;
@@ -290,7 +295,7 @@ namespace CCW.Controllers
                     {
                         try
                         {
-                            ClientIndividual clientIndividual = _service.GetCurrentClientIndividual(ccwdata.NSCPolicyNumber, organizationNameCode, userId, guid, directory);
+                            ClientIndividual clientIndividual = _service.GetCurrentClientIndividual(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
                             foundNSCData = true;
                             ccwdata.NSCCarrierConditions = clientIndividual.nscInformation.carrierStatus;
                             ccwdata.NSCCarrierName = clientIndividual.displayName;
@@ -319,39 +324,7 @@ namespace CCW.Controllers
                             _logger.LogInformation("Unknown Error retrieving Individual NSC data.");
                         }
                     }
-
-                }
-                
-                // get the ICBC data
-
-                try
-                {
-                    IcbcVehicleDescription icbcVehicleDescription = _service.GetIcbcVehicleForRegistrationNumberAsync(vehicle.registrationNumber, DateTime.Now, userId, guid, directory);
-                    ccwdata.ICBCRegOwnerRODL = icbcVehicleDescription.regularOperatorLicenceNumber;
-                    ccwdata.ICBCLicencePlateNumber = icbcVehicleDescription.plateNumber;
-                    ccwdata.ICBCRegOwnerStatus = "";                    
-                }
-                catch (AggregateException ae)
-                {
-                    _logger.LogInformation("Aggregate Exception occured during GetIcbcVehicleForRegistrationNumberAsync");
-                    ae.Handle((x) =>
-                    {
-                        if (x is FaultException<CVSECommonException>) // From the web service.
-                        {
-                            _logger.LogDebug("CVSECommonException:");
-                            FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
-                            _logger.LogDebug("errorId: {0}", fault.Detail.errorId);
-                            _logger.LogDebug("errorMessage: {0}", fault.Detail.errorMessage);
-                            _logger.LogDebug("systemError: {0}", fault.Detail.systemError);
-                            return true;
-                        }
-                        return true; // ignore other exceptions
-                    });
-                }
-                catch (Exception e)
-                {
-                    _logger.LogDebug("Unknown error retrieving ICBC information.");
-                }
+                }                               
 
                 if (ccwdata.Id > 0)
                 {
