@@ -5,7 +5,7 @@ FROM microsoft/dotnet:1.1.0-sdk-projectjson
  
 RUN apt-get update \
  && apt-get upgrade -y --force-yes \
- && apt-get install rlwrap bzip2 \
+ && apt-get install rlwrap bzip2 build-essential chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
  && rm -rf /var/lib/apt/lists/*;
 
 RUN curl https://deb.nodesource.com/node_6.x/pool/main/n/nodejs/nodejs_6.7.0-1nodesource1~jessie1_amd64.deb > node.deb \
