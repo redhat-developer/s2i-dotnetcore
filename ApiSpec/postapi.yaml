@@ -285,7 +285,23 @@
           in: path
           description: id of SchoolBus to obtain a new permit number for
           required: true
-          type: integer          
+          type: integer
+  /schoolbuses/{id}/pdfpermit:
+    get:
+      description:  Returns a PDF version of the permit for the selected Schoolbus
+      tags:
+        - SchoolBus
+      produces:
+        - application/pdf
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to obtain the PDF permit for
+          required: true
+          type: integer                    
   /schoolbusowners/{id}/attachments:
     get:
       description: Returns attachments for a particular SchoolBusOwner

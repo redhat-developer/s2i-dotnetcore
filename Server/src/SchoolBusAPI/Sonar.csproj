@@ -20,7 +20,7 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-	<NoWarn>$(NoWarn);S2360;S100;S2583;S101;CS0472;S3376;S1118</NoWarn>
+	<!-- <NoWarn>$(NoWarn);S2360;S100;S2583;S101;CS0472;S3376;S1118</NoWarn> -->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,18 +45,25 @@
     <None Include="MSBuild.ruleset" />
     <None Include="project.sonar.json" />
     <!-- A reference to the entire .NET Framework is automatically included -->
+	<ProjectReference Include="..\..\..\Common\src\SchoolBusCommon\SchoolBusCommon.xproj">
+      <Project>{FF1DB058-3D10-4065-A42B-E9EB5BEB0982}</Project>
+      <Name>SchoolBusCommon</Name>
+	  <ReferenceOutputAssembly>false</ReferenceOutputAssembly> 
+   </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />    
+	<Compile Include="Authentication\*.cs" />
+	<Compile Include="Authorization\*.cs" />	
     <Compile Include="Controllers\*.cs" />
 	<Compile Include="Mappings\*.cs" />
 	<Compile Include="Models\*.cs" />
 	<Compile Include="Models.Impl\*.cs" />
 	<Compile Include="Properties\*.cs" />
 	<Compile Include="Services\*.cs" />
+	<Compile Include="Seeders\*.cs" />
 	<Compile Include="Services.Impl\*.cs" />
-	<Compile Include="ViewModels\*.cs" />
-	
+	<Compile Include="ViewModels\*.cs" />	
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -66,7 +73,9 @@
   </Target>
   -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  
   <PropertyGroup>
-    <NugetTargetMoniker>.NETCore,Version=v5.0</NugetTargetMoniker>
+  <NugetTargetMoniker>.NETCoreApp,Version=v1.1</NugetTargetMoniker>
   </PropertyGroup>
+ 
 </Project>

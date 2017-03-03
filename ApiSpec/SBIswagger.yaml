@@ -2867,7 +2867,23 @@ paths:
           in: path
           description: id of SchoolBus to obtain a new permit number for
           required: true
-          type: integer          
+          type: integer
+  /schoolbuses/{id}/pdfpermit:
+    get:
+      description:  Returns a PDF version of the permit for the selected Schoolbus
+      tags:
+        - SchoolBus
+      produces:
+        - application/pdf
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to obtain the PDF permit for
+          required: true
+          type: integer                    
   /schoolbusowners/{id}/attachments:
     get:
       description: Returns attachments for a particular SchoolBusOwner
@@ -4747,6 +4763,38 @@ definitions:
         type: string
         maxLength: 255
         description: Type of attachment
+  PermitViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    properties:
+      permitNumber:
+        format: int32
+        type: integer        
+      permitIssueDate:
+        type: string
+        format: date-time
+      schoolBusOwnerName:
+        type: string
+      schoolBusOwnerAddressLine1:
+        type: string
+      schoolBusOwnerAddressLine2:
+        type: string
+      icbcRegistrationNumber: 
+        type: string
+      vehicleIdentificationNumber:
+        type: string
+      icbcModelYear:
+        format: int32
+        type: integer
+      icbcMake:
+        type: string
+      restrictionsText:
+        type: string
+      schoolDistrictshortName:
+        type: string
+      schoolBusSeatingCapacity:
+        format: int32
+        type: integer
   SchoolBusOwnerViewModel:
     type: object
     x-codegen-viewmodel: true
