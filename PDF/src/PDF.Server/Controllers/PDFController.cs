@@ -67,14 +67,9 @@ namespace PDF.Controllers
 
             // execute the Node.js component
             result = await nodeServices.InvokeAsync<JSONResponse>("./pdf", "schoolbus_permit", rawdata, options); 
-            
-            HttpContext.Response.ContentType = "application/pdf";
-            string filename = @"output.pdf";
-            HttpContext.Response.Headers.Add("x-filename", filename);
-            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "x-filename");
-            HttpContext.Response.Body.Write(result.data, 0, result.data.Length);
-            return new ContentResult();
-        }
+                        
+            return new FileContentResult(result.data, "application/pdf");
+        }        
 
         protected HttpRequest Request
         {
