@@ -43,6 +43,7 @@ RUN dotnet publish -c Release -o /app/out
 # copy the node.js portion of the application
 COPY PDF/src/PDF.Server/pdf.js /app/out
 COPY PDF/src/PDF.Server/package.json /app/out
+COPY PDF/src/PDF.Server/Templates /app/out/Templates
 WORKDIR /app/out
 # restore Node packages.
 RUN npm install
