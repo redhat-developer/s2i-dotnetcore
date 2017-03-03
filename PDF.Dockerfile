@@ -2,12 +2,22 @@ FROM microsoft/dotnet:1.1.0-sdk-projectjson
 # Dockerfile for package PDF
 
 # Install Node.js
+
+RUN apt-get update \
+ && apt-get upgrade -y --force-yes \
+ && apt-get install rlwrap bzip2 \
+ && rm -rf /var/lib/apt/lists/*;
  
 RUN apt-get update \
  && apt-get upgrade -y --force-yes \
- && apt-get install rlwrap bzip2 build-essential chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
+ && apt-get install -y --force-yes chrpath \
  && rm -rf /var/lib/apt/lists/*;
 
+RUN apt-get update \
+ && apt-get upgrade -y --force-yes \
+ && apt-get install -y --force-yes libfreetype6 libfontconfig1  \
+ && rm -rf /var/lib/apt/lists/*;
+ 
 RUN curl https://deb.nodesource.com/node_6.x/pool/main/n/nodejs/nodejs_6.7.0-1nodesource1~jessie1_amd64.deb > node.deb \
  && dpkg -i node.deb \
  && rm node.deb
