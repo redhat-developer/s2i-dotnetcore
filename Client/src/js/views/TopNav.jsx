@@ -6,6 +6,8 @@ import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Popover, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import * as Constant from '../constants';
+
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import Spinner from '../components/Spinner.jsx';
 
@@ -30,24 +32,24 @@ var TopNav = React.createClass({
         </div>
         <Navbar id="top-nav">
           <Nav>
-            <LinkContainer to={{ pathname: '/home' }}>
-              <NavItem eventKey={1} href="/home">Home</NavItem>
+            <LinkContainer to={{ pathname: `/${ Constant.HOME_PATHNAME }` }}>
+              <NavItem eventKey={ 1 }>Home</NavItem>
             </LinkContainer>
-            <LinkContainer to={{ pathname: '/school-buses' }}>
-              <NavItem eventKey={2} href="/school-buses">School Buses</NavItem>
+            <LinkContainer to={{ pathname: `/${ Constant.BUSES_PATHNAME }` }}>
+              <NavItem eventKey={ 2 }>School Buses</NavItem>
             </LinkContainer>
-            <LinkContainer to={{ pathname: '/owners' }}>
-              <NavItem eventKey={3} href="/owners">Owners</NavItem>
+            <LinkContainer to={{ pathname: `/${ Constant.OWNERS_PATHNAME }` }}>
+              <NavItem eventKey={ 3 }>Owners</NavItem>
             </LinkContainer>
-            <LinkContainer to={{ pathname: '/notifications' }}>
-              <NavItem eventKey={4} href="/notifications">Notifications</NavItem>
+            <LinkContainer to={{ pathname: `/${ Constant.NOTIFICATIONS_PATHNAME }` }}>
+              <NavItem eventKey={ 4 }>Notifications</NavItem>
             </LinkContainer>
             <NavDropdown id="admin-dropdown" title="Administration">
-              <LinkContainer to={{ pathname: '/users' }}>
-                <MenuItem eventKey={5} href="/users">User Management</MenuItem>
+              <LinkContainer to={{ pathname: `/${ Constant.USERS_PATHNAME }` }}>
+                <MenuItem eventKey={ 5 }>User Management</MenuItem>
               </LinkContainer>
-              <LinkContainer to={{ pathname: '/roles' }}>
-                <MenuItem eventKey={6} href="/roles">Roles and Permissions</MenuItem>
+              <LinkContainer to={{ pathname: `/${ Constant.ROLES_PATHNAME }` }}>
+                <MenuItem eventKey={ 6 }>Roles and Permissions</MenuItem>
               </LinkContainer>
             </NavDropdown>
           </Nav>

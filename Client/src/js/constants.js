@@ -1,3 +1,12 @@
+// Paths
+export const HOME_PATHNAME = 'home';
+export const BUSES_PATHNAME = 'school-buses';
+export const OWNERS_PATHNAME = 'owners';
+export const NOTIFICATIONS_PATHNAME = 'notifications';
+export const USERS_PATHNAME = 'users';
+export const ROLES_PATHNAME = 'roles';
+export const VERSION_PATHNAME = 'version';
+
 // Status
 export const STATUS_ACTIVE = 'Active';
 export const STATUS_ARCHIVED = 'Archived';

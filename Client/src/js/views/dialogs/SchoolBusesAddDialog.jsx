@@ -110,7 +110,7 @@ var SchoolBusAddDialog = React.createClass({
       title={ <strong>Add School Bus</strong> }
       footer={
         this.state.ccwFound &&
-          <LinkContainer to={{ pathname: 'school-buses/0' }}>
+          <LinkContainer to={{ pathname: `${ Constant.BUSES_PATHNAME }/0` }}>
             <Button title="add bus">Continue</Button>
           </LinkContainer>
       }
@@ -133,7 +133,7 @@ var SchoolBusAddDialog = React.createClass({
               return <div>
                 <Row className="has-error">
                   <span>This bus is already in the Inspection Tracking System.</span>
-                  <LinkContainer to={{ pathname: 'school-buses/' + this.state.busInSystemId }}>
+                  <LinkContainer to={{ pathname: `${ Constant.BUSES_PATHNAME }/${ this.state.busInSystemId }` }}>
                     <Button title="view bus" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
                   </LinkContainer>
                 </Row>

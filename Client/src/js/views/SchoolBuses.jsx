@@ -369,7 +369,7 @@ var SchoolBuses = React.createClass({
                     <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, bus) }/> }>
                       <Button className={ bus.canDelete ? '' : 'hidden' } title="Delete Bus" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                     </OverlayTrigger>
-                    <LinkContainer to={{ pathname: 'school-buses/' + bus.id }}>
+                    <LinkContainer to={{ pathname: `${ Constant.BUSES_PATHNAME }/${ bus.id }` }}>
                       <Button className={ bus.canEdit ? '' : 'hidden' } title="View Bus" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
                     </LinkContainer>
 

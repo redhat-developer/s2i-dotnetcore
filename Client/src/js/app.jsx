@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, Route, Redirect, hashHistory } from 'react-router';
 
+import * as Constant from './constants';
 import store from './store';
 
 import Main from './views/Main.jsx';
@@ -21,19 +22,19 @@ import FourOhFour from './views/404.jsx';
 
 const App = <Provider store={ store }>
   <Router history={ hashHistory }>
-    <Redirect from="/" to="/home"/>
+    <Redirect from="/" to={`/${ Constant.HOME_PATHNAME }`}/>
     <Route path="/" component={ Main }>
-      <Route path="home" component={ Home }/>
-      <Route path="school-buses" component={ SchoolBuses }/>
-      <Route path="school-buses/:schoolBusId" component={ SchoolBusesDetail }/>
-      <Route path="owners" component={ Owners }/>
-      <Route path="owners/:ownerId" component={ OwnersDetail }/>
-      <Route path="notifications" component={ Notifications }/>
-      <Route path="users" component={ Users }/>
-      <Route path="users/:userId" component={ UsersDetail }/>
-      <Route path="roles" component={ Roles }/>
-      <Route path="roles/:roleId" component={ RolesDetail }/>
-      <Route path="version" component={ Version }/>
+      <Route path={ Constant.HOME_PATHNAME } component={ Home }/>
+      <Route path={ Constant.BUSES_PATHNAME } component={ SchoolBuses }/>
+      <Route path={ `${ Constant.BUSES_PATHNAME }/:schoolBusId` } component={ SchoolBusesDetail }/>
+      <Route path={ Constant.OWNERS_PATHNAME } component={ Owners }/>
+      <Route path={ `${ Constant.OWNERS_PATHNAME }/:ownerId` } component={ OwnersDetail }/>
+      <Route path={ Constant.NOTIFICATIONS_PATHNAME } component={ Notifications }/>
+      <Route path={ Constant.USERS_PATHNAME } component={ Users }/>
+      <Route path={ `${ Constant.USERS_PATHNAME }/:userId` } component={ UsersDetail }/>
+      <Route path={ Constant.ROLES_PATHNAME } component={ Roles }/>
+      <Route path={ `${ Constant.USERS_PATHNAME }/:roleId` } component={ RolesDetail }/>
+      <Route path={ Constant.VERSION_PATHNAME } component={ Version }/>
       <Route path="*" component={ FourOhFour }/>
     </Route>
   </Router>

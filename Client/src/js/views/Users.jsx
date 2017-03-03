@@ -11,6 +11,7 @@ import Promise from 'bluebird';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
+import * as Constant from '../constants';
 import store from '../store';
 
 import CheckboxControl from '../components/CheckboxControl.jsx';
@@ -164,7 +165,7 @@ var UserManagement = React.createClass({
         {(() => {
           if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
-          var addUserButton = <LinkContainer to={{ pathname: 'users/0' }}>
+          var addUserButton = <LinkContainer to={{ pathname: `${ Constant.USERS_PATHNAME }/0` }}>
             <Button title="Add User" bsSize="xsmall"><Glyphicon glyph="plus" />&nbsp;<strong>Add User</strong></Button>
           </LinkContainer>;
           if (Object.keys(this.props.users).length === 0) { return <Alert bsStyle="success">No users { addUserButton }</Alert>; }
@@ -195,7 +196,7 @@ var UserManagement = React.createClass({
                       <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, user) }/> }>
                         <Button className={ user.canDelete ? '' : 'hidden' } title="Delete User" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
                       </OverlayTrigger>
-                      <LinkContainer to={{ pathname: 'users/' + user.id }}>
+                      <LinkContainer to={{ pathname: `${ Constant.USERS_PATHNAME }/${ user.id }` }}>
                         <Button className={ user.canEdit ? '' : 'hidden' } title="View User" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
                       </LinkContainer>
                     </ButtonGroup>

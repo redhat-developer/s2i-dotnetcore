@@ -136,7 +136,7 @@ var OwnersDetail = React.createClass({
               <Unimplemented>
                 <Button><Glyphicon glyph="print" title="Print" /></Button>
               </Unimplemented>
-              <LinkContainer to={{ pathname: 'owners' }}>
+              <LinkContainer to={{ pathname: Constant.OWNERS_PATHNAME }}>
                 <Button title="Return to List"><Glyphicon glyph="arrow-left" /> Return to List</Button>
               </LinkContainer>
             </div>
@@ -168,7 +168,7 @@ var OwnersDetail = React.createClass({
 
                 return <div id="owners-data">
                   <Row>
-                    <ColDisplay md={12} label="Number of School Buses"><a href={ `#school-buses?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a></ColDisplay>
+                    <ColDisplay md={12} label="Number of School Buses"><a href={ `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a></ColDisplay>
                   </Row>
                   <Row>
                     <ColDisplay md={12} label="Owner Added On">{ formatDateTime(owner.dateCreated, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>

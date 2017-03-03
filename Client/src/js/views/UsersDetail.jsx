@@ -110,7 +110,7 @@ var UsersDetail = React.createClass({
         if (this.state.isNew) {
           // Reload the screen using new user id
           this.props.router.push({
-            pathname: 'users/' + user.id,
+            pathname: `${ Constant.USERS_PATHNAME }/${ user.id }`,
           });
         }
       });
@@ -123,7 +123,7 @@ var UsersDetail = React.createClass({
     if (this.state.isNew) {
       // Go back to user list if cancelling new user
       this.props.router.push({
-        pathname: 'users',
+        pathname: Constant.USERS_PATHNAME,
       });
     }
   },
@@ -171,7 +171,7 @@ var UsersDetail = React.createClass({
               <Unimplemented>
                 <Button><Glyphicon glyph="print" title="Print" /></Button>
               </Unimplemented>
-              <LinkContainer to={{ pathname: 'users' }}>
+              <LinkContainer to={{ pathname: Constant.USERS_PATHNAME }}>
                 <Button title="Return to List"><Glyphicon glyph="arrow-left" /> Return to List</Button>
               </LinkContainer>
             </div>
