@@ -415,7 +415,16 @@ namespace SchoolBusAPI.Services.Impl
                     permitViewModel.IcbcRegistrationNumber = schoolBus.CCWData.ICBCRegistrationNumber;
                     permitViewModel.VehicleIdentificationNumber = schoolBus.CCWData.ICBCVehicleIdentificationNumber;                    
                 }
-                permitViewModel.PermitIssueDate = schoolBus.PermitIssueDate;
+                permitViewModel.PermitIssueDate = null;
+                if (schoolBus.PermitIssueDate != null)
+                {
+                    // Since the PDF template is raw HTML and won't convert a date object, we must adjust the time zone here.
+                     
+                    TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+                    DateTime dto = TimeZoneInfo.ConvertTime ((DateTime)schoolBus.PermitIssueDate, tzi);
+                    permitViewModel.PermitIssueDate = dto.ToString("yyyy-MM-dd");
+                }
+                
                 permitViewModel.PermitNumber = schoolBus.PermitNumber;
                 permitViewModel.RestrictionsText = schoolBus.RestrictionsText;
 
@@ -430,8 +439,6 @@ namespace SchoolBusAPI.Services.Impl
                 {
                     permitViewModel.SchoolDistrictshortName = schoolBus.SchoolDistrict.ShortName;
                 }
-
-                //return new ObjectResult(permitViewModel);
                 string payload = JsonConvert.SerializeObject(permitViewModel);
 
                 // pass the request on to the PDF Micro Service
