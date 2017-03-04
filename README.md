@@ -24,6 +24,9 @@ This application is meant to be deployed to RedHat OpenShift version 3.  The ful
 
 Two OpenShift templates are provided, one for the build and one for the deploy.  Full details are here: [OpenShift]
 
+**CCW Jurisdiction Changes**
+In the event that CCW Jurisdiction changes occur, instructions are available at the following location to update the seed data for CCW Jurisdictions.  [CCW Jurisdiction Changes]
+
 Developer Prerequisites
 -----------------------
 
@@ -37,21 +40,21 @@ Developer Prerequisites
 - .NET Core IDE such as Visual Studio
 - PostgreSQL 9.4 or newer
 
-** DevOps **
+**DevOps**
 - RedHat OpenShift tools
 - Docker
 - A familiarity with Jenkins
 
 Development
 -----------
-** Client Code **
+**Client Code**
 The client code is tested using a Node.js application.  Node.js is also used to build the client code into the deployable JavaScript application.
 
 Run npm install from the Client directory to configure the Client build environment
 
 The frameworks used for this application are React/Redux.
  
-** API Services **
+**API Services**
 
 - Create a local postgres database that you will use for development purposes
 - Edit the project launch settings such that the same [environment variables] set during deployment are set on your development environment
@@ -60,7 +63,7 @@ The frameworks used for this application are React/Redux.
 	- /api/authentication/dev/token?userid=<UserId>
 - The MicroServices "CCW" and "PDF" require an instance of the "Server" component in order to be tested.  However you can run all three applications at once on the same computer, with each running on different TCP ports.  Configure the [Environment Variables] with appropriate settings for each service.
 
-** SonarQube **
+**SonarQube**
 
 SonarQube is a code quality service that helps identify problem areas in code through static analysis.
 
@@ -70,7 +73,8 @@ Before running this batch file, "sonar.bat", ensure that you have a valid SonarQ
 
 The file sonar.bat will start the SonarQube scanner, execute a build, and stop the scanner.  You may then go to the SonarQube.com website to view the results of the scan.
 
-** Viewing the Database **
+**Viewing the Database**
+
 This application utilizes the [SchemaSpy] OpenShift image to provide an easy way for stakeholders to view the database schema.  The SchemaSpy component is a self contained schema viewer application that can be rapidly deployed to analyze the database structure and provide a website to review details of the database.
 
 Contribution
@@ -110,3 +114,4 @@ Click [here](https://github.com/orgs/bcgov/teams/tran/repositories) for a comple
 [environment variables]: linktoenvironmentvariableshere
 [openshift]: openshiftinfo
 [SchemaSpy]: schemaspy
+[CCW Jurisdiction Changes]: ccwjurisdiction
