@@ -14,7 +14,7 @@ Repository Map
 - **Common**: A library of common methods used by various components
 - **FrontEnd**: The Front End server that hosts static content and proxies the API
 - **Jenkins**: Jenkins configuration data
-- **openshift**: OpenShift templates
+- **openshift**: [OpenShift templates](openshift/templates/README.md)
 - **PDF**: A microservice for PDF rendering
 - **Server**: The API Server 
 
@@ -22,10 +22,10 @@ Installation
 ------------
 This application is meant to be deployed to RedHat OpenShift version 3.  The full application will require 8 Cores of CPU and at least 8 GB of RAM, plus sufficient Persistent Volume storage for the database and configuration secrets.
 
-Two OpenShift templates are provided, one for the build and one for the deploy.  Full details are here: [OpenShift]
+Two OpenShift templates are provided, one for the build and one for the deploy.  Full details are here: [OpenShift](openshift/templates/README.md)
 
 **CCW Jurisdiction Changes**
-In the event that CCW Jurisdiction changes occur, instructions are available at the following location to update the seed data for CCW Jurisdictions.  [CCW Jurisdiction Changes]
+In the event that CCW Jurisdiction changes occur, instructions are available at the following location to update the seed data for CCW Jurisdictions.  [CCW Jurisdiction Changes](ApiSpec/CCWJurisdiction/readme.md)
 
 Developer Prerequisites
 -----------------------
@@ -57,10 +57,10 @@ The frameworks used for this application are React/Redux.
 **API Services**
 
 - Create a local postgres database that you will use for development purposes
-- Edit the project launch settings such that the same [environment variables] set during deployment are set on your development environment
+- Edit the project launch settings such that the same [environment variables](openshift/templates/README.md) set during deployment are set on your development environment
 - Run the code in Development mode, which will allow you to get a Developer Token allowing the application to run outside of a SiteMinder environment.
 - A developer token is obtained by going to the following url, where <UserId> is a valid SiteMinder UserId field in the database.
-	- /api/authentication/dev/token?userid=<UserId>
+	- `/api/authentication/dev/token?userid=<UserId>`
 - The MicroServices "CCW" and "PDF" require an instance of the "Server" component in order to be tested.  However you can run all three applications at once on the same computer, with each running on different TCP ports.  Configure the [Environment Variables] with appropriate settings for each service.
 
 **SonarQube**
@@ -69,13 +69,13 @@ SonarQube is a code quality service that helps identify problem areas in code th
 
 A batch file is provided in the Server code directory that can be used to run SonarQube code analysis on the API Server code.
 
-Before running this batch file, "sonar.bat", ensure that you have a valid SonarQube account (can be your GitHub account once registered with SonarQube.com) and that your SonarQube token is installed properly on your computer.  You will also need the SonarQube Scanner for C# to be installed on your local computer.
+Before running this batch file, `sonar.bat`, ensure that you have a valid SonarQube account (can be your GitHub account once registered with SonarQube.com) and that your SonarQube token is installed properly on your computer.  You will also need the SonarQube Scanner for C# to be installed on your local computer.
 
 The file sonar.bat will start the SonarQube scanner, execute a build, and stop the scanner.  You may then go to the SonarQube.com website to view the results of the scan.
 
 **Viewing the Database**
 
-This application utilizes the [SchemaSpy] OpenShift image to provide an easy way for stakeholders to view the database schema.  The SchemaSpy component is a self contained schema viewer application that can be rapidly deployed to analyze the database structure and provide a website to review details of the database.
+This application utilizes the [SchemaSpy](https://github.com/bcgov/SchemaSpy) OpenShift image to provide an easy way for stakeholders to view the database schema.  The SchemaSpy component is a self contained schema viewer application that can be rapidly deployed to analyze the database structure and provide a website to review details of the database.
 
 Contribution
 ------------
@@ -110,8 +110,3 @@ Maintenance
 
 This repository is maintained by [BC Ministry of Transportation](http://www.th.gov.bc.ca/).
 Click [here](https://github.com/orgs/bcgov/teams/tran/repositories) for a complete list of our repositories on GitHub.
-
-[environment variables] (openshift/templates/README.md)
-[openshift] (openshift/templates/README.md)
-[SchemaSpy] https://github.com/bcgov/SchemaSpy
-[CCW Jurisdiction Changes] (ApiSpec/CCWJurisdiction/readme.md)
