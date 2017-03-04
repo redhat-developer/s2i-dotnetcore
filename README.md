@@ -111,7 +111,7 @@ Maintenance
 This repository is maintained by [BC Ministry of Transportation](http://www.th.gov.bc.ca/).
 Click [here](https://github.com/orgs/bcgov/teams/tran/repositories) for a complete list of our repositories on GitHub.
 
-[environment variables]: (openshift/templates/README.md)
-[openshift]: (openshift/templates/README.md)
-[SchemaSpy]: https://github.com/bcgov/SchemaSpy
-[CCW Jurisdiction Changes]: (ApiSpec/CCWJurisdiction/readme.md)
+[environment variables] (openshift/templates/README.md)
+[openshift] (openshift/templates/README.md)
+[SchemaSpy] https://github.com/bcgov/SchemaSpy
+[CCW Jurisdiction Changes] (ApiSpec/CCWJurisdiction/readme.md)
