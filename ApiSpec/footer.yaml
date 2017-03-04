@@ -29,7 +29,6 @@
         type: integer        
       permitIssueDate:
         type: string
-        format: date-time
       schoolBusOwnerName:
         type: string
       schoolBusOwnerAddressLine1:

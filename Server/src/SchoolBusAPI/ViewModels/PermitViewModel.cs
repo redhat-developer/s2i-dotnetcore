@@ -51,7 +51,7 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="RestrictionsText">RestrictionsText.</param>
         /// <param name="SchoolDistrictshortName">SchoolDistrictshortName.</param>
         /// <param name="SchoolBusSeatingCapacity">SchoolBusSeatingCapacity.</param>
-        public PermitViewModel(int? PermitNumber = null, DateTime? PermitIssueDate = null, string SchoolBusOwnerName = null, string SchoolBusOwnerAddressLine1 = null, string SchoolBusOwnerAddressLine2 = null, string IcbcRegistrationNumber = null, string VehicleIdentificationNumber = null, int? IcbcModelYear = null, string IcbcMake = null, string RestrictionsText = null, string SchoolDistrictshortName = null, int? SchoolBusSeatingCapacity = null)
+        public PermitViewModel(int? PermitNumber = null, string PermitIssueDate = null, string SchoolBusOwnerName = null, string SchoolBusOwnerAddressLine1 = null, string SchoolBusOwnerAddressLine2 = null, string IcbcRegistrationNumber = null, string VehicleIdentificationNumber = null, int? IcbcModelYear = null, string IcbcMake = null, string RestrictionsText = null, string SchoolDistrictshortName = null, int? SchoolBusSeatingCapacity = null)
         {               this.PermitNumber = PermitNumber;
             this.PermitIssueDate = PermitIssueDate;
             this.SchoolBusOwnerName = SchoolBusOwnerName;
@@ -76,7 +76,7 @@ namespace SchoolBusAPI.ViewModels
         /// Gets or Sets PermitIssueDate
         /// </summary>
         [DataMember(Name="permitIssueDate")]
-        public DateTime? PermitIssueDate { get; set; }
+        public string PermitIssueDate { get; set; }
 
         /// <summary>
         /// Gets or Sets SchoolBusOwnerName
