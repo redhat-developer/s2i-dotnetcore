@@ -19,22 +19,23 @@
         float: left;
         width: 160px;
         height: 50px;
-        background-color: #AAA;
-        border-right: 1px solid black;
-        text-transform: uppercase;
-        text-align: center;
+    }
+
+    img {
+        height: 100%;
     }
 
     #word-mark {
-        margin-left: 10px;
-        margin-top: 15px;
+        padding-left: 10px;
+        padding-top: 10px;
         font-family: serif;
         float: left;
-        font-size: 14px;
+        font-size: 15px;
+        border-left: 2px solid #999;
     }
 
     #permit-num {
-        margin-top: 10px;
+        margin-top: 7px;
         float: right;
         white-space: nowrap;
         font-size: 26px;
@@ -43,9 +44,9 @@
 
     #permit-num-box {
         display: inline-block;
-        border: 1px solid #999;
+        border: 2px solid #999;
         font-size: 20px;
-        padding: 10px;
+        padding: 8px;
     }
 
 
@@ -165,10 +166,10 @@
     <div id="inner">
         <div id="header" class="clearfix">
             <div id="logo">
-                British<br>Columbia
+                <img src="gov_bc_logo.jpg"/>
             </div>
             <div id="word-mark">
-                Ministry of Transportation<br>and Infastructure
+                Ministry of Transportation<br>and Infrastructure
             </div>
             <div id="permit-num">
                 PERMIT NO.: <div id="permit-num-box">{{permitNumber}}</div>
@@ -176,7 +177,7 @@
         </div>
         <h1>SCHOOL BUS PERMIT</h1>
         <p>Under the provisions of <i>Motor Vehicle Act Regulations,</i> Division 11.03,
-        authorization is hereby granted to the registered owner of lessee, as described below,
+        authorization is hereby granted to the registered owner or lessee, as described below,
         to operate a school bus:</p>
         <div id="info-box">
             <div class="row clearfix">
@@ -228,7 +229,7 @@
         </div>
     </div>
 
-    <p id="notice">This permit is not transferable - If change in ownership/leasse occurs, contact
+    <p id="notice">This permit is not transferable &mdash; If change in ownership/lessee occurs, contact
     commercial vehicle safety and enforcement immediately to cancel this permit.
 
     <div id="footer">
