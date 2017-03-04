@@ -218,20 +218,18 @@ namespace SchoolBusAPI.Services.Impl
                 result.Surname = User.FindFirst(ClaimTypes.Surname).Value;
 
                 int overdue = _context.SchoolBuss
-                .Where(x => x.Inspector.Id == id)
-                .Where(x => x.NextInspectionDate <= DateTime.UtcNow)
+                
+                .Where(x => x.Inspector.Id == id && x.NextInspectionDate <= DateTime.UtcNow && x.Status.ToLower() == "active")
                 .Select(x => x)
                 .Count();
 
                 int nextMonth = _context.SchoolBuss
-                    .Where(x => x.Inspector.Id == id)                    
-                    .Where(x => x.NextInspectionDate <= DateTime.UtcNow.AddMonths(1))
+                    .Where(x => x.Inspector.Id == id && x.NextInspectionDate <= DateTime.UtcNow.AddMonths(1) && x.Status.ToLower() == "active")
                     .Select(x => x)
                     .Count();
 
                 int scheduledInspections = _context.SchoolBuss
-                    .Where(x => x.Inspector.Id == id)
-                    .Where(x => x.NextInspectionDate >= DateTime.UtcNow)
+                    .Where(x => x.Inspector.Id == id && x.NextInspectionDate >= DateTime.UtcNow && x.Status.ToLower() == "active")
                     .Select(x => x)
                     .Count();
 

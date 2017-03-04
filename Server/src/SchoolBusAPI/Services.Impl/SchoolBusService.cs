@@ -721,12 +721,7 @@ namespace SchoolBusAPI.Services.Impl
                 {
                     data = data.Where(x => x.SchoolBusOwner.Id == owner);
                 }
-
-                if (includeInactive == null)
-                {
-                    data = data.Where(x => x.Status.ToLower() == "active");
-                }
-
+                
                 if (includeInactive == null || (includeInactive != null && includeInactive == false))
                 {
                     data = data.Where(x => x.Status.ToLower() == "active");
