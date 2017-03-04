@@ -32,7 +32,7 @@ Developer Prerequisites
 
 **Client**
 - Node.js
-- Text editor such as NetBeans
+- Text editor such as Sublime Text or VI
 
 **Server**
 - .Net Core SDK (.NET Core App 1.1 is used for all components)
@@ -62,6 +62,17 @@ The frameworks used for this application are React/Redux.
 - A developer token is obtained by going to the following url, where <UserId> is a valid SiteMinder UserId field in the database.
 	- `/api/authentication/dev/token?userid=<UserId>`
 - The MicroServices "CCW" and "PDF" require an instance of the "Server" component in order to be tested.  However you can run all three applications at once on the same computer, with each running on different TCP ports.  Configure the [Environment Variables] with appropriate settings for each service.
+
+**Code Generation**
+A large part of this application was generated through a custom [Swagger Codegen extension] (https://github.com/bcgov/Swagger-Codegen-Extension).  A custom [Swagger Editor](https://github.com/bcgov/Swagger-Editor) was also used to validate the OpenAPI format files that form the API specicification.
+
+Generated sections in the code include:
+- Controllers
+- Services
+- Models
+- ViewModels
+
+The generated model was then used to construct the database through the use of [Entity Framework](https://docs.microsoft.com/en-us/ef/).
 
 **SonarQube**
 
