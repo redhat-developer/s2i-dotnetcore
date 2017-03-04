@@ -221,4 +221,4 @@ The following environment variables are used by the application:
 | PDF_SERVICE_NAME | PDF microservice location | http://pdf:8080 | |
 | ASPNETCORE_ENVIRONMENT | Type of deployment | Development | Set to other Production (or anything other than Development) to disable development features such as user visible stack traces. |
 
-Credit:  @GeorgeWalker, @WadeBarnes contributed to this page.
+Credit:  [George Walker](https://github.com/GeorgeWalker), [Wade Barnes](https://github.com/WadeBarnes) contributed to this page.
