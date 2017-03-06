@@ -678,12 +678,10 @@ namespace SchoolBusAPI.Services.Impl
 
             // Eager loading of related data
             var data = _context.SchoolBuss
-                .Include(x => x.HomeTerminalCity)
-                .Include(x => x.SchoolDistrict)
-                .Include(x => x.SchoolBusOwner.PrimaryContact)
-                .Include(x => x.District.Region)
-                .Include(x => x.Inspector)
-                .Include(x => x.CCWData)
+                .Include(x => x.HomeTerminalCity)                
+                .Include(x => x.SchoolBusOwner)
+                .Include(x => x.District)
+                .Include(x => x.Inspector)                
                 .Select(x => x);
 
             bool keySearch = false;
