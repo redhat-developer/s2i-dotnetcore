@@ -232,7 +232,7 @@ namespace CCW.Controllers
                 ccwdata.ICBCRegOwnerProv = vehicle.owner.mailingAddress4;
                 ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;
                 ccwdata.ICBCSeatingCapacity = SanitizeInt(vehicle.seatingCapacity);
-                ccwdata.ICBCVehicleType = vehicle.vehicleType;
+                ccwdata.ICBCVehicleType = vehicle.vehicleType + " - " + vehicle.vehicleTypeDescription;
                 
                 ccwdata.ICBCVehicleIdentificationNumber = vehicle.serialNumber;
 
