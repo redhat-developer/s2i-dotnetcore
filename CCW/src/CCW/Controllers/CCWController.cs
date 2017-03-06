@@ -263,7 +263,7 @@ namespace CCW.Controllers
                         ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
                         foundNSCData = true;
                         ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
-                        ccwdata.NSCCarrierName = clientOrganization.name1;
+                        ccwdata.NSCCarrierName = clientOrganization.displayName;                        
                         ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
                         ccwdata.NSCClientNum = clientOrganization.nscInformation.certificationNumber;
                     }
