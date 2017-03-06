@@ -152,6 +152,18 @@ namespace CCW.Controllers
             VehicleDescription vehicle = null;
             if (regi != null)
             {
+                // format the regi.
+                try
+                {
+                    int registration = int.Parse(regi);
+                    // zero padded, 8 digits
+                    regi = registration.ToString("D8");
+                } 
+                catch (Exception e)
+                {
+                    _logger.LogInformation("Exception occured parsing registration number " + regi);
+                }
+
                 try
                 {
                     vehicle = _service.GetBCVehicleForRegistrationNumber(regi, userId, guid, directory);
