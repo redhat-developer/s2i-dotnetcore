@@ -344,7 +344,7 @@ var SchoolBuses = React.createClass({
             { field: 'districtName',           title: 'District'        },
             { field: 'homeTerminalCityPostal', title: 'Home Terminal'   },
             { field: 'icbcRegistrationNumber', title: 'Registration'    },
-            { field: 'unitNumber',             title: 'Fleet Unit #'    },
+            { field: 'unitNumber',             title: 'Unit Number'     },
             { field: 'permitNumber',           title: 'Permit'          },
             { field: 'nextInspectionDateSort', title: 'Next Inspection' },
             { field: 'inspectorName',          title: 'Inspector'       },
