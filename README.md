@@ -4,7 +4,19 @@ Schoolbus Inspection Tracking System
 Introduction
 ----------------
 
-This project is to replace the existing permitting and inspection scheduling functionality in AVIS such that the mainframe application can be retired.
+The approximately 3000 school buses in BC are subject to mandatory inspections under the Motor Vehicle Act Regulations. The CVSA eForm is used to record the details of school bus inspection and the data is stored in the RIP (Roadside Inspection Program) database.
+
+The School Bus Program encompasses three major processes:
+
+* Applying for and issuing School Bus permits;
+* Scheduling and performing vehicle inspections; and
+* Cancelling and/or suspending permits.
+
+The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from systems of record, e.g. ICBC, NSC), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
+
+School bus permitting and inspection scheduling was previously tracked in the Automated Vehicle Inspection System on the IMS mainframe.
+
+The application is being developed as an open source solution.
 
 Repository Map
 --------------
