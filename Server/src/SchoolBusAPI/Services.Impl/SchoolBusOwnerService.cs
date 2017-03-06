@@ -283,10 +283,10 @@ namespace SchoolBusAPI.Services.Impl
             DateTime? result = null;
 
             // next inspection is drawn from the schoolbus table
-            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null);
+            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null && x.Status.ToLower() == "active");
             if (exists)
             {
-                SchoolBus schoolbus = _context.SchoolBuss.Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null)
+                SchoolBus schoolbus = _context.SchoolBuss.Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null && x.Status.ToLower() == "active")
                     .OrderByDescending(x => x.NextInspectionDate)
                     .First();
                 result = schoolbus.NextInspectionDate;
@@ -307,7 +307,7 @@ namespace SchoolBusAPI.Services.Impl
             bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId);
             if (exists)
             {
-                result = _context.SchoolBuss.Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId)
+                result = _context.SchoolBuss.Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.Status.ToLower() == "active")
                     .Count();
                 
             }
@@ -319,11 +319,11 @@ namespace SchoolBusAPI.Services.Impl
             string result = null;
 
             // next inspection is drawn from the inspections table.
-            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null);
+            bool exists = _context.SchoolBuss.Any(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null && x.Status.ToLower() == "active");
             if (exists)
             {
                 var record = _context.SchoolBuss
-                    .Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null)
+                    .Where(x => x.SchoolBusOwner.Id == schoolBusOwnerId && x.NextInspectionDate != null && x.Status.ToLower() == "active")
                     .OrderByDescending(x => x.NextInspectionDate)
                     .First();
                 result = record.NextInspectionTypeCode;                
