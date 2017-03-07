@@ -339,7 +339,7 @@ function mapStateToProps(state) {
   return {
     user: state.models.user,
     groups: state.lookups.groups,
-    ui: state.ui.roles,
+    ui: state.ui.userRoles,
   };
 }
 
