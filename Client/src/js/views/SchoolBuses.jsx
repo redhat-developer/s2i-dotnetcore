@@ -295,7 +295,7 @@ var SchoolBuses = React.createClass({
                   items={ cities } selectedIds={ this.state.search.selectedCitiesIds } updateState={ this.updateSearchState } showMaxItems={ 2 } />
                 <MultiDropdown id="selectedSchoolDistrictsIds" placeholder="School Districts"
                   items={ schoolDistricts } selectedIds={ this.state.search.selectedSchoolDistrictsIds } fieldName="shortName" updateState={ this.updateSearchState } showMaxItems={ 2 } />
-                <FilterDropdown id="ownerId" placeholder="Owner" blankLine
+                <FilterDropdown id="ownerId" placeholder="Owner" blankLine="(All)"
                   items={ owners } selectedId={ this.state.search.ownerId } updateState={ this.updateSearchState } />
                 <KeySearchControl id="school-buses-key-search" search={ this.state.search } updateState={ this.updateSearchState }/>
               </ButtonToolbar>

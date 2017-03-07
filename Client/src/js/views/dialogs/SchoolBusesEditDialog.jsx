@@ -343,7 +343,7 @@ var SchoolBusesEditDialog = React.createClass({
                             <div>The permit restrictions text should be changed only in rare circumstances. Are you sure?</div>
                           </Confirm>
                         }>
-                        <Button title="editRestrictions" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
+                        <Button title="editRestrictions" bsSize="xsmall"><Glyphicon glyph="pencil" /></Button>
                       </OverlayTrigger>
                     </span>
                   </div>
