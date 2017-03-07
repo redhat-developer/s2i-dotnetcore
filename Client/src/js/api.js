@@ -286,8 +286,9 @@ function parseSchoolBus(bus) {
   if (!bus.inspector)        { bus.inspector        = { id: 0, givenName: '', surname: '' }; }
 
   bus.isActive = bus.status === Constant.STATUS_ACTIVE;
+  bus.URL = `#/${ Constant.BUSES_PATHNAME }/${ bus.id }`;
   bus.ownerName = bus.schoolBusOwner.name;
-  bus.ownerPath = bus.schoolBusOwner.id ? `#/${ Constant.OWNERS_PATHNAME }/${ bus.schoolBusOwner.id }` : '';
+  bus.ownerURL = bus.schoolBusOwner.id ? `#/${ Constant.OWNERS_PATHNAME }/${ bus.schoolBusOwner.id }` : '';
   bus.districtName = bus.district.name;
   bus.schoolDistrictName = bus.schoolDistrict.name;
   bus.homeTerminalAddress = concat(bus.homeTerminalAddress1, bus.homeTerminalAddress2, ', ');
@@ -298,6 +299,7 @@ function parseSchoolBus(bus) {
   bus.inspectorName = firstLastName(bus.inspector.givenName, bus.inspector.surname);
   bus.isReinspection = bus.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   bus.nextInspectionDateSort = sortableDateTime(bus.nextInspectionDate);
+  bus.canView = true;
   bus.canEdit = true;
   bus.canDelete = false;
 }
@@ -569,11 +571,13 @@ export function deleteInspection(inspection) {
 
 function parseOwner(owner) {
   owner.isActive = owner.status === Constant.STATUS_ACTIVE;
+  owner.URL = `#/${ Constant.OWNERS_PATHNAME }/${ owner.id }`;
   owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
   owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
   owner.isOverdue = owner.daysToInspection < 0;
   owner.isReinspection = owner.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   owner.nextInspectionDateSort = sortableDateTime(owner.nextInspectionDate);
+  owner.canView = true;
   owner.canEdit = true;
   owner.canDelete = owner.numberOfBuses === 0 && hoursAgo(owner.dateCreated) <= Constant.OWNER_DELETE_GRACE_PERIOD_HOURS;
 }

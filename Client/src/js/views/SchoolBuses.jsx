@@ -347,15 +347,15 @@ var SchoolBuses = React.createClass({
             { field: 'permitNumber',           title: 'Permit'          },
             { field: 'nextInspectionDateSort', title: 'Next Inspection' },
             { field: 'inspectorName',          title: 'Inspector'       },
-            { field: 'blank' },
+            { field: 'details', noSort: true,  title: 'Details'         },
         ]}>
           {
             _.map(schoolBuses, (bus) => {
               return <tr key={ bus.id } className={ bus.isActive ? null : 'info' }>
-                <td><a href={ bus.ownerPath }>{ bus.ownerName }</a></td>
+                <td><a href={ bus.ownerURL }>{ bus.ownerName }</a></td>
                 <td>{ bus.districtName }</td>
                 <td>{ bus.homeTerminalCityPostal }</td>
-                <td>{ bus.icbcRegistrationNumber }</td>
+                <td>{ bus.canView ? <a href={ bus.URL }>{ bus.icbcRegistrationNumber }</a> : bus.icbcRegistrationNumber }</td>
                 <td>{ bus.unitNumber }</td>
                 <td>{ bus.permitNumber }</td>
                 <td>{ formatDateTime(bus.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }
@@ -366,7 +366,7 @@ var SchoolBuses = React.createClass({
                 <td style={{ textAlign: 'right' }}>
                   <ButtonGroup>
                     <DeleteButton name="Bus" hide={ !bus.canDelete } onConfirm={ this.delete.bind(this, bus) }/>
-                    <EditButton name="Bus" hide={ !bus.canEdit } view pathname={ `${ Constant.BUSES_PATHNAME }/${ bus.id }` }/>
+                    <EditButton name="Bus" hide={ !bus.canView } view pathname={ `${ Constant.BUSES_PATHNAME }/${ bus.id }` }/>
                   </ButtonGroup>
                 </td>
               </tr>;

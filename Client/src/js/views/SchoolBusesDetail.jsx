@@ -308,7 +308,7 @@ var SchoolBusesDetail = React.createClass({
           return <div id="school-buses-header">
             <Row>
               <Col md={12}>
-                <h1>School Bus Owner: <small><a href={ bus.ownerPath }>{ bus.ownerName }</a></small></h1>
+                <h1>School Bus Owner: <small><a href={ bus.ownerURL }>{ bus.ownerName }</a></small></h1>
               </Col>
             </Row>
             <Row>
