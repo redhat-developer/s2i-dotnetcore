@@ -35,7 +35,8 @@
     "Swashbuckle.SwaggerGen": "6.0.0-beta901",
     "Swashbuckle.SwaggerUi": "6.0.0-beta901",
     "System.Xml.XmlDocument": "4.3.0",
-    "System.Xml.XPath.XmlDocument": "4.3.0"
+    "System.Xml.XPath.XmlDocument": "4.3.0",
+    "Microsoft.AspNetCore.ResponseCompression": "1.0.0"
   },
   "tools": {
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-preview4-final",
