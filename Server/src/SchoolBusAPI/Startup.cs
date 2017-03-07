@@ -126,7 +126,7 @@ namespace SchoolBusAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseResponseCompression();
             app.UseMvc();
             app.UseDefaultFiles();
             app.UseStaticFiles();
