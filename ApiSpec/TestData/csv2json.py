@@ -31,7 +31,7 @@ def process_file(filename):
     # Get the total number of columns
     fieldnames_len = len(fieldnames)
 
-    print "Fieldnames: %s" % fieldnames
+    # print "Fieldnames: %s" % fieldnames
 
     data = [] # Empty list
     i = 0
@@ -106,7 +106,7 @@ def make_datasets(data):
     datasets = {}
     # group the now sorted list of rows by the value of File, as provided by keyfunc and turn the groupby into a regular dict
     for group_name, group_data in groupby(data, keyfunc):
-        print "Group name: %s" % group_name
+        # print "Group name: %s" % group_name
 
         # groupby is a generator, so we need to convert it into a concrete list
         group_data_as_list = list(group_data)
@@ -121,7 +121,7 @@ def make_datasets(data):
 def output_dataset(entity_name, dataset_name, dataset, excluded_field_names=['File'], flat=False):
     # for top-level files, we only have one record per output file, so we don't want an array, so twiddle things so we won't output a JSON array
     if not flat:
-        print 'pop!'
+        # print 'pop!'
         dataset = dataset.pop()
 
     # serialize the data to a json string
@@ -149,13 +149,13 @@ if len(sys.argv) == 3:
     flat = sys.argv[2] in ['True', 'true', '1', 't', 'y', 'yes', 'yeah', 'yup', 'certainly', 'uh-huh']
 
 if os.path.exists(input_filename):
-        print 'Input file \'%s\' exists.' % input_filename
+        print 'Processing input file \'%s\'.' % input_filename
 
 dir_name_part, file_name_part = os.path.split(input_filename)
-print "Dir: %s" % dir_name_part
+# print "Dir: %s" % dir_name_part
 os.chdir(dir_name_part)
 entity_name = file_name_part.split(".")[0]
-print "Entity name: %s" % entity_name
+# print "Entity name: %s" % entity_name
 data_dicts = process_file(file_name_part)
 datasets = make_datasets(data_dicts)
 
