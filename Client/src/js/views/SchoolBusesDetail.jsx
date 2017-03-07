@@ -19,8 +19,8 @@ import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
 import ColDisplay from '../components/ColDisplay.jsx';
-import Confirm from '../components/Confirm.jsx';
-import OverlayTrigger from '../components/OverlayTrigger.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
@@ -364,7 +364,7 @@ var SchoolBusesDetail = React.createClass({
                     <ColDisplay md={12} label="Permit Class">{ bus.permitClassCode }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColDisplay md={12} label="Body Type">{ bus.bodyTypeCode }</ColDisplay>
+                    <ColDisplay md={12} label="Body Description">{ bus.bodyTypeCode }</ColDisplay>
                   </Row>
                   <Row>
                     <ColDisplay md={12} label="Restrictions">{ bus.restrictionsText }</ColDisplay>
@@ -426,12 +426,8 @@ var SchoolBusesDetail = React.createClass({
                         <td>{ inspection.inspectorName }</td>
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
-                            <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteInspection.bind(this, inspection) }/> }>
-                              <Button className={ inspection.canDelete ? '' : 'hidden' } title="Delete Inspection" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
-                            </OverlayTrigger>
-                            <Button title={ inspection.canEdit ? 'Edit Inspection' : 'View Inspection' } bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, inspection) }>
-                              <Glyphicon glyph={ inspection.canEdit ? 'pencil' : 'edit' } />
-                            </Button>
+                            <DeleteButton name="Inspection" hide={ !inspection.canDelete } onConfirm={ this.deleteInspection.bind(this, inspection) }/>
+                            <EditButton name="Inspection" view={ !inspection.canEdit } onClick={ this.openInspectionDialog.bind(this, inspection) }/>
                           </ButtonGroup>
                         </td>
                       </tr>;

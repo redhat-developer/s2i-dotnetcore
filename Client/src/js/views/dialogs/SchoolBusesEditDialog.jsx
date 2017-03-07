@@ -319,7 +319,7 @@ var SchoolBusesEditDialog = React.createClass({
                 <Row>
                   <Col>
                     <FormGroup controlId="bodyTypeCode">
-                      <ControlLabel>Body Type</ControlLabel>
+                      <ControlLabel>Body Description</ControlLabel>
                       <DropdownControl id="bodyTypeCode" title={ this.state.bodyTypeCode } updateState={ this.updateState }
                         items={ BODY_TYPES }
                       />

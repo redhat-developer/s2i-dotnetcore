@@ -13,8 +13,8 @@ import * as Api from '../api';
 import * as Constant from '../constants';
 import store from '../store';
 
-import Confirm from '../components/Confirm.jsx';
-import OverlayTrigger from '../components/OverlayTrigger.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
 import SearchControl from '../components/SearchControl.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
@@ -148,12 +148,8 @@ var Roles = React.createClass({
                   <td>{ role.description }</td>
                   <td style={{ textAlign: 'right' }}>
                     <ButtonGroup>
-                      <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, role) }/> }>
-                        <Button className={ role.canDelete ? '' : 'hidden' } title="Delete Role" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
-                      </OverlayTrigger>
-                      <LinkContainer to={{ pathname: `${ Constant.ROLES_PATHNAME }/${ role.id }` }}>
-                        <Button className={ role.canEdit ? '' : 'hidden' } title="Edit Role" bsSize="xsmall"><Glyphicon glyph="pencil" /></Button>
-                      </LinkContainer>
+                      <DeleteButton name="Role" hide={ !role.canDelete } onConfirm={ this.delete.bind(this, role) }/>
+                      <EditButton name="Role" hide={ !role.canEdit } view pathname={ `${ Constant.ROLES_PATHNAME }/${ role.id }` }/>
                     </ButtonGroup>
                   </td>
                 </tr>;

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { PageHeader, Well, Alert, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
 import Promise from 'bluebird';
@@ -18,11 +17,11 @@ import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
 import CheckboxControl from '../components/CheckboxControl.jsx';
-import Confirm from '../components/Confirm.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
 import Favourites from '../components/Favourites.jsx';
 import FilterDropdown from '../components/FilterDropdown.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
-import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
@@ -237,12 +236,8 @@ var Owners = React.createClass({
                   </td>
                   <td style={{ textAlign: 'right' }}>
                     <ButtonGroup>
-                      <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, owner) }/> }>
-                        <Button className={ owner.canDelete ? '' : 'hidden' } title="Delete Owner" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
-                      </OverlayTrigger>
-                      <LinkContainer to={{ pathname: `${ Constant.OWNERS_PATHNAME }/${ owner.id }` }}>
-                        <Button className={ owner.canEdit ? '' : 'hidden' } title="View Owner" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
-                      </LinkContainer>
+                      <DeleteButton name="Owner" hide={ !owner.canDelete } onConfirm={ this.delete.bind(this, owner) }/>
+                      <EditButton name="Owner" hide={ !owner.canEdit } view pathname={ `${ Constant.OWNERS_PATHNAME }/${ owner.id }` }/>
                     </ButtonGroup>
                   </td>
                 </tr>;
