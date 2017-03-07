@@ -26,8 +26,9 @@ var DropdownControl = React.createClass({
     // Displayed when there's no selection
     placeholder: React.PropTypes.string,
 
-    // If true, include an "empty" line at the top;
-    blankLine: React.PropTypes.bool,
+    // If blankLine is supplied, include an "empty" line at the top;
+    // If it has a string value, use that in place of blank.
+    blankLine: React.PropTypes.any,
 
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -125,7 +126,7 @@ var DropdownControl = React.createClass({
           <ul>
             { this.props.blankLine &&
               <MenuItem key={ this.state.simple ? '' : 0 } eventKey={ this.state.simple ? '' : 0 } onSelect={ this.itemSelected }>
-                &nbsp;
+                { typeof this.props.blankLine === 'string' ? this.props.blankLine : ' ' }
               </MenuItem>
             }
             {

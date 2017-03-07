@@ -16,7 +16,8 @@ var FilterDropdown = React.createClass({
     fieldName: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     // If blankLine is supplied, include an "empty" line at the top;
-    blankLine: React.PropTypes.bool,
+    // If it has a string value, use that in place of blank.
+    blankLine: React.PropTypes.any,
     disabled: React.PropTypes.bool,
     onSelect: React.PropTypes.func,
     updateState: React.PropTypes.func,
@@ -129,7 +130,7 @@ var FilterDropdown = React.createClass({
           <ul>
             { this.props.blankLine && this.state.filterTerm.length === 0 &&
               <MenuItem key={ 0 } eventKey={ 0 } onSelect={ this.itemSelected }>
-                &nbsp;
+                { typeof this.props.blankLine === 'string' ? this.props.blankLine : ' ' }
               </MenuItem>
             }
             {
