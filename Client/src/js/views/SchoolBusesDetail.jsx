@@ -306,16 +306,18 @@ var SchoolBusesDetail = React.createClass({
           return <div id="school-buses-header">
             <Row>
               <Col md={12}>
-                <h1>School Bus Owner: <small>{ bus.ownerName }</small></h1>
+                <h1>School Bus Owner: <small><a href={ bus.ownerPath }>{ bus.ownerName }</a></small></h1>
               </Col>
             </Row>
             <Row>
-              <Col md={1}></Col>
-              <Col md={11}>
-                <h1>Registration: <small>{ bus.icbcRegistrationNumber }</small>
+              <Col md={12}>
+                <h1 id="school-buses-keys">Registration: <small>{ bus.icbcRegistrationNumber }</small>
                   &nbsp;Plate: <small>{ bus.licencePlateNumber }</small>
                   &nbsp;VIN: <small>{ bus.vehicleIdentificationNumber }</small>
                   &nbsp;Permit: <small>{ bus.permitNumber }</small>
+                  {
+                    bus.permitIssueDate && <small>&nbsp;({ formatDateTime(bus.permitIssueDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) })</small>
+                  }
                   {
                     bus.permitNumber ?
                       <Button onClick={ this.printPermit } bsSize="small">
