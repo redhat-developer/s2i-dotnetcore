@@ -47,6 +47,8 @@ var SchoolBusesDetail = React.createClass({
       loadingSchoolBusCCW: true,
       loadingSchoolBusInspections: true,
 
+      workingOnPermit: false,
+
       showEditDialog: false,
       showInspectionDialog: false,
 
@@ -241,13 +243,17 @@ var SchoolBusesDetail = React.createClass({
 
   generatePermit() {
     // This API call will update the school bus state after generating a permit.
-    this.setState({ loadingSchoolBus: true });
+    this.setState({ workingOnPermit: true });
     Api.newSchoolBusPermit(this.props.params.schoolBusId).finally(() => {
-      this.setState({ loadingSchoolBus: false });
+      this.setState({ workingOnPermit: false });
     });
   },
 
   printPermit() {
+    this.setState({ workingOnPermit: true });
+    // Get path to PDF API call and call it in a new browser window.
+    window.open(Api.getSchoolBusPermitURL(this.props.params.schoolBusId));
+    this.setState({ workingOnPermit: false });
   },
 
   render() {
@@ -312,8 +318,13 @@ var SchoolBusesDetail = React.createClass({
                   &nbsp;Permit: <small>{ bus.permitNumber }</small>
                   {
                     bus.permitNumber ?
-                      <Unimplemented><Button onClick={ this.printPermit } bsSize="small">Print Permit</Button></Unimplemented> :
-                      <Button onClick={ this.generatePermit } bsSize="small">Generate Permit</Button>
+                      <Button onClick={ this.printPermit } bsSize="small">
+                      { this.state.workingOnPermit ? <span id="permitSpinner" style={{ textAlign: 'center', marginLeft: -10 }}><Spinner/></span> : 'Print Permit' }
+                      </Button>
+                      :
+                      <Button onClick={ this.generatePermit } bsSize="small">
+                        { this.state.workingOnPermit ? <span id="permitSpinner" style={{ textAlign: 'center', marginLeft: -10 }}><Spinner/></span> : 'Generate Permit' }
+                      </Button>
                   }
                 </h1>
               </Col>

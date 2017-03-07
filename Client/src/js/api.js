@@ -433,6 +433,11 @@ export function newSchoolBusPermit(schoolBusId) {
   });
 }
 
+export function getSchoolBusPermitURL(schoolBusId) {
+  // Not an API call, per se, as it must be called from the browser window.
+  return `${ location.origin }${ location.pathname}api/schoolbuses/${ schoolBusId }/pdfpermit`;
+}
+
 ////////////////////
 // CCW
 ////////////////////
