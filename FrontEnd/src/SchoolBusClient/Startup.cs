@@ -109,7 +109,8 @@ namespace SchoolBusClient
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
+            app.UseResponseCompression();
             app.UseMvc();
             app.UseDefaultFiles();
 
