@@ -18,8 +18,8 @@ import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
 import ColDisplay from '../components/ColDisplay.jsx';
-import Confirm from '../components/Confirm.jsx';
-import OverlayTrigger from '../components/OverlayTrigger.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
@@ -105,6 +105,10 @@ var OwnersDetail = React.createClass({
 
   closeContactDialog() {
     this.setState({ showContactDialog: false });
+  },
+
+  deleteContact(contact) {
+    console.debug(contact);
   },
 
   saveContact() {
@@ -218,10 +222,8 @@ var OwnersDetail = React.createClass({
                         <td>{ contact.role }</td>
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
-                            <Button className={ contact.canEdit ? '' : 'hidden' } title="Edit Contact" bsSize="xsmall" onClick={ this.openInspectionDialog.bind(this, contact) }><Glyphicon glyph="pencil" /></Button>
-                            <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteInspection.bind(this, contact) }/> }>
-                              <Button className={ contact.canDelete ? '' : 'hidden' } title="Delete Contact" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
-                            </OverlayTrigger>
+                            <DeleteButton name="Contact" hide={ !contact.canDelete } onConfirm={ this.deleteContact.bind(this, contact) }/>
+                            <EditButton name="Contact" view={ !contact.canEdit } onClick={ this.openContactDialog.bind(this, contact) }/>
                           </ButtonGroup>
                         </td>
                       </tr>;

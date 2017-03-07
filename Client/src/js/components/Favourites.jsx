@@ -8,10 +8,10 @@ import _ from 'lodash';
 import * as Api from '../api';
 
 import CheckboxControl from '../components/CheckboxControl.jsx';
-import Confirm from '../components/Confirm.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
 import EditDialog from '../components/EditDialog.jsx';
 import FormInputControl from '../components/FormInputControl.jsx';
-import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import RootCloseMenu from './RootCloseMenu.jsx';
 
 import { isBlank } from '../utils/string';
@@ -191,10 +191,8 @@ var Favourites = React.createClass({
                   </Col>
                   <Col md={3}>
                     <ButtonToolbar>
-                      <Button title="Edit Favourite" bsSize="xsmall" onClick={ this.editFavourite.bind(this, favourite) }><Glyphicon glyph="pencil" /></Button>
-                      <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.deleteFavourite.bind(this, favourite) }/> }>
-                        <Button title="Delete Favourite" bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
-                      </OverlayTrigger>
+                      <DeleteButton name="Favourite" onConfirm={ this.deleteFavourite.bind(this, favourite) }/>
+                      <EditButton name="Favourite" onClick={ this.editFavourite.bind(this, favourite) }/>
                     </ButtonToolbar>
                   </Col>
                 </li>;

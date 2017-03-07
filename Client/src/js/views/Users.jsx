@@ -15,11 +15,11 @@ import * as Constant from '../constants';
 import store from '../store';
 
 import CheckboxControl from '../components/CheckboxControl.jsx';
-import Confirm from '../components/Confirm.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
 import Favourites from '../components/Favourites.jsx';
 import FormInputControl from '../components/FormInputControl.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
-import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
@@ -193,12 +193,8 @@ var UserManagement = React.createClass({
                   <td>{ user.districtName }</td>
                   <td style={{ textAlign: 'right' }}>
                     <ButtonGroup>
-                      <OverlayTrigger trigger="click" placement="top" rootClose overlay={ <Confirm onConfirm={ this.delete.bind(this, user) }/> }>
-                        <Button className={ user.canDelete ? '' : 'hidden' } title="Delete User" bsSize="xsmall"><Glyphicon glyph="trash" /></Button>
-                      </OverlayTrigger>
-                      <LinkContainer to={{ pathname: `${ Constant.USERS_PATHNAME }/${ user.id }` }}>
-                        <Button className={ user.canEdit ? '' : 'hidden' } title="View User" bsSize="xsmall"><Glyphicon glyph="edit" /></Button>
-                      </LinkContainer>
+                      <DeleteButton name="User" hide={ !user.canDelete } onConfirm={ this.delete.bind(this, user) }/>
+                      <EditButton name="User" hide={ !user.canEdit } view pathname={ `${ Constant.USERS_PATHNAME }/${ user.id }` }/>
                     </ButtonGroup>
                   </td>
                 </tr>;
