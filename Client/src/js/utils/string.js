@@ -40,3 +40,10 @@ export function isBlankOrZero(str) {
 export function notBlank(str) {
   return !isBlank(str);
 }
+
+export function padLeft(str, padChar, len) {
+  if (!str || !padChar || !len) { return ''; }
+  if (str.length >= len) { return str; }
+  var pad = Array(len + 1).join(padChar);
+  return pad.substring(str.length) + str;
+}

@@ -119,7 +119,7 @@ var SchoolBusAddDialog = React.createClass({
         return <div>
           <Row>
             <ButtonToolbar>
-              <KeySearchControl id="school-buses-key-search" search={ this.state.search } updateState={ this.updateSearchState } />
+              <KeySearchControl id="school-buses-key-search" search={ this.state.search } updateState={ this.updateSearchState } suppressPlate />
               <ButtonGroup>
                 <Button id="close-button" onClick={ this.props.onClose }>Close</Button>
                 <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
