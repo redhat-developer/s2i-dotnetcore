@@ -17,7 +17,9 @@ import DropdownControl from '../../components/DropdownControl.jsx';
 import EditDialog from '../../components/EditDialog.jsx';
 import FilterDropdown from '../../components/FilterDropdown.jsx';
 import FormInputControl from '../../components/FormInputControl.jsx';
+import InfoButton from '../../components/InfoButton.jsx';
 import OverlayTrigger from '../../components/OverlayTrigger.jsx';
+import SchoolBusBodyDescription from '../../components/SchoolBusBodyDescription.jsx';
 import Spinner from '../../components/Spinner.jsx';
 
 import { isBlank } from '../../utils/string';
@@ -320,6 +322,9 @@ var SchoolBusesEditDialog = React.createClass({
                   <Col>
                     <FormGroup controlId="bodyTypeCode">
                       <ControlLabel>Body Description</ControlLabel>
+                      <InfoButton title="School Bus Body Description">
+                        <SchoolBusBodyDescription />
+                      </InfoButton>
                       <DropdownControl id="bodyTypeCode" title={ this.state.bodyTypeCode } updateState={ this.updateState }
                         items={ BODY_TYPES }
                       />

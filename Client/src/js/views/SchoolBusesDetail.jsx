@@ -21,6 +21,8 @@ import BadgeLabel from '../components/BadgeLabel.jsx';
 import ColDisplay from '../components/ColDisplay.jsx';
 import DeleteButton from '../components/DeleteButton.jsx';
 import EditButton from '../components/EditButton.jsx';
+import InfoButton from '../components/InfoButton.jsx';
+import SchoolBusBodyDescription from '../components/SchoolBusBodyDescription.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
@@ -364,7 +366,13 @@ var SchoolBusesDetail = React.createClass({
                     <ColDisplay md={12} label="Permit Class">{ bus.permitClassCode }</ColDisplay>
                   </Row>
                   <Row>
-                    <ColDisplay md={12} label="Body Description">{ bus.bodyTypeCode }</ColDisplay>
+                    <ColDisplay md={12} label={ <span>
+                      <InfoButton title="School Bus Body Description">
+                        <SchoolBusBodyDescription />
+                      </InfoButton><span>Body Description</span>
+                    </span> }>
+                      { bus.bodyTypeCode }
+                    </ColDisplay>
                   </Row>
                   <Row>
                     <ColDisplay md={12} label="Restrictions">{ bus.restrictionsText }</ColDisplay>
