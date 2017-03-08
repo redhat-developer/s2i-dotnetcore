@@ -46,7 +46,6 @@ var SchoolBusesDetail = React.createClass({
   getInitialState() {
     return {
       loadingSchoolBus: true,
-      loadingSchoolBusCCW: true,
       loadingSchoolBusInspections: true,
 
       workingOnPermit: false,
@@ -75,7 +74,6 @@ var SchoolBusesDetail = React.createClass({
       // Clear the spinners
       this.setState({
         loadingSchoolBus: false,
-        loadingSchoolBusCCW: false,
         loadingSchoolBusInspections: false,
       });
       // Clear the school bus store, except for the fields
@@ -104,6 +102,7 @@ var SchoolBusesDetail = React.createClass({
     var id = this.props.params.schoolBusId;
 
     Api.getSchoolBus(id).then(() => {
+      this.setState({ loadingSchoolBus: false });
       // Fetch CCW to make sure it's up to date
       var params = {};
       if (this.props.schoolBus.icbcRegistrationNumber) {
@@ -116,12 +115,9 @@ var SchoolBusesDetail = React.createClass({
         params[Constant.CCW_VIN] = this.props.schoolBus.vehicleIdentificationNumber;
       }
       if (Object.keys(params).length > 0) {
-        this.setState({ loadingSchoolBusCCW: true });
         return Api.searchCCW(params).then(() => {
           // Chicanery: push the CCW data into our school bus store.
           store.dispatch({ type: Action.UPDATE_BUS, schoolBus: { ...this.props.schoolBus, ccwData: this.props.schoolBusCCW }});
-        }).finally(() => {
-          this.setState({ loadingSchoolBusCCW: false });
         });
       }
     }).finally(() => {
@@ -570,7 +566,7 @@ var SchoolBusesDetail = React.createClass({
             </Well>
           </Col>
         </Row>
-        { this.state.loadingSchoolBus || this.state.loadingSchoolBusCCW || !ccw.dateFetched ||
+        { ccw.dateFetched &&
           <Row>
             <Col md={12}>
               <span id="school-buses-ccw-fetched">ICBC data last fetched on { formatDateTime(ccw.dateFetched, Constant.DATE_TIME_READABLE) }</span>

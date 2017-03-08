@@ -218,14 +218,16 @@ var SchoolBuses = React.createClass({
             return;
           }
         }
-        this.fetch();
+        return this.fetch();
       }
+    }).finally(() => {
+      this.setState({ loading: false });
     });
   },
 
   fetch() {
     this.setState({ loading: true });
-    Api.searchSchoolBuses(this.buildSearchParams()).finally(() => {
+    return Api.searchSchoolBuses(this.buildSearchParams()).finally(() => {
       this.setState({ loading: false });
     });
   },

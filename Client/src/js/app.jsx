@@ -33,7 +33,7 @@ const App = <Provider store={ store }>
       <Route path={ Constant.USERS_PATHNAME } component={ Users }/>
       <Route path={ `${ Constant.USERS_PATHNAME }/:userId` } component={ UsersDetail }/>
       <Route path={ Constant.ROLES_PATHNAME } component={ Roles }/>
-      <Route path={ `${ Constant.USERS_PATHNAME }/:roleId` } component={ RolesDetail }/>
+      <Route path={ `${ Constant.ROLES_PATHNAME }/:roleId` } component={ RolesDetail }/>
       <Route path={ Constant.VERSION_PATHNAME } component={ Version }/>
       <Route path="*" component={ FourOhFour }/>
     </Route>

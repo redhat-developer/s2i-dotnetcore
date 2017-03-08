@@ -80,13 +80,15 @@ var UserManagement = React.createClass({
           return;
         }
       }
-      this.fetch();
+      return this.fetch();
+    }).finally(() => {
+      this.setState({ loading: false });
     });
   },
 
   fetch() {
     this.setState({ loading: true });
-    Api.searchUsers(this.buildSearchParams()).finally(() => {
+    return Api.searchUsers(this.buildSearchParams()).finally(() => {
       this.setState({ loading: false });
     });
   },

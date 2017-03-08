@@ -59,20 +59,22 @@ var RolesDetail = React.createClass({
   },
 
   fetch() {
+    this.setState({ loading: true });
+
     var rolePromise = Api.getRole(this.props.params.roleId);
     var permissionsPromise = Api.getRolePermissions(this.props.params.roleId);
 
-    this.setState({ loading: true });
     Promise.all([rolePromise, permissionsPromise]).then(() => {
       var selectedPermissionIds = _.map(this.props.rolePermissions, permission => {
         return permission.id;
       });
       this.setState({
-        loading: false,
         name: this.props.role.name,
         description: this.props.role.description,
         selectedPermissionIds: selectedPermissionIds,
       });
+    }).finally(() => {
+      this.setState({ loading: false });
     });
   },
 
