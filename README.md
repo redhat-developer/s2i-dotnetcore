@@ -45,3 +45,17 @@ Image name structure
 3. Base builder image - rhel7
 
 Example: `dotnet/dotnetcore-10-rhel7`
+
+OpenShift Templates
+-------------------
+
+The `templates` folder contains OpenShift templates. Some of these will be shipped with OpenShift. If a template is not on your OpenShift installation, you can import it:
+
+```
+oc create -f <template.json>
+```
+
+**dotnet-example**
+
+The dotnet-example template can be used to create a new .NET Core service in OpenShift. It provides parameters for all the environment
+variables of the s2i-dotnetcore builder. It also includes a liveness and a readiness probe.
