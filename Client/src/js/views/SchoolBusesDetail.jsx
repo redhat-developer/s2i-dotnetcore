@@ -314,9 +314,6 @@ var SchoolBusesDetail = React.createClass({
                   &nbsp;VIN: <small>{ bus.vehicleIdentificationNumber }</small>
                   &nbsp;Permit: <small>{ bus.permitNumber }</small>
                   {
-                    bus.permitIssueDate && <small>&nbsp;({ formatDateTime(bus.permitIssueDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) })</small>
-                  }
-                  {
                     bus.permitNumber ?
                       <Button onClick={ this.printPermit } bsSize="small">
                       { this.state.workingOnPermit ? <span id="permitSpinner" style={{ textAlign: 'center', marginLeft: -10 }}><Spinner/></span> : 'Print Permit' }
@@ -325,6 +322,9 @@ var SchoolBusesDetail = React.createClass({
                       <Button onClick={ this.generatePermit } bsSize="small">
                         { this.state.workingOnPermit ? <span id="permitSpinner" style={{ textAlign: 'center', marginLeft: -10 }}><Spinner/></span> : 'Generate Permit' }
                       </Button>
+                  }
+                  {
+                    bus.permitIssueDate && <small id="issued-date">&nbsp;(Issued: { formatDateTime(bus.permitIssueDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) })</small>
                   }
                 </h1>
               </Col>
