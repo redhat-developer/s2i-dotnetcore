@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Dropdown, MenuItem } from 'react-bootstrap';
+import { Dropdown, MenuItem, Popover, OverlayTrigger } from 'react-bootstrap';
 
 import RootCloseMenu from './RootCloseMenu.jsx';
 
@@ -131,9 +131,18 @@ var DropdownControl = React.createClass({
             }
             {
               _.map(this.props.items, item => {
-                return <MenuItem key={ this.state.simple ? item : item.id } eventKey={ this.state.simple ? item : item.id } onSelect={ this.itemSelected }>
+                var menuItem = <MenuItem key={ this.state.simple ? item : item.id } eventKey={ this.state.simple ? item : item.id } onSelect={ this.itemSelected }>
                   { this.state.simple ? item : item[this.state.fieldName] }
                 </MenuItem>;
+                // Check for hover items
+                if (!this.state.simple && item.hoverText) {
+                  return <OverlayTrigger trigger="hover" placement="right" rootClose
+                    overlay={ <Popover id={ `popover-${ item.id }` } title={ item[this.state.fieldName] }>{ item.hoverText }</Popover> }
+                  >
+                    { menuItem }
+                  </OverlayTrigger>;
+                }
+                return menuItem;
               })
             }
           </ul>

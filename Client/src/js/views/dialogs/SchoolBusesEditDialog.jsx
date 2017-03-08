@@ -17,9 +17,7 @@ import DropdownControl from '../../components/DropdownControl.jsx';
 import EditDialog from '../../components/EditDialog.jsx';
 import FilterDropdown from '../../components/FilterDropdown.jsx';
 import FormInputControl from '../../components/FormInputControl.jsx';
-import InfoButton from '../../components/InfoButton.jsx';
 import OverlayTrigger from '../../components/OverlayTrigger.jsx';
-import SchoolBusBodyDescription from '../../components/SchoolBusBodyDescription.jsx';
 import Spinner from '../../components/Spinner.jsx';
 
 import { isBlank } from '../../utils/string';
@@ -28,9 +26,33 @@ const PERMIT_CLASS_TYPE_1 = 'Type 1: Yellow and Black School Bus';
 const PERMIT_CLASS_TYPE_2 = 'Type 2: Special Activity Bus';
 const PERMIT_CLASS_TYPE_3 = 'Type 3: Special Vehicle';
 
-const BODY_TYPES = [ 'Yellow and Black', 'Bus', 'Coach Bus', 'Mobility Aid', 'Van', 'Other' ];
-
 const RESTRICTION_NON_SCHEDULED_ONLY = 'Non-Scheduled Transportation Only';
+
+const BODY_TYPES = [{
+  id: 'Yellow and Black',
+  name: 'Yellow and Black',
+  hoverText: 'Means a bus that is identified with the colour yellow and black and on the date of its manufacture conformed to the safety standards under the Motor Vehicle Safety Act (Canada) and the standards made by the Canadian Standards Association numbered CSA D250, "School Buses" that were applicable to school buses on that date.',
+}, {
+  id: 'Bus',
+  name: 'Bus',
+  hoverText: 'Means a motor vehicle designed to carry more than 10 persons, but does not include a yellow and black or coach bus.',
+}, {
+  id: 'Coach Bus',
+  name: 'Coach Bus',
+  hoverText: 'Means a motor vehicle designed to provide intercity, commuter or charter service.',
+}, {
+  id: 'Mobility Aid',
+  name: 'Mobility Aid',
+  hoverText: 'Means a motor vehicle designed to carry persons that is designed or modified for transportation of non-ambulatory persons.',
+}, {
+  id: 'Van',
+  name: 'Van',
+  hoverText: 'Means a vehicle that is designed to carry more than 10 persons, but the body style may not be identifiable as a bus, such as a 15 passenger van.',
+}, {
+  id: 'Other',
+  name: 'Other',
+  hoverText: 'Means a vehicle that requires a school bus permit and is not identified in the above listed body descriptions.',
+}];
 
 var SchoolBusesEditDialog = React.createClass({
   propTypes: {
@@ -66,7 +88,7 @@ var SchoolBusesEditDialog = React.createClass({
       description: this.props.schoolBus.homeTerminalComment || '',
 
       permitClassCode: this.props.schoolBus.permitClassCode || PERMIT_CLASS_TYPE_1,
-      bodyTypeCode: this.props.schoolBus.bodyTypeCode || BODY_TYPES[0],
+      bodyTypeCode: this.props.schoolBus.bodyTypeCode || BODY_TYPES[0].id,
       restrictionsText: this.props.schoolBus.restrictionsText || '',
       disableRestrictionsText: true,
 
@@ -322,10 +344,7 @@ var SchoolBusesEditDialog = React.createClass({
                   <Col>
                     <FormGroup controlId="bodyTypeCode">
                       <ControlLabel>Body Description</ControlLabel>
-                      <InfoButton title="School Bus Body Description">
-                        <SchoolBusBodyDescription />
-                      </InfoButton>
-                      <DropdownControl id="bodyTypeCode" title={ this.state.bodyTypeCode } updateState={ this.updateState }
+                      <DropdownControl id="bodyTypeCode" selectedId={ this.state.bodyTypeCode } updateState={ this.updateState }
                         items={ BODY_TYPES }
                       />
                     </FormGroup>

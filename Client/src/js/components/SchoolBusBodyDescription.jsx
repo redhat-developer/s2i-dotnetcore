@@ -22,7 +22,7 @@ var BodyDescription = React.createClass({
           </tr>
           <tr>
             <td>b.</td>
-            <td className="desc">Means a motor vehicle designed to carry more than 10 persons, but does not include a yellow and black or coach bus. </td>
+            <td className="desc">Means a motor vehicle designed to carry more than 10 persons, but does not include a yellow and black or coach bus.</td>
           </tr>
           <tr>
             <td colSpan="2"><h3>Coach Bus</h3></td>
@@ -43,14 +43,14 @@ var BodyDescription = React.createClass({
           </tr>
           <tr>
             <td>e.</td>
-            <td className="desc">Means a vehicle that is designed to carry more than 10 persons, but the body style may not be identifiable as a bus, such as a 15 passenger van.  </td>
+            <td className="desc">Means a vehicle that is designed to carry more than 10 persons, but the body style may not be identifiable as a bus, such as a 15 passenger van.</td>
           </tr>
           <tr>
             <td colSpan="2"><h3>Other</h3></td>
           </tr>
           <tr>
             <td>f.</td>
-            <td className="desc">Means a vehicle that requires a school bus permit and is not identified in the above listed body descriptions</td>
+            <td className="desc">Means a vehicle that requires a school bus permit and is not identified in the above listed body descriptions.</td>
           </tr>
         </tbody>
       </Table>
