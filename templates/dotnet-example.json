@@ -201,7 +201,7 @@
                                         "scheme": "HTTP"
                                     },
                                     "initialDelaySeconds": 40,
-                                    "timeoutSeconds": 10
+                                    "timeoutSeconds": 15
                                 },
                                 "readinessProbe": {
                                     "httpGet": {
