@@ -35,7 +35,7 @@ var SchoolBusAddDialog = React.createClass({
 
   getInitialState() {
     return {
-      loading: 0,
+      loading: false,
 
       search: {
         keySearchField: this.props.search.keySearchField,
@@ -63,9 +63,7 @@ var SchoolBusAddDialog = React.createClass({
   fetch() {
     if (this.state.search.keySearchParams) {
       this.setState({
-        // Need to count the "loads" because we've got more than one call and
-        // don't want to stop the spinner prematurely.
-        loading: 1,
+        loading: true,
         busInSystemId: 0,
         ccwFound: false,
         ccwError: false,
@@ -76,7 +74,6 @@ var SchoolBusAddDialog = React.createClass({
             busInSystemId: _.first(_.keys(this.props.schoolBuses)),
           });
         } else {
-          this.setState({ loading: this.state.loading + 1 });
           return Api.searchCCW(this.state.search.keySearchParams).then(() => {
             var found = this.props.schoolBusCCW.icbcRegistrationNumber ? true : false;
             this.setState({
@@ -95,12 +92,10 @@ var SchoolBusAddDialog = React.createClass({
               ccwFound: false,
               ccwError: true,
             });
-          }).finally(() => {
-            this.setState({ loading: this.state.loading - 1 });
           });
         }
       }).finally(() => {
-        this.setState({ loading: this.state.loading - 1 });
+        this.setState({ loading: false });
       });
     }
   },

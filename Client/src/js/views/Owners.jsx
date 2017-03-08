@@ -99,13 +99,15 @@ var Owners = React.createClass({
           return;
         }
       }
-      this.fetch();
+      return this.fetch();
+    }).finally(() => {
+      this.setState({ loading: false });
     });
   },
 
   fetch() {
     this.setState({ loading: true });
-    Api.searchOwners(this.buildSearchParams()).finally(() => {
+    return Api.searchOwners(this.buildSearchParams()).finally(() => {
       this.setState({ loading: false });
     });
   },

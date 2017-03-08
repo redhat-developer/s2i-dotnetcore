@@ -2,13 +2,12 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, OverlayTrigger } from 'react-bootstrap';
 import { Popover, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import * as Constant from '../constants';
 
-import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 
