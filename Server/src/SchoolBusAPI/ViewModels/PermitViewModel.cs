@@ -44,6 +44,10 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="SchoolBusOwnerName">SchoolBusOwnerName.</param>
         /// <param name="SchoolBusOwnerAddressLine1">SchoolBusOwnerAddressLine1.</param>
         /// <param name="SchoolBusOwnerAddressLine2">SchoolBusOwnerAddressLine2.</param>
+        /// <param name="SchoolBusMobilityAidCapacity">SchoolBusMobilityAidCapacity.</param>
+        /// <param name="SchoolBusOwnerCity">SchoolBusOwnerCity.</param>
+        /// <param name="SchoolBusOwnerProvince">SchoolBusOwnerProvince.</param>
+        /// <param name="SchoolBusOwnerPostalCode">SchoolBusOwnerPostalCode.</param>
         /// <param name="IcbcRegistrationNumber">IcbcRegistrationNumber.</param>
         /// <param name="VehicleIdentificationNumber">VehicleIdentificationNumber.</param>
         /// <param name="IcbcModelYear">IcbcModelYear.</param>
@@ -51,12 +55,16 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="RestrictionsText">RestrictionsText.</param>
         /// <param name="SchoolDistrictshortName">SchoolDistrictshortName.</param>
         /// <param name="SchoolBusSeatingCapacity">SchoolBusSeatingCapacity.</param>
-        public PermitViewModel(int? PermitNumber = null, string PermitIssueDate = null, string SchoolBusOwnerName = null, string SchoolBusOwnerAddressLine1 = null, string SchoolBusOwnerAddressLine2 = null, string IcbcRegistrationNumber = null, string VehicleIdentificationNumber = null, int? IcbcModelYear = null, string IcbcMake = null, string RestrictionsText = null, string SchoolDistrictshortName = null, int? SchoolBusSeatingCapacity = null)
+        public PermitViewModel(int? PermitNumber = null, string PermitIssueDate = null, string SchoolBusOwnerName = null, string SchoolBusOwnerAddressLine1 = null, string SchoolBusOwnerAddressLine2 = null, string SchoolBusMobilityAidCapacity = null, string SchoolBusOwnerCity = null, string SchoolBusOwnerProvince = null, string SchoolBusOwnerPostalCode = null, string IcbcRegistrationNumber = null, string VehicleIdentificationNumber = null, int? IcbcModelYear = null, string IcbcMake = null, string RestrictionsText = null, string SchoolDistrictshortName = null, int? SchoolBusSeatingCapacity = null)
         {               this.PermitNumber = PermitNumber;
             this.PermitIssueDate = PermitIssueDate;
             this.SchoolBusOwnerName = SchoolBusOwnerName;
             this.SchoolBusOwnerAddressLine1 = SchoolBusOwnerAddressLine1;
             this.SchoolBusOwnerAddressLine2 = SchoolBusOwnerAddressLine2;
+            this.SchoolBusMobilityAidCapacity = SchoolBusMobilityAidCapacity;
+            this.SchoolBusOwnerCity = SchoolBusOwnerCity;
+            this.SchoolBusOwnerProvince = SchoolBusOwnerProvince;
+            this.SchoolBusOwnerPostalCode = SchoolBusOwnerPostalCode;
             this.IcbcRegistrationNumber = IcbcRegistrationNumber;
             this.VehicleIdentificationNumber = VehicleIdentificationNumber;
             this.IcbcModelYear = IcbcModelYear;
@@ -95,6 +103,30 @@ namespace SchoolBusAPI.ViewModels
         /// </summary>
         [DataMember(Name="schoolBusOwnerAddressLine2")]
         public string SchoolBusOwnerAddressLine2 { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SchoolBusMobilityAidCapacity
+        /// </summary>
+        [DataMember(Name="schoolBusMobilityAidCapacity")]
+        public string SchoolBusMobilityAidCapacity { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SchoolBusOwnerCity
+        /// </summary>
+        [DataMember(Name="schoolBusOwnerCity")]
+        public string SchoolBusOwnerCity { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SchoolBusOwnerProvince
+        /// </summary>
+        [DataMember(Name="schoolBusOwnerProvince")]
+        public string SchoolBusOwnerProvince { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SchoolBusOwnerPostalCode
+        /// </summary>
+        [DataMember(Name="schoolBusOwnerPostalCode")]
+        public string SchoolBusOwnerPostalCode { get; set; }
 
         /// <summary>
         /// Gets or Sets IcbcRegistrationNumber
@@ -151,6 +183,10 @@ namespace SchoolBusAPI.ViewModels
             sb.Append("  SchoolBusOwnerName: ").Append(SchoolBusOwnerName).Append("\n");
             sb.Append("  SchoolBusOwnerAddressLine1: ").Append(SchoolBusOwnerAddressLine1).Append("\n");
             sb.Append("  SchoolBusOwnerAddressLine2: ").Append(SchoolBusOwnerAddressLine2).Append("\n");
+            sb.Append("  SchoolBusMobilityAidCapacity: ").Append(SchoolBusMobilityAidCapacity).Append("\n");
+            sb.Append("  SchoolBusOwnerCity: ").Append(SchoolBusOwnerCity).Append("\n");
+            sb.Append("  SchoolBusOwnerProvince: ").Append(SchoolBusOwnerProvince).Append("\n");
+            sb.Append("  SchoolBusOwnerPostalCode: ").Append(SchoolBusOwnerPostalCode).Append("\n");
             sb.Append("  IcbcRegistrationNumber: ").Append(IcbcRegistrationNumber).Append("\n");
             sb.Append("  VehicleIdentificationNumber: ").Append(VehicleIdentificationNumber).Append("\n");
             sb.Append("  IcbcModelYear: ").Append(IcbcModelYear).Append("\n");
@@ -222,6 +258,26 @@ namespace SchoolBusAPI.ViewModels
                     this.SchoolBusOwnerAddressLine2.Equals(other.SchoolBusOwnerAddressLine2)
                 ) &&                 
                 (
+                    this.SchoolBusMobilityAidCapacity == other.SchoolBusMobilityAidCapacity ||
+                    this.SchoolBusMobilityAidCapacity != null &&
+                    this.SchoolBusMobilityAidCapacity.Equals(other.SchoolBusMobilityAidCapacity)
+                ) &&                 
+                (
+                    this.SchoolBusOwnerCity == other.SchoolBusOwnerCity ||
+                    this.SchoolBusOwnerCity != null &&
+                    this.SchoolBusOwnerCity.Equals(other.SchoolBusOwnerCity)
+                ) &&                 
+                (
+                    this.SchoolBusOwnerProvince == other.SchoolBusOwnerProvince ||
+                    this.SchoolBusOwnerProvince != null &&
+                    this.SchoolBusOwnerProvince.Equals(other.SchoolBusOwnerProvince)
+                ) &&                 
+                (
+                    this.SchoolBusOwnerPostalCode == other.SchoolBusOwnerPostalCode ||
+                    this.SchoolBusOwnerPostalCode != null &&
+                    this.SchoolBusOwnerPostalCode.Equals(other.SchoolBusOwnerPostalCode)
+                ) &&                 
+                (
                     this.IcbcRegistrationNumber == other.IcbcRegistrationNumber ||
                     this.IcbcRegistrationNumber != null &&
                     this.IcbcRegistrationNumber.Equals(other.IcbcRegistrationNumber)
@@ -288,6 +344,22 @@ namespace SchoolBusAPI.ViewModels
                                 if (this.SchoolBusOwnerAddressLine2 != null)
                 {
                     hash = hash * 59 + this.SchoolBusOwnerAddressLine2.GetHashCode();
+                }                
+                                if (this.SchoolBusMobilityAidCapacity != null)
+                {
+                    hash = hash * 59 + this.SchoolBusMobilityAidCapacity.GetHashCode();
+                }                
+                                if (this.SchoolBusOwnerCity != null)
+                {
+                    hash = hash * 59 + this.SchoolBusOwnerCity.GetHashCode();
+                }                
+                                if (this.SchoolBusOwnerProvince != null)
+                {
+                    hash = hash * 59 + this.SchoolBusOwnerProvince.GetHashCode();
+                }                
+                                if (this.SchoolBusOwnerPostalCode != null)
+                {
+                    hash = hash * 59 + this.SchoolBusOwnerPostalCode.GetHashCode();
                 }                
                                 if (this.IcbcRegistrationNumber != null)
                 {

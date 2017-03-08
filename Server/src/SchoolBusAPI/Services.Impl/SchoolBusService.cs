@@ -413,7 +413,14 @@ namespace SchoolBusAPI.Services.Impl
                     permitViewModel.IcbcMake = schoolBus.CCWData.ICBCMake;
                     permitViewModel.IcbcModelYear = schoolBus.CCWData.ICBCModelYear;
                     permitViewModel.IcbcRegistrationNumber = schoolBus.CCWData.ICBCRegistrationNumber;
-                    permitViewModel.VehicleIdentificationNumber = schoolBus.CCWData.ICBCVehicleIdentificationNumber;                    
+                    permitViewModel.VehicleIdentificationNumber = schoolBus.CCWData.ICBCVehicleIdentificationNumber;
+                    permitViewModel.SchoolBusOwnerPostalCode = schoolBus.CCWData.ICBCRegOwnerPostalCode;
+                    permitViewModel.SchoolBusOwnerAddressLine1 = schoolBus.CCWData.ICBCRegOwnerAddr1;
+                    permitViewModel.SchoolBusOwnerAddressLine2 = schoolBus.CCWData.ICBCRegOwnerAddr2;
+                    permitViewModel.SchoolBusOwnerProvince = schoolBus.CCWData.ICBCRegOwnerProv;
+                    permitViewModel.SchoolBusOwnerCity = schoolBus.CCWData.ICBCRegOwnerCity;
+                    permitViewModel.SchoolBusOwnerName = schoolBus.CCWData.ICBCRegOwnerName;
+                    
                 }
                 permitViewModel.PermitIssueDate = null;
                 if (schoolBus.PermitIssueDate != null)
@@ -458,13 +465,9 @@ namespace SchoolBusAPI.Services.Impl
                 
                 permitViewModel.PermitNumber = schoolBus.PermitNumber;
                 permitViewModel.RestrictionsText = schoolBus.RestrictionsText;
+                permitViewModel.SchoolBusMobilityAidCapacity = schoolBus.MobilityAidCapacity.ToString();                
 
-                if (schoolBus.SchoolBusOwner != null && schoolBus.SchoolBusOwner.PrimaryContact != null)
-                {
-                    permitViewModel.SchoolBusOwnerAddressLine1 = schoolBus.SchoolBusOwner.PrimaryContact.Address1;
-                    permitViewModel.SchoolBusOwnerAddressLine2 = schoolBus.SchoolBusOwner.PrimaryContact.Address2;
-                    permitViewModel.SchoolBusOwnerName = schoolBus.SchoolBusOwner.Name;
-                }
+
                 permitViewModel.SchoolBusSeatingCapacity = schoolBus.SchoolBusSeatingCapacity;
                 if (schoolBus.SchoolDistrict != null)
                 {

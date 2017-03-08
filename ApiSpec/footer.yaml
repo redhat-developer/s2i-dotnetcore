@@ -35,6 +35,14 @@
         type: string
       schoolBusOwnerAddressLine2:
         type: string
+      schoolBusMobilityAidCapacity:
+        type: string
+      schoolBusOwnerCity:
+        type: string
+      schoolBusOwnerProvince:
+        type: string
+      schoolBusOwnerPostalCode:
+        type: string        
       icbcRegistrationNumber: 
         type: string
       vehicleIdentificationNumber:
