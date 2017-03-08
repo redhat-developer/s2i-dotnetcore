@@ -690,7 +690,16 @@ namespace SchoolBusAPI.Services.Impl
 
             if (regi != null)
             {
-                data = data.Where(x => x.ICBCRegistrationNumber == regi);
+                // first convert the regi to a number.
+                int tempRegi;
+                bool parsed = int.TryParse(regi, out tempRegi);
+
+                if (parsed)
+                {
+                    regi = tempRegi.ToString();
+                }
+                
+                data = data.Where(x => x.ICBCRegistrationNumber.Contains(regi));
                 keySearch = true;
             }
 
