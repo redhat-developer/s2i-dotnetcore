@@ -95,6 +95,14 @@ namespace SchoolBusAPI.Services.Impl
             Dictionary<string, string> parametersToAdd = new Dictionary<string, string>();
             if (regi != null)
             {
+                // first convert the regi to a number.
+                int tempRegi;
+                bool parsed = int.TryParse(regi, out tempRegi);
+
+                if (parsed)
+                {
+                    regi = tempRegi.ToString();
+                }
                 parametersToAdd.Add("regi", regi);
             }
             if (vin != null)
