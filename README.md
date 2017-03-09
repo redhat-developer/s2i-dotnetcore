@@ -62,11 +62,8 @@ To instantiate a template you can use the `oc new-app` command:
 oc new-app --template=<template>
 ```
 
-In case you imported the template in your project, set the `NAMESPACE` parameter to your project name
-by adding the `-p NAMESPACE=<project>` parameter.
-
 The template can also be instantiated using the OpenShift web console. Login to the console and
-navigate to the desired project. Click the **Add to Project** button. Search and select the \<template>.
+navigate to the desired project. Click the **Add to Project** button. Search and select the desired template by it's name (e.g. dotnet-example).
 Next, click **Create** to start a build and deploy the sample application. Once the build has and deployment
 have completed, you can browse to the application using the url you find in project overview.
 
