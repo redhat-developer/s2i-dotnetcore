@@ -16,6 +16,8 @@ namespace SampleApp
         {
             loggerFactory.AddConsole(LogLevel.Trace);
 
+            app.UseStaticFiles();
+
             app.Run(async context =>
             {
                 Console.WriteLine("{0} {1}{2}{3}",
@@ -45,10 +47,9 @@ namespace SampleApp
                 {
                     // options.ThreadCount = 4;
                     options.NoDelay = true;
-                    options.UseHttps("testCert.pfx", "testPassword");
                     options.UseConnectionLogging();
                 })
-                .UseUrls("http://0.0.0.0:8080", "https://0.0.0.0:8081")
+                .UseUrls("http://0.0.0.0:8080")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .Build();

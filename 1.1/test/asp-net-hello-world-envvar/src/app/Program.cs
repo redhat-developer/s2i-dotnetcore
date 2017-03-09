@@ -16,6 +16,8 @@ namespace SampleApp
         {
             loggerFactory.AddConsole(LogLevel.Trace);
 
+            app.UseStaticFiles();
+
             app.Run(async context =>
             {
                 Console.WriteLine("{0} {1}{2}{3}",
@@ -47,7 +49,6 @@ namespace SampleApp
             // Launch webserver
             var host = new WebHostBuilder()
                 .UseKestrel()
-                .UseUrls("http://0.0.0.0:8080")
                 .UseStartup<Startup>()
                 .Build();
 
