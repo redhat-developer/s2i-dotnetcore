@@ -59,3 +59,9 @@ oc create -f <template.json>
 
 The dotnet-example template can be used to create a new .NET Core service in OpenShift. It provides parameters for all the environment
 variables of the s2i-dotnetcore builder. It also includes a liveness and a readiness probe.
+
+**dotnet-pgsql-persistent**
+
+The dotnet-pgsql-persistent creates a .NET Core service with a PostgreSQL backend. It provides parameters for all the environment
+variables of the s2i-dotnetcore builder and variables to setup the database. The database connection information is passed to the
+.NET application via the `ConnectionString` environment variable.
