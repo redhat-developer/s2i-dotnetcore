@@ -92,6 +92,30 @@
                             {
                                 "name": "DOTNET_STARTUP_PROJECT",
                                 "value": "${DOTNET_STARTUP_PROJECT}"
+                            },
+                            {
+                                "name": "DOTNET_ASSEMBLY_NAME",
+                                "value": "${DOTNET_ASSEMBLY_NAME}"
+                            },
+                            {
+                                "name": "DOTNET_NPM_TOOLS",
+                                "value": "${DOTNET_NPM_TOOLS}"
+                            },
+                            {
+                                "name": "DOTNET_TEST_PROJECTS",
+                                "value": "${DOTNET_TEST_PROJECTS}"
+                            },
+                            {
+                                "name": "DOTNET_CONFIGURATION",
+                                "value": "${DOTNET_CONFIGURATION}"
+                            },
+                            {
+                                "name": "DOTNET_PUBLISH",
+                                "value": "true"
+                            },
+                            {
+                                "name": "DOTNET_RESTORE_SOURCES",
+                                "value": "${DOTNET_RESTORE_SOURCES}"
                             }
                         ]
                     }
@@ -439,6 +463,32 @@
             "displayName": "Startup Project",
             "description": "Set this to the folder containing your startup project.",
             "value": "samples/MusicStore"
+        },
+        {
+            "name": "DOTNET_ASSEMBLY_NAME",
+            "displayName": "Startup Assembly",
+            "description": "Set this when the assembly name is overridden in the project file."
+        },
+        {
+            "name": "DOTNET_NPM_TOOLS",
+            "displayName": "Npm Tools",
+            "description": "Set this to a space separated list of npm tools needed to publish."
+        },
+        {
+            "name": "DOTNET_TEST_PROJECTS",
+            "displayName": "Test projects",
+            "description": "Set this to a space separated list of test projects to run before publishing."
+        },
+        {
+            "name": "DOTNET_CONFIGURATION",
+            "displayName": "Configuration",
+            "description": "Set this to configuration (Release/Debug).",
+            "value": "Release"
+        },
+        {
+            "name": "DOTNET_RESTORE_SOURCES",
+            "displayName": "NuGet package sources",
+            "description": "Set this to override the NuGet.config sources."
         },
         {
             "name": "APPLICATION_DOMAIN",
