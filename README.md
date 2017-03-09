@@ -49,13 +49,31 @@ Example: `dotnet/dotnetcore-10-rhel7`
 OpenShift Templates
 -------------------
 
-The `templates` folder contains OpenShift templates. Some of these will be shipped with OpenShift. If a template is not on your OpenShift installation, you can import it:
+The `templates` folder contains OpenShift templates. Some of these will be shipped with OpenShift.
+If a template is not on your OpenShift installation, you can import it:
 
 ```
 oc create -f <template.json>
 ```
 
+To instantiate a template you can use the `oc new-app` command:
+
+```
+oc new-app --template=<template>
+```
+
+The template can also be instantiated using the OpenShift web console. Login to the console and
+navigate to the desired project. Click the **Add to Project** button. Search and select the desired template by it's name (e.g. dotnet-example).
+Next, click **Create** to start a build and deploy the sample application. Once the build has and deployment
+have completed, you can browse to the application using the url you find in project overview.
+
 **dotnet-example**
 
 The dotnet-example template can be used to create a new .NET Core service in OpenShift. It provides parameters for all the environment
 variables of the s2i-dotnetcore builder. It also includes a liveness and a readiness probe.
+
+**dotnet-pgsql-persistent**
+
+The dotnet-pgsql-persistent creates a .NET Core service with a PostgreSQL backend. It provides parameters for all the environment
+variables of the s2i-dotnetcore builder and variables to setup the database. The database connection information is passed to the
+.NET application via the `ConnectionString` environment variable.
