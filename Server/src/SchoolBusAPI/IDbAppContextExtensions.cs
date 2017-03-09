@@ -243,7 +243,7 @@ namespace SchoolBusAPI.Models
                         new GroupMembership
                         {
                             Active = true,
-                            Group = context.GetGroup("Other")
+                            Group = group
                         });
                 }
             }
@@ -505,7 +505,7 @@ namespace SchoolBusAPI.Models
 
         public static void UpdateSeedUserInfo(this DbAppContext context, User userInfo)
         {
-            User user = context.GetUserByGuid(userInfo.Guid);
+            User user = context.GetUserByGuid(userInfo.Guid);            
             if (user == null)
             {
                 context.Users.Add(userInfo);
