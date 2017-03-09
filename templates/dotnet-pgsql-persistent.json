@@ -7,7 +7,10 @@
             "openshift.io/display-name": ".NET Core + PostgreSQL (Persistent)",
             "description": "An example .NET Core application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore.",
             "tags": "quickstart,dotnet",
-            "iconClass": "icon-dotnet"
+            "iconClass": "icon-dotnet",
+            "template.openshift.io/provider-display-name": "Red Hat, Inc.",
+            "template.openshift.io/documentation-url": "https://github.com/redhat-developer/s2i-dotnetcore",
+            "template.openshift.io/support-url": "https://access.redhat.com"
         }
     },
     "message": "The following service(s) have been created in your project: ${NAME}, ${DATABASE_SERVICE_NAME}.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore.",
