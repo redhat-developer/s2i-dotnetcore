@@ -17,21 +17,15 @@ resulting image with [Docker](http://docker.io) execute:
 
     ```
     $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=1.0/test/asp-net-hello-world dotnet/dotnetcore-10-rhel7 dotnet-sample-app
-    $ sudo docker run -p 8080-8081:8080-8081 dotnet-sample-app
+    $ sudo docker run -p 8080:8080 dotnet-sample-app
     ```
 
 **Accessing the application:**
 
-Plain HTTP:
+HTTP:
 
 ```
 $ curl http://127.0.0.1:8080
-```
-
-HTTPS (uses a self-signed certificate, thus, `--insecure`):
-
-```
-$ curl --tlsv1 --insecure https://127.0.0.1:8081
 ```
 
 Repository organization
@@ -80,10 +74,6 @@ Repository organization
 
     .Net Core Quote of the Day example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
 
-  * **`dotnetbot/`**
-
-    .Net Core ASCII art example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
-
   * **`asp-net-hello-world/`**
 
     ASP .Net hello world example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
@@ -103,19 +93,56 @@ a `.s2i/environment` file inside your source code repository.
     Used to select the project to run. This must be the folder containing
     `project.json`. Defaults to `.`.
 
+* **DOTNET_PUBLISH**
+
+    Used to control whether the application should be built by executing
+    `dotnet build` or `dotnet publish`. To publish the application set the
+    value to `true`. It is recommended to publish your application. For
+    backwards compatibility, the default is `false`. In the next major release,
+    this variable will be removed and the builder will always publish the
+    application.
+
+* **DOTNET_ASSEMBLY_NAME**
+
+    Used to select the assembly to run. This must NOT include the `.dll` extension.
+    Set this to the output assembly name specified in `project.json` (`name`, `buildOptions/outputName`).
+    For `project.json`, the assembly name defaults to the `project.json` parent folder. The name of the
+    parent folder is used as the default value for `DOTNET_ASSEMBLY_NAME`.
+
+    When `project.json` is at the `context-dir`, the parent folder name will be 'src'. So, by
+    default, this generates a 'src.dll' assembly. Setting `DOTNET_ASSEMBLY_NAME` will cause:
+    - the assembly to be <DOTNET_ASSEMBLY_NAME>.dll
+    - the application sources to be in subfolder `DOTNET_ASSEMBLY_NAME` in the deployed
+    container.
+
+* **DOTNET_RESTORE_SOURCES**
+
+    Used to specify the list of NuGet package sources used during the restore operation. This overrides 
+    all of the sources specified in the NuGet.config file.
+
+* **DOTNET_NPM_TOOLS**
+
+    Used to specify a list of npm packages to install before building the app.
+    Defaults to ``.
+
+* **DOTNET_TEST_PROJECTS**
+
+    Used to specify the list of test projects to run. This must be folders containing
+    `project.json`. `dotnet test` is invoked for each folder. Defaults to ``.
+
 * **DOTNET_CONFIGURATION**
 
     Used to run the application in Debug or Release mode. This should be either
-    `Release` or `Debug`.  This is passed to the `dotnet build` invocation.
-    Defaults to `Release`.
+    `Release` or `Debug`.
 
-* **DOTNET_RESTORE_ROOT**
+* **ASPNETCORE_URLS**
 
-    Used to specify the list of projects or project folders to restore. This is
-    passed to the `dotnet restore` invocation. Defaults to `.`.
+    This variable is set to `http://*:8080` to configure ASP.NET Core to use the
+    port exposed by the image.
 
-* **DOTNET_FRAMEWORK**
+NPM
+---
 
-    Used to run the select the target framework to run this application under.
-    This is passed to the `dotnet build` invocation. The framework needs to be
-    defined in the `project.json` file. Defaults to `netcoreapp1.0`.
+Typical modern web applications rely on javascript tools to build the front-end.
+The image includes npm (node package manager) to install these tools. Packages can be
+installed by setting `DOTNET_NPM_TOOLS` and by calling `npm install` in the build process.

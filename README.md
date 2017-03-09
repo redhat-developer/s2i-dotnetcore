@@ -54,3 +54,8 @@ The `templates` folder contains OpenShift templates. Some of these will be shipp
 ```
 oc create -f <template.json>
 ```
+
+**dotnet-example**
+
+The dotnet-example template can be used to create a new .NET Core service in OpenShift. It provides parameters for all the environment
+variables of the s2i-dotnetcore builder. It also includes a liveness and a readiness probe.

@@ -3,19 +3,24 @@ source /opt/app-root/etc/generate_container_user
 
 set -e
 
-DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
-DOTNET_FRAMEWORK="${DOTNET_FRAMEWORK:-netcoreapp1.0}"
-DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
+if [ "$DOTNET_PUBLISH" == "true" ]; then
+  cd $DOTNET_PUBLISH_PATH
 
-APP_DLL_NAME="$(basename "$(realpath "${DOTNET_STARTUP_PROJECT}")").dll"
-APP_DLL_PATH="${DOTNET_STARTUP_PROJECT}/bin/${DOTNET_CONFIGURATION}/${DOTNET_FRAMEWORK}/${APP_DLL_NAME}"
-
-ARG_FILE="arguments.txt"
-if [[ -f "${ARG_FILE}" ]]; then
-  echo "---> Running application with arguments from file '${ARG_FILE}' ..."
-  PROG_ARGS="$(cat ${ARG_FILE})"
-  dotnet "${APP_DLL_PATH}" ${PROG_ARGS}
-else
   echo "---> Running application ..."
-  dotnet "${APP_DLL_PATH}"
+  exec "$DOTNET_RUN_SCRIPT"
+else
+  DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
+  DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
+  DOTNET_FRAMEWORK="netcoreapp1.0"
+  if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
+    APP_DLL_NAME="${DOTNET_ASSEMBLY_NAME}.dll"
+  else
+    APP_DLL_NAME="$(basename "$(realpath "${DOTNET_STARTUP_PROJECT}")").dll"
+  fi
+  APP_DLL_PATH="bin/${DOTNET_CONFIGURATION}/${DOTNET_FRAMEWORK}/${APP_DLL_NAME}"
+  
+  cd "${DOTNET_STARTUP_PROJECT}"
+
+  echo "---> Running application ..."
+  exec dotnet "${APP_DLL_PATH}"
 fi
