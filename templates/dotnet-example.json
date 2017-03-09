@@ -110,6 +110,10 @@
                             {
                                 "name": "DOTNET_PUBLISH",
                                 "value": "true"
+                            },
+                            {
+                                "name": "DOTNET_RESTORE_SOURCES",
+                                "value": "${DOTNET_RESTORE_SOURCES}"
                             }
                         ]
                     }
@@ -319,6 +323,11 @@
             "displayName": "Configuration",
             "description": "Set this to configuration (Release/Debug).",
             "value": "Release"
+        },
+        {
+            "name": "DOTNET_RESTORE_SOURCES",
+            "displayName": "NuGet package sources",
+            "description": "Set this to override the NuGet.config sources."
         }
     ]
 }
