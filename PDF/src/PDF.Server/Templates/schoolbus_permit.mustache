@@ -186,16 +186,20 @@
         to operate a school bus:</p>
         <div id="info-box">
             <div class="row clearfix">
+                <div class="label in">Permit Class:</div>
+                <div class="value">{{permitClassCode}}</div>
+            </div>
+            <div class="row clearfix">
                 <div class="label in">Owner/Lessee Name:</div>
                 <div class="value">{{schoolBusOwnerName}}</div>
             </div>
             <div class="row clearfix">
                 <div class="label in">Address:</div>
-                <div class="value">{{schoolBusOwnerAddressLine1}} {{schoolBusOwnerAddressLine2}}</div>
+                <div class="value">{{schoolBusOwnerAddressLine1}}</div>
             </div>
             <div class="row clearfix">
-                <div class="label in">City, Prov, PC:</div>
-                <div class="value">{{schoolBusOwnerCity}}, {{schoolBusOwnerProvince}}, {{schoolBusOwnerPostalCode}}</div>
+                <div class="label in"></div>
+                <div class="value">{{schoolBusOwnerAddressLine2}}</div>
             </div>
             <div class="two-column clearfix">
                 <div class="col-1">
@@ -210,6 +214,14 @@
                     <div class="row clearfix">
                         <div class="label">Vehicle Year, Make:</div>
                         <div class="value">{{icbcModelYear}} {{icbcMake}}</div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="label">Body Description:</div>
+                        <div class="value">{{bodyTypeCode}}</div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="label">Unit #:</div>
+                        <div class="value">{{unitNumber}}</div>
                     </div>
                 </div>
                 <div class="col-2">
