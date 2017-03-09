@@ -55,7 +55,10 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="RestrictionsText">RestrictionsText.</param>
         /// <param name="SchoolDistrictshortName">SchoolDistrictshortName.</param>
         /// <param name="SchoolBusSeatingCapacity">SchoolBusSeatingCapacity.</param>
-        public PermitViewModel(int? PermitNumber = null, string PermitIssueDate = null, string SchoolBusOwnerName = null, string SchoolBusOwnerAddressLine1 = null, string SchoolBusOwnerAddressLine2 = null, string SchoolBusMobilityAidCapacity = null, string SchoolBusOwnerCity = null, string SchoolBusOwnerProvince = null, string SchoolBusOwnerPostalCode = null, string IcbcRegistrationNumber = null, string VehicleIdentificationNumber = null, int? IcbcModelYear = null, string IcbcMake = null, string RestrictionsText = null, string SchoolDistrictshortName = null, int? SchoolBusSeatingCapacity = null)
+        /// <param name="UnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
+        /// <param name="PermitClassCode">The enumerated class of School Bus from drop down.</param>
+        /// <param name="BodyTypeCode">The enumerated body type of the School Bus from drop down.</param>
+        public PermitViewModel(int? PermitNumber = null, string PermitIssueDate = null, string SchoolBusOwnerName = null, string SchoolBusOwnerAddressLine1 = null, string SchoolBusOwnerAddressLine2 = null, string SchoolBusMobilityAidCapacity = null, string SchoolBusOwnerCity = null, string SchoolBusOwnerProvince = null, string SchoolBusOwnerPostalCode = null, string IcbcRegistrationNumber = null, string VehicleIdentificationNumber = null, int? IcbcModelYear = null, string IcbcMake = null, string RestrictionsText = null, string SchoolDistrictshortName = null, int? SchoolBusSeatingCapacity = null, string UnitNumber = null, string PermitClassCode = null, string BodyTypeCode = null)
         {               this.PermitNumber = PermitNumber;
             this.PermitIssueDate = PermitIssueDate;
             this.SchoolBusOwnerName = SchoolBusOwnerName;
@@ -72,6 +75,9 @@ namespace SchoolBusAPI.ViewModels
             this.RestrictionsText = RestrictionsText;
             this.SchoolDistrictshortName = SchoolDistrictshortName;
             this.SchoolBusSeatingCapacity = SchoolBusSeatingCapacity;
+            this.UnitNumber = UnitNumber;
+            this.PermitClassCode = PermitClassCode;
+            this.BodyTypeCode = BodyTypeCode;
         }
 
         /// <summary>
@@ -171,6 +177,30 @@ namespace SchoolBusAPI.ViewModels
         public int? SchoolBusSeatingCapacity { get; set; }
 
         /// <summary>
+        /// The unit number of the Bus as defined by the School Bus owner - freeform text.
+        /// </summary>
+        /// <value>The unit number of the Bus as defined by the School Bus owner - freeform text.</value>
+        [DataMember(Name="unitNumber")]
+        [MetaDataExtension (Description = "The unit number of the Bus as defined by the School Bus owner - freeform text.")]
+        public string UnitNumber { get; set; }
+
+        /// <summary>
+        /// The enumerated class of School Bus from drop down
+        /// </summary>
+        /// <value>The enumerated class of School Bus from drop down</value>
+        [DataMember(Name="permitClassCode")]
+        [MetaDataExtension (Description = "The enumerated class of School Bus from drop down")]
+        public string PermitClassCode { get; set; }
+
+        /// <summary>
+        /// The enumerated body type of the School Bus from drop down
+        /// </summary>
+        /// <value>The enumerated body type of the School Bus from drop down</value>
+        [DataMember(Name="bodyTypeCode")]
+        [MetaDataExtension (Description = "The enumerated body type of the School Bus from drop down")]
+        public string BodyTypeCode { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -194,6 +224,9 @@ namespace SchoolBusAPI.ViewModels
             sb.Append("  RestrictionsText: ").Append(RestrictionsText).Append("\n");
             sb.Append("  SchoolDistrictshortName: ").Append(SchoolDistrictshortName).Append("\n");
             sb.Append("  SchoolBusSeatingCapacity: ").Append(SchoolBusSeatingCapacity).Append("\n");
+            sb.Append("  UnitNumber: ").Append(UnitNumber).Append("\n");
+            sb.Append("  PermitClassCode: ").Append(PermitClassCode).Append("\n");
+            sb.Append("  BodyTypeCode: ").Append(BodyTypeCode).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -311,6 +344,21 @@ namespace SchoolBusAPI.ViewModels
                     this.SchoolBusSeatingCapacity == other.SchoolBusSeatingCapacity ||
                     this.SchoolBusSeatingCapacity != null &&
                     this.SchoolBusSeatingCapacity.Equals(other.SchoolBusSeatingCapacity)
+                ) &&                 
+                (
+                    this.UnitNumber == other.UnitNumber ||
+                    this.UnitNumber != null &&
+                    this.UnitNumber.Equals(other.UnitNumber)
+                ) &&                 
+                (
+                    this.PermitClassCode == other.PermitClassCode ||
+                    this.PermitClassCode != null &&
+                    this.PermitClassCode.Equals(other.PermitClassCode)
+                ) &&                 
+                (
+                    this.BodyTypeCode == other.BodyTypeCode ||
+                    this.BodyTypeCode != null &&
+                    this.BodyTypeCode.Equals(other.BodyTypeCode)
                 );
         }
 
@@ -388,6 +436,18 @@ namespace SchoolBusAPI.ViewModels
                                 if (this.SchoolBusSeatingCapacity != null)
                 {
                     hash = hash * 59 + this.SchoolBusSeatingCapacity.GetHashCode();
+                }                
+                                if (this.UnitNumber != null)
+                {
+                    hash = hash * 59 + this.UnitNumber.GetHashCode();
+                }                
+                                if (this.PermitClassCode != null)
+                {
+                    hash = hash * 59 + this.PermitClassCode.GetHashCode();
+                }                
+                                if (this.BodyTypeCode != null)
+                {
+                    hash = hash * 59 + this.BodyTypeCode.GetHashCode();
                 }                
                 
                 return hash;

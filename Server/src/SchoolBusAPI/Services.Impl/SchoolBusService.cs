@@ -465,14 +465,17 @@ namespace SchoolBusAPI.Services.Impl
                 
                 permitViewModel.PermitNumber = schoolBus.PermitNumber;
                 permitViewModel.RestrictionsText = schoolBus.RestrictionsText;
-                permitViewModel.SchoolBusMobilityAidCapacity = schoolBus.MobilityAidCapacity.ToString();                
-
-
+                permitViewModel.SchoolBusMobilityAidCapacity = schoolBus.MobilityAidCapacity.ToString();
+                permitViewModel.UnitNumber = schoolBus.UnitNumber;
+                permitViewModel.PermitClassCode = schoolBus.PermitClassCode;
+                permitViewModel.BodyTypeCode = schoolBus.BodyTypeCode;             
                 permitViewModel.SchoolBusSeatingCapacity = schoolBus.SchoolBusSeatingCapacity;
+
                 if (schoolBus.SchoolDistrict != null)
                 {
                     permitViewModel.SchoolDistrictshortName = schoolBus.SchoolDistrict.ShortName;
                 }
+
                 string payload = JsonConvert.SerializeObject(permitViewModel);
 
                 // pass the request on to the PDF Micro Service
