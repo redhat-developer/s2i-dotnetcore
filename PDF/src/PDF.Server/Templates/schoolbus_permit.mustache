@@ -9,6 +9,7 @@
         color: black;
         font-family: sans-serif;
         padding: 30px;
+        white-space: nowrap;
     }
 
     #header {
@@ -37,7 +38,6 @@
     #permit-num {
         margin-top: 7px;
         float: right;
-        white-space: nowrap;
         font-size: 26px;
         font-weight: bold;
     }
@@ -60,6 +60,7 @@
     p {
         margin: 10px 0;
         font-size: 11px;
+        white-space: normal;
     }
 
 
@@ -81,8 +82,8 @@
     }
 
     .row .label.in {
-        padding-left: 60px;
-        width: 130px;
+        padding-left: 30px;
+        width: 160px;
     }
 
     .row .value {
@@ -96,22 +97,21 @@
 
     .col-1 {
         float: left;
-        width: 58%;
+        width: 56%;
     }
 
     .col-2 {
         float: right;
-        width: 38%;
+        width: 42%;
     }
 
     .col-2 .label {
-        width: 100px;
+        width: 120px;
     }
 
     .col-2 .value {
-        width: calc(100% - 120px);
+        width: calc(100% - 140px);
     }
-
 
     #restrictions .label {
         height: 50px;
@@ -122,6 +122,7 @@
     #restrictions .value {
         height: 50px;
         width: calc(100% - 100px);
+        white-space: normal;
     }
 
 
@@ -190,7 +191,7 @@
             </div>
             <div class="row clearfix">
                 <div class="label in">Address:</div>
-                <div class="value">{{schoolBusOwnerAddressLine1}}</div>
+                <div class="value">{{schoolBusOwnerAddressLine1}} {{schoolBusOwnerAddressLine2}}</div>
             </div>
             <div class="row clearfix">
                 <div class="label in">City, Prov, PC:</div>
