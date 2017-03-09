@@ -59,6 +59,18 @@
       schoolBusSeatingCapacity:
         format: int32
         type: integer
+      unitNumber:
+        type: string
+        maxLength: 30
+        description: The unit number of the Bus as defined by the School Bus owner - freeform text.     
+      permitClassCode:
+        type: string
+        maxLength: 50
+        description: The enumerated class of School Bus from drop down
+      bodyTypeCode:
+        type: string
+        maxLength: 50
+        description: The enumerated body type of the School Bus from drop down       
   SchoolBusOwnerViewModel:
     type: object
     x-codegen-viewmodel: true

@@ -85,70 +85,25 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         /// <response code="404">Vehicle not found in CCW system</response>
         public virtual IActionResult CcwdataFetchGetAsync(string regi, string vin, string plate)
-        {
-            CCWData result = null;
+        {            
+            string cCW_userId = null;
+            string cCW_guid = null;
+            string cCW_directory = null;
 
-            string ccwHost = Configuration["CCW_SERVICE_NAME"];
-
-            // construct the query string
-
-            Dictionary<string, string> parametersToAdd = new Dictionary<string, string>();
-            if (regi != null)
+            if (Request.Headers.ContainsKey("SM_UNIVERSALID"))
             {
-                // first convert the regi to a number.
-                int tempRegi;
-                bool parsed = int.TryParse(regi, out tempRegi);
-
-                if (parsed)
-                {
-                    regi = tempRegi.ToString();
-                }
-                parametersToAdd.Add("regi", regi);
+                cCW_userId = Request.Headers["SM_UNIVERSALID"];
             }
-            if (vin != null)
+            if (Request.Headers.ContainsKey("SMGOV_USERGUID"))
             {
-                parametersToAdd.Add("vin", vin);
+                cCW_guid = Request.Headers["SMGOV_USERGUID"];
             }
-            if (plate != null)
+            if (Request.Headers.ContainsKey("SM_AUTHDIRNAME"))
             {
-                parametersToAdd.Add("plate", plate);
-            }            
-            var targetUrl = ccwHost + "/api/CCW/GetCCW";
-            string newUri = QueryHelpers.AddQueryString(targetUrl, parametersToAdd);
-            
-            // call the microservice
-
-            try
-            {
-                HttpClient client = new HttpClient();
-
-                var request = new HttpRequestMessage(HttpMethod.Get, newUri);
-                request.Headers.Clear();
-                // transfer over the request headers.
-                foreach (var item in Request.Headers )
-                {
-                    string key = item.Key;
-                    string value = item.Value;                    
-                    request.Headers.Add(key, value);
-                }
-                
-                Task<HttpResponseMessage> responseTask = client.SendAsync(request);
-                responseTask.Wait();
-
-                HttpResponseMessage response = responseTask.Result;
-                if (response.StatusCode == HttpStatusCode.OK) // success
-                {
-                    var stringtask = response.Content.ReadAsStringAsync();
-                    stringtask.Wait();
-                    // parse as JSON.
-                    string jsonString = stringtask.Result;
-                    result = JsonConvert.DeserializeObject<CCWData>(jsonString);
-                }
+                cCW_directory = Request.Headers["SM_AUTHDIRNAME"];
             }
-            catch (Exception e)
-            {
-                result = null;
-            }
+
+            CCWData result = CCWTools.FetchCCW (Configuration, regi, vin, plate, cCW_userId, cCW_guid, cCW_directory);
 
             // return the result, or 404 if no result was found.
 
