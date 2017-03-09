@@ -57,5 +57,9 @@ oc create -f <template.json>
 
 **dotnet-example**
 
-The dotnet-example template can be used to create a new .NET Core service in OpenShift. It provides parameters for all the environment
-variables of the s2i-dotnetcore builder. It also includes a liveness and a readiness probe.
+The dotnet-example template can be used to create a new .NET Core service in
+OpenShift. It provides parameters for all the environment variables of the
+s2i-dotnetcore builder. It also includes a liveness and a readiness probe. See
+the [s2i-dotnetcore-ex
+repository](https://github.com/redhat-developer/s2i-dotnetcore-ex/tree/master#use-a-template-to-build-and-deploy-a-sample-application)
+for an example as to how the template can be used.
