@@ -181,11 +181,7 @@
                                 ],
                                 "env": [
                                     {
-                                        "name": "Data__DefaultConnection__Provider",
-                                        "value": "npgsql"
-                                    },
-                                    {
-                                        "name": "Data__DefaultConnection__ConnectionString",
+                                        "name": "ConnectionString",
                                         "value": "Host=${DATABASE_SERVICE_NAME};Database=${DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD}"
                                     }
                                 ],
@@ -431,19 +427,18 @@
             "name": "SOURCE_REPOSITORY_REF",
             "displayName": "Git Reference",
             "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
-            "value": "rel/1.1.0-preview1"
+            "value": "1.1.1-example"
         },
         {
             "name": "CONTEXT_DIR",
             "displayName": "Context Directory",
-            "description": "Set this to the relative path to your project if it is not in the root of your repository.",
-            "value": "samples/MusicStore"
+            "description": "Set this to the relative path to your project if it is not in the root of your repository."
         },
         {
             "name": "DOTNET_STARTUP_PROJECT",
             "displayName": "Startup Project",
             "description": "Set this to the folder containing your startup project.",
-            "value": "."
+            "value": "samples/MusicStore"
         },
         {
             "name": "APPLICATION_DOMAIN",
