@@ -252,7 +252,25 @@ namespace CCW.Controllers
                 ccwdata.NSCPolicyEffectiveDate = vehicle.policyStartDate;
                 ccwdata.NSCPolicyExpiryDate = vehicle.policyExpiryDate;
                 ccwdata.NSCPolicyStatus = vehicle.policyStatus + " - " + vehicle.policyStatusDescription;
-                ccwdata.NSCPolicyStatusDate = vehicle.policyAcquiredCurrentStatusDate;
+
+                // policyAquiredCurrentStatusDate is the preferred field, however it is often null.
+                if (vehicle.policyAcquiredCurrentStatusDate != null)
+                {
+                    ccwdata.NSCPolicyStatusDate = vehicle.policyAcquiredCurrentStatusDate;
+                }
+                else if (vehicle.policyTerminationDate != null)
+                {
+                    ccwdata.NSCPolicyStatusDate = vehicle.policyTerminationDate;
+                }
+                else if (vehicle.policyReplacedOnDate != null)
+                {
+                    ccwdata.NSCPolicyStatusDate = vehicle.policyReplacedOnDate;
+                }
+                else if (vehicle.policyStartDate != null)
+                {
+                    ccwdata.NSCPolicyStatusDate = vehicle.policyStartDate;
+                }                
+
                 ccwdata.NSCPolicyNumber = vehicle.policyNumber;
                 ccwdata.NSCClientNum = vehicle.nscNumber;
                 if (vehicle.owner != null)
