@@ -414,9 +414,33 @@ namespace SchoolBusAPI.Services.Impl
                     permitViewModel.IcbcModelYear = schoolBus.CCWData.ICBCModelYear;
                     permitViewModel.IcbcRegistrationNumber = schoolBus.CCWData.ICBCRegistrationNumber;
                     permitViewModel.VehicleIdentificationNumber = schoolBus.CCWData.ICBCVehicleIdentificationNumber;
-                    permitViewModel.SchoolBusOwnerPostalCode = schoolBus.CCWData.ICBCRegOwnerPostalCode;
+                    
                     permitViewModel.SchoolBusOwnerAddressLine1 = schoolBus.CCWData.ICBCRegOwnerAddr1;
-                    permitViewModel.SchoolBusOwnerAddressLine2 = schoolBus.CCWData.ICBCRegOwnerAddr2;
+
+                    // line 2 is a combination of the various fields that may contain data.
+                    List<string> strings = new List<string>();
+                    if (! string.IsNullOrWhiteSpace (schoolBus.CCWData.ICBCRegOwnerAddr2))
+                    {
+                        strings.Add(schoolBus.CCWData.ICBCRegOwnerAddr2);
+                    }
+                    if (!string.IsNullOrWhiteSpace(schoolBus.CCWData.ICBCRegOwnerCity))
+                    {
+                        strings.Add(schoolBus.CCWData.ICBCRegOwnerCity);
+                    }
+                    if (!string.IsNullOrWhiteSpace(schoolBus.CCWData.ICBCRegOwnerProv))
+                    {
+                        strings.Add(schoolBus.CCWData.ICBCRegOwnerProv);
+                    }                    
+                    if (!string.IsNullOrWhiteSpace(schoolBus.CCWData.ICBCRegOwnerPostalCode))
+                    {
+                        strings.Add(schoolBus.CCWData.ICBCRegOwnerPostalCode);
+                    }
+                    if (strings.Count > 0)
+                    {
+                        permitViewModel.SchoolBusOwnerAddressLine2 = String.Join(", ", strings);
+                    }
+
+                    permitViewModel.SchoolBusOwnerPostalCode = schoolBus.CCWData.ICBCRegOwnerPostalCode;
                     permitViewModel.SchoolBusOwnerProvince = schoolBus.CCWData.ICBCRegOwnerProv;
                     permitViewModel.SchoolBusOwnerCity = schoolBus.CCWData.ICBCRegOwnerCity;
                     permitViewModel.SchoolBusOwnerName = schoolBus.CCWData.ICBCRegOwnerName;
