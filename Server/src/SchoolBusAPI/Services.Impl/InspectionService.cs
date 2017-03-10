@@ -135,15 +135,40 @@ namespace SchoolBusAPI.Services.Impl
         {
             var exists = _context.Inspections.Any(a => a.Id == id);
             if (exists)
-            {
-                var item = _context.Inspections.First(a => a.Id == id);
-                if (item != null)
+            {                
+                var item = _context.Inspections.Include(x => x.SchoolBus).First(a => a.Id == id);
+                // Delete Inspection has special behavior.
+                // By design, an Inspector is only able to delete an Inspection 24 hours after it has been entered.
+                // Also, the related Schoolbus will be updated with the value of the PreviousNextInspectionDate and PreviousNextInspectionType fields.
+
+                // first check to see if we are allowed to delete.
+                if (item.CreatedDate > DateTime.UtcNow.AddDays(-1))
                 {
+                    // update the Schoolbus record.
+                    if (item.SchoolBus != null)
+                    {
+                        int schoolbusId = item.SchoolBus.Id;
+
+                        bool schoolbus_exists = _context.SchoolBuss.Any(x => x.Id == schoolbusId);
+                        if (schoolbus_exists)
+                        {
+                            SchoolBus schoolbus = _context.SchoolBuss.First(x => x.Id == schoolbusId);
+                            schoolbus.NextInspectionDate = item.PreviousNextInspectionDate;
+                            schoolbus.NextInspectionTypeCode = item.PreviousNextInspectionTypeCode;
+                            _context.Update(schoolbus);
+                        }                        
+                    }
+
                     _context.Inspections.Remove(item);
                     // Save the changes
                     _context.SaveChanges();
-                }            
-                return new ObjectResult(item);
+                    return new ObjectResult(item);
+                }
+                else
+                {
+                    // forbidden
+                    return new StatusCodeResult(403);
+                }                                                               
             }
             else
             {
@@ -279,6 +304,13 @@ namespace SchoolBusAPI.Services.Impl
                     {
                         item.SchoolBus = null;
                     }
+                }
+
+                // set the Inspection's Previous Next Inspection Date and to the SchoolBus Next Inspection Date
+                if (item.SchoolBus != null)
+                {
+                    item.PreviousNextInspectionDate = item.SchoolBus.NextInspectionDate;
+                    item.PreviousNextInspectionTypeCode = item.SchoolBus.NextInspectionTypeCode;
                 }
 
                 var exists = _context.Inspections.Any(a => a.Id == item.Id);

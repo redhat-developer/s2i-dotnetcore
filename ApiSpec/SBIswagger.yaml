@@ -4158,6 +4158,14 @@ definitions:
         type: string
         format: date-time
         description: Record creation date and time
+      previousNextInspectionDate:
+        type: string
+        format: date-time
+        description: The next inspection date for the related School Bus prior to the creation of this record
+      previousNextInspectionTypeCode:
+        type: string
+        maxLength: 30
+        description: The next inspection type code for the related School Bus prior to the creation of this record
   Note:
     type: object
     description: Notes entered by users about instance of entities - e.g. School Buses and School Bus Owners
@@ -4772,13 +4780,20 @@ definitions:
         type: integer        
       permitIssueDate:
         type: string
-        format: date-time
       schoolBusOwnerName:
         type: string
       schoolBusOwnerAddressLine1:
         type: string
       schoolBusOwnerAddressLine2:
         type: string
+      schoolBusMobilityAidCapacity:
+        type: string
+      schoolBusOwnerCity:
+        type: string
+      schoolBusOwnerProvince:
+        type: string
+      schoolBusOwnerPostalCode:
+        type: string        
       icbcRegistrationNumber: 
         type: string
       vehicleIdentificationNumber:
@@ -4795,6 +4810,18 @@ definitions:
       schoolBusSeatingCapacity:
         format: int32
         type: integer
+      unitNumber:
+        type: string
+        maxLength: 30
+        description: The unit number of the Bus as defined by the School Bus owner - freeform text.     
+      permitClassCode:
+        type: string
+        maxLength: 50
+        description: The enumerated class of School Bus from drop down
+      bodyTypeCode:
+        type: string
+        maxLength: 50
+        description: The enumerated body type of the School Bus from drop down       
   SchoolBusOwnerViewModel:
     type: object
     x-codegen-viewmodel: true
@@ -4914,6 +4941,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/UserRole'
+      smUserId:
+        type: string
+      smAuthorizationDirectory:
+        type: string
       groupMemberships:
         type: array
         items:

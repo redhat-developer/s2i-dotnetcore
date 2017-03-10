@@ -50,7 +50,9 @@ namespace SchoolBusAPI.Models
         /// <param name="Inspector">Defaults for a new inspection to the current user,  but can be changed as needed..</param>
         /// <param name="Notes">A note about the inspection independent of what goes into the RIP inspection - this is just for the School Bus application..</param>
         /// <param name="RIPInspectionId">The ID of the RIP inspection. The expectation is that the user will manually enter a RIP ID such that an external URL can be formed to allow the user to open the RIP inspection and see the inspection details..</param>
-        public Inspection(int Id, DateTime InspectionDate, string InspectionTypeCode, string InspectionResultCode, DateTime CreatedDate, SchoolBus SchoolBus = null, User Inspector = null, string Notes = null, string RIPInspectionId = null)
+        /// <param name="PreviousNextInspectionDate">The next inspection date for the related School Bus prior to the creation of this record.</param>
+        /// <param name="PreviousNextInspectionTypeCode">The next inspection type code for the related School Bus prior to the creation of this record.</param>
+        public Inspection(int Id, DateTime InspectionDate, string InspectionTypeCode, string InspectionResultCode, DateTime CreatedDate, SchoolBus SchoolBus = null, User Inspector = null, string Notes = null, string RIPInspectionId = null, DateTime? PreviousNextInspectionDate = null, string PreviousNextInspectionTypeCode = null)
         {   
             this.Id = Id;
             this.InspectionDate = InspectionDate;
@@ -65,6 +67,8 @@ namespace SchoolBusAPI.Models
             this.Inspector = Inspector;
             this.Notes = Notes;
             this.RIPInspectionId = RIPInspectionId;
+            this.PreviousNextInspectionDate = PreviousNextInspectionDate;
+            this.PreviousNextInspectionTypeCode = PreviousNextInspectionTypeCode;
         }
 
         /// <summary>
@@ -155,6 +159,22 @@ namespace SchoolBusAPI.Models
         public string RIPInspectionId { get; set; }
         
         /// <summary>
+        /// The next inspection date for the related School Bus prior to the creation of this record
+        /// </summary>
+        /// <value>The next inspection date for the related School Bus prior to the creation of this record</value>
+        [MetaDataExtension (Description = "The next inspection date for the related School Bus prior to the creation of this record")]
+        public DateTime? PreviousNextInspectionDate { get; set; }
+        
+        /// <summary>
+        /// The next inspection type code for the related School Bus prior to the creation of this record
+        /// </summary>
+        /// <value>The next inspection type code for the related School Bus prior to the creation of this record</value>
+        [MetaDataExtension (Description = "The next inspection type code for the related School Bus prior to the creation of this record")]
+        [MaxLength(30)]
+        
+        public string PreviousNextInspectionTypeCode { get; set; }
+        
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -171,6 +191,8 @@ namespace SchoolBusAPI.Models
             sb.Append("  Inspector: ").Append(Inspector).Append("\n");
             sb.Append("  Notes: ").Append(Notes).Append("\n");
             sb.Append("  RIPInspectionId: ").Append(RIPInspectionId).Append("\n");
+            sb.Append("  PreviousNextInspectionDate: ").Append(PreviousNextInspectionDate).Append("\n");
+            sb.Append("  PreviousNextInspectionTypeCode: ").Append(PreviousNextInspectionTypeCode).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -252,6 +274,16 @@ namespace SchoolBusAPI.Models
                     this.RIPInspectionId == other.RIPInspectionId ||
                     this.RIPInspectionId != null &&
                     this.RIPInspectionId.Equals(other.RIPInspectionId)
+                ) &&                 
+                (
+                    this.PreviousNextInspectionDate == other.PreviousNextInspectionDate ||
+                    this.PreviousNextInspectionDate != null &&
+                    this.PreviousNextInspectionDate.Equals(other.PreviousNextInspectionDate)
+                ) &&                 
+                (
+                    this.PreviousNextInspectionTypeCode == other.PreviousNextInspectionTypeCode ||
+                    this.PreviousNextInspectionTypeCode != null &&
+                    this.PreviousNextInspectionTypeCode.Equals(other.PreviousNextInspectionTypeCode)
                 );
         }
 
@@ -298,6 +330,14 @@ namespace SchoolBusAPI.Models
                                 if (this.RIPInspectionId != null)
                 {
                     hash = hash * 59 + this.RIPInspectionId.GetHashCode();
+                }                
+                                if (this.PreviousNextInspectionDate != null)
+                {
+                    hash = hash * 59 + this.PreviousNextInspectionDate.GetHashCode();
+                }                
+                                if (this.PreviousNextInspectionTypeCode != null)
+                {
+                    hash = hash * 59 + this.PreviousNextInspectionTypeCode.GetHashCode();
                 }                
                 
                 return hash;
