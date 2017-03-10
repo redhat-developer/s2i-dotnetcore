@@ -45,19 +45,23 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="Email">Email.</param>
         /// <param name="Active">Active.</param>
         /// <param name="UserRoles">UserRoles.</param>
+        /// <param name="SmUserId">SmUserId.</param>
+        /// <param name="SmAuthorizationDirectory">SmAuthorizationDirectory.</param>
         /// <param name="GroupMemberships">GroupMemberships.</param>
         /// <param name="District">The District to which this User is affliated..</param>
         /// <param name="OverdueInspections">OverdueInspections.</param>
         /// <param name="ScheduledInspections">ScheduledInspections.</param>
         /// <param name="DueNextMonthInspections">DueNextMonthInspections.</param>
         /// <param name="ReInspections">ReInspections.</param>
-        public CurrentUserViewModel(int? Id = null, string GivenName = null, string Surname = null, string Email = null, bool? Active = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null, int? OverdueInspections = null, int? ScheduledInspections = null, int? DueNextMonthInspections = null, int? ReInspections = null)
+        public CurrentUserViewModel(int? Id = null, string GivenName = null, string Surname = null, string Email = null, bool? Active = null, List<UserRole> UserRoles = null, string SmUserId = null, string SmAuthorizationDirectory = null, List<GroupMembership> GroupMemberships = null, District District = null, int? OverdueInspections = null, int? ScheduledInspections = null, int? DueNextMonthInspections = null, int? ReInspections = null)
         {               this.Id = Id;
             this.GivenName = GivenName;
             this.Surname = Surname;
             this.Email = Email;
             this.Active = Active;
             this.UserRoles = UserRoles;
+            this.SmUserId = SmUserId;
+            this.SmAuthorizationDirectory = SmAuthorizationDirectory;
             this.GroupMemberships = GroupMemberships;
             this.District = District;
             this.OverdueInspections = OverdueInspections;
@@ -101,6 +105,18 @@ namespace SchoolBusAPI.ViewModels
         /// </summary>
         [DataMember(Name="userRoles")]
         public List<UserRole> UserRoles { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SmUserId
+        /// </summary>
+        [DataMember(Name="smUserId")]
+        public string SmUserId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SmAuthorizationDirectory
+        /// </summary>
+        [DataMember(Name="smAuthorizationDirectory")]
+        public string SmAuthorizationDirectory { get; set; }
 
         /// <summary>
         /// Gets or Sets GroupMemberships
@@ -154,6 +170,8 @@ namespace SchoolBusAPI.ViewModels
             sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  Active: ").Append(Active).Append("\n");
             sb.Append("  UserRoles: ").Append(UserRoles).Append("\n");
+            sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
+            sb.Append("  SmAuthorizationDirectory: ").Append(SmAuthorizationDirectory).Append("\n");
             sb.Append("  GroupMemberships: ").Append(GroupMemberships).Append("\n");
             sb.Append("  District: ").Append(District).Append("\n");
             sb.Append("  OverdueInspections: ").Append(OverdueInspections).Append("\n");
@@ -227,6 +245,16 @@ namespace SchoolBusAPI.ViewModels
                     this.UserRoles == other.UserRoles ||
                     this.UserRoles != null &&
                     this.UserRoles.SequenceEqual(other.UserRoles)
+                ) &&                 
+                (
+                    this.SmUserId == other.SmUserId ||
+                    this.SmUserId != null &&
+                    this.SmUserId.Equals(other.SmUserId)
+                ) &&                 
+                (
+                    this.SmAuthorizationDirectory == other.SmAuthorizationDirectory ||
+                    this.SmAuthorizationDirectory != null &&
+                    this.SmAuthorizationDirectory.Equals(other.SmAuthorizationDirectory)
                 ) && 
                 (
                     this.GroupMemberships == other.GroupMemberships ||
@@ -295,7 +323,15 @@ namespace SchoolBusAPI.ViewModels
                 if (this.UserRoles != null)
                 {
                     hash = hash * 59 + this.UserRoles.GetHashCode();
-                }                   
+                }                if (this.SmUserId != null)
+                {
+                    hash = hash * 59 + this.SmUserId.GetHashCode();
+                }                
+                                if (this.SmAuthorizationDirectory != null)
+                {
+                    hash = hash * 59 + this.SmAuthorizationDirectory.GetHashCode();
+                }                
+                                   
                 if (this.GroupMemberships != null)
                 {
                     hash = hash * 59 + this.GroupMemberships.GetHashCode();

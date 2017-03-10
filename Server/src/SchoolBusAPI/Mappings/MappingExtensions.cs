@@ -65,9 +65,10 @@ namespace SchoolBusAPI.Mappings
                 dto.Email = model.Email;
                 dto.GivenName = model.GivenName;                
                 dto.Surname = model.Surname;
-                dto.Id = model.Id;
+                dto.Id = model.Id;                
                 dto.District = model.District;
                 dto.GroupMemberships = model.GroupMemberships;
+                dto.SmUserId = model.SmUserId;
                 dto.UserRoles = model.UserRoles;                
             }            
             return dto;
@@ -89,6 +90,8 @@ namespace SchoolBusAPI.Mappings
                 dto.Id = model.Id;
                 dto.District = model.District;
                 dto.GroupMemberships = model.GroupMemberships;
+                dto.SmAuthorizationDirectory = model.SmAuthorizationDirectory;
+                dto.SmUserId = model.SmUserId;
                 dto.UserRoles = model.UserRoles;
             }
             return dto;
