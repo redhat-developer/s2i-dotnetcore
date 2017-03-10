@@ -1,28 +1,45 @@
 import React from 'react';
 
 
-// Logging history events. Note that the current user ID and a timestamp will
-// be added to the entry when it is received by the API server.
-export function log(type, id, event) {
+// History Entity Types
+export const BUS = 'School Bus';
+export const OWNER = 'Owner';
+export const USER = 'User';
+export const ROLE = 'Role';
+export const INSPECTION = 'Inspection';
+
+// History Events
+export const BUS_TEST = 'Testing School Bus %entity history.';
+export const OWNER_TEST = 'Testing Owner %entity history.';
+
+// Helper to create an entity object
+export function makeEntity(type, id, description, url) {
+  return {
+    type: type,
+    id: id,
+    description: description,
+    url: url,
+  };
+}
+
+// Log a history event
+export function log(type, id, event, ...entities) {
   var entry = {
-    // Type should denote an area of the app, suggest using PATHNAME constants here
+    // Type should denote an entity
     entityType: type,
     // The ID for the corresponding type, if appropriate
     entityId: id,
-    // An event object example:
-    //   {
-    //     text: 'School Bus {0} was added to Owner {1}',
-    //     fields: [{
-    //       text: 'VIN ABC123DEF456',
-    //       path: 'school-buses/200001'
-    //     },{
-    //       text: 'Thompson Bus Barn',
-    //       path: 'owners/200001'
-    //     }],
-    //   }
-    //
-    // Kind of clunky, but we're working on it
-    eventText: JSON.stringify(event),
+    // The event text and entities as a JSON string
+    event: JSON.stringify({
+      // The event text, with entity placeholders
+      text: event,
+      // The array of entities
+      entities: entities,
+    }),
+    // These fields will be added by the API server.
+    id: null,
+    userId: null,
+    timestamp: null,
   };
 
   // TODO: API call to add entry.
@@ -32,17 +49,16 @@ export function log(type, id, event) {
 export function renderEvent(entry) {
   try {
     // Unwrap the JSONed event
-    var event = JSON.parse(entry.eventText);
+    var event = JSON.parse(entry.event);
 
-    // Parse the text and return it inside a <div>, replacing field placeholders
-    // with linked content.
-    var tokens = event.text.split(/{\d+}/g);
+    // Parse the text and return it inside a <div>, replacing field placeholders with linked content.
+    var tokens = event.text.split('%entity');
     return <div>
       {
         tokens.map((token, index) => {
-          return <span>
+          return <span key={ index }>
             { token }
-            { index < tokens.length - 1 ? buildLink(event.fields[index]) : null }
+            { index < tokens.length - 1 ? buildLink(event.entities[index]) : null }
           </span>;
         })
       }
@@ -53,19 +69,13 @@ export function renderEvent(entry) {
   }
 }
 
-function buildLink(field) {
-  // Return a link if there's a path; just the text otherwise.
-  return field.path ? <a href={ `#/${ field.path }` }>{ field.text }</a> : <span>{ field.text }</span>;
+function buildLink(entity) {
+  // Return a link if there's a path; just the description otherwise.
+  return entity.url ? <a href={ `${ entity.url }` }>{ entity.description }</a> : <span>{ entity.description }</span>;
 }
 
 export function test() {
-  var logged = log('school-buses', 1, {
-    text: 'School Bus {0} was printed.',
-    fields: [{
-      text: '(VIN 2FTRX08L0YCA33666)',
-      path: 'school-buses/1',
-    }],
-  });
+  var logged = log(BUS, 1, BUS_TEST, makeEntity(BUS, 1, 'Test Bus', 'http://google.com?q=school+buses+in+BC'));
 
   var rendered = renderEvent(logged);
   return rendered;

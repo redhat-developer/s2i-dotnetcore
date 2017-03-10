@@ -368,7 +368,7 @@ var SchoolBuses = React.createClass({
                 <td style={{ textAlign: 'right' }}>
                   <ButtonGroup>
                     <DeleteButton name="Bus" hide={ !bus.canDelete } onConfirm={ this.delete.bind(this, bus) }/>
-                    <EditButton name="Bus" hide={ !bus.canView } view pathname={ `${ Constant.BUSES_PATHNAME }/${ bus.id }` }/>
+                    <EditButton name="Bus" hide={ !bus.canView } view pathname={ bus.path }/>
                   </ButtonGroup>
                 </td>
               </tr>;

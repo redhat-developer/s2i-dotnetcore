@@ -2,8 +2,9 @@ import store from './store';
 
 import * as Action from './actionTypes';
 import * as Constant from './constants';
+import * as History from './history';
 
-import { daysFromToday, hoursAgo, sortableDateTime } from './utils/date';
+import { daysFromToday, formatDateTime, hoursAgo, sortableDateTime } from './utils/date';
 import { ApiRequest } from './utils/http';
 import { lastFirstName, firstLastName, concat } from './utils/string';
 
@@ -22,6 +23,10 @@ function parseUser(user) {
   user.name = lastFirstName(user.surname, user.givenName);
   user.fullName = firstLastName(user.givenName, user.surname);
   user.districtName = user.district.name;
+
+  user.path = `${ Constant.USERS_PATHNAME }/${ user.id }`;
+  user.URL = `#/${ user.path }`;
+  user.historyEntity = History.makeEntity(History.USER, user.id, user.name, user.URL);
 
   user.groupNames = _.chain(user.groupMemberships).filter(membership => {
     return membership.group && membership.group.name;
@@ -163,6 +168,10 @@ export function updateUserRoles(userId, userRoleArray) {
 function parseRole(role) {
   role.canEdit = true;
   role.canDelete = false;
+
+  role.path = `${ Constant.ROLES_PATHNAME }/${ role.id }`;
+  role.URL = `#/${ role.path }`;
+  role.historyEntity = History.makeEntity(History.ROLE, role.id, role.name, role.URL);
 }
 
 export function searchRoles(params) {
@@ -286,7 +295,6 @@ function parseSchoolBus(bus) {
   if (!bus.inspector)        { bus.inspector        = { id: 0, givenName: '', surname: '' }; }
 
   bus.isActive = bus.status === Constant.STATUS_ACTIVE;
-  bus.URL = `#/${ Constant.BUSES_PATHNAME }/${ bus.id }`;
   bus.ownerName = bus.schoolBusOwner.name;
   bus.ownerURL = bus.schoolBusOwner.id ? `#/${ Constant.OWNERS_PATHNAME }/${ bus.schoolBusOwner.id }` : '';
   bus.districtName = bus.district.name;
@@ -299,6 +307,11 @@ function parseSchoolBus(bus) {
   bus.inspectorName = firstLastName(bus.inspector.givenName, bus.inspector.surname);
   bus.isReinspection = bus.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   bus.nextInspectionDateSort = sortableDateTime(bus.nextInspectionDate);
+
+  bus.path = `${ Constant.BUSES_PATHNAME }/${ bus.id }`;
+  bus.URL = `#/${ bus.path }`;
+  bus.historyEntity = History.makeEntity(History.BUS, bus.id, `(VIN ${ bus.vehicleIdentificationNumber })`, bus.URL);
+
   bus.canView = true;
   bus.canEdit = true;
   bus.canDelete = false;
@@ -513,9 +526,12 @@ export function searchCCW(params) {
 function parseInspection(inspection) {
   inspection.inspectorName = inspection.inspector ? firstLastName(inspection.inspector.givenName, inspection.inspector.surname) : '';
   inspection.isReinspection = inspection.inspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
+  inspection.inspectionDateSort = sortableDateTime(inspection.inspectionDate);
+
+  inspection.historyEntity = History.makeEntity(History.INSPECTION, inspection.id, `(${ formatDateTime(inspection.inspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) })`, null);
+
   inspection.canEdit = hoursAgo(inspection.createdDate) <= Constant.INSPECTION_EDIT_GRACE_PERIOD_HOURS;
   inspection.canDelete = hoursAgo(inspection.createdDate) <= Constant.INSPECTION_DELETE_GRACE_PERIOD_HOURS;
-  inspection.inspectionDateSort = sortableDateTime(inspection.inspectionDate);
 }
 
 export function getInspection(id) {
@@ -571,12 +587,17 @@ export function deleteInspection(inspection) {
 
 function parseOwner(owner) {
   owner.isActive = owner.status === Constant.STATUS_ACTIVE;
-  owner.URL = `#/${ Constant.OWNERS_PATHNAME }/${ owner.id }`;
+  owner.busesURL = `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }`;
   owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
   owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
   owner.isOverdue = owner.daysToInspection < 0;
   owner.isReinspection = owner.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   owner.nextInspectionDateSort = sortableDateTime(owner.nextInspectionDate);
+
+  owner.path = `${ Constant.OWNERS_PATHNAME }/${ owner.id }`;
+  owner.URL = `#/${ owner.path }`;
+  owner.historyEntity = History.makeEntity(History.OWNER, owner.id, owner.name, owner.URL);
+
   owner.canView = true;
   owner.canEdit = true;
   owner.canDelete = owner.numberOfBuses === 0 && hoursAgo(owner.dateCreated) <= Constant.OWNER_DELETE_GRACE_PERIOD_HOURS;
