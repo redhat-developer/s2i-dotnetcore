@@ -190,6 +190,10 @@
         type: array
         items:
           $ref: '#/definitions/UserRole'
+      smUserId:
+        type: string
+      smAuthorizationDirectory:
+        type: string
       groupMemberships:
         type: array
         items:
