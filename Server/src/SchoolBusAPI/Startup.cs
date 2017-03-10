@@ -8,6 +8,8 @@
  * 
  */
 
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -54,6 +56,8 @@ namespace SchoolBusAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = GetConnectionString();
+
             services.AddAuthorization();
             services.RegisterPermissionHandler();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -62,7 +66,11 @@ namespace SchoolBusAPI
 
             // Add database context
             // - Pattern should be using Configuration.GetConnectionString("Schoolbus") directly; see GetConnectionString for more details.
-            services.AddDbContext<DbAppContext>(options => options.UseNpgsql(GetConnectionString()));
+            services.AddDbContext<DbAppContext>(options => options.UseNpgsql(connectionString));
+
+            // enable Hangfire
+            PostgreSqlStorage storage = new PostgreSqlStorage(connectionString);
+            services.AddHangfire(x => x.UseStorage(storage));
 
             // allow for large files to be uploaded
             services.Configure<FormOptions>(options =>
@@ -120,18 +128,37 @@ namespace SchoolBusAPI
             loggerFactory.AddDebug();
 
             TryMigrateDatabase(app, loggerFactory);
-            app.UseAuthentication(env);
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseAuthentication(env);            
             app.UseResponseCompression();
             app.UseMvc();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUi();
+
+            // enable Hangfire
+            app.UseHangfireServer();
+            app.UseHangfireDashboard(); // this enables the /hangfire action
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            // this should be set as an environment variable.  
+            // Only enable when doing a new PROD deploy to populate CCW data and link it to the bus data.
+            if (!string.IsNullOrEmpty(Configuration["ENABLE_HANGFIRE_CREATE"]))
+            {
+                SetupHangfireCreateJob(app, loggerFactory);
+            }
+
+            // this should be set as an environment variable
+            if (! string.IsNullOrEmpty (Configuration["ENABLE_HANGFIRE_UPDATE"]))
+            {
+                SetupHangfireUpdateJob(app, loggerFactory);
+            }
+
+            
         }
 
         // TODO:
@@ -171,7 +198,7 @@ namespace SchoolBusAPI
                 msg.AppendLine("The database migration failed!");
                 msg.AppendLine("The database may not be available and the application will not function as expected.");
                 msg.AppendLine("Please ensure a database is available and the connection string is correct.");
-                msg.AppendLine("If you are running in a development environment, ensure your test database and server configuraiotn match the project's default connection string.");
+                msg.AppendLine("If you are running in a development environment, ensure your test database and server configuration match the project's default connection string.");
 
                 log.LogCritical(new EventId(-1, "Database Migration Failed"), e, msg.ToString());
             }
@@ -211,6 +238,70 @@ namespace SchoolBusAPI
             options.UseNpgsql(GetConnectionString());
             DbAppContextFactory dbAppContextFactory = new DbAppContextFactory(null, options.Options);
             return dbAppContextFactory;
+        }
+
+        /// <summary>
+        /// Setup the Hangfire job to populate the CCW Data table.
+        /// Only necessary after a new deploy to PROD with an empty database.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="loggerFactory"></param>
+        private void SetupHangfireCreateJob(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        {
+            ILogger log = loggerFactory.CreateLogger(typeof(Startup));
+            log.LogInformation("Attempting setup of Hangfire Create CCW job ...");
+
+            try
+            {
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    log.LogInformation("Fetching the application's database context ...");
+                    DbAppContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
+
+                    log.LogInformation("Creating Hangfire job for CCW population ...");
+                    // every 15 seconds we see if a CCW record needs to be created for a bus.  We only create one CCW record at a time.
+                    BackgroundJob.Schedule(() => CCWTools.PopulateCCWJob(context, Configuration), TimeSpan.FromSeconds(15));
+                }
+            }
+            catch (Exception e)
+            {
+                StringBuilder msg = new StringBuilder();
+                msg.AppendLine("Failed to setup Hangfire job.");
+                
+                log.LogCritical(new EventId(-1, "Hangfire job setup failed"), e, msg.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Setup the Hangfire job to update the CCW Data table.        
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="loggerFactory"></param>
+
+        private void SetupHangfireUpdateJob(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        {
+            ILogger log = loggerFactory.CreateLogger(typeof(Startup));
+            log.LogInformation("Attempting setup of Hangfire Update CCW job ...");
+
+            try
+            {
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    log.LogInformation("Fetching the application's database context ...");
+                    DbAppContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
+
+                    log.LogInformation("Creating Hangfire job for CCW update ...");
+                    // every 5 minutes we see if a CCW record needs to be updated.  We only update one CCW record at a time.
+                    BackgroundJob.Schedule(() => CCWTools.UpdateCCWJob(context, Configuration), TimeSpan.FromMinutes(5));
+                }
+            }
+            catch (Exception e)
+            {
+                StringBuilder msg = new StringBuilder();
+                msg.AppendLine("Failed to setup Hangfire job.");
+
+                log.LogCritical(new EventId(-1, "Hangfire job setup failed"), e, msg.ToString());
+            }
         }
     }
 }

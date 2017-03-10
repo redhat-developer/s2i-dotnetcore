@@ -577,6 +577,10 @@
                     "value": "/secrets/ccwjurisdictions.json"
                   },
 				  {
+                    "name": "CCWInitializationFile",
+                    "value": "/ccwsecrets/ccw.json"
+                  },
+				  {
 				    "name": "CCW_SERVICE_NAME",
 					"value": "${CCW_NAME}"
 				  },
@@ -619,6 +623,11 @@
                     "name": "secret-volume",
                     "mountPath": "/secrets",                    
                     "readOnly": true
+                  },
+                  {
+                    "name": "ccw-secret-volume",
+                    "mountPath": "/ccwsecrets",                    
+                    "readOnly": true
                   }
                 ]
               }
@@ -635,6 +644,13 @@
                 "secret": {
                   "secretName": "schoolbus-secret"
                 }
+              },
+              {
+                 "name": "ccw-secret-volume",
+                 "secret": {
+                  "secretName": "ccw-secret",
+                  "defaultMode": 420
+                  }
               }
             ]
           }
