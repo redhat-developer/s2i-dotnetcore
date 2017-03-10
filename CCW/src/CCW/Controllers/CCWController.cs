@@ -270,14 +270,13 @@ namespace CCW.Controllers
                 {
                     ccwdata.NSCPolicyStatusDate = vehicle.policyStartDate;
                 }                
-
-                ccwdata.NSCPolicyNumber = vehicle.policyNumber;
-                ccwdata.NSCClientNum = vehicle.nscNumber;
+                
                 if (vehicle.owner != null)
                 {
                     ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;                    
                 }                
                 ccwdata.ICBCLicencePlateNumber = vehicle.policyNumber;
+                ccwdata.NSCPolicyNumber = vehicle.nscNumber;
 
                 ccwdata.DateFetched = DateTime.UtcNow;
 
@@ -290,12 +289,12 @@ namespace CCW.Controllers
                     string organizationNameCode = "LE";
                     try
                     {
-                        ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
+                        ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(ccwdata.NSCPolicyNumber, organizationNameCode, userId, guid, directory);
                         foundNSCData = true;
                         ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
                         ccwdata.NSCCarrierName = clientOrganization.displayName;                        
                         ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
-                        ccwdata.NSCClientNum = clientOrganization.nscInformation.certificationNumber;
+                        ccwdata.NSCClientNum = clientOrganization.nscInformation.certificationNumber;                        
                     }
                     catch (AggregateException ae)
                     {
@@ -325,7 +324,7 @@ namespace CCW.Controllers
                     {
                         try
                         {
-                            ClientIndividual clientIndividual = _service.GetCurrentClientIndividual(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
+                            ClientIndividual clientIndividual = _service.GetCurrentClientIndividual(ccwdata.NSCPolicyNumber, organizationNameCode, userId, guid, directory);
                             foundNSCData = true;
                             ccwdata.NSCCarrierConditions = clientIndividual.nscInformation.carrierStatus;
                             ccwdata.NSCCarrierName = clientIndividual.displayName;
