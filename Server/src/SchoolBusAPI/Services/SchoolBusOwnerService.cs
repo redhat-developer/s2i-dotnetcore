@@ -69,6 +69,14 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns History for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch History for</param>
+        /// <response code="200">OK</response>
+        IActionResult SchoolbusownersIdHistoryGetAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns notes for a particular SchoolBusOwner</remarks>
         /// <param name="id">id of SchoolBusOwner to fetch notes for</param>
         /// <response code="200">OK</response>

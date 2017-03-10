@@ -239,7 +239,7 @@
           schema:
             type: array
             items:
-              $ref: '#/definitions/History'
+              $ref: '#/definitions/HistoryViewModel'
       parameters:
         - name: id
           in: path
@@ -322,6 +322,28 @@
         - name: id
           in: path
           description: id of SchoolBusOwner to fetch attachments for
+          required: true
+          type: integer
+  /schoolbusowners/{id}/history:
+    get:
+      description: Returns History for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/HistoryViewModel'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch History for
           required: true
           type: integer
   /schoolbusowners/{id}/notes:
@@ -903,6 +925,28 @@
           description: OK          
         404:
           description: User not found
+  /users/{id}/history:
+    get:
+      description: Returns History for a particular User
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/HistoryViewModel'
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch History for
+          required: true
+          type: integer
   /users/{id}/roles:
     get:
       description: Returns the roles for a user
@@ -1122,6 +1166,7 @@
           description: id of User to fetch notifications for
           required: true
           type: integer
+  
   /regions/{id}/districts:
     get:
       description: Returns the districts for a specific region
