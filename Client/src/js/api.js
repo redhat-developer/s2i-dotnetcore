@@ -287,12 +287,22 @@ export function deleteFavourite(favourite) {
 // School Buses
 ////////////////////
 
+function parseCCW(ccw) {
+  if (ccw.icbcRebuiltStatus === 'R') {
+    ccw.icbcRebuiltStatus = 'R - Rebuilt';
+  } else if (ccw.icbcRebuiltStatus === 'S') {
+    ccw.icbcRebuiltStatus = 'S - Salvage';
+  }
+}
+
 function parseSchoolBus(bus) {
   if (!bus.schoolBusOwner)   { bus.schoolBusOwner   = { id: 0, name: '' }; }
   if (!bus.district)         { bus.district         = { id: 0, name: '' }; }
   if (!bus.schoolDistrict)   { bus.schoolDistrict   = { id: 0, name: '', shortName: '' }; }
   if (!bus.homeTerminalCity) { bus.homeTerminalCity = { id: 0, name: '' }; }
   if (!bus.inspector)        { bus.inspector        = { id: 0, givenName: '', surname: '' }; }
+
+  if (bus.ccwData) { parseCCW(bus.ccwData); }
 
   bus.isActive = bus.status === Constant.STATUS_ACTIVE;
   bus.ownerName = bus.schoolBusOwner.name;
@@ -395,6 +405,9 @@ export function addSchoolBusCCW(ccw) {
   return new ApiRequest('/ccwdata').post(ccw).then(response => {
     var schoolBusCCW = response || {};
 
+    // Add display fields
+    parseCCW(schoolBusCCW);
+
     store.dispatch({ type: Action.ADD_BUS_CCW, schoolBusCCW: schoolBusCCW });
   });
 }
@@ -402,6 +415,9 @@ export function addSchoolBusCCW(ccw) {
 export function getSchoolBusCCW(schoolBusId) {
   return new ApiRequest(`/schoolbuses/${ schoolBusId }/ccwdata`).get().then(response => {
     var schoolBusCCW = response || {};
+
+    // Add display fields
+    parseCCW(schoolBusCCW);
 
     store.dispatch({ type: Action.UPDATE_BUS_CCW, schoolBusCCW: schoolBusCCW });
   });
@@ -514,6 +530,9 @@ export function searchCCW(params) {
 
   return new ApiRequest('/ccwdata/fetch').get(params).then(response => {
     var ccw = response || {};
+
+    // Add display fields
+    parseCCW(ccw);
 
     store.dispatch({ type: Action.UPDATE_BUS_CCW, schoolBusCCW: ccw });
   });
