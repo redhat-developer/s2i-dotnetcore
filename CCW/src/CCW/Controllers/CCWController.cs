@@ -275,12 +275,14 @@ namespace CCW.Controllers
                     ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;                    
                 }                
                 ccwdata.ICBCLicencePlateNumber = vehicle.policyNumber;
+                // these fields are the same.
                 ccwdata.NSCPolicyNumber = vehicle.nscNumber;
+                ccwdata.NSCClientNum = ccwdata.NSCPolicyNumber;
 
                 ccwdata.DateFetched = DateTime.UtcNow;
 
                 // get the nsc client organization data.
-
+                
                 bool foundNSCData = false;
 
                 if (!string.IsNullOrEmpty(ccwdata.NSCPolicyNumber)) 
@@ -293,8 +295,6 @@ namespace CCW.Controllers
                         ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
                         ccwdata.NSCCarrierName = clientOrganization.displayName;                        
                         ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
-                        ccwdata.NSCClientNum = clientOrganization.clientNumber;
-                            // was clientOrganization.nscInformation.certificationNumber however that field has no data.
                     }
                     catch (AggregateException ae)
                     {
@@ -329,9 +329,6 @@ namespace CCW.Controllers
                             ccwdata.NSCCarrierConditions = clientIndividual.nscInformation.carrierStatus;
                             ccwdata.NSCCarrierName = clientIndividual.displayName;
                             ccwdata.NSCCarrierSafetyRating = clientIndividual.nscInformation.safetyRating;
-                            ccwdata.NSCClientNum = clientIndividual.clientNumber;
-
-                            // was clientIndividual.nscInformation.certificationNumber however that field has no data.
                         }
                         catch (AggregateException ae)
                         {
