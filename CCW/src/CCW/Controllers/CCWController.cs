@@ -137,7 +137,6 @@ namespace CCW.Controllers
         [Route("GetCCW")]
         public virtual IActionResult GetCCW([FromQuery] string regi, [FromQuery] string plate, [FromQuery] string vin)
         {                        
-
             // check we have the right headers.
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(guid) || string.IsNullOrEmpty(directory))
             {
@@ -294,7 +293,8 @@ namespace CCW.Controllers
                         ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
                         ccwdata.NSCCarrierName = clientOrganization.displayName;                        
                         ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
-                        ccwdata.NSCClientNum = clientOrganization.nscInformation.certificationNumber;                        
+                        ccwdata.NSCClientNum = clientOrganization.clientNumber;
+                            // was clientOrganization.nscInformation.certificationNumber however that field has no data.
                     }
                     catch (AggregateException ae)
                     {
@@ -329,7 +329,9 @@ namespace CCW.Controllers
                             ccwdata.NSCCarrierConditions = clientIndividual.nscInformation.carrierStatus;
                             ccwdata.NSCCarrierName = clientIndividual.displayName;
                             ccwdata.NSCCarrierSafetyRating = clientIndividual.nscInformation.safetyRating;
-                            ccwdata.NSCClientNum = clientIndividual.nscInformation.certificationNumber;
+                            ccwdata.NSCClientNum = clientIndividual.clientNumber;
+
+                            // was clientIndividual.nscInformation.certificationNumber however that field has no data.
                         }
                         catch (AggregateException ae)
                         {
