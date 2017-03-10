@@ -12,7 +12,6 @@ const DEFAULT_MODELS = {
   schoolBus: {},
   schoolBusAttachments: {},
   schoolBusCCW: {},
-  schoolBusHistories: {},
   schoolBusInspections: {},
   schoolBusNotes: {},
 
@@ -24,6 +23,8 @@ const DEFAULT_MODELS = {
   roles: {},
   role: {},
   rolePermissions: {},
+
+  histories: {},
 };
 
 export default function modelsReducer(state = DEFAULT_MODELS, action) {
@@ -80,7 +81,7 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
       return { ...state, schoolBusCCW: action.schoolBusCCW };
 
     case Action.UPDATE_BUS_HISTORIES:
-      return { ...state, schoolBusHistories: action.schoolBusHistories };
+      return { ...state, histories: action.schoolBusHistories };
 
     case Action.UPDATE_BUS_INSPECTIONS:
       return { ...state, schoolBusInspections: action.schoolBusInspections };

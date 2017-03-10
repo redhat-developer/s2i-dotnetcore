@@ -110,7 +110,7 @@ var UsersDetail = React.createClass({
         if (this.state.isNew) {
           // Reload the screen using new user id
           this.props.router.push({
-            pathname: `${ Constant.USERS_PATHNAME }/${ user.id }`,
+            pathname: user.path,
           });
         }
       });

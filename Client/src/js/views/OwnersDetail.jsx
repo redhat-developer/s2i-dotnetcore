@@ -14,6 +14,7 @@ import SchoolBusesAddDialog from './dialogs/SchoolBusesAddDialog.jsx';
 import * as Action from '../actionTypes';
 import * as Api from '../api';
 import * as Constant from '../constants';
+import * as History from '../history';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
@@ -45,6 +46,8 @@ var OwnersDetail = React.createClass({
       showSchoolBusDialog: false,
 
       contact: {},
+
+      history: null,
 
       isNew: this.props.params.ownerId === '0',
 
@@ -114,6 +117,15 @@ var OwnersDetail = React.createClass({
   saveContact() {
   },
 
+  showHistory() {
+    var logged = History.log(History.OWNER, this.props.owner.id, History.OWNER_TEST, this.props.owner.historyEntity);
+
+    this.setState({ history: History.renderEvent(logged) });
+  },
+
+  print() {
+  },
+
   render: function() {
     var owner = this.props.owner;
 
@@ -134,11 +146,14 @@ var OwnersDetail = React.createClass({
             { owner.nextInspectionDate &&
               <span className={ `label label-${inspectionStyle}` } dangerouslySetInnerHTML={{ __html: inspectionNotice }}></span>
             }
+            <Unimplemented>
+              <Button title="History" onClick={ this.showHistory }>History</Button>
+            </Unimplemented>
           </Col>
           <Col md={2}>
             <div className="pull-right">
               <Unimplemented>
-                <Button><Glyphicon glyph="print" title="Print" /></Button>
+                <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
               </Unimplemented>
               <LinkContainer to={{ pathname: Constant.OWNERS_PATHNAME }}>
                 <Button title="Return to List"><Glyphicon glyph="arrow-left" /> Return to List</Button>
@@ -146,7 +161,7 @@ var OwnersDetail = React.createClass({
             </div>
           </Col>
         </Row>
-
+        <Row>{ this.state.history }</Row>
         {(() => {
           if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
@@ -172,7 +187,7 @@ var OwnersDetail = React.createClass({
 
                 return <div id="owners-data">
                   <Row>
-                    <ColDisplay md={12} label="Number of School Buses"><a href={ `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a></ColDisplay>
+                    <ColDisplay md={12} label="Number of School Buses"><a href={ owner.busesURL }>{ owner.numberOfBuses }</a></ColDisplay>
                   </Row>
                   <Row>
                     <ColDisplay md={12} label="Owner Added On">{ formatDateTime(owner.dateCreated, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</ColDisplay>

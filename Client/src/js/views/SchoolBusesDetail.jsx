@@ -8,13 +8,13 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
 
+import HistoryListDialog from './dialogs/HistoryListDialog.jsx';
 import InspectionEditDialog from './dialogs/InspectionEditDialog.jsx';
 import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
 import * as Constant from '../constants';
-import * as History from '../history';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
@@ -51,11 +51,10 @@ var SchoolBusesDetail = React.createClass({
       workingOnPermit: false,
 
       showEditDialog: false,
+      showHistoryDialog: false,
       showInspectionDialog: false,
 
       inspection: {},
-
-      history: null,
 
       isNew: this.props.params.schoolBusId === '0',
 
@@ -151,7 +150,7 @@ var SchoolBusesDetail = React.createClass({
       Api.addSchoolBus(schoolBus).then(() => {
         // Reload the screen with new school bus id
         this.props.router.push({
-          pathname: `${ Constant.BUSES_PATHNAME }/${ this.props.schoolBus.id }`,
+          pathname: this.props.schoolBus.path,
         });
       });
     }
@@ -164,7 +163,7 @@ var SchoolBusesDetail = React.createClass({
     if (this.state.isNew) {
       // Go back to owner page if cancelling new school bus
       this.props.router.push({
-        pathname: `${ Constant.OWNERS_PATHNAME }/${ this.props.owner.id }`,
+        pathname: this.props.owner.path,
       });
     }
   },
@@ -224,16 +223,12 @@ var SchoolBusesDetail = React.createClass({
   showAttachments() {
   },
 
-  showHistory() {
-    var logged = History.log(Constant.BUSES_PATHNAME, this.props.schoolBus.id, {
-      text: 'Testing School Bus {0} history.',
-      fields: [{
-        text: `(VIN ${ this.props.schoolBus.vehicleIdentificationNumber })`,
-        path: `${ Constant.BUSES_PATHNAME }/${ this.props.schoolBus.id }`,
-      }],
-    });
+  showHistoryDialog() {
+    this.setState({ showHistoryDialog: true });
+  },
 
-    this.setState({ history: History.renderEvent(logged) });
+  closeHistoryDialog() {
+    this.setState({ showHistoryDialog: false });
   },
 
   print() {
@@ -283,7 +278,7 @@ var SchoolBusesDetail = React.createClass({
               <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ bus.attachments ? bus.attachments.length : 0 })</Button>
             </Unimplemented>
             <Unimplemented>
-              <Button title="History" onClick={ this.showHistory }>History</Button>
+              <Button title="History" onClick={ this.showHistoryDialog }>History</Button>
             </Unimplemented>
           </Col>
           <Col md={2}>
@@ -297,7 +292,7 @@ var SchoolBusesDetail = React.createClass({
             </div>
           </Col>
         </Row>
-        <Row>{ this.state.history }</Row>
+
         {(() => {
           if (this.state.loadingSchoolBus) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
@@ -409,10 +404,10 @@ var SchoolBusesDetail = React.createClass({
                 }
 
                 var headers = [
-                  { field: 'inspectionDateSort',   title: 'Date' },
-                  { field: 'inspectionTypeCode',   title: 'Type'            },
-                  { field: 'inspectionResultCode', title: 'Status'          },
-                  { field: 'inspectorName',        title: 'Inspector'       },
+                  { field: 'inspectionDateSort',   title: 'Date'      },
+                  { field: 'inspectionTypeCode',   title: 'Type'      },
+                  { field: 'inspectionResultCode', title: 'Status'    },
+                  { field: 'inspectorName',        title: 'Inspector' },
                   { field: 'addInspection',        title: 'Add Inspection', style: { textAlign: 'right'  },
                     node: addInspectionButton,
                   },
@@ -576,6 +571,9 @@ var SchoolBusesDetail = React.createClass({
       </div>
       { this.state.showEditDialog &&
         <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.onSaveEdit } onClose= { this.onCloseEdit } />
+      }
+      { this.state.showHistoryDialog &&
+        <HistoryListDialog show={ this.state.showHistoryDialog } onClose= { this.closeHistoryDialog } />
       }
       { this.state.showInspectionDialog &&
         <InspectionEditDialog show={ this.state.showInspectionDialog } inspection={ this.state.inspection } onSave={ this.saveInspection } onClose= { this.closeInspectionDialog } />

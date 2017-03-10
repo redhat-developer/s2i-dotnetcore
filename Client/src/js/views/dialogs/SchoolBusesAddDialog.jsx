@@ -101,7 +101,7 @@ var SchoolBusAddDialog = React.createClass({
   },
 
   render() {
-    return <ModalDialog id="school-buses-add" show={ this.props.show } onClose={ this.props.onClose }
+    return <ModalDialog id="school-buses-add" show={ this.props.show } onClose={ this.props.onClose } backdrop="static"
       title={ <strong>Add School Bus</strong> }
       footer={
         this.state.ccwFound &&

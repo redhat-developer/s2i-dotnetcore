@@ -196,7 +196,7 @@ var UserManagement = React.createClass({
                   <td style={{ textAlign: 'right' }}>
                     <ButtonGroup>
                       <DeleteButton name="User" hide={ !user.canDelete } onConfirm={ this.delete.bind(this, user) }/>
-                      <EditButton name="User" hide={ !user.canEdit } view pathname={ `${ Constant.USERS_PATHNAME }/${ user.id }` }/>
+                      <EditButton name="User" hide={ !user.canEdit } view pathname={ user.path }/>
                     </ButtonGroup>
                   </td>
                 </tr>;

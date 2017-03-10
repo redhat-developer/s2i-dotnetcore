@@ -149,7 +149,7 @@ var Roles = React.createClass({
                   <td style={{ textAlign: 'right' }}>
                     <ButtonGroup>
                       <DeleteButton name="Role" hide={ !role.canDelete } onConfirm={ this.delete.bind(this, role) }/>
-                      <EditButton name="Role" hide={ !role.canEdit } view pathname={ `${ Constant.ROLES_PATHNAME }/${ role.id }` }/>
+                      <EditButton name="Role" hide={ !role.canEdit } view pathname={ role.path }/>
                     </ButtonGroup>
                   </td>
                 </tr>;
