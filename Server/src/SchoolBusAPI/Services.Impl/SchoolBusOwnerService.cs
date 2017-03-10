@@ -222,6 +222,22 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Returns History for a particular SchoolBusOwner</remarks>
+        /// <param name="id">id of SchoolBusOwner to fetch History for</param>
+        /// <response code="200">OK</response>
+        public virtual IActionResult SchoolbusownersIdHistoryGetAsync(int id)
+        {
+            // stub
+            HistoryViewModel[] result = new HistoryViewModel[0];
+            return new ObjectResult(result);
+        }
+
+
+
         /// <summary>
         /// 
         /// </summary>

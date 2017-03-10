@@ -135,7 +135,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/schoolbuses/{id}/history")]
         [SwaggerOperation("SchoolbusesIdHistoryGet")]
-        [SwaggerResponse(200, type: typeof(List<History>))]
+        [SwaggerResponse(200, type: typeof(List<HistoryViewModel>))]
         public virtual IActionResult SchoolbusesIdHistoryGet([FromRoute]int id)
         {
             return this._service.SchoolbusesIdHistoryGetAsync(id);

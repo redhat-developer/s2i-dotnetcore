@@ -2821,7 +2821,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/History'
+              $ref: '#/definitions/HistoryViewModel'
       parameters:
         - name: id
           in: path
@@ -2904,6 +2904,28 @@ paths:
         - name: id
           in: path
           description: id of SchoolBusOwner to fetch attachments for
+          required: true
+          type: integer
+  /schoolbusowners/{id}/history:
+    get:
+      description: Returns History for a particular SchoolBusOwner
+      tags:
+        - SchoolBusOwner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/HistoryViewModel'
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to fetch History for
           required: true
           type: integer
   /schoolbusowners/{id}/notes:
@@ -3485,6 +3507,28 @@ paths:
           description: OK          
         404:
           description: User not found
+  /users/{id}/history:
+    get:
+      description: Returns History for a particular User
+      tags:
+        - User
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/HistoryViewModel'
+      parameters:
+        - name: id
+          in: path
+          description: id of User to fetch History for
+          required: true
+          type: integer
   /users/{id}/roles:
     get:
       description: Returns the roles for a user
@@ -3704,6 +3748,7 @@ paths:
           description: id of User to fetch notifications for
           required: true
           type: integer
+  
   /regions/{id}/districts:
     get:
       description: Returns the districts for a specific region
@@ -4749,6 +4794,31 @@ definitions:
         type: string
         maxLength: 255
         description: A description of the group that is presented to the user when they are setting a user into a group.
+  HistoryViewModel:
+    type: object
+    x-codegen-viewmodel: true
+    required:
+      - id      
+    properties:
+      id:
+        format: int32
+        type: integer
+        uniqueItems: true
+        description: A system-generated unique identifier for a History
+      historyText:
+        type: string
+        maxLength: 2048
+        description: The text of the history entry tracked against the related entity.
+      lastUpdateUserid:
+        type: string
+        description: Audit information - SM User Id for the User who most recently updated the record.
+      lastUpdateTimestamp:
+        type: string
+        description: Audit information - Timestamp for record modification       
+      affectedEntityId:
+        format: int32
+        type: integer
+        description: The primary key of the affected record        
   AttachmentViewModel:
     type: object
     x-codegen-viewmodel: true

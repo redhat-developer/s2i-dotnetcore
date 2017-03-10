@@ -137,6 +137,14 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Returns History for a particular User</remarks>
+        /// <param name="id">id of User to fetch History for</param>
+        /// <response code="200">OK</response>
+        IActionResult UsersIdHistoryGetAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns a user&#39;s notifications</remarks>
         /// <param name="id">id of User to fetch notifications for</param>
         /// <response code="200">OK</response>
