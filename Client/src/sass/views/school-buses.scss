@@ -245,6 +245,10 @@
 }
 
 #inspection-edit {
+  .modal-dialog {
+    width: 650px;;
+  }
+
   #notes {
     height: 106px;
   }

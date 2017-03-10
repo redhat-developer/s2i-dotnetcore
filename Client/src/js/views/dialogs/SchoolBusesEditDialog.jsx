@@ -100,6 +100,7 @@ var SchoolBusesEditDialog = React.createClass({
       schoolBusSeatingCapacity: this.props.schoolBus.schoolBusSeatingCapacity || 0,
       mobilityAidCapacity: this.props.schoolBus.mobilityAidCapacity || 0,
 
+      schoolDistrictIdError: false,
       schoolBusSeatingCapacityError: false,
       mobilityAidCapacityError: false,
     };
@@ -190,11 +191,17 @@ var SchoolBusesEditDialog = React.createClass({
 
   isValid() {
     this.setState({
+      schoolDistrictIdError: false,
       schoolBusSeatingCapacityError: false,
       mobilityAidCapacityError: false,
     });
 
     var valid = true;
+
+    if (!this.state.schoolDistrictId) {
+      this.setState({ schoolDistrictIdError: 'School District is required' });
+      valid = false;
+    }
 
     if (isBlank(this.state.schoolBusSeatingCapacity)) {
       this.setState({ schoolBusSeatingCapacityError: 'Seating capacity is required' });
@@ -372,10 +379,11 @@ var SchoolBusesEditDialog = React.createClass({
             </Row>
             <Row>
               <Col md={3}>
-                <FormGroup controlId="schoolDistrictId">
-                  <ControlLabel>School District</ControlLabel>
+                <FormGroup controlId="schoolDistrictId" validationState={ this.state.schoolDistrictIdError ? 'error' : null }>
+                  <ControlLabel>School District <sup>*</sup></ControlLabel>
                   <FilterDropdown id="schoolDistrictId" placeholder="None" blankLine fieldName="shortName"
                     items={ schoolDistricts } selectedId={ this.state.schoolDistrictId } updateState={ this.updateState } />
+                  <HelpBlock>{ this.state.schoolDistrictIdError }</HelpBlock>
                 </FormGroup>
               </Col>
               <Col md={2}>
