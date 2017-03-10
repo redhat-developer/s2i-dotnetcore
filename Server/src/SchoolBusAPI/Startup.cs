@@ -66,11 +66,7 @@ namespace SchoolBusAPI
 
             // Add database context
             // - Pattern should be using Configuration.GetConnectionString("Schoolbus") directly; see GetConnectionString for more details.
-            services.AddDbContext<DbAppContext>(options => options.UseNpgsql(connectionString));
-
-            // enable Hangfire
-            PostgreSqlStorage storage = new PostgreSqlStorage(connectionString);
-            services.AddHangfire(x => x.UseStorage(storage));
+            services.AddDbContext<DbAppContext>(options => options.UseNpgsql(connectionString));           
 
             // allow for large files to be uploaded
             services.Configure<FormOptions>(options =>
@@ -91,6 +87,10 @@ namespace SchoolBusAPI
                         // ReferenceLoopHandling is set to Ignore to prevent JSON parser issues with the user / roles model.
                         opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                     });
+
+            // enable Hangfire
+            PostgreSqlStorage storage = new PostgreSqlStorage(connectionString);
+            services.AddHangfire(x => x.UseStorage(storage));
 
             // Configure Swagger
             services.AddSwaggerGen();
@@ -137,14 +137,17 @@ namespace SchoolBusAPI
             app.UseSwagger();
             app.UseSwaggerUi();
 
-            // enable Hangfire
-            app.UseHangfireServer();
-            app.UseHangfireDashboard(); // this enables the /hangfire action
+            
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // enable Hangfire
+            app.UseHangfireServer();
+            app.UseHangfireDashboard(); // this enables the /hangfire action
+
             // this should be set as an environment variable.  
             // Only enable when doing a new PROD deploy to populate CCW data and link it to the bus data.
             if (!string.IsNullOrEmpty(Configuration["ENABLE_HANGFIRE_CREATE"]))
