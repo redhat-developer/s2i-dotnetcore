@@ -7,7 +7,6 @@ import { Form, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 import _ from 'lodash';
 import Moment from 'moment';
-import Promise from 'bluebird';
 
 import * as Api from '../../api';
 import * as Constant from '../../constants';
@@ -26,6 +25,7 @@ import { isBlank } from '../../utils/string';
 
 const RESULT_PASSED = 'Passed';
 const RESULT_FAILED = 'Failed';
+const RESULT_OUT_OF_SERVICE = 'Out of Service';
 
 var InspectionEditDialog = React.createClass({
   propTypes: {
@@ -61,10 +61,7 @@ var InspectionEditDialog = React.createClass({
 
   componentDidMount() {
     this.setState({ loading: true });
-
-    var inspectorsPromise = Api.getInspectors();
-
-    Promise.all([inspectorsPromise]).then(() => {
+    Api.getInspectors().finally(() => {
       this.setState({ loading: false });
     });
   },
@@ -79,17 +76,18 @@ var InspectionEditDialog = React.createClass({
       // Remove time elements from date
       inspectionDate.startOf('d');
       var nextDate = '';
-      if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION) {
+      if (this.state.inspectionResultCode === RESULT_FAILED) {
         // 30 days from date
         nextDate = businessDayOnOrBefore(inspectionDate.add(30, 'd'));
-      } else if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_ANNUAL) {
+      } else if (this.state.inspectionResultCode === RESULT_PASSED) {
         // A year from date
         nextDate = businessDayOnOrBefore(inspectionDate.add(1, 'y'));
+      } else if (this.state.inspectionResultCode === RESULT_OUT_OF_SERVICE) {
+        // Clear the date
+        nextDate = '';
       }
 
-      this.updateState({
-        nextInspectionDate: nextDate,
-      });
+      this.updateState({ nextInspectionDate: nextDate });
     }
   },
 
@@ -102,7 +100,7 @@ var InspectionEditDialog = React.createClass({
   resultCodeChanged(resultCode) {
     var typeCode = '';
 
-    if (resultCode === RESULT_FAILED) {
+    if (resultCode === RESULT_FAILED || resultCode === RESULT_OUT_OF_SERVICE) {
       typeCode = Constant.INSPECTION_TYPE_REINSPECTION;
     } else if (resultCode === RESULT_PASSED) {
       typeCode = Constant.INSPECTION_TYPE_ANNUAL;
@@ -227,14 +225,14 @@ var InspectionEditDialog = React.createClass({
             <Row>
               <Col md={4}>
                 <FormGroup validationState={ this.state.inspectionDateError ? 'error' : null }>
-                  <ControlLabel>Date</ControlLabel>
+                  <ControlLabel>Date <sup>*</sup></ControlLabel>
                   <DateControl id="inspectionDate" date={ this.state.inspectionDate } disabled={ isReadOnly } onChange={ this.inspectionDateChanged } placeholder="mm/dd/yyyy" title="inspection date"/>
                   <HelpBlock>{ this.state.inspectionDateError }</HelpBlock>
                 </FormGroup>
               </Col>
               <Col md={5}>
                 <FormGroup controlId="inspectorId" validationState={ this.state.inspectorIdError ? 'error' : null }>
-                  <ControlLabel>Inspector</ControlLabel>
+                  <ControlLabel>Inspector <sup>*</sup></ControlLabel>
                   <FilterDropdown id="inspectorId" placeholder="None" blankLine disabled={ isReadOnly }
                     items={ inspectors } selectedId={ this.state.inspectorId } updateState={ this.updateState } />
                   <HelpBlock>{ this.state.inspectorIdError }</HelpBlock>
@@ -242,9 +240,9 @@ var InspectionEditDialog = React.createClass({
               </Col>
               <Col md={3}>
                 <FormGroup controlId="inspectionResultCode" validationState={ this.state.inspectionResultCodeError ? 'error' : null }>
-                  <ControlLabel>Result</ControlLabel>
+                  <ControlLabel>Result <sup>*</sup></ControlLabel>
                   <DropdownControl id="inspectionResultCode" title={ this.state.inspectionResultCode } disabled={ isReadOnly } onSelect={ this.resultCodeChanged } placeholder="None" blankLine
-                    items={[ RESULT_PASSED, RESULT_FAILED ]}
+                    items={[ RESULT_PASSED, RESULT_FAILED, RESULT_OUT_OF_SERVICE ]}
                   />
                   <HelpBlock>{ this.state.inspectionResultCodeError }</HelpBlock>
                 </FormGroup>
@@ -253,7 +251,7 @@ var InspectionEditDialog = React.createClass({
             <Row>
               <Col md={4}>
                 <FormGroup validationState={ this.state.nextInspectionDateError ? 'error' : null }>
-                  <ControlLabel>Next Inspection Date</ControlLabel>
+                  <ControlLabel>Next Inspection Date <sup>*</sup></ControlLabel>
                   <DateControl id="nextInspectionDate" date={ this.state.nextInspectionDate } disabled={ isReadOnly } updateState={ this.updateState } placeholder="mm/dd/yyyy" title="next inspection date"/>
                   <HelpBlock>{ this.state.nextInspectionDateError }</HelpBlock>
                 </FormGroup>
