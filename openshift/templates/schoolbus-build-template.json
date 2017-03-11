@@ -141,6 +141,29 @@
       },
       "status": {}
     },
+	{
+      "kind": "ImageStream",
+      "apiVersion": "v1",
+      "metadata":
+      {
+        "name": "${BACKUP_NAME}",
+        "generation": 1,
+        "creationTimestamp": null
+      },
+      "spec":
+      {
+        "tags": [
+          {
+            "name": "${DEPLOYMENT_TYPE}",
+            "annotations": null,
+            "generation": null,
+            "importPolicy": {}
+          }
+
+        ]
+      },
+      "status": {}
+    },
     {
       "kind": "ImageStream",
       "apiVersion": "v1",
@@ -457,6 +480,62 @@
             "kind": "ImageStreamTag",
             "namespace": "tran-schoolbus-tools",
             "name": "${CLIENT_NAME}:${DEPLOYMENT_TYPE}"
+          }
+        },
+        "resources": {},
+        "postCommit": {},
+        "nodeSelector": null
+      },
+      "status":
+      {
+        "lastVersion": 0
+      }
+    },
+	    {
+      "kind": "BuildConfig",
+      "apiVersion": "v1",
+      "metadata":
+      {
+        "name": "${BACKUP_NAME}",
+        "creationTimestamp": null,
+        "labels":
+        {
+          "app": "${BACKUP_NAME}"
+        }
+      },
+      "spec":
+      {
+        "triggers": [
+          {
+            "type": "ImageChange",
+            "imageChange": {}
+          },
+          {
+            "type": "ConfigChange"
+          }
+        ],
+        "runPolicy": "Serial",
+        "source":
+        {
+          "type": "Git",
+          "git":
+          {
+            "uri": "${SRC_REPO}",
+			"ref": "${GIT_REFERENCE}"			
+          },
+          "contextDir": "/Backup"
+        },
+        "strategy":
+        {
+          "type": "Docker"          
+        },
+        "output":
+        {
+          "to":
+          {
+            "kind": "ImageStreamTag",
+            "namespace": "tran-schoolbus-tools",
+            "name": "${BACKUP_NAME}:${DEPLOYMENT_TYPE}"
           }
         },
         "resources": {},
@@ -900,6 +979,13 @@
       "description": "Optional branch, tag, or commit.",
       "required": true,
       "value": "master"
+    },
+    {
+      "name": "BACKUP_NAME",
+      "displayName": "Backup Server Name",
+      "description": "Name for the object that will perform database backups",
+      "required": true,
+      "value": "backup"
     },
     {
       "name": "EDITOR_NAME",

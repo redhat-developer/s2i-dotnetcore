@@ -4,11 +4,7 @@ FROM openshift/base-centos7
 # install PostgreSQL client programs
 RUN yum -y install postgresql
 
-# install cron
-RUN yum -y install cronie
-CMD /usr/sbin/crond 
 
-# setup the SQL backup process
 
 
 
