@@ -20,13 +20,14 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace SchoolBusAPI.Services.Impl
 { 
     /// <summary>
     /// 
     /// </summary>
-    public class InspectionService : IInspectionService
+    public class InspectionService : ServiceBase, IInspectionService
     {
 
         private readonly DbAppContext _context;
@@ -34,15 +35,15 @@ namespace SchoolBusAPI.Services.Impl
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public InspectionService (DbAppContext context)
+        public InspectionService(IHttpContextAccessor httpContextAccessor, DbAppContext context) : base(httpContextAccessor, context)
         {
-            _context = context;
+            _context = context;            
         }
-	
+
         /// <summary>
         /// 
         /// </summary>
-        
+
         /// <param name="body"></param>
         /// <response code="201">Inspections created</response>
 
@@ -160,6 +161,11 @@ namespace SchoolBusAPI.Services.Impl
                     }
 
                     _context.Inspections.Remove(item);
+
+
+                    // add a history record to the associated schoolbus.                
+                    AddHistory(item, "Inspection result <<" + item.InspectionResultCode + ":" + item.Id + ">> removed.");
+
                     // Save the changes
                     _context.SaveChanges();
                     return new ObjectResult(item);
@@ -254,7 +260,9 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.Inspections.Any(a => a.Id == id);
             if (exists && id == item.Id)
             {
-                _context.Inspections.Update(item);
+                _context.Inspections.Update(item);                
+                // add a history record to the associated schoolbus.                
+                AddHistory(item, "Inspection result <<" + item.InspectionResultCode + ":" + item.Id + ">> changed.");
                 // Save the changes
                 _context.SaveChanges();
                 return new ObjectResult(item);
@@ -265,6 +273,24 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
+        // Adds a history entry to the related school bus
+        public void AddHistory (Inspection item, string text)
+        {
+            if (item.SchoolBus != null)
+            {
+                int schoolbus_id = item.SchoolBus.Id;
+
+                SchoolBus schoolBus = _context.SchoolBuss.Include(x => x.History).FirstOrDefault (x => x.Id == schoolbus_id);
+                if (schoolBus != null)
+                {
+                    schoolBus.AddHistory(text, GetCurrentSmUserId());
+                    _context.SchoolBuss.Update(schoolBus);
+                }                
+            }
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -327,6 +353,9 @@ namespace SchoolBusAPI.Services.Impl
                     item.CreatedDate = DateTime.UtcNow;
                     _context.Inspections.Add(item);
                 }
+                _context.SaveChanges();
+                // add a history record to the associated schoolbus.                
+                AddHistory(item, "Inspection result <<" + item.InspectionResultCode + ":" + item.Id + ">> added.");
 
                 _context.SaveChanges();
                 return new ObjectResult(item);

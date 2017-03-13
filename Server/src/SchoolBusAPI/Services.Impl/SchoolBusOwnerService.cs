@@ -229,14 +229,41 @@ namespace SchoolBusAPI.Services.Impl
         /// <remarks>Returns History for a particular SchoolBusOwner</remarks>
         /// <param name="id">id of SchoolBusOwner to fetch History for</param>
         /// <response code="200">OK</response>
-        public virtual IActionResult SchoolbusownersIdHistoryGetAsync(int id)
+        public virtual IActionResult SchoolbusownersIdHistoryGetAsync(int id, int? offset, int? limit)
         {
-            // stub
-            HistoryViewModel[] result = new HistoryViewModel[0];
-            return new ObjectResult(result);
+            bool exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
+            {
+                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners
+                    .Include(x => x.History)
+                    .First(a => a.Id == id);
+
+                List<History> data = schoolBusOwner.History.OrderByDescending(y => y.LastUpdateTimestamp).ToList();
+
+                if (offset == null)
+                {
+                    offset = 0;
+                }
+                if (limit == null)
+                {
+                    limit = data.Count() - offset;
+                }
+                List<HistoryViewModel> result = new List<HistoryViewModel>();
+
+                for (int i = (int)offset; i < data.Count() && i < offset + limit; i++)
+                {
+                    result.Add(data[i].ToViewModel(id));
+                }
+
+                return new ObjectResult(result);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
+
         }
-
-
 
         /// <summary>
         /// 

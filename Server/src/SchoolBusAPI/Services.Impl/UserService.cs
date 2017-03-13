@@ -529,19 +529,7 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(400);
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns History for a particular User</remarks>
-        /// <param name="id">id of User to fetch History for</param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult UsersIdHistoryGetAsync(int id)
-        {
-            // stub
-            HistoryViewModel[] result = new HistoryViewModel[0];
-            return new ObjectResult(result);
-        }
+               
 
         /// <summary>
         /// 

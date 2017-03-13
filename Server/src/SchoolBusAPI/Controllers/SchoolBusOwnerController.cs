@@ -115,14 +115,16 @@ namespace SchoolBusAPI.Controllers
         /// </summary>
         /// <remarks>Returns History for a particular SchoolBusOwner</remarks>
         /// <param name="id">id of SchoolBusOwner to fetch History for</param>
+        /// <param name="offset">offset for records that are returned</param>
+        /// <param name="limit">limits the number of records returned.</param>
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusowners/{id}/history")]
         [SwaggerOperation("SchoolbusownersIdHistoryGet")]
         [SwaggerResponse(200, type: typeof(List<HistoryViewModel>))]
-        public virtual IActionResult SchoolbusownersIdHistoryGet([FromRoute]int id)
+        public virtual IActionResult SchoolbusownersIdHistoryGet([FromRoute]int id, [FromQuery]int? offset, [FromQuery]int? limit)
         {
-            return this._service.SchoolbusownersIdHistoryGetAsync(id);
+            return this._service.SchoolbusownersIdHistoryGetAsync(id, offset, limit);
         }
 
         /// <summary>

@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using SchoolBusCommon;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
@@ -176,6 +177,110 @@ namespace SchoolBusAPI.Models
             return result;
         }
 
+        bool FieldHasChanged (EntityEntry entry, string fieldName)
+        {
+            bool result = false;
+
+            // first check that the property is there.
+
+            var property = entry.Metadata.FindProperty(fieldName);
+            if (property != null)
+            {
+                var oldValue = entry.OriginalValues[fieldName];
+                var newValue = entry.CurrentValues[fieldName];
+                if (property.ClrType == typeof (int))
+                {
+                    result = oldValue != newValue;
+                }
+                else
+                {
+                    result = !oldValue.Equals(newValue);
+                }
+                
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Adds the SchoolBus specific history entries
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <param name="smUserId"></param>
+        private void AddSchoolBusHistory(EntityEntry entry, string smUserId)
+        {
+            var schoolBus = (SchoolBus)entry.Entity;
+            
+
+            if (entry.State == EntityState.Added)
+            {
+                string ownerName = "Unknown Owner";
+                int ownerId = -1;
+                if (schoolBus.SchoolBusOwner != null)
+                {
+                    ownerName = schoolBus.SchoolBusOwner.Name;
+                    ownerId = schoolBus.SchoolBusOwner.Id;
+                }
+                schoolBus.AddHistory("School Bus <<VIN " + schoolBus.VehicleIdentificationNumber + ":" + schoolBus.Id + ">> owned by <<" + ownerName + ":" + ownerId + ">> was added to the system.", smUserId);                               
+            }
+            else // update
+            {
+                string fieldName = "Status";
+                if (FieldHasChanged(entry, fieldName))
+                {
+                    string value = (string) entry.CurrentValues[fieldName];
+                    schoolBus.AddHistory("The status of School Bus <<VIN " + schoolBus.VehicleIdentificationNumber + ":" + schoolBus.Id + ">> was changed to " + value, smUserId);                    
+                }
+
+                fieldName = "PermitNumber";
+                if (FieldHasChanged(entry, fieldName))
+                {
+                    int value = (int)entry.CurrentValues[fieldName];
+                    schoolBus.AddHistory("The permit number for School Bus <<VIN " + schoolBus.VehicleIdentificationNumber + ":" + schoolBus.Id + ">> was changed to " + value, smUserId);                    
+                }
+
+                fieldName = "SchoolBusOwner";
+                if (FieldHasChanged(entry, fieldName))
+                {
+                    string ownerName = "Unknown Owner";
+                    int ownerId = -1;
+                    if (schoolBus.SchoolBusOwner != null)
+                    {
+                        ownerName = schoolBus.SchoolBusOwner.Name;
+                        ownerId = schoolBus.SchoolBusOwner.Id;
+                    }
+                    schoolBus.AddHistory("The owner for School Bus <<VIN " + schoolBus.VehicleIdentificationNumber + ":" + schoolBus.Id + ">> was changed to <<" + ownerName + ":" + ownerId + ">>.", smUserId);
+                }
+
+                schoolBus.AddHistory("Information for School Bus <<VIN " + schoolBus.VehicleIdentificationNumber + ":" + schoolBus.Id + ">> was updated.", smUserId);                    
+
+            }
+        }
+
+        private void AddSchoolBusOwnerHistory(EntityEntry entry, string smUserId)
+        {
+            var schoolBusOwner = (SchoolBusOwner)entry.Entity;
+            if (schoolBusOwner.History == null)
+            {
+                schoolBusOwner.History = new List<History>();
+            }
+
+            if (entry.State == EntityState.Added)
+            {
+                schoolBusOwner.AddHistory("School Bus Owner <<" + schoolBusOwner.Name + ":" + schoolBusOwner.Id + ">> was added to the system.", smUserId);                
+            }
+            else // update
+            {
+                string fieldName = "Status";
+                if (FieldHasChanged(entry, fieldName))
+                {
+                    string value = (string)entry.CurrentValues[fieldName];
+                    schoolBusOwner.AddHistory("The status of School Bus Owner <<" + schoolBusOwner.Name + ":" + schoolBusOwner.Id + ">> was changed to " + value, smUserId);                    
+                }
+                schoolBusOwner.AddHistory("Information for School Bus Owner <<" + schoolBusOwner.Name + ":" + schoolBusOwner.Id + ">> was updated.", smUserId);                
+            }
+        }
+
         /// <summary>
         /// Override for Save Changes to implement the audit log
         /// </summary>
@@ -194,7 +299,7 @@ namespace SchoolBusAPI.Models
 
             foreach (var entry in modifiedEntries)
             {
-                if (entry.Entity.GetType().InheritsOrImplements(typeof (AuditableEntity)))
+                if (entry.Entity.GetType().InheritsOrImplements(typeof(AuditableEntity)))
                 {
                     var theObject = (AuditableEntity)entry.Entity;
                     theObject.LastUpdateUserid = smUserId;
@@ -205,7 +310,19 @@ namespace SchoolBusAPI.Models
                         theObject.CreateUserid = smUserId;
                         theObject.CreateTimestamp = currentTime;
                     }
-                }                
+                }
+
+                // add the SchoolBus specific history items 
+                if (entry.Entity.GetType().InheritsOrImplements(typeof(SchoolBus)))
+                {
+                    AddSchoolBusHistory(entry, smUserId);
+                }
+
+                // add the SchoolBusOwner specific history items
+                if (entry.Entity.GetType().InheritsOrImplements(typeof(SchoolBusOwner)))
+                {
+                    AddSchoolBusOwnerHistory(entry, smUserId);
+                }
             }
 
             return base.SaveChanges();

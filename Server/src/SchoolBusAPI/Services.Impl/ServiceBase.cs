@@ -48,6 +48,26 @@ namespace SchoolBusAPI.Services.Impl
             return result;
         }
 
+
+        /// Returns the current Site Minder User ID
+        /// </summary>
+        /// <returns></returns>
+        protected string GetCurrentSmUserId()
+        {
+            string result = null;
+            
+            try
+            {
+                result = User.FindFirst(ClaimTypes.Name).Value;                
+            }
+            catch (Exception e)
+            {
+                result = null;
+            }
+            return result;
+        }
+
+
         protected OkObjectResult Ok(object value)
         {
             return new OkObjectResult(value);

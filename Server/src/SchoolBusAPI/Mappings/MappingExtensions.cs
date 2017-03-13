@@ -215,6 +215,26 @@ namespace SchoolBusAPI.Mappings
         }
 
         /// <summary>
+        /// Converts a History record to a view model
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="AffectedEntityId"></param>
+        /// <returns></returns>
+        public static HistoryViewModel ToViewModel(this History model, int AffectedEntityId)
+        {
+            HistoryViewModel dto = new HistoryViewModel();
+            dto.AffectedEntityId = AffectedEntityId;
+            if (model != null)
+            {
+                dto.HistoryText = model.HistoryText;
+                dto.Id = model.Id;
+                dto.LastUpdateTimestamp = model.LastUpdateTimestamp;
+                dto.LastUpdateUserid = model.LastUpdateUserid;                
+            }
+            return dto;
+        }
+
+        /// <summary>
         /// Converts UserFavourite to UserFavouriteViewModel
         /// </summary>
         /// <param name="model"></param>
