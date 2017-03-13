@@ -226,21 +226,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns History for a particular User</remarks>
-        /// <param name="id">id of User to fetch History for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/users/{id}/history")]
-        [SwaggerOperation("UsersIdHistoryGet")]
-        [SwaggerResponse(200, type: typeof(List<HistoryViewModel>))]
-        public virtual IActionResult UsersIdHistoryGet([FromRoute]int id)
-        {
-            return this._service.UsersIdHistoryGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Returns a user&#39;s notifications</remarks>
         /// <param name="id">id of User to fetch notifications for</param>
         /// <response code="200">OK</response>

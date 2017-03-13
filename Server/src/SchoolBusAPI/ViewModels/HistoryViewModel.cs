@@ -44,7 +44,7 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="LastUpdateUserid">Audit information - SM User Id for the User who most recently updated the record..</param>
         /// <param name="LastUpdateTimestamp">Audit information - Timestamp for record modification.</param>
         /// <param name="AffectedEntityId">The primary key of the affected record.</param>
-        public HistoryViewModel(int Id, string HistoryText = null, string LastUpdateUserid = null, string LastUpdateTimestamp = null, int? AffectedEntityId = null)
+        public HistoryViewModel(int Id, string HistoryText = null, string LastUpdateUserid = null, DateTime? LastUpdateTimestamp = null, int? AffectedEntityId = null)
         {   
             this.Id = Id;
             this.HistoryText = HistoryText;
@@ -83,7 +83,7 @@ namespace SchoolBusAPI.ViewModels
         /// <value>Audit information - Timestamp for record modification</value>
         [DataMember(Name="lastUpdateTimestamp")]
         [MetaDataExtension (Description = "Audit information - Timestamp for record modification")]
-        public string LastUpdateTimestamp { get; set; }
+        public DateTime? LastUpdateTimestamp { get; set; }
 
         /// <summary>
         /// The primary key of the affected record

@@ -342,15 +342,32 @@ namespace SchoolBusAPI.Services.Impl
         /// <param name="id">id of SchoolBus to fetch SchoolBusHistory for</param>
         /// <response code="200">OK</response>
 
-        public virtual IActionResult SchoolbusesIdHistoryGetAsync (int id)        
+        public virtual IActionResult SchoolbusesIdHistoryGetAsync (int id, int? offset, int? limit)        
         {
             bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
                 SchoolBus schoolBus = _context.SchoolBuss
-                    .Include(x => x.History)
+                    .Include(x => x.History)                    
                     .First(a => a.Id == id);
-                var result = schoolBus.History;
+                
+                List<History> data = schoolBus.History.OrderByDescending(y => y.LastUpdateTimestamp).ToList();
+
+                if (offset == null)
+                {
+                    offset = 0;
+                }
+                if (limit == null)
+                {
+                    limit = data.Count() - offset;
+                }
+                List<HistoryViewModel> result = new List<HistoryViewModel>();
+
+                for (int i = (int)offset; i < data.Count() && i < offset + limit; i++)
+                {
+                    result.Add(data[i].ToViewModel(id));
+                }
+
                 return new ObjectResult(result);
             }
             else

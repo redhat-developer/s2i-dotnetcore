@@ -18,6 +18,7 @@
         description: Audit information - SM User Id for the User who most recently updated the record.
       lastUpdateTimestamp:
         type: string
+        format: date-time
         description: Audit information - Timestamp for record modification       
       affectedEntityId:
         format: int32

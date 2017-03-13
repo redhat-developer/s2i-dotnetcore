@@ -80,8 +80,10 @@ namespace SchoolBusAPI.Services
         /// </summary>
         /// <remarks>Returns History for a particular SchoolBus</remarks>
         /// <param name="id">id of SchoolBus to fetch History for</param>
+        /// <param name="offset">offset for records that are returned</param>
+        /// <param name="limit">limits the number of records returned.</param>
         /// <response code="200">OK</response>
-        IActionResult SchoolbusesIdHistoryGetAsync(int id);
+        IActionResult SchoolbusesIdHistoryGetAsync(int id, int? offset, int? limit);
 
         /// <summary>
         /// 
