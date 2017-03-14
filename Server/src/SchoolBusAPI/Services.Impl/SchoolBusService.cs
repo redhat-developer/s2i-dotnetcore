@@ -376,6 +376,35 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Add a History record to the SchoolBus</remarks>
+        /// <param name="id">id of SchoolBus to fetch History for</param>
+        /// <param name="item"></param>
+        /// <response code="201">History created</response>
+        public virtual IActionResult SchoolbusesIdHistoryPostAsync(int id, History item)
+        {
+            bool exists = _context.SchoolBuss.Any(a => a.Id == id);
+            if (exists)
+            {
+                SchoolBus schoolBus = _context.SchoolBuss
+                    .Include(x => x.History)
+                    .First(a => a.Id == id);
+                if (schoolBus.History == null)
+                {
+                    schoolBus.History = new List<History>();
+                }
+                // force add
+                item.Id = 0;
+                schoolBus.History.Add(item);
+                _context.SchoolBuss.Update(schoolBus);
+            }
+            return new ObjectResult(item);
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
