@@ -116,7 +116,7 @@ var Version = React.createClass({
           <Well>
             <h3>Client</h3>
             <Row>
-              <ColDisplay md={12} label="Name">MOTI School Bus Inspection Tracking System</ColDisplay>
+              <ColDisplay md={12} label="Name">CVSE School Bus Inspection Tracking System</ColDisplay>
             </Row>
             <Row>
               <ColDisplay md={12} label="Build Time">{ formatDateTime(this.state.buildTime, Constant.DATE_TIME_READABLE) }</ColDisplay>
