@@ -48,6 +48,13 @@ RUN /usr/bin/supervisord&
 COPY httpd.conf /etc/httpd/conf/httpd.conf
 EXPOSE 8080
 
+# In order to drop the root user, we have to make some directories world
+# writeable as OpenShift default security model is to run the container under
+# random UID.
+RUN chmod -R ug+rwx /opt/app-root 
+
+USER root
+
 # Start the service
 CMD ["-D", "FOREGROUND"]
 ENTRYPOINT ["/usr/sbin/httpd"]

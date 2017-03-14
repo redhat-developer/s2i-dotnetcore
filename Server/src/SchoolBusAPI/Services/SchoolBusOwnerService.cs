@@ -79,6 +79,15 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Add a History record to the SchoolBus Owner</remarks>
+        /// <param name="id">id of SchoolBusOwner to add History for</param>
+        /// <param name="item"></param>
+        /// <response code="201">History created</response>
+        IActionResult SchoolbusownersIdHistoryPostAsync(int id, History item);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <remarks>Returns notes for a particular SchoolBusOwner</remarks>
         /// <param name="id">id of SchoolBusOwner to fetch notes for</param>
         /// <response code="200">OK</response>

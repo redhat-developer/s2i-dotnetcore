@@ -56,7 +56,7 @@ namespace SchoolBusAPI.Test
 
             */
 
-            InspectionService _service = new InspectionService(dbAppContext.Object);
+            InspectionService _service = new InspectionService(null, dbAppContext.Object);
 			
                     _InspectionApi = new InspectionController (_service);
 

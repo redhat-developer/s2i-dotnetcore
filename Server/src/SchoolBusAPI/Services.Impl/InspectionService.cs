@@ -160,11 +160,7 @@ namespace SchoolBusAPI.Services.Impl
                         }                        
                     }
 
-                    _context.Inspections.Remove(item);
-
-
-                    // add a history record to the associated schoolbus.                
-                    AddHistory(item, "Inspection result <<" + item.InspectionResultCode + ":" + item.Id + ">> removed.");
+                    _context.Inspections.Remove(item);                    
 
                     // Save the changes
                     _context.SaveChanges();
@@ -260,9 +256,7 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.Inspections.Any(a => a.Id == id);
             if (exists && id == item.Id)
             {
-                _context.Inspections.Update(item);                
-                // add a history record to the associated schoolbus.                
-                AddHistory(item, "Inspection result <<" + item.InspectionResultCode + ":" + item.Id + ">> changed.");
+                _context.Inspections.Update(item);                                
                 // Save the changes
                 _context.SaveChanges();
                 return new ObjectResult(item);

@@ -265,6 +265,26 @@ namespace SchoolBusAPI.Services.Impl
 
         }
 
+        public virtual IActionResult SchoolbusownersIdHistoryPostAsync(int id, History item)
+        {
+            bool exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
+            {
+                SchoolBusOwner schoolBuOwner = _context.SchoolBusOwners
+                    .Include(x => x.History)
+                    .First(a => a.Id == id);
+                if (schoolBuOwner.History == null)
+                {
+                    schoolBuOwner.History = new List<History>();
+                }
+                // force add
+                item.Id = 0;
+                schoolBuOwner.History.Add(item);
+                _context.SchoolBusOwners.Update(schoolBuOwner);
+            }
+            return new ObjectResult(item);
+        }
+
         /// <summary>
         /// 
         /// </summary>

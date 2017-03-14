@@ -146,6 +146,22 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>Add a History record to the SchoolBus</remarks>
+        /// <param name="id">id of SchoolBus to fetch History for</param>
+        /// <param name="item"></param>
+        /// <response code="201">History created</response>
+        [HttpPost]
+        [Route("/api/schoolbuses/{id}/history")]
+        [SwaggerOperation("SchoolbusesIdHistoryPost")]
+        [SwaggerResponse(200, type: typeof(History))]
+        public virtual IActionResult SchoolbusesIdHistoryPost([FromRoute]int id, [FromBody]History item)
+        {
+            return this._service.SchoolbusesIdHistoryPostAsync(id, item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id">id of SchoolBus to fetch Inspections for</param>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBus not found</response>
