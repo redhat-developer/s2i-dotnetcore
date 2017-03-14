@@ -276,8 +276,8 @@ namespace CCW.Controllers
                 }                
                 ccwdata.ICBCLicencePlateNumber = vehicle.policyNumber;
                 // these fields are the same.
-                ccwdata.NSCPolicyNumber = vehicle.nscNumber;
-                ccwdata.NSCClientNum = ccwdata.NSCPolicyNumber;
+                ccwdata.NSCPolicyNumber = vehicle.policyNumber;
+                ccwdata.NSCClientNum = vehicle.nscNumber; 
 
                 ccwdata.DateFetched = DateTime.UtcNow;
 
@@ -290,7 +290,7 @@ namespace CCW.Controllers
                     string organizationNameCode = "LE";
                     try
                     {
-                        ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(ccwdata.NSCPolicyNumber, organizationNameCode, userId, guid, directory);
+                        ClientOrganization clientOrganization = _service.GetCurrentClientOrganization(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
                         foundNSCData = true;
                         ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
                         ccwdata.NSCCarrierName = clientOrganization.displayName;                        
@@ -324,7 +324,7 @@ namespace CCW.Controllers
                     {
                         try
                         {
-                            ClientIndividual clientIndividual = _service.GetCurrentClientIndividual(ccwdata.NSCPolicyNumber, organizationNameCode, userId, guid, directory);
+                            ClientIndividual clientIndividual = _service.GetCurrentClientIndividual(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
                             foundNSCData = true;
                             ccwdata.NSCCarrierConditions = clientIndividual.nscInformation.carrierStatus;
                             ccwdata.NSCCarrierName = clientIndividual.displayName;
