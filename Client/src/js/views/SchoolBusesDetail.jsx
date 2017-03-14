@@ -196,7 +196,9 @@ var SchoolBusesDetail = React.createClass({
 
   deleteInspection(inspection) {
     Api.deleteInspection(inspection).then(() => {
-      this.getInspections();
+      // In addition to refreshing the inspections, we need to update the school bus record
+      // to get the new next inspection data.
+      this.fetch();
     });
   },
 
