@@ -46,6 +46,10 @@ RUN ln -s /opt/rh/rh-postgresql94/root/usr/lib64/libpq.so.rh-postgresql94-5  /us
 
 RUN /usr/bin/supervisord&
 COPY httpd.conf /etc/httpd/conf/httpd.conf
-CMD ["httpd"]
+EXPOSE 8080
+
+# Start the service
+CMD ["-D", "FOREGROUND"]
+ENTRYPOINT ["/usr/sbin/httpd"]
 
 
