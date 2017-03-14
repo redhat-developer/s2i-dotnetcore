@@ -56,7 +56,7 @@ RUN chmod -R a+rwx /opt/app-root && chmod -R a+rwx /run/httpd
 USER 1001
 
 # Start the service
-CMD ["-D", "FOREGROUND"]
+CMD ["-DFOREGROUND"]
 ENTRYPOINT ["/usr/sbin/httpd"]
 
 
