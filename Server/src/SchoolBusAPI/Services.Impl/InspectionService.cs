@@ -267,23 +267,7 @@ namespace SchoolBusAPI.Services.Impl
                 return new StatusCodeResult(404);
             }
         }
-
-        // Adds a history entry to the related school bus
-        public void AddHistory (Inspection item, string text)
-        {
-            if (item.SchoolBus != null)
-            {
-                int schoolbus_id = item.SchoolBus.Id;
-
-                SchoolBus schoolBus = _context.SchoolBuss.Include(x => x.History).FirstOrDefault (x => x.Id == schoolbus_id);
-                if (schoolBus != null)
-                {
-                    schoolBus.AddHistory(text, GetCurrentSmUserId());
-                    _context.SchoolBuss.Update(schoolBus);
-                }                
-            }
-        }
-
+ 
 
         /// <summary>
         /// 
@@ -347,11 +331,7 @@ namespace SchoolBusAPI.Services.Impl
                     item.CreatedDate = DateTime.UtcNow;
                     _context.Inspections.Add(item);
                 }
-                _context.SaveChanges();
-                // add a history record to the associated schoolbus.                
-                AddHistory(item, "Inspection result <<" + item.InspectionResultCode + ":" + item.Id + ">> added.");
-
-                _context.SaveChanges();
+                _context.SaveChanges();                                
                 return new ObjectResult(item);
 
             }            

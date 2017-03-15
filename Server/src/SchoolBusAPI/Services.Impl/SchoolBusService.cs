@@ -386,6 +386,8 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="201">History created</response>
         public virtual IActionResult SchoolbusesIdHistoryPostAsync(int id, History item)
         {
+            HistoryViewModel result = new HistoryViewModel();
+
             bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists)
             {
@@ -400,8 +402,16 @@ namespace SchoolBusAPI.Services.Impl
                 item.Id = 0;
                 schoolBus.History.Add(item);
                 _context.SchoolBuss.Update(schoolBus);
+                _context.SaveChanges();
             }
-            return new ObjectResult(item);
+
+            result.HistoryText = item.HistoryText;
+            result.Id = item.Id;
+            result.LastUpdateTimestamp = item.LastUpdateTimestamp;
+            result.LastUpdateUserid = item.LastUpdateUserid;
+            result.AffectedEntityId = id;
+            
+            return new ObjectResult(result);
         }
 
 
