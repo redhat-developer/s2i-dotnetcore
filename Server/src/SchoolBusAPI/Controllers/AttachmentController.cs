@@ -22,6 +22,7 @@ using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
+using SchoolBusAPI.Authorization;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -48,6 +49,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/attachments/bulk")]
         [SwaggerOperation("AttachmentsBulkPost")]
+        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult AttachmentsBulkPost([FromBody]Attachment[] items)
         {
             return this._service.AttachmentsBulkPostAsync(items);

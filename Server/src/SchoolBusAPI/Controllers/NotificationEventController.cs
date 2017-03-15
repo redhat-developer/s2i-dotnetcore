@@ -22,6 +22,7 @@ using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
+using SchoolBusAPI.Authorization;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -48,6 +49,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/notificationevents/bulk")]
         [SwaggerOperation("NotificationeventsBulkPost")]
+        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult NotificationeventsBulkPost([FromBody]NotificationEvent[] items)
         {
             return this._service.NotificationeventsBulkPostAsync(items);

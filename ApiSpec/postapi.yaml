@@ -256,6 +256,37 @@
           description: limits the number of records returned.  
           required: false
           type: integer
+    post:
+      description: Add a History record to the SchoolBus
+      tags:
+        - SchoolBus
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200': OK
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBus to fetch History for
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/History"
+      responses:
+        201:
+          description: History created
+          headers:
+            Location:
+              description: A link to the History
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/History"        
   /schoolbuses/{id}/ccwdata:
     get:
       description: Returns CCWData for a particular Schoolbus
@@ -366,6 +397,37 @@
           description: limits the number of records returned.  
           required: false
           type: integer
+    post:
+      description: Add a History record to the SchoolBus Owner
+      tags:
+        - SchoolBusOwner
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200': OK
+      parameters:
+        - name: id
+          in: path
+          description: id of SchoolBusOwner to add History for
+          required: true
+          type: integer
+        - name: item
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/History"
+      responses:
+        201:
+          description: History created
+          headers:
+            Location:
+              description: A link to the History
+              type: string
+              format: url
+          schema:
+            $ref: "#/definitions/History"          
   /schoolbusowners/{id}/notes:
     get:
       description: Returns notes for a particular SchoolBusOwner
