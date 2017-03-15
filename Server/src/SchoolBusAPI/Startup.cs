@@ -156,7 +156,7 @@ namespace SchoolBusAPI
             // enable Hangfire
             app.UseHangfireServer();
             app.UseHangfireDashboard(); // this enables the /hangfire action
-
+            
             // this should be set as an environment variable.  
             // Only enable when doing a new PROD deploy to populate CCW data and link it to the bus data.
             if (!string.IsNullOrEmpty(Configuration["ENABLE_HANGFIRE_CREATE"]))
@@ -263,16 +263,16 @@ namespace SchoolBusAPI
             ILogger log = loggerFactory.CreateLogger(typeof(Startup));
             log.LogInformation("Attempting setup of Hangfire Create CCW job ...");
 
+
             try
             {
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    log.LogInformation("Fetching the application's database context ...");
-                    DbAppContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
-
+                    string connectionString = GetConnectionString();
+                    
                     log.LogInformation("Creating Hangfire job for CCW population ...");
                     // every 15 seconds we see if a CCW record needs to be created for a bus.  We only create one CCW record at a time.
-                    BackgroundJob.Schedule(() => CCWTools.PopulateCCWJob(context, Configuration), TimeSpan.FromSeconds(15));
+                    BackgroundJob.Schedule(() => CCWTools.PopulateCCWJob(connectionString, Configuration), TimeSpan.FromSeconds(15));
                 }
             }
             catch (Exception e)
@@ -299,12 +299,11 @@ namespace SchoolBusAPI
             {
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    log.LogInformation("Fetching the application's database context ...");
-                    DbAppContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
-
+                    string connectionString = GetConnectionString();
+                    
                     log.LogInformation("Creating Hangfire job for CCW update ...");
                     // every 5 minutes we see if a CCW record needs to be updated.  We only update one CCW record at a time.
-                    BackgroundJob.Schedule(() => CCWTools.UpdateCCWJob(context, Configuration), TimeSpan.FromMinutes(5));
+                    BackgroundJob.Schedule(() => CCWTools.UpdateCCWJob(connectionString, Configuration), TimeSpan.FromMinutes(5));
                 }
             }
             catch (Exception e)
