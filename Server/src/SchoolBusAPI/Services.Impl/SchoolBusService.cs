@@ -77,7 +77,7 @@ namespace SchoolBusAPI.Services.Impl
                 if (item.District != null)
                 {
                     int district_id = item.District.Id;
-                    var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
+                    var district_exists = _context.Districts.Any(a => a.Id == district_id);
                     if (district_exists)
                     {
                         District district = _context.Districts.First(a => a.Id == district_id);
