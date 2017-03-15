@@ -2,7 +2,8 @@
 }}{{#get}}
     get:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes: []
       produces:
         - text/plain
@@ -18,7 +19,8 @@
 }}{{#post}}
     post:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes:
         - application/json
       produces:
@@ -45,7 +47,8 @@
   /{{path}}/bulk:
     post:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes:
         - application/json
       produces:
@@ -67,7 +70,8 @@
 }}{{#getById}}
     get:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes: []
       produces:
         - text/plain
@@ -89,7 +93,8 @@
 }}{{#putById}}
     put:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes:
         - application/json
       produces:
@@ -118,7 +123,8 @@
   /{{path}}/{id}/delete:
     post:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes: []
       produces:
         - text/plain
@@ -143,7 +149,8 @@
 }}{{#crud}}  /{{path}}:
     get:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes: []
       produces:
         - text/plain
@@ -159,6 +166,8 @@
     post:
       tags:
         - {{tag}}
+      {{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes:
         - application/json
       produces:
@@ -184,7 +193,8 @@
   /{{path}}/{id}:
     get:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes: []
       produces:
         - text/plain
@@ -205,7 +215,8 @@
           type: integer
     put:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes:
         - application/json
       produces:
@@ -233,7 +244,8 @@
   /{{path}}/{id}/delete:
     post:
       tags:
-        - {{tag}}
+        - {{tag}}{{#x-codegen-permission}}
+      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes: []
       produces:
         - text/plain

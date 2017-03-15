@@ -22,6 +22,7 @@ using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
+using SchoolBusAPI.Authorization;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -48,6 +49,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/rolepermissions/bulk")]
         [SwaggerOperation("RolepermissionsBulkPost")]
+        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult RolepermissionsBulkPost([FromBody]RolePermission[] items)
         {
             return this._service.RolepermissionsBulkPostAsync(items);
@@ -61,6 +63,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/roles/bulk")]
         [SwaggerOperation("RolesBulkPost")]
+        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult RolesBulkPost([FromBody]Role[] items)
         {
             return this._service.RolesBulkPostAsync(items);
