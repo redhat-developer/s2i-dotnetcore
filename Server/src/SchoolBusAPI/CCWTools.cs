@@ -23,14 +23,18 @@ using Microsoft.Extensions.DependencyInjection;
 namespace SchoolBusAPI
 {
     public class CCWTools 
-    {    
+    {
         /// <summary>
         /// Hangfire job to populate CCW data.  Only used for a deploy to PROD with a new database.
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="connectionString"></param>
         /// <param name="Configuration"></param>
-        public static void PopulateCCWJob (DbAppContext context, IConfiguration Configuration)
+        public static void PopulateCCWJob (string connectionString, IConfiguration Configuration)
         {
+            DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
+            options.UseNpgsql(connectionString);
+            DbAppContext context = new DbAppContext(null, options.Options);
+
             // get credentials
             string cCW_userId = Configuration["CCW_userId"];
             string cCW_guid = Configuration["CCW_guid"];
@@ -65,11 +69,15 @@ namespace SchoolBusAPI
         /// <summary>
         /// Hangfire job to refresh existing data.
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="connectionString"></param>
         /// <param name="Configuration"></param>
-        public static void UpdateCCWJob(DbAppContext context, IConfiguration Configuration)
+        public static void UpdateCCWJob(string connectionString, IConfiguration Configuration)
         {
             // make a database connection and see if there are any records that need to be updated.
+            DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
+            options.UseNpgsql(connectionString);
+            DbAppContext context = new DbAppContext(null, options.Options);
+
             // get credentials
             string cCW_userId = Configuration["CCW_userId"];
             string cCW_guid = Configuration["CCW_guid"];
@@ -114,6 +122,17 @@ namespace SchoolBusAPI
             }           
         }
 
+        /// <summary>
+        /// Fetch CCW data from the microservice
+        /// </summary>
+        /// <param name="Configuration"></param>
+        /// <param name="regi"></param>
+        /// <param name="vin"></param>
+        /// <param name="plate"></param>
+        /// <param name="cCW_userId"></param>
+        /// <param name="cCW_guid"></param>
+        /// <param name="cCW_directory"></param>
+        /// <returns></returns>
         public static CCWData FetchCCW(IConfiguration Configuration, string regi, string vin, string plate, string cCW_userId, string cCW_guid, string cCW_directory)
         {
             string ccwHost = Configuration["CCW_SERVICE_NAME"];
