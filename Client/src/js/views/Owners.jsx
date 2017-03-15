@@ -182,7 +182,7 @@ var Owners = React.createClass({
       <div>
         <Well id="owners-bar" bsSize="small" className="clearfix">
           <Row>
-            <Col md={11}>
+            <Col md={10}>
               <ButtonToolbar id="owners-search">
                 <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
                   items={ districts } selectedIds={ this.state.search.selectedDistrictsIds } updateState={ this.updateSearchState } showMaxItems={ 2 }/>
@@ -194,7 +194,7 @@ var Owners = React.createClass({
                 <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
               </ButtonToolbar>
             </Col>
-            <Col md={1}>
+            <Col md={2}>
               <Row id="owners-faves">
                 <Favourites id="owners-faves-dropdown" type="owner" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } pullRight/>
               </Row>

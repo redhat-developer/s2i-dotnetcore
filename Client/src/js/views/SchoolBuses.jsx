@@ -286,7 +286,7 @@ var SchoolBuses = React.createClass({
       </PageHeader>
       <Well id="school-buses-bar" bsSize="small" className="clearfix">
         <Row>
-          <Col md={11}>
+          <Col md={10}>
             <Row>
               <ButtonToolbar id="school-buses-filters">
                 <MultiDropdown id="selectedDistrictsIds" placeholder="Districts"
@@ -320,7 +320,7 @@ var SchoolBuses = React.createClass({
               </ButtonToolbar>
             </Row>
           </Col>
-          <Col md={1}>
+          <Col md={2}>
             <Row id="school-buses-faves">
               <Favourites id="school-buses-faves-dropdown" type="schoolBus" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } pullRight />
             </Row>
