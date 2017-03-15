@@ -51,12 +51,12 @@ EXPOSE 8080
 # In order to drop the root user, we have to make some directories world
 # writeable as OpenShift default security model is to run the container under
 # random UID.
-RUN chmod -R ug+rwx /opt/app-root 
+RUN chmod -R a+rwx /opt/app-root && chmod -R a+rwx /run/httpd
 
-USER root
+USER 1001
 
 # Start the service
-CMD ["-D", "FOREGROUND"]
+CMD ["-DFOREGROUND"]
 ENTRYPOINT ["/usr/sbin/httpd"]
 
 
