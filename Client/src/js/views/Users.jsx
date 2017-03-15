@@ -158,7 +158,7 @@ var UserManagement = React.createClass({
             </Col>
             <Col md={1}>
               <Row id="users-faves">
-                <Favourites id="users-faves-dropdown" type="user" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } />
+                <Favourites id="users-faves-dropdown" type="user" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } pullRight />
               </Row>
             </Col>
           </Row>
