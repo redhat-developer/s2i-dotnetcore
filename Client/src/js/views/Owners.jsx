@@ -196,7 +196,7 @@ var Owners = React.createClass({
             </Col>
             <Col md={1}>
               <Row id="owners-faves">
-                <Favourites id="owners-faves-dropdown" type="owner" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite }/>
+                <Favourites id="owners-faves-dropdown" type="owner" favourites={ this.props.favourites } data={ this.state.search } onSelect={ this.loadFavourite } pullRight/>
               </Row>
             </Col>
           </Row>
