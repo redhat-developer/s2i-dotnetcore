@@ -80,6 +80,7 @@ var SchoolBuses = React.createClass({
         endDate: this.props.search.endDate || '',
         hideInactive: this.props.search.hideInactive !== false,
         justReInspections: this.props.search.justReInspections === true,
+        loaded: this.props.search.loaded === true,
       },
 
       ui : {
@@ -215,7 +216,6 @@ var SchoolBuses = React.createClass({
           var favourite = _.find(this.props.favourites, (favourite) => { return favourite.isDefault; });
           if (favourite) {
             this.loadFavourite(favourite);
-            return;
           }
         }
         return this.fetch();
@@ -233,7 +233,10 @@ var SchoolBuses = React.createClass({
   },
 
   updateSearchState(state, callback) {
-    this.setState({ search: { ...this.state.search, ...state, ...{ loaded: true } }}, () =>{
+    // Initializing the KeySearchControl causes a state change which we want to catch here by checking
+    // state.keySearchOnMount; otherwise this will flag the search state as loaded before it actually is.
+    var loaded = state.keySearchOnMount ? {} : { loaded: true };
+    this.setState({ search: { ...this.state.search, ...state, ...loaded }}, () =>{
       store.dispatch({ type: Action.UPDATE_BUSES_SEARCH, schoolBuses: this.state.search });
       if (callback) { callback(); }
     });
@@ -357,7 +360,7 @@ var SchoolBuses = React.createClass({
                 <td><a href={ bus.ownerURL }>{ bus.ownerName }</a></td>
                 <td>{ bus.districtName }</td>
                 <td>{ bus.homeTerminalCityPostal }</td>
-                <td>{ bus.canView ? <a href={ bus.URL }>{ bus.icbcRegistrationNumber }</a> : bus.icbcRegistrationNumber }</td>
+                <td>{ bus.canView ? <a href={ bus.url }>{ bus.icbcRegistrationNumber }</a> : bus.icbcRegistrationNumber }</td>
                 <td>{ bus.unitNumber }</td>
                 <td>{ bus.permitNumber }</td>
                 <td>{ formatDateTime(bus.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }

@@ -30,6 +30,9 @@ var searchControl = React.createClass({
   componentDidMount() {
     this.updated({
       params: this.getParams(),
+      // Initializing this control causes a state change to load the params, so
+      // flag this in the update.
+      onMount: true,
     });
   },
 

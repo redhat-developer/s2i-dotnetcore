@@ -6,6 +6,7 @@ export const NOTIFICATIONS_PATHNAME = 'notifications';
 export const USERS_PATHNAME = 'users';
 export const ROLES_PATHNAME = 'roles';
 export const VERSION_PATHNAME = 'version';
+export const INSPECTION_PATHNAME = 'inspection';
 
 // Status
 export const STATUS_ACTIVE = 'Active';
@@ -14,6 +15,10 @@ export const STATUS_ARCHIVED = 'Archived';
 // Inspections
 export const INSPECTION_TYPE_ANNUAL = 'Annual';
 export const INSPECTION_TYPE_REINSPECTION = 'Re-Inspection';
+
+export const INSPECTION_RESULT_PASSED = 'Passed';
+export const INSPECTION_RESULT_FAILED = 'Failed';
+export const INSPECTION_RESULT_OUT_OF_SERVICE = 'Out of Service';
 
 export const INSPECTION_EDIT_GRACE_PERIOD_HOURS = 24;
 export const INSPECTION_DELETE_GRACE_PERIOD_HOURS = 24;
@@ -38,6 +43,7 @@ export const DATE_ZULU = 'YYYY-MM-DDThh:mm:ss[Z]';
 
 export const DATE_TIME_ISO_8601 = 'YYYY-MM-DDTHH:mm:ss';
 export const DATE_TIME_READABLE = 'MMMM D, YYYY [at] h:mm:ss A';
+export const DATE_TIME_LOG = 'MMM D, YYYY h:mm:ss A';
 
 // CCW Search Fields
 export const CCW_REGISTRATION = 'regi';

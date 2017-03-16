@@ -136,7 +136,7 @@ var DropdownControl = React.createClass({
                 </MenuItem>;
                 // Check for hover items
                 if (!this.state.simple && item.hoverText) {
-                  return <OverlayTrigger trigger="hover" placement="right" rootClose
+                  return <OverlayTrigger trigger={ ['hover', 'focus'] } placement="right" rootClose key={ this.state.simple ? item : item.id }
                     overlay={ <Popover id={ `popover-${ item.id }` } title={ item[this.state.fieldName] }>{ item.hoverText }</Popover> }
                   >
                     { menuItem }

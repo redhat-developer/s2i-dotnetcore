@@ -54,6 +54,9 @@ var KeySearchControl = React.createClass({
         keySearchField: item ? item.name : '',
         keySearchText: this.state.text,
         keySearchParams: this.state.params,
+        // Initializing the SearchControl causes a state change to load the params, so
+        // flag this in the update.
+        keySearchOnMount: this.state.onMount,
       });
     });
   },

@@ -13,7 +13,7 @@ const DEFAULT_STATE = {
   contacts: {},
   roles: {},
   userRoles: {},
-  histories: {},
+  history: {},
 };
 
 export default function uiReducer(state = DEFAULT_STATE, action) {
@@ -60,8 +60,8 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
     case Action.UPDATE_USER_ROLES_UI:
       return { ...state, userRoles: action.userRoles };
 
-    case Action.UPDATE_HISTORIES_UI:
-      return { ...state, histories: action.histories };
+    case Action.UPDATE_HISTORY_UI:
+      return { ...state, history: action.history };
   }
 
   return { ...state, ...newState };

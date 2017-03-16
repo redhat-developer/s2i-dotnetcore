@@ -25,8 +25,8 @@ function parseUser(user) {
   user.districtName = user.district.name;
 
   user.path = `${ Constant.USERS_PATHNAME }/${ user.id }`;
-  user.URL = `#/${ user.path }`;
-  user.historyEntity = History.makeEntity(History.USER, user.id, user.name, user.URL);
+  user.url = `#/${ user.path }`;
+  user.historyEntity = History.makeHistoryEntity(History.USER, user);
 
   user.groupNames = _.chain(user.groupMemberships).filter(membership => {
     return membership.group && membership.group.name;
@@ -140,6 +140,22 @@ export function deleteUser(user) {
   });
 }
 
+export function addUserHistory(userId, history) {
+  return new ApiRequest(`/users/${ userId }/history`).post(history);
+}
+
+export function getUserHistory(userId, params) {
+  return new ApiRequest(`/users/${ userId }/history`).get(params).then(response => {
+    // Normalize the response
+    var history = _.fromPairs(response.map(history => [ history.id, history ]));
+
+    // Add display fields
+    _.map(history, history => { parseHistory(history); });
+
+    store.dispatch({ type: Action.UPDATE_HISTORY, history: history });
+  });
+}
+
 export function updateUserGroups(user) {
   return new ApiRequest(`/users/${ user.id }/groups`).put(user.groupIds).then(() => {
     // After updating the user's group, refresh the user state.
@@ -170,8 +186,8 @@ function parseRole(role) {
   role.canDelete = false;
 
   role.path = `${ Constant.ROLES_PATHNAME }/${ role.id }`;
-  role.URL = `#/${ role.path }`;
-  role.historyEntity = History.makeEntity(History.ROLE, role.id, role.name, role.URL);
+  role.url = `#/${ role.path }`;
+  role.historyEntity = History.makeHistoryEntity(History.ROLE, role);
 }
 
 export function searchRoles(params) {
@@ -319,8 +335,9 @@ function parseSchoolBus(bus) {
   bus.nextInspectionDateSort = sortableDateTime(bus.nextInspectionDate);
 
   bus.path = `${ Constant.BUSES_PATHNAME }/${ bus.id }`;
-  bus.URL = `#/${ bus.path }`;
-  bus.historyEntity = History.makeEntity(History.BUS, bus.id, `(VIN ${ bus.vehicleIdentificationNumber })`, bus.URL);
+  bus.url = `#/${ bus.path }`;
+  bus.name = `VIN ${ bus.vehicleIdentificationNumber }`;
+  bus.historyEntity = History.makeHistoryEntity(History.BUS, bus);
 
   bus.canView = true;
   bus.canEdit = true;
@@ -423,12 +440,19 @@ export function getSchoolBusCCW(schoolBusId) {
   });
 }
 
-export function getSchoolBusHistories(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${ schoolBusId }/history`).get().then(response => {
-    // Normalize the response
-    var schoolBusHistories = _.fromPairs(response.map(history => [ history.id, history ]));
+export function addSchoolBusHistory(schoolBusId, history) {
+  return new ApiRequest(`/schoolbuses/${ schoolBusId }/history`).post(history);
+}
 
-    store.dispatch({ type: Action.UPDATE_BUS_HISTORIES, schoolBusHistories: schoolBusHistories });
+export function getSchoolBusHistory(schoolBusId, params) {
+  return new ApiRequest(`/schoolbuses/${ schoolBusId }/history`).get(params).then(response => {
+    // Normalize the response
+    var history = _.fromPairs(response.map(history => [ history.id, history ]));
+
+    // Add display fields
+    _.map(history, history => { parseHistory(history); });
+
+    store.dispatch({ type: Action.UPDATE_HISTORY, history: history });
   });
 }
 
@@ -547,7 +571,10 @@ function parseInspection(inspection) {
   inspection.isReinspection = inspection.inspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   inspection.inspectionDateSort = sortableDateTime(inspection.inspectionDate);
 
-  inspection.historyEntity = History.makeEntity(History.INSPECTION, inspection.id, `(${ formatDateTime(inspection.inspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) })`, null);
+  inspection.path = inspection.schoolBus ? `${ Constant.BUSES_PATHNAME }/${ inspection.schoolBus.id }/${ Constant.INSPECTION_PATHNAME }/${ inspection.id }` : null;
+  inspection.url = inspection.path ? `#/${ inspection.path }` : null;
+  inspection.name = `(${ formatDateTime(inspection.inspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) })`;
+  inspection.historyEntity = History.makeHistoryEntity(History.INSPECTION, inspection);
 
   inspection.canEdit = hoursAgo(inspection.createdDate) <= Constant.INSPECTION_EDIT_GRACE_PERIOD_HOURS;
   inspection.canDelete = hoursAgo(inspection.createdDate) <= Constant.INSPECTION_DELETE_GRACE_PERIOD_HOURS;
@@ -567,7 +594,7 @@ export function getInspection(id) {
 export function addInspection(inspection) {
   return new ApiRequest('/inspections').post(inspection).then(response => {
     // Normalize the response
-    var inspection = _.fromPairs([[ response.id, response ]]);
+    var inspection = response;
 
     // Add display fields
     parseInspection(inspection);
@@ -579,7 +606,7 @@ export function addInspection(inspection) {
 export function updateInspection(inspection) {
   return new ApiRequest(`/inspections/${ inspection.id }`).put(inspection).then(response => {
     // Normalize the response
-    var inspection = _.fromPairs([[ response.id, response ]]);
+    var inspection = response;
 
     // Add display fields
     parseInspection(inspection);
@@ -591,7 +618,7 @@ export function updateInspection(inspection) {
 export function deleteInspection(inspection) {
   return new ApiRequest(`/inspections/${ inspection.id }/delete`).post().then(response => {
     // Normalize the response
-    var inspection = _.fromPairs([[ response.id, response ]]);
+    var inspection = response;
 
     // Add display fields
     parseInspection(inspection);
@@ -614,8 +641,8 @@ function parseOwner(owner) {
   owner.nextInspectionDateSort = sortableDateTime(owner.nextInspectionDate);
 
   owner.path = `${ Constant.OWNERS_PATHNAME }/${ owner.id }`;
-  owner.URL = `#/${ owner.path }`;
-  owner.historyEntity = History.makeEntity(History.OWNER, owner.id, owner.name, owner.URL);
+  owner.url = `#/${ owner.path }`;
+  owner.historyEntity = History.makeHistoryEntity(History.OWNER, owner);
 
   owner.canView = true;
   owner.canEdit = true;
@@ -687,6 +714,22 @@ export function deleteOwner(owner) {
     parseOwner(owner);
 
     store.dispatch({ type: Action.DELETE_OWNER, owner: owner });
+  });
+}
+
+export function addOwnerHistory(ownerId, history) {
+  return new ApiRequest(`/schoolbusowners/${ ownerId }/history`).post(history);
+}
+
+export function getOwnerHistory(ownerId, params) {
+  return new ApiRequest(`/schoolbusowners/${ ownerId }/history`).get(params).then(response => {
+    // Normalize the response
+    var history = _.fromPairs(response.map(history => [ history.id, history ]));
+
+    // Add display fields
+    _.map(history, history => { parseHistory(history); });
+
+    store.dispatch({ type: Action.UPDATE_HISTORY, history: history });
   });
 }
 
@@ -778,6 +821,14 @@ export function getPermissions() {
 
     store.dispatch({ type: Action.UPDATE_PERMISSIONS_LOOKUP, permissions: permissions });
   });
+}
+
+////////////////////
+// History
+////////////////////
+
+function parseHistory(history) {
+  history.timestampSort = sortableDateTime(history.lastUpdateTimestamp);
 }
 
 ////////////////////
