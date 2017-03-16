@@ -106,7 +106,7 @@ var SchoolBusAddDialog = React.createClass({
       footer={
         this.state.ccwFound &&
           <LinkContainer to={{ pathname: `${ Constant.BUSES_PATHNAME }/0` }}>
-            <Button title="add bus">Continue</Button>
+            <Button title="Add Bus">Continue</Button>
           </LinkContainer>
       }
     >

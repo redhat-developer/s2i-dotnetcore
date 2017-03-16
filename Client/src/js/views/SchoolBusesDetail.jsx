@@ -15,6 +15,7 @@ import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
 import * as Action from '../actionTypes';
 import * as Api from '../api';
 import * as Constant from '../constants';
+import * as History from '../history';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
@@ -38,6 +39,7 @@ var SchoolBusesDetail = React.createClass({
     owner: React.PropTypes.object,
     schoolBusCCW: React.PropTypes.object,
     schoolBusInspections: React.PropTypes.object,
+    inspection: React.PropTypes.object,
     ui: React.PropTypes.object,
     params: React.PropTypes.object,
     router: React.PropTypes.object,
@@ -88,7 +90,37 @@ var SchoolBusesDetail = React.createClass({
       // Open editor to add new bus
       this.openEditDialog();
     } else {
-      this.fetch();
+      this.fetch().then(() => {
+        this.openInspection(this.props);
+      });
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (!_.isEqual(nextProps.params, this.props.params)) {
+      if (nextProps.params.inspectionId && !this.props.params.inspectionId) {
+        this.openInspection(nextProps);
+      }
+    }
+  },
+
+  openInspection(props) {
+    var inspection = null;
+
+    if (props.params.inspectionId === '0') {
+      // New
+      inspection = {
+        id: 0,
+        schoolBus: props.schoolBus,
+        inspector: { id: props.currentUser.isInspector ? props.currentUser.id : 0 },
+      };
+    } else if (props.params.inspectionId) {
+      // Open the inspection for viewing if possible
+      inspection = props.schoolBusInspections[props.params.inspectionId];
+    }
+
+    if (inspection) {
+      this.openInspectionDialog(inspection);
     }
   },
 
@@ -122,7 +154,7 @@ var SchoolBusesDetail = React.createClass({
     }).finally(() => {
       this.setState({ loadingSchoolBus: false });
     });
-    Api.getSchoolBusInspections(id).finally(() => {
+    return Api.getSchoolBusInspections(id).finally(() => {
       this.setState({ loadingSchoolBusInspections: false });
     });
   },
@@ -148,6 +180,8 @@ var SchoolBusesDetail = React.createClass({
     } else {
       // Save the new school bus record
       Api.addSchoolBus(schoolBus).then(() => {
+        // Log it
+        History.logNewBus(this.props.schoolBus, this.props.owner);
         // Reload the screen with new school bus id
         this.props.router.push({
           pathname: this.props.schoolBus.path,
@@ -176,7 +210,12 @@ var SchoolBusesDetail = React.createClass({
   },
 
   closeInspectionDialog() {
-    this.setState({ showInspectionDialog: false });
+    this.setState({ showInspectionDialog: false }, () => {
+      // Reset school bus location
+      this.props.router.push({
+        pathname: this.props.schoolBus.path,
+      });
+    });
   },
 
   getInspections() {
@@ -187,10 +226,8 @@ var SchoolBusesDetail = React.createClass({
   },
 
   addInspection() {
-    this.openInspectionDialog({
-      id: 0,
-      schoolBus: this.props.schoolBus,
-      inspector: { id: this.props.currentUser.isInspector ? this.props.currentUser.id : 0 },
+    this.props.router.push({
+      pathname: `${ this.props.schoolBus.path }/${ Constant.INSPECTION_PATHNAME }/0`,
     });
   },
 
@@ -204,9 +241,16 @@ var SchoolBusesDetail = React.createClass({
 
   saveInspection(inspection) {
     // Update or add accordingly
-    var inspectionPromise = inspection.id ? Api.updateInspection : Api.addInspection;
+    var isNew = !inspection.id;
+
+    var inspectionPromise = isNew ? Api.addInspection : Api.updateInspection;
 
     inspectionPromise(inspection).then(() => {
+      if (isNew) {
+        // Log it
+        History.logNewInspection(this.props.schoolBus, this.props.inspection);
+      }
+
       // Refresh the inspections table
       this.getInspections();
       // Save next inspection data to this school bus record
@@ -279,9 +323,7 @@ var SchoolBusesDetail = React.createClass({
             <Unimplemented>
               <Button title="Attachments" onClick={ this.showAttachments }>Attachments ({ bus.attachments ? bus.attachments.length : 0 })</Button>
             </Unimplemented>
-            <Unimplemented>
-              <Button title="History" onClick={ this.showHistoryDialog }>History</Button>
-            </Unimplemented>
+            <Button title="History" onClick={ this.showHistoryDialog }>History</Button>
           </Col>
           <Col md={2}>
             <div className="pull-right">
@@ -428,7 +470,7 @@ var SchoolBusesDetail = React.createClass({
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
                             <DeleteButton name="Inspection" hide={ !inspection.canDelete } onConfirm={ this.deleteInspection.bind(this, inspection) }/>
-                            <EditButton name="Inspection" view={ !inspection.canEdit } onClick={ this.openInspectionDialog.bind(this, inspection) }/>
+                            <EditButton name="Inspection" view={ !inspection.canEdit } pathname={ inspection.path }/>
                           </ButtonGroup>
                         </td>
                       </tr>;
@@ -572,13 +614,13 @@ var SchoolBusesDetail = React.createClass({
         }
       </div>
       { this.state.showEditDialog &&
-        <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.onSaveEdit } onClose= { this.onCloseEdit } />
+        <SchoolBusesEditDialog show={ this.state.showEditDialog } onSave={ this.onSaveEdit } onClose={ this.onCloseEdit } />
       }
       { this.state.showHistoryDialog &&
-        <HistoryListDialog show={ this.state.showHistoryDialog } onClose= { this.closeHistoryDialog } />
+        <HistoryListDialog show={ this.state.showHistoryDialog } historyEntity={ bus.historyEntity } onClose={ this.closeHistoryDialog } />
       }
       { this.state.showInspectionDialog &&
-        <InspectionEditDialog show={ this.state.showInspectionDialog } inspection={ this.state.inspection } onSave={ this.saveInspection } onClose= { this.closeInspectionDialog } />
+        <InspectionEditDialog show={ this.state.showInspectionDialog } inspection={ this.state.inspection } onSave={ this.saveInspection } onClose={ this.closeInspectionDialog } />
       }
     </div>;
   },
@@ -591,6 +633,7 @@ function mapStateToProps(state) {
     owner: state.models.owner,
     schoolBusCCW: state.models.schoolBusCCW,
     schoolBusInspections: state.models.schoolBusInspections,
+    inspection: state.models.inspection,
     ui: state.ui.inspections,
   };
 }

@@ -8,13 +8,13 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import _ from 'lodash';
 
+import HistoryListDialog from './dialogs/HistoryListDialog.jsx';
 import OwnersEditDialog from './dialogs/OwnersEditDialog.jsx';
 import SchoolBusesAddDialog from './dialogs/SchoolBusesAddDialog.jsx';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
 import * as Constant from '../constants';
-import * as History from '../history';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
@@ -41,13 +41,12 @@ var OwnersDetail = React.createClass({
       loading: true,
       loadingContacts: true,
 
-      showEditDialog: false,
       showContactDialog: false,
+      showEditDialog: false,
+      showHistoryDialog: false,
       showSchoolBusDialog: false,
 
       contact: {},
-
-      history: null,
 
       isNew: this.props.params.ownerId === '0',
 
@@ -117,10 +116,12 @@ var OwnersDetail = React.createClass({
   saveContact() {
   },
 
-  showHistory() {
-    var logged = History.log(History.OWNER, this.props.owner.id, History.OWNER_TEST, this.props.owner.historyEntity);
+  showHistoryDialog() {
+    this.setState({ showHistoryDialog: true });
+  },
 
-    this.setState({ history: History.renderEvent(logged) });
+  closeHistoryDialog() {
+    this.setState({ showHistoryDialog: false });
   },
 
   print() {
@@ -146,9 +147,7 @@ var OwnersDetail = React.createClass({
             { owner.nextInspectionDate &&
               <span className={ `label label-${inspectionStyle}` } dangerouslySetInnerHTML={{ __html: inspectionNotice }}></span>
             }
-            <Unimplemented>
-              <Button title="History" onClick={ this.showHistory }>History</Button>
-            </Unimplemented>
+            <Button title="History" onClick={ this.showHistoryDialog }>History</Button>
           </Col>
           <Col md={2}>
             <div className="pull-right">
@@ -161,7 +160,6 @@ var OwnersDetail = React.createClass({
             </div>
           </Col>
         </Row>
-        <Row>{ this.state.history }</Row>
         {(() => {
           if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
 
@@ -260,10 +258,13 @@ var OwnersDetail = React.createClass({
         </Row>
       </div>
       { this.state.showEditDialog &&
-        <OwnersEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose= { this.closeEditDialog } />
+        <OwnersEditDialog show={ this.state.showEditDialog } onSave={ this.saveEdit } onClose={ this.closeEditDialog } />
+      }
+      { this.state.showHistoryDialog &&
+        <HistoryListDialog show={ this.state.showHistoryDialog } historyEntity={ owner.historyEntity } onClose={ this.closeHistoryDialog } />
       }
       { this.state.showSchoolBusDialog &&
-        <SchoolBusesAddDialog show={ this.state.showSchoolBusDialog } onSave={ this.closeSchoolBusDialog } onClose= { this.closeSchoolBusDialog } />
+        <SchoolBusesAddDialog show={ this.state.showSchoolBusDialog } onSave={ this.closeSchoolBusDialog } onClose={ this.closeSchoolBusDialog } />
       }
     </div>;
   },

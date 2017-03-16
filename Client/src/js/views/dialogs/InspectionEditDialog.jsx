@@ -23,10 +23,6 @@ import { today, businessDayOnOrBefore, daysFromToday, isValidDate, toZuluTime } 
 import { isBlank } from '../../utils/string';
 
 
-const RESULT_PASSED = 'Passed';
-const RESULT_FAILED = 'Failed';
-const RESULT_OUT_OF_SERVICE = 'Out of Service';
-
 var InspectionEditDialog = React.createClass({
   propTypes: {
     inspection: React.PropTypes.object.isRequired,
@@ -76,13 +72,13 @@ var InspectionEditDialog = React.createClass({
       // Remove time elements from date
       inspectionDate.startOf('d');
       var nextDate = '';
-      if (this.state.inspectionResultCode === RESULT_FAILED) {
+      if (this.state.inspectionResultCode === Constant.INSPECTION_RESULT_FAILED) {
         // 30 days from date
         nextDate = businessDayOnOrBefore(inspectionDate.add(30, 'd'));
-      } else if (this.state.inspectionResultCode === RESULT_PASSED) {
+      } else if (this.state.inspectionResultCode === Constant.INSPECTION_RESULT_PASSED) {
         // A year from date
         nextDate = businessDayOnOrBefore(inspectionDate.add(1, 'y'));
-      } else if (this.state.inspectionResultCode === RESULT_OUT_OF_SERVICE) {
+      } else if (this.state.inspectionResultCode === Constant.INSPECTION_RESULT_OUT_OF_SERVICE) {
         // Clear the date
         nextDate = '';
       }
@@ -100,9 +96,9 @@ var InspectionEditDialog = React.createClass({
   resultCodeChanged(resultCode) {
     var typeCode = '';
 
-    if (resultCode === RESULT_FAILED || resultCode === RESULT_OUT_OF_SERVICE) {
+    if (resultCode === Constant.INSPECTION_RESULT_FAILED || resultCode === Constant.INSPECTION_RESULT_OUT_OF_SERVICE) {
       typeCode = Constant.INSPECTION_TYPE_REINSPECTION;
-    } else if (resultCode === RESULT_PASSED) {
+    } else if (resultCode === Constant.INSPECTION_RESULT_PASSED) {
       typeCode = Constant.INSPECTION_TYPE_ANNUAL;
     }
 
@@ -242,7 +238,7 @@ var InspectionEditDialog = React.createClass({
                 <FormGroup controlId="inspectionResultCode" validationState={ this.state.inspectionResultCodeError ? 'error' : null }>
                   <ControlLabel>Result <sup>*</sup></ControlLabel>
                   <DropdownControl id="inspectionResultCode" title={ this.state.inspectionResultCode } disabled={ isReadOnly } onSelect={ this.resultCodeChanged } placeholder="None" blankLine
-                    items={[ RESULT_PASSED, RESULT_FAILED, RESULT_OUT_OF_SERVICE ]}
+                    items={[ Constant.INSPECTION_RESULT_PASSED, Constant.INSPECTION_RESULT_FAILED, Constant.INSPECTION_RESULT_OUT_OF_SERVICE ]}
                   />
                   <HelpBlock>{ this.state.inspectionResultCodeError }</HelpBlock>
                 </FormGroup>

@@ -227,7 +227,7 @@ var Owners = React.createClass({
             {
               _.map(ownerList, (owner) => {
                 return <tr key={ owner.id } className={ owner.isActive ? null : 'info' }>
-                  <td>{ owner.canView ? <a href={ owner.URL }>{ owner.name }</a> : owner.name }</td>
+                  <td>{ owner.canView ? <a href={ owner.url }>{ owner.name }</a> : owner.name }</td>
                   <td>{ owner.primaryContactName }</td>
                   <td style={{ textAlign: 'center' }}>
                     <a href={ `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }` }>{ owner.numberOfBuses }</a>

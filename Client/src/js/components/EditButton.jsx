@@ -10,6 +10,7 @@ var EditButton = React.createClass({
   propTypes: {
     pathname: React.PropTypes.string,
     onClick: React.PropTypes.func,
+    // view as opposed to edit, i.e. read only
     view: React.PropTypes.bool,
     name: React.PropTypes.string,
     hide: React.PropTypes.bool,

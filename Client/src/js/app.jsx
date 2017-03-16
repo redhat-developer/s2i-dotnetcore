@@ -27,6 +27,7 @@ const App = <Provider store={ store }>
       <Route path={ Constant.HOME_PATHNAME } component={ Home }/>
       <Route path={ Constant.BUSES_PATHNAME } component={ SchoolBuses }/>
       <Route path={ `${ Constant.BUSES_PATHNAME }/:schoolBusId` } component={ SchoolBusesDetail }/>
+      <Route path={ `${ Constant.BUSES_PATHNAME }/:schoolBusId/${ Constant.INSPECTION_PATHNAME }/:inspectionId` } component={ SchoolBusesDetail }/>
       <Route path={ Constant.OWNERS_PATHNAME } component={ Owners }/>
       <Route path={ `${ Constant.OWNERS_PATHNAME }/:ownerId` } component={ OwnersDetail }/>
       <Route path={ Constant.NOTIFICATIONS_PATHNAME } component={ Notifications }/>
