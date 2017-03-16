@@ -567,7 +567,11 @@
                   {
                     "name": "POSTGRESQL_DATABASE",
                     "value": "${DATABASE_NAME}"
-                  }                                    
+                  },
+                  {
+                    "name": "BACKUP_DIR",
+                    "value": "/backups/"
+                  }
                 ],
                 "resources": {
                   "limits": {

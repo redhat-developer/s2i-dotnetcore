@@ -3,7 +3,7 @@
 while true; do
 
 # first cull backups older than 10 days.
-find $FINAL_BACKUP_DIR"*" -type d -ctime +10 | xargs rm -rf
+find $BACKUP_DIR* -type d -ctime +10 | xargs rm -rf
 
 FINAL_BACKUP_DIR=$BACKUP_DIR"`date +\%Y-\%m-\%d-%H`/"
 DBFILE=$FINAL_BACKUP_DIR"$POSTGRESQL_DATABASE`date +\%Y-\%m-\%d-%H-%M`"
