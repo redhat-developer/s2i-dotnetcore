@@ -1,11 +1,13 @@
 #!/bin/bash
+# Postgresql automated backup script
+# See README.md for documentation on this script
 
 while true; do
 
 # first cull backups older than 10 days.
 find $BACKUP_DIR* -type d -ctime +10 | xargs rm -rf
 
-FINAL_BACKUP_DIR=$BACKUP_DIR"`date +\%Y-\%m-\%d-%H`/"
+FINAL_BACKUP_DIR=$BACKUP_DIR"`date +\%Y-\%m-\%d`/"
 DBFILE=$FINAL_BACKUP_DIR"$POSTGRESQL_DATABASE`date +\%Y-\%m-\%d-%H-%M`"
 echo "Making backup directory in $FINAL_BACKUP_DIR"
  
