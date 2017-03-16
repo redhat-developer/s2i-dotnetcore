@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SchoolBusAPI.Models;
+using System;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -81,7 +82,12 @@ namespace SchoolBusAPI.Authentication
         {
             get
             {
-                return this.Request.Headers[Options.SiteMinderUserGuidKey];
+                string result = this.Request.Headers[Options.SiteMinderUserGuidKey];                
+                if (!string.IsNullOrEmpty(result))
+                {
+                    result = result.Trim();
+                }
+                return result;
             }
         }
 
@@ -92,7 +98,11 @@ namespace SchoolBusAPI.Authentication
                 string smUserId = this.Request.Headers[Options.SiteMinderUserNameKey];
                 if (string.IsNullOrEmpty(smUserId))
                 {
-                    smUserId = this.Request.Headers[Options.SiteMinderUniversalIdKey];
+                    smUserId = this.Request.Headers[Options.SiteMinderUniversalIdKey];                    
+                }
+                if (!string.IsNullOrEmpty(smUserId))
+                {
+                    smUserId = smUserId.Trim();
                 }
 
                 return smUserId;
