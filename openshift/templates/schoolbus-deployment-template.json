@@ -590,7 +590,7 @@
               {
                 "name": "database-backups",
                 "persistentVolumeClaim": {
-                  "claimName": "${DATABASE_NAME}-backups-pvc"
+                  "claimName": "${DATABASE_SERVICE_NAME}-backups-pvc"
                 }
               }
             ]
@@ -965,7 +965,7 @@
         "name": "${RPROXY_NAME}"
       },
       "spec": {
-        "host": "${APPLICATION_DOMAIN}",		
+        "host": "${APPLICATION_DOMAIN}",
         "to": {
           "kind": "Service",
 		  "name": "${RPROXY_NAME}"
@@ -1285,7 +1285,7 @@
       "name": "BACKUP_IMAGE_NAME",
       "displayName": "Backup server image name.",
       "description": "Backup server image name.",
-      "value": "server",
+      "value": "backup",
       "required": true
     },	
     {
