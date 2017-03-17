@@ -103,9 +103,7 @@ namespace SchoolBusAPI.Models
             modelBuilder.UpperCaseUnderscoreSingularConvention();
         }
 
-        // Add methods here to get and set items in the model.
-        // For example:
-
+        public virtual DbSet<Audit> Audits { get; set; }
         public virtual DbSet<CCWData> CCWDatas { get; set; }
         public virtual DbSet<CCWJurisdiction> CCWJurisdictions { get; set; }
         public virtual DbSet<City> Cities { get; set; }
@@ -176,26 +174,76 @@ namespace SchoolBusAPI.Models
             }
             return result;
         }
-        
+
+        protected User GetCurrentUser()
+        {
+            User result = null;
+
+            try
+            {
+                string userId = HttpContextUser.FindFirst(SchoolBusAPI.Models.User.USERID_CLAIM).Value;
+                int id = int.Parse(userId);
+                result = Users.FirstOrDefault(x => x.Id == id);
+            }
+            catch (Exception e)
+            {
+                result = null;
+            }
+            return result;
+        }
+
+        bool FieldHasChanged(EntityEntry entry, string fieldName)
+        {
+            bool result = false;
+
+            // first check that the property is there.
+
+            var property = entry.Metadata.FindProperty(fieldName);
+            if (property != null)
+            {
+                var oldValue = entry.OriginalValues[fieldName];
+                var newValue = entry.CurrentValues[fieldName];
+                if (property.ClrType == typeof(int))
+                {
+                    result = oldValue != newValue;
+                }
+                else
+                {
+                    result = !oldValue.Equals(newValue);
+                }
+
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Override for Save Changes to implement the audit log
         /// </summary>
         /// <returns></returns>
         public override int SaveChanges()
         {
+            List<Audit> auditEntries = new List<Audit>();            
+
             // update the audit fields for this item.
             string smUserId = null;
+            User currentUser = null;
+
             if (_httpContextAccessor != null)
+            {
                 smUserId = GetCurrentUserId();
-
+                currentUser = GetCurrentUser();
+            }
+                                        
             var modifiedEntries = ChangeTracker.Entries()
-                    .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+                    .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted).ToList();
 
-            DateTime currentTime = DateTime.UtcNow;
-
+            DateTime currentTime = DateTime.UtcNow;            
+            
             foreach (var entry in modifiedEntries)
             {
-                if (entry.Entity.GetType().InheritsOrImplements(typeof(AuditableEntity)))
+                // handle the table level audit fields
+                if ((entry.State == EntityState.Added || entry.State == EntityState.Modified) && entry.Entity.GetType().InheritsOrImplements(typeof(AuditableEntity)))
                 {
                     var theObject = (AuditableEntity)entry.Entity;
                     theObject.LastUpdateUserid = smUserId;
@@ -205,12 +253,85 @@ namespace SchoolBusAPI.Models
                     {
                         theObject.CreateUserid = smUserId;
                         theObject.CreateTimestamp = currentTime;
-                    }
+                    }                    
+                }                
+                int affectedEntityId = (int) entry.CurrentValues["Id"];
+
+                string entityName = Model.FindEntityType(entry.Entity.GetType()).Relational().TableName;
+
+                if (entry.State == EntityState.Deleted)
+                {
+                    // update the Audit log for the delete record
+                    Audit audit = new Audit();
+                    audit.AppLastUpdateTimestamp = currentTime;
+                    audit.AppLastUpdateUserDirectory = currentUser.SmAuthorizationDirectory;
+                    audit.AppLastUpdateUserGuid = currentUser.Guid;
+                    audit.AppLastUpdateUserid = smUserId;
+                    audit.CreateTimestamp = currentTime;
+                    audit.CreateUserid = smUserId;
+                    audit.EntityName = entityName;
+                    audit.EntityName = entityName;
+                    audit.LastUpdateTimestamp = currentTime;
+                    audit.LastUpdateUserid = smUserId;
+                    audit.IsDelete = true;
+                    auditEntries.Add(audit);
                 }
-        
+                else
+                {
+                    
+                    // loop through the fields and determine any changes.
+                    foreach (var item in entry.Properties)
+                    {
+                        if (item.IsModified || entry.State == EntityState.Added)
+                        {
+                            // create an audit entry for this item.
+                            Audit audit = new Audit();
+                            audit.AppLastUpdateTimestamp = currentTime;
+                            audit.AppLastUpdateUserDirectory = currentUser.SmAuthorizationDirectory;
+                            audit.AppLastUpdateUserGuid = currentUser.Guid;
+                            audit.AppLastUpdateUserid = smUserId;
+                            audit.CreateTimestamp = currentTime;
+                            audit.CreateUserid = smUserId;
+                            audit.EntityName = entityName;
+                            audit.LastUpdateTimestamp = currentTime;
+                            audit.LastUpdateUserid = smUserId;
+
+                            if (entry.State == EntityState.Added)
+                            {
+                                audit.AppCreateTimestamp = currentTime;
+                                audit.AppCreateUserid = smUserId;
+                                audit.AppCreateUserGuid = currentUser.Guid;
+                                audit.AppCreateUserDirectory = currentUser.SmAuthorizationDirectory;                                                                
+                            }
+                                  
+                            if (item.OriginalValue != null)
+                            {
+                                audit.OldValue = item.OriginalValue.ToString();
+                            }                            
+                            if (item.CurrentValue != null)
+                            {
+                                audit.NewValue = item.CurrentValue.ToString();
+                            }                            
+                            audit.PropertyName = item.Metadata.Relational().ColumnName;
+                            auditEntries.Add(audit);                            
+                        }
+                    }                    
+                }
             }
 
-            return base.SaveChanges();
+            int result = base.SaveChanges();
+
+            // Add the audit entries. 
+            if (auditEntries.Count > 0)
+            {
+                foreach (var item in auditEntries)
+                {
+                    Audits.Add(item);
+                    base.SaveChanges();
+                }                
+            }
+
+            return result;
         }
     }
 }
