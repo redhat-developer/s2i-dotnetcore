@@ -267,22 +267,31 @@ namespace SchoolBusAPI.Services.Impl
 
         public virtual IActionResult SchoolbusownersIdHistoryPostAsync(int id, History item)
         {
+            HistoryViewModel result = new HistoryViewModel();
+
             bool exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                SchoolBusOwner schoolBuOwner = _context.SchoolBusOwners
+                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners
                     .Include(x => x.History)
                     .First(a => a.Id == id);
-                if (schoolBuOwner.History == null)
+                if (schoolBusOwner.History == null)
                 {
-                    schoolBuOwner.History = new List<History>();
+                    schoolBusOwner.History = new List<History>();
                 }
                 // force add
                 item.Id = 0;
-                schoolBuOwner.History.Add(item);
-                _context.SchoolBusOwners.Update(schoolBuOwner);
+                schoolBusOwner.History.Add(item);
+                _context.SchoolBusOwners.Update(schoolBusOwner);
             }
-            return new ObjectResult(item);
+
+            result.HistoryText = item.HistoryText;
+            result.Id = item.Id;
+            result.LastUpdateTimestamp = item.LastUpdateTimestamp;
+            result.LastUpdateUserid = item.LastUpdateUserid;
+            result.AffectedEntityId = id;
+
+            return new ObjectResult(result);
         }
 
         /// <summary>
