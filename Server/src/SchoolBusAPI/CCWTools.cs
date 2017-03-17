@@ -29,16 +29,11 @@ namespace SchoolBusAPI
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="Configuration"></param>
-        public static void PopulateCCWJob (string connectionString, IConfiguration Configuration)
+        public static void PopulateCCWJob (string connectionString, string cCW_userId, string cCW_guid, string cCW_directory, string ccwHost)
         {
             DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
             options.UseNpgsql(connectionString);
             DbAppContext context = new DbAppContext(null, options.Options);
-
-            // get credentials
-            string cCW_userId = Configuration["CCW_userId"];
-            string cCW_guid = Configuration["CCW_guid"];
-            string cCW_directory = Configuration["CCW_directory"];
 
             // make a database connection and see if there are any records that are missing the CCW link.
             // we restrict the query to records not updated in the last 6 hours so that the batch process does not repeatedly try a failed record. 
@@ -54,7 +49,7 @@ namespace SchoolBusAPI
                 string plate = data.LicencePlateNumber;
 
                 // Fetch the record.
-                CCWData cCWData = FetchCCW(Configuration, regi, vin, plate, cCW_userId, cCW_guid, cCW_directory);
+                CCWData cCWData = FetchCCW(ccwHost, regi, vin, plate, cCW_userId, cCW_guid, cCW_directory);
                 data.CCWData = cCWData;
 
                 // ensure that the record is touched in the database
@@ -71,17 +66,12 @@ namespace SchoolBusAPI
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="Configuration"></param>
-        public static void UpdateCCWJob(string connectionString, IConfiguration Configuration)
+        public static void UpdateCCWJob(string connectionString, string cCW_userId, string cCW_guid, string cCW_directory, string ccwHost)
         {
             // make a database connection and see if there are any records that need to be updated.
             DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
             options.UseNpgsql(connectionString);
             DbAppContext context = new DbAppContext(null, options.Options);
-
-            // get credentials
-            string cCW_userId = Configuration["CCW_userId"];
-            string cCW_guid = Configuration["CCW_guid"];
-            string cCW_directory = Configuration["CCW_directory"];
 
             // first get a few metrics.  we only want to update a max of 1% the database per day.
             int databaseTotal = context.CCWDatas.Count();
@@ -109,7 +99,7 @@ namespace SchoolBusAPI
                     string plate = null;
 
                     // Fetch the record.
-                    CCWData cCWData = FetchCCW(Configuration, regi, vin, plate, cCW_userId, cCW_guid, cCW_directory);
+                    CCWData cCWData = FetchCCW(regi, vin, plate, cCW_userId, cCW_guid, cCW_directory, ccwHost);
                    
                     if (cCWData == null) // fetch did not work, but we don't want it to fire again, so update the timestamp.
                     {
@@ -132,11 +122,10 @@ namespace SchoolBusAPI
         /// <param name="cCW_userId"></param>
         /// <param name="cCW_guid"></param>
         /// <param name="cCW_directory"></param>
+        /// <param name="ccwHost"></param>
         /// <returns></returns>
-        public static CCWData FetchCCW(IConfiguration Configuration, string regi, string vin, string plate, string cCW_userId, string cCW_guid, string cCW_directory)
-        {
-            string ccwHost = Configuration["CCW_SERVICE_NAME"];
-
+        public static CCWData FetchCCW(string regi, string vin, string plate, string cCW_userId, string cCW_guid, string cCW_directory, string ccwHost)
+        {            
             CCWData result = null;
 
             Dictionary<string, string> parametersToAdd = new Dictionary<string, string>();
