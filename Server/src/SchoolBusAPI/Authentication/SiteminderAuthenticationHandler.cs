@@ -103,8 +103,16 @@ namespace SchoolBusAPI.Authentication
                 if (!string.IsNullOrEmpty(smUserId))
                 {
                     smUserId = smUserId.Trim();
-                }
 
+                    // sometimes the site minder user ID contains the authorization directory.
+
+                    string idir = "IDIR\\";
+                    if (smUserId.Length >= idir.Length && smUserId.Substring(0, idir.Length).ToUpper() == idir)
+                    {
+                        smUserId = smUserId.Substring(idir.Length);
+                    }
+                }
+              
                 return smUserId;
             }
         }
