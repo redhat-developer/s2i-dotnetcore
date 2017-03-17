@@ -263,6 +263,11 @@ namespace SchoolBusAPI
             ILogger log = loggerFactory.CreateLogger(typeof(Startup));
             log.LogInformation("Attempting setup of Hangfire Create CCW job ...");
 
+            // get credentials
+            string cCW_userId = Configuration["CCW_userId"];
+            string cCW_guid = Configuration["CCW_guid"];
+            string cCW_directory = Configuration["CCW_directory"];
+            string ccwHost = Configuration["CCW_SERVICE_NAME"];
 
             try
             {
@@ -272,7 +277,7 @@ namespace SchoolBusAPI
                     
                     log.LogInformation("Creating Hangfire job for CCW population ...");
                     // every 15 seconds we see if a CCW record needs to be created for a bus.  We only create one CCW record at a time.
-                    BackgroundJob.Schedule(() => CCWTools.PopulateCCWJob(connectionString, Configuration), TimeSpan.FromSeconds(15));
+                    BackgroundJob.Schedule(() => CCWTools.PopulateCCWJob(connectionString, cCW_userId, cCW_guid, cCW_directory, ccwHost), TimeSpan.FromSeconds(15));
                 }
             }
             catch (Exception e)
@@ -295,6 +300,12 @@ namespace SchoolBusAPI
             ILogger log = loggerFactory.CreateLogger(typeof(Startup));
             log.LogInformation("Attempting setup of Hangfire Update CCW job ...");
 
+            // get credentials
+            string cCW_userId = Configuration["CCW_userId"];
+            string cCW_guid = Configuration["CCW_guid"];
+            string cCW_directory = Configuration["CCW_directory"];
+            string ccwHost = Configuration["CCW_SERVICE_NAME"];
+            
             try
             {
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -303,7 +314,7 @@ namespace SchoolBusAPI
                     
                     log.LogInformation("Creating Hangfire job for CCW update ...");
                     // every 5 minutes we see if a CCW record needs to be updated.  We only update one CCW record at a time.
-                    BackgroundJob.Schedule(() => CCWTools.UpdateCCWJob(connectionString, Configuration), TimeSpan.FromMinutes(5));
+                    BackgroundJob.Schedule(() => CCWTools.UpdateCCWJob(connectionString, cCW_userId, cCW_guid, cCW_directory, ccwHost), TimeSpan.FromMinutes(5));
                 }
             }
             catch (Exception e)

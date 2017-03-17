@@ -102,8 +102,8 @@ namespace SchoolBusAPI.Services.Impl
             {
                 cCW_directory = Request.Headers["SM_AUTHDIRNAME"];
             }
-
-            CCWData result = CCWTools.FetchCCW (Configuration, regi, vin, plate, cCW_userId, cCW_guid, cCW_directory);
+            string ccwHost = Configuration["CCW_SERVICE_NAME"];
+            CCWData result = CCWTools.FetchCCW (regi, vin, plate, cCW_userId, cCW_guid, cCW_directory, ccwHost);
 
             // return the result, or 404 if no result was found.
 
