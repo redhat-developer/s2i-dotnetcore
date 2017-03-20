@@ -176,16 +176,34 @@ var SchoolBusesDetail = React.createClass({
 
   onSaveEdit(schoolBus) {
     if (schoolBus.id) {
-      Api.updateSchoolBus(schoolBus);
+      
+      // Check for school bus status or owner change
+      var statusChanged = (this.props.schoolBus.status !== schoolBus.status) ? true : false;
+      var ownerChanged = (this.props.schoolBus.schoolBusOwner.id !== schoolBus.schoolBusOwner.id) ? true : false;
+      
+      Api.updateSchoolBus(schoolBus).then(() => {
+        // Log existing SchoolBus modified
+        History.logModifiedBus(this.props.schoolBus);
+
+        // Check for bus status change
+        if(statusChanged) {
+          History.logModifiedBusStatus(this.props.schoolBus);
+        }
+
+        // Check for school bus owner change
+        if(ownerChanged) {
+          History.logModifiedBusOwner(this.props.schoolBus, this.props.owner);
+        }
+      });
     } else {
       // Save the new school bus record
       Api.addSchoolBus(schoolBus).then(() => {
-        // Log it
-        History.logNewBus(this.props.schoolBus, this.props.owner);
         // Reload the screen with new school bus id
         this.props.router.push({
           pathname: this.props.schoolBus.path,
         });
+        // Log it
+        History.logNewBus(this.props.schoolBus, this.props.owner);
       });
     }
 
@@ -236,6 +254,8 @@ var SchoolBusesDetail = React.createClass({
       // In addition to refreshing the inspections, we need to update the school bus record
       // to get the new next inspection data.
       this.fetch();
+
+      History.logDeletedInspection(this.props.schoolBus, this.props.inspection);
     });
   },
 
@@ -249,6 +269,8 @@ var SchoolBusesDetail = React.createClass({
       if (isNew) {
         // Log it
         History.logNewInspection(this.props.schoolBus, this.props.inspection);
+      } else {
+        History.logModifiedInspection(this.props.schoolBus, this.props.inspection);
       }
 
       // Refresh the inspections table
@@ -283,7 +305,10 @@ var SchoolBusesDetail = React.createClass({
   generatePermit() {
     // This API call will update the school bus state after generating a permit.
     this.setState({ workingOnPermit: true });
-    Api.newSchoolBusPermit(this.props.params.schoolBusId).finally(() => {
+    Api.newSchoolBusPermit(this.props.params.schoolBusId).then(() => {
+      // Log generated permit to bus history
+      History.logGeneratedBusPermit(this.props.schoolBus);
+    }).finally(() => {
       this.setState({ workingOnPermit: false });
     });
   },

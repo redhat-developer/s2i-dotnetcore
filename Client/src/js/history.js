@@ -14,12 +14,19 @@ export const INSPECTION = 'Inspection';
 // History Events
 export const BUS_ADDED = 'School Bus %e was added by Owner %e.';
 export const BUS_MODIFIED = 'School Bus %e was modified.';
+export const BUS_MODIFIED_OWNER = 'The owner of School Bus %e was changed to %e.';
+export const BUS_MODIFIED_STATUS = 'The status of School Bus %e was changed';
 export const BUS_PASSED_INSPECTION = 'School Bus %e passed an Inspection %e.';
 export const BUS_FAILED_INSPECTION = 'School Bus %e failed an Inspection %e.';
 export const BUS_OUT_OF_SERVICE = 'School Bus %e is out of service %e.';
+export const BUS_PERMIT_GENERATED = 'School Bus %e - Permit';
+export const BUS_INSPECTION_ADDED = 'School Bus %e - Inspection %e was added.';
+export const BUS_INSPECTION_MODIFIED = 'School Bus %e - Inspection %e was modified.';
+export const BUS_INSPECTION_DELETED = 'School Bus %e - Inspection %e was deleted.';
 
 export const OWNER_ADDED = 'Owner %e was added.';
 export const OWNER_MODIFIED = 'Owner %e was modified.';
+export const OWNER_MODIFIED_STATUS = 'The status of %e was changed';
 export const OWNER_ADDED_BUS = 'Owner %e added School Bus %e.';
 
 export const USER_ADDED = 'User %e was added.';
@@ -125,12 +132,57 @@ export function get(historyEntity, offset, limit) {
   return null;
 }
 
-// Some log events
+// Logging
 export function logNewBus(bus, owner) {
   log(bus.historyEntity, BUS_ADDED, owner.historyEntity);
   log(owner.historyEntity, OWNER_ADDED_BUS, bus.historyEntity);
 }
 
+export function logModifiedBus(bus) {
+  log(bus.historyEntity, BUS_MODIFIED);
+}
+
+// Bus Details
+export function logModifiedBusStatus(bus) {
+  var event = BUS_MODIFIED_STATUS;
+  // Check if status exists.
+  if(typeof(bus.status) === 'string') {
+    event += ' to ';
+    event += bus.status;
+  }
+  event += '.';
+
+  log(bus.historyEntity, event);
+}
+
+export function logModifiedBusOwner(bus) {
+  // Temporary fix for owner.historyEntity async load issue
+  var pathMock = 'owners/' + bus.schoolBusOwner.id;
+  var ownerHistoryMock = {
+    type: 'Owner',
+    id: bus.schoolBusOwner.id,
+    description: bus.ownerName,
+    url: bus.ownerURL,
+    path: pathMock,
+  };
+
+  log(bus.historyEntity, BUS_MODIFIED_OWNER, ownerHistoryMock);
+  log(ownerHistoryMock, OWNER_ADDED_BUS, bus.historyEntity);
+}
+
+export function logGeneratedBusPermit(bus) {
+  var event = BUS_PERMIT_GENERATED;
+  
+  if(bus.permitNumber) {
+    event += ' #';
+    event += (bus.permitNumber).toString();
+  }
+  event += ' was generated.';
+  
+  log(bus.historyEntity, event);
+}
+
+// Bus Inspection
 export function logNewInspection(bus, inspection) {
   var event = null;
 
@@ -145,4 +197,29 @@ export function logNewInspection(bus, inspection) {
   if (event) {
     log(bus.historyEntity, event, inspection.historyEntity);
   }
+}
+
+export function logModifiedInspection(bus, inspection) {
+  log(bus.historyEntity, BUS_INSPECTION_MODIFIED, inspection.historyEntity);
+}
+
+export function logDeletedInspection(bus, inspection) {
+  log(bus.historyEntity, BUS_INSPECTION_DELETED, inspection.historyEntity);
+}
+
+//// LOG OWNER
+export function logNewOwner(owner) {
+  log(owner.historyEntity, OWNER_ADDED);
+}
+
+export function logModifiedOwnerStatus(owner) {
+  var event = OWNER_MODIFIED_STATUS;
+
+  if(typeof(owner.status) === 'string') {
+    event += ' to ';
+    event += owner.status;
+  }
+  event += '.';
+  console.log(event);
+  log(owner.historyEntity, event);
 }
