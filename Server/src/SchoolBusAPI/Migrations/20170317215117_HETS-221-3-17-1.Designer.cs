@@ -8,9 +8,10 @@ using SchoolBusAPI.Models;
 namespace SchoolBusAPI.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    partial class DbAppContextModelSnapshot : ModelSnapshot
+    [Migration("20170317215117_HETS-221-3-17-1")]
+    partial class HETS2213171
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -68,7 +69,7 @@ namespace SchoolBusAPI.Migrations
 
             modelBuilder.Entity("SchoolBusAPI.Models.Audit", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AUDIT_ID");
 
