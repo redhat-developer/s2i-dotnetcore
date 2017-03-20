@@ -15,7 +15,6 @@ import SchoolBusesAddDialog from './dialogs/SchoolBusesAddDialog.jsx';
 import * as Action from '../actionTypes';
 import * as Api from '../api';
 import * as Constant from '../constants';
-import * as History from '../history';
 import store from '../store';
 
 import BadgeLabel from '../components/BadgeLabel.jsx';
@@ -86,16 +85,7 @@ var OwnersDetail = React.createClass({
   },
 
   saveEdit(owner) {
-    // Check for owner status change
-    var statusChanged = (this.props.owner.status !== owner.status) ? true : false;
-    
     Api.updateOwner(owner).finally(() => {
-      // Logging
-      // Owner status change
-      if(statusChanged) {
-        History.logModifiedOwnerStatus(this.props.owner);
-      }
-      
       this.closeEditDialog();
     });
   },
