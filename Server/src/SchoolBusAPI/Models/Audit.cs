@@ -51,11 +51,12 @@ namespace SchoolBusAPI.Models
         /// <param name="AppLastUpdateUserGuid">The Globally Unique Identifier of the application user who performed the action that created or last updated the record. This value must be non-NULL if APP_CREATE_USER_DIRECTORY is &amp;#39;IDIR&amp;#39; or &amp;#39;BCEID&amp;#39;, but it must be NULL if APP_CREATE_USER_DIRECTORY is &amp;#39;ORACLE&amp;#39;..</param>
         /// <param name="AppLastUpdateUserDirectory">The directory in which APP_LAST_UPDATE_USERID is defined. Valid values are &amp;#39;IDIR&amp;#39;, &amp;#39; BCEID&amp;#39; or &amp;#39;ORACLE&amp;#39;..</param>
         /// <param name="EntityName">The name of the entity that has changed.</param>
+        /// <param name="EntityId">The primary key in the entity that has changed.</param>
         /// <param name="PropertyName">The property that has changed.</param>
         /// <param name="OldValue">The old value.</param>
         /// <param name="NewValue">The new value.</param>
         /// <param name="IsDelete">If true the record was deleted.</param>
-        public Audit(int Id, DateTime? AppCreateTimestamp = null, string AppCreateUserid = null, string AppCreateUserGuid = null, string AppCreateUserDirectory = null, DateTime? AppLastUpdateTimestamp = null, string AppLastUpdateUserid = null, string AppLastUpdateUserGuid = null, string AppLastUpdateUserDirectory = null, string EntityName = null, string PropertyName = null, string OldValue = null, string NewValue = null, bool? IsDelete = null)
+        public Audit(int Id, DateTime? AppCreateTimestamp = null, string AppCreateUserid = null, string AppCreateUserGuid = null, string AppCreateUserDirectory = null, DateTime? AppLastUpdateTimestamp = null, string AppLastUpdateUserid = null, string AppLastUpdateUserGuid = null, string AppLastUpdateUserDirectory = null, string EntityName = null, int? EntityId = null, string PropertyName = null, string OldValue = null, string NewValue = null, bool? IsDelete = null)
         {   
             this.Id = Id;
             this.AppCreateTimestamp = AppCreateTimestamp;
@@ -67,6 +68,7 @@ namespace SchoolBusAPI.Models
             this.AppLastUpdateUserGuid = AppLastUpdateUserGuid;
             this.AppLastUpdateUserDirectory = AppLastUpdateUserDirectory;
             this.EntityName = EntityName;
+            this.EntityId = EntityId;
             this.PropertyName = PropertyName;
             this.OldValue = OldValue;
             this.NewValue = NewValue;
@@ -144,6 +146,13 @@ namespace SchoolBusAPI.Models
         public string EntityName { get; set; }
         
         /// <summary>
+        /// The primary key in the entity that has changed
+        /// </summary>
+        /// <value>The primary key in the entity that has changed</value>
+        [MetaDataExtension (Description = "The primary key in the entity that has changed")]
+        public int? EntityId { get; set; }
+        
+        /// <summary>
         /// The property that has changed
         /// </summary>
         /// <value>The property that has changed</value>
@@ -189,6 +198,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  AppLastUpdateUserGuid: ").Append(AppLastUpdateUserGuid).Append("\n");
             sb.Append("  AppLastUpdateUserDirectory: ").Append(AppLastUpdateUserDirectory).Append("\n");
             sb.Append("  EntityName: ").Append(EntityName).Append("\n");
+            sb.Append("  EntityId: ").Append(EntityId).Append("\n");
             sb.Append("  PropertyName: ").Append(PropertyName).Append("\n");
             sb.Append("  OldValue: ").Append(OldValue).Append("\n");
             sb.Append("  NewValue: ").Append(NewValue).Append("\n");
@@ -281,6 +291,11 @@ namespace SchoolBusAPI.Models
                     this.EntityName.Equals(other.EntityName)
                 ) &&                 
                 (
+                    this.EntityId == other.EntityId ||
+                    this.EntityId != null &&
+                    this.EntityId.Equals(other.EntityId)
+                ) &&                 
+                (
                     this.PropertyName == other.PropertyName ||
                     this.PropertyName != null &&
                     this.PropertyName.Equals(other.PropertyName)
@@ -349,6 +364,10 @@ namespace SchoolBusAPI.Models
                                 if (this.EntityName != null)
                 {
                     hash = hash * 59 + this.EntityName.GetHashCode();
+                }                
+                                if (this.EntityId != null)
+                {
+                    hash = hash * 59 + this.EntityId.GetHashCode();
                 }                
                                 if (this.PropertyName != null)
                 {

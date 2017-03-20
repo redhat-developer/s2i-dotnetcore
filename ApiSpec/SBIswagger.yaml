@@ -4934,6 +4934,10 @@ definitions:
       entityName:
         type: string
         description: The name of the entity that has changed
+      entityId:
+        format: int32
+        type: integer
+        description: The primary key in the entity that has changed
       propertyName:
         type: string
         description: The property that has changed

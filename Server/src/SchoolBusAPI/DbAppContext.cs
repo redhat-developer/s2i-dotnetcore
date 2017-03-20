@@ -270,7 +270,7 @@ namespace SchoolBusAPI.Models
                     audit.CreateTimestamp = currentTime;
                     audit.CreateUserid = smUserId;
                     audit.EntityName = entityName;
-                    audit.EntityName = entityName;
+                    audit.EntityId = affectedEntityId;
                     audit.LastUpdateTimestamp = currentTime;
                     audit.LastUpdateUserid = smUserId;
                     audit.IsDelete = true;
@@ -293,6 +293,7 @@ namespace SchoolBusAPI.Models
                             audit.CreateTimestamp = currentTime;
                             audit.CreateUserid = smUserId;
                             audit.EntityName = entityName;
+                            audit.EntityId = affectedEntityId;
                             audit.LastUpdateTimestamp = currentTime;
                             audit.LastUpdateUserid = smUserId;
 
