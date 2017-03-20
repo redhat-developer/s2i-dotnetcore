@@ -282,7 +282,9 @@ namespace SchoolBusAPI.Services.Impl
                 // force add
                 item.Id = 0;
                 schoolBusOwner.History.Add(item);
+                
                 _context.SchoolBusOwners.Update(schoolBusOwner);
+                _context.SaveChanges();
             }
 
             result.HistoryText = item.HistoryText;
