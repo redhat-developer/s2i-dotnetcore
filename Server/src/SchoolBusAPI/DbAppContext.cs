@@ -258,71 +258,75 @@ namespace SchoolBusAPI.Models
 
                 if (currentUser != null)
                 {
-
-
-
-                    int affectedEntityId = (int)entry.CurrentValues["Id"];
-
-                    string entityName = Model.FindEntityType(entry.Entity.GetType()).Relational().TableName;
-
-                    if (entry.State == EntityState.Deleted)
+                    try
                     {
-                        // update the Audit log for the delete record
-                        Audit audit = new Audit();
-                        audit.AppLastUpdateTimestamp = currentTime;
-                        audit.AppLastUpdateUserDirectory = currentUser.SmAuthorizationDirectory;
-                        audit.AppLastUpdateUserGuid = currentUser.Guid;
-                        audit.AppLastUpdateUserid = smUserId;
-                        audit.CreateTimestamp = currentTime;
-                        audit.CreateUserid = smUserId;
-                        audit.EntityName = entityName;
-                        audit.EntityId = affectedEntityId;
-                        audit.LastUpdateTimestamp = currentTime;
-                        audit.LastUpdateUserid = smUserId;
-                        audit.IsDelete = true;
-                        auditEntries.Add(audit);
-                    }
-                    else
-                    {
+                        int affectedEntityId = (int)entry.CurrentValues["Id"];
 
-                        // loop through the fields and determine any changes.
-                        foreach (var item in entry.Properties)
+                        string entityName = Model.FindEntityType(entry.Entity.GetType()).Relational().TableName;
+
+                        if (entry.State == EntityState.Deleted)
                         {
-                            if (item.IsModified || entry.State == EntityState.Added)
+                            // update the Audit log for the delete record
+                            Audit audit = new Audit();
+                            audit.AppLastUpdateTimestamp = currentTime;
+                            audit.AppLastUpdateUserDirectory = currentUser.SmAuthorizationDirectory;
+                            audit.AppLastUpdateUserGuid = currentUser.Guid;
+                            audit.AppLastUpdateUserid = smUserId;
+                            audit.CreateTimestamp = currentTime;
+                            audit.CreateUserid = smUserId;
+                            audit.EntityName = entityName;
+                            audit.EntityId = affectedEntityId;
+                            audit.LastUpdateTimestamp = currentTime;
+                            audit.LastUpdateUserid = smUserId;
+                            audit.IsDelete = true;
+                            auditEntries.Add(audit);
+                        }
+                        else
+                        {
+
+                            // loop through the fields and determine any changes.
+                            foreach (var item in entry.Properties)
                             {
-                                // create an audit entry for this item.
-                                Audit audit = new Audit();
-                                audit.AppLastUpdateTimestamp = currentTime;
-                                audit.AppLastUpdateUserDirectory = currentUser.SmAuthorizationDirectory;
-                                audit.AppLastUpdateUserGuid = currentUser.Guid;
-                                audit.AppLastUpdateUserid = smUserId;
-                                audit.CreateTimestamp = currentTime;
-                                audit.CreateUserid = smUserId;
-                                audit.EntityName = entityName;
-                                audit.EntityId = affectedEntityId;
-                                audit.LastUpdateTimestamp = currentTime;
-                                audit.LastUpdateUserid = smUserId;
+                                if (item.IsModified || entry.State == EntityState.Added)
+                                {
+                                    // create an audit entry for this item.
+                                    Audit audit = new Audit();
+                                    audit.AppLastUpdateTimestamp = currentTime;
+                                    audit.AppLastUpdateUserDirectory = currentUser.SmAuthorizationDirectory;
+                                    audit.AppLastUpdateUserGuid = currentUser.Guid;
+                                    audit.AppLastUpdateUserid = smUserId;
+                                    audit.CreateTimestamp = currentTime;
+                                    audit.CreateUserid = smUserId;
+                                    audit.EntityName = entityName;
+                                    audit.EntityId = affectedEntityId;
+                                    audit.LastUpdateTimestamp = currentTime;
+                                    audit.LastUpdateUserid = smUserId;
 
-                                if (entry.State == EntityState.Added)
-                                {
-                                    audit.AppCreateTimestamp = currentTime;
-                                    audit.AppCreateUserid = smUserId;
-                                    audit.AppCreateUserGuid = currentUser.Guid;
-                                    audit.AppCreateUserDirectory = currentUser.SmAuthorizationDirectory;
-                                }
+                                    if (entry.State == EntityState.Added)
+                                    {
+                                        audit.AppCreateTimestamp = currentTime;
+                                        audit.AppCreateUserid = smUserId;
+                                        audit.AppCreateUserGuid = currentUser.Guid;
+                                        audit.AppCreateUserDirectory = currentUser.SmAuthorizationDirectory;
+                                    }
 
-                                if (item.OriginalValue != null)
-                                {
-                                    audit.OldValue = item.OriginalValue.ToString();
+                                    if (item.OriginalValue != null)
+                                    {
+                                        audit.OldValue = item.OriginalValue.ToString();
+                                    }
+                                    if (item.CurrentValue != null)
+                                    {
+                                        audit.NewValue = item.CurrentValue.ToString();
+                                    }
+                                    audit.PropertyName = item.Metadata.Relational().ColumnName;
+                                    auditEntries.Add(audit);
                                 }
-                                if (item.CurrentValue != null)
-                                {
-                                    audit.NewValue = item.CurrentValue.ToString();
-                                }
-                                audit.PropertyName = item.Metadata.Relational().ColumnName;
-                                auditEntries.Add(audit);
                             }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
                     }
                 }
             }

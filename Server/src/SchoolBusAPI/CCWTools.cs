@@ -31,33 +31,38 @@ namespace SchoolBusAPI
         /// <param name="Configuration"></param>
         public static void PopulateCCWJob (string connectionString, string cCW_userId, string cCW_guid, string cCW_directory, string ccwHost)
         {
-            DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
-            options.UseNpgsql(connectionString);
-            DbAppContext context = new DbAppContext(null, options.Options);
+            // sanity check
+            if (connectionString != null && cCW_userId != null && cCW_guid != null && cCW_directory != null && ccwHost != null)
+            {
 
-            // make a database connection and see if there are any records that are missing the CCW link.
-            // we restrict the query to records not updated in the last 6 hours so that the batch process does not repeatedly try a failed record. 
-            var data = context.SchoolBuss
-                .FirstOrDefault(x => x.CCWDataId == null && x.LastUpdateTimestamp < DateTime.UtcNow.AddHours(-1));
+                DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
+                options.UseNpgsql(connectionString);
+                DbAppContext context = new DbAppContext(null, options.Options);
 
-            if (data != null)
-            {               
-             
-                // get the data for the request from the result of the database query.
-                string regi = data.ICBCRegistrationNumber;
-                string vin = data.VehicleIdentificationNumber;
-                string plate = data.LicencePlateNumber;
+                // make a database connection and see if there are any records that are missing the CCW link.
+                // we restrict the query to records not updated in the last 6 hours so that the batch process does not repeatedly try a failed record. 
+                var data = context.SchoolBuss
+                    .FirstOrDefault(x => x.CCWDataId == null && x.LastUpdateTimestamp < DateTime.UtcNow.AddHours(-1));
 
-                // Fetch the record.
-                CCWData cCWData = FetchCCW(ccwHost, regi, vin, plate, cCW_userId, cCW_guid, cCW_directory);
-                data.CCWData = cCWData;
+                if (data != null)
+                {
 
-                // ensure that the record is touched in the database
-                data.LastUpdateTimestamp = DateTime.UtcNow;
+                    // get the data for the request from the result of the database query.
+                    string regi = data.ICBCRegistrationNumber;
+                    string vin = data.VehicleIdentificationNumber;
+                    string plate = data.LicencePlateNumber;
 
-                // save changes.
-                context.SchoolBuss.Update(data);
-                context.SaveChanges();
+                    // Fetch the record.
+                    CCWData cCWData = FetchCCW(ccwHost, regi, vin, plate, cCW_userId, cCW_guid, cCW_directory);
+                    data.CCWData = cCWData;
+
+                    // ensure that the record is touched in the database
+                    data.LastUpdateTimestamp = DateTime.UtcNow;
+
+                    // save changes.
+                    context.SchoolBuss.Update(data);
+                    context.SaveChanges();
+                }
             }                
         }
 
@@ -68,48 +73,51 @@ namespace SchoolBusAPI
         /// <param name="Configuration"></param>
         public static void UpdateCCWJob(string connectionString, string cCW_userId, string cCW_guid, string cCW_directory, string ccwHost)
         {
-            // make a database connection and see if there are any records that need to be updated.
-            DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
-            options.UseNpgsql(connectionString);
-            DbAppContext context = new DbAppContext(null, options.Options);
-
-            // first get a few metrics.  we only want to update a max of 1% the database per day.
-            int databaseTotal = context.CCWDatas.Count();
-
-            int dailyTotal = context.CCWDatas
-                .Where(x => x.LastUpdateTimestamp < DateTime.UtcNow.AddDays(-1))
-                .Select(x => x)
-                .Count();
-
-            if (databaseTotal > 0 && dailyTotal < databaseTotal / 100)
+            // sanity check
+            if (connectionString != null && cCW_userId != null && cCW_guid != null && cCW_directory != null && ccwHost != null)
             {
-                // make a database connection and see if there are any records that are missing the CCW link.
-                // we restrict the query to records not updated in the last 100 days so that the batch process does not repeatedly try a failed record. 
-                var data = context.CCWDatas
-                    .OrderBy (x => x.LastUpdateTimestamp)
-                    .FirstOrDefault(x => x.LastUpdateTimestamp < DateTime.UtcNow.AddDays(-100));
+                // make a database connection and see if there are any records that need to be updated.
+                DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
+                options.UseNpgsql(connectionString);
+                DbAppContext context = new DbAppContext(null, options.Options);
 
-                if (data != null)
+                // first get a few metrics.  we only want to update a max of 1% the database per day.
+                int databaseTotal = context.CCWDatas.Count();
+
+                int dailyTotal = context.CCWDatas
+                    .Where(x => x.LastUpdateTimestamp < DateTime.UtcNow.AddDays(-1))
+                    .Select(x => x)
+                    .Count();
+
+                if (databaseTotal > 0 && dailyTotal < databaseTotal / 100)
                 {
+                    // make a database connection and see if there are any records that are missing the CCW link.                
+                    var data = context.CCWDatas
+                        .OrderBy(x => x.LastUpdateTimestamp)
+                        .FirstOrDefault(x => x.LastUpdateTimestamp < DateTime.UtcNow.AddDays(-1));
 
-                    // get the data for the request from the result of the database query.
-                    string regi = data.ICBCRegistrationNumber;
-                    string vin = data.ICBCVehicleIdentificationNumber;
-                    // plate is excluded from the batch update because it can be shared.
-                    string plate = null;
-
-                    // Fetch the record.
-                    CCWData cCWData = FetchCCW(regi, vin, plate, cCW_userId, cCW_guid, cCW_directory, ccwHost);
-                   
-                    if (cCWData == null) // fetch did not work, but we don't want it to fire again, so update the timestamp.
+                    if (data != null)
                     {
-                        // ensure that the record is touched in the database
-                        data.LastUpdateTimestamp = DateTime.UtcNow;
-                        context.CCWDatas.Update(data);
-                        context.SaveChanges();
+
+                        // get the data for the request from the result of the database query.
+                        string regi = data.ICBCRegistrationNumber;
+                        string vin = data.ICBCVehicleIdentificationNumber;
+                        // plate is excluded from the batch update because it can be shared.
+                        string plate = null;
+
+                        // Fetch the record.
+                        CCWData cCWData = FetchCCW(regi, vin, plate, cCW_userId, cCW_guid, cCW_directory, ccwHost);
+
+                        if (cCWData == null) // fetch did not work, but we don't want it to fire again, so update the timestamp.
+                        {
+                            // ensure that the record is touched in the database
+                            data.LastUpdateTimestamp = DateTime.UtcNow;
+                            context.CCWDatas.Update(data);
+                            context.SaveChanges();
+                        }
                     }
                 }
-            }           
+            }                   
         }
 
         /// <summary>

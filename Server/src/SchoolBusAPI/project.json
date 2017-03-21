@@ -37,9 +37,11 @@
     "System.Xml.XmlDocument": "4.3.0",
     "System.Xml.XPath.XmlDocument": "4.3.0",
     "Microsoft.AspNetCore.ResponseCompression": "1.0.0",
-    "Hangfire.PostgreSql.NetCore": "1.4.3",
     "Hangfire.AspNetCore": "1.6.9",
-    "Microsoft.AspNetCore.Mvc.Core": "1.1.1"
+    "Microsoft.AspNetCore.Mvc.Core": "1.1.1",
+    "Hangfire.Core": "1.6.9",
+    "Hangfire.PostgreSql.NetCore": "1.4.3",
+    "Dapper": "1.50.2"
   },
   "tools": {
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-preview4-final",
