@@ -27,7 +27,9 @@ export const BUS_INSPECTION_DELETED = 'School Bus %e - Inspection %e was deleted
 export const OWNER_ADDED = 'Owner %e was added.';
 export const OWNER_MODIFIED = 'Owner %e was modified.';
 export const OWNER_MODIFIED_STATUS = 'The status of %e was changed';
-export const OWNER_ADDED_BUS = 'Owner %e added School Bus %e.';
+export const OWNER_MODIFIED_NAME = 'Owner name was changed to %e';
+export const OWNER_ADDED_BUS = 'A school bus was added or moved to Owner %e - School Bus %e.';
+export const OWNER_REMOVED_BUS = 'A school bus was removed from Owner %e - School Bus %e.';
 
 export const USER_ADDED = 'User %e was added.';
 export const USER_MODIFIED = 'User %e was modified.';
@@ -155,19 +157,19 @@ export function logModifiedBusStatus(bus) {
   log(bus.historyEntity, event);
 }
 
-export function logModifiedBusOwner(bus) {
+export function logModifiedBusOwner(bus, previousOwner) {
   // Temporary fix for owner.historyEntity async load issue
-  var pathMock = 'owners/' + bus.schoolBusOwner.id;
-  var ownerHistoryMock = {
+  var nextOwnerHistoryMock = {
     type: 'Owner',
     id: bus.schoolBusOwner.id,
     description: bus.ownerName,
     url: bus.ownerURL,
-    path: pathMock,
   };
+  nextOwnerHistoryMock.path = 'owners/' + bus.schoolBusOwner.id;
 
-  log(bus.historyEntity, BUS_MODIFIED_OWNER, ownerHistoryMock);
-  log(ownerHistoryMock, OWNER_ADDED_BUS, bus.historyEntity);
+  log(bus.historyEntity, BUS_MODIFIED_OWNER, nextOwnerHistoryMock);
+  log(nextOwnerHistoryMock, OWNER_ADDED_BUS, bus.historyEntity);
+  log(previousOwner.historyEntity, OWNER_REMOVED_BUS, bus.historyEntity);
 }
 
 export function logGeneratedBusPermit(bus) {
@@ -220,10 +222,10 @@ export function logModifiedOwnerStatus(owner) {
     event += owner.status;
   }
   event += '.';
-  console.log(event);
+
   log(owner.historyEntity, event);
 }
 
-// export function logDeletedOwner(owner) {
-//   log(owner.historyEntity, OWNER_DELETED, owner.historyEntity);
-// }
+export function logModifiedOwnerName(owner) {
+  log(owner.historyEntity, OWNER_MODIFIED_NAME);
+}

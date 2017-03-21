@@ -192,6 +192,8 @@ var SchoolBusesDetail = React.createClass({
 
         // Check for school bus owner change
         if(ownerChanged) {
+          // First parameter contains school bus entity with new owner info
+          // Second parameter contains previous owner entity
           History.logModifiedBusOwner(this.props.schoolBus, this.props.owner);
         }
       });
