@@ -144,6 +144,7 @@ var Owners = React.createClass({
       this.props.router.push({
         pathname: `${ Constant.OWNERS_PATHNAME }/${ this.props.owner.id }`,
       });
+      History.logNewOwner(this.props.owner);
     });
   },
 

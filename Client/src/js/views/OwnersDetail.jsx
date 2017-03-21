@@ -88,12 +88,18 @@ var OwnersDetail = React.createClass({
   saveEdit(owner) {
     // Check for owner status change
     var statusChanged = (this.props.owner.status !== owner.status) ? true : false;
+    var nameChanged = (this.props.owner.name !== owner.name) ? true : false;
     
     Api.updateOwner(owner).finally(() => {
       // Logging
       // Owner state change
       if(statusChanged) {
         History.logModifiedOwnerStatus(this.props.owner);
+      }
+
+      // Owner name change
+      if(nameChanged) {
+        History.logModifiedOwnerName(this.props.owner);
       }
       
       this.closeEditDialog();
