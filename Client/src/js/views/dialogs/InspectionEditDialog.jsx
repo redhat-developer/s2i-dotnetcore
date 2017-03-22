@@ -253,7 +253,7 @@ var InspectionEditDialog = React.createClass({
                 </FormGroup>
                 <FormGroup controlId="ripInspectionId">
                   <ControlLabel>RIP Inspection ID</ControlLabel>
-                  <LinkControl value={ this.state.ripInspectionId } url={ (value) => { return `http://google.com/search?q=${value}`; } } readOnly={ isReadOnly } updateState={ this.updateState }/>
+                  <FormInputControl type="text" defaultValue={ this.state.ripInspectionId } disabled={ isReadOnly } updateState={ this.updateState } />
                 </FormGroup>
               </Col>
               <Col md={8}>
