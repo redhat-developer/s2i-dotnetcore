@@ -2,8 +2,7 @@
 }}{{#get}}
     get:
       tags:
-        - {{tag}}{{#x-codegen-permission}}
-      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
+        - {{tag}}
       consumes: []
       produces:
         - text/plain
@@ -70,8 +69,7 @@
 }}{{#getById}}
     get:
       tags:
-        - {{tag}}{{#x-codegen-permission}}
-      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
+        - {{tag}}
       consumes: []
       produces:
         - text/plain
@@ -93,8 +91,7 @@
 }}{{#putById}}
     put:
       tags:
-        - {{tag}}{{#x-codegen-permission}}
-      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
+        - {{tag}}
       consumes:
         - application/json
       produces:
@@ -149,8 +146,7 @@
 }}{{#crud}}  /{{path}}:
     get:
       tags:
-        - {{tag}}{{#x-codegen-permission}}
-      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
+        - {{tag}}
       consumes: []
       produces:
         - text/plain
@@ -165,8 +161,7 @@
               $ref: "#/definitions/{{#paramDef}}{{paramDef}}{{/paramDef}}{{^paramDef}}{{tag}}{{/paramDef}}"
     post:
       tags:
-        - {{tag}}
-      {{#x-codegen-permission}}
+        - {{tag}}{{#x-codegen-permission}}
       x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
       consumes:
         - application/json
@@ -193,8 +188,7 @@
   /{{path}}/{id}:
     get:
       tags:
-        - {{tag}}{{#x-codegen-permission}}
-      x-codegen-permission: {{x-codegen-permission}}{{/x-codegen-permission}}
+        - {{tag}}
       consumes: []
       produces:
         - text/plain

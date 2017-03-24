@@ -999,3 +999,58 @@ definitions:
         type: string
         maxLength: 255
         description: A description of the group that is presented to the user when they are setting a user into a group.
+  Audit:
+    type: object
+    description: Server generated audit log
+    required:
+      - id
+    properties:
+      id:
+        format: int32
+        type: integer
+        description: A system-generated unique identifier for an Audit
+      appCreateTimestamp:
+        type: string
+        format: date-time
+        description: The date and time of the application action that created the record. 
+      appCreateUserid:
+        type: string
+        description: The user account name of the application user who performed the action that created the record (e.g. JSMITH). This value is not preceded by the directory name. 
+      appCreateUserGuid:
+        type: string
+        description: The Globally Unique Identifier of the application user who performed the action that created the record. This value must be non-NULL if APP_CREATE_USER_DIRECTORY is &#39;IDIR&#39; or &#39;BCEID&#39;, but it must be NULL if APP_CREATE_USER_DIRECTORY is &#39;ORACLE&#39;. APP
+      appCreateUserDirectory:
+        type: string
+        description: The directory in which APP_CREATE_USERID is defined. Valid values are &#39;IDIR&#39;, &#39; BCEID&#39; or &#39;ORACLE&#39;. 
+      appLastUpdateTimestamp:
+        type: string
+        format: date-time
+        description: The date and time of the application action that created or last updated the record.
+      appLastUpdateUserid:
+        type: string
+        description: The Globally Unique Identifier of the application user who performed the action that created the record. This value must be non-NULL if APP_CREATE_USER_DIRECTORY is &#39;IDIR&#39; or &#39;BCEID&#39;, but it must be NULL if APP_CREATE_USER_DIRECTORY is &#39;ORACLE&#39;. APP
+      appLastUpdateUserGuid:
+        type: string
+        description: The Globally Unique Identifier of the application user who performed the action that created or last updated the record. This value must be non-NULL if APP_CREATE_USER_DIRECTORY is &#39;IDIR&#39; or &#39;BCEID&#39;, but it must be NULL if APP_CREATE_USER_DIRECTORY is &#39;ORACLE&#39;. 
+      appLastUpdateUserDirectory:
+        type: string
+        description: The directory in which APP_LAST_UPDATE_USERID is defined. Valid values are &#39;IDIR&#39;, &#39; BCEID&#39; or &#39;ORACLE&#39;. 
+      entityName:
+        type: string
+        description: The name of the entity that has changed
+      entityId:
+        format: int32
+        type: integer
+        description: The primary key in the entity that has changed
+      propertyName:
+        type: string
+        description: The property that has changed
+      oldValue:
+        type: string
+        description: The old value
+      newValue:
+        type: string
+        description: The new value
+      isDelete:
+        type: boolean
+        description: If true the record was deleted

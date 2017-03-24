@@ -539,6 +539,7 @@
       description: Updates the permissions for a role
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -571,6 +572,7 @@
       description: Adds a permissions to a role
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -623,6 +625,7 @@
       description: Updates the users for a role
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -673,6 +676,7 @@
       description: Create new user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -809,6 +813,7 @@
       description: Adds a number of users
       tags:
         - User
+      x-codegen-permission: ADMIN
       produces:
         - text/plain
         - application/json
@@ -885,6 +890,7 @@
       description: Updates a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -914,6 +920,7 @@
       description: Deletes a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       produces:
         - text/plain
         - application/json
@@ -1035,6 +1042,7 @@
       description: Adds a role to a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1066,6 +1074,7 @@
       description: Updates the roles for a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1146,6 +1155,7 @@
       description: Updates the active set of groups for a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1178,6 +1188,7 @@
       description: Add to the active set of groups for a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
