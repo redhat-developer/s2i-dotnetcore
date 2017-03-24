@@ -1350,6 +1350,7 @@ paths:
     get:
       tags:
         - Group
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1365,7 +1366,7 @@ paths:
     post:
       tags:
         - Group
-
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1392,6 +1393,7 @@ paths:
     get:
       tags:
         - Group
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1413,6 +1415,7 @@ paths:
     put:
       tags:
         - Group
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1441,6 +1444,7 @@ paths:
     post:
       tags:
         - Group
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1484,6 +1488,7 @@ paths:
     get:
       tags:
         - Permission
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1499,7 +1504,7 @@ paths:
     post:
       tags:
         - Permission
-
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1526,6 +1531,7 @@ paths:
     get:
       tags:
         - Permission
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1547,6 +1553,7 @@ paths:
     put:
       tags:
         - Permission
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1575,6 +1582,7 @@ paths:
     post:
       tags:
         - Permission
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1618,6 +1626,7 @@ paths:
     get:
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1633,7 +1642,7 @@ paths:
     post:
       tags:
         - Role
-
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1660,6 +1669,7 @@ paths:
     get:
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1681,6 +1691,7 @@ paths:
     put:
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1709,6 +1720,7 @@ paths:
     post:
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -3162,6 +3174,7 @@ paths:
       description: Updates the permissions for a role
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -3194,6 +3207,7 @@ paths:
       description: Adds a permissions to a role
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -3246,6 +3260,7 @@ paths:
       description: Updates the users for a role
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -3296,6 +3311,7 @@ paths:
       description: Create new user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -3432,6 +3448,7 @@ paths:
       description: Adds a number of users
       tags:
         - User
+      x-codegen-permission: ADMIN
       produces:
         - text/plain
         - application/json
@@ -3508,6 +3525,7 @@ paths:
       description: Updates a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -3537,6 +3555,7 @@ paths:
       description: Deletes a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       produces:
         - text/plain
         - application/json
@@ -3658,6 +3677,7 @@ paths:
       description: Adds a role to a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -3689,6 +3709,7 @@ paths:
       description: Updates the roles for a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -3769,6 +3790,7 @@ paths:
       description: Updates the active set of groups for a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -3801,6 +3823,7 @@ paths:
       description: Add to the active set of groups for a user
       tags:
         - User
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:

@@ -1342,6 +1342,7 @@
     get:
       tags:
         - Group
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1357,7 +1358,7 @@
     post:
       tags:
         - Group
-
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1384,6 +1385,7 @@
     get:
       tags:
         - Group
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1405,6 +1407,7 @@
     put:
       tags:
         - Group
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1433,6 +1436,7 @@
     post:
       tags:
         - Group
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1476,6 +1480,7 @@
     get:
       tags:
         - Permission
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1491,7 +1496,7 @@
     post:
       tags:
         - Permission
-
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1518,6 +1523,7 @@
     get:
       tags:
         - Permission
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1539,6 +1545,7 @@
     put:
       tags:
         - Permission
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1567,6 +1574,7 @@
     post:
       tags:
         - Permission
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1610,6 +1618,7 @@
     get:
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1625,7 +1634,7 @@
     post:
       tags:
         - Role
-
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1652,6 +1661,7 @@
     get:
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1673,6 +1683,7 @@
     put:
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1701,6 +1712,7 @@
     post:
       tags:
         - Role
+      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
