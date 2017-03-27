@@ -19,13 +19,13 @@ var TopNav = React.createClass({
     requestError: React.PropTypes.object,
   },
 
-  isCurrentUserAdmin () {
-    _.some(this.props.currentUser.userRoles, function (currentUserRoles) {
-      return currentUserRoles.roleId === 2;
-    });
+  getIsCurrentUserAdmin () {
+    return _.some(this.props.currentUser.userRoles, ['roleId', 2]);
   },
 
   render: function () {
+    let isCurrentUserAdmin = this.getIsCurrentUserAdmin();
+
     return <div id="header">
       <nav id="header-main" className="navbar navbar-default navbar-fixed-top">
         <div className="container">
@@ -50,8 +50,8 @@ var TopNav = React.createClass({
             <LinkContainer to={{ pathname: `/${ Constant.NOTIFICATIONS_PATHNAME }` }}>
               <NavItem eventKey={ 4 }>Notifications</NavItem>
             </LinkContainer>
-            { this.isCurrentUserAdmin === true &&
-              <NavDropdown id="admin-dropdown" title="Administration" className={ !this.isCurrentUserAdmin ? '' : 'hidden' }>
+            { (isCurrentUserAdmin) &&
+              <NavDropdown id="admin-dropdown" title="Administration">
                 <LinkContainer to={{ pathname: `/${ Constant.USERS_PATHNAME }` }}>
                   <MenuItem eventKey={ 5 }>User Management</MenuItem>
                 </LinkContainer>
