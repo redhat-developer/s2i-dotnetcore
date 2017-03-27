@@ -8,6 +8,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import * as Constant from '../constants';
 
+import _ from 'lodash';
 import Spinner from '../components/Spinner.jsx';
 
 
@@ -16,6 +17,12 @@ var TopNav = React.createClass({
     currentUser: React.PropTypes.object,
     showWorkingIndicator: React.PropTypes.bool,
     requestError: React.PropTypes.object,
+  },
+
+  isCurrentUserAdmin () {
+    _.some(this.props.currentUser.userRoles, function (currentUserRoles) {
+      return currentUserRoles.roleId === 2;
+    });
   },
 
   render: function () {
@@ -43,14 +50,16 @@ var TopNav = React.createClass({
             <LinkContainer to={{ pathname: `/${ Constant.NOTIFICATIONS_PATHNAME }` }}>
               <NavItem eventKey={ 4 }>Notifications</NavItem>
             </LinkContainer>
-            <NavDropdown id="admin-dropdown" title="Administration">
-              <LinkContainer to={{ pathname: `/${ Constant.USERS_PATHNAME }` }}>
-                <MenuItem eventKey={ 5 }>User Management</MenuItem>
-              </LinkContainer>
-              <LinkContainer to={{ pathname: `/${ Constant.ROLES_PATHNAME }` }}>
-                <MenuItem eventKey={ 6 }>Roles and Permissions</MenuItem>
-              </LinkContainer>
-            </NavDropdown>
+            { this.isCurrentUserAdmin === true &&
+              <NavDropdown id="admin-dropdown" title="Administration" className={ !this.isCurrentUserAdmin ? '' : 'hidden' }>
+                <LinkContainer to={{ pathname: `/${ Constant.USERS_PATHNAME }` }}>
+                  <MenuItem eventKey={ 5 }>User Management</MenuItem>
+                </LinkContainer>
+                <LinkContainer to={{ pathname: `/${ Constant.ROLES_PATHNAME }` }}>
+                  <MenuItem eventKey={ 6 }>Roles and Permissions</MenuItem>
+                </LinkContainer>
+              </NavDropdown>
+            }
           </Nav>
           <Nav id="navbar-current-user" pullRight>
             <NavItem>
