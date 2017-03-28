@@ -63,7 +63,6 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/groups")]
         [SwaggerOperation("GroupsGet")]
         [SwaggerResponse(200, type: typeof(List<Group>))]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult GroupsGet()
         {
             return this._service.GroupsGetAsync();
@@ -94,7 +93,6 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/groups/{id}")]
         [SwaggerOperation("GroupsIdGet")]
         [SwaggerResponse(200, type: typeof(Group))]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult GroupsIdGet([FromRoute]int id)
         {
             return this._service.GroupsIdGetAsync(id);
