@@ -63,7 +63,6 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/permissions")]
         [SwaggerOperation("PermissionsGet")]
         [SwaggerResponse(200, type: typeof(List<PermissionViewModel>))]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult PermissionsGet()
         {
             return this._service.PermissionsGetAsync();
@@ -78,7 +77,6 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/permissions/{id}/delete")]
         [SwaggerOperation("PermissionsIdDeletePost")]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult PermissionsIdDeletePost([FromRoute]int id)
         {
             return this._service.PermissionsIdDeletePostAsync(id);
@@ -94,7 +92,6 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/permissions/{id}")]
         [SwaggerOperation("PermissionsIdGet")]
         [SwaggerResponse(200, type: typeof(PermissionViewModel))]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult PermissionsIdGet([FromRoute]int id)
         {
             return this._service.PermissionsIdGetAsync(id);
@@ -111,7 +108,6 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/permissions/{id}")]
         [SwaggerOperation("PermissionsIdPut")]
         [SwaggerResponse(200, type: typeof(PermissionViewModel))]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult PermissionsIdPut([FromRoute]int id, [FromBody]PermissionViewModel item)
         {
             return this._service.PermissionsIdPutAsync(id, item);
@@ -126,7 +122,6 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/permissions")]
         [SwaggerOperation("PermissionsPost")]
         [SwaggerResponse(200, type: typeof(PermissionViewModel))]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult PermissionsPost([FromBody]PermissionViewModel item)
         {
             return this._service.PermissionsPostAsync(item);

@@ -77,7 +77,6 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/groups/{id}/delete")]
         [SwaggerOperation("GroupsIdDeletePost")]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult GroupsIdDeletePost([FromRoute]int id)
         {
             return this._service.GroupsIdDeletePostAsync(id);
@@ -109,7 +108,6 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/groups/{id}")]
         [SwaggerOperation("GroupsIdPut")]
         [SwaggerResponse(200, type: typeof(Group))]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult GroupsIdPut([FromRoute]int id, [FromBody]Group item)
         {
             return this._service.GroupsIdPutAsync(id, item);
@@ -139,7 +137,6 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/groups")]
         [SwaggerOperation("GroupsPost")]
         [SwaggerResponse(200, type: typeof(Group))]
-        [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult GroupsPost([FromBody]Group item)
         {
             return this._service.GroupsPostAsync(item);
