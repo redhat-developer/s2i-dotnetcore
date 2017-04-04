@@ -4,9 +4,6 @@
 
 while true; do
 
-# first cull backups older than 10 days.
-find $BACKUP_DIR* -type d -ctime +10 | xargs rm -rf
-
 FINAL_BACKUP_DIR=$BACKUP_DIR"`date +\%Y-\%m-\%d`/"
 DBFILE=$FINAL_BACKUP_DIR"$POSTGRESQL_DATABASE`date +\%Y-\%m-\%d-%H-%M`"
 echo "Making backup directory in $FINAL_BACKUP_DIR"
@@ -24,6 +21,9 @@ if ! /opt/rh/rh-postgresql94/root/usr/bin/pg_dump -Fp -h "$DATABASE_SERVICE_NAME
 else
 	mv $DBFILE.sql.gz.in_progress $DBFILE.sql.gz
 	echo "Database backup written to $DBFILE.sql.gz"
+	
+	# first cull backups older than 10 days.  (SB-331)
+	find $BACKUP_DIR* -type d -ctime +31 | xargs rm -rf
 fi;
 
 # 24 hrs
