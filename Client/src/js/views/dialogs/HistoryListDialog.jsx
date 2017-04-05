@@ -11,6 +11,7 @@ import { Alert, Button } from 'react-bootstrap';
 import _ from 'lodash';
 
 import * as Action from '../../actionTypes';
+import * as Api from '../../api';
 import * as Constant from '../../constants';
 import * as History from '../../history';
 import store from '../../store';
@@ -30,7 +31,9 @@ var HistoryListDialog = React.createClass({
     historyEntity: React.PropTypes.object.isRequired,
     onClose: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool,
+    
     history: React.PropTypes.object,
+    users: React.PropTypes.object,
     ui: React.PropTypes.object,
   },
 
@@ -48,7 +51,12 @@ var HistoryListDialog = React.createClass({
   },
 
   componentDidMount() {
-    this.fetch(true);
+    this.setState({ loading: true });
+    Api.getUsers().then(() => {
+      return this.fetch(true);
+    }).finally(() => {
+      this.setState({ loading: false });
+    });
   },
 
   updateUIState(state, callback) {
@@ -62,7 +70,17 @@ var HistoryListDialog = React.createClass({
     // Easy mode: show 10 the first time and let the user load all of them with the
     // "Show More" button. Can adapt for paginated / offset&limit calls if necessary.
     this.setState({ loading: true });
-    return History.get(this.props.historyEntity, 0, first ? API_LIMIT : null).finally(() => {
+    return History.get(this.props.historyEntity, 0, first ? API_LIMIT : null).then(() => {
+      var history = _.map(this.props.history, history => {
+        history.userName = this.getUserName(history.lastUpdateUserid);
+        history.formattedTimestamp = formatDateTime(history.lastUpdateTimestamp, Constant.DATE_TIME_LOG);
+        history.event = History.renderEvent(history.historyText, this.props.onClose);
+        return history;
+      });
+      this.setState({
+        history: history,
+      });
+    }).finally(() => {
       this.setState({
         loading: false,
         canShowMore: first && Object.keys(this.props.history).length >= API_LIMIT,
@@ -72,6 +90,11 @@ var HistoryListDialog = React.createClass({
 
   showMore() {
     this.fetch();
+  },
+
+  getUserName(smUserId) {
+    var user = _.find(this.props.users, user => { return user.smUserId === smUserId; });
+    return user ? user.name : smUserId;
   },
 
   render() {
@@ -98,7 +121,7 @@ var HistoryListDialog = React.createClass({
 
             var headers = [
               { field: 'timestampSort',       title: 'Timestamp' },
-              { field: 'lastUpdateUserid',    title: 'User'      },
+              { field: 'userName',            title: 'User'      },
               { field: 'event', noSort: true, title: 'Event'     },
             ];
 
@@ -106,9 +129,9 @@ var HistoryListDialog = React.createClass({
               {
                 _.map(history, (history) => {
                   return <tr key={ history.id }>
-                    <td>{ formatDateTime(history.lastUpdateTimestamp, Constant.DATE_TIME_LOG) }</td>
-                    <td>{ history.lastUpdateUserid }</td>
-                    <td className="history-event">{ History.renderEvent(history.historyText, this.props.onClose) }</td>
+                    <td>{ history.formattedTimestamp }</td>
+                    <td>{ history.userName }</td>
+                    <td className="history-event">{ history.event }</td>
                   </tr>;
                 })
               }
@@ -123,6 +146,7 @@ var HistoryListDialog = React.createClass({
 function mapStateToProps(state) {
   return {
     history: state.models.history,
+    users: state.models.users,
     ui: state.ui.history,
   };
 }
