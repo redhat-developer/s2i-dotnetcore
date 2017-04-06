@@ -244,6 +244,9 @@ namespace SchoolBusAPI.Services.Impl
                 result.ScheduledInspections = scheduledInspections;
                 result.ReInspections = reInspections;
 
+                //Added By Simon Di to screen out all the ineffective roles (expired)
+                var thisUserRoles = result.UserRoles.Where(x => (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
+                result.UserRoles = thisUserRoles.ToList();
 
                 return new ObjectResult(result);
             }            
