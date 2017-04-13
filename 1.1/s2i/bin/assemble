@@ -11,16 +11,15 @@ DOTNET_FRAMEWORK="netcoreapp1.1"
 
 # npm
 if [ ! -z $HTTP_PROXY ]; then
-	echo "---> Setting npm http proxy to $HTTP_PROXY"
+	echo "---> Setting npm http proxy"
 	npm config set proxy $HTTP_PROXY
 fi
 if [ ! -z $HTTPS_PROXY ]; then
-	echo "---> Setting npm https proxy to $HTTPS_PROXY"
+	echo "---> Setting npm https proxy"
 	npm config set https-proxy $HTTPS_PROXY
 fi
-
 if [ ! -z $NPM_MIRROR ]; then
-	echo "---> Setting npm mirror to $NPM_MIRROR"
+	echo "---> Setting npm mirror"
 	npm config set registry $NPM_MIRROR
 fi
 
