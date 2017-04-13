@@ -10,21 +10,22 @@ DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
 DOTNET_FRAMEWORK="netcoreapp1.1"
 
 # npm
-if [ ! -z $HTTP_PROXY ]; then
-	echo "---> Setting npm http proxy"
-	npm config set proxy $HTTP_PROXY
-fi
-if [ ! -z $HTTPS_PROXY ]; then
-	echo "---> Setting npm https proxy"
-	npm config set https-proxy $HTTPS_PROXY
-fi
-if [ ! -z $NPM_MIRROR ]; then
-	echo "---> Setting npm mirror"
-	npm config set registry $NPM_MIRROR
-fi
-
 if [ -n "${DOTNET_NPM_TOOLS}" ]; then
   echo "---> Installing npm tools ..."
+
+  if [ ! -z $HTTP_PROXY ]; then
+    echo "---> Setting npm http proxy"
+    npm config set proxy $HTTP_PROXY
+  fi
+  if [ ! -z $HTTPS_PROXY ]; then
+    echo "---> Setting npm https proxy"
+    npm config set https-proxy $HTTPS_PROXY
+  fi
+  if [ ! -z $NPM_MIRROR ]; then
+    echo "---> Setting npm mirror"
+    npm config set registry $NPM_MIRROR
+  fi
+
   pushd $HOME
   npm install ${DOTNET_NPM_TOOLS}
   popd

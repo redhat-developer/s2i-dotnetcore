@@ -142,7 +142,7 @@ a `.s2i/environment` file inside your source code repository.
 
 * **HTTP_PROXY or HTTPS_PROXY**
 
-    Use a HTTP proxy or HTTPS proxy for npm during assembly
+    Use a HTTP proxy or HTTPS proxy during assembly
 
 * **NPM_MIRROR**
 
