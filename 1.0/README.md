@@ -142,7 +142,7 @@ a `.s2i/environment` file inside your source code repository.
 
 * **HTTP_PROXY, HTTPS_PROXY**
 
-    Configures the HTTP/HTTPS proxy to use when building and running the application.
+    Configures the HTTP/HTTPS proxy used when building and running the application.
 
 * **NPM_MIRROR**
 
