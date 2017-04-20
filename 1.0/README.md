@@ -140,6 +140,14 @@ a `.s2i/environment` file inside your source code repository.
     This variable is set to `http://*:8080` to configure ASP.NET Core to use the
     port exposed by the image.
 
+* **HTTP_PROXY, HTTPS_PROXY**
+
+    Configures the HTTP/HTTPS proxy used when building and running the application.
+
+* **NPM_MIRROR**
+
+    Use a custom NPM registry mirror to download packages during the build process.
+
 NPM
 ---
 
