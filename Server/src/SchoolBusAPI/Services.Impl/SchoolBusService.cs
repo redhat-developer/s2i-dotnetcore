@@ -791,13 +791,17 @@ namespace SchoolBusAPI.Services.Impl
 
             if (vin != null)
             {
-                data = data.Where(x => x.VehicleIdentificationNumber == vin);
+                // Normalize vin to ignore case and whitespaces
+                vin = vin.Replace(" ", String.Empty).ToUpperInvariant();
+                data = data.Where(x => x.VehicleIdentificationNumber.ToUpperInvariant().Contains(vin));
                 keySearch = true;
             }
 
             if (plate != null)
             {
-                data = data.Where(x => x.LicencePlateNumber == plate);
+                // Normalize plate to ignore case and whitespaces
+                plate = plate.Replace(" ", String.Empty).ToUpperInvariant();
+                data = data.Where(x => x.LicencePlateNumber.Replace(" ", String.Empty).ToUpperInvariant().Contains(plate));
                 keySearch = true;
             }
 
