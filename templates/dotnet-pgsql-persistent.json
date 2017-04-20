@@ -22,19 +22,10 @@
             "kind": "Secret",
             "apiVersion": "v1",
             "metadata": {
-                "name": "database"
+                "name": "${NAME}"
             },
             "stringData": {
-                "database-password": "${DATABASE_PASSWORD}"
-            }
-        },
-        {
-            "kind": "Secret",
-            "apiVersion": "v1",
-            "metadata": {
-                "name": "database-connection"
-            },
-            "stringData": {
+                "database-password": "${DATABASE_PASSWORD}",
                 "connect-string": "Host=${DATABASE_SERVICE_NAME};Database=${DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD}"
             }
         },
@@ -231,7 +222,7 @@
                                         "name": "ConnectionString",
                                         "valueFrom": {
                                             "secretKeyRef": {
-                                                "name": "database-connection",
+                                                "name": "${NAME}",
                                                 "key": "connect-string"
                                             }
                                         }
@@ -400,7 +391,7 @@
                                         "name": "POSTGRESQL_PASSWORD",
                                         "valueFrom": {
                                             "secretKeyRef": {
-                                                "name": "database",
+                                                "name": "${NAME}",
                                                 "key": "database-password"
                                             }
                                         }
