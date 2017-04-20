@@ -142,11 +142,11 @@ a `.s2i/environment` file inside your source code repository.
 
 * **HTTP_PROXY, HTTPS_PROXY**
 
-    Use an HTTP/HTTPS proxy during the build process.
+    Configures the HTTP/HTTPS proxy to use when building and running the application.
 
 * **NPM_MIRROR**
 
-    Use a custom NPM registry mirror to download packages during the build process
+    Use a custom NPM registry mirror to download packages during the build process.
 
 NPM
 ---
