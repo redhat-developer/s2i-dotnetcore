@@ -1,0 +1,102 @@
+FROM rhel7
+# This image provides a .NET Core 1.1 environment you can use to run your .NET
+# applications.
+
+EXPOSE 8080
+
+ENV DOTNET_CORE_VERSION=1.1
+# Default to UTF-8 file.encoding
+ENV LANG=C.UTF-8 \
+    HOME=/opt/app-root \
+    PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/bin:/opt/app-root/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    STI_SCRIPTS_PATH=/usr/libexec/s2i \
+    DOTNET_PUBLISH_PATH=/opt/app-root/publish \
+    DOTNET_RUN_SCRIPT=/opt/app-root/publish/s2i_run
+
+LABEL io.k8s.description="Platform for building and running .NET Core 1.1 applications" \
+      io.k8s.display-name=".NET Core 1.1" \
+      io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnetcore11" \
+      io.openshift.expose-services="8080:http" \
+      io.s2i.scripts-url=image:///usr/libexec/s2i
+
+# Labels consumed by Red Hat build service
+LABEL name="dotnet/dotnetcore-11-rhel7" \
+      com.redhat.component="rh-dotnetcore11-docker" \
+      version="1.1" \
+      release="5" \
+      architecture="x86_64"
+
+COPY ./root/usr/bin /usr/bin
+
+# Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
+COPY ./s2i/bin/ /usr/libexec/s2i
+
+# Each language image can have 'contrib' a directory with extra files needed to
+# run and build the applications.
+COPY ./contrib/ /opt/app-root
+
+RUN yum install -y yum-utils && \
+    yum-config-manager --enable rhel-server-rhscl-7-rpms && \
+    yum-config-manager --enable rhel-7-server-dotnet-rpms && \
+    yum-config-manager --enable rhel-7-server-rpms && \
+    yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \
+    yum install -y --setopt=tsflags=nodocs rh-dotnetcore11 nss_wrapper tar rh-nodejs4-npm && \
+    yum clean all && \
+    mkdir -p /opt/app-root/src /opt/app-root/publish && \
+    useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
+      -c "Default Application User" default && \
+    chown -R 1001:0 /opt/app-root
+
+# Switch to default app-user for cache population
+USER 1001
+
+# Don't download/extract docs for nuget packages
+ENV NUGET_XMLDOC_MODE=skip
+
+# - Initialize the .Net cache via 'scl enable rh-dotnetcore11 -- dotnet new'
+#   Move to the proper command to do this once https://github.com/dotnet/cli/issues/3692 is fixed.
+# - Removal of /tmp/NuGetScratch is needed due to:
+#   https://github.com/NuGet/Home/issues/2793
+RUN cd /opt/app-root/src && mkdir cache-warmup && \
+    cd cache-warmup && \
+    scl enable rh-dotnetcore11 -- dotnet new && \
+    cd .. && \
+    rm -rf cache-warmup && \
+    rm -rf /tmp/NuGetScratch
+
+# Switch back to root for changing dir ownership/permissions
+USER 0
+
+# In order to drop the root user, we have to make some directories world
+# writable as OpenShift default security model is to run the container under
+# random UID.
+RUN chown -R 1001:0 /opt/app-root && chmod -R og+rwx /opt/app-root
+
+# Get prefix path and path to scripts rather than hard-code them in scripts
+ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
+    ENABLED_COLLECTIONS="rh-dotnetcore11 rh-nodejs4"
+
+# When bash is started non-interactively, to run a shell script, for example it
+# looks for this variable and source the content of this file. This will enable
+# the SCL for all scripts without need to do 'scl enable'.
+ENV BASH_ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
+    ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
+    PROMPT_COMMAND=". ${CONTAINER_SCRIPTS_PATH}/etc/scl_enable"
+
+# Directory with the sources is set as the working directory. This should
+# be a folder outside $HOME as this might cause issues when compiling sources.
+# See https://github.com/redhat-developer/s2i-dotnetcore/issues/28
+WORKDIR /opt/app-root/src
+
+# Run container by default as user with id 1001 (default)
+USER 1001
+
+# By default, ASP.NET Core runs on port 5000. We configure it to match
+# the container port.
+ENV ASPNETCORE_URLS=http://*:8080
+
+ENTRYPOINT ["container-entrypoint"]
+
+# Set the default CMD to print the usage of the language image.
+CMD /usr/libexec/s2i/usage

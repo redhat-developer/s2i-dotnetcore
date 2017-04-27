@@ -1,0 +1,463 @@
+#!/bin/bash
+#
+# The 'run' script performs simple tests that verifies usability
+# of the image
+#
+# IMAGE_NAME specifies a name of the candidate image used for testing.
+# The image has to be available before this script is executed.
+#
+# OPENSHIFT_ONLY environment variable, if 'true', only tests features used by
+# OpenShift's try-it feature.
+#
+# DEBUG environment variable, if not empty, makes 'run' to log every step
+# of testing.
+#
+# Example usage: $ sudo ./test/run
+
+IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-11-rhel7}
+
+OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
+
+if [ "$DEBUG" != "" ]; then
+  set -x
+fi
+
+declare -a CLI_APPS=(hw_framework_config helloworld qotd)
+declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
+
+test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
+image_dir=$(readlink -zf ${test_dir}/..)
+dotnet_version="1.0.0-preview2-1-003176"
+sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
+
+test_port=8080
+
+info() {
+  echo -e "\n\e[1m[INFO] $@\e[0m\n"
+}
+
+image_exists() {
+  docker inspect $1 &>/dev/null
+}
+
+container_exists() {
+  image_exists $(cat $cid_file)
+}
+
+container_ip() {
+  docker inspect --format="{{ .NetworkSettings.IPAddress }}" $(cat $cid_file)
+}
+
+run_s2i_build() {
+  info "Building the ${1} application image ..."
+  run_s2i_build_from_url "file://${test_dir}/${1}"
+}
+
+run_s2i_build_from_url() {
+  local url="$1"
+  s2i build ${s2i_args} "${url}" ${IMAGE_NAME} ${IMAGE_NAME}-testapp
+}
+
+prepare() {
+  if ! image_exists ${IMAGE_NAME}; then
+    echo "ERROR: The image ${IMAGE_NAME} must exist before this script is executed."
+    exit 1
+  fi
+  # TODO: S2I build require the application is a valid 'GIT' repository, we
+  # should remove this restriction in the future when a file:// is used.
+  info "Preparing to test ${1} ..."
+  pushd ${test_dir}/${1} >/dev/null
+  git init
+  git config user.email "build@localhost" && git config user.name "builder"
+  git add -A && git commit -m "Sample commit"
+  popd >/dev/null
+}
+
+run_test_application() {
+  docker run --user=100001 ${CONTAINER_ARGS} -d --cidfile=${cid_file} -p ${test_port}:${test_port} ${IMAGE_NAME}-testapp
+}
+
+run_cli_test_application() {
+  docker run --user=100001 ${CONTAINER_ARGS} -i --rm ${IMAGE_NAME}-testapp
+}
+
+cleanup_app() {
+  info "Cleaning up app container ..."
+  if [ -f $cid_file ]; then
+    if container_exists; then
+      docker stop $(cat $cid_file)
+    fi
+  fi
+}
+
+cleanup() {
+  info "Cleaning up the test application image"
+  if image_exists ${IMAGE_NAME}-testapp; then
+    docker rmi -f ${IMAGE_NAME}-testapp
+  fi
+  rm -rf ${test_dir}/${1}/.git
+}
+
+check_result() {
+  local result="$1"
+  if [[ "$result" != "0" ]]; then
+    info "TEST FAILED (${result})"
+    cleanup
+    exit $result
+  fi
+}
+
+check_command_exists_at()
+{
+  local command=$1
+  local at=$2
+  info "Testing if ${command} is at ${at}"
+  local actual=$(docker run ${IMAGE_NAME}-testapp bash -c "command -v ${command}")
+  if [[ "${at}_" != "${actual}_" ]]; then
+    info "TEST FAILED (${command} is at ${actual}, expected ${at})"
+    cleanup
+    exit $result
+  fi
+}
+
+wait_for_cid() {
+  local max_attempts=10
+  local sleep_time=1
+  local attempt=1
+  local result=1
+  info "Waiting for application container to start $CONTAINER_ARGS ..."
+  while [ $attempt -le $max_attempts ]; do
+    [ -f $cid_file ] && [ -s $cid_file ] && break
+    attempt=$(( $attempt + 1 ))
+    sleep $sleep_time
+  done
+}
+
+test_s2i_usage() {
+  local expected="$1"
+  info "Testing 's2i usage (${expected})' ..."
+  s2i usage ${s2i_args} ${IMAGE_NAME} 2>&1 | grep "${expected}" 2>&1 > /dev/null
+}
+
+test_docker_run_usage() {
+  local expected="$1"
+  info "Testing 'docker run' usage (${expected}) ..."
+  docker run ${IMAGE_NAME} 2>&1 | grep "${expected}" 2>&1 >/dev/null
+}
+
+test_pid_1() {
+  local cid_file="$1"
+  info "Testing whether dotnet runs as PID 1"
+  # Use the 'args' format so as to get command arguments. We are looking for 'dotnet' with
+  # an assembly dll.
+  out="$(docker exec $(cat ${cid_file}) /bin/bash -c 'ps --no-headers -o args 1' 2>&1)"
+  if ! echo "${out}" | grep "dotnet" | grep -q '\.dll' ; then
+    echo "'dotnet <assembly>' not process with PID 1. PID 1 process was: '${out}'"
+    cleanup_app
+    return 1
+  fi
+}
+
+test_scl_usage() {
+  local run_cmd="$1"
+  local expected="$2"
+  local cid_file="$3"
+
+  info "Testing the image SCL enable"
+  out=$(docker run --rm ${IMAGE_NAME} /bin/bash -c "${run_cmd}" 2>&1)
+  if ! echo "${out}" | grep -q "${expected}"; then
+    echo "ERROR[/bin/bash -c "${run_cmd}"] Expected '${expected}', got '${out}'"
+    return 1
+  fi
+  out=$(docker exec $(cat ${cid_file}) /bin/bash -c "${run_cmd}" 2>&1)
+  if ! echo "${out}" | grep -q "${expected}"; then
+    echo "ERROR[exec /bin/bash -c "${run_cmd}"] Expected '${expected}', got '${out}'"
+    return 1
+  fi
+  out=$(docker exec $(cat ${cid_file}) /bin/sh -ic "${run_cmd}" 2>&1)
+  if ! echo "${out}" | grep -q "${expected}"; then
+    echo "ERROR[exec /bin/sh -ic "${run_cmd}"] Expected '${expected}', got '${out}'"
+    return 1
+  fi
+}
+
+# Usage:
+#   test_http <path> <expected> [<filter_cmd>]
+#
+# Issues a HTTP GET request with path <path> and matches it against
+# <expected>. The match is an *exact*, character by character, match
+# unless <filter_cmd> is also specified. In that case, the output of
+# the HTTP GET request at <path> is filtered through <filter_cmd>.
+test_http() {
+  local path=$1
+  local expected=$2
+  local filter_cmd="$3"
+  local output_file=$(mktemp --suffix=.dotnet_out)
+  local max_attempts=30
+  local sleep_time=1
+  local attempt=1
+  local result=1
+  local url=http://$(container_ip):${test_port}${path}
+  info "Testing HTTP ($url) ${CONTAINER_ARGS} output file ${output_file}..."
+  while [ $attempt -le $max_attempts ]; do
+    response_code=$(curl -s -w %{http_code} -o ${output_file} ${url})
+    status=$?
+    if [ $status -eq 0 ]; then
+      if [ $response_code -eq 200 ]; then
+        if [ $# -eq 2 ]; then
+          output=$(cat ${output_file})
+          if [ "${output}_" == "${expected}_" ]; then
+            result=0
+          fi
+        elif [ $# -eq 3 ]; then
+          output=$(cat ${output_file} | eval ${filter_cmd})
+          if [ "${output}_" == "${expected}_" ]; then
+            result=0
+          fi
+        else
+          result=0
+        fi
+      fi
+      break
+    fi
+    attempt=$(( $attempt + 1 ))
+    sleep $sleep_time
+  done
+  rm -rf ${output_file}
+  return $result
+}
+
+test_web_application() {
+  local cid_file=$(mktemp -u --suffix=.cid)
+  # Verify that the HTTP connection can be established to test application container
+  run_test_application &
+
+  # Wait for the container to write it's CID file
+  wait_for_cid
+
+  test_scl_usage "dotnet --version" "${dotnet_version}" "${cid_file}"
+  check_result $?
+
+  # Verify $HOME != $CWD. See https://github.com/redhat-developer/s2i-dotnetcore/issues/28
+  test_scl_usage "pwd" "/opt/app-root/src" "${cid_file}"
+  check_result $?
+  test_scl_usage "echo \$HOME" "/opt/app-root" "${cid_file}"
+  check_result $?
+
+  # Verify npm is enabled in the container
+  test_scl_usage "npm --version" "2.15.1" "${cid_file}"
+
+  test_http "/" "Hello world"
+  check_result $?
+  test_http "/TextFile.txt" "A text file."
+  check_result $?
+
+  test_pid_1 "${cid_file}"
+  check_result $?
+
+  cleanup_app
+}
+
+test_openshift_sample_app() {
+  local cid_file=$(mktemp -u --suffix=.cid)
+  # Verify that the HTTP connection can be established to test application container
+  run_test_application &
+
+  # Wait for the container to write it's CID file
+  wait_for_cid
+
+  test_scl_usage "dotnet --version" "${dotnet_version}" "${cid_file}"
+  check_result $?
+
+  test_http "/" "Sample pages using ASP.NET Core MVC" "grep \"ASP.NET Core MVC\" | sed -e 's#<li>##g' -e 's#</li>##g' -e 's#^ \\+##g'"
+  check_result $?
+
+  cleanup_app
+}
+
+echo_details() {
+  local expected="$1"
+  local actual="$2"
+  cat <<EOF
+expected:
+
+-------->8
+${expected}
+8<--------
+
+but got:
+
+-------->8
+${actual}
+8<--------
+
+EOF
+}
+
+get_expected_cli() {
+  local app="$1"
+  case "${app}" in
+    "helloworld")
+      echo 'Hello World!'
+      ;;
+    "hw_framework_config")
+      echo 'Hello World!'
+      ;;
+    "qotd")
+      echo IGNORE_ME
+      ;;
+    *)
+      echo "Unknown CLI app ${app}"
+      exit 1
+      ;;
+  esac
+}
+
+filter_cli() {
+  local app="$1"
+  local all_output="$2"
+  case "${app}" in
+    "helloworld")
+      # Note: tail -n1 => Omit "--> Running application ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    "hw_framework_config")
+      # Note: tail -n1 => Omit "--> Running application ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    "qotd")
+      # Note: tail -n1 => Omit "--> Running application with ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    *)
+      echo "Unknown CLI app ${app}"
+      exit 1
+      ;;
+  esac
+}
+
+success_cli() {
+  local app="$1"
+  local actual="$2"
+  local expected="$3"
+  case "${app}" in
+    "helloworld")
+      echo "${actual}" | grep -q "${expected}"
+      return $?
+      ;;
+    "hw_framework_config")
+      echo "${actual}" | grep -q "${expected}"
+      return $?
+      ;;
+    "qotd")
+      local retval=0
+      # Only match for the QOTD prefix
+      echo ${actual} | grep -q "\[QOTD\]: "
+      retval=$(( ${retval} + $? ))
+      return ${retval}
+      ;;
+    *)
+      echo "Unknown CLI app ${app}"
+      exit 1
+      ;;
+  esac
+}
+
+test_cli_app() {
+  local app="$1"
+  info "Testing CLI app: ${app} ..."
+  prepare ${app}
+  run_s2i_build ${app}
+  check_result $?
+
+  local expected="$( get_expected_cli ${app} )"
+  local actual_pre="$( run_cli_test_application )"
+  local actual="$( filter_cli "${app}" "${actual_pre}" )"
+  if ! success_cli "${app}" "${actual}" "${expected}"; then
+    info "Test CLI app: ${app} FAILED."
+    echo_details "${expected}" "${actual}"
+    cleanup ${app}
+    exit 1
+  else
+    info "Test CLI app: ${app} PASSED."
+  fi
+  cleanup ${app}
+}
+
+test_new_web_app() {
+  app=newweb
+  prepare ${app}
+  run_s2i_build ${app}
+  check_result $?
+
+  local cid_file=$(mktemp -u --suffix=.cid)
+  run_test_application &
+  wait_for_cid
+
+  # installed via DOTNET_NPM_TOOLS
+  check_command_exists_at bower /opt/app-root/node_modules/.bin/bower
+
+  # minified using npm tools
+  test_http "/js/site.min.js"
+  check_result $?
+
+  cleanup_app
+  info "All tests for the ${app} finished successfully."
+  cleanup ${app}
+}
+
+info "Testing ${IMAGE_NAME}"
+
+# Since we built the candidate image locally, we don't want S2I attempt to pull
+# it from Docker hub
+s2i_args="--force-pull=false"
+
+# Verify the 'usage' script is working properly when running the base image with 's2i usage ...'
+test_s2i_usage "${sample_app_url}"
+check_result $?
+
+# Verify the 'usage' script is working properly when running the base image with 'docker run ...'
+test_docker_run_usage "${sample_app_url}"
+check_result $?
+
+# Verify OpenShift's s2i-dotnetcore-ex runs
+if [ ${OPENSHIFT_ONLY} = true ]; then
+  old_s2i_args="${s2i_args}"
+  s2i_args="${s2i_args} --context-dir=app --ref=dotnetcore-1.1"
+  run_s2i_build_from_url ${sample_app_url}
+  check_result $?
+
+  # test application with default user
+  test_openshift_sample_app
+
+  # test application with random user
+  CONTAINER_ARGS="-u 12345" test_openshift_sample_app
+
+  info "All tests for the ${sample_app_url} finished successfully."
+  cleanup "ignore-me"
+  s2i_args="${old_s2i_args}"
+else
+  # Verify that some CLI s2i apps build and run properly
+  for app in ${CLI_APPS[@]}; do
+    test_cli_app "${app}"
+  done
+
+  for app in ${WEB_APPS[@]}; do
+    prepare ${app}
+    run_s2i_build ${app}
+    check_result $?
+
+    # test application with default user
+    test_web_application
+
+    # test application with random user
+    CONTAINER_ARGS="-u 12345" test_web_application
+
+    info "All tests for the ${app} finished successfully."
+    cleanup ${app}
+  done
+
+  test_new_web_app
+fi
+
+info "All tests finished successfully."
