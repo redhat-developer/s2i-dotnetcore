@@ -11,6 +11,7 @@ Versions
 .NET Core versions currently provided are:
 * 1.0
 * 1.1
+* 2.0
 
 RHEL versions currently supported are:
 * RHEL 7
@@ -29,6 +30,9 @@ $ sudo docker build -f Dockerfile.rhel7 -t dotnet/dotnetcore-10-rhel7 .
 
 Usage
 ---------------------------------
+
+For information about usage of Docker image for .NET Core 2.0,
+see [2.0 usage documentation](2.0/README.md).
 
 For information about usage of Docker image for .NET Core 1.1,
 see [1.1 usage documentation](1.1/README.md).
