@@ -17,12 +17,14 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
+using SchoolBusAPI.Helpers;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -272,8 +274,23 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/schoolbuses/search")]
         [SwaggerOperation("SchoolbusesSearchGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBus>))]
-        public virtual IActionResult SchoolbusesSearchGet([FromQuery]int?[] districts, [FromQuery]int?[] inspectors, [FromQuery]int?[] cities, [FromQuery]int?[] schooldistricts, [FromQuery]int? owner, [FromQuery]string regi, [FromQuery]string vin, [FromQuery]string plate, [FromQuery]bool? includeInactive, [FromQuery]bool? onlyReInspections, [FromQuery]DateTime? startDate, [FromQuery]DateTime? endDate)
+        public virtual IActionResult SchoolbusesSearchGet(
+            [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] districts, 
+            [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] inspectors,
+            [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] cities,
+            [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] schooldistricts, 
+            [FromQuery]int? owner, 
+            [FromQuery]string regi, 
+            [FromQuery]string vin, 
+            [FromQuery]string plate, 
+            [FromQuery]bool? includeInactive, 
+            [FromQuery]bool? onlyReInspections, 
+            [FromQuery]DateTime? startDate, 
+            [FromQuery]DateTime? endDate)
         {
+            // TODO: Implement fix for Swagger and APIExplorer interpretation of ModelBinder
+            // TODO: Return 400 Bad Request status code when query is malformed
+            // TODO: Integrate ModelBinder with SimpleModelBinderProvider
             return this._service.SchoolbusesSearchGetAsync(districts, inspectors, cities, schooldistricts, owner, regi, vin, plate, includeInactive, onlyReInspections, startDate, endDate);
         }
     }

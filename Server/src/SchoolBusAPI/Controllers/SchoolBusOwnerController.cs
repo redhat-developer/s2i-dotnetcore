@@ -23,6 +23,7 @@ using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
+using SchoolBusAPI.Helpers;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -218,7 +219,11 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/schoolbusowners/search")]
         [SwaggerOperation("SchoolbusownersSearchGet")]
         [SwaggerResponse(200, type: typeof(List<SchoolBusOwner>))]
-        public virtual IActionResult SchoolbusownersSearchGet([FromQuery]int?[] districts, [FromQuery]int?[] inspectors, [FromQuery]int? owner, [FromQuery]bool? includeInactive)
+        public virtual IActionResult SchoolbusownersSearchGet(
+            [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] districts, 
+            [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] inspectors,
+            [FromQuery]int? owner,
+            [FromQuery]bool? includeInactive)
         {
             return this._service.SchoolbusownersSearchGetAsync(districts, inspectors, owner, includeInactive);
         }
