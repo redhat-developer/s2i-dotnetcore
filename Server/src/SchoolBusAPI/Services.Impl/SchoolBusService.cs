@@ -27,6 +27,7 @@ using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using System.Text;
 using Microsoft.AspNetCore.WebUtilities;
+using SchoolBusCommon;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -810,46 +811,22 @@ namespace SchoolBusAPI.Services.Impl
             {
                 if (districts != null)
                 {
-                    foreach (int? district in districts)
-                    {
-                        if (district != null)
-                        {
-                            data = data.Where(x => x.District.Id == district);
-                        }
-                    }
+                    data = data.Where(x => districts.Contains(x.DistrictId));
                 }                
-
+                
                 if (inspectors != null)
                 {
-                    foreach (int? inspector in inspectors)
-                    {
-                        if (inspector != null)
-                        {
-                            data = data.Where(x => x.Inspector.Id == inspector);
-                        }
-                    }
+                    data = data.Where(x => inspectors.Contains(x.InspectorId));
                 }
 
                 if (cities != null)
                 {
-                    foreach (int? city in cities)
-                    {
-                        if (city != null)
-                        {
-                            data = data.Where(x => x.HomeTerminalCity.Id == city);
-                        }
-                    }
+                    data = data.Where(x => cities.Contains(x.HomeTerminalCityId));
                 }
 
                 if (schooldistricts != null)
                 {
-                    foreach (int? schooldistrict in schooldistricts)
-                    {
-                        if (schooldistrict != null)
-                        {
-                            data = data.Where(x => x.SchoolDistrict.Id == schooldistrict);
-                        }
-                    }
+                    data = data.Where(x => schooldistricts.Contains(x.SchoolDistrictId));
                 }
 
                 if (owner != null)
