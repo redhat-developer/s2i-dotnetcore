@@ -3,24 +3,7 @@ source /opt/app-root/etc/generate_container_user
 
 set -e
 
-if [ "$DOTNET_PUBLISH" == "true" ]; then
-  cd $DOTNET_PUBLISH_PATH
+cd $DOTNET_PUBLISH_PATH
 
-  echo "---> Running application ..."
-  exec "$DOTNET_RUN_SCRIPT"
-else
-  DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
-  DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
-  DOTNET_FRAMEWORK="netcoreapp1.1"
-  if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
-    APP_DLL_NAME="${DOTNET_ASSEMBLY_NAME}.dll"
-  else
-    APP_DLL_NAME="$(basename "$(realpath "${DOTNET_STARTUP_PROJECT}")").dll"
-  fi
-  APP_DLL_PATH="bin/${DOTNET_CONFIGURATION}/${DOTNET_FRAMEWORK}/${APP_DLL_NAME}"
-  
-  cd "${DOTNET_STARTUP_PROJECT}"
-
-  echo "---> Running application ..."
-  exec dotnet "${APP_DLL_PATH}"
-fi
+echo "---> Running application ..."
+exec "$DOTNET_RUN_SCRIPT"

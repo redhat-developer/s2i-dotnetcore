@@ -1,10 +1,10 @@
 FROM rhel7
-# This image provides a .NET Core 1.1 environment you can use to run your .NET
+# This image provides a .NET Core 2.0 environment you can use to run your .NET
 # applications.
 
 EXPOSE 8080
 
-ENV DOTNET_CORE_VERSION=1.1
+ENV DOTNET_CORE_VERSION=2.0
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
     HOME=/opt/app-root \
@@ -13,18 +13,18 @@ ENV LANG=C.UTF-8 \
     DOTNET_PUBLISH_PATH=/opt/app-root/publish \
     DOTNET_RUN_SCRIPT=/opt/app-root/publish/s2i_run
 
-LABEL io.k8s.description="Platform for building and running .NET Core 1.1 applications" \
-      io.k8s.display-name=".NET Core 1.1" \
+LABEL io.k8s.description="Platform for building and running .NET Core 2.0 applications" \
+      io.k8s.display-name=".NET Core 2.0" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnetcore11" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet20" \
       io.openshift.expose-services="8080:http" \
       io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnetcore-11-rhel7" \
-      com.redhat.component="rh-dotnetcore11-docker" \
-      version="1.1" \
-      release="5" \
+LABEL name="dotnet/dotnet-20-rhel7" \
+      com.redhat.component="rh-dotnet20-docker" \
+      version="2.0" \
+      release="1" \
       architecture="x86_64"
 
 COPY ./root/usr/bin /usr/bin
@@ -36,17 +36,26 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
 
+# TODO: install rh-dotnet20
 RUN yum install -y yum-utils && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-dotnet-rpms && \
     yum-config-manager --enable rhel-7-server-rpms && \
     yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \
-    yum install -y --setopt=tsflags=nodocs rh-dotnetcore11 nss_wrapper tar rh-nodejs4-npm && \
+    yum install -y --setopt=tsflags=nodocs nss_wrapper tar rh-nodejs6-npm && \
     yum clean all && \
-    mkdir -p /opt/app-root/src /opt/app-root/publish && \
+    mkdir -p /opt/app-root/{src,publish,warmup} && \
     useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
       -c "Default Application User" default && \
     chown -R 1001:0 /opt/app-root
+
+# TODO: remove upstream sdk
+# install upstream 2.0 sdk
+RUN yum install -y libunwind libicu && \
+    curl https://dotnetcli.azureedge.net/dotnet/Sdk/2.0.0-preview1-005783/dotnet-dev-rhel-x64.2.0.0-preview1-005783.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+    mkdir -p /opt/dotnet && \
+    tar xf /tmp/dotnet-sdk.tar.gz -C /opt/dotnet && \
+    ln -s /opt/dotnet/dotnet /usr/bin/dotnet
 
 # Switch to default app-user for cache population
 USER 1001
@@ -54,16 +63,16 @@ USER 1001
 # Don't download/extract docs for nuget packages
 ENV NUGET_XMLDOC_MODE=skip
 
-# - Initialize the .Net cache via 'scl enable rh-dotnetcore11 -- dotnet new'
-#   Move to the proper command to do this once https://github.com/dotnet/cli/issues/3692 is fixed.
-# - Removal of /tmp/NuGetScratch is needed due to:
-#   https://github.com/NuGet/Home/issues/2793
-RUN cd /opt/app-root/src && mkdir cache-warmup && \
-    cd cache-warmup && \
-    scl enable rh-dotnetcore11 -- dotnet new && \
-    cd .. && \
-    rm -rf cache-warmup && \
-    rm -rf /tmp/NuGetScratch
+# TODO: set source argument to: https://api.nuget.org/v3/index.json
+# TODO: scl enable rh-dotnet20 --
+# TODO: set packagescache.csproj NETStandard.Library version to 2.0.0
+# TODO: ?additional packages for packagescache.csproj
+# TODO: does the `global cache` solve this problem? better? different?
+# Create NuGet package cache
+COPY packagescache.csproj /opt/app-root/warmup/packagescache.csproj
+RUN dotnet restore /opt/app-root/warmup/packagescache.csproj \
+      --source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json \
+    && rm -rf /opt/app-root/warmup/
 
 # Switch back to root for changing dir ownership/permissions
 USER 0
@@ -73,9 +82,10 @@ USER 0
 # random UID.
 RUN chown -R 1001:0 /opt/app-root && chmod -R og+rwx /opt/app-root
 
+# TODO: enable rh-dotnet20
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
-    ENABLED_COLLECTIONS="rh-dotnetcore11 rh-nodejs4"
+    ENABLED_COLLECTIONS="rh-nodejs6"
 
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable

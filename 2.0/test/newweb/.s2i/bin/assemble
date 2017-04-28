@@ -2,7 +2,7 @@
 
 # generate the project
 pushd /tmp/src
-dotnet new -t web
+dotnet new mvc
 popd
 
 # call base assemble script

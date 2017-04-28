@@ -16,7 +16,7 @@ resulting image with [Docker](http://docker.io) execute:
 *  **For RHEL based image**
 
     ```
-    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=1.1/test/asp-net-hello-world dotnet/dotnetcore-11-rhel7 dotnet-sample-app
+    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=2.0/test/asp-net-hello-world dotnet/dotnet-20-rhel7 dotnet-sample-app
     $ sudo docker run -p 8080:8080 dotnet-sample-app
     ```
 
@@ -90,30 +90,13 @@ a `.s2i/environment` file inside your source code repository.
 
 * **DOTNET_STARTUP_PROJECT**
 
-    Used to select the project to run. This must be the folder containing
-    `project.json`. Defaults to `.`.
-
-* **DOTNET_PUBLISH**
-
-    Used to control whether the application should be built by executing
-    `dotnet build` or `dotnet publish`. To publish the application set the
-    value to `true`. It is recommended to publish your application. For
-    backwards compatibility, the default is `false`. In the next major release,
-    this variable will be removed and the builder will always publish the
-    application.
+    Used to select the project to run. This must be a folder containing a single `csproj` file. Defaults to `.`.
 
 * **DOTNET_ASSEMBLY_NAME**
 
     Used to select the assembly to run. This must NOT include the `.dll` extension.
-    Set this to the output assembly name specified in `project.json` (`name`, `buildOptions/outputName`).
-    For `project.json`, the assembly name defaults to the `project.json` parent folder. The name of the
-    parent folder is used as the default value for `DOTNET_ASSEMBLY_NAME`.
-
-    When `project.json` is at the `context-dir`, the parent folder name will be 'src'. So, by
-    default, this generates a 'src.dll' assembly. Setting `DOTNET_ASSEMBLY_NAME` will cause:
-    - the assembly to be <DOTNET_ASSEMBLY_NAME>.dll
-    - the application sources to be in subfolder `DOTNET_ASSEMBLY_NAME` in the deployed
-    container.
+    Set this to the output assembly name specified in `csproj` (`PropertyGroup/AssemblyName`). This defaults
+    to the `csproj` filename.
 
 * **DOTNET_RESTORE_SOURCES**
 
@@ -127,8 +110,8 @@ a `.s2i/environment` file inside your source code repository.
 
 * **DOTNET_TEST_PROJECTS**
 
-    Used to specify the list of test projects to run. This must be folders containing
-    `project.json`. `dotnet test` is invoked for each folder. Defaults to ``.
+    Used to specify the list of test projects to run. This must be folders containing a
+    `csproj` file. `dotnet test` is invoked for each folder. Defaults to ``.
 
 * **DOTNET_CONFIGURATION**
 
