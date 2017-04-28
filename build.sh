@@ -59,6 +59,7 @@ for v in ${VERSIONS}; do
   popd &>/dev/null
 done
 
+# TODO: cleanup TEST_OPENSHIFT, OPENSHIFT_ONLY
 # if [ "$TEST_OPENSHIFT" = "true" ]; then
 #   for v in ${VERSIONS}; do
 #     img_name="registry.access.redhat.com/dotnet/$(image_name ${v}):latest"

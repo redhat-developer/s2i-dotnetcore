@@ -67,6 +67,7 @@ ENV NUGET_XMLDOC_MODE=skip
 # TODO: scl enable rh-dotnet20 --
 # TODO: set packagescache.csproj NETStandard.Library version to 2.0.0
 # TODO: ?additional packages for packagescache.csproj
+# TODO: does the `global cache` solve this problem? better? different?
 # Create NuGet package cache
 COPY packagescache.csproj /opt/app-root/warmup/packagescache.csproj
 RUN dotnet restore /opt/app-root/warmup/packagescache.csproj \
