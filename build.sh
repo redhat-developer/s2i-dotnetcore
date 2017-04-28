@@ -59,16 +59,16 @@ for v in ${VERSIONS}; do
   popd &>/dev/null
 done
 
-if [ "$TEST_OPENSHIFT" = "true" ]; then
-  for v in ${VERSIONS}; do
-    img_name="registry.access.redhat.com/dotnet/$(image_name ${v}):latest"
-    pushd ${v} &>/dev/null
-      echo "Running tests on image ${img_name} ..."
-      IMAGE_NAME="${img_name}" OPENSHIFT_ONLY=true ./test/run
-      check_result_msg $? "Tests for image ${img_name} FAILED!"
-    popd &>/dev/null
-  done
-fi
+# if [ "$TEST_OPENSHIFT" = "true" ]; then
+#   for v in ${VERSIONS}; do
+#     img_name="registry.access.redhat.com/dotnet/$(image_name ${v}):latest"
+#     pushd ${v} &>/dev/null
+#       echo "Running tests on image ${img_name} ..."
+#       IMAGE_NAME="${img_name}" OPENSHIFT_ONLY=true ./test/run
+#       check_result_msg $? "Tests for image ${img_name} FAILED!"
+#     popd &>/dev/null
+#   done
+# fi
 
 echo "ALL builds and tests were successful!"
 exit 0
