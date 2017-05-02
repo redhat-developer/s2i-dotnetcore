@@ -22,7 +22,13 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
-declare -a CLI_APPS=(hw_framework_config helloworld qotd)
+declare -a CLI_APPS=(
+  hw_framework_config
+  helloworld
+  qotd
+  envvar-general/dotnet-configuration-debug
+  envvar-general/dotnet-configuration-release
+)
 declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
@@ -306,6 +312,12 @@ get_expected_cli() {
     "qotd")
       echo IGNORE_ME
       ;;
+    "envvar-general/dotnet-configuration-debug")
+      echo 'Debug'
+      ;;
+    "envvar-general/dotnet-configuration-release")
+      echo 'Release'
+      ;;
     *)
       echo "Unknown CLI app ${app}"
       exit 1
@@ -326,6 +338,14 @@ filter_cli() {
       echo "${all_output}" | tail -n1
       ;;
     "qotd")
+      # Note: tail -n1 => Omit "--> Running application with ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    "envvar-general/dotnet-configuration-debug")
+      # Note: tail -n1 => Omit "--> Running application with ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    "envvar-general/dotnet-configuration-release")
       # Note: tail -n1 => Omit "--> Running application with ..." output
       echo "${all_output}" | tail -n1
       ;;
@@ -355,6 +375,14 @@ success_cli() {
       echo ${actual} | grep -q "\[QOTD\]: "
       retval=$(( ${retval} + $? ))
       return ${retval}
+      ;;
+    "envvar-general/dotnet-configuration-debug")
+      echo "${actual}" | grep -q "${expected}"
+      return $?
+      ;;
+    "envvar-general/dotnet-configuration-release")
+      echo "${actual}" | grep -q "${expected}"
+      return $?
       ;;
     *)
       echo "Unknown CLI app ${app}"
