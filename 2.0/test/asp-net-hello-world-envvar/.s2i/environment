@@ -1,6 +1,7 @@
 DOTNET_STARTUP_PROJECT=src/app
 DOTNET_CONFIGURATION=Debug
-TODO_DOTNET_TEST_PROJECTS=test/test1 test/test2
+DOTNET_TEST_PROJECTS=test/test1 test/test2
 DOTNET_ASSEMBLY_NAME=SampleApp
-DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
+LANG=en_US.UTF-8
+DOTNET_RESTORE_SOURCES=https://dotnet.myget.org/F/vstest/api/v3/index.json https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
 
