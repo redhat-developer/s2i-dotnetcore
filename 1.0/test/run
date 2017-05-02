@@ -26,8 +26,8 @@ declare -a CLI_APPS=(
   hw_framework_config
   helloworld
   qotd
-  envvar-general/dotnet-configuration-debug
-  envvar-general/dotnet-configuration-release
+  dotnet-configuration-debug
+  dotnet-configuration-release
 )
 declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 
@@ -312,10 +312,10 @@ get_expected_cli() {
     "qotd")
       echo IGNORE_ME
       ;;
-    "envvar-general/dotnet-configuration-debug")
+    "dotnet-configuration-debug")
       echo 'Debug'
       ;;
-    "envvar-general/dotnet-configuration-release")
+    "dotnet-configuration-release")
       echo 'Release'
       ;;
     *)
@@ -341,11 +341,11 @@ filter_cli() {
       # Note: tail -n1 => Omit "--> Running application with ..." output
       echo "${all_output}" | tail -n1
       ;;
-    "envvar-general/dotnet-configuration-debug")
+    "dotnet-configuration-debug")
       # Note: tail -n1 => Omit "--> Running application with ..." output
       echo "${all_output}" | tail -n1
       ;;
-    "envvar-general/dotnet-configuration-release")
+    "dotnet-configuration-release")
       # Note: tail -n1 => Omit "--> Running application with ..." output
       echo "${all_output}" | tail -n1
       ;;
@@ -376,11 +376,11 @@ success_cli() {
       retval=$(( ${retval} + $? ))
       return ${retval}
       ;;
-    "envvar-general/dotnet-configuration-debug")
+    "dotnet-configuration-debug")
       echo "${actual}" | grep -q "${expected}"
       return $?
       ;;
-    "envvar-general/dotnet-configuration-release")
+    "dotnet-configuration-release")
       echo "${actual}" | grep -q "${expected}"
       return $?
       ;;
