@@ -90,7 +90,7 @@ a `.s2i/environment` file inside your source code repository.
 
 * **DOTNET_STARTUP_PROJECT**
 
-    Used to select the project to run. This must be a folder containing a single `csproj` file. Defaults to `.`.
+    Used to select the project to run. This must be a `csproj` file or a folder containing a single `csproj` file. Defaults to `.`.
 
 * **DOTNET_ASSEMBLY_NAME**
 
@@ -110,8 +110,8 @@ a `.s2i/environment` file inside your source code repository.
 
 * **DOTNET_TEST_PROJECTS**
 
-    Used to specify the list of test projects to run. This must be folders containing a
-    `csproj` file. `dotnet test` is invoked for each folder. Defaults to ``.
+    Used to specify the list of test projects to run. This must be `csproj` files or folders containing a
+    single `csproj` file. `dotnet test` is invoked for each item. Defaults to ``.
 
 * **DOTNET_CONFIGURATION**
 
