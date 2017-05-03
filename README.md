@@ -27,6 +27,12 @@ $ cd s2i-dotnetcore/1.0
 $ sudo docker build -f Dockerfile.rhel7 -t dotnet/dotnetcore-10-rhel7 .
 ```
 
+Or in order to build and test all images run:
+
+```
+sudo bash build.sh
+```
+
 Usage
 ---------------------------------
 
