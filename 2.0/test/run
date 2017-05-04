@@ -22,9 +22,9 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
-# TODO: vstest is broken for asp-net-hello-world-envvar (workaround in .s2i/environment: LANG and vstest feed)
+# TODO: vstest is broken for asp-net-hello-world-envvar{,2} (workaround in .s2i/environment: LANG and vstest feed)
 declare -a CLI_APPS=(hw_framework_config helloworld qotd)
-declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
+declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar asp-net-hello-world-envvar2)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
