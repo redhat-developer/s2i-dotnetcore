@@ -458,8 +458,7 @@ else
     cleanup ${app}
   done
 
-  # TODO: re-enable test, template doesn't compile'
-  # test_new_web_app
+  test_new_web_app
 fi
 
 info "All tests finished successfully."
