@@ -54,7 +54,7 @@ fi
 
 # Build nuget sources list for when doing the restore
 # TODO: initialize RESTORE_OPTIONS to empty string
-RESTORE_OPTIONS="--source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json --source https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json --source https://api.nuget.org/v3/index.json"
+RESTORE_OPTIONS="--source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json --source https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json --source https://dotnet.myget.org/F/msbuild/api/v3/index.json --source https://api.nuget.org/v3/index.json"
 for SOURCE in $DOTNET_RESTORE_SOURCES; do
   RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
 done

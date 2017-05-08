@@ -52,7 +52,7 @@ RUN yum install -y yum-utils && \
 # TODO: remove upstream sdk
 # install upstream 2.0 sdk
 RUN yum install -y libunwind libicu && \
-    curl https://dotnetcli.azureedge.net/dotnet/Sdk/2.0.0-preview1-005783/dotnet-dev-rhel-x64.2.0.0-preview1-005783.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+    curl https://dotnetcli.azureedge.net/dotnet/Sdk/2.0.0-preview1-005972/dotnet-dev-rhel-x64.2.0.0-preview1-005972.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
     mkdir -p /opt/dotnet && \
     tar xf /tmp/dotnet-sdk.tar.gz -C /opt/dotnet && \
     ln -s /opt/dotnet/dotnet /usr/bin/dotnet
