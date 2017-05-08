@@ -22,7 +22,7 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
-# TODO: vstest is broken for asp-net-hello-world-envvar{,2} (workaround in .s2i/environment: LANG and vstest feed)
+# TODO: asp-net-hello-world-envvar{,2}: remove vstest feed
 declare -a CLI_APPS=(hw_framework_config helloworld qotd)
 declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar asp-net-hello-world-envvar2)
 
