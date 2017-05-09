@@ -52,7 +52,7 @@ RUN yum install -y yum-utils && \
 # TODO: remove upstream sdk
 # install upstream 2.0 sdk
 RUN yum install -y libunwind libicu && \
-    curl https://dotnetcli.azureedge.net/dotnet/Sdk/2.0.0-preview1-005783/dotnet-dev-rhel-x64.2.0.0-preview1-005783.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+    curl https://dotnetcli.azureedge.net/dotnet/Sdk/2.0.0-preview1-005972/dotnet-dev-rhel-x64.2.0.0-preview1-005972.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
     mkdir -p /opt/dotnet && \
     tar xf /tmp/dotnet-sdk.tar.gz -C /opt/dotnet && \
     ln -s /opt/dotnet/dotnet /usr/bin/dotnet
@@ -62,16 +62,18 @@ USER 1001
 
 # Don't download/extract docs for nuget packages
 ENV NUGET_XMLDOC_MODE=skip
+# Don't do initially populate of package cache
+ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 
 # TODO: set source argument to: https://api.nuget.org/v3/index.json
 # TODO: scl enable rh-dotnet20 --
-# TODO: set packagescache.csproj NETStandard.Library version to 2.0.0
-# TODO: ?additional packages for packagescache.csproj
-# TODO: does the `global cache` solve this problem? better? different?
+# TODO: replace '.0-*' from AspNetPackageVersion with '.*'
+# TODO: does the `global store` solve this problem? better? different?
+# TODO: if using store, remove TargetManifestFiles parameter from publish command
 # Create NuGet package cache
 COPY packagescache.csproj /opt/app-root/warmup/packagescache.csproj
-RUN dotnet restore /opt/app-root/warmup/packagescache.csproj \
-      --source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json \
+RUN dotnet restore /opt/app-root/warmup/packagescache.csproj /p:AspNetPackageVersion=$DOTNET_CORE_VERSION.0-* \
+    --source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json --source https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json  --source https://api.nuget.org/v3/index.json \
     && rm -rf /opt/app-root/warmup/
 
 # Switch back to root for changing dir ownership/permissions

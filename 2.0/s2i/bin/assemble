@@ -54,7 +54,7 @@ fi
 
 # Build nuget sources list for when doing the restore
 # TODO: initialize RESTORE_OPTIONS to empty string
-RESTORE_OPTIONS="--source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json --source https://api.nuget.org/v3/index.json"
+RESTORE_OPTIONS="--source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json --source https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json --source https://dotnet.myget.org/F/msbuild/api/v3/index.json --source https://api.nuget.org/v3/index.json"
 for SOURCE in $DOTNET_RESTORE_SOURCES; do
   RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
 done
@@ -71,7 +71,7 @@ done
 echo "---> Restoring application dependencies..."
 dotnet restore "$DOTNET_STARTUP_PROJECT" -r "$DOTNET_RID" $RESTORE_OPTIONS
 echo "---> Publishing application..."
-dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" -r "$DOTNET_RID" /p:SelfContained=false -o "$DOTNET_PUBLISH_PATH"
+dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" -r "$DOTNET_RID" --self-contained false /p:TargetManifestFiles= -o "$DOTNET_PUBLISH_PATH"
 
 # check if the assembly used by the script exists
 if [ ! -f "$DOTNET_PUBLISH_PATH/${APP_DLL_NAME}" ]; then

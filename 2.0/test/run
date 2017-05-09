@@ -22,7 +22,7 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
-# TODO: vstest is broken for asp-net-hello-world-envvar{,2} (workaround in .s2i/environment: LANG and vstest feed)
+# TODO: asp-net-hello-world-envvar{,2}: remove vstest feed
 declare -a CLI_APPS=(
   hw_framework_config
   helloworld
@@ -34,7 +34,7 @@ declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar asp-net-hell
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
-dotnet_version="2.0.0-preview1-005783"
+dotnet_version="2.0.0-preview1-005972"
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
 test_port=8080
@@ -486,8 +486,7 @@ else
     cleanup ${app}
   done
 
-  # TODO: re-enable test, template doesn't compile'
-  # test_new_web_app
+  test_new_web_app
 fi
 
 info "All tests finished successfully."
