@@ -36,6 +36,11 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
 
+# TODO: remove this (https://access.redhat.com/solutions/1443553: Permanently Enabling/Disabling repositories from a Dockerfile)
+RUN yum repolist --disablerepo=* && \
+    yum-config-manager --disable \* > /dev/null && \
+    yum-config-manager --enable rhel-7-server-rpms > /dev/null
+
 # TODO: install rh-dotnet20
 RUN yum install -y yum-utils && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
@@ -52,7 +57,7 @@ RUN yum install -y yum-utils && \
 # TODO: remove upstream sdk
 # install upstream 2.0 sdk
 RUN yum install -y libunwind libicu && \
-    curl https://dotnetcli.azureedge.net/dotnet/Sdk/2.0.0-preview1-005972/dotnet-dev-rhel-x64.2.0.0-preview1-005972.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+    curl https://download.microsoft.com/download/0/6/5/0656B047-5F2F-4281-A851-F30776F8616D/dotnet-dev-linux-x64.2.0.0-preview1-005977.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
     mkdir -p /opt/dotnet && \
     tar xf /tmp/dotnet-sdk.tar.gz -C /opt/dotnet && \
     ln -s /opt/dotnet/dotnet /usr/bin/dotnet
@@ -65,15 +70,12 @@ ENV NUGET_XMLDOC_MODE=skip
 # Don't do initially populate of package cache
 ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 
-# TODO: set source argument to: https://api.nuget.org/v3/index.json
 # TODO: scl enable rh-dotnet20 --
-# TODO: replace '.0-*' from AspNetPackageVersion with '.*'
-# TODO: does the `global store` solve this problem? better? different?
-# TODO: if using store, remove TargetManifestFiles parameter from publish command
+# TODO: replace '.0-preview1-final' from AspNetPackageVersion with '.*'
 # Create NuGet package cache
 COPY packagescache.csproj /opt/app-root/warmup/packagescache.csproj
-RUN dotnet restore /opt/app-root/warmup/packagescache.csproj /p:AspNetPackageVersion=$DOTNET_CORE_VERSION.0-* \
-    --source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json --source https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json  --source https://api.nuget.org/v3/index.json \
+RUN dotnet restore /opt/app-root/warmup/packagescache.csproj /p:AspNetPackageVersion=$DOTNET_CORE_VERSION.0-preview1-final \
+    --source https://api.nuget.org/v3/index.json \
     && rm -rf /opt/app-root/warmup/
 
 # Switch back to root for changing dir ownership/permissions

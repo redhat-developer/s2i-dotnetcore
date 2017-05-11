@@ -43,7 +43,8 @@ check_result_msg() {
   fi
 }
 
-VERSIONS="${VERSIONS:-1.0 1.1 2.0}"
+# TODO: build 1.0 1.1 
+VERSIONS="${VERSIONS:-2.0}"
 
 for v in ${VERSIONS}; do
   img_name="dotnet/$(image_name ${v})"
