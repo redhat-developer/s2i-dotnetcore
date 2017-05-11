@@ -36,6 +36,11 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
 
+# TODO: remove this (https://access.redhat.com/solutions/1443553: Permanently Enabling/Disabling repositories from a Dockerfile)
+RUN yum repolist --disablerepo=* && \
+    yum-config-manager --disable \* > /dev/null && \
+    yum-config-manager --enable rhel-7-server-rpms > /dev/null
+
 # TODO: install rh-dotnet20
 RUN yum install -y yum-utils && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
@@ -70,7 +75,7 @@ ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 # Create NuGet package cache
 COPY packagescache.csproj /opt/app-root/warmup/packagescache.csproj
 RUN dotnet restore /opt/app-root/warmup/packagescache.csproj /p:AspNetPackageVersion=$DOTNET_CORE_VERSION.0-preview1-final \
-    --source https://api.nuget.org/v3/index.json
+    --source https://api.nuget.org/v3/index.json \
     && rm -rf /opt/app-root/warmup/
 
 # Switch back to root for changing dir ownership/permissions

@@ -33,7 +33,7 @@ declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar asp-net-hell
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
-dotnet_version="2.0.0-preview1-005972"
+dotnet_version="2.0.0-preview1-005977"
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
 test_port=8080
