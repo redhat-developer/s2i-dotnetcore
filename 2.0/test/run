@@ -22,7 +22,6 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
-# TODO: asp-net-hello-world-envvar{,2}: remove vstest feed
 declare -a CLI_APPS=(
   hw_framework_config
   helloworld
