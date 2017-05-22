@@ -36,11 +36,6 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
 
-# TODO: remove this (https://access.redhat.com/solutions/1443553: Permanently Enabling/Disabling repositories from a Dockerfile)
-RUN yum repolist --disablerepo=* && \
-    yum-config-manager --disable \* > /dev/null && \
-    yum-config-manager --enable rhel-7-server-rpms > /dev/null
-
 # TODO: install rh-dotnet20
 RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y yum-utils && \
     yum-config-manager --disable \* && \
