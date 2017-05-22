@@ -36,7 +36,8 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
 
-RUN yum install -y yum-utils && \
+RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y yum-utils && \
+    yum-config-manager --disable \* && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-dotnet-rpms && \
     yum-config-manager --enable rhel-7-server-rpms && \
