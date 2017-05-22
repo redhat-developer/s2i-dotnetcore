@@ -42,7 +42,8 @@ RUN yum repolist --disablerepo=* && \
     yum-config-manager --enable rhel-7-server-rpms > /dev/null
 
 # TODO: install rh-dotnet20
-RUN yum install -y yum-utils && \
+RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y yum-utils && \
+    yum-config-manager --disable \* && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-dotnet-rpms && \
     yum-config-manager --enable rhel-7-server-rpms && \
