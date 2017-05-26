@@ -57,6 +57,7 @@ for v in ${VERSIONS}; do
     echo "Running tests on image ${img_name} ..."
     ./test/run
     check_result_msg $? "Tests for image ${img_name} FAILED!"
+	# TODO: Add tests for runtime images
   popd &>/dev/null
 done
 
