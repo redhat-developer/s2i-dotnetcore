@@ -1,4 +1,4 @@
-FROM rhel7
+FROM dotnet/dotnet-20-rhel7-runtime
 # This image provides a .NET Core 2.0 environment you can use to run your .NET
 # applications.
 
@@ -52,11 +52,9 @@ RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y yum-utils &&
 
 # TODO: remove upstream sdk
 # install upstream 2.0 sdk
-RUN yum install -y libunwind libicu && \
-    curl https://download.microsoft.com/download/0/6/5/0656B047-5F2F-4281-A851-F30776F8616D/dotnet-dev-linux-x64.2.0.0-preview1-005977.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
-    mkdir -p /opt/dotnet && \
-    tar xf /tmp/dotnet-sdk.tar.gz -C /opt/dotnet && \
-    ln -s /opt/dotnet/dotnet /usr/bin/dotnet
+RUN curl https://download.microsoft.com/download/0/6/5/0656B047-5F2F-4281-A851-F30776F8616D/dotnet-dev-linux-x64.2.0.0-preview1-005977.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+	tar xf /tmp/dotnet-sdk.tar.gz -C /opt/dotnet "./sdk" && \
+	rm /tmp/dotnet-sdk.tar.gz
 
 # Switch to default app-user for cache population
 USER 1001
