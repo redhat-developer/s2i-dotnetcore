@@ -15,7 +15,6 @@
 # Example usage: $ sudo ./test/run
 
 IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-rhel7}
-RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-${IMAGE_NAME}-runtime}
 
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -30,7 +29,11 @@ declare -a CLI_APPS=(
   dotnet-configuration-debug
   dotnet-configuration-release
 )
-declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar asp-net-hello-world-envvar2)
+declare -a WEB_APPS=(
+  asp-net-hello-world
+  asp-net-hello-world-envvar
+  asp-net-hello-world-envvar2
+)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
@@ -108,9 +111,6 @@ cleanup() {
   if image_exists ${IMAGE_NAME}-testapp; then
     docker rmi -f ${IMAGE_NAME}-testapp
   fi
-  if image_exists ${RUNTIME_IMAGE_NAME}-testapp; then
-    docker rmi -f ${RUNTIME_IMAGE_NAME}-testapp
-  fi
   rm -rf ${test_dir}/${1}/.git
 }
 
@@ -128,7 +128,7 @@ check_command_exists_at()
   local command=$1
   local at=$2
   info "Testing if ${command} is at ${at}"
-  local actual=$(docker run ${IMAGE_NAME}-testapp bash -c "command -v ${command}")
+  local actual=$(docker run --rm ${IMAGE_NAME}-testapp bash -c "command -v ${command}")
   if [[ "${at}_" != "${actual}_" ]]; then
     info "TEST FAILED (${command} is at ${actual}, expected ${at})"
     cleanup
@@ -158,7 +158,7 @@ test_s2i_usage() {
 test_docker_run_usage() {
   local expected="$1"
   info "Testing 'docker run' usage (${expected}) ..."
-  docker run ${IMAGE_NAME} 2>&1 | grep "${expected}" 2>&1 >/dev/null
+  docker run --rm ${IMAGE_NAME} 2>&1 | grep "${expected}" 2>&1 >/dev/null
 }
 
 test_pid_1() {
@@ -288,36 +288,21 @@ test_web_application() {
   prepare ${app}
   run_s2i_build ${app}
   check_result $?
-  create_runtime_app
 
-  build_image="${IMAGE_NAME}-testapp"
-  runtime_image="${RUNTIME_IMAGE_NAME}-testapp"
+  image="${IMAGE_NAME}-testapp"
 
   ##
-  # test the build container
+  # test the image
   ##
   info "Starting build image tests"
   local cid_file=$(mktemp -u --suffix=.cid)
-  init_web_app "${build_image}" "${cid_file}"
+  init_web_app "${image}" "${cid_file}"
   # test application with default user
-  test_web_app_scl "${build_image}" "${cid_file}"
+  test_web_app_scl "${image}" "${cid_file}"
   test_web_app_http
 
   # test application with random user
-  CONTAINER_ARGS="-u 12345" test_web_app_scl "${build_image}" "${cid_file}"
-  CONTAINER_ARGS="-u 12345" test_web_app_http
-  cleanup_container "${cid_file}"
-
-  ##
-  # test the runtime container
-  ##
-  info "Starting runtime image tests"
-  local cid_file=$(mktemp -u --suffix=.cid)
-  init_web_app "${runtime_image}" "${cid_file}"
-  # test application with default user
-  test_web_app_http
-
-  # test application with random user
+  CONTAINER_ARGS="-u 12345" test_web_app_scl "${image}" "${cid_file}"
   CONTAINER_ARGS="-u 12345" test_web_app_http
   cleanup_container "${cid_file}"
 
@@ -470,20 +455,6 @@ test_cli_app() {
     exit 1
   fi
   info "Test CLI app (build image): ${app} PASSED."
-
-  info "Testing CLI app against runtime image: ${app} ..."
-  create_runtime_app
-  #check_result $?
-  local expected="$( get_expected_cli ${app} )"
-  local actual_pre="$( run_cli_test_application ${RUNTIME_IMAGE_NAME}-testapp)"
-  local actual="$( filter_cli "${app}" "${actual_pre}" )"
-  if ! success_cli "${app}" "${actual}" "${expected}"; then
-    info "Test CLI app: ${app} FAILED."
-    echo_details "${expected}" "${actual}"
-    cleanup ${app}
-    exit 1
-  fi
-  info "Test CLI app (runtime image): ${app} PASSED."
   cleanup ${app}
 }
 
@@ -507,34 +478,6 @@ test_new_web_app() {
   cleanup_container "${cid_file}"
   info "All tests for the ${app} finished successfully."
   cleanup ${app}
-}
-
-create_runtime_app() {
-  # Create a temp directory to hold our temporary files
-  TMPDIR=$(mktemp -d)
-  # TODO: Figure out a better way to allow access from the image /OTHER/ than 777
-  chmod 777 ${TMPDIR}
-  echo "Created temp directory ${TMPDIR}"
-  # Grab the build artifacts from the build image
-  docker run --rm --volume=${TMPDIR}:/opt/app-root/tmp:Z "${IMAGE_NAME}-testapp" tar zcvpf /opt/app-root/tmp/publish.tar.gz -C /opt/app-root/publish .
-
-  if [ ! -e "${TMPDIR}/publish.tar.gz" ] || [ ! -s "${TMPDIR}/publish.tar.gz" ]; then
-    echo "Failed to extract the publish directory from the build image '${app}'."
-    cleanup
-    exit 1
-  fi
-  echo "FROM ${RUNTIME_IMAGE_NAME}" > "${TMPDIR}/Dockerfile"
-  echo "RUN mkdir -p '/opt/app-root/publish'" >> "${TMPDIR}/Dockerfile"
-  echo "WORKDIR /opt/app-root/publish" >> "${TMPDIR}/Dockerfile"
-  echo "COPY publish.tar.gz publish.tar.gz" >> "${TMPDIR}/Dockerfile"
-  echo "RUN tar xvf publish.tar.gz" >> "${TMPDIR}/Dockerfile"
-  echo "CMD /opt/app-root/publish/s2i_run" >> "${TMPDIR}/Dockerfile"
-  # Build the runtime image
-  docker build -f "${TMPDIR}/Dockerfile" -t "${RUNTIME_IMAGE_NAME}-testapp" ${TMPDIR}
-  if [ -n ${TMPDIR} ] && [ -e ${TMPDIR} ]; then
-    echo "Removing temp directory ${TMPDIR}"
-    rm -rf ${TMPDIR}
-  fi
 }
 
 info "Testing ${IMAGE_NAME}"

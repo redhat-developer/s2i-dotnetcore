@@ -62,19 +62,36 @@ build_image() {
 test_images() {
   local path=$1
   echo "Running tests..."
-  ${path}/run
-  check_result_msg $? "Tests FAILED!"
+  pushd ${path} > /dev/null
+    ./run
+    check_result_msg $? "Tests FAILED!"
+  popd > /dev/null
 }
 
 # TODO: build 1.0 1.1 
 VERSIONS="${VERSIONS:-2.0}"
 
 for v in ${VERSIONS}; do
-  build_name="dotnet/$(image_name ${v})"
-  runtime_name="${build_name}-runtime"
-  build_image "${v}/runtime" "${runtime_name}"
-  build_image "${v}/build" "${build_name}"
-  test_images "${v}/test"
+  # TODO: If this gets more complex, the find a better way to determine split
+  #       images, or just normalize split and non-split images
+  if [ "$v" == "1.0" ] || [ "$v" == "1.1" ]; then
+    build_name="dotnet/$(image_name ${v})"
+
+    # Build the build image
+    build_image "${v}" "${build_name}"
+    test_images "${v}/test"
+  else
+    build_name="dotnet/$(image_name ${v})"
+    runtime_name="${build_name}-runtime"
+
+    # Build the runtime image
+    build_image "${v}/runtime" "${runtime_name}"
+    test_images "${v}/runtime/test"
+
+    # Build the build image
+    build_image "${v}/build" "${build_name}"
+    test_images "${v}/build/test"
+  fi
 done
 
 # TODO: cleanup TEST_OPENSHIFT, OPENSHIFT_ONLY

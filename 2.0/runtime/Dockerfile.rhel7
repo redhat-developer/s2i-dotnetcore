@@ -9,7 +9,7 @@ ENV DOTNET_CORE_VERSION=2.0
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
     HOME=/opt/app-root \
-    PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/bin:/opt/app-root/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
       io.k8s.display-name=".NET Core 2.0" \
@@ -29,6 +29,9 @@ ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 ## By default, ASP.NET Core runs on port 5000. We configure it to match
 ## the container port.
 ENV ASPNETCORE_URLS=http://*:8080
+
+RUN yum install -y --setopt=tsflags=nodocs nss_wrapper tar && \
+    yum clean all
 
 # TODO: remove upstream sdk
 # install upstream 2.0 sdk
