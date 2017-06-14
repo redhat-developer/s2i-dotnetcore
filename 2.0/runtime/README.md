@@ -14,12 +14,28 @@ example, given an archive of the binaries of a simple [dotnet-sample-app](test/a
 application, the following Dockerfile could be used.
 
 **Sample Dockerfile**
+```
 FROM dotnet-20-rhel7-runtime
 RUN mkdir -p '/opt/app-root/publish'
 WORKDIR /opt/app-root/publish
 COPY asp-net-hello-world.tar.gz asp-net-hello-world.tar.gz
 RUN tar xvf asp-net-hello-world.tar.gz
 CMD /opt/app-root/publish/s2i_run
+```
+
+As for generating the binary archives in the first place, often this can be
+accomplished by running a dotnet restore and a dotnet publish to a single
+directory and then archiving that directories contents.
+
+**Example Binary Archive Creation**
+``` sh
+cd asp-net-hello-world
+dotnet restore "." -r "rhel.7-x64"
+dotnet publish "." -f "netcoreapp2.0" -c "Release" -r "rhel.7-x64" --self-contained false /p:TargetManifestFiles= -o "./publish"
+tar zcvpf "./asp-net-hello-world.tar.gz" -C ./publish .
+```
+
+This example cds into the project's directory, restores the projects NuGet dependencies, and then publishes the project to a publish directory. Finally, a tar command is used to create a gzipped tar file containing the content of the publish directory. This tar file is what is copied and extracted to create the apps runtime image, using the sample dockerfile given above.
 
 **Accessing the application:**
 
@@ -68,4 +84,4 @@ Environment variables
 
 * **HTTP_PROXY, HTTPS_PROXY**
 
-    Configures the HTTP/HTTPS proxy used when building and running the application.
+    Configures the HTTP/HTTPS proxy used when running the application.

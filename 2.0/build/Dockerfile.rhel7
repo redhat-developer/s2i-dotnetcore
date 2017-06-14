@@ -2,14 +2,8 @@ FROM dotnet/dotnet-20-rhel7-runtime
 # This image provides a .NET Core 2.0 environment you can use to run your .NET
 # applications.
 
-EXPOSE 8080
-
-ENV DOTNET_CORE_VERSION=2.0
-
 # Default to UTF-8 file.encoding
-ENV LANG=C.UTF-8 \
-    HOME=/opt/app-root \
-    PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/bin:/opt/app-root/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i \
     DOTNET_PUBLISH_PATH=/opt/app-root/publish \
     DOTNET_RUN_SCRIPT=/opt/app-root/publish/s2i_run
@@ -60,11 +54,6 @@ RUN curl https://download.microsoft.com/download/0/6/5/0656B047-5F2F-4281-A851-F
 # Switch to default app-user for cache population
 USER 1001
 
-# Don't download/extract docs for nuget packages
-ENV NUGET_XMLDOC_MODE=skip
-# Don't do initially populate of package cache
-ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-
 # TODO: scl enable rh-dotnet20 --
 # TODO: replace '.0-preview1-final' from AspNetPackageVersion with '.*'
 # Create NuGet package cache
@@ -100,10 +89,6 @@ WORKDIR /opt/app-root/src
 
 # Run container by default as user with id 1001 (default)
 USER 1001
-
-# By default, ASP.NET Core runs on port 5000. We configure it to match
-# the container port.
-ENV ASPNETCORE_URLS=http://*:8080
 
 ENTRYPOINT ["container-entrypoint"]
 

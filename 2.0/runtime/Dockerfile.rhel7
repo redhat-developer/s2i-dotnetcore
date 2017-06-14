@@ -23,6 +23,9 @@ LABEL name="dotnet/dotnet-20-rhel7-runtime" \
       release="1" \
       architecture="x86_64"
 
+# Don't download/extract docs for nuget packages
+ENV NUGET_XMLDOC_MODE=skip
+
 # Don't do initially populate of package cache
 ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 
