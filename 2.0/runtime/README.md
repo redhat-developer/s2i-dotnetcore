@@ -81,7 +81,3 @@ Environment variables
 
     This variable is set to `http://*:8080` to configure ASP.NET Core to use the
     port exposed by the image.
-
-* **HTTP_PROXY, HTTPS_PROXY**
-
-    Configures the HTTP/HTTPS proxy used when running the application.
