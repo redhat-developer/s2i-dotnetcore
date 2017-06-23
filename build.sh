@@ -43,21 +43,55 @@ check_result_msg() {
   fi
 }
 
+build_image() {
+  local path=$1
+  local name=$2
+  if ! image_exists ${name}; then
+    echo "Building Docker image ${name} ..."
+    if [ ! -d "${path}" ]; then
+      echo "No directory found at given location '${path}'. Skipping this image."
+      return
+    fi
+    pushd ${path} &>/dev/null
+      docker build -f Dockerfile.rhel7 -t ${name} .
+      check_result_msg $? "Building Docker image ${name} FAILED!"
+    popd &>/dev/null
+  fi
+}
+
+test_images() {
+  local path=$1
+  echo "Running tests..."
+  pushd ${path} > /dev/null
+    ./run
+    check_result_msg $? "Tests FAILED!"
+  popd > /dev/null
+}
+
 # TODO: build 1.0 1.1 
 VERSIONS="${VERSIONS:-2.0}"
 
 for v in ${VERSIONS}; do
-  img_name="dotnet/$(image_name ${v})"
-  pushd ${v} &>/dev/null
-    if ! image_exists ${img_name}; then
-      echo "Building Docker image ${img_name} ..."
-      docker build -f Dockerfile.rhel7 -t ${img_name} .
-      check_result_msg $? "Building Docker image ${img_name} FAILED!"
-    fi
-    echo "Running tests on image ${img_name} ..."
-    ./test/run
-    check_result_msg $? "Tests for image ${img_name} FAILED!"
-  popd &>/dev/null
+  # TODO: If this gets more complex, the find a better way to determine split
+  #       images, or just normalize split and non-split images
+  if [ "$v" == "1.0" ] || [ "$v" == "1.1" ]; then
+    build_name="dotnet/$(image_name ${v})"
+
+    # Build the build image
+    build_image "${v}" "${build_name}"
+    test_images "${v}/test"
+  else
+    build_name="dotnet/$(image_name ${v})"
+    runtime_name="${build_name}-runtime"
+
+    # Build the runtime image
+    build_image "${v}/runtime" "${runtime_name}"
+    test_images "${v}/runtime/test"
+
+    # Build the build image
+    build_image "${v}/build" "${build_name}"
+    test_images "${v}/build/test"
+  fi
 done
 
 # TODO: cleanup TEST_OPENSHIFT, OPENSHIFT_ONLY

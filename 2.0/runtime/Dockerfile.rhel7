@@ -1,0 +1,48 @@
+FROM rhel7
+# This image provides a .NET Core 2.0 environment you can use to run your .NET
+# applications.
+
+EXPOSE 8080
+
+ENV DOTNET_CORE_VERSION=2.0
+
+# Default to UTF-8 file.encoding
+ENV LANG=C.UTF-8 \
+    HOME=/opt/app-root \
+    PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
+      io.k8s.display-name=".NET Core 2.0" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet20-runtime" \
+      io.openshift.expose-services="8080:http"
+
+# Labels consumed by Red Hat build service
+LABEL name="dotnet/dotnet-20-rhel7-runtime" \
+      com.redhat.component="rh-dotnet20-runtime-docker" \
+      version="2.0" \
+      release="1" \
+      architecture="x86_64"
+
+# Don't download/extract docs for nuget packages
+ENV NUGET_XMLDOC_MODE=skip
+
+# Don't do initially populate of package cache
+ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+
+## By default, ASP.NET Core runs on port 5000. We configure it to match
+## the container port.
+ENV ASPNETCORE_URLS=http://*:8080
+
+RUN yum install -y --setopt=tsflags=nodocs nss_wrapper tar && \
+    yum clean all
+
+# TODO: remove upstream sdk
+# install upstream 2.0 sdk
+RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y libunwind libicu && \
+	yum clean all && \
+    curl https://download.microsoft.com/download/0/6/5/0656B047-5F2F-4281-A851-F30776F8616D/dotnet-dev-linux-x64.2.0.0-preview1-005977.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+    mkdir -p /opt/dotnet && \
+    tar xf /tmp/dotnet-sdk.tar.gz -C /opt/dotnet && \
+    ln -s /opt/dotnet/dotnet /usr/bin/dotnet; \
+	rm /tmp/dotnet-sdk.tar.gz; \
+	rm -rf /opt/dotnet/sdk
