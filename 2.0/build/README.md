@@ -103,6 +103,11 @@ a `.s2i/environment` file inside your source code repository.
     Used to specify the list of NuGet package sources used during the restore operation. This overrides 
     all of the sources specified in the NuGet.config file.
 
+    **NOTE:** For the 2.0 preview, some sources will be added automatically. Specifically, these are:
+    * https://api.nuget.org/v3/index.json
+    * https://dotnet.myget.org/F/dotnet-core/api/v2
+    * https://dotnet.myget.org/F/dotnet-2-0-0-preview2-final/api/v2
+
 * **DOTNET_NPM_TOOLS**
 
     Used to specify a list of npm packages to install before building the app.

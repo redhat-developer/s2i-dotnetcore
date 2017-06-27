@@ -11,13 +11,18 @@ ENV LANG=C.UTF-8 \
     HOME=/opt/app-root \
     PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
+# Certain versions of docker restrict syscalls that will cause liblttng to fail
+# and dotnet to abort. This flag will prevent that.
+# For more information, see this bug: https://github.com/dotnet/cli/issues/1582
+ENV LTTNG_UST_REGISTER_TIMEOUT=0
+
 LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
       io.k8s.display-name=".NET Core 2.0" \
       io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet20-runtime" \
       io.openshift.expose-services="8080:http"
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-20-rhel7-runtime" \
+LABEL name="dotnet/dotnet-20-runtime-rhel7" \
       com.redhat.component="rh-dotnet20-runtime-docker" \
       version="2.0" \
       release="1" \
@@ -33,16 +38,30 @@ ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 ## the container port.
 ENV ASPNETCORE_URLS=http://*:8080
 
-RUN yum install -y --setopt=tsflags=nodocs nss_wrapper tar && \
+# Each language image can have 'contrib' a directory with extra files needed to
+# run and build the applications.
+COPY ./contrib/ /opt/app-root
+
+# TODO: remove the beta repo once RPMs reach the full release
+RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y yum-utils && \
+    yum-config-manager --enable rhel-server-rhscl-7-rpms && \
+    yum-config-manager --enable rhel-7-server-dotnet-rpms && \
+    yum-config-manager --enable rhel-7-server-rpms && \
+    yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \
+    yum-config-manager --enable rhel-7-server-dotnet-beta-rpms && \
+    yum install -y --setopt=tsflags=nodocs rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar && \
     yum clean all
 
-# TODO: remove upstream sdk
-# install upstream 2.0 sdk
-RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y libunwind libicu && \
-	yum clean all && \
-    curl https://download.microsoft.com/download/0/6/5/0656B047-5F2F-4281-A851-F30776F8616D/dotnet-dev-linux-x64.2.0.0-preview1-005977.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
-    mkdir -p /opt/dotnet && \
-    tar xf /tmp/dotnet-sdk.tar.gz -C /opt/dotnet && \
-    ln -s /opt/dotnet/dotnet /usr/bin/dotnet; \
-	rm /tmp/dotnet-sdk.tar.gz; \
-	rm -rf /opt/dotnet/sdk
+# Get prefix path and path to scripts rather than hard-code them in scripts
+ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
+    ENABLED_COLLECTIONS="rh-dotnet20"
+
+# When bash is started non-interactively, to run a shell script, for example it
+# looks for this variable and source the content of this file. This will enable
+# the SCL for all scripts without need to do 'scl enable'.
+ENV BASH_ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
+    ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
+    PROMPT_COMMAND=". ${CONTAINER_SCRIPTS_PATH}/etc/scl_enable"
+
+# Run container by default as user with id 1001 (default)
+USER 1001

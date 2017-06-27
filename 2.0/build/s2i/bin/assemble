@@ -53,8 +53,9 @@ else
 fi
 
 # Build nuget sources list for when doing the restore
+# TODO: These are necessary for the 2.0 preview. They should be removed for the final release.
 # TODO: initialize RESTORE_OPTIONS to empty string
-RESTORE_OPTIONS=""
+RESTORE_OPTIONS="--source https://api.nuget.org/v3/index.json --source https://dotnet.myget.org/F/dotnet-core/api/v2 --source https://dotnet.myget.org/F/dotnet-2-0-0-preview2-final/api/v2"
 for SOURCE in $DOTNET_RESTORE_SOURCES; do
   RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
 done

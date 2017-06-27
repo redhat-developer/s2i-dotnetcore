@@ -1,4 +1,4 @@
-FROM dotnet/dotnet-20-rhel7-runtime
+FROM dotnet/dotnet-20-runtime-rhel7
 # This image provides a .NET Core 2.0 environment you can use to run your .NET
 # applications.
 
@@ -27,60 +27,41 @@ COPY ./root/usr/bin /usr/bin
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-# Each language image can have 'contrib' a directory with extra files needed to
-# run and build the applications.
-COPY ./contrib/ /opt/app-root
+# Switch back to root for changing dir ownership/permissions
+USER 0
 
-# TODO: install rh-dotnet20
+# TODO: remove the beta repo once RPMs reach the full release
 RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y yum-utils && \
-    yum-config-manager --disable \* && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-dotnet-rpms && \
     yum-config-manager --enable rhel-7-server-rpms && \
     yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \
-    yum install -y --setopt=tsflags=nodocs rh-nodejs6-npm && \
+    yum-config-manager --enable rhel-7-server-dotnet-beta-rpms && \
+    yum install -y --setopt=tsflags=nodocs rh-nodejs6-npm rh-dotnet20-dotnet-sdk-2.0 && \
     yum clean all && \
     mkdir -p /opt/app-root/{src,publish,warmup} && \
     useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
       -c "Default Application User" default && \
     chown -R 1001:0 /opt/app-root
 
-# TODO: remove upstream sdk
-# install upstream 2.0 sdk
-RUN curl https://download.microsoft.com/download/0/6/5/0656B047-5F2F-4281-A851-F30776F8616D/dotnet-dev-linux-x64.2.0.0-preview1-005977.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
-	tar xf /tmp/dotnet-sdk.tar.gz -C /opt/dotnet "./sdk" && \
-	rm /tmp/dotnet-sdk.tar.gz
+# TODO: This is needed for the 2.0 preview. It should be removed for the final release
+# Create the NuGet file necessary for the preview
+RUN cd /opt/app-root/src && \
+    echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>" > NuGet.config && \
+    echo "<configuration>" >> NuGet.config && \
+    echo "  <packageSources>" >> NuGet.config && \
+    echo "    <add key=\"api-nuget\" value=\"https://dotnet.myget.org/F/dotnet-core/api/v2\" />" >> NuGet.config && \
+    echo "    <add key=\"dotnet-myget\" value=\"https://dotnet.myget.org/F/dotnet-core/api/v2\" />" >> NuGet.config && \
+    echo "    <add key=\"dotnet-preview-myget\" value=\"https://dotnet.myget.org/F/dotnet-2-0-0-preview2-final/api/v2\" />" >> NuGet.config && \
+    echo "  </packageSources>" >> NuGet.config && \
+    echo "</configuration>" >> NuGet.config
 
-# Switch to default app-user for cache population
-USER 1001
-
-# TODO: scl enable rh-dotnet20 --
-# TODO: replace '.0-preview1-final' from AspNetPackageVersion with '.*'
-# Create NuGet package cache
-COPY packagescache.csproj /opt/app-root/warmup/packagescache.csproj
-RUN dotnet restore /opt/app-root/warmup/packagescache.csproj /p:AspNetPackageVersion=$DOTNET_CORE_VERSION.0-preview1-final \
-    --source https://api.nuget.org/v3/index.json \
-    && rm -rf /opt/app-root/warmup/
-
-# Switch back to root for changing dir ownership/permissions
-USER 0
+ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs6"
 
 # In order to drop the root user, we have to make some directories world
 # writable as OpenShift default security model is to run the container under
 # random UID.
 RUN chown -R 1001:0 /opt/app-root && chmod -R og+rwx /opt/app-root
-
-# TODO: enable rh-dotnet20
-# Get prefix path and path to scripts rather than hard-code them in scripts
-ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
-    ENABLED_COLLECTIONS="rh-nodejs6"
-
-# When bash is started non-interactively, to run a shell script, for example it
-# looks for this variable and source the content of this file. This will enable
-# the SCL for all scripts without need to do 'scl enable'.
-ENV BASH_ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
-    ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
-    PROMPT_COMMAND=". ${CONTAINER_SCRIPTS_PATH}/etc/scl_enable"
 
 # Directory with the sources is set as the working directory. This should
 # be a folder outside $HOME as this might cause issues when compiling sources.
