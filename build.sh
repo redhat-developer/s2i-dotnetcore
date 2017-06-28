@@ -20,6 +20,10 @@
 #       $ sudo VERSIONS=1.0 ./build.sh
 #
 
+if [ "${DEBUG}" == "true"]; then
+  set -x
+fi
+
 base_image_name() {
   local version=$1
   local v_no_dot=$(echo ${version} | sed 's/\.//g')

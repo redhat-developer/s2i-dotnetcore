@@ -83,6 +83,7 @@ fi
 # Create run script in publish folder
 cat << EOF >"$DOTNET_RUN_SCRIPT"
 #!/bin/bash
+source /opt/app-root/etc/generate_container_user
 exec dotnet ${APP_DLL_NAME} \$@
 EOF
 chmod +x "$DOTNET_RUN_SCRIPT"

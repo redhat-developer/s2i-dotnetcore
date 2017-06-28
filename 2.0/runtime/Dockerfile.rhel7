@@ -11,11 +11,6 @@ ENV LANG=C.UTF-8 \
     HOME=/opt/app-root \
     PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-# Certain versions of docker restrict syscalls that will cause liblttng to fail
-# and dotnet to abort. This flag will prevent that.
-# For more information, see this bug: https://github.com/dotnet/cli/issues/1582
-ENV LTTNG_UST_REGISTER_TIMEOUT=0
-
 LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
       io.k8s.display-name=".NET Core 2.0" \
       io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet20-runtime" \
@@ -62,6 +57,11 @@ ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
 ENV BASH_ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
     ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
     PROMPT_COMMAND=". ${CONTAINER_SCRIPTS_PATH}/etc/scl_enable"
+
+# In order to drop the root user, we have to make some directories world
+# writable as OpenShift default security model is to run the container under
+# random UID.
+RUN chown -R 1001:0 /opt/app-root && chmod -R og+rwx /opt/app-root
 
 # Run container by default as user with id 1001 (default)
 USER 1001
