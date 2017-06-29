@@ -27,7 +27,7 @@ COPY ./root/usr/bin /usr/bin
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-# Switch back to root for changing dir ownership/permissions
+# Switch to root for package installs
 USER 0
 
 # TODO: remove the beta repo once RPMs reach the full release
@@ -43,18 +43,6 @@ RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y yum-utils &&
     useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
       -c "Default Application User" default && \
     chown -R 1001:0 /opt/app-root
-
-# TODO: This is needed for the 2.0 preview. It should be removed for the final release
-# Create the NuGet file necessary for the preview
-RUN cd /opt/app-root/src && \
-    echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>" > NuGet.config && \
-    echo "<configuration>" >> NuGet.config && \
-    echo "  <packageSources>" >> NuGet.config && \
-    echo "    <add key=\"api-nuget\" value=\"https://dotnet.myget.org/F/dotnet-core/api/v2\" />" >> NuGet.config && \
-    echo "    <add key=\"dotnet-myget\" value=\"https://dotnet.myget.org/F/dotnet-core/api/v2\" />" >> NuGet.config && \
-    echo "    <add key=\"dotnet-preview-myget\" value=\"https://dotnet.myget.org/F/dotnet-2-0-0-preview2-final/api/v2\" />" >> NuGet.config && \
-    echo "  </packageSources>" >> NuGet.config && \
-    echo "</configuration>" >> NuGet.config
 
 ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs6"
 
