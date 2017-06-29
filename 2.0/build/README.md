@@ -132,6 +132,10 @@ a `.s2i/environment` file inside your source code repository.
 
     Use a custom NPM registry mirror to download packages during the build process.
 
+* **DOTNET_ASPNET_STORE**
+
+    Publish assuming the runtime image contains the ASP.NET Core runtime store. Defaults to `false`.
+
 NPM
 ---
 

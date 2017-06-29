@@ -5,6 +5,10 @@ set -e
 # User settable environment
 DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
 DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
+DOTNET_ASPNET_STORE="${DOTNET_ASPNET_STORE:-false}"
+if [ "$DOTNET_ASPNET_STORE" != "false" ]; then
+  DOTNET_ASPNET_STORE="true"
+fi
 
 # Private environment
 DOTNET_FRAMEWORK="netcoreapp2.0"
@@ -71,7 +75,8 @@ done
 echo "---> Restoring application dependencies..."
 dotnet restore "$DOTNET_STARTUP_PROJECT" -r "$DOTNET_RID" $RESTORE_OPTIONS
 echo "---> Publishing application..."
-dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" -r "$DOTNET_RID" --self-contained false /p:TargetManifestFiles= -o "$DOTNET_PUBLISH_PATH"
+dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" -r "$DOTNET_RID" \
+       --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE -o "$DOTNET_PUBLISH_PATH"
 
 # check if the assembly used by the script exists
 if [ ! -f "$DOTNET_PUBLISH_PATH/${APP_DLL_NAME}" ]; then
