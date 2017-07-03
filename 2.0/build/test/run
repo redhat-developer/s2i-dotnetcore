@@ -37,7 +37,7 @@ declare -a WEB_APPS=(
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
-dotnet_version="2.0.0-preview1-005977"
+dotnet_version="2.0.0-preview2-006497"
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
 test_port=8080
@@ -265,7 +265,7 @@ test_web_app_scl() {
   check_result $?
 
   # Verify npm is enabled in the container
-  test_scl_usage "npm --version" "2.15.1" "${cid_file}" "${image}"
+  test_scl_usage "npm --version" "3.10.9" "${cid_file}" "${image}"
 }
 
 init_web_app() {

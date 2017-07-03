@@ -14,7 +14,7 @@
 #
 # Example usage: $ sudo ./test/run
 
-IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-rhel7-runtime}
+IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
 
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -37,7 +37,7 @@ declare -a WEB_APPS=(
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
-dotnet_version="2.0.0-preview1-005977"
+dotnet_version="2.0.0-preview2-006497"
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
 test_port=8080

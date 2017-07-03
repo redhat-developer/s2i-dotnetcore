@@ -20,13 +20,17 @@
 #       $ sudo VERSIONS=1.0 ./build.sh
 #
 
-image_name() {
+if [ "${DEBUG}" == "true"]; then
+  set -x
+fi
+
+base_image_name() {
   local version=$1
   local v_no_dot=$(echo ${version} | sed 's/\.//g')
   if [[ "$version" == 1* ]]; then
-    echo "dotnetcore-${v_no_dot}-rhel7";
+    echo "dotnetcore-${v_no_dot}";
   else
-    echo "dotnet-${v_no_dot}-rhel7";
+    echo "dotnet-${v_no_dot}";
   fi
 }
 
@@ -75,14 +79,14 @@ for v in ${VERSIONS}; do
   # TODO: If this gets more complex, the find a better way to determine split
   #       images, or just normalize split and non-split images
   if [ "$v" == "1.0" ] || [ "$v" == "1.1" ]; then
-    build_name="dotnet/$(image_name ${v})"
+    build_name="dotnet/$(base_image_name ${v})-rhel7"
 
     # Build the build image
     build_image "${v}" "${build_name}"
     test_images "${v}/test"
   else
-    build_name="dotnet/$(image_name ${v})"
-    runtime_name="${build_name}-runtime"
+    build_name="dotnet/$(base_image_name ${v})-rhel7"
+    runtime_name="dotnet/$(base_image_name ${v})-runtime-rhel7"
 
     # Build the runtime image
     build_image "${v}/runtime" "${runtime_name}"
@@ -97,7 +101,7 @@ done
 # TODO: cleanup TEST_OPENSHIFT, OPENSHIFT_ONLY
 # if [ "$TEST_OPENSHIFT" = "true" ]; then
 #   for v in ${VERSIONS}; do
-#     img_name="registry.access.redhat.com/dotnet/$(image_name ${v}):latest"
+#     img_name="registry.access.redhat.com/dotnet/$(base_image_name ${v}):latest"
 #     pushd ${v} &>/dev/null
 #       echo "Running tests on image ${img_name} ..."
 #       IMAGE_NAME="${img_name}" OPENSHIFT_ONLY=true ./test/run
