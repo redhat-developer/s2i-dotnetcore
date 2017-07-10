@@ -66,10 +66,8 @@ build_image() {
 test_images() {
   local path=$1
   echo "Running tests..."
-  pushd ${path} > /dev/null
-    ./run
-    check_result_msg $? "Tests FAILED!"
-  popd > /dev/null
+  ${path}/run
+  check_result_msg $? "Tests FAILED!"
 }
 
 # TODO: build 1.0 1.1 
