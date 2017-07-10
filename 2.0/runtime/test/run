@@ -387,7 +387,7 @@ create_runtime_app() {
   # TODO: Figure out a better way to allow access from the image /OTHER/ than 777
   chmod 777 ${TMPDIR}
   echo "Created temp directory ${TMPDIR}"
-  cp "${app}.tar.gz" "${TMPDIR}/${app}.tar.gz"
+  cp "${test_dir}/${app}.tar.gz" "${TMPDIR}/${app}.tar.gz"
   if [ ! -e "${TMPDIR}/${app}.tar.gz" ] || [ ! -s "${TMPDIR}/${app}.tar.gz" ]; then
     echo "Failed to find the binary tar for app '${app}'."
     echo "Removing temp directory ${TMPDIR}"
