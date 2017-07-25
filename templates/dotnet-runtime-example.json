@@ -2,10 +2,10 @@
     "kind": "Template",
     "apiVersion": "v1",
     "metadata": {
-        "name": "dotnet-example",
+        "name": "dotnet-runtime-example",
         "annotations": {
-            "openshift.io/display-name": ".NET Core Example",
-            "description": "An example .NET Core example application.",
+            "openshift.io/display-name": ".NET Core Runtime Example",
+            "description": "An example .NET Core Runtime example application.",
             "tags": "quickstart,dotnet,.net",
             "iconClass": "icon-dotnet",
             "template.openshift.io/provider-display-name": "Red Hat, Inc.",
@@ -58,6 +58,28 @@
                 "annotations": {
                     "description": "Keeps track of changes in the application image"
                 }
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "name": "2.0-runtime",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET Core 2.0 Runtime",
+                            "description": "Run .NET Core 2.0 applications on RHEL 7. For more information about using this runtime image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/2.0/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "runtime,.net,dotnet,rh-dotnet20",
+                            "supports":"dotnet:2.0-runtime,dotnet",
+                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git",
+                            "sampleContextDir": "app",
+                            "sampleRef": "dotnet-2.0-runtime",
+                            "version": "2.0"
+                        },
+                        "from": {
+                          "kind": "DockerImage",
+                          "name": "registry.access.redhat.com/dotnet/dotnet-20-runtime-rhel7:latest"
+                        }
+                    }
+                ]
             }
         },
         {
@@ -66,56 +88,34 @@
             "metadata": {
                 "name": "${NAME}",
                 "annotations": {
-                    "description": "Defines how to build the application"
+                    "description": "Defines how to chain the runtime image from the source build image"
                 }
             },
             "spec": {
                 "source": {
-                    "type": "Git",
-                    "git": {
-                        "uri": "${SOURCE_REPOSITORY_URL}",
-                        "ref": "${SOURCE_REPOSITORY_REF}"
-                    },
-                    "contextDir": "${CONTEXT_DIR}"
+                    "dockerfile": "FROM ${NAME}:2.0-runtime \nCOPY publish/ /opt/app-root/publish\n\nWORKDIR /opt/app-root/publish\nCMD \"/opt/app-root/publish/s2i_run\"",
+                    "images": [
+						{
+							"from": {
+								"kind": "ImageStreamTag",
+								"name": "${APP_BUILD_IMAGE_TAG}"
+							},
+							"paths": [
+								{
+									"sourcePath": "/opt/app-root/publish",
+									"destinationDir": "."
+								}
+							]
+						}
+					]
                 },
                 "strategy": {
-                    "type": "Source",
-                    "sourceStrategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "namespace": "${NAMESPACE}",
-                            "name": "${DOTNET_IMAGE_STREAM_TAG}"
-                        },
-                        "env": [
-                            {
-                                "name": "DOTNET_STARTUP_PROJECT",
-                                "value": "${DOTNET_STARTUP_PROJECT}"
-                            },
-                            {
-                                "name": "DOTNET_ASSEMBLY_NAME",
-                                "value": "${DOTNET_ASSEMBLY_NAME}"
-                            },
-                            {
-                                "name": "DOTNET_NPM_TOOLS",
-                                "value": "${DOTNET_NPM_TOOLS}"
-                            },
-                            {
-                                "name": "DOTNET_TEST_PROJECTS",
-                                "value": "${DOTNET_TEST_PROJECTS}"
-                            },
-                            {
-                                "name": "DOTNET_CONFIGURATION",
-                                "value": "${DOTNET_CONFIGURATION}"
-                            },
-                            {
-                                "name": "DOTNET_PUBLISH",
-                                "value": "true"
-                            },
-                            {
-                                "name": "DOTNET_RESTORE_SOURCES",
-                                "value": "${DOTNET_RESTORE_SOURCES}"
-                            }
-                        ]
+                            "name": "${NAME}:2.0-runtime"
+                        }
                     }
                 },
                 "output": {
@@ -130,18 +130,6 @@
                     },
                     {
                         "type": "ConfigChange"
-                    },
-                    {
-                        "type": "GitHub",
-                        "github": {
-                            "secret": "${GITHUB_WEBHOOK_SECRET}"
-                        }
-                    },
-                    {
-                        "type": "Generic",
-                        "generic": {
-                            "secret": "${GENERIC_WEBHOOK_SECRET}"
-                        }
                     }
                 ]
             }
@@ -165,7 +153,7 @@
                         "imageChangeParams": {
                             "automatic": true,
                             "containerNames": [
-                                "dotnet-app"
+                                "dotnet-runtime-app"
                             ],
                             "from": {
                                 "kind": "ImageStreamTag",
@@ -191,7 +179,7 @@
                     "spec": {
                         "containers": [
                             {
-                                "name": "dotnet-app",
+                                "name": "dotnet-runtime-app",
                                 "image": " ",
                                 "ports": [
                                     {
@@ -235,7 +223,7 @@
             "displayName": "Name",
             "description": "The name assigned to all of the frontend objects defined in this template.",
             "required": true,
-            "value": "dotnet-example"
+            "value": "dotnet-runtime-example"
         },
         {
             "name": "MEMORY_LIMIT",
@@ -245,11 +233,18 @@
             "value": "512Mi"
         },
         {
-            "name": "DOTNET_IMAGE_STREAM_TAG",
-            "displayName": ".NET builder",
+            "name": "APP_BUILD_IMAGE_TAG",
+            "displayName": "Application build image",
+            "description": "The image stream tag which is used to build the application.",
             "required": true,
-            "description": "The image stream tag which is used to build the code.",
-            "value": "dotnet:2.0"
+            "value": "dotnet-example:latest"
+        },
+        {
+            "name": "DOTNET_IMAGE_STREAM_RUNTIME_TAG",
+            "displayName": ".NET Runtime",
+            "description": "The image stream tag which is used to run the application.",
+            "required": true,
+            "value": "dotnet-runtime-example:2.0-runtime"
         },
         {
             "name": "NAMESPACE",
@@ -259,75 +254,10 @@
             "value": "openshift"
         },
         {
-            "name": "SOURCE_REPOSITORY_URL",
-            "displayName": "Git Repository URL",
-            "description": "The URL of the repository with your application source code.",
-            "required": true,
-            "value": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
-        },
-        {
-            "name": "SOURCE_REPOSITORY_REF",
-            "displayName": "Git Reference",
-            "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
-            "value": "dotnetcore-2.0"
-        },
-        {
-            "name": "CONTEXT_DIR",
-            "displayName": "Context Directory",
-            "description": "Set this to use a subdirectory of the source code repository"
-        },
-        {
             "name": "APPLICATION_DOMAIN",
             "displayName": "Application Hostname",
             "description": "The exposed hostname that will route to the .NET Core service, if left blank a value will be defaulted.",
             "value": ""
-        },
-        {
-            "name": "GITHUB_WEBHOOK_SECRET",
-            "displayName": "GitHub Webhook Secret",
-            "description": "A secret string used to configure the GitHub webhook.",
-            "generate": "expression",
-            "from": "[a-zA-Z0-9]{40}"
-        },
-        {
-            "name": "GENERIC_WEBHOOK_SECRET",
-            "displayName": "Generic Webhook Secret",
-            "description": "A secret string used to configure the Generic webhook.",
-            "generate": "expression",
-            "from": "[a-zA-Z0-9]{40}"
-        },
-        {
-            "name": "DOTNET_STARTUP_PROJECT",
-            "displayName": "Startup Project",
-            "description": "Set this to the folder containing your startup project.",
-            "value": "app"
-        },
-        {
-            "name": "DOTNET_ASSEMBLY_NAME",
-            "displayName": "Startup Assembly",
-            "description": "Set this when the assembly name is overridden in the project file."
-        },
-        {
-            "name": "DOTNET_NPM_TOOLS",
-            "displayName": "Npm Tools",
-            "description": "Set this to a space separated list of npm tools needed to publish.",
-            "value": "bower gulp"
-        },
-        {
-            "name": "DOTNET_TEST_PROJECTS",
-            "displayName": "Test projects",
-            "description": "Set this to a space separated list of test projects to run before publishing."
-        },
-        {
-            "name": "DOTNET_CONFIGURATION",
-            "displayName": "Configuration",
-            "description": "Set this to configuration (Release/Debug).",
-            "value": "Release"
-        },
-        {
-            "name": "DOTNET_RESTORE_SOURCES",
-            "displayName": "NuGet package sources",
-            "description": "Set this to override the NuGet.config sources."
         }
     ]
 }
