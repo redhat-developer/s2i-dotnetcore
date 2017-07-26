@@ -382,6 +382,7 @@ test_cli_app() {
 
 create_runtime_app() {
   local app="$1"
+  local cmd=${2:-"CMD [\"/opt/app-root/publish/s2i_run\"]"}
   # Create a temp directory to hold our temporary files
   TMPDIR=$(mktemp -d)
   # TODO: Figure out a better way to allow access from the image /OTHER/ than 777
@@ -402,7 +403,7 @@ RUN mkdir -p '/opt/app-root/publish'
 WORKDIR /opt/app-root/publish
 COPY ${app}.tar.gz ${app}.tar.gz
 RUN tar xvf ${app}.tar.gz
-CMD /opt/app-root/publish/s2i_run
+${cmd}
 EOF
 
   # Build the runtime image
@@ -413,11 +414,27 @@ EOF
   fi
 }
 
+# This tests that the container has an ENTRYPOINT defined such that
+# a new image built FROM the runtime image can have a CMD that simply
+# calls dotnet to run an app directly.
+test_entrypoint() {
+  app=${1:-"helloworld"}
+
+  info "Starting container entrypoint test using app '${app}'."
+
+  create_runtime_app ${app} "CMD [\"dotnet\", \"${app}.dll\"]"
+  test_cli_app ${app}
+
+  info "Finished container entrypoint test."
+}
+
 info "Testing ${IMAGE_NAME}"
 
 # Since we built the candidate image locally, we don't want S2I attempt to pull
 # it from Docker hub
 s2i_args="--force-pull=false"
+
+test_entrypoint
 
 # Verify OpenShift's s2i-dotnetcore-ex runs
 # TODO: Adjust this test once the openshift template is updated

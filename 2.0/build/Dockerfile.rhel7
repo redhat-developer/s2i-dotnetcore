@@ -59,7 +59,5 @@ WORKDIR /opt/app-root/src
 # Run container by default as user with id 1001 (default)
 USER 1001
 
-ENTRYPOINT ["container-entrypoint"]
-
 # Set the default CMD to print the usage of the language image.
 CMD /usr/libexec/s2i/usage
