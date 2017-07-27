@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -eu
+if [ $# -eq 0 ]; then
+	# No arguments given. Try to use s2i_run, if it exists.
+	if [ -f /opt/app-root/publish/s2i_run ]; then
+		exec /opt/app-root/publish/s2i_run
+	fi
+else
+	cmd="$1"; shift
+	exec $cmd "$@"
+fi
