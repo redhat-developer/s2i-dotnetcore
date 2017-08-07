@@ -39,8 +39,6 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
-COPY rh-dotnet20.repo /etc/yum.repos.d/
-
 # TODO: remove the beta repo once RPMs reach the full release
 RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y yum-utils && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
