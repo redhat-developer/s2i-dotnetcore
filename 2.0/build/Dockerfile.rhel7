@@ -28,15 +28,11 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # Switch to root for package installs
 USER 0
 
-# TODO: remove the beta repo once RPMs reach the full release
-RUN yum install --disablerepo=\* --enablerepo=rhel-7-server-rpms -y yum-utils && \
-    yum-config-manager --enable rhel-server-rhscl-7-rpms && \
-    yum-config-manager --enable rhel-7-server-dotnet-rpms && \
-    yum-config-manager --enable rhel-7-server-rpms && \
-    yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \
-    yum-config-manager --enable rhel-7-server-dotnet-beta-rpms && \
-    yum install -y --setopt=tsflags=nodocs rh-nodejs6-npm rh-dotnet20-dotnet-sdk-2.0 && \
-    yum clean all && \
+# TODO: remove rhel-7-server-dotnet-beta-rpms,rh-dotnet20
+RUN yum install \
+      -y --setopt=tsflags=nodocs --disablerepo=\* \
+      --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms,rhel-7-server-rpms,rhel-7-server-dotnet-beta-rpms,rh-dotnet20 \
+      rh-nodejs6-npm rh-dotnet20-dotnet-sdk-2.0 &&\
     mkdir -p /opt/app-root/{src,publish,warmup} && \
     useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
       -c "Default Application User" default && \
