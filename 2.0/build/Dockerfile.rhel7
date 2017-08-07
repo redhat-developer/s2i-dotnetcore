@@ -32,7 +32,8 @@ USER 0
 RUN yum install \
       -y --setopt=tsflags=nodocs --disablerepo=\* \
       --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms,rhel-7-server-rpms,rhel-7-server-dotnet-beta-rpms,rh-dotnet20 \
-      rh-nodejs6-npm rh-dotnet20-dotnet-sdk-2.0 &&\
+      rh-nodejs6-npm rh-dotnet20-dotnet-sdk-2.0 && \		
+    yum clean all && \
     mkdir -p /opt/app-root/{src,publish,warmup} && \
     useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
       -c "Default Application User" default && \
