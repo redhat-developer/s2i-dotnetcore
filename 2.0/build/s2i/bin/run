@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd $DOTNET_PUBLISH_PATH
+cd $DOTNET_APP_PATH
 
 echo "---> Running application ..."
-exec "$DOTNET_RUN_SCRIPT"
+exec "./$DOTNET_DEFAULT_CMD"
