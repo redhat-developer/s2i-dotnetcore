@@ -19,6 +19,7 @@
 #       $ sudo ./build.sh
 #       $ sudo VERSIONS=1.0 ./build.sh
 #
+TEST_COMMIT_HASH=${TEST_COMMIT_HASH:-`git rev-parse HEAD`}
 
 if [ "${DEBUG}" == "true" ]; then
   set -x
@@ -88,10 +89,13 @@ for v in ${VERSIONS}; do
 
     # Build the runtime image
     build_image "${v}/runtime" "${runtime_name}"
-    test_images "${v}/runtime/test"
 
     # Build the build image
     build_image "${v}/build" "${build_name}"
+
+    ${v}/gen_tests.sh
+
+    test_images "${v}/runtime/test"
     test_images "${v}/build/test"
   fi
 done
