@@ -57,7 +57,8 @@ else
 fi
 
 # Build nuget sources list for when doing the restore
-RESTORE_OPTIONS=""
+# TODO: remove myget nuget feeds
+DOTNET_RESTORE_SOURCES="$DOTNET_RESTORE_SOURCES https://dotnet.myget.org/F/dotnet-core/api/v2 https://dotnet.myget.org/F/aspnetcore-release/api/v2 https://api.nuget.org/v3/index.json"
 for SOURCE in $DOTNET_RESTORE_SOURCES; do
   RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
 done

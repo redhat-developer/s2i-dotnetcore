@@ -20,7 +20,7 @@
 #       $ sudo VERSIONS=1.0 ./build.sh
 #
 
-if [ "${DEBUG}" == "true"]; then
+if [ "${DEBUG}" == "true" ]; then
   set -x
 fi
 
