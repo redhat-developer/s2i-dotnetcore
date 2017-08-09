@@ -2,6 +2,8 @@
 
 set -eu
 
+# For the main process (PID 1) and children we ensure there is a known user.
+# For other processes (i.e. docker exec) the user isn't added, so it may be unknown.
 if [ $$ -eq 1 ]; then
   source /opt/app-root/etc/generate_container_user
 fi
