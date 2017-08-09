@@ -33,13 +33,10 @@ $ docker build -t s2i-dotnetcore-ex .
 
 Start a container:
 ```
-$ docker run -p 8080:8080 s2i-dotnetcore-ex
+$ docker run --rm -p 8080:8080 s2i-dotnetcore-ex
 ```
 
-Fetch a webpage:
-```
-$ curl http://127.0.0.1:8080
-```
+Visit the web application that is running in the docker container with a browser at [http://localhost:8080].
 
 Repository organization
 ------------------------
