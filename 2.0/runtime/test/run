@@ -21,45 +21,102 @@ info() {
   echo -e "\n\e[1m[INFO] $@\e[0m\n"
 }
 
-test_cmd() {
-  local run_cmd="$1"
+assert_contains()
+{
+  local actual="$1"
   local expected="$2"
-  local user="$3"
 
-  info "Running command '${run_cmd}'"
-  local docker_arg=""
-  if [ -n "${user}" ]; then
-    docker_arg="${docker_arg} --user=${user}"
-  fi
-  if [ -n "${run_cmd}" ]; then
-    out=$(docker run --rm ${docker_arg} ${IMAGE_NAME} "${run_cmd}" 2>&1)
-  else
-    out=$(docker run --rm ${docker_arg} ${IMAGE_NAME} 2>&1)
-  fi
-  if ! echo "${out}" | grep -q "${expected}"; then
-    echo "ERROR[/bin/bash -c "${run_cmd}"] Expected '${expected}', got '${out}'"
+  if ! echo "${actual}" | grep -q "${expected}"; then
+    echo "ERROR[${FUNCNAME[1]}:${BASH_LINENO[0]}]: '${actual}' does not contain '${expected}'"
     exit 1
   fi
 }
 
-info "Testing ${IMAGE_NAME}"
+assert_equal()
+{
+  local actual="$1"
+  local expected="$2"
+
+  if ! [ "$actual" == "$expected" ]; then
+    echo "ERROR[${FUNCNAME[1]}:${BASH_LINENO[0]}]: '${actual}' does not equal '${expected}'"
+    exit 1
+  fi
+}
+
+test_start() {
+  info "Running ${FUNCNAME[1]}"
+}
+
+docker_run() {
+  local command="$1"
+
+  docker run --rm ${IMAGE_NAME} "${command}" 2>&1
+}
+
+docker_run_as() {
+  local user="$1"
+  local command="$2"
+
+  docker run --rm --user="${user}" ${IMAGE_NAME} "${command}" 2>&1
+}
+
+docker_get_env() {
+  local name="$1"
+
+  local env=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{println $value}}{{end}}' ${IMAGE_NAME})
+  local line=$(echo "$env" | grep "${name}=")
+  echo ${line#*=}
+}
+
+docker_get_exposedports() {
+  docker inspect -f '{{json .Config.ExposedPorts}}' ${IMAGE_NAME}
+}
 
 # Since we built the candidate image locally, we don't want S2I attempt to pull
 # it from Docker hub
 s2i_args="--force-pull=false"
 
-# ENTRYPOINT enables scl so dotnet is available
-test_cmd "dotnet --info" "Microsoft .NET Core Shared Framework Host"
-test_cmd "dotnet" "Usage: dotnet"
+info "Testing ${IMAGE_NAME}"
 
-# default CMD
-test_cmd "" "This is a runtime image for .NET Core"
+test_dotnet() {
+  test_start
+  local dotnet_version="2.0.0"
 
-# we run as user 'default'
-test_cmd "whoami" "default"
-# other users are mapped to 'default'
-test_cmd "whoami" "default" 100001
-# root is 'root'
-test_cmd "whoami" "root" 0
+  # ENTRYPOINT enables scl so dotnet is available
+  assert_contains "$(docker_run "dotnet --info")" "Microsoft .NET Core Shared Framework Host"
+  assert_contains "$(docker_run "dotnet")" "Usage: dotnet"
+  # Check version
+  assert_contains "$(docker_run "dotnet --info")" "Version  : ${dotnet_version}"$'\r\n'
+}
+test_dotnet
+
+test_default_cmd() {
+  test_start
+
+  assert_contains $(docker_run) "This is a runtime image for .NET Core"
+}
+test_default_cmd
+
+test_user() {
+  test_start
+
+  # we run as user 'default'
+  assert_equal $(docker_run "whoami")           "default"
+  # other users are mapped to 'default'
+  assert_equal $(docker_run_as 100001 "whoami") "default"
+  # root is 'root'
+  assert_equal $(docker_run_as 0 "whoami")      "root"
+}
+test_user
+
+test_port() {
+  test_start
+
+  # Port 8080 is exposed
+  assert_equal $(docker_get_exposedports) '{"8080/tcp":{}}'
+  # The environment variable used by ASP.NET Core matches
+  assert_equal $(docker_get_env ASPNETCORE_URLS) "http://*:8080"
+}
+test_port
 
 info "All tests finished successfully."
