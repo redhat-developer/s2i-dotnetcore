@@ -9,7 +9,9 @@ ENV DOTNET_CORE_VERSION=2.0
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
     HOME=/opt/app-root \
-    PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    DOTNET_APP_PATH=/opt/app-root/app \
+    DOTNET_DEFAULT_CMD=default-cmd.sh
 
 LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
       io.k8s.display-name=".NET Core 2.0" \
@@ -42,7 +44,7 @@ COPY ./root/usr/bin /usr/bin
 # TODO: remove the beta repo once RPMs reach the full release
 RUN INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar" && \
     yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
-      --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms,rhel-7-server-rpms,rhel-7-server-ose-3.2-rpms,rhel-7-server-dotnet-beta-rpms,rh-dotnet20 \
+      --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms,rhel-7-server-rpms,rhel-7-server-ose-3.2-rpms,rhel-7-server-dotnet-beta-rpms \
       $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y
@@ -58,12 +60,21 @@ ENV BASH_ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
     ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
     PROMPT_COMMAND=". ${CONTAINER_SCRIPTS_PATH}/etc/scl_enable"
 
+# Add default user
+RUN mkdir -p ${DOTNET_APP_PATH} && \
+    useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
+      -c "Default Application User" default
+
+WORKDIR ${DOTNET_APP_PATH}
+COPY default-cmd.sh ${DOTNET_DEFAULT_CMD}
+CMD "./${DOTNET_DEFAULT_CMD}"
+
 # In order to drop the root user, we have to make some directories world
 # writable as OpenShift default security model is to run the container under
 # random UID.
 RUN chown -R 1001:0 /opt/app-root && chmod -R og+rwx /opt/app-root
 
-ENTRYPOINT ["container-entrypoint"]
+ENTRYPOINT [ "container-entrypoint" ]
 
 # Run container by default as user with id 1001 (default)
 USER 1001

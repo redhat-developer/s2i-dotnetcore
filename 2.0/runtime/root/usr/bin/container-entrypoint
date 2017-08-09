@@ -1,12 +1,12 @@
 #!/bin/bash
 
 set -eu
-if [ $# -eq 0 ]; then
-	# No arguments given. Try to use s2i_run, if it exists.
-	if [ -f /opt/app-root/publish/s2i_run ]; then
-		exec /opt/app-root/publish/s2i_run
-	fi
-else
-	cmd="$1"; shift
-	exec $cmd "$@"
+
+# For the main process (PID 1) and children we ensure there is a known user.
+# For other processes (i.e. docker exec) the user isn't added, so it may be unknown.
+if [ $$ -eq 1 ]; then
+  source /opt/app-root/etc/generate_container_user
 fi
+
+cmd="$1"; shift
+exec $cmd "$@"

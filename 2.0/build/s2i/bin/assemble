@@ -76,21 +76,21 @@ echo "---> Restoring application dependencies..."
 dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS
 echo "---> Publishing application..."
 dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" \
-       --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE -o "$DOTNET_PUBLISH_PATH"
+       --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE -o "$DOTNET_APP_PATH"
 
 # check if the assembly used by the script exists
-if [ ! -f "$DOTNET_PUBLISH_PATH/${APP_DLL_NAME}" ]; then
+if [ ! -f "$DOTNET_APP_PATH/${APP_DLL_NAME}" ]; then
   echo "error: Build output does not contain entrypoint assembly: ${APP_DLL_NAME}"
   exit 1
 fi
 
 # Create run script in publish folder
-cat << EOF >"$DOTNET_RUN_SCRIPT"
+cat << EOF >"$DOTNET_APP_PATH/$DOTNET_DEFAULT_CMD"
 #!/bin/bash
-source /opt/app-root/etc/generate_container_user
+
 exec dotnet ${APP_DLL_NAME} \$@
 EOF
-chmod +x "$DOTNET_RUN_SCRIPT"
+chmod +x "$DOTNET_APP_PATH/$DOTNET_DEFAULT_CMD"
 
 # Fix source directory permissions
 fix-permissions ./

@@ -9,41 +9,34 @@ The image can be run using [Docker](http://docker.io).
 Usage
 ---------------------
 The distributale binaries of an application should be copied to this image and
-a new docker image should be created using this image as the base. As an
-example, given an archive of the binaries of a simple [dotnet-sample-app](test/asp-net-hello-world)
-application, the following Dockerfile could be used.
+a new docker image should be created using this image as the base.
 
-**Sample Dockerfile**
+For example to create a Docker image for [s2i-dotnetcore-ex](https://github.com/redhat-developer/s2i-dotnetcore-ex) 
+
+Publish the application:
 ```
-FROM dotnet-20-rhel7-runtime
-RUN mkdir -p '/opt/app-root/publish'
-WORKDIR /opt/app-root/publish
-COPY asp-net-hello-world.tar.gz asp-net-hello-world.tar.gz
-RUN tar xvf asp-net-hello-world.tar.gz
-CMD /opt/app-root/publish/s2i_run
+$ git clone -b dotnetcore-2.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
+$ cd s2i-dotnetcore-ex/app
+$ dotnet restore -r rhel.7-x64
+$ dotnet publish -f netcoreapp2.0 -c Release -r rhel.7-x64 --self-contained false /p:PublishWithAspNetCoreTargetManifest=false
 ```
 
-As for generating the binary archives in the first place, often this can be
-accomplished by running a dotnet restore and a dotnet publish to a single
-directory and then archiving that directories contents.
-
-**Example Binary Archive Creation**
-``` sh
-cd asp-net-hello-world
-dotnet restore "." -r "rhel.7-x64"
-dotnet publish "." -f "netcoreapp2.0" -c "Release" -r "rhel.7-x64" --self-contained false /p:TargetManifestFiles= -o "./publish"
-tar zcvpf "./asp-net-hello-world.tar.gz" -C ./publish .
+Create the Docker image:
+```
+$ cat > Dockerfile <<EOF
+FROM dotnet/dotnet-20-runtime-rhel7
+ADD bin/Release/netcoreapp2.0/rhel.7-x64/publish/. .
+CMD [ "dotnet", "app.dll" ]
+EOF
+$ docker build -t s2i-dotnetcore-ex .
 ```
 
-This example cds into the project's directory, restores the projects NuGet dependencies, and then publishes the project to a publish directory. Finally, a tar command is used to create a gzipped tar file containing the content of the publish directory. This tar file is what is copied and extracted to create the apps runtime image, using the sample dockerfile given above.
-
-**Accessing the application:**
-
-HTTP:
-
+Start a container:
 ```
-$ curl http://127.0.0.1:8080
+$ docker run --rm -p 8080:8080 s2i-dotnetcore-ex
 ```
+
+Visit the web application that is running in the docker container with a browser at [http://localhost:8080].
 
 Repository organization
 ------------------------
