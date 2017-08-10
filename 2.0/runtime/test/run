@@ -113,6 +113,9 @@ test_user() {
   assert_equal $(docker_run_as 100001 "whoami") "default"
   # root is 'root'
   assert_equal $(docker_run_as 0 "whoami")      "root"
+
+  # ensure the passwd file used by nss_wrapper can be overwritten
+  assert_equal $(docker_run_as 100001 "stat -c %a /opt/app-root/etc/passwd") "666"
 }
 test_user
 
