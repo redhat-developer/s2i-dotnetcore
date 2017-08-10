@@ -136,6 +136,10 @@ a `.s2i/environment` file inside your source code repository.
 
     Publish assuming the runtime image contains the ASP.NET Core runtime store. Defaults to `false`.
 
+* **DOTNET_PACK**
+
+    When set to `true` creates a tar.gz file at `/opt/app-root/app.tar.gz` that contains the published application.
+
 NPM
 ---
 
