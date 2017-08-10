@@ -56,7 +56,17 @@
             "metadata": {
                 "name": "${NAME}",
                 "annotations": {
-                    "description": "Keeps track of changes in the application image"
+                    "description": "Keeps track of changes in the application runtime image"
+                }
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}-build",
+                "annotations": {
+                    "description": "Keeps track of changes in the application builder image"
                 }
             }
         },
@@ -64,7 +74,93 @@
             "kind": "BuildConfig",
             "apiVersion": "v1",
             "metadata": {
-                "name": "${NAME}",
+                "name": "${NAME}-build",
+                "annotations": {
+                    "description": "Defines how to build the application"
+                }
+            },
+            "spec": {
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "${SOURCE_REPOSITORY_URL}",
+                        "ref": "${SOURCE_REPOSITORY_REF}"
+                    },
+                    "contextDir": "${CONTEXT_DIR}"
+                },
+                "strategy": {
+                    "type": "Source",
+                    "sourceStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "namespace": "${NAMESPACE}",
+                            "name": "${DOTNET_BUILD_IMAGE_STREAM_TAG}"
+                        },
+                        "env": [
+                            {
+                                "name": "DOTNET_STARTUP_PROJECT",
+                                "value": "${DOTNET_STARTUP_PROJECT}"
+                            },
+                            {
+                                "name": "DOTNET_ASSEMBLY_NAME",
+                                "value": "${DOTNET_ASSEMBLY_NAME}"
+                            },
+                            {
+                                "name": "DOTNET_NPM_TOOLS",
+                                "value": "${DOTNET_NPM_TOOLS}"
+                            },
+                            {
+                                "name": "DOTNET_TEST_PROJECTS",
+                                "value": "${DOTNET_TEST_PROJECTS}"
+                            },
+                            {
+                                "name": "DOTNET_CONFIGURATION",
+                                "value": "${DOTNET_CONFIGURATION}"
+                            },
+                            {
+                                "name": "DOTNET_PUBLISH",
+                                "value": "true"
+                            },
+                            {
+                                "name": "DOTNET_RESTORE_SOURCES",
+                                "value": "${DOTNET_RESTORE_SOURCES}"
+                            }
+                        ]
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "${NAME}-build:latest"
+                    }
+                },
+                "triggers": [
+                    {
+                        "type": "ImageChange"
+                    },
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "GitHub",
+                        "github": {
+                            "secret": "${GITHUB_WEBHOOK_SECRET}"
+                        }
+                    },
+                    {
+                        "type": "Generic",
+                        "generic": {
+                            "secret": "${GENERIC_WEBHOOK_SECRET}"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}-runtime",
                 "annotations": {
                     "description": "Defines how to chain the runtime image from the source build image"
                 }
@@ -76,7 +172,7 @@
                         {
                             "from": {
                                 "kind": "ImageStreamTag",
-                                "name": "${APP_BUILD_IMAGE_TAG}"
+                                "name": "${NAME}-build:latest"
                             },
                             "paths": [
                                 {
@@ -109,6 +205,15 @@
                     },
                     {
                         "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChange": {
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "${NAME}-build:latest"
+                            }
+                        }
                     }
                 ]
             }
@@ -117,7 +222,7 @@
             "kind": "DeploymentConfig",
             "apiVersion": "v1",
             "metadata": {
-                "name": "${NAME}",
+                "name": "${NAME}-runtime",
                 "annotations": {
                     "description": "Defines how to deploy the application server"
                 }
@@ -212,18 +317,18 @@
             "value": "512Mi"
         },
         {
-            "name": "APP_BUILD_IMAGE_TAG",
-            "displayName": "Application build image",
-            "description": "The image stream tag which is used to build the application.",
-            "required": true,
-            "value": "dotnet-example:latest"
-        },
-        {
             "name": "DOTNET_RUNTIME_IMAGE_STREAM_TAG",
             "displayName": ".NET Runtime Imagestream Tag",
             "description": "The image stream tag which is used to run the application.",
             "required": true,
             "value": "dotnet-runtime:2.0"
+        },
+        {
+            "name": "DOTNET_BUILD_IMAGE_STREAM_TAG",
+            "displayName": ".NET builder",
+            "required": true,
+            "description": "The image stream tag which is used to build the application.",
+            "value": "dotnet:2.0"
         },
         {
             "name": "NAMESPACE",
@@ -237,6 +342,71 @@
             "displayName": "Application Hostname",
             "description": "The exposed hostname that will route to the .NET Core service, if left blank a value will be defaulted.",
             "value": ""
+        },
+        {
+            "name": "SOURCE_REPOSITORY_URL",
+            "displayName": "Git Repository URL",
+            "description": "The URL of the repository with your application source code.",
+            "required": true,
+            "value": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
+        },
+        {
+            "name": "SOURCE_REPOSITORY_REF",
+            "displayName": "Git Reference",
+            "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
+            "value": "dotnetcore-2.0"
+        },
+        {
+            "name": "CONTEXT_DIR",
+            "displayName": "Context Directory",
+            "description": "Set this to use a subdirectory of the source code repository"
+        },
+        {
+            "name": "GITHUB_WEBHOOK_SECRET",
+            "displayName": "GitHub Webhook Secret",
+            "description": "A secret string used to configure the GitHub webhook.",
+            "generate": "expression",
+            "from": "[a-zA-Z0-9]{40}"
+        },
+        {
+            "name": "GENERIC_WEBHOOK_SECRET",
+            "displayName": "Generic Webhook Secret",
+            "description": "A secret string used to configure the Generic webhook.",
+            "generate": "expression",
+            "from": "[a-zA-Z0-9]{40}"
+        },
+        {
+            "name": "DOTNET_STARTUP_PROJECT",
+            "displayName": "Startup Project",
+            "description": "Set this to the folder containing your startup project.",
+            "value": "app"
+        },
+        {
+            "name": "DOTNET_ASSEMBLY_NAME",
+            "displayName": "Startup Assembly",
+            "description": "Set this when the assembly name is overridden in the project file."
+        },
+        {
+            "name": "DOTNET_NPM_TOOLS",
+            "displayName": "Npm Tools",
+            "description": "Set this to a space separated list of npm tools needed to publish.",
+            "value": "bower gulp"
+        },
+        {
+            "name": "DOTNET_TEST_PROJECTS",
+            "displayName": "Test projects",
+            "description": "Set this to a space separated list of test projects to run before publishing."
+        },
+        {
+            "name": "DOTNET_CONFIGURATION",
+            "displayName": "Configuration",
+            "description": "Set this to configuration (Release/Debug).",
+            "value": "Release"
+        },
+        {
+            "name": "DOTNET_RESTORE_SOURCES",
+            "displayName": "NuGet package sources",
+            "description": "Set this to override the NuGet.config sources."
         }
     ]
 }
