@@ -526,6 +526,8 @@ test_split_build() {
 
   # create image based on app.tar.gz
   image="${image}-runtime"
+  # we don't need to provide a CMD statement
+  # app.tar.gz has a default-cmd.sh which matches with the runtime CMD.
   cat >Dockerfile <<EOF
 FROM ${RUNTIME_IMAGE_NAME}
 ADD app.tar.gz .
