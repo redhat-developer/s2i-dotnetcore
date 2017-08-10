@@ -82,7 +82,7 @@ The dotnet-runtime-example template can be used to create a new .NET Core servic
 how to create a 'chained build' where one image is used to build an application but the runtime image is used to deploy the application.
 This service will deploy the application built by the dotnet-example template above, so that must also be created.
 
-For more information on build chaining in OpenShift, [please see this doc](ihttps://docs.openshift.org/latest/dev_guide/builds/advanced_build_operations.html#dev-guide-chaining-builds).
+For more information on build chaining in OpenShift, [please see this doc](https://docs.openshift.org/latest/dev_guide/builds/advanced_build_operations.html#dev-guide-chaining-builds).
 
 **dotnet-pgsql-persistent**
 

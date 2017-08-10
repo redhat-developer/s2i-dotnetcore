@@ -58,28 +58,6 @@
                 "annotations": {
                     "description": "Keeps track of changes in the application image"
                 }
-            },
-            "spec": {
-                "tags": [
-                    {
-                        "name": "2.0-runtime",
-                        "annotations": {
-                            "openshift.io/display-name": ".NET Core 2.0 Runtime",
-                            "description": "Run .NET Core 2.0 applications on RHEL 7. For more information about using this runtime image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/2.0/README.md.",
-                            "iconClass": "icon-dotnet",
-                            "tags": "runtime,.net,dotnet,rh-dotnet20",
-                            "supports":"dotnet:2.0-runtime,dotnet",
-                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git",
-                            "sampleContextDir": "app",
-                            "sampleRef": "dotnet-2.0-runtime",
-                            "version": "2.0"
-                        },
-                        "from": {
-                          "kind": "DockerImage",
-                          "name": "registry.access.redhat.com/dotnet/dotnet-20-runtime-rhel7:latest"
-                        }
-                    }
-                ]
             }
         },
         {
@@ -93,28 +71,29 @@
             },
             "spec": {
                 "source": {
-                    "dockerfile": "FROM ${NAME}:2.0-runtime \nCOPY publish/ /opt/app-root/publish\n\nWORKDIR /opt/app-root/publish\nCMD \"/opt/app-root/publish/s2i_run\"",
+                    "dockerfile": "FROM ${DOTNET_RUNTIME_IMAGE_STREAM_TAG}\nCOPY publish/ /opt/app-root/app\nWORKDIR /opt/app-root/app\nUSER 0\nRUN chown -R 1001:0 /opt/app-root/app && chmod -R og+rwx /opt/app-root/app\nUser 1001",
                     "images": [
-						{
-							"from": {
-								"kind": "ImageStreamTag",
-								"name": "${APP_BUILD_IMAGE_TAG}"
-							},
-							"paths": [
-								{
-									"sourcePath": "/opt/app-root/publish",
-									"destinationDir": "."
-								}
-							]
-						}
-					]
+                        {
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "${APP_BUILD_IMAGE_TAG}"
+                            },
+                            "paths": [
+                                {
+                                    "sourcePath": "/opt/app-root/app",
+                                    "destinationDir": "."
+                                }
+                            ]
+                        }
+                    ]
                 },
                 "strategy": {
                     "type": "Docker",
                     "dockerStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "${NAME}:2.0-runtime"
+                            "namespace": "${NAMESPACE}",
+                            "name": "${DOTNET_RUNTIME_IMAGE_STREAM_TAG}"
                         }
                     }
                 },
@@ -240,11 +219,11 @@
             "value": "dotnet-example:latest"
         },
         {
-            "name": "DOTNET_IMAGE_STREAM_RUNTIME_TAG",
-            "displayName": ".NET Runtime",
+            "name": "DOTNET_RUNTIME_IMAGE_STREAM_TAG",
+            "displayName": ".NET Runtime Imagestream Tag",
             "description": "The image stream tag which is used to run the application.",
             "required": true,
-            "value": "dotnet-runtime-example:2.0-runtime"
+            "value": "dotnet-runtime:2.0"
         },
         {
             "name": "NAMESPACE",
