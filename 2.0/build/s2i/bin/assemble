@@ -96,3 +96,6 @@ chmod +x "$DOTNET_APP_PATH/$DOTNET_DEFAULT_CMD"
 fix-permissions ./
 # set permissions for any installed artifacts
 fix-permissions /opt/app-root
+
+# Don't persist the nss_wrapper passwd file
+rm -rf $NSS_WRAPPER_PASSWD

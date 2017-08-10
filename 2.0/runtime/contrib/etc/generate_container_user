@@ -8,6 +8,8 @@ if [ x"$USER_ID" != x"0" -a x"$USER_ID" != x"1001" ]; then
     NSS_WRAPPER_GROUP=/etc/group
 
     cat /etc/passwd | sed -e 's/^default:/builder:/' > $NSS_WRAPPER_PASSWD
+    # make sure this file is writable so it can be overwritten if it is persisted in an image.
+    fix-permissions $NSS_WRAPPER_PASSWD
 
     echo "default:x:${USER_ID}:${GROUP_ID}:Default Application User:${HOME}:/sbin/nologin" >> $NSS_WRAPPER_PASSWD
 
