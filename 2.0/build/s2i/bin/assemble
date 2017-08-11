@@ -1,0 +1,104 @@
+#!/bin/bash
+
+set -e
+
+# User settable environment
+DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
+DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
+DOTNET_ASPNET_STORE="${DOTNET_ASPNET_STORE:-false}"
+if [ "$DOTNET_ASPNET_STORE" != "false" ]; then
+  DOTNET_ASPNET_STORE="true"
+fi
+
+# Private environment
+DOTNET_FRAMEWORK="netcoreapp2.0"
+DOTNET_RID=rhel.7-x64
+
+# npm
+if [ -n "${DOTNET_NPM_TOOLS}" ]; then
+  echo "---> Installing npm tools ..."
+
+  if [ ! -z $HTTP_PROXY ]; then
+    echo "---> Setting npm http proxy"
+    npm config set proxy $HTTP_PROXY
+  fi
+  if [ ! -z $HTTPS_PROXY ]; then
+    echo "---> Setting npm https proxy"
+    npm config set https-proxy $HTTPS_PROXY
+  fi
+  if [ ! -z $NPM_MIRROR ]; then
+    echo "---> Setting npm mirror"
+    npm config set registry $NPM_MIRROR
+  fi
+
+  pushd $HOME
+  npm install ${DOTNET_NPM_TOOLS}
+  popd
+fi
+
+echo "---> Copying application source ..."
+cp -Rf /tmp/src/. ./
+
+# output assembly name
+if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
+  APP_DLL_NAME="${DOTNET_ASSEMBLY_NAME}.dll"
+else
+  CSPROJFILES=(`find "${DOTNET_STARTUP_PROJECT}" -maxdepth 1 -name "*.csproj"`)
+  if [ ${#CSPROJFILES[@]} -eq 1 ]; then
+    CSPROJFILE=$(basename ${CSPROJFILES[0]})
+    APP_DLL_NAME="${CSPROJFILE: : -7}.dll"
+  elif [ ${#CSPROJFILES[@]} -eq 0 ]; then
+    echo "error: DOTNET_STARTUP_PROJECT has no csproj file"
+    exit 1
+  else
+    echo "error: DOTNET_STARTUP_PROJECT contains multiple csproj files"
+    exit 1
+  fi
+fi
+
+# Build nuget sources list for when doing the restore
+# TODO: remove myget nuget feeds
+DOTNET_RESTORE_SOURCES="$DOTNET_RESTORE_SOURCES https://dotnet.myget.org/F/dotnet-core/api/v2 https://dotnet.myget.org/F/aspnetcore-release/api/v2 https://api.nuget.org/v3/index.json"
+for SOURCE in $DOTNET_RESTORE_SOURCES; do
+  RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
+done
+
+# run tests
+for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
+    echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
+    dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS
+    echo "---> Running test project: $TEST_PROJECT..."
+    dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK"
+done
+
+# publish application
+echo "---> Restoring application dependencies..."
+dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS
+echo "---> Publishing application..."
+dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" \
+       --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE -o "$DOTNET_APP_PATH"
+
+# check if the assembly used by the script exists
+if [ ! -f "$DOTNET_APP_PATH/${APP_DLL_NAME}" ]; then
+  echo "error: Build output does not contain entrypoint assembly: ${APP_DLL_NAME}"
+  exit 1
+fi
+
+# Create run script in publish folder
+cat << EOF >"$DOTNET_APP_PATH/$DOTNET_DEFAULT_CMD"
+#!/bin/bash
+
+exec dotnet ${APP_DLL_NAME} \$@
+EOF
+chmod +x "$DOTNET_APP_PATH/$DOTNET_DEFAULT_CMD"
+
+# Fix source directory permissions
+fix-permissions ./
+# set permissions for any installed artifacts
+fix-permissions /opt/app-root
+
+if [ "$DOTNET_PACK" == "true" ]; then
+  echo "---> Packing application..."
+  tar -czf /opt/app-root/app.tar.gz -C $DOTNET_APP_PATH .
+  fix-permissions /opt/app-root/app.tar.gz
+fi
