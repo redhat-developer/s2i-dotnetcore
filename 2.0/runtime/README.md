@@ -51,21 +51,11 @@ Repository organization
   This folder contains binary archives of [S2I](https://github.com/openshift/source-to-image)
   dotnet sample applications.
 
-  * **`helloworld/`**
-
-    .Net Core "Hello World" used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
-
-  * **`qotd/`**
-
-    .Net Core Quote of the Day example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
-
   * **`asp-net-hello-world/`**
 
-    ASP .Net hello world example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
-
-  * **`asp-net-hello-world-envvar/`**
-
-    ASP .Net hello world example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
+    ASP .Net hello world example app used for testing purposes. Sources are precompiled in `app.tar.gz`.
+    See [build-project.sh](test/aspnet-hello-world/build-project.sh) for as to how to produce
+    the binary.
 
 Environment variables
 ---------------------

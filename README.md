@@ -32,7 +32,8 @@ Usage
 ---------------------------------
 
 For information about usage of Docker image for .NET Core 2.0,
-see [2.0 usage documentation](2.0/README.md).
+see [2.0 builder usage documentation](2.0/build/README.md) and
+[2.0 runtime usage documentation](2.0/runtime/README.md).
 
 For information about usage of Docker image for .NET Core 1.1,
 see [1.1 usage documentation](1.1/README.md).
