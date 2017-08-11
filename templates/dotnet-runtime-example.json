@@ -118,12 +118,12 @@
                                 "value": "${DOTNET_CONFIGURATION}"
                             },
                             {
-                                "name": "DOTNET_PUBLISH",
-                                "value": "true"
-                            },
-                            {
                                 "name": "DOTNET_RESTORE_SOURCES",
                                 "value": "${DOTNET_RESTORE_SOURCES}"
+                            },
+                            {
+                                "name": "DOTNET_PACK",
+                                "value": "true"
                             }
                         ]
                     }
@@ -167,7 +167,7 @@
             },
             "spec": {
                 "source": {
-                    "dockerfile": "FROM ${DOTNET_RUNTIME_IMAGE_STREAM_TAG}\nCOPY publish/ /opt/app-root/app\nWORKDIR /opt/app-root/app\nUSER 0\nRUN chown -R 1001:0 /opt/app-root/app && chmod -R og+rwx /opt/app-root/app\nUser 1001",
+                    "dockerfile": "FROM ${DOTNET_RUNTIME_IMAGE_STREAM_TAG}\nWORKDIR /opt/app-root/app\nADD app.tar.gz\nUser 1001",
                     "images": [
                         {
                             "from": {
