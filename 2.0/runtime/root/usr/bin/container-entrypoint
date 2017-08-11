@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -eu
+
+source /opt/app-root/etc/generate_container_user
+
+cmd="$1"; shift
+exec $cmd "$@"

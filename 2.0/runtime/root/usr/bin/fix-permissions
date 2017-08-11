@@ -1,0 +1,8 @@
+#!/bin/sh
+# Fix permissions on the given directory to allow owner/group read/write of
+# regular files and execute of directories.
+# Note: Openshift uses random UIDs for running apps. Thus we need to grant
+#       some world-writable perms :(
+chgrp -R 0 $1
+chmod -R og+rw $1
+find $1 -type d -exec chmod g+x {} +

@@ -20,9 +20,18 @@
 #       $ sudo VERSIONS=1.0 ./build.sh
 #
 
-version_no_dot() {
+if [ "${DEBUG}" == "true" ]; then
+  set -x
+fi
+
+base_image_name() {
   local version=$1
-  echo ${version} | sed 's/\.//g'
+  local v_no_dot=$(echo ${version} | sed 's/\.//g')
+  if [[ "$version" == 1* ]]; then
+    echo "dotnetcore-${v_no_dot}";
+  else
+    echo "dotnet-${v_no_dot}";
+  fi
 }
 
 image_exists() {
@@ -38,34 +47,66 @@ check_result_msg() {
   fi
 }
 
-VERSIONS="${VERSIONS:-1.0 1.1}"
+build_image() {
+  local path=$1
+  local name=$2
+  if ! image_exists ${name}; then
+    echo "Building Docker image ${name} ..."
+    if [ ! -d "${path}" ]; then
+      echo "No directory found at given location '${path}'. Skipping this image."
+      return
+    fi
+    pushd ${path} &>/dev/null
+      docker build -f Dockerfile.rhel7 -t ${name} .
+      check_result_msg $? "Building Docker image ${name} FAILED!"
+    popd &>/dev/null
+  fi
+}
+
+test_images() {
+  local path=$1
+  echo "Running tests..."
+  ${path}/run
+  check_result_msg $? "Tests FAILED!"
+}
+
+# TODO: build 1.0 1.1 
+VERSIONS="${VERSIONS:-2.0}"
 
 for v in ${VERSIONS}; do
-  v_no_dot="$( version_no_dot ${v} )"
-  img_name="dotnet/dotnetcore-${v_no_dot}-rhel7"
-  pushd ${v} &>/dev/null
-    if ! image_exists ${img_name}; then
-      echo "Building Docker image ${img_name} ..."
-      docker build -f Dockerfile.rhel7 -t ${img_name} .
-      check_result_msg $? "Building Docker image ${img_name} FAILED!"
-    fi
-    echo "Running tests on image ${img_name} ..."
-    ./test/run
-    check_result_msg $? "Tests for image ${img_name} FAILED!"
-  popd &>/dev/null
+  # TODO: If this gets more complex, the find a better way to determine split
+  #       images, or just normalize split and non-split images
+  if [ "$v" == "1.0" ] || [ "$v" == "1.1" ]; then
+    build_name="dotnet/$(base_image_name ${v})-rhel7"
+
+    # Build the build image
+    build_image "${v}" "${build_name}"
+    test_images "${v}/test"
+  else
+    build_name="dotnet/$(base_image_name ${v})-rhel7"
+    runtime_name="dotnet/$(base_image_name ${v})-runtime-rhel7"
+
+    # Build the runtime image
+    build_image "${v}/runtime" "${runtime_name}"
+    test_images "${v}/runtime/test"
+
+    # Build the build image
+    build_image "${v}/build" "${build_name}"
+    test_images "${v}/build/test"
+  fi
 done
 
-if [ "$TEST_OPENSHIFT" = "true" ]; then
-  for v in ${VERSIONS}; do
-    v_no_dot="$( version_no_dot ${v} )"
-    img_name="registry.access.redhat.com/dotnet/dotnetcore-${v_no_dot}-rhel7:latest"
-    pushd ${v} &>/dev/null
-      echo "Running tests on image ${img_name} ..."
-      IMAGE_NAME="${img_name}" OPENSHIFT_ONLY=true ./test/run
-      check_result_msg $? "Tests for image ${img_name} FAILED!"
-    popd &>/dev/null
-  done
-fi
+# TODO: cleanup TEST_OPENSHIFT, OPENSHIFT_ONLY
+# if [ "$TEST_OPENSHIFT" = "true" ]; then
+#   for v in ${VERSIONS}; do
+#     img_name="registry.access.redhat.com/dotnet/$(base_image_name ${v}):latest"
+#     pushd ${v} &>/dev/null
+#       echo "Running tests on image ${img_name} ..."
+#       IMAGE_NAME="${img_name}" OPENSHIFT_ONLY=true ./test/run
+#       check_result_msg $? "Tests for image ${img_name} FAILED!"
+#     popd &>/dev/null
+#   done
+# fi
 
 echo "ALL builds and tests were successful!"
 exit 0

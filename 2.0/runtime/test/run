@@ -1,0 +1,166 @@
+#!/bin/bash
+#
+# The 'run' script performs simple tests that verifies usability
+# of the image
+#
+# IMAGE_NAME specifies a name of the candidate image used for testing.
+# The image has to be available before this script is executed.
+#
+# DEBUG environment variable, if not empty, makes 'run' to log every step
+# of testing.
+#
+# Example usage: $ sudo ./test/run
+
+IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
+
+test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
+
+if [ "$DEBUG" != "" ]; then
+  set -x
+fi
+
+info() {
+  echo -e "\n\e[1m[INFO] $@\e[0m\n"
+}
+
+assert_contains()
+{
+  local actual="$1"
+  local expected="$2"
+
+  if ! echo "${actual}" | grep -q "${expected}"; then
+    echo "ERROR[${FUNCNAME[1]}:${BASH_LINENO[0]}]: '${actual}' does not contain '${expected}'"
+    exit 1
+  fi
+}
+
+assert_equal()
+{
+  local actual="$1"
+  local expected="$2"
+
+  if ! [ "$actual" == "$expected" ]; then
+    echo "ERROR[${FUNCNAME[1]}:${BASH_LINENO[0]}]: '${actual}' does not equal '${expected}'"
+    exit 1
+  fi
+}
+
+test_start() {
+  info "Running ${FUNCNAME[1]}"
+}
+
+docker_run() {
+  local command="$1"
+
+  docker run --rm ${IMAGE_NAME} "${command}" 2>&1
+}
+
+docker_run_as() {
+  local user="$1"
+  local command="$2"
+
+  docker run --rm --user="${user}" ${IMAGE_NAME} "${command}" 2>&1
+}
+
+docker_get_env() {
+  local name="$1"
+
+  local env=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{println $value}}{{end}}' ${IMAGE_NAME})
+  local line=$(echo "$env" | grep "${name}=")
+  echo ${line#*=}
+}
+
+docker_get_exposedports() {
+  docker inspect -f '{{json .Config.ExposedPorts}}' ${IMAGE_NAME}
+}
+
+curl_retry() {
+  local url="$1"
+  curl --retry-delay 1 --retry 5 "$url"
+}
+
+# Since we built the candidate image locally, we don't want S2I attempt to pull
+# it from Docker hub
+s2i_args="--force-pull=false"
+
+info "Testing ${IMAGE_NAME}"
+
+test_dotnet() {
+  test_start
+  local dotnet_version="2.0.0"
+
+  # ENTRYPOINT enables scl so dotnet is available
+  assert_contains "$(docker_run "dotnet --info")" "Microsoft .NET Core Shared Framework Host"
+  assert_contains "$(docker_run "dotnet")" "Usage: dotnet"
+  # Check version
+  assert_contains "$(docker_run "dotnet --info")" "Version  : ${dotnet_version}"$'\r\n'
+}
+test_dotnet
+
+test_default_cmd() {
+  test_start
+
+  assert_contains $(docker_run) "This is a runtime image for .NET Core"
+}
+test_default_cmd
+
+test_user() {
+  test_start
+
+  # we run as user 'default'
+  assert_equal $(docker_run "whoami")           "default"
+  # other users are mapped to 'default'
+  assert_equal $(docker_run_as 100001 "whoami") "default"
+  # root is 'root'
+  assert_equal $(docker_run_as 0 "whoami")      "root"
+
+  # ensure the passwd file used by nss_wrapper can be overwritten
+  assert_equal $(docker_run_as 100001 "stat -c %a /opt/app-root/etc/passwd") "666"
+}
+test_user
+
+test_port() {
+  test_start
+
+  # Port 8080 is exposed
+  assert_equal $(docker_get_exposedports) '{"8080/tcp":{}}'
+  # The environment variable used by ASP.NET Core matches
+  assert_equal $(docker_get_env ASPNETCORE_URLS) "http://*:8080"
+}
+test_port
+
+#TODO remove NuGet.Config file
+test_aspnet() {
+  test_start
+
+  pushd ${test_dir}/aspnet-hello-world
+
+  # create image
+  local container=dotnet-helloworld
+  local image=${container}
+  cat >Dockerfile <<EOF
+FROM ${IMAGE_NAME}
+ADD app.tar.gz .
+CMD [ "dotnet", "aspnet-hello-world.dll" ]
+EOF
+  docker build -t ${image} .
+
+  # start container
+  docker run -d -p 8080:8080 --name=${container} ${image}
+  sleep 1
+
+  # request
+  local response=$(curl_retry http://localhost:8080)
+
+  # cleanup
+  docker rm -f ${container}
+  docker rmi ${image}
+
+  # assert
+  assert_equal "${response}" "Hello World!"
+
+  popd
+}
+test_aspnet
+
+info "All tests finished successfully."
