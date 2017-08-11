@@ -167,7 +167,7 @@
             },
             "spec": {
                 "source": {
-                    "dockerfile": "FROM ${DOTNET_RUNTIME_IMAGE_STREAM_TAG}\nWORKDIR /opt/app-root/app\nADD app.tar.gz\nUser 1001",
+                    "dockerfile": "FROM ${DOTNET_RUNTIME_IMAGE_STREAM_TAG}\nADD app.tar.gz",
                     "images": [
                         {
                             "from": {
@@ -176,7 +176,7 @@
                             },
                             "paths": [
                                 {
-                                    "sourcePath": "/opt/app-root/app",
+                                    "sourcePath": "/opt/app-root/app/app.tar.gz",
                                     "destinationDir": "."
                                 }
                             ]
