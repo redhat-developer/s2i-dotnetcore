@@ -15,6 +15,7 @@
 # Example usage: $ sudo ./test/run
 
 IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-rhel7}
+RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
 
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -501,6 +502,58 @@ test_user() {
   info "Test user PASSED."
 }
 
+test_split_build() {
+  local app=asp-net-hello-world-envvar
+  info "Starting split build test"
+
+  rm -rf ${test_dir}/split_build
+  mkdir ${test_dir}/split_build
+  pushd ${test_dir}/split_build
+
+  # create app.tar.gz using builder
+  # build image
+  prepare ${app}
+  run_s2i_build ${app}
+  check_result $?
+  # extract tar.gz from temp container
+  image="${IMAGE_NAME}-testapp"
+  id=$(docker create ${image})
+  docker cp $id:/opt/app-root/app.tar.gz .
+  # remove container
+  docker rm -v $id
+  # remove image
+  cleanup ${app}
+
+  # create image based on app.tar.gz
+  image="${image}-runtime"
+  # we don't need to provide a CMD statement
+  # app.tar.gz has a default-cmd.sh which matches with the runtime CMD.
+  cat >Dockerfile <<EOF
+FROM ${RUNTIME_IMAGE_NAME}
+ADD app.tar.gz .
+EOF
+  docker build -t ${image} .
+
+  ##
+  # test the image
+  ##
+  info "Starting build image tests"
+  local cid_file=$(mktemp -u --suffix=.cid)
+  init_web_app "${image}" "${cid_file}"
+  # test application with default user
+  test_web_app_http
+
+  # test application with random user
+  CONTAINER_ARGS="-u 12345" test_web_app_http
+  cleanup_container "${cid_file}"
+
+  docker rmi -f ${image}
+
+  popd
+
+  info "Split build test finished successfully."
+}
+
 info "Testing ${IMAGE_NAME}"
 
 # Since we built the candidate image locally, we don't want S2I attempt to pull
@@ -543,6 +596,7 @@ else
 
   test_new_web_app
   test_user
+  test_split_build
 fi
 
 info "All tests finished successfully."

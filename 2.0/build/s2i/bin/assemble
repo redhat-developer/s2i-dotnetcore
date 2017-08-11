@@ -96,3 +96,9 @@ chmod +x "$DOTNET_APP_PATH/$DOTNET_DEFAULT_CMD"
 fix-permissions ./
 # set permissions for any installed artifacts
 fix-permissions /opt/app-root
+
+if [ "$DOTNET_PACK" == "true" ]; then
+  echo "---> Packing application..."
+  tar -czf /opt/app-root/app.tar.gz -C $DOTNET_APP_PATH .
+  fix-permissions /opt/app-root/app.tar.gz
+fi
