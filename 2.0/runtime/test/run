@@ -129,7 +129,6 @@ test_port() {
 }
 test_port
 
-#TODO remove NuGet.Config file
 test_aspnet() {
   test_start
 
