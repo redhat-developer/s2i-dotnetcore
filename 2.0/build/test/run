@@ -26,6 +26,7 @@ fi
 declare -a CLI_APPS=(
   hw_framework_config
   helloworld
+  helloworld-fs
   qotd
   dotnet-configuration-debug
   dotnet-configuration-release
@@ -354,6 +355,9 @@ get_expected_cli() {
     "helloworld")
       echo 'Hello World!'
       ;;
+    "helloworld-fs")
+      echo 'Hello World from F#!'
+      ;;
     "hw_framework_config")
       echo 'Hello World!'
       ;;
@@ -378,6 +382,10 @@ filter_cli() {
   local all_output="$2"
   case "${app}" in
     "helloworld")
+      # Note: tail -n1 => Omit "--> Running application ..." output
+      echo "${all_output}" | tail -n1
+      ;;
+    "helloworld-fs")
       # Note: tail -n1 => Omit "--> Running application ..." output
       echo "${all_output}" | tail -n1
       ;;
@@ -410,6 +418,10 @@ success_cli() {
   local expected="$3"
   case "${app}" in
     "helloworld")
+      echo "${actual}" | grep -q "${expected}"
+      return $?
+      ;;
+    "helloworld-fs")
       echo "${actual}" | grep -q "${expected}"
       return $?
       ;;

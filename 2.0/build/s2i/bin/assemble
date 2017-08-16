@@ -43,15 +43,15 @@ cp -Rf /tmp/src/. ./
 if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
   APP_DLL_NAME="${DOTNET_ASSEMBLY_NAME}.dll"
 else
-  CSPROJFILES=(`find "${DOTNET_STARTUP_PROJECT}" -maxdepth 1 -name "*.csproj"`)
-  if [ ${#CSPROJFILES[@]} -eq 1 ]; then
-    CSPROJFILE=$(basename ${CSPROJFILES[0]})
-    APP_DLL_NAME="${CSPROJFILE: : -7}.dll"
-  elif [ ${#CSPROJFILES[@]} -eq 0 ]; then
-    echo "error: DOTNET_STARTUP_PROJECT has no csproj file"
+  PROJFILES=(`find "${DOTNET_STARTUP_PROJECT}" -maxdepth 1 -name "*.??proj"`)
+  if [ ${#PROJFILES[@]} -eq 1 ]; then
+    PROJFILE=$(basename ${PROJFILES[0]})
+    APP_DLL_NAME="${PROJFILE: : -7}.dll"
+  elif [ ${#PROJFILES[@]} -eq 0 ]; then
+    echo "error: DOTNET_STARTUP_PROJECT has no project file"
     exit 1
   else
-    echo "error: DOTNET_STARTUP_PROJECT contains multiple csproj files"
+    echo "error: DOTNET_STARTUP_PROJECT contains multiple project files"
     exit 1
   fi
 fi
