@@ -485,7 +485,7 @@
         {
             "name": "DOTNET_STARTUP_PROJECT",
             "displayName": "Startup Project",
-            "description": "Set this to the a project file (e.g. csproj) or a folder containing a single project file.",
+            "description": "Set this to a project file (e.g. csproj) or a folder containing a single project file.",
             "value": "samples/MusicStore"
         },
         {

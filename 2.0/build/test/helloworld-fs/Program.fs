@@ -1,3 +1,4 @@
+// generated using 'dotnet new --language fsharp'
 open System
 
 [<EntryPoint>]
