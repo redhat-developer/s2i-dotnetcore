@@ -28,7 +28,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 
 RUN INSTALL_PKGS="rh-nodejs6-npm rh-dotnet20-dotnet-sdk-2.0" && \
     yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
-      --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms,rhel-7-server-rpms,rhel-7-server-ose-3.2-rpms \
+      --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms,rhel-7-server-ose-3.2-rpms \
       $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y
