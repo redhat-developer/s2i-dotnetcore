@@ -103,6 +103,16 @@ test_consoleapp() {
   assert_contains "$(s2i_build_and_run helloworld)" "Hello World!"
 }
 
+test_multiframework() {
+  test_start
+
+  # hw_framework_config targets both: net451 and netcoreapp
+  # this test verifies we are building and able to run the .NET Core target.
+
+  # application returns expected output
+  assert_contains "$(s2i_build_and_run hw_framework_config)" "Hello World!"
+}
+
 test_fsharp() {
   test_start
 
@@ -314,6 +324,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_docker_run_usage
   test_image
   test_consoleapp
+  test_multiframework
   test_fsharp
   test_published_files
   test_aspnetapp
@@ -324,4 +335,3 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
 fi
 
 info "All tests finished successfully."
-exit 0
