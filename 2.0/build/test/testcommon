@@ -1,3 +1,7 @@
+# This code is the same for the build and runtime images.
+# The code is duplicated in both folders because the images are built
+# and tested after copying the sub-directories into a container repo.
+
 test_port=8080
 CURLE_COULNDT_CONNECT=7
 

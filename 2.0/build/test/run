@@ -19,7 +19,7 @@ RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
-source ${test_dir}/../../testcommon
+source ${test_dir}/testcommon
 
 dotnet_version="2.0.0"
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
