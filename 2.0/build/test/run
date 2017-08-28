@@ -34,7 +34,7 @@ s2i_build_output_log() {
   local tag="$2"
 
   docker_rmi ${tag}
-  s2i build --force-pull=false "file://${test_dir}/${app}" ${IMAGE_NAME} ${tag} 2>&1
+  s2i build --pull-policy=never "file://${test_dir}/${app}" ${IMAGE_NAME} ${tag} 2>&1
 }
 
 s2i_build() {
@@ -328,10 +328,6 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_fsharp
   test_published_files
   test_aspnetapp
-  test_user
-  test_new_web_app
-  test_config
-  test_split_build
 fi
 
 info "All tests finished successfully."
