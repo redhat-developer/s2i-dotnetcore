@@ -343,7 +343,7 @@ test_imagestream_sample() {
   # build image
   local image=$(s2i_image_tag sample)
   docker_rmi ${tag}
-  local s2i_build=$(s2i build --pull-policy=never --context-dir=app --ref=dotnetcore-2.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git ${IMAGE_NAME} ${image} 2>&1)
+  local s2i_build=$(s2i build --pull-policy=always --context-dir=app --ref=dotnetcore-2.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git ${IMAGE_NAME} ${image} 2>&1)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
