@@ -77,6 +77,13 @@ have completed, you can browse to the application using the url you find in proj
 The dotnet-example template can be used to create a new .NET Core service in OpenShift. It provides parameters for all the environment
 variables of the s2i-dotnetcore builder. It also includes a liveness and a readiness probe.
 
+**dotnet-runtime-example**
+
+The dotnet-runtime-example template can be used to create a new .NET Core service in OpenShift. It is meant to serve as an example of
+how to create a 'chained build' where one image is used to build an application but the runtime image is used to deploy the application.
+
+For more information on build chaining in OpenShift, [please see this doc](https://docs.openshift.org/latest/dev_guide/builds/advanced_build_operations.html#dev-guide-chaining-builds).
+
 **dotnet-pgsql-persistent**
 
 The dotnet-pgsql-persistent creates a .NET Core service with a PostgreSQL backend. It provides parameters for all the environment
