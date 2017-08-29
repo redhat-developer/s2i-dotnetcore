@@ -12,7 +12,6 @@
 # Example usage: $ sudo ./test/run
 
 IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
-OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
@@ -89,12 +88,10 @@ EOF
 
 info "Testing ${IMAGE_NAME}"
 
-if [ ${OPENSHIFT_ONLY} != true ]; then
-  test_dotnet
-  test_default_cmd
-  test_user
-  test_port
-  test_aspnet
-fi
+test_dotnet
+test_default_cmd
+test_user
+test_port
+test_aspnet
 
 info "All tests finished successfully."
