@@ -63,7 +63,7 @@ s2i_build_and_run() {
 test_s2i_usage() {
   test_start
 
-  local output=$(s2i usage ${s2i_args} ${IMAGE_NAME} 2>&1)
+  local output=$(s2i usage ${IMAGE_NAME} 2>&1)
 
   # s2i usage refers to the sample app
   assert_contains "$output" "${sample_app_url}"
@@ -99,6 +99,8 @@ test_image() {
 test_consoleapp() {
   test_start
 
+  # helloworld is a C# console application
+
   # application returns expected output
   assert_contains "$(s2i_build_and_run helloworld)" "Hello World!"
 }
@@ -116,6 +118,8 @@ test_multiframework() {
 test_fsharp() {
   test_start
 
+  # helloworld-fs is an F# console application
+
   # application returns expected output
   assert_contains "$(s2i_build_and_run helloworld-fs)" "Hello World from F#!"
 }
@@ -123,13 +127,17 @@ test_fsharp() {
 test_published_files() {
   test_start
 
-  # This application has an appsettings.json and quotes.txt files that must
+  # qotd has an appsettings.json and quotes.txt files that must
   # be published with the app and found at runtime.
+
+  # application returns expected output
   assert_contains "$(s2i_build_and_run qotd)" "QOTD"
 }
 
 test_aspnetapp() {
   test_start
+
+  # asp-net-hello-world is an ASP.NET Core application
 
   local app=asp-net-hello-world
   # build image
@@ -181,6 +189,9 @@ test_user() {
 
 test_new_web_app() {
   test_start
+
+  # newweb creates instantiates the 'dotnet new mvc' template
+  # in the assemble script.
 
   local app=newweb
   # build image
@@ -276,6 +287,10 @@ test_config() {
 test_split_build() {
   test_start
 
+  # test openshift chained build
+  # see 'chaining builds' in the openshift docs
+
+  # this app has DOTNET_PACK=true
   local app=asp-net-hello-world-envvar
 
   local build_dir="${test_dir}/split_build"
