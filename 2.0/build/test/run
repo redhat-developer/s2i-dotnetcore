@@ -41,7 +41,8 @@ s2i_build() {
   local app="$1"
   local tag=$(s2i_image_tag ${app})
 
-  local output=$(s2i_build_output_log ${app} ${tag})
+  local output;
+  output=$(s2i_build_output_log ${app} ${tag})
   if [ $? -ne 0 ]; then
     error "$output"
     echo "no-image"
@@ -122,6 +123,15 @@ test_fsharp() {
 
   # application returns expected output
   assert_contains "$(s2i_build_and_run helloworld-fs)" "Hello World from F#!"
+}
+
+test_vb() {
+  test_start
+
+  # helloworld-vb is a VB console application
+
+  # application returns expected output
+  assert_contains "$(s2i_build_and_run helloworld-vb)" "Hello World from VB!"
 }
 
 test_published_files() {
@@ -366,6 +376,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_consoleapp
   test_multiframework
   test_fsharp
+  test_vb
   test_published_files
   test_aspnetapp
 else
