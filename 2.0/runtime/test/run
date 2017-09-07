@@ -12,6 +12,7 @@
 # Example usage: $ sudo ./test/run
 
 IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
+OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
@@ -25,6 +26,14 @@ test_dotnet() {
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
   # Check version
   assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version  : ${dotnet_version}"$'\r\n'
+}
+
+test_debuggable() {
+  test_start
+
+  # VSDBG (the .NET Core command line debugger) install script needs unzip
+  #   curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg
+  assert_equal "$(docker_commandpath $IMAGE_NAME unzip)" "/usr/bin/unzip"
 }
 
 test_default_cmd() {
@@ -88,10 +97,13 @@ EOF
 
 info "Testing ${IMAGE_NAME}"
 
-test_dotnet
-test_default_cmd
-test_user
-test_port
-test_aspnet
+if [ ${OPENSHIFT_ONLY} != true ]; then
+  test_dotnet
+  test_default_cmd
+  test_debuggable
+  test_user
+  test_port
+  test_aspnet
+fi
 
 info "All tests finished successfully."
