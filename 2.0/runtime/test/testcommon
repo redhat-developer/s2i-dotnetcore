@@ -145,6 +145,13 @@ docker_rmi() {
   docker rmi -f "${image}" >/dev/null 2>&1
 }
 
+docker_commandpath() {
+  local image="$1"
+  local command="$2"
+
+  docker_run ${image} bash -c "command -v ${command}"
+}
+
 curl_retry() {
   local url="$1"
 
