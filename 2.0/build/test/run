@@ -367,6 +367,45 @@ test_imagestream_sample() {
   assert_contains "${response}" "html"
 }
 
+test_devmode() {
+  test_start
+
+  # test DEV_MODE
+
+  # This application has no sources and is configured (.s2i/environment):
+  #   DEV_MODE=true, DOTNET_STARTUP_PROJECT=src/app
+  local app=devmode
+  # build image
+  local image=$(s2i_build ${app})
+  # start container
+  local container=$(docker_run_d ${image})
+  # retrieve log
+  local attempt=1
+  local log=""
+  while [ -z "${log}" -a $attempt -le 5 ]; do
+    log=$(docker logs ${container})
+    if [ -z "${log}" ]; then
+      sleep 1
+    fi
+    attempt=$(( $attempt + 1 ))
+  done
+  # copy source (from devmode-src) in container
+  local app_src_dir="${test_dir}/devmode-src/."
+  chmod goa+rwx "${app_src_dir}"
+  docker cp "${app_src_dir}" "${container}:/opt/app-root/src"
+  # request
+  local url=$(container_url ${container})
+  local response=$(curl_retry ${url}/ 30) # 30 attempts
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # Check no project was found initially
+  assert_contains "${log}" "error: DOTNET_STARTUP_PROJECT not found"
+  # Check app was launched succesfully after uploading sources.
+  assert_equal "${response}" "Hello World!"
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -379,6 +418,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_vb
   test_published_files
   test_aspnetapp
+  test_devmode
 else
   test_imagestream_sample
 fi

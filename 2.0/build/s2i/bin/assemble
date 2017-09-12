@@ -2,18 +2,6 @@
 
 set -e
 
-# User settable environment
-DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
-DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
-DOTNET_ASPNET_STORE="${DOTNET_ASPNET_STORE:-false}"
-if [ "$DOTNET_ASPNET_STORE" != "false" ]; then
-  DOTNET_ASPNET_STORE="true"
-fi
-
-# Private environment
-DOTNET_FRAMEWORK="netcoreapp2.0"
-DOTNET_RID=rhel.7-x64
-
 # npm
 if [ -n "${DOTNET_NPM_TOOLS}" ]; then
   echo "---> Installing npm tools ..."
@@ -38,6 +26,21 @@ fi
 
 echo "---> Copying application source ..."
 cp -Rf /tmp/src/. ./
+
+if [ "$DEV_MODE" == true ]; then
+  exit 0
+fi
+
+# User settable environment
+DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
+DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
+DOTNET_ASPNET_STORE="${DOTNET_ASPNET_STORE:-false}"
+if [ "$DOTNET_ASPNET_STORE" != "false" ]; then
+  DOTNET_ASPNET_STORE="true"
+fi
+
+# Private environment
+DOTNET_FRAMEWORK="netcoreapp2.0"
 
 # output assembly name
 if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
