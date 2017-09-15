@@ -140,6 +140,11 @@ a `.s2i/environment` file inside your source code repository.
 
     When set to `true` creates a tar.gz file at `/opt/app-root/app.tar.gz` that contains the published application.
 
+* **DEV_MODE**
+
+    When set to `true`, the application restart automatically when the source code changes. `dotnet run`
+    is used to start the application.
+
 NPM
 ---
 

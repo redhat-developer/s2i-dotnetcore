@@ -154,10 +154,10 @@ docker_commandpath() {
 
 curl_retry() {
   local url="$1"
+  local max_attempts="${2:-10}"
 
   local output
   local attempt=1
-  local max_attempts=10
   local rv=$CURLE_COULNDT_CONNECT
   while [ $rv -eq $CURLE_COULNDT_CONNECT -a $attempt -le $max_attempts ]; do
     output=$(curl -sS "$url" 2>&1)
@@ -165,6 +165,7 @@ curl_retry() {
     if [ $rv -eq $CURLE_COULNDT_CONNECT ]; then
       sleep 1
     fi
+    attempt=$(( $attempt + 1 ))
   done
   if [ $rv -ne 0 ]; then
     error "$output"
