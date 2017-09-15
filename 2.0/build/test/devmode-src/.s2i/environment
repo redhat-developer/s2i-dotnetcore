@@ -1,0 +1,2 @@
+DOTNET_STARTUP_PROJECT=src/app
+DEV_MODE=true

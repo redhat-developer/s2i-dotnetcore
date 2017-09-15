@@ -367,10 +367,36 @@ test_imagestream_sample() {
   assert_contains "${response}" "html"
 }
 
-test_devmode() {
+test_devmode_user() {
   test_start
 
-  # test DEV_MODE
+  # check DEV_MODE run has permissions to build the source added by assemble
+
+  # This application is configured (.s2i/environment):
+  #   DEV_MODE=true, DOTNET_STARTUP_PROJECT=src/app
+  local app=devmode-src
+  # user to run the app (100002) is different than user that built the app (1001).
+  local run_user=100002
+
+  # build image
+  local image=$(s2i_build ${app})
+  # start container
+  local container=$(docker_run_as_d ${image} ${run_user})
+  # request
+  local url=$(container_url ${container})
+  local response=$(curl_retry ${url}/ 30) # 30 attempts
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # Check app was launched succesfully after uploading sources.
+  assert_equal "${response}" "Hello World!"
+}
+
+test_devmode_change() {
+  test_start
+
+  # test DEV_MODE run picks up changes
 
   # This application has no sources and is configured (.s2i/environment):
   #   DEV_MODE=true, DOTNET_STARTUP_PROJECT=src/app
@@ -404,6 +430,11 @@ test_devmode() {
   assert_contains "${log}" "error: DOTNET_STARTUP_PROJECT not found"
   # Check app was launched succesfully after uploading sources.
   assert_equal "${response}" "Hello World!"
+}
+
+test_devmode() {
+  test_devmode_user
+  test_devmode_change
 }
 
 info "Testing ${IMAGE_NAME}"
