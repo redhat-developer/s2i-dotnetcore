@@ -28,6 +28,9 @@ echo "---> Copying application source ..."
 cp -Rf /tmp/src/. ./
 
 if [ "$DEV_MODE" == true ]; then
+  # Fix source directory permissions
+  fix-permissions ./
+
   exit 0
 fi
 
