@@ -10,157 +10,198 @@ The following projects contain the Deployment Configurations (dc) for the variou
 - tran-schoolbus-dev (Development)
 - tran-schoolbus-test (Test)
 - tran-schoolbus-prod (Production)
- 
-In Schoolbus there are 6 components that are deployed 
-- nginx reverse proxy
+
+In Schoolbus the following components are deployed
 - Postgres Database, built based on the Red Hat Postgres image
 - .NET Core Front End Server, which also contains the compiled UI files
-- .NET Core API Server
+- .NET Core API Server (backend)
 - .NET Core PDF microservice
 - .NET Core CCW microservice
 
 Steps to configure the deployment:
 ----------------------------------
 
-Ensure that you have access to the build and deployment templates.
+### Procure Environment - local or shared OpenShift
 
-These can be found in the openshift/templates folder of the project repository.
+Ensure that you have access to the build and deployment templates in the openshift/templates folder in the School Bus repo.
 
-If you are setting up a local OpenShift cluster for development, fork the main project.  You'll be using your own fork.
+If you are setting up a local OpenShift cluster for development, fork the main project.  You'll be using your own fork. Clone a local instance of the fork you are using.
 
-Connect to the OpenShift server using the CLI; either your local instance or the production instance. 
+For a local instance, get the latest version of the [OpenShift Command line tools](https://github.com/openshift/origin/releases) and start up a local instance using "oc cluster up" or using [minishift](https://github.com/minishift/minishift).
+
+### Connect to OpenShift - Web and CLI
+
+Connect to the OpenShift server using the CLI; either your local instance or the production instance.
+
 If you have not connected to the production instance before, use the web interface as you will need to login though your GitHub account.  Once you login you'll be able to get the token you'll need to login to you project(s) through the CLI from here; Token Request Page.  The CLI will also give you a URL to go to if you attempt a login to the OpenShift server without a token.
 
 The same basic procedure, minus the GitHub part, can be used to connect to your local instance.
 
 Login to the server using the oc command from the page.
+
+### Create the School Bus Projects
+
+If necessary, create each of the projects listed above (e.g. tran-schoolbus-tools, tran-schoolbus-dev, etc.):
+
+```oc new-project tran-schoolbus-tools```
+
+### Create the Build Configs and Imagestreams
+
 Switch to the Tools project by running:
 `oc project tran-schoolbus-tools`
 
-`oc process -f https://raw.githubusercontent.com/bcgov/schoolbus/master/openshift/templates/schoolbus-build-template.json > schoolbus-build.json`
- 
-Create the resources from the resulting file by running
+Use the build template in the repo openshift/templates folder. The path to the file depends where you are. Please do not commit the processed file (schoolbus-build.json in this case):
+
+`oc process -f schoolbus/openshift/templates/schoolbus-build-template.json > schoolbus-build.json`
+
+Create the build config and imagestream resources from the resulting file by running
 `oc create -f schoolbus-build.json`
 
-This will produce several builds and image streams.
+You can now login to the web interface and observe the progress of the initial build.
 
- You can now login to the web interface and observe the progress of the initial build.
-Once the initial build is done, create builds with tags "dev", "test", and "prod" as required for deployment.  The deployment configurations will use these tags to determine which image to load.
-You can edit a build to change the tag.
+- Log in
+- Go to the tran-schoolbus-tools project
+- Go to Builds -> Builds menu and monitor the jobs
 
-Once you have images tagged for dev, test or prod you are ready to deploy.
-Open a command prompt and login as above to OpenShift
-Change to the project for the type of deployment you are configuring.  For example, to configure a dev build, switch to tran-schoolbus-dev
+NOTE: Effective this update, all of the builds complete successfully **except** the "editor" build, which is failing on a Dockerfile step.
 
-In the command prompt, type
-`oc project tran-schoolbus-dev`
+### Tag the Images for Dev, etc.
+
+Once the initial build is done, create builds with tags "dev", "test", and "prod" as required for deployment (just "dev" is enough for local use). This is normally done by Jenkins (added later), but if you have not installed Jenkins yet, you can do this from the command line for each imagestream with the commands:
+
+```oc get is # get a list of imagestreams - shows current tags, likely just "latest"```
+
+```oc tag backup:latest backup:dev # sets "dev" tag to match "latest" on "backup" - repeat per imagestream```
+
+Example command:
+
+```oc tag backup:latest backup:dev;oc tag client:latest client:dev;oc tag frontend:latest frontend:dev;oc tag mock:latest mock:dev;oc tag pdf:latest pdf:dev;oc tag s2i-nginx:latest s2i-nginx:dev;oc tag  schema-spy:latest schema-spy:dev;oc tag server:latest server:dev;oc tag cerberus:latest cerberus:dev```
+
+Rerunning ```oc get is``` should return something like this:
+
+```
+NAME           DOCKER REPO                                       TAGS         UPDATED
+backup         172.30.1.1:5000/tran-schoolbus-tools/backup       dev,latest   About a minute ago
+base-centos7   openshift/base-centos7                            latest       10 minutes ago
+cerberus       172.30.1.1:5000/tran-schoolbus-tools/cerberus     dev,latest   2 seconds ago
+client         172.30.1.1:5000/tran-schoolbus-tools/client       dev,latest   About a minute ago
+dotnet         microsoft/dotnet                                  latest       10 minutes ago
+editor         172.30.1.1:5000/tran-schoolbus-tools/editor
+frontend       172.30.1.1:5000/tran-schoolbus-tools/frontend     dev,latest   About a minute ago
+mock           172.30.1.1:5000/tran-schoolbus-tools/mock         dev,latest   About a minute ago
+pdf            172.30.1.1:5000/tran-schoolbus-tools/pdf          dev,latest   About a minute ago
+s2i-nginx      172.30.1.1:5000/tran-schoolbus-tools/s2i-nginx    dev,latest   About a minute ago
+schema-spy     172.30.1.1:5000/tran-schoolbus-tools/schema-spy   dev,latest   About a minute ago
+server         172.30.1.1:5000/tran-schoolbus-tools/server       dev,latest   25 seconds ago
+```
+
+The deployment configurations will use these tags to determine which image to load.
+
+Once you have images tagged for dev, test and/or prod you are ready to deploy.
+
+### Add Permission for Access to "Tools" Images
+
 By default projects do not have permission to access images from other projects.  You will need to grant that.
 Run the following:
-`oc policy add-role-to-user system:image-puller system:serviceaccount:<project_identifier>:default -n <project namespace where project_identifier needs access>`
+`oc policy add-role-to-user system:image-puller system:serviceaccount:tran-schoolbus-dev:default -n tran-schoolbus-tools`
 
-EXAMPLE - to allow the production project access to the images, run:
+Repeat for test and prod projects as required.
 
-`oc policy add-role-to-user system:image-puller system:serviceaccount:tran-schoolbus-prod:default -n tran-schoolbus-tools`
+### Add Secrets for the projects
 
-Decide which Deployment Template you will use.
+*NOTE: The correctly formatted data for this data is in the repo [swcurran/schoolbus](https://github.com/swcurran/schoolbus). It will be pushed to the BCGov School Bus repo, but that has not yet happened.*
 
-For local test deployments to an environment that does not support persistent volumes, use schoolbus-deployment-template-emptydir.json
+The server has several OpenShift secrets for seeding data necessary to create user accounts - we don't want them in the repo with real user IDs. To create the secrets in each environment project:
 
-For any deployment to an environment that does support persistent volumes (such as production), use `schoolbus-deployment-template.json`
-Parse the deployment template:
-In the command prompt, type:
-`oc process -f <deployment template> <target-file>`
-(where target file is an appropriate filename for the deployment implementation .json)
-Create the output of the parse:
- In the command prompt, type:
-`oc create -f <target-file>`
-This should produce several deployment configurations, persistent volume claims and services.  
-Verify that the Overview looks correct in the web UI for the project you provisioned
-If there are any orphan services (a service without a deployment configuration), edit the YAML for the DC and SVC so that the selectors match the labels.  
-If this is not done, then it will not be possible to route traffic to the pod containing the application component for the service
+- **Log into the environment project** - e.g. ```oc project tran-schoolbus-dev```
+- On the command line, goto a tmp directory (e.g. ~/tmp)
+- Create a folder in the tmp directory "secrets"
+- Copy files from the repo APISpec/Testdata folder into the tmp directory:
+  - Copy ApiSpec/TestData/example_ccw.json to ccw.json
+  - Copy ApiSpec/TestData/example_users.json to secrets/users.json
+    - You can update this file to add/update the users initially loaded for testing.
+  - Copy ApiSpec/TestData/Regions/Regions_Region.json to secrets/regions.json
+  - Copy ApiSpec/TestData/Districts/Districts_District.json to secrets/districts.json
 
-You can now trigger deployments.
+Once the files are in place, run the commands to add the secrets to the project:
 
--Go to the Deployments page
--Select the component to deploy by clicking the name
--Click Deploy
+- ```oc secrets new ccw-secret ccw.json```
+- ```oc secrets new schoolbus-secret secrets```
 
-If any builds or deployments fail, you can use the events view to see detailed errors.
+"ccw.json" and "secrets" are the file and folder (respectively) on your system. Adjust the path and filenames as needed.
 
-The Postgresql deployment does not automatically run - be sure to deploy it otherwise the Server component will not be able to connect to the database.
+**NOTE**: Should you ever want to change the contents of the secrets data, run the OpenShift command to delete the secret (Web or from CLI: ```oc delete secrets schoolbus-secret```) and then rerun the new secret command above.
 
-Secrets
--------
+### Parse and Process the Deployment template:
 
-Secrets must be manually added to the environment, using an account that has the authority to add secrets.
-There are several secret files used by the application:
+Next step is to create the OpenShift resources for the environment you are creating (e.g. "dev", etc.).
 
-**Users.json**
-`[
-{
-"active": true,
-"email": ""email address,
-"givenName": "Given Name",
-"id": "Id field",
-"initials": "Initials",
-"smUserID": "Siteminder User ID",
-"surname": "Surname",
-"groupMemberships": [{"Group" : {"name": "Group Name"}}],
-"userRoles": [{"Role": {"Name": "Role Name"}}]
- },
-<other users>
-]`
+Log into the correct project - e.g. for dev run:
 
-**districts.json**
+```oc project tran-schoolbus-dev```
 
-`[
-{
-"endDate": null,
-"id": "1",
-"ministryDistrict": "1",
-"name": "Lower Mainland",
-"region": {
-"id": "1",
-"ministryRegionID": "1"
-},
-"startDate": "1/1/2009"
-},
-<other districts>`
-]`
+Parse the deployment template - substitute the correct path to the repo openshift/templates folder as you did with the build process:
 
-**regions.json**
+`oc process -f schoolbus/openshift/templates/schoolbus-deployment-template.json >schoolbus-deployment.json`
+`oc create -f schoolbus-deployment.json # Use same as output file in the previous command`
 
-`[
-{
-"Name": "South Coast",
-"endDate": null,
-"id": "1",
-"ministryRegionID": "1",
-"startDate": "1/1/2009"
-},
-<other regions>
-]`
+This should produce a list of deployment configurations, persistent volume claims and services being created.  
 
-**CCW.json**
+Go to the Web Interface, Overview and verify everything looks correct in the web UI for the project you provisioned
 
-`{
-"CCW_userId":"Siteminder User ID for the user that will login to CCW",
-"CCW_guid":"Siteminder GUID for the user that will login to CCW",
-"CCW_directory":"Siteminder directory for the user that will login to CCW",
-"CCW_endpointURL":"Endpoint assigned to the application for CCW access",
-"CCW_applicationIdentifier":"Application Identifier assigned to the application",
-"CCW_basicAuth_username":"Basic auth username for CCW",
-"CCW_basicAuth_password":"Basic auth password for CCW"
-}`
+#### Ignore the failure of the CCW Deployment
 
-In order to provision these secrets, files will need to be created in a secure area of your PC.
-Then execute the following commands:
-`oc secrets new ccw-secret ccw.json`
-Put the remaining secrets inside a folder, which in this example is called secrets
-`oc secrets new schoolbus-secret secrets`
+**NOTE** As of the writing of this guidance, the CCW microservice is *NOT* loading. The app will operate without that, and in fact, it is a BC Gov-specific implementation. Without the service, when clicking on the details of a school bus, you will get an "Error" because of the lack of the CCW service, but the app will operate correctly.  See the user guide for information about why that is OK.
+
+#### Fix the failure of the Postgres Deployment
+
+**NOTE** As of the writing of this guidance, the postgres deployment is **not** working based on the steps outlined here. To get it to work:
+
+- From the Web UI **delete** the Postgres Deployment Configuration and Service.
+- From the "server" Deployment Config, Environment, get the values of the Environment Variables:
+ - POSTGRESQL_USER - will be "user" plus 3 letters
+ - POSTGRESQL_PASSWORD - will be a generated string
+ - POSTGRESQL_DATABASE - will be "schoolbus"
+- Use the "Add to Project" (top of the screen)
+ - Select "Browse Catalog"
+ - Select "Data Stores"
+ - Select "PostgreSQL (Persistent)"
+ - Fill in the User Name, Password and set the database name to "schoolbus"
+
+The "server" deployment may have work once Postgre is running, or may have failed because of the postgres issue.  If it failed, once postgres is running, go into the Web interface and re-deploy "server".
+
+### Add Route for the FrontEnd
+
+The current setup does not create a route to the Web Interface for the app.  To do that, go into the Web Interface:
+
+- Go to Overview
+- Expand "frontend"
+- In the Service section, click on the "Create Route" link
+- Accept the defaults
+
+To verify access use the Dev authentication mechanism and log in:
+
+- http://frontend-tran-schoolbus-dev.10.0.75.2.nip.io/api/authentication/dev/token/SCURRAN
+- http://frontend-tran-schoolbus-dev.10.0.75.2.nip.io
+
+The application should start up as expected. Note that if you edited the example_users.json to use a different admin user then "SCURRAN", adjust the authentication URL appropriately.
+
+If your local base URL is different from above - adjust the URL as necessary.
+
+### Load Test Data
+
+**NOTE**: The load scripts assume you have curl on your local system.
+
+There is test data in the repo APISpec/TestData folder. With everything done, you should be able load that data.  Go into the folder and in a Windows command line, run "load-all.bat". Note that there is (or will be) a Readme in that folder with more details on the test data management process.
+
+**NOTE**: The first step of the load-all.bat script loads the "SBI_CITY" table in School Bus. The command times out in the local instance, but the load seems to work fine.  If the rest of the commands run without error - (look for the HTTP status: ```HTTP/1.1 204 No Content```), all good.
+
+Again, the user and the base URL may need to be changed if they are different in your setup. Edit the batch file as appropriate to adjust those.
 
 Jenkins Basic Configuration
 ---------------------------
+
+**NOTE: This sequence has not been tested recently. Your results may vary.**
 
 A job will need to be setup for each Build Configuration.  This job will be used to build and promote each build configuration.
 
@@ -205,20 +246,6 @@ Jenkins Automated Builds
 Environment Variables
 --------------------
 
-The following environment variables are used by the application:
+Once the deployment configs (DC) have been created, look at the various DCs to see the environment variables and their values.
 
-| Environment Variable | Purpose | Example | Notes |
-| ---------------------| ------- | ------- | ----- |
-| DATABASE_SERVICE_NAME | Database service | postgresql | set to localhost for local development |
-| POSTGRESQL_USER | PGSQL User | test | Must have enough access to create tables |
-| POSTGRESQL_PASSWORD | PGSQL User's Password | test | |
-| POSTGRESQL_DATABASE | Database name | schoolbus | |
-| UserInitializationFile | Location of user seed data | /secrets/users.json | Json format following the User model definition |
-| DistrictInitializationFile | Location of District seed data | /secrets/districts.json | Json format following the District model definition |
-| RegionInitializationFile | Location of Region seed data | /secrets/regions.json | Json format following the Region model definition |
-| CCWJurisdictionInitializationFile | Location of CCW Jurisdiction seed data | /secrets/ccwjurisdictions.json | Json format following the CCW Jurisdiction model definition |
-| CCW_SERVICE_NAME | CCW microservice location | http://ccw:8080 | |
-| PDF_SERVICE_NAME | PDF microservice location | http://pdf:8080 | |
-| ASPNETCORE_ENVIRONMENT | Type of deployment | Development | Set to other Production (or anything other than Development) to disable development features such as user visible stack traces. |
-
-Credit:  [George Walker](https://github.com/GeorgeWalker), [Wade Barnes](https://github.com/WadeBarnes) contributed to this page.
+Credit:  [George Walker](https://github.com/GeorgeWalker), [Wade Barnes](https://github.com/WadeBarnes) and [Stephen Curran](https://github.com/swcurran) contributed to this page.
