@@ -9,7 +9,7 @@ rem call load.bat "Regions\Regions_Region.json" api/regions/bulk "%TARGET_SERVER
 rem call load.bat "Districts\Districts_District.json" api/districts/bulk "%TARGET_SERVER%"
 call load.bat "ServiceAreas\ServiceAreas_ServiceArea.json" api/serviceareas/bulk "%TARGET_SERVER%"
 call load.bat "schoolDistricts\schoolDistricts_SchoolDistrict.json" api/schooldistricts/bulk "%TARGET_SERVER%"
-rem 
+rem
 rem need to load owner contacts before owners.
 call load.bat "OwnerContacts\OwnerContacts_Contact.json" api/contacts/bulk "%TARGET_SERVER%"
 call load.bat "Owners\Owners_SBOwner.json" api/schoolbusowners/bulk "%TARGET_SERVER%"
