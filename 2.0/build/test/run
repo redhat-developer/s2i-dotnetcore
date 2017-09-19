@@ -417,7 +417,10 @@ test_devmode_change() {
   done
   # copy source (from devmode-src) in container
   local app_src_dir="${test_dir}/devmode-src/."
-  chmod goa+rwx "${app_src_dir}"
+
+  # Add the -R here to work around a docker issue
+  # See https://bugzilla.redhat.com/show_bug.cgi?id=1492814 for more info.
+  chmod -R goa+rwx "${app_src_dir}"
   docker cp "${app_src_dir}" "${container}:/opt/app-root/src"
   # request
   local url=$(container_url ${container})
