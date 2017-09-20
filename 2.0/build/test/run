@@ -417,11 +417,16 @@ test_devmode_change() {
   done
   # copy source (from devmode-src) in container
   local app_src_dir="${test_dir}/devmode-src/."
-  chmod goa+rwx "${app_src_dir}"
+  chmod -R goa+rwx "${app_src_dir}"
   docker cp "${app_src_dir}" "${container}:/opt/app-root/src"
   # request
   local url=$(container_url ${container})
   local response=$(curl_retry ${url}/ 30) # 30 attempts
+
+  # debug
+  docker logs ${container}
+  docker exec ${container} ls -lah /opt/app-root/src
+
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
