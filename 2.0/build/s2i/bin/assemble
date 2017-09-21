@@ -97,13 +97,14 @@ exec dotnet ${APP_DLL_NAME} \$@
 EOF
 chmod +x "$DOTNET_APP_PATH/$DOTNET_DEFAULT_CMD"
 
-# Fix source directory permissions
-fix-permissions ./
-# set permissions for any installed artifacts
-fix-permissions /opt/app-root
-
 if [ "$DOTNET_PACK" == "true" ]; then
   echo "---> Packing application..."
+  fix-permissions $DOTNET_APP_PATH
   tar -czf /opt/app-root/app.tar.gz -C $DOTNET_APP_PATH .
-  fix-permissions /opt/app-root/app.tar.gz
 fi
+
+# cleanup NuGet artifacts
+rm -rf ~/{.local,.nuget}
+
+# fix permissions
+fix-permissions /opt/app-root
