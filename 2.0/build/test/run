@@ -425,13 +425,17 @@ test_devmode_change() {
   docker cp "${app_src_dir}" "${container}:/opt/app-root/src"
   # request
   local url=$(container_url ${container})
-  local response=$(curl_retry ${url}/ 30) # 30 attempts
+  local response=$(curl_retry ${url}/ 60) # 60 attempts
+  # get updated log
+  local log_updated=$(docker logs ${container})
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
 
   # Check no project was found initially
   assert_contains "${log}" "error: DOTNET_STARTUP_PROJECT not found"
+  # The build completed succesfully
+  assert_contains "${log_updated}" "Running application..."
   # Check app was launched succesfully after uploading sources.
   assert_equal "${response}" "Hello World!"
 }

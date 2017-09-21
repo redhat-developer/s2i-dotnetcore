@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
 # When unset, default to '.'
 # When empty, don't start the project.
