@@ -64,8 +64,9 @@ else
   else
     echo "The source repository contains the following projects:"
     for PROJFILE in ${PROJFILES[@]}; do
-      echo "DOTNET_STARTUP_PROJECT=${PROJFILE}"
+      echo "- ${PROJFILE}"
     done
+    echo "Update the '.s2i/environment' file to specify the project you want to publish, for example DOTNET_STARTUP_PROJECT=${PROJFILES[0]}".
   fi
   exit 1
 fi

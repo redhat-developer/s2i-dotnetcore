@@ -77,8 +77,9 @@ test_s2i_usage_projfile()
   local expected="error: DOTNET_STARTUP_PROJECT has no project file
 You can specify the startup project by adding an '.s2i/environment' file to the source repository.
 The source repository contains the following projects:
-DOTNET_STARTUP_PROJECT=proj1/proj1.csproj
-DOTNET_STARTUP_PROJECT=proj2/proj2.fsproj"
+- proj1/proj1.csproj
+- proj2/proj2.fsproj
+Update the '.s2i/environment' file to specify the project you want to publish, for example DOTNET_STARTUP_PROJECT=proj1/proj1.csproj"
   assert_contains "${s2i_build}" "${expected}"
 }
 
