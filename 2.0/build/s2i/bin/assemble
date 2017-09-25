@@ -45,21 +45,34 @@ fi
 # Private environment
 DOTNET_FRAMEWORK="netcoreapp2.0"
 
+# Ensure there is a project file
+PROJFILES=(`find "${DOTNET_STARTUP_PROJECT}" -maxdepth 1 -name "*.??proj"`)
+if [ ${#PROJFILES[@]} -eq 1 ]; then
+  PROJFILE=$(basename ${PROJFILES[0]})
+  APP_DLL_NAME="${PROJFILE: : -7}.dll"
+else
+  if [ ${#PROJFILES[@]} -eq 0 ]; then
+    echo "error: DOTNET_STARTUP_PROJECT has no project file"
+  else
+    echo "error: DOTNET_STARTUP_PROJECT contains multiple project files"
+  fi
+  echo "You can specify the startup project by adding an '.s2i/environment' file to the source repository."
+  # find all projects and strip leading './'
+  PROJFILES=(`find -name "*.??proj" | sed "s|^\./||"`)
+  if [ ${#PROJFILES[@]} -eq 0 ]; then
+    echo "The source repository has no project files."
+  else
+    echo "The source repository contains the following projects:"
+    for PROJFILE in ${PROJFILES[@]}; do
+      echo "DOTNET_STARTUP_PROJECT=${PROJFILE}"
+    done
+  fi
+  exit 1
+fi
+
 # output assembly name
 if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
   APP_DLL_NAME="${DOTNET_ASSEMBLY_NAME}.dll"
-else
-  PROJFILES=(`find "${DOTNET_STARTUP_PROJECT}" -maxdepth 1 -name "*.??proj"`)
-  if [ ${#PROJFILES[@]} -eq 1 ]; then
-    PROJFILE=$(basename ${PROJFILES[0]})
-    APP_DLL_NAME="${PROJFILE: : -7}.dll"
-  elif [ ${#PROJFILES[@]} -eq 0 ]; then
-    echo "error: DOTNET_STARTUP_PROJECT has no project file"
-    exit 1
-  else
-    echo "error: DOTNET_STARTUP_PROJECT contains multiple project files"
-    exit 1
-  fi
 fi
 
 # Build nuget sources list for when doing the restore

@@ -61,9 +61,28 @@ s2i_build_and_run() {
   echo "$output"
 }
 
-test_s2i_usage() {
-  test_start
+test_s2i_usage_projfile()
+{
+  # startup_project_not_found contains two project files
+  # but doesn't set DOTNET_STARTUP_PROJECT to select one.
+  local app=startup_project_not_found
 
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  # cleanup
+  docker_rmi ${image}
+
+  # verify usage instructions
+  local expected="error: DOTNET_STARTUP_PROJECT has no project file
+You can specify the startup project by adding an '.s2i/environment' file to the source repository.
+The source repository contains the following projects:
+DOTNET_STARTUP_PROJECT=proj1/proj1.csproj
+DOTNET_STARTUP_PROJECT=proj2/proj2.fsproj"
+  assert_contains "${s2i_build}" "${expected}"
+}
+
+test_s2i_usage() {
   local output=$(s2i usage ${IMAGE_NAME} 2>&1)
 
   # s2i usage refers to the sample app
@@ -71,12 +90,18 @@ test_s2i_usage() {
 }
 
 test_docker_run_usage() {
-  test_start
-
   local output=$(docker_run ${IMAGE_NAME})
 
   # docker run refers to the sample app
   assert_contains "$output" "${sample_app_url}"
+}
+
+test_usage() {
+  test_start
+
+  test_s2i_usage
+  test_s2i_usage_projfile
+  test_docker_run_usage
 }
 
 test_image() {
@@ -448,8 +473,7 @@ test_devmode() {
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
-  test_s2i_usage
-  test_docker_run_usage
+  test_usage
   test_image
   test_consoleapp
   test_multiframework
