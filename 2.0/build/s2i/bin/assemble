@@ -45,7 +45,7 @@ fi
 # Private environment
 DOTNET_FRAMEWORK="netcoreapp2.0"
 
-# Ensure there is a project file
+# Ensure there is a project file and derive assembly name from project name.
 PROJFILES=(`find "${DOTNET_STARTUP_PROJECT}" -maxdepth 1 -name "*.??proj"`)
 if [ ${#PROJFILES[@]} -eq 1 ]; then
   PROJFILE=$(basename ${PROJFILES[0]})
@@ -70,7 +70,7 @@ else
   exit 1
 fi
 
-# output assembly name
+# Override assembly name
 if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
   APP_DLL_NAME="${DOTNET_ASSEMBLY_NAME}.dll"
 fi
