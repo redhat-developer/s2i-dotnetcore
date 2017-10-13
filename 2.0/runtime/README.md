@@ -60,7 +60,18 @@ Repository organization
 Environment variables
 ---------------------
 
+The following variables are set so they can be used from scripts.
+They must not to be overridden.
+
 * **ASPNETCORE_URLS**
 
     This variable is set to `http://*:8080` to configure ASP.NET Core to use the
     port exposed by the image.
+
+* **DOTNET_APP_PATH,DOTNET_DEFAULT_CMD**
+
+    These variables contain the working directory (`/opt/app-root/app`) and default CMD of the runtime image (`default-cmd.sh`).
+
+* **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
+
+    These variables contain the framework (`netcoreapp2.0`) and .NET Core version (`2.0`) respectively.
