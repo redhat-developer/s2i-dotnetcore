@@ -8,25 +8,24 @@ image can be run using [Docker](http://docker.io).
 
 Versions
 ----------------
+
 .NET Core versions currently provided are:
-* 1.0
-* 1.1
-* 2.0
 
-RHEL versions currently supported are:
-* RHEL 7
+* 1.0 (RHEL 7)
+* 1.1 (RHEL 7)
+* 2.0 (RHEL 7, CentOS 7)
 
-Installation
+
+Building
 ----------------
-
-To build a RHEL 7 based .NET Core image, you need to run the build on a
-properly subscribed RHEL machine.
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ cd s2i-dotnetcore/1.0
-$ sudo docker build -f Dockerfile.rhel7 -t dotnet/dotnetcore-10-rhel7 .
+$ sudo VERSIONS=2.0 ./build.sh
 ```
+
+Note: to build RHEL 7 based images, you need to run the build on a
+properly subscribed RHEL machine.
 
 Usage
 ---------------------------------
