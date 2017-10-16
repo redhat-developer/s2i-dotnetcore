@@ -14,7 +14,7 @@
 #
 # Example usage: $ sudo ./test/run
 
-IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-10-rhel7}
+IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-11-rhel7}
 
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -33,7 +33,7 @@ declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
-dotnet_version="1.0.0-preview2-003159"
+dotnet_version="1.0.0-preview2-1-003211"
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
 test_port=8080
@@ -451,7 +451,7 @@ check_result $?
 # Verify OpenShift's s2i-dotnetcore-ex runs
 if [ ${OPENSHIFT_ONLY} = true ]; then
   old_s2i_args="${s2i_args}"
-  s2i_args="${s2i_args} --context-dir=app --ref=dotnetcore-1.0"
+  s2i_args="${s2i_args} --context-dir=app --ref=dotnetcore-1.1"
   run_s2i_build_from_url ${sample_app_url}
   check_result $?
 
