@@ -19,7 +19,7 @@ LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
       io.openshift.expose-services="8080:http"
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-20-runtime-centos7" \
+LABEL name="centos/dotnet-20-runtime-centos7" \
       com.redhat.component="rh-dotnet20-runtime-docker" \
       version="2.0" \
       release="1" \

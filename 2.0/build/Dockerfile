@@ -1,4 +1,4 @@
-FROM dotnet/dotnet-20-runtime-centos7
+FROM centos/dotnet-20-runtime-centos7
 # This image provides a .NET Core 2.0 environment you can use to run your .NET
 # applications.
 
@@ -14,7 +14,7 @@ LABEL io.k8s.description="Platform for building and running .NET Core 2.0 applic
       io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-20-centos7" \
+LABEL name="centos/dotnet-20-centos7" \
       com.redhat.component="rh-dotnet20-docker" \
       version="2.0" \
       release="1" \

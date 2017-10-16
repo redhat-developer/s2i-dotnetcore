@@ -83,16 +83,18 @@ fi
 if [ "$BUILD_CENTOS" = "true" ]; then
   VERSIONS="${VERSIONS:-2.0}"
   image_os="centos7"
+  image_prefix="centos"
   docker_filename="Dockerfile"
 else
   VERSIONS="${VERSIONS:-1.0 1.1 2.0}"
+  image_prefix="dotnet"
   image_os="rhel7"
   docker_filename="Dockerfile.rhel7"
 fi
 
 for v in ${VERSIONS}; do
   if [ "$v" == "1.0" ] || [ "$v" == "1.1" ]; then
-    build_name="dotnet/$(base_image_name ${v})-${image_os}"
+    build_name="${image_prefix}/$(base_image_name ${v})-${image_os}"
 
     # Build the build image
     build_image "${v}" "${docker_filename}" "${build_name}"
@@ -107,8 +109,8 @@ for v in ${VERSIONS}; do
       popd &>/dev/null
     fi
   else
-    build_name="dotnet/$(base_image_name ${v})-${image_os}"
-    runtime_name="dotnet/$(base_image_name ${v})-runtime-${image_os}"
+    build_name="${image_prefix}/$(base_image_name ${v})-${image_os}"
+    runtime_name="${image_prefix}/$(base_image_name ${v})-runtime-${image_os}"
 
     # Build the runtime image
     build_image "${v}/runtime" "${docker_filename}" "${runtime_name}"
