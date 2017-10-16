@@ -75,8 +75,8 @@ test_images() {
   check_result_msg $? "Tests FAILED!"
 }
 
-# Default to CentOS when building on CentOS.
-if [[ `grep CentOS /etc/redhat-release` ]]; then
+# Default to CentOS when not on RHEL.
+if ! [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
   BUILD_CENTOS=true
 fi
 
