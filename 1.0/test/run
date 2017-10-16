@@ -14,7 +14,7 @@
 #
 # Example usage: $ sudo ./test/run
 
-IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-11-rhel7}
+IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-10-rhel7}
 
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -451,7 +451,7 @@ check_result $?
 # Verify OpenShift's s2i-dotnetcore-ex runs
 if [ ${OPENSHIFT_ONLY} = true ]; then
   old_s2i_args="${s2i_args}"
-  s2i_args="${s2i_args} --context-dir=app --ref=dotnetcore-1.1"
+  s2i_args="${s2i_args} --context-dir=app --ref=dotnetcore-1.0"
   run_s2i_build_from_url ${sample_app_url}
   check_result $?
 
