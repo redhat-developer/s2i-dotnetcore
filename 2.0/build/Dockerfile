@@ -1,4 +1,4 @@
-FROM dotnet/dotnet-20-runtime-rhel7
+FROM centos/dotnet-20-runtime-centos7
 # This image provides a .NET Core 2.0 environment you can use to run your .NET
 # applications.
 
@@ -14,10 +14,10 @@ LABEL io.k8s.description="Platform for building and running .NET Core 2.0 applic
       io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-20-rhel7" \
+LABEL name="centos/dotnet-20-centos7" \
       com.redhat.component="rh-dotnet20-docker" \
       version="2.0" \
-      release="8" \
+      release="1" \
       architecture="x86_64"
 
 # Labels consumed by Eclipse JBoss OpenShift plugin
@@ -30,10 +30,9 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-RUN INSTALL_PKGS="rh-nodejs6-npm rh-nodejs6-nodejs-nodemon rh-dotnet20-dotnet-sdk-2.0 rsync" && \
-    yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
-      --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
-      $INSTALL_PKGS && \
+RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
+    INSTALL_PKGS="rh-nodejs6-npm rh-nodejs6-nodejs-nodemon rh-dotnet20-dotnet-sdk-2.0 rsync" && \
+    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y
 

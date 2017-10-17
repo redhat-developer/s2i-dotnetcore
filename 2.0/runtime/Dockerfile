@@ -1,17 +1,17 @@
-FROM rhel7
+FROM centos:7
 # This image provides a .NET Core 2.0 environment you can use to run your .NET
 # applications.
 
 EXPOSE 8080
+
+ENV DOTNET_CORE_VERSION=2.0
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
     HOME=/opt/app-root \
     PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     DOTNET_APP_PATH=/opt/app-root/app \
-    DOTNET_DEFAULT_CMD=default-cmd.sh \
-    DOTNET_CORE_VERSION=2.0 \
-    DOTNET_FRAMEWORK=netcoreapp2.0
+    DOTNET_DEFAULT_CMD=default-cmd.sh
 
 LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
       io.k8s.display-name=".NET Core 2.0" \
@@ -19,10 +19,10 @@ LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
       io.openshift.expose-services="8080:http"
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-20-runtime-rhel7" \
+LABEL name="centos/dotnet-20-runtime-centos7" \
       com.redhat.component="rh-dotnet20-runtime-docker" \
       version="2.0" \
-      release="7" \
+      release="1" \
       architecture="x86_64"
 
 # Don't download/extract docs for nuget packages
@@ -41,10 +41,9 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
-RUN INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar unzip" && \
-    yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
-      --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
-      $INSTALL_PKGS && \
+RUN yum install -y centos-release-dotnet && \
+    INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar unzip" && \
+    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y
 

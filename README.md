@@ -8,25 +8,25 @@ image can be run using [Docker](http://docker.io).
 
 Versions
 ----------------
+
 .NET Core versions currently provided are:
-* 1.0
-* 1.1
-* 2.0
 
-RHEL versions currently supported are:
-* RHEL 7
+* 1.0 (RHEL 7)
+* 1.1 (RHEL 7)
+* 2.0 (RHEL 7, CentOS 7)
 
-Installation
+
+Building
 ----------------
-
-To build a RHEL 7 based .NET Core image, you need to run the build on a
-properly subscribed RHEL machine.
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ cd s2i-dotnetcore/1.0
-$ sudo docker build -f Dockerfile.rhel7 -t dotnet/dotnetcore-10-rhel7 .
+$ sudo VERSIONS=2.0 ./build.sh
 ```
+
+Note: to build RHEL 7 based images, you need to run the build on a
+properly subscribed RHEL machine. To build CentOS images on RHEL, set
+BUILD_CENTOS=true. On non-RHEL, building CentOS images is the default.
 
 Usage
 ---------------------------------
@@ -43,13 +43,15 @@ see [1.0 usage documentation](1.0/README.md).
 
 Image name structure
 ------------------------
-##### Structure: dotnet/1-2-3
 
-1. Platform name (lowercase) - dotnetcore
-2. Platform version (without dots) - 10
-3. Base builder image - rhel7
+##### Structure: 1/2-3-4
 
-Example: `dotnet/dotnetcore-10-rhel7`
+1. Prefix: 'dotnet' for RHEL, 'centos' for CentOS
+2. Platform name: 'dotnetcore' for 1.x, 'dotnet' for 2.0+
+3. Platform version (without dots)
+4. Base builder image: 'rhel7' or 'centos7'
+
+Examples: `dotnet/dotnetcore-10-rhel7`, `centos/dotnet-20-centos7`
 
 OpenShift Templates
 -------------------

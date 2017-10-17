@@ -46,6 +46,10 @@ Repository organization
   RHEL based Dockerfile. In order to perform build or test actions on this
   Dockerfile you need to run the action on a properly subscribed RHEL machine.
 
+* **Dockerfile**
+
+  CentOS based Dockerfile.
+
 * **`test/`**
 
   This folder contains binary archives of [S2I](https://github.com/openshift/source-to-image)
