@@ -4,14 +4,14 @@ FROM centos:7
 
 EXPOSE 8080
 
-ENV DOTNET_CORE_VERSION=2.0
-
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
     HOME=/opt/app-root \
     PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     DOTNET_APP_PATH=/opt/app-root/app \
-    DOTNET_DEFAULT_CMD=default-cmd.sh
+    DOTNET_DEFAULT_CMD=default-cmd.sh \
+    DOTNET_CORE_VERSION=2.0 \
+    DOTNET_FRAMEWORK=netcoreapp2.0
 
 LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
       io.k8s.display-name=".NET Core 2.0" \
