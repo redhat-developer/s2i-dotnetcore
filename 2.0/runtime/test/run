@@ -11,21 +11,42 @@
 #
 # Example usage: $ sudo ./test/run
 
-IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
+if [ "$BUILD_CENTOS" = "true" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-centos/dotnet-20-runtime-centos7}
+else
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
+fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
+dotnet_version_series="2.0"
+dotnet_version_suffix="0"
+dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
+
 test_dotnet() {
   test_start
-  local dotnet_version="2.0.0"
 
   # ENTRYPOINT enables scl so dotnet is available
   assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Microsoft .NET Core Shared Framework Host"
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
   # Check version
   assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version  : ${dotnet_version}"$'\r\n'
+}
+
+test_envvars() {
+  test_start
+
+  # DOTNET_APP_PATH
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_APP_PATH) "/opt/app-root/app"
+  # DOTNET_DEFAULT_CMD
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DEFAULT_CMD) "default-cmd.sh"
+
+  # DOTNET_CORE_VERSION
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_CORE_VERSION) "${dotnet_version_series}"
+  # DOTNET_FRAMEWORK
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_FRAMEWORK) "netcoreapp${dotnet_version_series}"
 }
 
 test_debuggable() {
@@ -99,6 +120,7 @@ info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
   test_dotnet
+  test_envvars
   test_default_cmd
   test_debuggable
   test_user

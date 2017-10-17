@@ -8,7 +8,6 @@ DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
 if [ -z ${DOTNET_STARTUP_PROJECT+x} ]; then
   DOTNET_STARTUP_PROJECT="."
 fi
-DOTNET_FRAMEWORK="netcoreapp2.0"
 
 # Build nuget sources list for when doing the restore
 RESTORE_OPTIONS=""

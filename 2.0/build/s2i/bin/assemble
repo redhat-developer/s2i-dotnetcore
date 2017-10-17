@@ -42,9 +42,6 @@ if [ "$DOTNET_ASPNET_STORE" != "false" ]; then
   DOTNET_ASPNET_STORE="true"
 fi
 
-# Private environment
-DOTNET_FRAMEWORK="netcoreapp2.0"
-
 # Ensure there is a project file and derive assembly name from project name.
 PROJFILES=(`find "${DOTNET_STARTUP_PROJECT}" -maxdepth 1 -name "*.??proj"`)
 if [ ${#PROJFILES[@]} -eq 1 ]; then
