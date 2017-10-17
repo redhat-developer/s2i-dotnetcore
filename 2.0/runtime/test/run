@@ -21,9 +21,9 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version_serie="2.0"
+dotnet_version_series="2.0"
 dotnet_version_suffix="0"
-dotnet_version="${dotnet_version_serie}.${dotnet_version_suffix}"
+dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
 
 test_dotnet() {
   test_start
@@ -44,9 +44,9 @@ test_envvars() {
   assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DEFAULT_CMD) "default-cmd.sh"
 
   # DOTNET_CORE_VERSION
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_CORE_VERSION) "${dotnet_version_serie}"
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_CORE_VERSION) "${dotnet_version_series}"
   # DOTNET_FRAMEWORK
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_FRAMEWORK) "netcoreapp${dotnet_version_serie}"
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_FRAMEWORK) "netcoreapp${dotnet_version_series}"
 }
 
 test_debuggable() {

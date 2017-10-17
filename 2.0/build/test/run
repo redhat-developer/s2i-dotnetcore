@@ -16,12 +16,11 @@
 
 if [ "$BUILD_CENTOS" = "true" ]; then
   IMAGE_NAME=${IMAGE_NAME:-centos/dotnet-20-centos7}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-centos/dotnet-20-runtime-centos7}
 else
-  IMAGE_NAME=${IMAGE_NAME:-centos/dotnet-20-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-rhel7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
 fi
-
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
