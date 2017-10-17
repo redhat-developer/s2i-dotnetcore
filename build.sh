@@ -13,6 +13,8 @@
 #
 # VERSIONS     The list of versions to build/test.
 #              Defaults to all versions. i.e "1.0 1.1".
+#
+# BUILD_CENTOS    If 'true' build CentOS based images.
 # -----------------------------------------------------
 #
 # Usage:
@@ -49,7 +51,8 @@ check_result_msg() {
 
 build_image() {
   local path=$1
-  local name=$2
+  local docker_filename=$2
+  local name=$3
   if ! image_exists ${name}; then
     echo "Building Docker image ${name} ..."
     if [ ! -d "${path}" ]; then
@@ -57,7 +60,7 @@ build_image() {
       return
     fi
     pushd ${path} &>/dev/null
-      docker build -f Dockerfile.rhel7 -t ${name} .
+      docker build -f ${docker_filename} -t ${name} .
       check_result_msg $? "Building Docker image ${name} FAILED!"
     popd &>/dev/null
   fi
@@ -65,20 +68,37 @@ build_image() {
 
 test_images() {
   local path=$1
+  local test_image=$2
+  local runtime_image=$3
   echo "Running tests..."
-  ${path}/run
+  IMAGE_NAME=${test_image} RUNTIME_IMAGE_NAME=${runtime_image} ${path}/run
   check_result_msg $? "Tests FAILED!"
 }
 
-VERSIONS="${VERSIONS:-1.0 1.1 2.0}"
+# Default to CentOS when not on RHEL.
+if ! [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
+  BUILD_CENTOS=true
+fi
+
+if [ "$BUILD_CENTOS" = "true" ]; then
+  VERSIONS="${VERSIONS:-2.0}"
+  image_os="centos7"
+  image_prefix="centos"
+  docker_filename="Dockerfile"
+else
+  VERSIONS="${VERSIONS:-1.0 1.1 2.0}"
+  image_prefix="dotnet"
+  image_os="rhel7"
+  docker_filename="Dockerfile.rhel7"
+fi
 
 for v in ${VERSIONS}; do
   if [ "$v" == "1.0" ] || [ "$v" == "1.1" ]; then
-    build_name="dotnet/$(base_image_name ${v})-rhel7"
+    build_name="${image_prefix}/$(base_image_name ${v})-${image_os}"
 
     # Build the build image
-    build_image "${v}" "${build_name}"
-    test_images "${v}/test"
+    build_image "${v}" "${docker_filename}" "${build_name}"
+    test_images "${v}/test" "${build_name}"
 
     if [ "$TEST_OPENSHIFT" = "true" ]; then
       build_name="registry.access.redhat.com/${build_name}:latest"
@@ -89,16 +109,16 @@ for v in ${VERSIONS}; do
       popd &>/dev/null
     fi
   else
-    build_name="dotnet/$(base_image_name ${v})-rhel7"
-    runtime_name="dotnet/$(base_image_name ${v})-runtime-rhel7"
+    build_name="${image_prefix}/$(base_image_name ${v})-${image_os}"
+    runtime_name="${image_prefix}/$(base_image_name ${v})-runtime-${image_os}"
 
     # Build the runtime image
-    build_image "${v}/runtime" "${runtime_name}"
-    test_images "${v}/runtime/test"
+    build_image "${v}/runtime" "${docker_filename}" "${runtime_name}"
+    test_images "${v}/runtime/test" "${runtime_name}"
 
     # Build the build image
-    build_image "${v}/build" "${build_name}"
-    test_images "${v}/build/test"
+    build_image "${v}/build" "${docker_filename}" "${build_name}"
+    test_images "${v}/build/test" "${build_name}" "${runtime_name}"
 
     if [ "$TEST_OPENSHIFT" = "true" ]; then
       build_name="registry.access.redhat.com/${build_name}:latest"
