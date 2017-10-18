@@ -12,7 +12,7 @@
 # Example usage: $ sudo ./test/run
 
 if [ "$BUILD_CENTOS" = "true" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-centos/dotnet-20-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-centos7}
 else
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
 fi
