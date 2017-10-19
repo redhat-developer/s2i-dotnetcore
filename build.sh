@@ -83,12 +83,12 @@ fi
 if [ "$BUILD_CENTOS" = "true" ]; then
   VERSIONS="${VERSIONS:-2.0}"
   image_os="centos7"
-  image_prefix="centos"
+  image_prefix="dotnet"
   docker_filename="Dockerfile"
 else
   VERSIONS="${VERSIONS:-1.0 1.1 2.0}"
-  image_prefix="dotnet"
   image_os="rhel7"
+  image_prefix="dotnet"
   docker_filename="Dockerfile.rhel7"
 fi
 
