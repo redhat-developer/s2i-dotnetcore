@@ -44,14 +44,13 @@ see [1.0 usage documentation](1.0/README.md).
 Image name structure
 ------------------------
 
-##### Structure: 1/2-3-4
+##### Structure: dotnet/1-2-3
 
-1. Prefix: 'dotnet' for RHEL, 'centos' for CentOS
-2. Platform name: 'dotnetcore' for 1.x, 'dotnet' for 2.0+
-3. Platform version (without dots)
-4. Base builder image: 'rhel7' or 'centos7'
+1. Platform name: 'dotnetcore' for 1.x, 'dotnet' for 2.0+
+2. Platform version (without dots)
+3. Base image: 'rhel7' or 'centos7'
 
-Examples: `dotnet/dotnetcore-10-rhel7`, `centos/dotnet-20-centos7`
+Examples: `dotnet/dotnetcore-10-rhel7`, `dotnet/dotnet-20-centos7`
 
 OpenShift Templates
 -------------------
