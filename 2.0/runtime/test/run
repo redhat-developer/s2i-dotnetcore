@@ -47,6 +47,10 @@ test_envvars() {
   assert_equal $(docker_get_env $IMAGE_NAME DOTNET_CORE_VERSION) "${dotnet_version_series}"
   # DOTNET_FRAMEWORK
   assert_equal $(docker_get_env $IMAGE_NAME DOTNET_FRAMEWORK) "netcoreapp${dotnet_version_series}"
+
+  # When HTTP_PROXY is set, we set http_proxy to match (unless it's already set).
+  assert_equal $(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0"                      bash -c 'echo $http_proxy') "proxy0"
+  assert_equal $(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0 -e http_proxy=proxy1" bash -c 'echo $http_proxy') "proxy1"
 }
 
 test_debuggable() {

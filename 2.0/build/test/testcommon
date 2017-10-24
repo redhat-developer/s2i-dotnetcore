@@ -47,8 +47,16 @@ docker_run() {
   local image="$1"
   shift
 
+  docker_run_withargs "${image}" "" "$@"
+}
+
+docker_run_withargs() {
+  local image="$1"
+  local args="$2"
+  shift 2
+
   local output;
-  output=$(docker run --rm ${image} "$@" 2>&1)
+  output=$(docker run --rm ${args} ${image} "$@" 2>&1)
   if [ $? -ne 0 ]; then
     error "$output"
   else
