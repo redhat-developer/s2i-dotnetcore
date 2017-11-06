@@ -434,6 +434,24 @@ test_new_web_app() {
   cleanup ${app}
 }
 
+test_http_proxy() {
+  info "Testing http_proxy ..."
+
+  # When HTTP_PROXY is set, we set http_proxy to match (unless it's already set).
+  local expected="proxy0"
+  local out=$(docker run --rm -e HTTP_PROXY=proxy0 ${IMAGE_NAME} bash -c 'echo $http_proxy')
+  if ! echo "${out}" | grep -q "${expected}"; then
+    echo "ERROR[http_proxy] Expected '${expected}', got '${out}'"
+    exit 1
+  fi
+  expected="proxy1"
+  out=$(docker run --rm -e HTTP_PROXY=proxy0 -e http_proxy=proxy1 ${IMAGE_NAME} bash -c 'echo $http_proxy')
+  if ! echo "${out}" | grep -q "${expected}"; then
+    echo "ERROR[http_proxy] Expected '${expected}', got '${out}'"
+    exit 1
+  fi
+}
+
 info "Testing ${IMAGE_NAME}"
 
 # Since we built the candidate image locally, we don't want S2I attempt to pull
@@ -486,6 +504,8 @@ else
   done
 
   test_new_web_app
+
+  test_http_proxy
 fi
 
 info "All tests finished successfully."
