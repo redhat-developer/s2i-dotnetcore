@@ -466,8 +466,6 @@ check_result $?
 test_docker_run_usage "${sample_app_url}"
 check_result $?
 
-test_http_proxy
-
 # Verify OpenShift's s2i-dotnetcore-ex runs
 if [ ${OPENSHIFT_ONLY} = true ]; then
   old_s2i_args="${s2i_args}"
@@ -506,6 +504,8 @@ else
   done
 
   test_new_web_app
+
+  test_http_proxy
 fi
 
 info "All tests finished successfully."
