@@ -14,7 +14,15 @@
 #
 # Example usage: $ sudo ./test/run
 
-IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-10-rhel7}
+if ! [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
+  BUILD_CENTOS=true
+fi
+
+if [ "$BUILD_CENTOS" = "true" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-10-centos7}
+else
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-10-rhel7}
+fi
 
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
