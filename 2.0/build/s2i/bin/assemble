@@ -91,8 +91,11 @@ done
 echo "---> Restoring application dependencies..."
 dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS
 echo "---> Publishing application..."
+
+echo "dotnet publish arguments: DOTNET_STARTUP_PROJECT=$DOTNET_STARTUP_PROJECT DOTNET_FRAMEWORK=$DOTNET_FRAMEWORK DOTNET_CONFIGURATION=$DOTNET_CONFIGURATION DOTNET_ASPNET_STORE=$DOTNET_ASPNET_STORE DOTNET_APP_PATH=$DOTNET_APP_PATH DOTNET_NO_RESTORE=$DOTNET_NO_RESTORE DOTNET_VERBOSITY=$DOTNET_VERBOSITY"
+
 dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" \
-       --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE -o "$DOTNET_APP_PATH"
+       --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE -o "$DOTNET_APP_PATH" $DOTNET_NO_RESTORE $DOTNET_VERBOSITY
 
 # check if the assembly used by the script exists
 if [ ! -f "$DOTNET_APP_PATH/${APP_DLL_NAME}" ]; then
@@ -119,3 +122,4 @@ rm -rf ~/{.local,.nuget}
 
 # fix permissions
 fix-permissions /opt/app-root
+
