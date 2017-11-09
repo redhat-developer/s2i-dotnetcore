@@ -147,14 +147,14 @@ a `.s2i/environment` file inside your source code repository.
     When set to `true`, the application restart automatically when the source code changes. `dotnet run`
     is used to start the application.
 
-* **DOTNET_NO_RESTORE**
+* **DOTNET_NO_RESTORE** (dotnet 2.0 only)
 
   Can be set to `--no-restore`, will be passed to the `dotnet publish` command in `assemble`. Intended to be used for
   situations where not attempting to connect to an external `nuget.org` site is useful. An example of this
   would be a disconnected build configuration where all desired nuget packages are already accessible to the
   build either on the host or in the image.
 
-* **DOTNET_VERBOSITY**
+* **DOTNET_VERBOSITY** (dotnet 2.0 only)
 
   Will be passed to `assemble` script `dotnet publish` command allowing additional build related descriptive output.
   Example values are `-v  [ q | n | d | diag ]` (for quiet, minimal, normal, detailed and diagnostic levels).
