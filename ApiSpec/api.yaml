@@ -17,7 +17,6 @@
     post:
       tags:
         - CCWData
-
       consumes:
         - application/json
       produces:
@@ -151,7 +150,6 @@
     post:
       tags:
         - Inspection
-
       consumes:
         - application/json
       produces:
@@ -285,7 +283,6 @@
     post:
       tags:
         - SchoolBus
-
       consumes:
         - application/json
       produces:
@@ -419,7 +416,6 @@
     post:
       tags:
         - Note
-
       consumes:
         - application/json
       produces:
@@ -553,7 +549,6 @@
     post:
       tags:
         - Attachment
-
       consumes:
         - application/json
       produces:
@@ -687,7 +682,6 @@
     post:
       tags:
         - History
-
       consumes:
         - application/json
       produces:
@@ -821,7 +815,6 @@
     post:
       tags:
         - Notification
-
       consumes:
         - application/json
       produces:
@@ -955,7 +948,6 @@
     post:
       tags:
         - NotificationEvent
-
       consumes:
         - application/json
       produces:
@@ -1089,7 +1081,6 @@
     post:
       tags:
         - SchoolBusOwner
-
       consumes:
         - application/json
       produces:
@@ -1223,7 +1214,6 @@
     post:
       tags:
         - Contact
-
       consumes:
         - application/json
       produces:
@@ -1342,7 +1332,6 @@
     get:
       tags:
         - Group
-      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1358,7 +1347,6 @@
     post:
       tags:
         - Group
-      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1385,7 +1373,6 @@
     get:
       tags:
         - Group
-      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1407,7 +1394,6 @@
     put:
       tags:
         - Group
-      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1436,7 +1422,6 @@
     post:
       tags:
         - Group
-      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1480,7 +1465,6 @@
     get:
       tags:
         - Permission
-      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1496,7 +1480,6 @@
     post:
       tags:
         - Permission
-      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1523,7 +1506,6 @@
     get:
       tags:
         - Permission
-      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1545,7 +1527,6 @@
     put:
       tags:
         - Permission
-      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1574,7 +1555,6 @@
     post:
       tags:
         - Permission
-      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1618,7 +1598,6 @@
     get:
       tags:
         - Role
-      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1634,7 +1613,6 @@
     post:
       tags:
         - Role
-      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1661,7 +1639,6 @@
     get:
       tags:
         - Role
-      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1683,7 +1660,6 @@
     put:
       tags:
         - Role
-      x-codegen-permission: ADMIN
       consumes:
         - application/json
       produces:
@@ -1712,7 +1688,6 @@
     post:
       tags:
         - Role
-      x-codegen-permission: ADMIN
       consumes: []
       produces:
         - text/plain
@@ -1840,7 +1815,6 @@
     post:
       tags:
         - Region
-
       consumes:
         - application/json
       produces:
@@ -1974,7 +1948,6 @@
     post:
       tags:
         - District
-
       consumes:
         - application/json
       produces:
@@ -2108,7 +2081,6 @@
     post:
       tags:
         - CCWJurisdiction
-
       consumes:
         - application/json
       produces:
@@ -2242,7 +2214,6 @@
     post:
       tags:
         - ServiceArea
-
       consumes:
         - application/json
       produces:
@@ -2376,7 +2347,6 @@
     post:
       tags:
         - City
-
       consumes:
         - application/json
       produces:
@@ -2510,7 +2480,6 @@
     post:
       tags:
         - SchoolDistrict
-
       consumes:
         - application/json
       produces:

@@ -188,6 +188,29 @@
       "kind": "Service",
       "apiVersion": "v1",
       "metadata": {
+        "name": "${BACKEND_NAME}",
+        "annotations": {
+          "description": "Exposes and load balances the Back end pods"
+        }
+      },
+      "spec": {
+        "ports": [
+			{
+				"name": "web",
+				"protocol": "TCP",
+				"port": 8080,
+				"targetPort": 8080
+			}
+        ],
+        "selector": {
+          "name": "${BACKEND_NAME}"
+        }
+      }
+    },
+	{
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
         "name": "${CCW_NAME}",
         "annotations": {
           "description": "Exposes and load balances the CCW pods"
@@ -339,29 +362,6 @@
         }
     },
     "status": {}
-    },
-	{
-      "kind": "Service",
-      "apiVersion": "v1",
-      "metadata": {
-        "name": "${PDF_NAME}",
-        "annotations": {
-          "description": "Exposes and load balances the PDF pods"
-        }
-      },
-      "spec": {
-        "ports": [
-          {
-            "name": "web",
-			"protocol": "TCP",
-            "port": 8080,
-            "targetPort": 8080
-          }
-        ],
-        "selector": {
-          "name": "${PDF_NAME}"
-        }
-      }
     },
 	{
     "kind": "DeploymentConfig",

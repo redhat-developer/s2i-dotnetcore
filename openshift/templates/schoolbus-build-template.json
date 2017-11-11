@@ -579,7 +579,7 @@
             "uri": "${SRC_REPO}",
 			"ref": "${GIT_REFERENCE}"			
           },
-          "contextDir": "/PDF"
+          "contextDir": "/"
         },
         "strategy":
         {
