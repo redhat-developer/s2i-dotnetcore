@@ -22,7 +22,7 @@ LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
 LABEL name="dotnet/dotnet-20-runtime-centos7" \
       com.redhat.component="rh-dotnet20-runtime-docker" \
       version="2.0" \
-      release="1" \
+      release="2" \
       architecture="x86_64"
 
 # Don't download/extract docs for nuget packages
