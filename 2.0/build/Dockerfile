@@ -17,7 +17,7 @@ LABEL io.k8s.description="Platform for building and running .NET Core 2.0 applic
 LABEL name="dotnet/dotnet-20-centos7" \
       com.redhat.component="rh-dotnet20-docker" \
       version="2.0" \
-      release="2" \
+      release="3" \
       architecture="x86_64"
 
 # Labels consumed by Eclipse JBoss OpenShift plugin
