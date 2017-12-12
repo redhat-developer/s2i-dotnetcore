@@ -26,7 +26,10 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version="2.0.3"
+sdk_default_version="2.0.3"
+sdk_latest_version="2.0.3"
+sdk_versions=( "2.0.3" )
+
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
 s2i_image_tag() {
@@ -39,7 +42,7 @@ s2i_build_output_log() {
   local tag="$2"
 
   docker_rmi ${tag}
-  s2i build --pull-policy=never "file://${test_dir}/${app}" ${IMAGE_NAME} ${tag} 2>&1
+  s2i build --pull-policy=never -e DOTNET_SDK_VERSION=$sdk_version "file://${test_dir}/${app}" ${IMAGE_NAME} ${tag} 2>&1
 }
 
 s2i_build() {
@@ -88,6 +91,25 @@ Update the '.s2i/environment' file to specify the project you want to publish, f
   assert_contains "${s2i_build}" "${expected}"
 }
 
+test_s2i_sdk_version()
+{
+  test_start
+  local expected_version=$1
+
+  # The assemble script prints out the SDK version.
+  local app=sdkversion
+
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+
+  # cleanup
+  docker_rmi ${image}
+
+  # verify sdk version
+  assert_contains "${s2i_build}" "SDK Version: ${expected_version}"
+}
+
 test_s2i_usage() {
   local output=$(s2i usage ${IMAGE_NAME} 2>&1)
 
@@ -115,7 +137,7 @@ test_image() {
 
   # verify dotnet is available
   local image_dotnet_version=$(docker_run ${IMAGE_NAME} 'dotnet --version')
-  assert_equal "${image_dotnet_version}" "${dotnet_version}"
+  assert_equal "${image_dotnet_version}" "${sdk_latest_version}"
 
   # Verify $HOME != $CWD. See https://github.com/redhat-developer/s2i-dotnetcore/issues/28
   local working_dir=$(docker_run ${IMAGE_NAME} pwd)
@@ -479,15 +501,23 @@ test_devmode() {
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
-  test_usage
   test_image
-  test_consoleapp
-  test_multiframework
-  test_fsharp
-  test_vb
-  test_published_files
-  test_aspnetapp
-  test_devmode
+  for sdk_version in "${sdk_versions[@]}"
+  do
+    test_usage
+    test_s2i_sdk_version $sdk_version
+    test_consoleapp
+    test_multiframework
+    test_fsharp
+    test_vb
+    test_published_files
+    test_aspnetapp
+    test_devmode
+  done
+  # when unset, default to the lowest sdk version
+  sdk_version="" test_s2i_sdk_version $sdk_default_version
+  # when set to 'latest', use the higest sdk version
+  sdk_version="latest" test_s2i_sdk_version $sdk_latest_version
 else
   test_imagestream_sample
 fi
