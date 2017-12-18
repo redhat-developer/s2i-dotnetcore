@@ -1,0 +1,593 @@
+{
+    "kind": "Template",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "dotnet-mysql-persistent",
+        "annotations": {
+            "openshift.io/display-name": ".NET Core + MySQL (Persistent)",
+            "description": "An example .NET Core application with a MySQL database. For more information about using this template, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore.",
+            "tags": "quickstart,dotnet,mysql",
+            "iconClass": "icon-dotnet",
+            "template.openshift.io/provider-display-name": "Red Hat, Inc.",
+            "template.openshift.io/documentation-url": "https://github.com/redhat-developer/s2i-dotnetcore",
+            "template.openshift.io/support-url": "https://access.redhat.com"
+        }
+    },
+    "message": "The following service(s) have been created in your project: ${NAME}, ${DATABASE_SERVICE_NAME}.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore.",
+    "labels": {
+        "template": "dotnet-mysql-persistent"
+    },
+    "objects": [
+        {
+            "kind": "Secret",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}",
+                "template.openshift.io/expose-username": "{.data['database-user']}",
+                "template.openshift.io/expose-password": "{.data['database-password']}",
+                "template.openshift.io/expose-root_password": "{.data['database-root-password']}",
+                "template.openshift.io/expose-database_name": "{.data['database-name']}"                
+            },
+            "stringData": {
+                "database-user" : "${MYSQL_USER}",
+                "database-password" : "${MYSQL_PASSWORD}",
+                "database-root-password" : "${MYSQL_ROOT_PASSWORD}",
+                "database-name" : "${MYSQL_DATABASE}",                
+                "connect-string": "Host=${DATABASE_SERVICE_NAME};Database=${MYSQL_DATABASE};Username=${MYSQL_USER};Password=${MYSQL_PASSWORD}"
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}",
+                "annotations": {
+                    "description": "Exposes and load balances the application pods",
+                    "service.alpha.openshift.io/dependencies": "[{\"name\": \"${DATABASE_SERVICE_NAME}\", \"kind\": \"Service\"}]"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 8080,
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "name": "${NAME}"
+                }
+            }
+        },
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}"
+            },
+            "spec": {
+                "host": "${APPLICATION_DOMAIN}",
+                "to": {
+                    "kind": "Service",
+                    "name": "${NAME}"
+                }
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}",
+                "annotations": {
+                    "description": "Keeps track of changes in the application image"
+                }
+            }
+        },
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}",
+                "annotations": {
+                    "description": "Defines how to build the application"
+                }
+            },
+            "spec": {
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "${SOURCE_REPOSITORY_URL}",
+                        "ref": "${SOURCE_REPOSITORY_REF}"
+                    },
+                    "contextDir": "${CONTEXT_DIR}"
+                },
+                "strategy": {
+                    "type": "Source",
+                    "sourceStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "namespace": "${NAMESPACE}",
+                            "name": "${DOTNET_IMAGE_STREAM_TAG}"
+                        },
+                        "env": [
+                            {
+                                "name": "DOTNET_STARTUP_PROJECT",
+                                "value": "${DOTNET_STARTUP_PROJECT}"
+                            },
+                            {
+                                "name": "DOTNET_ASSEMBLY_NAME",
+                                "value": "${DOTNET_ASSEMBLY_NAME}"
+                            },
+                            {
+                                "name": "DOTNET_NPM_TOOLS",
+                                "value": "${DOTNET_NPM_TOOLS}"
+                            },
+                            {
+                                "name": "DOTNET_TEST_PROJECTS",
+                                "value": "${DOTNET_TEST_PROJECTS}"
+                            },
+                            {
+                                "name": "DOTNET_CONFIGURATION",
+                                "value": "${DOTNET_CONFIGURATION}"
+                            },
+                            {
+                                "name": "DOTNET_PUBLISH",
+                                "value": "true"
+                            },
+                            {
+                                "name": "DOTNET_RESTORE_SOURCES",
+                                "value": "${DOTNET_RESTORE_SOURCES}"
+                            }
+                        ]
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "${NAME}:latest"
+                    }
+                },
+                "triggers": [
+                    {
+                        "type": "ImageChange"
+                    },
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "GitHub",
+                        "github": {
+                            "secret": "${GITHUB_WEBHOOK_SECRET}"
+                        }
+                    }
+                ],
+                "postCommit": {}
+            }
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}",
+                "annotations": {
+                    "description": "Defines how to deploy the application server"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {}
+                },
+                "triggers": [
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "dotnet-mysql-persistent"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "${NAME}:latest"
+                            }
+                        }
+                    },
+                    {
+                        "type": "ConfigChange"
+                    }
+                ],
+                "replicas": 1,
+                "selector": {
+                    "name": "${NAME}"
+                },
+                "template": {
+                    "metadata": {
+                        "name": "${NAME}",
+                        "labels": {
+                            "name": "${NAME}"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "dotnet-mysql-persistent",
+                                "image": " ",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "ConnectionString",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "name": "${NAME}",
+                                                "key": "connect-string"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "memory": "${MEMORY_LIMIT}"
+                                    }
+                                },
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 40,
+                                    "timeoutSeconds": 10
+                                },
+                                "readinessProbe": {
+                                    "httpGet": {
+                                        "path": "/",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 10,
+                                    "timeoutSeconds": 30
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "kind": "PersistentVolumeClaim",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${DATABASE_SERVICE_NAME}"
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "resources": {
+                    "requests": {
+                        "storage": "${VOLUME_CAPACITY}"
+                    }
+                }
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${DATABASE_SERVICE_NAME}",
+                "annotations": {
+                "template.openshift.io/expose-uri": "mysql://{.spec.clusterIP}:{.spec.ports[?(.name==\"mysql\")].port}"
+                }
+            },
+            "spec": {
+                "ports": [
+                {
+                    "name": "mysql",
+                    "port": 3306
+                }
+                ],
+                "selector": {
+                "name": "${DATABASE_SERVICE_NAME}"
+                }
+            }
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${DATABASE_SERVICE_NAME}"
+            },
+            "spec": {
+                "strategy": {
+                "type": "Recreate"
+                },
+                "triggers": [
+                {
+                    "type": "ImageChange",
+                    "imageChangeParams": {
+                    "automatic": true,
+                    "containerNames": [
+                        "mysql"
+                    ],
+                    "from": {
+                        "kind": "ImageStreamTag",
+                        "name": "mysql:${MYSQL_VERSION}",
+                        "namespace": "${NAMESPACE}"
+                    }
+                    }
+                },
+                {
+                    "type": "ConfigChange"
+                }
+                ],
+                "replicas": 1,
+                "selector": {
+                "name": "${DATABASE_SERVICE_NAME}"
+                },
+                "template": {
+                "metadata": {
+                    "labels": {
+                    "name": "${DATABASE_SERVICE_NAME}"
+                    }
+                },
+                "spec": {
+                    "containers": [
+                    {
+                        "name": "mysql",
+                        "image": " ",
+                        "ports": [
+                        {
+                            "containerPort": 3306
+                        }
+                        ],
+                        "readinessProbe": {
+                        "timeoutSeconds": 1,
+                        "initialDelaySeconds": 5,
+                        "exec": {
+                            "command": [ "/bin/sh", "-i", "-c",
+                            "MYSQL_PWD=\"$MYSQL_PASSWORD\" mysql -h 127.0.0.1 -u $MYSQL_USER -D $MYSQL_DATABASE -e 'SELECT 1'"]
+                        }
+                        },
+                        "livenessProbe": {
+                        "timeoutSeconds": 1,
+                        "initialDelaySeconds": 30,
+                        "tcpSocket": {
+                            "port": 3306
+                        }
+                        },
+                        "env": [
+                        {
+                            "name": "MYSQL_USER",
+                            "valueFrom": {
+                            "secretKeyRef" : {
+                                "name" : "${DATABASE_SERVICE_NAME}",
+                                "key" : "database-user"
+                            }
+                            }
+                        },
+                        {
+                            "name": "MYSQL_PASSWORD",
+                            "valueFrom": {
+                            "secretKeyRef" : {
+                                "name" : "${DATABASE_SERVICE_NAME}",
+                                "key" : "database-password"
+                            }
+                            }
+                        },
+                        {
+                            "name": "MYSQL_ROOT_PASSWORD",
+                            "valueFrom": {
+                            "secretKeyRef" : {
+                                "name" : "${DATABASE_SERVICE_NAME}",
+                                "key" : "database-root-password"
+                            }
+                            }
+                        },
+                        {
+                            "name": "MYSQL_DATABASE",
+                            "valueFrom": {
+                            "secretKeyRef" : {
+                                "name" : "${DATABASE_SERVICE_NAME}",
+                                "key" : "database-name"
+                            }
+                            }
+                        }
+                        ],
+                        "resources": {
+                        "limits": {
+                            "memory": "${MEMORY_LIMIT}"
+                        }
+                        },
+                        "volumeMounts": [
+                        {
+                            "name": "${DATABASE_SERVICE_NAME}-data",
+                            "mountPath": "/var/lib/mysql/data"
+                        }
+                        ],
+                        "imagePullPolicy": "IfNotPresent"
+                    }
+                    ],
+                    "volumes": [
+                    {
+                        "name": "${DATABASE_SERVICE_NAME}-data",
+                        "persistentVolumeClaim": {
+                        "claimName": "${DATABASE_SERVICE_NAME}"
+                        }
+                    }
+                    ]
+                }
+                }
+            }
+        }
+    ],
+    "parameters": [
+        {
+            "name": "NAME",
+            "displayName": "Name",
+            "description": "The name assigned to all of the frontend objects defined in this template.",
+            "required": true,
+            "value": "musicstore"
+        },
+        {
+            "name": "MEMORY_LIMIT",
+            "displayName": "Memory Limit",
+            "required": true,
+            "description": "Maximum amount of memory the .NET Core container can use.",
+            "value": "512Mi"
+        },
+        {
+            "name": "MEMORY_POSTGRESQL_LIMIT",
+            "displayName": "Memory Limit (PostgreSQL)",
+            "required": true,
+            "description": "Maximum amount of memory the PostgreSQL container can use.",
+            "value": "512Mi"
+        },
+        {
+            "name": "VOLUME_CAPACITY",
+            "displayName": "Volume Capacity",
+            "description": "Volume space available for data, e.g. 512Mi, 2Gi",
+            "value": "1Gi",
+            "required": true
+        },
+        {
+            "name": "DOTNET_IMAGE_STREAM_TAG",
+            "displayName": ".NET builder",
+            "required": true,
+            "description": "The image stream tag which is used to build the code.",
+            "value": "dotnet:1.1"
+        },
+        {
+            "name": "NAMESPACE",
+            "displayName": "Namespace",
+            "required": true,
+            "description": "The OpenShift Namespace where the .NET builder ImageStream resides.",
+            "value": "openshift"
+        },
+        {
+            "name": "SOURCE_REPOSITORY_URL",
+            "displayName": "Git Repository URL",
+            "required": true,
+            "description": "The URL of the repository with your application source code.",
+            "value": "https://github.com/redhat-developer/s2i-aspnet-musicstore-ex.git"
+        },
+        {
+            "name": "SOURCE_REPOSITORY_REF",
+            "displayName": "Git Reference",
+            "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
+            "value": "rel/1.1-example"
+        },
+        {
+            "name": "CONTEXT_DIR",
+            "displayName": "Context Directory",
+            "description": "Set this to the relative path to your project if it is not in the root of your repository."
+        },
+        {
+            "name": "DOTNET_STARTUP_PROJECT",
+            "displayName": "Startup Project",
+            "description": "Set this to the folder containing your startup project.",
+            "value": "samples/MusicStore"
+        },
+        {
+            "name": "DOTNET_ASSEMBLY_NAME",
+            "displayName": "Startup Assembly",
+            "description": "Set this when the assembly name is overridden in the project file."
+        },
+        {
+            "name": "DOTNET_NPM_TOOLS",
+            "displayName": "Npm Tools",
+            "description": "Set this to a space separated list of npm tools needed to publish."
+        },
+        {
+            "name": "DOTNET_TEST_PROJECTS",
+            "displayName": "Test projects",
+            "description": "Set this to a space separated list of test projects to run before publishing."
+        },
+        {
+            "name": "DOTNET_CONFIGURATION",
+            "displayName": "Configuration",
+            "description": "Set this to configuration (Release/Debug).",
+            "value": "Release"
+        },
+        {
+            "name": "DOTNET_RESTORE_SOURCES",
+            "displayName": "NuGet package sources",
+            "description": "Set this to override the NuGet.config sources."
+        },
+        {
+            "name": "APPLICATION_DOMAIN",
+            "displayName": "Application Hostname",
+            "description": "The exposed hostname that will route to the .NET Core service, if left blank a value will be defaulted.",
+            "value": ""
+        },
+        {
+            "name": "GITHUB_WEBHOOK_SECRET",
+            "displayName": "GitHub Webhook Secret",
+            "description": "A secret string used to configure the GitHub webhook.",
+            "generate": "expression",
+            "from": "[a-zA-Z0-9]{40}"
+        },
+        {
+            "name": "DATABASE_SERVICE_NAME",
+            "displayName": "Database Service Name",
+            "description": "The name of the OpenShift Service exposed for the database.",
+            "value": "mysql",
+            "required": true
+        },
+        {
+            "name": "MYSQL_USER",
+            "displayName": "MySQL Connection Username",
+            "description": "Username for MySQL user that will be used for accessing the database.",
+            "generate": "expression",
+            "from": "user[A-Z0-9]{3}",
+            "required": true
+        },
+        {
+            "name": "MYSQL_PASSWORD",
+            "displayName": "MySQL Connection Password",
+            "description": "Password for the MySQL connection user.",
+            "generate": "expression",
+            "from": "[a-zA-Z0-9]{16}",
+            "required": true
+        },
+        {
+            "name": "MYSQL_ROOT_PASSWORD",
+            "displayName": "MySQL root user Password",
+            "description": "Password for the MySQL root user.",
+            "generate": "expression",
+            "from": "[a-zA-Z0-9]{16}",
+            "required": true
+        },
+        {
+            "name": "MYSQL_DATABASE",
+            "displayName": "MySQL Database Name",
+            "description": "Name of the MySQL database accessed.",
+            "value": "musicstore",
+            "required": true
+        },
+        {
+            "name": "VOLUME_CAPACITY",
+            "displayName": "Volume Capacity",
+            "description": "Volume space available for data, e.g. 512Mi, 2Gi.",
+            "value": "1Gi",
+            "required": true
+        },
+        {
+            "name": "MYSQL_VERSION",
+            "displayName": "Version of MySQL Image",
+            "description": "Version of MySQL image to be used (5.5, 5.6, 5.7, or latest).",
+            "value": "5.7",
+            "required": true
+        }        
+    ]
+}
