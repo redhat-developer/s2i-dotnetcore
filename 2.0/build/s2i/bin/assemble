@@ -2,6 +2,14 @@
 
 set -e
 
+if [ -n "${DOTNET_VERBOSITY}" ]; then
+  echo "--> Environment:"
+  env | sort
+  VERBOSITY_OPTION="-v ${DOTNET_VERBOSITY}"
+else
+  VERBOSITY_OPTION=""
+fi
+
 # npm
 if [ -n "${DOTNET_NPM_TOOLS}" ]; then
   echo "---> Installing npm tools ..."
@@ -82,16 +90,16 @@ done
 # run tests
 for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
     echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
-    dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS
+    dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
     echo "---> Running test project: $TEST_PROJECT..."
-    dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK"
+    dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK" $VERBOSITY_OPTION
 done
 
 # publish application
 echo "---> Restoring application dependencies..."
-dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS
+dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
 echo "---> Publishing application..."
-dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" \
+dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
        --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE -o "$DOTNET_APP_PATH"
 
 # check if the assembly used by the script exists
