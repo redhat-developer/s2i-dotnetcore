@@ -120,6 +120,12 @@ a `.s2i/environment` file inside your source code repository.
     Used to specify the list of test projects to run. This must be project files or folders containing a
     single project file. `dotnet test` is invoked for each item. Defaults to ``.
 
+* **DOTNET_VERBOSITY**
+
+    Used to specify the verbosity of the dotnet build commands. When set, the environment variables are printed at the start
+    of the build. This variable can be set to one of the msbuild verbosity values (`q[uiet]`, `m[inimal]`, `n[ormal]`,
+    `d[etailed]`, and `diag[nostic]`). Defaults to ``.
+
 * **DOTNET_CONFIGURATION**
 
     Used to run the application in Debug or Release mode. This should be either
