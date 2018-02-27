@@ -4,9 +4,7 @@ FROM rhel7
 
 EXPOSE 8080
 
-# Default to UTF-8 file.encoding
-ENV LANG=C.UTF-8 \
-    HOME=/opt/app-root \
+ENV HOME=/opt/app-root \
     PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     DOTNET_APP_PATH=/opt/app-root/app \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
