@@ -522,6 +522,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_image
   for sdk_version in "${sdk_versions[@]}"
   do
+    info "sdk ${sdk_version}:"
     test_config
     test_usage
     test_s2i_sdk_version $sdk_version
@@ -537,8 +538,10 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
     test_user
   done
   # when unset, default to the lowest sdk version
+  info "default sdk(${sdk_default_version}):"
   sdk_version="" test_s2i_sdk_version $sdk_default_version
   # when set to 'latest', use the higest sdk version
+  info "latest sdk(${sdk_latest_version}):"
   sdk_version="latest" test_s2i_sdk_version $sdk_latest_version
 else
   test_imagestream_sample
