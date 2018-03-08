@@ -32,6 +32,19 @@ if [ -n "${DOTNET_NPM_TOOLS}" ]; then
   popd
 fi
 
+# sdk version
+DOTNET_SDK_VERSION="${DOTNET_SDK_VERSION:-$DOTNET_SDK_BASE_VERSION}"
+if [ "$DOTNET_SDK_VERSION" != "latest" ]; then
+cat >../global.json <<EOF
+{
+  "sdk": {
+    "version": "$DOTNET_SDK_VERSION"
+  }
+}
+EOF
+fi
+echo "Using SDK: $(dotnet --version)"
+
 echo "---> Copying application source ..."
 cp -Rf /tmp/src/. ./
 

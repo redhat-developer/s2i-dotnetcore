@@ -48,6 +48,10 @@ RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
 
 ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs6"
 
+# For backwards compatibility, s2i builds default to the oldest sdk in the image.
+# We keep the patch at '0', the latest patch version is automatically picked up.
+ENV DOTNET_SDK_BASE_VERSION=2.0.0
+
 # Run container by default as user with id 1001 (default)
 USER 1001
 

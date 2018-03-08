@@ -94,6 +94,11 @@ a `.s2i/environment` file inside your source code repository.
 
     Used to select the project to run. This must be a project file (e.g. csproj, fsproj) or a folder containing a single project file. Defaults to `.`.
 
+* **DOTNET_SDK_VERSION**
+
+    Used to select the default sdk version when building. If there is a `global.json` file in the source repository, that takes precedence.
+    When set to `latest` the latest sdk in the image is used. Defaults to the lowest sdk version available in the image.
+
 * **DOTNET_ASSEMBLY_NAME**
 
     Used to select the assembly to run. This must NOT include the `.dll` extension.
@@ -152,6 +157,10 @@ a `.s2i/environment` file inside your source code repository.
 
     When set to `true`, the application restart automatically when the source code changes. `dotnet run`
     is used to start the application.
+
+* **DOTNET_SDK_BASE_VERSION**
+
+    Contains the lowest sdk version available in the image. This is used as the default value for `DOTNET_SDK_VERSION`.
 
 NPM
 ---

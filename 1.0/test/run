@@ -41,7 +41,11 @@ declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
+if [ "$BUILD_CENTOS" = "true" ]; then
 dotnet_version="1.0.0-preview2-003221"
+else
+dotnet_version="1.0.0-preview2-003240"
+fi
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
 test_port=8080
@@ -279,9 +283,6 @@ test_openshift_sample_app() {
 
   # Wait for the container to write it's CID file
   wait_for_cid
-
-  test_scl_usage "dotnet --version" "${dotnet_version}" "${cid_file}"
-  check_result $?
 
   test_http "/" "Sample pages using ASP.NET Core MVC" "grep \"ASP.NET Core MVC\" | sed -e 's#<li>##g' -e 's#</li>##g' -e 's#^ \\+##g'"
   check_result $?
