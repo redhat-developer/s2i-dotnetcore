@@ -26,7 +26,6 @@ var InspectionEditDialog = React.createClass({
   propTypes: {
     inspection: React.PropTypes.object.isRequired,
     inspectors: React.PropTypes.object,
-
     onSave: React.PropTypes.func.isRequired,
     onClose: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool,

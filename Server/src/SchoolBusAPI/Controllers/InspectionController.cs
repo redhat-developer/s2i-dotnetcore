@@ -54,7 +54,6 @@ namespace SchoolBusAPI.Controllers
         {
             return this._service.InspectionsBulkPostAsync(items);
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -79,7 +78,7 @@ namespace SchoolBusAPI.Controllers
         [SwaggerOperation("InspectionsIdDeletePost")]
         public virtual IActionResult InspectionsIdDeletePost([FromRoute]int id)
         {
-            return this._service.InspectionsIdDeletePostAsync(id);
+            return this._service.InspectionsIdDeletePostAsync(id, User.HasPermissions(Permission.ADMIN));
         }
 
         /// <summary>
