@@ -583,13 +583,11 @@ namespace SchoolBusAPI.Services.Impl
 
                     Task<HttpResponseMessage> responseTask = client.SendAsync(request);
                     responseTask.Wait();
-
                     HttpResponseMessage response = responseTask.Result;
                     if (response.StatusCode == HttpStatusCode.OK) // success
                     {
                         var bytetask = response.Content.ReadAsByteArrayAsync();
                         bytetask.Wait();
-                        
                         result = new FileContentResult(bytetask.Result, "application/pdf");
                         result.FileDownloadName = "Permit-" + schoolBus.PermitNumber + ".pdf";                        
                     }

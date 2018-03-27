@@ -59,6 +59,7 @@ function parseUser(user) {
     return (membership.group && membership.group.id === inspectorGroupId);
   });
   user.isInspector = isInspector !== undefined;
+
 }
 
 export function getCurrentUser() {
@@ -70,6 +71,24 @@ export function getCurrentUser() {
 
     store.dispatch({ type: Action.UPDATE_CURRENT_USER, user: user });
   });
+}
+
+//Check if current user is Administrator
+export function isAdmin(){
+  var roles = store.getState().user.userRoles;
+  var roleCount = roles.length;
+  var permissions = [];
+  var isAdmin = [];
+
+  for(var i = 0; i < roleCount; i++){
+    var role = roles[i].role;
+    if(role != null){
+      permissions[i] = role.rolePermissions;
+      isAdmin.push(_.some(permissions[i],['permission.code', 'ADMIN']));
+    }
+  }
+
+  return isAdmin.includes(true);
 }
 
 export function searchUsers(params) {
@@ -576,8 +595,8 @@ function parseInspection(inspection) {
   inspection.name = `(${ formatDateTime(inspection.inspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) })`;
   inspection.historyEntity = History.makeHistoryEntity(History.INSPECTION, inspection);
 
-  inspection.canEdit = hoursAgo(inspection.createdDate) <= Constant.INSPECTION_EDIT_GRACE_PERIOD_HOURS;
-  inspection.canDelete = hoursAgo(inspection.createdDate) <= Constant.INSPECTION_DELETE_GRACE_PERIOD_HOURS;
+  inspection.canEdit = (hoursAgo(inspection.createdDate) <= Constant.INSPECTION_EDIT_GRACE_PERIOD_HOURS) || isAdmin();
+  inspection.canDelete = (hoursAgo(inspection.createdDate) <= Constant.INSPECTION_DELETE_GRACE_PERIOD_HOURS) || isAdmin();
 }
 
 export function getInspection(id) {

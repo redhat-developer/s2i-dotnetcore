@@ -46,9 +46,10 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
         /// <param name="id">id of Inspection to delete</param>
+        /// <param name="isAdmin">is current has permission of ADMIN</param>
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
-        IActionResult InspectionsIdDeletePostAsync(int id);
+        IActionResult InspectionsIdDeletePostAsync(int id, bool isAdmin);
 
         /// <summary>
         /// 

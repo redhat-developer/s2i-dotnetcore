@@ -496,8 +496,8 @@ var SchoolBusesDetail = React.createClass({
                         <td>{ inspection.inspectorName }</td>
                         <td style={{ textAlign: 'right' }}>
                           <ButtonGroup>
-                            <DeleteButton name="Inspection" hide={ !inspection.canDelete } onConfirm={ this.deleteInspection.bind(this, inspection) }/>
-                            <EditButton name="Inspection" view={ !inspection.canEdit } pathname={ inspection.path }/>
+                            <DeleteButton name="Inspection" hide={ !inspection.canDelete} onConfirm={ this.deleteInspection.bind(this, inspection) }/>
+                            <EditButton name="Inspection" view={ !inspection.canEdit} pathname={ inspection.path }/>
                           </ButtonGroup>
                         </td>
                       </tr>;

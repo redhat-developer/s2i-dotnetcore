@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using SchoolBusAPI.Authorization;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -129,10 +130,12 @@ namespace SchoolBusAPI.Services.Impl
         /// </summary>
         
         /// <param name="id">id of Inspection to delete</param>
+        /// <param name="isAdmin">is current user has permission of ADMIN</param>
+        /// 
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
 
-        public virtual IActionResult InspectionsIdDeletePostAsync (int id)        
+        public virtual IActionResult InspectionsIdDeletePostAsync (int id, bool isAdmin)        
         {
             var exists = _context.Inspections.Any(a => a.Id == id);
             if (exists)
@@ -143,7 +146,7 @@ namespace SchoolBusAPI.Services.Impl
                 // Also, the related Schoolbus will be updated with the value of the PreviousNextInspectionDate and PreviousNextInspectionType fields.
 
                 // first check to see if we are allowed to delete.
-                if (item.CreatedDate > DateTime.UtcNow.AddDays(-1))
+                if (item.CreatedDate > DateTime.UtcNow.AddDays(-1) || isAdmin)
                 {
                     // update the Schoolbus record.
                     if (item.SchoolBus != null)
