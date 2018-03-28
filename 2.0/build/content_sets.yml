@@ -2,9 +2,6 @@
 # This is used by the Red Hat registry to determine the container status by
 # correlating these repos to known CVEs.
 #
-# See https://mojo.redhat.com/docs/DOC-1023066 for more information on
-# maintaining this file and the format and examples
-#
 ---
 x86_64:
 - rhel-7-server-rpms
