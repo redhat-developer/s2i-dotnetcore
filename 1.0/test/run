@@ -42,7 +42,7 @@ declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
 if [ "$BUILD_CENTOS" = "true" ]; then
-dotnet_version="1.0.0-preview2-003221"
+dotnet_version="1.0.0-preview2-003260"
 else
 dotnet_version="1.0.0-preview2-003260"
 fi
