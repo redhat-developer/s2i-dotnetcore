@@ -77,7 +77,7 @@ test_images() {
 
 # Default to CentOS when not on RHEL.
 if ! [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
-  BUILD_CENTOS=true
+  export BUILD_CENTOS=true
 fi
 
 if [ "$BUILD_CENTOS" = "true" ]; then

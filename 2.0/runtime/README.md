@@ -79,3 +79,7 @@ They must not to be overridden.
 * **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
 
     These variables contain the framework (`netcoreapp2.0`) and .NET Core version (`2.0`) respectively.
+
+* **DOTNET_RUNNING_IN_CONTAINER**
+
+    Like Microsoft images, this is set to `true` and can be used to detect the application is built/running in a container.

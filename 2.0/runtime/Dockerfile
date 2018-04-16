@@ -9,7 +9,9 @@ ENV HOME=/opt/app-root \
     DOTNET_APP_PATH=/opt/app-root/app \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
     DOTNET_CORE_VERSION=2.0 \
-    DOTNET_FRAMEWORK=netcoreapp2.0
+    DOTNET_FRAMEWORK=netcoreapp2.0 \
+# Microsoft's images set this to enable detecting when an app is running in a container.
+    DOTNET_RUNNING_IN_CONTAINER=true
 
 LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
       io.k8s.display-name=".NET Core 2.0" \

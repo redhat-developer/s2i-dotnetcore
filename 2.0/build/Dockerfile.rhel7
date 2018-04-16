@@ -51,7 +51,9 @@ ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs6"
 
 # For backwards compatibility, s2i builds default to the oldest sdk in the image.
 # We keep the patch at '0', the latest patch version is automatically picked up.
-ENV DOTNET_SDK_BASE_VERSION=2.0.0
+ENV DOTNET_SDK_BASE_VERSION=2.0.0 \
+# Needed for the `dotnet watch` to detect changes in a container.
+    DOTNET_USE_POLLING_FILE_WATCHER=true
 
 # Run container by default as user with id 1001 (default)
 USER 1001
