@@ -54,6 +54,9 @@ test_envvars() {
 
   # .NET Core determines culture based on LANG. It must be empty/unset to use the 'Invariant' culture
   assert_equal $(docker_get_env $IMAGE_NAME LANG) ""
+
+  # Like Microsoft images, we set this to 'true'
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_RUNNING_IN_CONTAINER) "true"
 }
 
 test_debuggable() {

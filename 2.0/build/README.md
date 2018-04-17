@@ -162,6 +162,10 @@ a `.s2i/environment` file inside your source code repository.
 
     Contains the lowest sdk version available in the image. This is used as the default value for `DOTNET_SDK_VERSION`.
 
+* **DOTNET_USE_POLLING_FILE_WATCHER**
+
+    This is set to `true` to ensure the `dotnet watch` command works in a container. This command is not used by the default scripts.
+
 NPM
 ---
 
