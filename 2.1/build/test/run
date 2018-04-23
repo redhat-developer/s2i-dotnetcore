@@ -1,0 +1,553 @@
+#!/bin/bash
+#
+# The 'run' script performs simple tests that verifies usability
+# of the image
+#
+# IMAGE_NAME specifies a name of the candidate image used for testing.
+# The image has to be available before this script is executed.
+#
+# OPENSHIFT_ONLY environment variable, if 'true', only tests features used by
+# OpenShift's try-it feature.
+#
+# DEBUG environment variable, if not empty, makes 'run' to log every step
+# of testing.
+#
+# Example usage: $ sudo ./test/run
+
+if [ "$BUILD_CENTOS" = "true" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-centos7}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-20-runtime-centos7}
+else
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-rhel7}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
+fi
+OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
+
+test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
+source ${test_dir}/testcommon
+
+sdk_default_version="2.0.3"
+if [ "$BUILD_CENTOS" = "true" ]; then
+sdk_latest_version="2.0.3"
+sdk_versions=( "2.0.3" )
+else
+sdk_latest_version="2.1.101"
+sdk_versions=( "2.0.3" "2.1.101" )
+fi
+
+sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
+
+s2i_image_tag() {
+  local app="$1"
+  echo "${IMAGE_NAME}-${app}"
+}
+
+s2i_build_output_log() {
+  local app="$1"
+  local tag="$2"
+
+  docker_rmi ${tag}
+  s2i build --pull-policy=never -e DOTNET_SDK_VERSION=$sdk_version "file://${test_dir}/${app}" ${IMAGE_NAME} ${tag} 2>&1
+}
+
+s2i_build() {
+  local app="$1"
+  local tag=$(s2i_image_tag ${app})
+
+  local output;
+  output=$(s2i_build_output_log ${app} ${tag})
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-image"
+  else
+    echo "$tag"
+  fi
+}
+
+s2i_build_and_run() {
+  local app="$1"
+
+  local image=$(s2i_build ${app})
+  local output=$(docker_run ${image})
+  docker_rmi ${image}
+
+  echo "$output"
+}
+
+test_s2i_usage_projfile()
+{
+  # startup_project_not_found contains two project files
+  # but doesn't set DOTNET_STARTUP_PROJECT to select one.
+  local app=startup_project_not_found
+
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  # cleanup
+  docker_rmi ${image}
+
+  # verify usage instructions
+  local expected="error: DOTNET_STARTUP_PROJECT has no project file
+You can specify the startup project by adding an '.s2i/environment' file to the source repository.
+The source repository contains the following projects:
+- proj1/proj1.csproj
+- proj2/proj2.fsproj
+Update the '.s2i/environment' file to specify the project you want to publish, for example DOTNET_STARTUP_PROJECT=proj1/proj1.csproj"
+  assert_contains "${s2i_build}" "${expected}"
+}
+
+test_s2i_sdk_version()
+{
+  test_start
+  local expected_version=$1
+
+  # The assemble script prints out the SDK version.
+  local app=sdkversion
+
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+
+  # cleanup
+  docker_rmi ${image}
+
+  # verify sdk version
+  assert_contains "${s2i_build}" "SDK Version: ${expected_version}"
+}
+
+test_s2i_usage() {
+  local output=$(s2i usage ${IMAGE_NAME} 2>&1)
+
+  # s2i usage refers to the sample app
+  assert_contains "$output" "${sample_app_url}"
+}
+
+test_docker_run_usage() {
+  local output=$(docker_run ${IMAGE_NAME})
+
+  # docker run refers to the sample app
+  assert_contains "$output" "${sample_app_url}"
+}
+
+test_usage() {
+  test_start
+
+  test_s2i_usage
+  test_s2i_usage_projfile
+  test_docker_run_usage
+}
+
+test_image() {
+  test_start
+
+  # verify dotnet is available
+  local image_dotnet_version=$(docker_run ${IMAGE_NAME} 'dotnet --version')
+  assert_equal "${image_dotnet_version}" "${sdk_latest_version}"
+
+  # Verify $HOME != $CWD. See https://github.com/redhat-developer/s2i-dotnetcore/issues/28
+  local working_dir=$(docker_run ${IMAGE_NAME} pwd)
+  assert_equal "${working_dir}" "/opt/app-root/src"
+  local env=$(docker_run ${IMAGE_NAME} env)
+  assert_contains "${env}" "HOME=/opt/app-root"$'\n'
+
+  # Verify the `dotnet watch` command can detect file changes in the container.
+  assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true"$'\n'
+
+  # verify npm is available
+  local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
+  assert_equal "${image_npm_version}" "3.10.9"
+}
+
+test_consoleapp() {
+  test_start
+
+  # helloworld is a C# console application
+
+  # application returns expected output
+  assert_contains "$(s2i_build_and_run helloworld)" "Hello World!"
+}
+
+test_multiframework() {
+  test_start
+
+  # hw_framework_config targets both: net451 and netcoreapp
+  # this test verifies we are building and able to run the .NET Core target.
+
+  # application returns expected output
+  assert_contains "$(s2i_build_and_run hw_framework_config)" "Hello World!"
+}
+
+test_fsharp() {
+  test_start
+
+  # helloworld-fs is an F# console application
+
+  # application returns expected output
+  assert_contains "$(s2i_build_and_run helloworld-fs)" "Hello World from F#!"
+}
+
+test_vb() {
+  test_start
+
+  # helloworld-vb is a VB console application
+
+  # application returns expected output
+  assert_contains "$(s2i_build_and_run helloworld-vb)" "Hello World from VB!"
+}
+
+test_published_files() {
+  test_start
+
+  # qotd has an appsettings.json and quotes.txt files that must
+  # be published with the app and found at runtime.
+
+  # application returns expected output
+  assert_contains "$(s2i_build_and_run qotd)" "QOTD"
+}
+
+test_aspnetapp() {
+  test_start
+
+  # asp-net-hello-world is an ASP.NET Core application
+
+  local app=asp-net-hello-world
+  # build image
+  local image=$(s2i_build ${app})
+  # start container
+  local container=$(docker_run_d ${image})
+  local url=$(container_url ${container})
+  # request
+  local response_base=$(curl_retry ${url}/)
+  local response_file=$(curl_retry ${url}/TextFile.txt)
+  local pid1_process=$(docker_exec ${container} /bin/bash -c 'ps --no-headers -o args 1')
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # Check response by ASP.NET pipeline
+  assert_equal "${response_base}" "Hello world"
+  # Check response by file middleware
+  assert_equal "${response_file}" "A text file."
+  # Verify dotnet runs as PID 1
+  assert_equal "${pid1_process}" "dotnet asp-net-hello-world.dll"
+}
+
+test_user() {
+  test_start
+
+  local app=asp-net-hello-world
+  # user to run the app (100002) is different than user that built the app (1001).
+  local run_user=100002
+
+  # build image
+  local image=$(s2i_build ${app})
+  # get username
+  local username=$(docker_run_as ${image} ${run_user} whoami)
+  # start container
+  local container=$(docker_run_as_d ${image} ${run_user})
+  local url=$(container_url ${container})
+  # request
+  local response=$(curl_retry ${url}/)
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # user is default
+  assert_equal "${username}" "default"
+  # app is working
+  assert_equal "${response}" "Hello world"
+}
+
+test_new_web_app() {
+  test_start
+
+  # newweb creates instantiates the 'dotnet new mvc' template
+  # in the assemble script.
+
+  local app=newweb
+  # build image
+  local image=$(s2i_build ${app})
+  # start container
+  local container=$(docker_run_d ${image})
+  local url=$(container_url ${container})
+  # request
+  local response=$(curl_retry ${url}/)
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # app is working
+  assert_contains "${response}" "html"
+}
+
+test_config_configuration() {
+  # DOTNET_CONFIGURATION=Debug
+  assert_contains "$(s2i_build_and_run dotnet-configuration-debug)" "Debug"
+  # DOTNET_CONFIGURATION=Release
+  assert_contains "$(s2i_build_and_run dotnet-configuration-release)" "Release"
+}
+
+test_config_1() {
+  # groups envvar tests which are performed against asp-net-hello-world-envvar
+
+  local app=asp-net-hello-world-envvar
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  # find bower and packed all
+  local bower_path=$(docker_run ${image} bash -c "command -v bower")
+  local packed_app=$(docker_run ${image} ls /opt/app-root/app.tar.gz)
+  # start container
+  local container=$(docker_run_d ${image})
+  local url=$(container_url ${container})
+  # request
+  local response=$(curl_retry ${url}/)
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # DOTNET_STARTUP_PROJECT=src/app
+  assert_equal "${response}" "Hello world"
+  # DOTNET_TEST_PROJECTS=test/test1 test/test2
+  assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
+  assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
+  # DOTNET_ASSEMBLY_NAME=SampleApp
+  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/netcoreapp2.0/SampleApp.dll"
+  # DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
+  assert_contains "${s2i_build}" "Installing S2iDotNetCoreDummy"
+  # DOTNET_PACK=true
+  assert_contains "${s2i_build}" "Packing application..."
+  assert_equal "${packed_app}" "/opt/app-root/app.tar.gz"
+  # DOTNET_NPM_TOOLS=bower gulp
+  assert_contains "${s2i_build}" "bower@"
+  assert_contains "${s2i_build}" "gulp@"
+  assert_equal "${bower_path}" "/opt/app-root/node_modules/.bin/bower"
+}
+
+test_config_2() {
+  # groups envvar tests which are performed against asp-net-hello-world-envvar2
+
+  local app=asp-net-hello-world-envvar2
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  # start container
+  local container=$(docker_run_d ${image})
+  local url=$(container_url ${container})
+  # request
+  local response=$(curl_retry ${url}/)
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # DOTNET_STARTUP_PROJECT=src/app/app.csproj
+  assert_equal "${response}" "Hello world"
+  # DOTNET_TEST_PROJECTS=test/test1/test1.csproj test/test2
+  assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
+  assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
+
+  # DOTNET_VERBOSITY=normal
+  ## Environment
+  assert_contains "${s2i_build}" "Environment:"
+  assert_contains "${s2i_build}" "DOTNET_VERBOSITY=normal"
+  ## Test project restore
+  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/test/test1/test1.csproj" on node 1 (Restore target(s)).'
+  ## Test project test
+  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/test/test1/test1.csproj" on node 1 (VSTest target(s)).'
+  ## App project restore
+  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 (Restore target(s)).'
+  ## App project publish
+  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 (Publish target(s)).'
+}
+
+test_config() {
+  test_start
+
+  test_config_configuration
+  test_config_1
+  test_config_2
+}
+
+test_split_build() {
+  test_start
+
+  # test openshift chained build
+  # see 'chaining builds' in the openshift docs
+
+  # this app has DOTNET_PACK=true
+  local app=asp-net-hello-world-envvar
+
+  local build_dir="${test_dir}/split_build"
+  rm -rf "$build_dir"
+  mkdir "$build_dir"
+  pushd "$build_dir" > /dev/null
+
+  # extract app.tar.gz from build
+  local image=$(s2i_build ${app})
+  local container=$(docker create ${image})
+  docker cp ${container}:/opt/app-root/app.tar.gz .
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # create image based on app.tar.gz
+  # we don't need to provide a CMD statement
+  # app.tar.gz has a default-cmd.sh which matches with the runtime CMD.
+  cat >Dockerfile <<EOF
+FROM ${RUNTIME_IMAGE_NAME}
+ADD app.tar.gz .
+EOF
+  image=$(docker_build .)
+
+  # user to run the app (100002) is different than user that built the app (1001).
+  local run_user=100002
+  # start container
+  local container=$(docker_run_as_d ${image} ${run_user})
+  local url=$(container_url ${container})
+  # request
+  local response=$(curl_retry ${url}/)
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # app works
+  assert_equal "${response}" "Hello world"
+
+  popd > /dev/null
+}
+
+test_imagestream_sample() {
+  test_start
+
+  # test the sample app defined with the imagestreams:
+  # "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git",
+  # "sampleContextDir": "app",
+  # "sampleRef": "dotnetcore-2.0"
+
+  # build image
+  local image=$(s2i_image_tag sample)
+  docker_rmi ${tag}
+  local s2i_build=$(s2i build --pull-policy=always --context-dir=app --ref=dotnetcore-2.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git ${IMAGE_NAME} ${image} 2>&1)
+  # start container
+  local container=$(docker_run_d ${image})
+  local url=$(container_url ${container})
+  # request
+  local response=$(curl_retry ${url}/)
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # app is working
+  assert_contains "${response}" "html"
+}
+
+test_devmode_user() {
+  test_start
+
+  # check DEV_MODE run has permissions to build the source added by assemble
+
+  # This application is configured (.s2i/environment):
+  #   DEV_MODE=true, DOTNET_STARTUP_PROJECT=src/app
+  local app=devmode-src
+  # user to run the app (100002) is different than user that built the app (1001).
+  local run_user=100002
+
+  # build image
+  local image=$(s2i_build ${app})
+  # start container
+  local container=$(docker_run_as_d ${image} ${run_user})
+  # request
+  local url=$(container_url ${container})
+  local response=$(curl_retry ${url}/ 60) # 60 attempts
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # Check app was launched succesfully after uploading sources.
+  assert_equal "${response}" "Hello World!"
+}
+
+test_devmode_change() {
+  test_start
+
+  # test DEV_MODE run picks up changes
+
+  # This application has no sources and is configured (.s2i/environment):
+  #   DEV_MODE=true, DOTNET_STARTUP_PROJECT=src/app
+  local app=devmode
+  # build image
+  local image=$(s2i_build ${app})
+  # start container
+  local container=$(docker_run_d ${image})
+  # retrieve log
+  local attempt=1
+  local log=""
+  while [ -z "${log}" -a $attempt -le 5 ]; do
+    log=$(docker logs ${container})
+    if [ -z "${log}" ]; then
+      sleep 1
+    fi
+    attempt=$(( $attempt + 1 ))
+  done
+  # copy source (from devmode-src) in container
+  local app_src_dir="${test_dir}/devmode-src/."
+
+  # The 'a' in goa+rwx is there to work around a docker issue
+  # Once the issue is resolved it should be removed.
+  # See https://bugzilla.redhat.com/show_bug.cgi?id=1492814 for more info.
+  chmod -R goa+rwx "${app_src_dir}"
+  docker cp "${app_src_dir}" "${container}:/opt/app-root/src"
+  # request
+  local url=$(container_url ${container})
+  local response=$(curl_retry ${url}/ 60) # 60 attempts
+  # get updated log
+  local log_updated=$(docker logs ${container})
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # Check no project was found initially
+  assert_contains "${log}" "error: DOTNET_STARTUP_PROJECT not found"
+  # The build completed succesfully
+  assert_contains "${log_updated}" "Running application..."
+  # Check app was launched succesfully after uploading sources.
+  assert_equal "${response}" "Hello World!"
+}
+
+test_devmode() {
+  test_devmode_user
+  test_devmode_change
+}
+
+info "Testing ${IMAGE_NAME}"
+
+if [ ${OPENSHIFT_ONLY} != true ]; then
+  test_image
+  for sdk_version in "${sdk_versions[@]}"
+  do
+    info "sdk ${sdk_version}:"
+    test_config
+    test_usage
+    test_s2i_sdk_version $sdk_version
+    test_consoleapp
+    test_multiframework
+    test_fsharp
+    test_vb
+    test_published_files
+    test_aspnetapp
+    test_devmode
+    test_split_build
+    test_new_web_app
+    test_user
+  done
+  # when unset, default to the lowest sdk version
+  info "default sdk(${sdk_default_version}):"
+  sdk_version="" test_s2i_sdk_version $sdk_default_version
+  # when set to 'latest', use the higest sdk version
+  info "latest sdk(${sdk_latest_version}):"
+  sdk_version="latest" test_s2i_sdk_version $sdk_latest_version
+else
+  test_imagestream_sample
+fi
+
+info "All tests finished successfully."
