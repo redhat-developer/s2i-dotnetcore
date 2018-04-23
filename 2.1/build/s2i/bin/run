@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+if [ "$DEV_MODE" == true ]; then
+    # Ignore build folders ('bin', 'obj') and ASP.NET Core static files ('wwwroot').
+    # Also ignore '.s2i' since we can't handle changes in there.
+    # note: nodemon ignores the following folders by default: '.git', '.nyc_output',
+    #         '.sass-cache', 'bower_components', 'coverage', 'node_modules'.
+    DEV_MODE_IGNORE="bin obj wwwroot .s2i"
+    for IGNORE in $DEV_MODE_IGNORE; do
+        NODEMON_OPTIONS="$NODEMON_OPTIONS --ignore $IGNORE"
+    done
+
+    # Monitor changes.
+    exec nodemon --quiet --ext '*' $NODEMON_OPTIONS --exec /usr/libexec/s2i/_devmode_run ""
+else
+    cd $DOTNET_APP_PATH
+
+    echo "---> Running application ..."
+    exec "./$DOTNET_DEFAULT_CMD"
+fi

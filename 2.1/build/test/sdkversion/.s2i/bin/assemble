@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# call base assemble script, this will create a global.json
+$STI_SCRIPTS_PATH/assemble >/dev/null 2>&1
+
+# print the sdk version
+sdk_version=$(dotnet --version)
+echo "SDK Version: ${sdk_version}"

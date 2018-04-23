@@ -1,0 +1,16 @@
+#!/bin/sh
+
+DISTRO=`cat /etc/*-release | grep ^ID= | grep -Po '".*?"' | tr -d '"'`
+NAMESPACE=dotnet
+
+cat <<EOF
+This is a S2I .Net core ${DISTRO} base image:
+To use it, install S2I: https://github.com/openshift/source-to-image
+
+Sample invocation:
+
+sudo s2i build https://github.com/redhat-developer/s2i-dotnetcore-ex.git --context-dir=app --ref=dotnetcore-2.0 ${NAMESPACE}/dotnet-20-${DISTRO}7 dotnet-sample-app
+
+You can then run the resulting image via:
+sudo docker run -p 8080:8080 dotnet-sample-app
+EOF
