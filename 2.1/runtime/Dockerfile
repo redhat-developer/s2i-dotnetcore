@@ -1,5 +1,5 @@
 FROM centos:7
-# This image provides a .NET Core 2.0 environment you can use to run your .NET
+# This image provides a .NET Core 2.1 environment you can use to run your .NET
 # applications.
 
 EXPOSE 8080
@@ -8,21 +8,21 @@ ENV HOME=/opt/app-root \
     PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     DOTNET_APP_PATH=/opt/app-root/app \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
-    DOTNET_CORE_VERSION=2.0 \
-    DOTNET_FRAMEWORK=netcoreapp2.0 \
+    DOTNET_CORE_VERSION=2.1 \
+    DOTNET_FRAMEWORK=netcoreapp2.1 \
 # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true
 
-LABEL io.k8s.description="Platform for running .NET Core 2.0 applications" \
-      io.k8s.display-name=".NET Core 2.0" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet20-runtime" \
+LABEL io.k8s.description="Platform for running .NET Core 2.1 applications" \
+      io.k8s.display-name=".NET Core 2.1" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet21-runtime" \
       io.openshift.expose-services="8080:http"
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-20-runtime-centos7" \
-      com.redhat.component="rh-dotnet20-runtime-docker" \
-      version="2.0" \
-      release="2" \
+LABEL name="dotnet/dotnet-21-runtime-centos7" \
+      com.redhat.component="rh-dotnet21-runtime-docker" \
+      version="2.1" \
+      release="1" \
       architecture="x86_64"
 
 # Don't download/extract docs for nuget packages
@@ -41,12 +41,20 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
+# TODO: install 2.1 runtime
 RUN yum install -y centos-release-dotnet && \
     INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y
 
+# TODO: remove Microsoft binaries
+RUN curl https://download.microsoft.com/download/3/7/C/37C0D2E3-2056-4F9A-A67C-14DEFBD70F06/dotnet-sdk-2.1.300-preview2-008530-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+    mkdir ~/dotnet-preview2 && \
+    tar xf /tmp/dotnet-sdk.tar.gz -C ~/dotnet-preview2 && \
+    rm -rf ~/dotnet-preview2/shared/Microsoft.AspNetCore.*
+
+# TODO: enable rh-dotnet21 scl
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
     ENABLED_COLLECTIONS="rh-dotnet20"

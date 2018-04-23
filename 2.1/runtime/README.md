@@ -13,6 +13,7 @@ a new docker image should be created using this image as the base.
 
 For example to create a Docker image for [s2i-dotnetcore-ex](https://github.com/redhat-developer/s2i-dotnetcore-ex) 
 
+TODO (2.1): update sample app and instructions below
 Publish the application:
 ```
 $ git clone -b dotnetcore-2.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
@@ -78,7 +79,7 @@ They must not to be overridden.
 
 * **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
 
-    These variables contain the framework (`netcoreapp2.0`) and .NET Core version (`2.0`) respectively.
+    These variables contain the framework (`netcoreapp2.1`) and .NET Core version (`2.1`) respectively.
 
 * **DOTNET_RUNNING_IN_CONTAINER**
 

@@ -12,24 +12,24 @@
 # Example usage: $ sudo ./test/run
 
 if [ "$BUILD_CENTOS" = "true" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-centos7}
 else
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-rhel7}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version_series="2.0"
-dotnet_version_suffix="6"
+dotnet_version_series="2.1"
+dotnet_version_suffix="300-preview2-008530"
 dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
 
 test_dotnet() {
   test_start
 
   # ENTRYPOINT enables scl so dotnet is available
-  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Microsoft .NET Core Shared Framework Host"
+  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Host"
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
   # Check version
   assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version  : ${dotnet_version}"$'\r\n'

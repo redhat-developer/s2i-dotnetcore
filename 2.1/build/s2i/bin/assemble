@@ -113,7 +113,7 @@ echo "---> Restoring application dependencies..."
 dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
 echo "---> Publishing application..."
 dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
-       --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE -o "$DOTNET_APP_PATH"
+       --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App -o "$DOTNET_APP_PATH"
 
 # check if the assembly used by the script exists
 if [ ! -f "$DOTNET_APP_PATH/${APP_DLL_NAME}" ]; then
