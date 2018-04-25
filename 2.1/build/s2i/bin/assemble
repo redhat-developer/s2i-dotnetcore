@@ -58,10 +58,6 @@ fi
 # User settable environment
 DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
 DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
-DOTNET_ASPNET_STORE="${DOTNET_ASPNET_STORE:-false}"
-if [ "$DOTNET_ASPNET_STORE" != "false" ]; then
-  DOTNET_ASPNET_STORE="true"
-fi
 
 # Ensure there is a project file and derive assembly name from project name.
 PROJFILES=(`find "${DOTNET_STARTUP_PROJECT}" -maxdepth 1 -name "*.??proj"`)
@@ -112,10 +108,9 @@ done
 echo "---> Restoring application dependencies..."
 dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
 echo "---> Publishing application..."
-# TODO: remove DOTNET_ASPNET_STORE envvar, perhaps leave PublishWithAspNetCoreTargetManifest and force it to false.
 # TODO: check if we'll need to continue setting MicrosoftNETPlatformLibrary (https://github.com/dotnet/source-build/issues/456).
 dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
-       --self-contained false /p:PublishWithAspNetCoreTargetManifest=$DOTNET_ASPNET_STORE /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App -o "$DOTNET_APP_PATH"
+       --self-contained false /p:PublishWithAspNetCoreTargetManifest=false /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App -o "$DOTNET_APP_PATH"
 
 # check if the assembly used by the script exists
 if [ ! -f "$DOTNET_APP_PATH/${APP_DLL_NAME}" ]; then
