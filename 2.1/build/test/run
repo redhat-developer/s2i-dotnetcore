@@ -297,6 +297,8 @@ test_config_1() {
   local s2i_build=$(s2i_build_output_log ${app} ${image})
   # find bower and packed all
   local bower_path=$(docker_run ${image} bash -c "command -v bower")
+  local watch_path=$(docker_run ${image} bash -c "command -v dotnet-watch")
+  local serve_path=$(docker_run ${image} bash -c "command -v dotnet-serve")
   local packed_app=$(docker_run ${image} ls /opt/app-root/app.tar.gz)
   # start container
   local container=$(docker_run_d ${image})
@@ -323,6 +325,10 @@ test_config_1() {
   assert_contains "${s2i_build}" "bower@"
   assert_contains "${s2i_build}" "gulp@"
   assert_equal "${bower_path}" "/opt/app-root/node_modules/.bin/bower"
+  # DOTNET_TOOLS=dotnet-watch@2.1.0-preview1-final dotnet-serve
+  assert_equal "${watch_path}" "/opt/app-root/dotnet_tools/dotnet-watch"
+  assert_equal "${serve_path}" "/opt/app-root/dotnet_tools/dotnet-serve"
+  assert_contains "${s2i_build}" "Tool 'dotnet-watch' (version '2.1.0-preview1-final') was successfully installed."
 }
 
 test_config_2() {

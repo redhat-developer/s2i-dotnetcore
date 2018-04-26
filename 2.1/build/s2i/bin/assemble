@@ -45,6 +45,28 @@ EOF
 fi
 echo "Using SDK: $(dotnet --version)"
 
+# dotnet tools
+if [ -n "${DOTNET_TOOLS}" ]; then
+  # Build nuget sources list for when doing the restore
+  # TODO: Follow-up on https://github.com/dotnet/cli/issues/9062.
+  TOOL_RESTORE_OPTIONS=""
+  for SOURCE in $DOTNET_RESTORE_SOURCES; do
+    TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --source-feed $SOURCE"
+  done
+
+  for DOTNET_TOOL in $DOTNET_TOOLS; do
+    # Split the tool by '@' and treat the second part as the version if there is one.
+    DOTNET_TOOL_SPLIT=(${DOTNET_TOOL//@/ })
+    DOTNET_TOOL_NAME=${DOTNET_TOOL_SPLIT[0]}
+    if [ ${#DOTNET_TOOL_SPLIT[@]} -eq 1 ]; then
+      DOTNET_TOOL_VERSION_OPTION=""
+    else
+      DOTNET_TOOL_VERSION_OPTION="--version ${DOTNET_TOOL_SPLIT[1]}"
+    fi
+    dotnet tool install --tool-path /opt/app-root/dotnet_tools $VERBOSITY_OPTION $TOOL_RESTORE_OPTIONS $DOTNET_TOOL_VERSION_OPTION $DOTNET_TOOL_NAME
+  done
+fi
+
 echo "---> Copying application source ..."
 cp -Rf /tmp/src/. ./
 

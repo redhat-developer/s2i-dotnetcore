@@ -3,7 +3,7 @@ FROM dotnet/dotnet-21-runtime-rhel7
 # applications.
 
 # Default to UTF-8 file.encoding
-ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:${PATH} \
+ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/dotnet_tools:/opt/app-root/node_modules/.bin:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
 LABEL io.k8s.description="Platform for building and running .NET Core 2.1 applications" \
