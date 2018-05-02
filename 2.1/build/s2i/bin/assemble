@@ -50,9 +50,23 @@ if [ -n "${DOTNET_TOOLS}" ]; then
   # Build nuget sources list for when doing the restore
   # TODO: Follow-up on https://github.com/dotnet/cli/issues/9062.
   TOOL_RESTORE_OPTIONS=""
-  for SOURCE in $DOTNET_RESTORE_SOURCES; do
-    TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --source-feed $SOURCE"
-  done
+  if [ -n "${DOTNET_RESTORE_SOURCES}" ]; then
+    # `dotnet tool install` doesn't have a `--source` parameter that behaves like
+    # `dotnet restore` (i.e. replacing vs adding sources). We generate a config file
+    # to have the same behavior.
+    cat >/tmp/ignore-global-nuget-sources <<EOF
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+ <packageSources>
+    <clear />
+ </packageSources>
+</configuration>
+EOF
+    TOOL_RESTORE_OPTIONS="--configfile /tmp/ignore-global-nuget-sources"
+    for SOURCE in $DOTNET_RESTORE_SOURCES; do
+      TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --source-feed $SOURCE"
+    done
+  fi
 
   for DOTNET_TOOL in $DOTNET_TOOLS; do
     # Split the tool by '@' and treat the second part as the version if there is one.
