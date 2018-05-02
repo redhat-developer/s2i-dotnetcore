@@ -20,9 +20,9 @@ LABEL io.k8s.description="Platform for building and running .NET Core 1.0 applic
 
 # Labels consumed by Red Hat build service
 LABEL name="dotnet/dotnetcore-10-rhel7" \
-      com.redhat.component="rh-dotnetcore10-docker" \
+      com.redhat.component="rh-dotnetcore10-container" \
       version="1.0" \
-      release="30" \
+      release="32" \
       architecture="x86_64"
 
 COPY ./root/usr/bin /usr/bin
