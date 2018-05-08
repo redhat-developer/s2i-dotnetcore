@@ -30,7 +30,6 @@ import Unimplemented from '../components/Unimplemented.jsx';
 
 import { formatDateTime, toZuluTime } from '../utils/date';
 
-
 const BEFORE_TODAY = 'Before Today';
 const BEFORE_END_OF_MONTH = 'Before End of Month';
 const BEFORE_END_OF_QUARTER = 'Before End of Quarter';
@@ -64,7 +63,7 @@ var SchoolBuses = React.createClass({
 
     return {
       loading: true,
-
+      rightNow: Moment().format('MMMM Do YYYY, h:mm a'),
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || defaultSelectedDistricts,
         selectedInspectorsIds: this.props.search.selectedInspectorsIds || defaultSelectedInspectors,
@@ -263,8 +262,32 @@ var SchoolBuses = React.createClass({
 
   },
 
-  print() {
+  printSelectedDropdownItems(allItems, selectedItemIds) {
+    var print = [];
 
+    for(var i = 0; i < selectedItemIds.length; i++) {
+      for(var a = 0; a < allItems.length; a++) {
+        if(allItems[a].id == selectedItemIds[i]) {
+          print.push(allItems[a].name);	
+        }
+      }
+    }
+    print = print.join(', ');
+    return print.toString();
+  },
+
+  printSelectedOwner(allOwners, ownerId){
+    var owner = '';
+    if(ownerId !== null){
+      var index = _.findIndex(allOwners,['id', ownerId]);
+      owner = allOwners[index].name;
+    }
+    return owner;
+  },
+
+  print() {
+    this.setState({rightNow: Moment().format('MMMM Do YYYY, h:mm a')});
+    window.print();
   },
 
   render() {
@@ -277,14 +300,13 @@ var SchoolBuses = React.createClass({
     var numBuses = this.state.loading ? '...' : Object.keys(this.props.schoolBuses).length;
 
     return <div id="school-buses-list">
-      <PageHeader>School Buses ({ numBuses })
-        <ButtonGroup id="school-buses-buttons">
+      <PageHeader id="pageHeader-print">School Bus Inspection Report: {this.state.rightNow}</PageHeader>
+      <PageHeader id="subPageHeader-print">School Buses ({ numBuses })
+        <ButtonGroup id="email-print-buttonGroup">
           <Unimplemented>
             <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
           </Unimplemented>
-          <Unimplemented>
             <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
-          </Unimplemented>
         </ButtonGroup>
       </PageHeader>
       <Well id="school-buses-bar" bsSize="small" className="clearfix">
@@ -319,7 +341,7 @@ var SchoolBuses = React.createClass({
                   }
                 })()}
                 <CheckboxControl inline id="hideInactive" checked={ this.state.search.hideInactive } updateState={ this.updateSearchState }>Hide Inactive</CheckboxControl>
-                <CheckboxControl inline id="justReInspections" checked={ this.state.search.justReInspections } updateState={ this.updateSearchState }>Just Re-Inspections</CheckboxControl>
+                <CheckboxControl inline id="justReInspections" checked={ this.state.search.justReInspections } updateState={ this.updateSearchState }>Re-Inspections</CheckboxControl>
               </ButtonToolbar>
             </Row>
           </Col>
@@ -330,6 +352,90 @@ var SchoolBuses = React.createClass({
             <Row id="school-buses-search">
               <Button id="search-button" bsStyle="primary" onClick={ this.fetch }>Search</Button>
             </Row>
+          </Col>
+        </Row>
+      </Well>
+
+      <Well id="searchCriteria-print" bsSize="small">
+        <Row>
+          <Col xs={6}><h2>Search Criteria</h2></Col>
+          <Col xs={6}><h2>School Buses ({numBuses})</h2></Col>
+          {(() => {
+            if(this.state.search.selectedDistrictsIds.length !== 0) {
+              if(this.state.search.selectedDistrictsIds.length == districts.length){
+                return <Col xs={6}>
+                  <span style={{fontWeight:'bold'}}>Districts: </span><span>(All districts) </span>
+                </Col>;
+              }else{
+                return <Col xs={6}>
+                  <span style={{fontWeight:'bold'}}>Districts: </span><span>{this.printSelectedDropdownItems(districts, this.state.search.selectedDistrictsIds)}</span>
+                </Col>;
+              }
+            }
+          })()}
+          {(() => {
+            if(this.state.search.selectedSchoolDistrictsIds.length !== 0){
+              if(this.state.search.selectedSchoolDistrictsIds.length == schoolDistricts.length){
+                return <Col xs={6}>
+                  <span style={{fontWeight:'bold'}}>School Districts: </span><span>(All school districts) </span>
+                </Col>;
+              }else{
+                return <Col xs={6}>
+                  <span style={{fontWeight:'bold'}}>School Districts: </span><span>{this.printSelectedDropdownItems(schoolDistricts, this.state.search.selectedSchoolDistrictsIds)}</span>
+                </Col>;
+              }
+            }
+          })()}
+          {(() => {
+            if(this.state.search.selectedCitiesIds.length !== 0){
+              if(this.state.search.selectedCitiesIds.length == cities.length){
+                return <Col xs={6}>
+                  <span style={{fontWeight:'bold'}}>Cities: </span><span>(All cities) </span>
+                </Col>;
+              }else{
+                return <Col xs={6}>
+                  <span style={{fontWeight:'bold'}}>Cities: </span><span>{this.printSelectedDropdownItems(cities, this.state.search.selectedCitiesIds)} </span>
+                </Col>;
+              }
+            }
+          })()}
+          {(() => {
+            if(this.state.search.ownerId !== 0){
+              return <Col xs={6}>
+                <span style={{fontWeight:'bold'}}>Owners: </span><span>{this.printSelectedOwner(owners, this.state.search.ownerId)} </span>
+              </Col>;
+            } else {
+              return <Col xs={6}>
+                <span style={{fontWeight:'bold'}}>Owners: </span><span>(All owners) </span>
+              </Col>;
+            }
+          })()}
+          {(() => {
+            if(this.state.search.selectedInspectorsIds.length !== 0){
+              if(this.state.search.selectedInspectorsIds.length == inspectors.length){
+                return <Col xs={6}>
+                  <span style={{fontWeight:'bold'}}>Inspectors: </span><span>(All inspectors) </span>
+                </Col>;
+              }else{
+                return <Col xs={6}>
+                  <span style={{fontWeight:'bold'}}>Inspectors: </span><span>{this.printSelectedDropdownItems(inspectors, this.state.search.selectedInspectorsIds)} </span>
+                </Col>;
+              }
+            }
+          })()}
+          {(() => {
+            if(this.state.search.keySearchText !== ''){
+              return <Col xs={6}>
+                <span style={{fontWeight:'bold'}}>{this.state.search.keySearchField}: </span><span>{this.state.search.keySearchText} </span>
+              </Col>;
+            }
+          })()}
+          <Col xs={12}>
+            {this.state.search.nextInspection==CUSTOM ?
+              <span><span style={{fontWeight:'bold'}}>From: </span>{this.state.search.startDate} <span style={{fontWeight:'bold'}}>To: </span>{this.state.search.endDate} </span> : <span style={{fontWeight:'bold'}}>{this.state.search.nextInspection}  </span>
+            }
+            <CheckboxControl inline checked={ this.state.search.hideInactive }>Hide Inactive</CheckboxControl>
+            <CheckboxControl inline checked={ this.state.search.justReInspections }>Re-Inspections</CheckboxControl>
           </Col>
         </Row>
       </Well>
@@ -369,7 +475,7 @@ var SchoolBuses = React.createClass({
                 </td>
                 <td>{ bus.inspectorName }</td>
                 <td style={{ textAlign: 'right' }}>
-                  <ButtonGroup>
+                  <ButtonGroup id="view-edit-buttonGroup">
                     <DeleteButton name="Bus" hide={ !bus.canDelete } onConfirm={ this.delete.bind(this, bus) }/>
                     <EditButton name="Bus" hide={ !bus.canView } view pathname={ bus.path }/>
                   </ButtonGroup>

@@ -249,3 +249,25 @@
     height: 106px;
   }
 }
+
+#email-print-buttonGroup{
+  float: right;
+}
+
+#pageHeader-print,#searchCriteria-print{
+  display: none;
+}
+
+@media print{
+  #email-print-buttonGroup, #view-edit-buttonGroup, #school-buses-bar, #subPageHeader-print, #details, .btn-group{
+    display: none;
+  }
+
+  #pageHeader-print,#searchCriteria-print{
+    display: block;
+  }
+
+  #searchCriteria-print span{
+    font-size: 15px;
+  }
+}
