@@ -30,6 +30,8 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
+# The 'rm -rf /var/cache/yum' line is there to clean out orphaned yum cache files,
+# which can be quite large in size.
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
     INSTALL_PKGS="rh-nodejs6-npm rh-nodejs6-nodejs-nodemon rh-dotnet20-dotnet-sdk-2.0 rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \

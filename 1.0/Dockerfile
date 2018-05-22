@@ -34,6 +34,8 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
 
+# The 'rm -rf /var/cache/yum' line is there to clean out orphaned yum cache files,
+# which can be quite large in size.
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
     INSTALL_PKGS="rh-dotnetcore10 nss_wrapper tar rh-nodejs4-npm" && \
     yum install -y --setopt=tsflags=nodocs  \

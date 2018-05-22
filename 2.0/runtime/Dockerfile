@@ -41,6 +41,8 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
+# The 'rm -rf /var/cache/yum' line is there to clean out orphaned yum cache files,
+# which can be quite large in size.
 RUN yum install -y centos-release-dotnet && \
     INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \

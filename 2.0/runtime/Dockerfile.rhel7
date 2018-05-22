@@ -41,6 +41,8 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
+# The 'rm -rf /var/cache/yum' line is there to clean out orphaned yum cache files,
+# which can be quite large in size.
 RUN INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
       --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
