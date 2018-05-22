@@ -40,6 +40,7 @@ RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
       $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
+    rm -rf /var/cache/yum/* && \
     mkdir -p /opt/app-root/src /opt/app-root/publish && \
     useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
       -c "Default Application User" default && \

@@ -35,7 +35,8 @@ RUN INSTALL_PKGS="rh-nodejs6-npm rh-nodejs6-nodejs-nodemon rh-dotnet20-dotnet-sd
       --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
       $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all -y
+    yum clean all -y && \
+    rm -rf /var/cache/yum/*
 
 # Directory with the sources is set as the working directory.
 RUN mkdir /opt/app-root/src
