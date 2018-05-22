@@ -42,13 +42,12 @@ COPY ./contrib/ /opt/app-root
 COPY ./root/usr/bin /usr/bin
 
 # TODO: install 2.1 runtime
-# The 'rm -rf /var/cache/yum' line is there to clean out orphaned yum cache files,
-# which can be quite large in size.
 RUN yum install -y centos-release-dotnet && \
     INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
+    # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/*
 
 # TODO: remove Microsoft binaries
