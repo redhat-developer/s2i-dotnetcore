@@ -42,12 +42,15 @@ COPY ./contrib/ /opt/app-root
 COPY ./root/usr/bin /usr/bin
 
 # TODO: install 2.1 runtime
+# The 'rm -rf /var/cache/yum' line is there to clean out orphaned yum cache files,
+# # which can be quite large in size.
 RUN INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
       --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
       $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all -y
+    yum clean all -y && \
+    rm -rf /var/cache/yum/*
 
 # TODO: remove Microsoft binaries
 RUN curl https://download.microsoft.com/download/3/7/C/37C0D2E3-2056-4F9A-A67C-14DEFBD70F06/dotnet-sdk-2.1.300-preview2-008530-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
