@@ -34,14 +34,13 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
 
-# The 'rm -rf /var/cache/yum' line is there to clean out orphaned yum cache files,
-# which can be quite large in size.
 RUN INSTALL_PKGS="rh-dotnetcore11 nss_wrapper tar rh-nodejs4-npm" && \
     yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
       --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
       $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
+    # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/* && \
     mkdir -p /opt/app-root/src /opt/app-root/publish && \
     useradd -u 1001 -r -g 0 -d /opt/app-root/src -s /sbin/nologin \
