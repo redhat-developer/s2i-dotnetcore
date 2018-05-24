@@ -46,7 +46,7 @@ RUN yum install -y centos-release-dotnet && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
-    # yum cache files may still exist (and quite large in size)
+# yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/*
 
 # Get prefix path and path to scripts rather than hard-code them in scripts
