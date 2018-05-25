@@ -45,7 +45,9 @@ RUN yum install -y centos-release-dotnet && \
     INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all -y
+    yum clean all -y && \
+# yum cache files may still exist (and quite large in size)
+    rm -rf /var/cache/yum/*
 
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
