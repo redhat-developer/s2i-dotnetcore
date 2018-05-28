@@ -22,7 +22,7 @@ test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
 dotnet_version_series="2.1"
-dotnet_version_suffix="300-preview2-008530"
+dotnet_version_suffix="300"
 dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
 
 test_dotnet() {

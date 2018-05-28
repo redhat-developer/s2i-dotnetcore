@@ -41,25 +41,17 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
-# TODO: install 2.1 runtime
 RUN yum install -y centos-release-dotnet && \
-    INSTALL_PKGS="rh-dotnet20-dotnet-runtime-2.0 nss_wrapper tar unzip" && \
+    INSTALL_PKGS="rh-dotnet21-dotnet-runtime-2.1 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/*
 
-# TODO: remove Microsoft binaries
-RUN curl https://download.microsoft.com/download/3/7/C/37C0D2E3-2056-4F9A-A67C-14DEFBD70F06/dotnet-sdk-2.1.300-preview2-008530-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
-    mkdir ~/dotnet-preview2 && \
-    tar xf /tmp/dotnet-sdk.tar.gz -C ~/dotnet-preview2 && \
-    rm -rf ~/dotnet-preview2/shared/Microsoft.AspNetCore.*
-
-# TODO: enable rh-dotnet21 scl
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
-    ENABLED_COLLECTIONS="rh-dotnet20"
+    ENABLED_COLLECTIONS="rh-dotnet21"
 
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable
