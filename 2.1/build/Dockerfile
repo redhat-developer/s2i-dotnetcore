@@ -30,9 +30,8 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-# TODO: install 2.1 sdk
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
-    INSTALL_PKGS="rh-nodejs6-npm rh-nodejs6-nodejs-nodemon rh-dotnet20-dotnet-sdk-2.0 rsync" && \
+    INSTALL_PKGS="rh-nodejs6-npm rh-nodejs6-nodejs-nodemon rh-dotnet21-dotnet-sdk-2.1 rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \

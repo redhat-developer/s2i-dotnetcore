@@ -48,7 +48,6 @@ echo "Using SDK: $(dotnet --version)"
 # dotnet tools
 if [ -n "${DOTNET_TOOLS}" ]; then
   # Build nuget sources list for when doing the restore
-  # TODO: Follow-up on https://github.com/dotnet/cli/issues/9062.
   TOOL_RESTORE_OPTIONS=""
   if [ -n "${DOTNET_RESTORE_SOURCES}" ]; then
     # `dotnet tool install` doesn't have a `--source` parameter that behaves like
@@ -64,7 +63,7 @@ if [ -n "${DOTNET_TOOLS}" ]; then
 EOF
     TOOL_RESTORE_OPTIONS="--configfile /tmp/ignore-global-nuget-sources"
     for SOURCE in $DOTNET_RESTORE_SOURCES; do
-      TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --source-feed $SOURCE"
+      TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --add-source $SOURCE"
     done
   fi
 
@@ -144,9 +143,8 @@ done
 echo "---> Restoring application dependencies..."
 dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
 echo "---> Publishing application..."
-# TODO: check if we'll need to continue setting MicrosoftNETPlatformLibrary (https://github.com/dotnet/source-build/issues/456).
 dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
-       --self-contained false /p:PublishWithAspNetCoreTargetManifest=false /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App -o "$DOTNET_APP_PATH"
+       --self-contained false /p:PublishWithAspNetCoreTargetManifest=false -o "$DOTNET_APP_PATH"
 
 # check if the assembly used by the script exists
 if [ ! -f "$DOTNET_APP_PATH/${APP_DLL_NAME}" ]; then

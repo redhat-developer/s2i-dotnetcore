@@ -86,7 +86,7 @@ if ! [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
 fi
 
 if [ "$BUILD_CENTOS" = "true" ]; then
-  VERSIONS="${VERSIONS:-1.0 2.0 2.1}"
+  VERSIONS="${VERSIONS:-1.0 2.0}"
   image_os="centos7"
   image_prefix="dotnet"
   docker_filename="Dockerfile"
