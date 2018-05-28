@@ -26,13 +26,13 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-sdk_default_version="2.1.300-preview2"
+sdk_default_version="2.1.300"
 if [ "$BUILD_CENTOS" = "true" ]; then
-sdk_latest_version="2.1.300-preview2-008530"
-sdk_versions=( "2.1.300-preview2" )
+sdk_latest_version="2.1.300"
+sdk_versions=( "2.1.300" )
 else
-sdk_latest_version="2.1.300-preview2-008530"
-sdk_versions=( "2.1.300-preview2" )
+sdk_latest_version="2.1.300"
+sdk_versions=( "2.1.300" )
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
