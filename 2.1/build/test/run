@@ -155,7 +155,7 @@ test_image() {
 
   # verify npm is available
   local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
-  assert_equal "${image_npm_version}" "3.10.9"
+  assert_equal "${image_npm_version}" "5.6.0"
 }
 
 test_consoleapp() {
