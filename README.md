@@ -11,17 +11,17 @@ Versions
 
 .NET Core versions currently provided are:
 
-* 1.0 (RHEL 7)
+* 1.0 (RHEL 7, CentOS 7)
 * 1.1 (RHEL 7)
 * 2.0 (RHEL 7, CentOS 7)
-
+* 2.1 (RHEL 7)
 
 Building
 ----------------
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ sudo VERSIONS=2.0 ./build.sh
+$ sudo VERSIONS=2.1 ./build.sh
 ```
 
 Note: to build RHEL 7 based images, you need to run the build on a
@@ -30,6 +30,10 @@ BUILD_CENTOS=true. On non-RHEL, building CentOS images is the default.
 
 Usage
 ---------------------------------
+
+For information about usage of Docker image for .NET Core 2.1,
+see [2.1 builder usage documentation](2.1/build/README.md) and
+[2.1 runtime usage documentation](2.1/runtime/README.md).
 
 For information about usage of Docker image for .NET Core 2.0,
 see [2.0 builder usage documentation](2.0/build/README.md) and

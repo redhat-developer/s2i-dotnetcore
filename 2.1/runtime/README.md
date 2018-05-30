@@ -13,20 +13,19 @@ a new docker image should be created using this image as the base.
 
 For example to create a Docker image for [s2i-dotnetcore-ex](https://github.com/redhat-developer/s2i-dotnetcore-ex) 
 
-TODO (2.1): update sample app and instructions below
 Publish the application:
 ```
-$ git clone -b dotnetcore-2.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
+$ git clone -b dotnetcore-2.1 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
 $ cd s2i-dotnetcore-ex/app
 $ dotnet restore -r rhel.7-x64
-$ dotnet publish -f netcoreapp2.0 -c Release -r rhel.7-x64 --self-contained false /p:PublishWithAspNetCoreTargetManifest=false
+$ dotnet publish -f netcoreapp2.1 -c Release -r rhel.7-x64 --self-contained false
 ```
 
 Create the Docker image:
 ```
 $ cat > Dockerfile <<EOF
-FROM dotnet/dotnet-20-runtime-rhel7
-ADD bin/Release/netcoreapp2.0/rhel.7-x64/publish/. .
+FROM dotnet/dotnet-21-runtime-rhel7
+ADD bin/Release/netcoreapp2.1/rhel.7-x64/publish/. .
 CMD [ "dotnet", "app.dll" ]
 EOF
 $ docker build -t s2i-dotnetcore-ex .
