@@ -76,7 +76,7 @@ EOF
     else
       DOTNET_TOOL_VERSION_OPTION="--version ${DOTNET_TOOL_SPLIT[1]}"
     fi
-    dotnet tool install --tool-path /opt/app-root/dotnet_tools $VERBOSITY_OPTION $TOOL_RESTORE_OPTIONS $DOTNET_TOOL_VERSION_OPTION $DOTNET_TOOL_NAME
+    dotnet tool install -g $VERBOSITY_OPTION $TOOL_RESTORE_OPTIONS $DOTNET_TOOL_VERSION_OPTION $DOTNET_TOOL_NAME
   done
 fi
 
