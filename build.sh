@@ -11,10 +11,15 @@
 #                 released images work against the
 #                 test application used in OpenShift
 #
-# VERSIONS     The list of versions to build/test.
-#              Defaults to all versions. i.e "1.0 1.1".
+# VERSIONS        The list of versions to build/test.
+#                 Defaults to all versions. i.e "1.0 1.1".
 #
 # BUILD_CENTOS    If 'true' build CentOS based images.
+#
+# TEST_PORT       specifies the port on the docker host
+#                 to bind to when creating containers
+#                 during the asp.net tests. Affects
+#                 tests only.
 # -----------------------------------------------------
 #
 # Usage:
