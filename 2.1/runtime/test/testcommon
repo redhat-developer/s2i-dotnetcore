@@ -2,7 +2,7 @@
 # The code is duplicated in both folders because the images are built
 # and tested after copying the sub-directories into a container repo.
 
-test_port=8080
+TEST_PORT=${TEST_PORT:-8080}
 CURLE_COULNDT_CONNECT=7
 
 if [ "$DEBUG" != "" ]; then
@@ -83,7 +83,7 @@ docker_run_as_d() {
   local user="$2"
 
   local output;
-  output=$(docker run --user="${user}" -d -p ${test_port}:8080 ${image} 2>&1)
+  output=$(docker run --user="${user}" -d -p ${TEST_PORT}:8080 ${image} 2>&1)
   if [ $? -ne 0 ]; then
     error "$output"
     echo "no-container"
@@ -95,7 +95,7 @@ docker_run_as_d() {
 docker_run_d() {
   local image="$1"
   local output;
-  output=$(docker run -d -p ${test_port}:8080 ${image} 2>&1)
+  output=$(docker run -d -p ${TEST_PORT}:8080 ${image} 2>&1)
   if [ $? -ne 0 ]; then
     error "$output"
     echo "no-container"
@@ -191,6 +191,6 @@ container_url() {
     error "$output"
     echo "no-url"
   else
-    echo "http://$output:${test_port}"
+    echo "http://$output:8080"
   fi
 }
