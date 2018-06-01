@@ -9,6 +9,10 @@
 # OPENSHIFT_ONLY environment variable, if 'true', only tests features used by
 # OpenShift's try-it feature.
 #
+# TEST_PORT specifies the port on the docker host to be used for testing.
+# The container application will still use 8080, but this port will be bound
+# to the running container when testing asp.net projects.
+#
 # DEBUG environment variable, if not empty, makes 'run' to log every step
 # of testing.
 #
