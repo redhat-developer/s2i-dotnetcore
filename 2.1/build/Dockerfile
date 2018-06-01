@@ -2,7 +2,6 @@ FROM dotnet/dotnet-21-runtime-centos7
 # This image provides a .NET Core 2.1 environment you can use to run your .NET
 # applications.
 
-# Default to UTF-8 file.encoding
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/dotnet_tools:/opt/app-root/node_modules/.bin:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
