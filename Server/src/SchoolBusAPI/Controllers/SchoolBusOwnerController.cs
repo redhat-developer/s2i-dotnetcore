@@ -227,5 +227,20 @@ namespace SchoolBusAPI.Controllers
         {
             return this._service.SchoolbusownersSearchGetAsync(districts, inspectors, owner, includeInactive);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name = "id">id of school bus owner to fetch contacts</param>
+        /// <response code = "200">OK</response>
+        /// <response code = "404">school bus owner not found</response>
+        [HttpGet]
+        [Route("/api/schoolbusowners/{id}/contacts")]
+        [SwaggerOperation("SchoolbusownersIdContactsGet")]
+        [SwaggerResponse(200, type: typeof(List<Contact>))]
+        public virtual IActionResult SchoolbusesIdInspectionsGet([FromRoute]int id)
+        {
+            return this._service.SchoolbuseownersIdContactsGetAsync(id);
+        }
     }
 }

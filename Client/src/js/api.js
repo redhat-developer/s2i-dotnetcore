@@ -752,6 +752,18 @@ export function getOwnerHistory(ownerId, params) {
   });
 }
 
+export function getOwnerContacts(ownerId){
+  return new ApiRequest(`/schoolbusowners/${ ownerId }/contacts`).get().then(response => {
+    // Normalize the response
+    var ownerContacts = _.fromPairs(response.map(contact => [ contact.id, contact ]));
+
+    // Add display fields
+    _.map(ownerContacts, contact => { parseContact(contact); });
+
+    store.dispatch({ type: Action.UPDATE_OWNER_CONTACTS, ownerContacts: ownerContacts }); 
+  });
+}
+
 ////////////////////
 // Look-ups
 ////////////////////
@@ -839,6 +851,60 @@ export function getPermissions() {
     var permissions = _.fromPairs(response.map(permission => [ permission.id, permission ]));
 
     store.dispatch({ type: Action.UPDATE_PERMISSIONS_LOOKUP, permissions: permissions });
+  });
+}
+
+////////////////////
+// Contacts
+////////////////////
+
+function parseContact(contact){
+  contact.path = contact.schoolBusOwner ? `${ Constant.OWNERS_PATHNAME }/${ contact.schoolBusOwner.id }/${ Constant.CONTACT_PATHNAME }/${ contact.id }` : null;
+  contact.url = contact.path ? `#/${ contact.path }` : null;
+  contact.name = `${ firstLastName(contact.givenName, contact.surname) }`;
+  contact.historyEntity = History.makeHistoryEntity(History.CONTACT, contact);
+  
+  contact.canDelete = true;
+  contact.canEdit = true;
+}
+
+export function getContact(id){
+  return new ApiRequest(`/contacts/${ id }`).get().then(response => {
+    var contact = response;
+
+    parseContact(contact);
+
+    store.dispatch({ type: Action.UPDATE_CONTACT, contact: contact });
+  });
+}
+
+export function addContact(contact){
+  return new ApiRequest('/contacts').post(contact).then(response => {
+    var contact = response;
+
+    parseContact(contact);
+
+    store.dispatch({ type: Action.ADD_CONTACT, contact: contact });
+  });
+}
+
+export function updateContact(contact){
+  return new ApiRequest(`/contacts/${ contact.id }`).put(contact).then(response => {
+    var contact = response;
+
+    parseContact(contact);
+
+    store.dispatch({ type: Action.UPDATE_CONTACT, contact: contact });
+  });
+}
+
+export function deleteContact(contact){
+  return new ApiRequest(`/contacts/${ contact.id }/delete`).post().then(response => {
+    var contact = response;
+
+    parseContact(contact);
+
+    store.dispatch({ type: Action.DELETE_CONTACT, contact: contact });
   });
 }
 

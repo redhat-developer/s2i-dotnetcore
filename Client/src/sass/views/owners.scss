@@ -44,6 +44,13 @@
     }
   }
 
+  #contact-list {
+    height: 271px;
+    width: 100%;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+  }
+
   .well {
     margin-left: 5px;
     margin-right: 5px;
@@ -56,6 +63,18 @@
 
   .btn {
     margin-left: 20px;
+  }
+
+  .btn-group > .btn + .btn {
+    margin-left: -1px;
+  }
+
+  .alert {
+    margin-top: 10px;
+
+    .btn{
+      float:  right;
+    }
   }
 
   .col-display-label {

@@ -17,6 +17,9 @@ const DEFAULT_MODELS = {
 
   inspection: {},
 
+  ownerContacts: {},
+  contact: {},
+
   owners: {},
   owner: {},
 
@@ -96,7 +99,20 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
     case Action.DELETE_INSPECTION:
       return { ...state, inspection: action.inspection };
 
+    //Contacts
+    case Action.ADD_CONTACT:
+      return { ...state, contact: action.contact };
+
+    case Action.UPDATE_CONTACT:
+      return { ...state, contact: action.contact };
+
+    case Action.DELETE_CONTACT:
+      return { ...state, contact: action.contact };
+
     // Owners
+    case Action.UPDATE_OWNER_CONTACTS:
+      return { ...state, ownerContacts: action.ownerContacts};
+
     case Action.UPDATE_OWNERS:
       return { ...state, owners: action.owners };
 

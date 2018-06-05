@@ -101,6 +101,10 @@ namespace SchoolBusAPI.Models
         {
             // add our naming convention extension
             modelBuilder.UpperCaseUnderscoreSingularConvention();
+
+            modelBuilder.Entity<Contact>()
+                .HasOne(s => s.SchoolBusOwner)
+                .WithMany(g => g.Contacts);
         }
 
         public virtual DbSet<Audit> Audits { get; set; }

@@ -56,7 +56,8 @@ namespace SchoolBusAPI.Models
         /// <param name="City">The City of the address..</param>
         /// <param name="Province">The Province of the address..</param>
         /// <param name="PostalCode">The postal code of the address..</param>
-        public Contact(int Id, string GivenName = null, string Surname = null, string OrganizationName = null, string Role = null, string Notes = null, string EmailAddress = null, string WorkPhoneNumber = null, string MobilePhoneNumber = null, string FaxPhoneNumber = null, string Address1 = null, string Address2 = null, string City = null, string Province = null, string PostalCode = null)
+        /// <param name="SchoolBusOwner">A foreign key reference to a system-generated unique identifier for a school bus owner</param>
+        public Contact(int Id, string GivenName = null, string Surname = null, string OrganizationName = null, string Role = null, string Notes = null, string EmailAddress = null, string WorkPhoneNumber = null, string MobilePhoneNumber = null, string FaxPhoneNumber = null, string Address1 = null, string Address2 = null, string City = null, string Province = null, string PostalCode = null, SchoolBusOwner SchoolBusOwner = null)
         {   
             this.Id = Id;
             this.GivenName = GivenName;
@@ -73,6 +74,8 @@ namespace SchoolBusAPI.Models
             this.City = City;
             this.Province = Province;
             this.PostalCode = PostalCode;
+            
+            this.SchoolBusOwner = SchoolBusOwner;
         }
 
         /// <summary>
@@ -205,9 +208,23 @@ namespace SchoolBusAPI.Models
         /// <value>The postal code of the address.</value>
         [MetaDataExtension (Description = "The postal code of the address.")]
         [MaxLength(15)]
-        
         public string PostalCode { get; set; }
-        
+
+        /// <summary>
+        /// A foreign key reference to a system-generated unique identifier for a school bus owner
+        /// </summary>
+        /// <value>A foreign key reference to a system-generated unique identifier for a school bus owner</value>
+        [MetaDataExtension(Description = "A foreign key reference to a system-generated unique identifier for a school bus owner")]
+        public SchoolBusOwner SchoolBusOwner { get; set; }
+
+        /// <summary>
+        /// Foreign key for SchoolBus 
+        /// </summary>   
+        [ForeignKey("SchoolBusOwner")]
+        [JsonIgnore]
+        [MetaDataExtension(Description = "A foreign key reference to the system-generated unique identifier for a School Bus Owner")]
+        public int? SchoolBusOwnerId { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -231,6 +248,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  City: ").Append(City).Append("\n");
             sb.Append("  Province: ").Append(Province).Append("\n");
             sb.Append("  PostalCode: ").Append(PostalCode).Append("\n");
+            sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -268,80 +286,85 @@ namespace SchoolBusAPI.Models
             if (ReferenceEquals(null, other)) { return false; }
             if (ReferenceEquals(this, other)) { return true; }
 
-            return                 
+            return
                 (
                     this.Id == other.Id ||
                     this.Id.Equals(other.Id)
-                ) &&                 
+                ) &&
                 (
                     this.GivenName == other.GivenName ||
                     this.GivenName != null &&
                     this.GivenName.Equals(other.GivenName)
-                ) &&                 
+                ) &&
                 (
                     this.Surname == other.Surname ||
                     this.Surname != null &&
                     this.Surname.Equals(other.Surname)
-                ) &&                 
+                ) &&
                 (
                     this.OrganizationName == other.OrganizationName ||
                     this.OrganizationName != null &&
                     this.OrganizationName.Equals(other.OrganizationName)
-                ) &&                 
+                ) &&
                 (
                     this.Role == other.Role ||
                     this.Role != null &&
                     this.Role.Equals(other.Role)
-                ) &&                 
+                ) &&
                 (
                     this.Notes == other.Notes ||
                     this.Notes != null &&
                     this.Notes.Equals(other.Notes)
-                ) &&                 
+                ) &&
                 (
                     this.EmailAddress == other.EmailAddress ||
                     this.EmailAddress != null &&
                     this.EmailAddress.Equals(other.EmailAddress)
-                ) &&                 
+                ) &&
                 (
                     this.WorkPhoneNumber == other.WorkPhoneNumber ||
                     this.WorkPhoneNumber != null &&
                     this.WorkPhoneNumber.Equals(other.WorkPhoneNumber)
-                ) &&                 
+                ) &&
                 (
                     this.MobilePhoneNumber == other.MobilePhoneNumber ||
                     this.MobilePhoneNumber != null &&
                     this.MobilePhoneNumber.Equals(other.MobilePhoneNumber)
-                ) &&                 
+                ) &&
                 (
                     this.FaxPhoneNumber == other.FaxPhoneNumber ||
                     this.FaxPhoneNumber != null &&
                     this.FaxPhoneNumber.Equals(other.FaxPhoneNumber)
-                ) &&                 
+                ) &&
                 (
                     this.Address1 == other.Address1 ||
                     this.Address1 != null &&
                     this.Address1.Equals(other.Address1)
-                ) &&                 
+                ) &&
                 (
                     this.Address2 == other.Address2 ||
                     this.Address2 != null &&
                     this.Address2.Equals(other.Address2)
-                ) &&                 
+                ) &&
                 (
                     this.City == other.City ||
                     this.City != null &&
                     this.City.Equals(other.City)
-                ) &&                 
+                ) &&
                 (
                     this.Province == other.Province ||
                     this.Province != null &&
                     this.Province.Equals(other.Province)
-                ) &&                 
+                ) &&
                 (
                     this.PostalCode == other.PostalCode ||
                     this.PostalCode != null &&
                     this.PostalCode.Equals(other.PostalCode)
+                ) &&
+                (
+                    this.SchoolBusOwner == other.SchoolBusOwner ||
+                    this.SchoolBusOwner != null &&
+                    this.SchoolBusOwner.Equals(other.SchoolBusOwner)
                 );
         }
 
@@ -412,7 +435,11 @@ namespace SchoolBusAPI.Models
                                 if (this.PostalCode != null)
                 {
                     hash = hash * 59 + this.PostalCode.GetHashCode();
-                }                
+                }
+                                if (this.SchoolBusOwner != null)
+                {
+                    hash = hash * 59 + this.SchoolBusOwner.GetHashCode();
+                }      
                 
                 return hash;
             }

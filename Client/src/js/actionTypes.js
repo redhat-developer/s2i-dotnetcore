@@ -82,6 +82,12 @@ export const UPDATE_OWNERS = 'UPDATE_OWNERS';
 export const UPDATE_OWNER = 'UPDATE_OWNER';
 export const ADD_OWNER = 'ADD_OWNER';
 export const DELETE_OWNER = 'DELETE_OWNER';
+export const UPDATE_OWNER_CONTACTS = 'UPDATE_OWNER_CONTACTS';
 
 // History
 export const UPDATE_HISTORY = 'UPDATE_HISTORY';
+
+//Contacts
+export const ADD_CONTACT = 'ADD_CONTACT';
+export const UPDATE_CONTACT = 'UPDATE_CONTACT';
+export const DELETE_CONTACT = 'DELECT_CONTACT';

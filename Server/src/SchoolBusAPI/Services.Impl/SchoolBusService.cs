@@ -631,7 +631,7 @@ namespace SchoolBusAPI.Services.Impl
             bool exists = _context.SchoolBuss.Any(a => a.Id == id);
             if (exists && id == item.Id)
             {
-                _context.SchoolBuss.Update(item);                
+                _context.SchoolBuss.Update(item);                 
                 // Save the changes
                 _context.SaveChanges();
                 return new ObjectResult(item);

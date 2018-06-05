@@ -415,10 +415,10 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.SchoolBusOwners.Any(a => a.Id == id);
             if (exists)
             {
-                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners.First(a => a.Id == id);
+                SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners.Include(x => x.PrimaryContact).First(a => a.Id == id);
                 SchoolBusOwnerViewModel result = schoolBusOwner.ToViewModel();
                 // populate the calculated fields.
-                result.NextInspectionDate = GetNextInspectionDate(id); ;
+                result.NextInspectionDate = GetNextInspectionDate(id);
                 result.NumberOfBuses = GetNumberSchoolBuses(id);
                 result.NextInspectionTypeCode = GetNextInspectionTypeCode(id);
                 return new ObjectResult(result);
@@ -560,6 +560,27 @@ namespace SchoolBusAPI.Services.Impl
                 item.NextInspectionTypeCode = GetNextInspectionTypeCode(item.Id);              
             }
             return new ObjectResult(result);
+        }
+
+        /// <param name="id">id of SchoolBus to fetch Inspections for</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">SchoolBus not found</response>
+
+        public virtual IActionResult SchoolbuseownersIdContactsGetAsync(int id)
+        {
+            bool exists = _context.SchoolBusOwners.Any(a => a.Id == id);
+            if (exists)
+            {
+                var items = _context.Contacts
+                    .Include(x => x.SchoolBusOwner)
+                    .Where(a => a.SchoolBusOwner.Id == id);
+                return new ObjectResult(items);
+            }
+            else
+            {
+                // record not found
+                return new StatusCodeResult(404);
+            }
         }
     }
 }

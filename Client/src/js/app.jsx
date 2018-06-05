@@ -30,6 +30,7 @@ const App = <Provider store={ store }>
       <Route path={ `${ Constant.BUSES_PATHNAME }/:schoolBusId/${ Constant.INSPECTION_PATHNAME }/:inspectionId` } component={ SchoolBusesDetail }/>
       <Route path={ Constant.OWNERS_PATHNAME } component={ Owners }/>
       <Route path={ `${ Constant.OWNERS_PATHNAME }/:ownerId` } component={ OwnersDetail }/>
+      <Route path={ `${ Constant.OWNERS_PATHNAME }/:ownerId/${ Constant.CONTACT_PATHNAME }/:contactId` } component={ OwnersDetail }/>
       <Route path={ Constant.NOTIFICATIONS_PATHNAME } component={ Notifications }/>
       <Route path={ Constant.USERS_PATHNAME } component={ Users }/>
       <Route path={ `${ Constant.USERS_PATHNAME }/:userId` } component={ UsersDetail }/>

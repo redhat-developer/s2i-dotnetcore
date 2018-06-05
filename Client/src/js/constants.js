@@ -7,6 +7,7 @@ export const USERS_PATHNAME = 'users';
 export const ROLES_PATHNAME = 'roles';
 export const VERSION_PATHNAME = 'version';
 export const INSPECTION_PATHNAME = 'inspection';
+export const CONTACT_PATHNAME = 'contact';
 
 // Status
 export const STATUS_ACTIVE = 'Active';
@@ -49,3 +50,10 @@ export const DATE_TIME_LOG = 'MMM D, YYYY h:mm:ss A';
 export const CCW_REGISTRATION = 'regi';
 export const CCW_PLATE = 'plate';
 export const CCW_VIN = 'vin';
+
+// Contact roles
+export const CONTACT_ROLE_DRIVER = 'Driver';
+export const CONTACT_ROLE_ASSISTANT = 'Assistant';
+export const CONTACT_ROLE_MECHANIC = 'Mechanic';
+export const CONTACT_ROLE_OWNER = 'Owner';
+export const CONTACT_ROLE_SUPERVISOR = 'Supervisor';

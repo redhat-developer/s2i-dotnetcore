@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolBusAPI.Services.Impl
 { 
@@ -52,7 +53,23 @@ namespace SchoolBusAPI.Services.Impl
                 return new BadRequestResult();
             }
             foreach (Contact item in items)
-            {                
+            {
+                //adjust the schoolbusowner
+                if (item.SchoolBusOwner != null)
+                {
+                    int owner_id = item.SchoolBusOwner.Id;
+                    bool owner_exists = _context.SchoolBusOwners.Any(a => a.Id == owner_id);
+                    if (owner_exists)
+                    {
+                        SchoolBusOwner schoolbusowner = _context.SchoolBusOwners.First(a => a.Id == owner_id);
+                        item.SchoolBusOwner = schoolbusowner;
+                    }
+                    else
+                    {
+                        item.SchoolBusOwner = null;
+                    }
+                }
+                  
                 var exists = _context.Contacts.Any(a => a.Id == item.Id);
                 if (exists)
                 {
@@ -80,9 +97,10 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.Contacts.Any(a => a.Id == id);
             if (exists)
             {
-                var item = _context.Contacts.First(a => a.Id == id);
+                var item = _context.Contacts.Include(x => x.SchoolBusOwner).First(a => a.Id == id);
                 if (item != null)
                 {
+     
                     _context.Contacts.Remove(item);
                     // Save the changes
                     _context.SaveChanges();
@@ -108,7 +126,9 @@ namespace SchoolBusAPI.Services.Impl
             var exists = _context.Contacts.Any(a => a.Id == id);
             if (exists)
             {
-                var result = _context.Contacts.First(a => a.Id == id);
+                var result = _context.Contacts
+                    .Include(x => x.SchoolBusOwner)
+                    .First(a => a.Id == id);
                 return new ObjectResult(result);
             }
             else
@@ -124,7 +144,9 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="200">OK</response>
         public virtual IActionResult ContactsGetAsync()
         {
-            var result = _context.Contacts.ToList();
+            var result = _context.Contacts
+                .Include(x => x.SchoolBusOwner)
+                .ToList();
             return new ObjectResult(result);
         }
 
@@ -134,13 +156,14 @@ namespace SchoolBusAPI.Services.Impl
         /// </summary>
 
         /// <param name="id">id of Contact to fetch</param>
+        /// <param name="body">object of contact to be updated</param>>
         /// <response code="200">OK</response>
         /// <response code="404">Contact not found</response>
 
         public virtual IActionResult ContactsIdPutAsync (int id, Contact body)        
         {
             var exists = _context.Contacts.Any(a => a.Id == id);
-            if (exists && id == body.Id)
+            if (exists && body.Id == id)
             {
                 _context.Contacts.Update(body);
                 // Save the changes
@@ -160,11 +183,46 @@ namespace SchoolBusAPI.Services.Impl
         /// </summary>
         /// <param name="body"></param>
         /// <returns></returns>
-        public virtual IActionResult ContactsPostAsync(Contact body)
+        public virtual IActionResult ContactsPostAsync(Contact item)
         {
-            _context.Contacts.Add(body);
-            _context.SaveChanges();
-            return new ObjectResult(body);
+            if (item != null)
+            {
+                //adjust schoolBusOwner
+                if (item.SchoolBusOwner != null)
+                {
+                    int owner_id = item.SchoolBusOwner.Id;
+                    bool owner_exists = _context.SchoolBusOwners.Any(a => a.Id == owner_id);
+                    if (owner_exists)
+                    {
+                        SchoolBusOwner owner = _context.SchoolBusOwners.First(x => x.Id == owner_id);
+                        item.SchoolBusOwner = owner;
+                    }
+                    else
+                    {
+                        item.SchoolBusOwner = null;       
+                    }
+                }
+
+                var exists = _context.Contacts.Any(a => a.Id == item.Id);
+                if (exists)
+                {
+                    _context.Contacts.Update(item);
+                    _context.SaveChanges();
+                    return new ObjectResult(item);
+                }
+                else
+                {
+                    _context.Contacts.Add(item);
+                }
+
+                _context.SaveChanges();
+                return new ObjectResult(item);
+            }
+            else
+            {
+                //no data
+                return new StatusCodeResult(400);
+            }
         }
     }
 }

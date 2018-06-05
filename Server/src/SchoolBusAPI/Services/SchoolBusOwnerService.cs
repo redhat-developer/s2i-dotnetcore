@@ -127,5 +127,13 @@ namespace SchoolBusAPI.Services
         /// <param name="includeInactive">True if Inactive schoolbuses will be returned</param>
         /// <response code="200">OK</response>
         IActionResult SchoolbusownersSearchGetAsync(int?[] districts, int?[] inspectors, int? owner, bool? includeInactive);
+
+        /// <summary>
+        /// id of school bus owner for fetch contacts
+        /// </summary>
+        /// <param name="id">id of school bus owner to fetch contacts</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">school bus owner not found</response>
+        IActionResult SchoolbuseownersIdContactsGetAsync(int id);
     }
 }

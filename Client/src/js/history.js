@@ -10,6 +10,7 @@ export const OWNER = 'Owner';
 export const USER = 'User';
 export const ROLE = 'Role';
 export const INSPECTION = 'Inspection';
+export const CONTACT = 'Contact';
 
 // History Events
 export const BUS_ADDED = 'School Bus %e was added by Owner %e.';
@@ -30,6 +31,12 @@ export const OWNER_MODIFIED_STATUS = 'The status of %e was changed';
 export const OWNER_MODIFIED_NAME = 'Owner name was changed to %e';
 export const OWNER_ADDED_BUS = 'A school bus was added or moved to Owner %e - School Bus %e.';
 export const OWNER_REMOVED_BUS = 'A school bus was removed from Owner %e - School Bus %e.';
+export const OWNER_CONTACT_ADDED = 'Owner %e - Contact of %e was added.';
+export const OWNER_CONTACT_MODIFIED = 'Owner %e - Contact of %e was modified.';
+export const OWNER_CONTACT_DELETED = 'Owner %e - Contact of %e was deleted.';
+export const OWNER_ADDED_PRIMARY_CONTACT = 'Owner %e - Set contact %e as new primary contact.';
+export const OWNER_UPDATE_PRIMARY_CONTACT = 'Owner %e - Updated conatact %e as new primary contact.';
+export const OWNER_DELETED_PRIMARY_CONTACT = 'Owner %e - Set primary contact %e to non-primary.';
 
 export const USER_ADDED = 'User %e was added.';
 export const USER_MODIFIED = 'User %e was modified.';
@@ -228,4 +235,30 @@ export function logModifiedOwnerStatus(owner) {
 
 export function logModifiedOwnerName(owner) {
   log(owner.historyEntity, OWNER_MODIFIED_NAME);
+}
+
+//LOG CONTACT
+export function logNewContact(owner, contact){
+  log(owner.historyEntity, OWNER_CONTACT_ADDED, contact.historyEntity);
+}
+
+export function logModifiedContact(owner, contact){
+  log(owner.historyEntity, OWNER_CONTACT_MODIFIED, contact.historyEntity);
+}
+
+export function logDeletedContact(owner, contact){
+  log(owner.historyEntity, OWNER_CONTACT_DELETED, contact.historyEntity);
+}
+
+//LOG PRIMARY CONTACT
+export function logNewPrimaryContact(owner, contact){
+  log(owner.historyEntity, OWNER_ADDED_PRIMARY_CONTACT, contact.historyEntity);
+}
+
+export function logModifiedPrimaryContact(owner, contact){
+  log(owner.historyEntity, OWNER_UPDATE_PRIMARY_CONTACT, contact.historyEntity);
+}
+
+export function logSetNonPrimaryContact(owner, contact){
+  log(owner.historyEntity, OWNER_DELETED_PRIMARY_CONTACT, contact.historyEntity);
 }
