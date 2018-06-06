@@ -263,11 +263,15 @@
     display: none;
   }
 
-  #pageHeader-print,#searchCriteria-print{
+  #pageHeader-print,#searchCriteria-print,#tdNextInspection,#tdBadgeLabels{
     display: block;
   }
 
   #searchCriteria-print span{
     font-size: 15px;
+  }
+
+  th#nextInspectionDateSort{
+    width: 110px;
   }
 }

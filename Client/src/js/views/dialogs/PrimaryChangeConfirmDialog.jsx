@@ -30,10 +30,10 @@ var PrimaryChangeConfirmDialog = React.createClass({
     return <ModalDialog id="primaryChangeConfirm" backdrop="static" bsSize="sm" show={this.props.show} onClose={this.props.onClose}
       title={ (() => {
         if(isPrimary && !checkboxValue){
-          return <strong>Remove primary contact</strong>;
+          return <strong>Deselect Primary Contact?</strong>;
         }
         if(!isPrimary && checkboxValue && hasPrimary){
-          return <strong>Primary contact already existed</strong>;
+          return <strong>Change Primary Contact?</strong>;
         }
       })() } footer={
         <span>
@@ -46,10 +46,12 @@ var PrimaryChangeConfirmDialog = React.createClass({
           <Col md={12}>
             {(() => {
               if(isPrimary && !checkboxValue){
-                return <h4>Current contact is primary contact, do you wish to remove primary contact for current owner?</h4>;
+                return <div><h4>This action will leave the school bus owner without a primary contact.</h4>
+                <h4>Are you sure you wish to deselect a primary contact from the school bus owner?</h4></div>;
               }
               if(!isPrimary && checkboxValue && hasPrimary){
-                return <h4>Do you wish to update current contact to primary contact for current owner?</h4>;
+                return <div><h4>A school bus owner can have only one primary contact.</h4>
+                <h4>Do you want to change the school bus owner's primary contact to the current contact?</h4></div>;
               }
             })()}
           </Col>

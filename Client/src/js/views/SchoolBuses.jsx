@@ -286,8 +286,9 @@ var SchoolBuses = React.createClass({
   },
 
   print() {
-    this.setState({rightNow: Moment().format('MMMM Do YYYY, h:mm a')});
-    window.print();
+    this.setState({rightNow: Moment().format('MMMM Do YYYY, h:mm a')}, () => {
+      window.print();
+    });
   },
 
   render() {
@@ -469,9 +470,9 @@ var SchoolBuses = React.createClass({
                 <td>{ bus.canView ? <a href={ bus.url }>{ bus.icbcRegistrationNumber }</a> : bus.icbcRegistrationNumber }</td>
                 <td>{ bus.unitNumber }</td>
                 <td>{ bus.permitNumber }</td>
-                <td>{ formatDateTime(bus.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }
-                  { bus.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
-                  { bus.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }
+                <td><span id="tdNextInspection">{ formatDateTime(bus.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) }</span>
+                  <span id="tdBadgeLabels">{ bus.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null }
+                  { bus.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null }</span>
                 </td>
                 <td>{ bus.inspectorName }</td>
                 <td style={{ textAlign: 'right' }}>

@@ -36,10 +36,10 @@ var EditDialog = React.createClass({
 
     return <ModalDialog backdrop="static" className={ `edit-dialog ${this.props.className || ''}` } { ...props } footer={
       <span>
+        <Button onClick={ this.props.onClose }>{ this.props.closeText || 'Close' }</Button>
         {
           this.props.readOnly || <Button bsStyle="primary" onClick={ this.save }>{ this.props.saveText || 'Save' }</Button>
         }
-        <Button onClick={ this.props.onClose }>{ this.props.closeText || 'Close' }</Button>
       </span>
     }/>;
   },
