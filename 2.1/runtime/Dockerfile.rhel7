@@ -20,7 +20,7 @@ LABEL io.k8s.description="Platform for running .NET Core 2.1 applications" \
 
 # Labels consumed by Red Hat build service
 LABEL name="dotnet/dotnet-21-runtime-rhel7" \
-      com.redhat.component="rh-dotnet21-runtime-docker" \
+      com.redhat.component="rh-dotnet21-runtime-container" \
       version="2.1" \
       release="1" \
       architecture="x86_64"
