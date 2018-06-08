@@ -47,7 +47,7 @@ namespace SchoolBusAPI.Services.Impl
             if (item.PrimaryContact != null)
             {
                 int primary_contact_id = item.PrimaryContact.Id;
-                var primary_contact_exists = _context.Contacts.Any(a => a.Id == primary_contact_id);
+                bool primary_contact_exists = _context.Contacts.Any(a => a.Id == primary_contact_id);
                 if (primary_contact_exists)
                 {
                     Contact contact = _context.Contacts.First(a => a.Id == primary_contact_id);
@@ -63,7 +63,7 @@ namespace SchoolBusAPI.Services.Impl
             if (item.District != null)
             {
                 int district_id = item.District.Id;
-                var district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
+                bool district_exists = _context.ServiceAreas.Any(a => a.Id == district_id);
                 if (district_exists)
                 {
                     District district = _context.Districts.First(a => a.Id == district_id);
@@ -325,6 +325,7 @@ namespace SchoolBusAPI.Services.Impl
         /// </summary>
         
         /// <param name="id">id of SchoolBusOwner to fetch</param>
+        /// <param name="body">object of modified SchoolBusOwner</param>>
         /// <response code="200">OK</response>
         /// <response code="404">SchoolBusOwner not found</response>
 

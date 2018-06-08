@@ -216,6 +216,11 @@ var OwnersDetail = React.createClass({
       }
     }
 
+    //update select/deselect primary contact
+    if(updatePrimary){  
+      Api.updateOwner(owner);
+    }
+
     var contactPromise = isNew ? Api.addContact : Api.updateContact;
 
     contactPromise(contact).then(() => {
@@ -226,15 +231,10 @@ var OwnersDetail = React.createClass({
       }
       
     }).finally(() => {
-      
-      if(updatePrimary){
-        if(isNewPrimaryContact){
-          owner.primaryContact.id = store.getState().models.contact.id;
-        }
-    
+      if(isNewPrimaryContact){//adding new contact also set it as primary
+        owner.primaryContact.id = store.getState().models.contact.id;
         Api.updateOwner(owner);
       }
-      
       //reflash contact table
       this.getContacts();
       this.closeContactDialog();
