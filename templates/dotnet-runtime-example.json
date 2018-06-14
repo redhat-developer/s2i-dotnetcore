@@ -408,8 +408,7 @@
         {
             "name": "DOTNET_NPM_TOOLS",
             "displayName": "Npm Tools",
-            "description": "Set this to a space separated list of npm tools needed to publish.",
-            "value": "bower gulp"
+            "description": "Set this to a space separated list of npm tools needed to publish."
         },
         {
             "name": "DOTNET_TEST_PROJECTS",

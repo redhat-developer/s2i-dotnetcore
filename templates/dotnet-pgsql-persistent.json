@@ -128,10 +128,6 @@
                                 "value": "${DOTNET_CONFIGURATION}"
                             },
                             {
-                                "name": "DOTNET_PUBLISH",
-                                "value": "true"
-                            },
-                            {
                                 "name": "DOTNET_RESTORE_SOURCES",
                                 "value": "${DOTNET_RESTORE_SOURCES}"
                             },
