@@ -89,9 +89,9 @@ namespace SchoolBusAPI.Models
 
 
 
-            _ICBCRegistrationNumber = ICBCRegistrationNumber;
-            _ICBCLicencePlateNumber = LicencePlateNumber;
-            _ICBCVehicleIdentificationNumber = VehicleIdentificationNumber;
+            this.ICBCRegistrationNumber = ICBCRegistrationNumber;
+            this.LicencePlateNumber = LicencePlateNumber;
+            this.VehicleIdentificationNumber = VehicleIdentificationNumber;
             this.SchoolBusOwner = SchoolBusOwner;
             this.PermitNumber = PermitNumber;
             this.PermitIssueDate = PermitIssueDate;
@@ -593,19 +593,19 @@ namespace SchoolBusAPI.Models
                     this.SchoolBusSeatingCapacity.Equals(other.SchoolBusSeatingCapacity)
                 ) &&                 
                 (
-                    _ICBCRegistrationNumber == other.ICBCRegistrationNumber ||
-                    _ICBCRegistrationNumber != null &&
-                    _ICBCRegistrationNumber.Equals(other.ICBCRegistrationNumber)
+                    this.ICBCRegistrationNumber == other.ICBCRegistrationNumber ||
+                    this.ICBCRegistrationNumber != null &&
+                    this.ICBCRegistrationNumber.Equals(other.ICBCRegistrationNumber)
                 ) &&                 
                 (
-                    _ICBCLicencePlateNumber == other.LicencePlateNumber ||
-                    _ICBCLicencePlateNumber != null &&
-                    _ICBCLicencePlateNumber.Equals(other.LicencePlateNumber)
+                    this.LicencePlateNumber == other.LicencePlateNumber ||
+                    this.LicencePlateNumber != null &&
+                    this.LicencePlateNumber.Equals(other.LicencePlateNumber)
                 ) &&                 
                 (
-                    _ICBCVehicleIdentificationNumber == other.VehicleIdentificationNumber ||
-                    _ICBCVehicleIdentificationNumber != null &&
-                    _ICBCVehicleIdentificationNumber.Equals(other.VehicleIdentificationNumber)
+                    this.VehicleIdentificationNumber == other.VehicleIdentificationNumber ||
+                    this.VehicleIdentificationNumber != null &&
+                    this.VehicleIdentificationNumber.Equals(other.VehicleIdentificationNumber)
                 ) &&                 
                 (
                     this.SchoolBusOwner == other.SchoolBusOwner ||
@@ -759,17 +759,17 @@ namespace SchoolBusAPI.Models
                     hash = hash * 59 + this.BodyTypeCode.GetHashCode();
                 }                
                                                    
-                hash = hash * 59 + this.SchoolBusSeatingCapacity.GetHashCode();                if (_ICBCRegistrationNumber != null)
+                hash = hash * 59 + this.SchoolBusSeatingCapacity.GetHashCode();                if (this.ICBCRegistrationNumber != null)
                 {
-                    hash = hash * 59 + _ICBCRegistrationNumber.GetHashCode();
+                    hash = hash * 59 + this.ICBCRegistrationNumber.GetHashCode();
                 }                
-                                if (_ICBCLicencePlateNumber != null)
+                                if (this.LicencePlateNumber != null)
                 {
-                    hash = hash * 59 + _ICBCLicencePlateNumber.GetHashCode();
+                    hash = hash * 59 + this.LicencePlateNumber.GetHashCode();
                 }                
-                                if (_ICBCVehicleIdentificationNumber != null)
+                                if (this.VehicleIdentificationNumber != null)
                 {
-                    hash = hash * 59 + _ICBCVehicleIdentificationNumber.GetHashCode();
+                    hash = hash * 59 + this.VehicleIdentificationNumber.GetHashCode();
                 }                
                                    
                 if (this.SchoolBusOwner != null)
