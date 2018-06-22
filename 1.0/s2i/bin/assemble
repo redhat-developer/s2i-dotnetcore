@@ -37,8 +37,11 @@ if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
   cd "$DOTNET_ASSEMBLY_NAME"
 fi
 
-echo "---> Copying application source ..."
-cp -Rf /tmp/src/. ./
+shopt -s dotglob # includes filenames beginning with a ‘.’ in the results of filename expansion
+echo "---> Installing application source ..."
+if [ -d /tmp/src ]; then
+  mv /tmp/src/* ./
+fi
 
 # output assembly name
 if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then

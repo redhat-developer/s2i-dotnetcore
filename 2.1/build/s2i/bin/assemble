@@ -10,6 +10,25 @@ else
   VERBOSITY_OPTION=""
 fi
 
+shopt -s dotglob # includes filenames beginning with a ‘.’ in the results of filename expansion
+echo "---> Installing application source ..."
+if [ -d /tmp/src ]; then
+  mv /tmp/src/* ./
+fi
+
+# sdk version
+DOTNET_SDK_VERSION="${DOTNET_SDK_VERSION:-$DOTNET_SDK_BASE_VERSION}"
+if [ "$DOTNET_SDK_VERSION" != "latest" ]; then
+cat >../global.json <<EOF
+{
+  "sdk": {
+    "version": "$DOTNET_SDK_VERSION"
+  }
+}
+EOF
+fi
+echo "Using SDK: $(dotnet --version)"
+
 # npm
 if [ -n "${DOTNET_NPM_TOOLS}" ]; then
   echo "---> Installing npm tools ..."
@@ -31,19 +50,6 @@ if [ -n "${DOTNET_NPM_TOOLS}" ]; then
   npm install ${DOTNET_NPM_TOOLS}
   popd
 fi
-
-# sdk version
-DOTNET_SDK_VERSION="${DOTNET_SDK_VERSION:-$DOTNET_SDK_BASE_VERSION}"
-if [ "$DOTNET_SDK_VERSION" != "latest" ]; then
-cat >../global.json <<EOF
-{
-  "sdk": {
-    "version": "$DOTNET_SDK_VERSION"
-  }
-}
-EOF
-fi
-echo "Using SDK: $(dotnet --version)"
 
 # dotnet tools
 if [ -n "${DOTNET_TOOLS}" ]; then
@@ -79,9 +85,6 @@ EOF
     dotnet tool install -g $VERBOSITY_OPTION $TOOL_RESTORE_OPTIONS $DOTNET_TOOL_VERSION_OPTION $DOTNET_TOOL_NAME
   done
 fi
-
-echo "---> Copying application source ..."
-cp -Rf /tmp/src/. ./
 
 if [ "$DEV_MODE" == true ]; then
   # fix permissions
