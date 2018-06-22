@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+shopt -s dotglob # includes filenames beginning with a ‘.’ in the results of filename expansion
 
 # User settable environment
 DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
@@ -37,7 +38,6 @@ if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
   cd "$DOTNET_ASSEMBLY_NAME"
 fi
 
-shopt -s dotglob # includes filenames beginning with a ‘.’ in the results of filename expansion
 echo "---> Installing application source ..."
 if [ -d /tmp/src ]; then
   mv /tmp/src/* ./
