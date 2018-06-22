@@ -1,7 +1,8 @@
 #!/bin/bash
 
 set -e
-shopt -s dotglob # includes filenames beginning with a ‘.’ in the results of filename expansion
+# Include filenames beginning with a '.' when installing the application source code.
+shopt -s dotglob
 
 # User settable environment
 DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
