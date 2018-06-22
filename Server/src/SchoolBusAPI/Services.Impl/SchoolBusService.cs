@@ -563,15 +563,15 @@ namespace SchoolBusAPI.Services.Impl
                 string pdfHost = Configuration["PDF_SERVICE_NAME"];
                 
                 string targetUrl = pdfHost + "/api/PDF/GetPDF";
-                
+
                 // call the microservice
+
+                HttpClient client = new HttpClient();
                 try
                 {
-                    HttpClient client = new HttpClient();
-
                     var request = new HttpRequestMessage(HttpMethod.Post, targetUrl);
-                    request.Content = new StringContent(payload, Encoding.UTF8, "application/json"); 
-                                        
+                    request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
+
                     request.Headers.Clear();
                     // transfer over the request headers.
                     foreach (var item in Request.Headers)
@@ -589,12 +589,28 @@ namespace SchoolBusAPI.Services.Impl
                         var bytetask = response.Content.ReadAsByteArrayAsync();
                         bytetask.Wait();
                         result = new FileContentResult(bytetask.Result, "application/pdf");
-                        result.FileDownloadName = "Permit-" + schoolBus.PermitNumber + ".pdf";                        
+                        result.FileDownloadName = "Permit-" + schoolBus.PermitNumber + ".pdf";
                     }
                 }
                 catch (Exception e)
                 {
                     result = null;
+                }
+
+                finally
+                {
+                    if (client != null)
+                    {
+                        try
+                        {
+                            client.Dispose();
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine(e.ToString());
+                        }
+                    }
+
                 }
 
                 // check that the result has a value

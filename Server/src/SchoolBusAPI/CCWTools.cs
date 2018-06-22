@@ -112,8 +112,32 @@ namespace SchoolBusAPI
                         {
                             // ensure that the record is touched in the database
                             data.LastUpdateTimestamp = DateTime.UtcNow;
+                            //update records in SchoolBus table
+                            bool exists = context.SchoolBuss.Any(x => x.CCWDataId == cCWData.Id);
+                            if (exists)
+                            {
+                                SchoolBus bus = context.SchoolBuss.First(a => a.CCWDataId == cCWData.Id);
+                                if (cCWData.ICBCRegistrationNumber != null && bus.ICBCRegistrationNumber != null && !cCWData.ICBCRegistrationNumber.Equals(bus.ICBCRegistrationNumber))
+                                {
+                                    bus.ICBCRegistrationNumber = cCWData.ICBCRegistrationNumber;
+                                }
+
+                                if (cCWData.ICBCVehicleIdentificationNumber != null && bus.VehicleIdentificationNumber !=null && !cCWData.ICBCVehicleIdentificationNumber.Equals(bus.VehicleIdentificationNumber))
+                                {
+                                    bus.VehicleIdentificationNumber = cCWData.ICBCVehicleIdentificationNumber;
+                                }
+
+                                if (cCWData.ICBCLicencePlateNumber != null && bus.LicencePlateNumber != null && !cCWData.ICBCLicencePlateNumber.Equals(bus.LicencePlateNumber))
+                                {
+                                    bus.LicencePlateNumber = cCWData.ICBCLicencePlateNumber;
+                                }
+
+                                context.SchoolBuss.Update(bus);
+                            }
+                            
                             context.CCWDatas.Update(data);
                             context.SaveChanges();
+                            
                         }
                     }
                 }
@@ -161,18 +185,17 @@ namespace SchoolBusAPI
             string newUri = QueryHelpers.AddQueryString(targetUrl, parametersToAdd);
 
             // call the microservice
+            HttpClient client = new HttpClient();
 
             try
             {
-                HttpClient client = new HttpClient();
-
                 var request = new HttpRequestMessage(HttpMethod.Get, newUri);
                 request.Headers.Clear();
                 // transfer over the request headers.
                 request.Headers.Add("SM_UNIVERSALID", cCW_userId);
                 request.Headers.Add("SMGOV_USERGUID", cCW_guid);
                 request.Headers.Add("SM_AUTHDIRNAME", cCW_directory);
-                
+
                 Task<HttpResponseMessage> responseTask = client.SendAsync(request);
                 responseTask.Wait();
 
@@ -190,6 +213,22 @@ namespace SchoolBusAPI
             {
                 result = null;
             }
+
+            finally
+            {
+                if (client != null)
+                {
+                    try
+                    {
+                        client.Dispose();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+                }
+            }
+
             return result;
         }
     }
