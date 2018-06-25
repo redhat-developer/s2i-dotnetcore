@@ -137,6 +137,12 @@ a `.s2i/environment` file inside your source code repository.
     `Release` or `Debug`.  This is passed to the `dotnet publish` invocation.
     Defaults to `Release`.
 
+* **DOTNET_SSL_DIRS**
+
+    Used to specify a list of folders with additional certificates to trust. The certificates are trusted by each process that runs
+    during the build and all processes that runs in the image after the build (including the application that was built). The folders
+    can be absolute paths (starting with `/`) or paths in the source repository (e.g. `certificates`). Defaults to ``.
+
 * **ASPNETCORE_URLS**
 
     This variable is set to `http://*:8080` to configure ASP.NET Core to use the
