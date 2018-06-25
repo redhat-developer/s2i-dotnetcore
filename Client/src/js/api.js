@@ -885,6 +885,8 @@ export function addContact(contact){
     parseContact(contact);
 
     store.dispatch({ type: Action.ADD_CONTACT, contact: contact });
+
+    return response;
   });
 }
 

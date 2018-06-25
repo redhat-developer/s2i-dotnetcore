@@ -177,13 +177,6 @@ var OwnersDetail = React.createClass({
     });
   },
 
-  getContacts(){
-    this.setState({ loadingContacts : true });
-    Api.getOwnerContacts(this.props.params.ownerId).finally(() => {
-      this.setState({ loadingContacts: false });
-    });
-  },
-
   addContact(){
     this.props.router.push({
       pathname: `${ this.props.owner.path }/${ Constant.CONTACT_PATHNAME}/0`,
@@ -201,42 +194,51 @@ var OwnersDetail = React.createClass({
 
   saveContact(contact, owner) {
     var isNew = (contact && contact.id === 0);
-    
     var oldPrimary = this.props.owner.primaryContact ? this.props.owner.primaryContact : null;
     var newPrimary = owner.primaryContact ? owner.primaryContact : null;
     var updatePrimary = false;
+    var deselectPrimary = false;
     //create new contact also set it as primary
-    var isNewPrimaryContact = (newPrimary != null && newPrimary.id == 0);
+    var isNewPrimaryContact = (newPrimary != null && newPrimary.id == 0 && isNew);
 
-    if(oldPrimary == null && newPrimary != null){
+    if((oldPrimary == null && newPrimary != null && !isNew)||(!isNew && oldPrimary != null && newPrimary != null && oldPrimary.id != newPrimary.id)){
       updatePrimary = true;
-    } else if(oldPrimary != null){
-      if(newPrimary == null || (oldPrimary.id != newPrimary.id)){
-        updatePrimary = true;
-      }
+    }
+    if(oldPrimary != null && newPrimary == null){
+      deselectPrimary = true;//deselected primary contact
     }
 
     //update select/deselect primary contact
-    if(updatePrimary){  
-      Api.updateOwner(owner);
+    if(updatePrimary || deselectPrimary){  
+      Api.updateOwner({ ...this.props.owner, ...{
+        primaryContact: newPrimary,
+      }});
     }
 
     var contactPromise = isNew ? Api.addContact : Api.updateContact;
 
-    contactPromise(contact).then(() => {
+    contactPromise(contact).then(response => {
       if(isNew){
         History.logNewContact(this.props.owner, this.props.contact);
       } else {
         History.logModifiedContact(this.props.owner, this.props.contact);
       }
-      
-    }).finally(() => {
-      if(isNewPrimaryContact){//adding new contact also set it as primary
-        owner.primaryContact.id = store.getState().models.contact.id;
-        Api.updateOwner(owner);
+      if(deselectPrimary){
+        History.logDeselectedPrimaryContact(this.props.owner, this.props.contact);
       }
+      if(updatePrimary){
+        History.logModifiedPrimaryContact(this.props.owner, this.props.contact);
+      }     
+      if(isNewPrimaryContact && response != null){//adding new contact also set it as primary
+        Api.updateOwner({...this.props.owner, ...{
+          primaryContact: response,
+        }}).then(() => {
+          History.logNewPrimaryContact(this.props.owner, this.props.contact);
+        });
+      }
+    }).finally(() => {
       //reflash contact table
-      this.getContacts();
+      this.fetch();
       this.closeContactDialog();
     });
   },
