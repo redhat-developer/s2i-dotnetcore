@@ -2,7 +2,7 @@
 
 # generate the project
 pushd /tmp/src
-dotnet new mvc --no-restore
+dotnet new $TEMPLATE --no-restore
 popd
 
 # call base assemble script

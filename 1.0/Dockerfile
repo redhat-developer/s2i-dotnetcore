@@ -39,6 +39,8 @@ RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
     yum install -y --setopt=tsflags=nodocs  \
       $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
+# trim nodejs dependencies to reduce image size and to avoid rebuilds on kernel CVEs.
+    rpm -e --nodeps glibc-headers glibc-devel gcc gcc-c++ kernel-headers && \
     yum clean all -y && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/* && \
