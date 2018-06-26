@@ -15,8 +15,10 @@
 #
 # Example usage: $ sudo ./test/run
 
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-centos7}
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-fedora}
 else
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-rhel7}
 fi

@@ -18,9 +18,12 @@
 #
 # Example usage: $ sudo ./test/run
 
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-centos7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-20-runtime-centos7}
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-fedora}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-20-runtime-fedora}
 else
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-rhel7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
@@ -31,12 +34,19 @@ test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
 sdk_default_version="2.0.3"
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
 sdk_latest_version="2.0.3"
 sdk_versions=( "2.0.3" )
+npm_version="3.10.9"
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
+sdk_latest_version="2.1.105"
+sdk_versions=( "2.1.105" )
+sdk_default_version="2.1.105" # There is no 2.0 sdk in fedora latest?
+npm_version="5.6.0"
 else
 sdk_latest_version="2.1.105"
 sdk_versions=( "2.0.3" "2.1.105" )
+npm_version="3.10.9"
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -159,7 +169,7 @@ test_image() {
 
   # verify npm is available
   local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
-  assert_equal "${image_npm_version}" "3.10.9"
+  assert_equal "${image_npm_version}" "${npm_version}"
 }
 
 test_consoleapp() {

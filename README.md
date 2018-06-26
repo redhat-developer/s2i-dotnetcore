@@ -13,7 +13,7 @@ Versions
 
 * 1.0 (RHEL 7, CentOS 7)
 * 1.1 (RHEL 7)
-* 2.0 (RHEL 7, CentOS 7)
+* 2.0 (RHEL 7, CentOS 7, Fedora)
 * 2.1 (RHEL 7)
 
 Building
@@ -26,7 +26,9 @@ $ sudo VERSIONS=2.1 ./build.sh
 
 Note: to build RHEL 7 based images, you need to run the build on a
 properly subscribed RHEL machine. To build CentOS images on RHEL, set
-BUILD_CENTOS=true. On non-RHEL, building CentOS images is the default.
+IMAGE_OS=CENTOS. On Fedora, building Fedora images is the default.
+To build Fedora images explicitly, set IMAGE_OS=FEDORA. On non-RHEL
+and non-Fedora systems, building CentOS images is the default.
 
 Usage
 ---------------------------------
@@ -52,7 +54,7 @@ Image name structure
 
 1. Platform name: 'dotnetcore' for 1.x, 'dotnet' for 2.0+
 2. Platform version (without dots)
-3. Base image: 'rhel7' or 'centos7'
+3. Base image: 'rhel7' or 'centos7' or 'fedora'
 
 Examples: `dotnet/dotnetcore-10-rhel7`, `dotnet/dotnet-20-centos7`
 

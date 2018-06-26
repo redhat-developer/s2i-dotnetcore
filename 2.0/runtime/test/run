@@ -15,8 +15,10 @@
 #
 # Example usage: $ sudo ./test/run
 
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-centos7}
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-fedora}
 else
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-20-runtime-rhel7}
 fi
@@ -43,24 +45,24 @@ test_envvars() {
   test_start
 
   # DOTNET_APP_PATH
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_APP_PATH) "/opt/app-root/app"
+  assert_equal "$(docker_get_env $IMAGE_NAME DOTNET_APP_PATH)" "/opt/app-root/app"
   # DOTNET_DEFAULT_CMD
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DEFAULT_CMD) "default-cmd.sh"
+  assert_equal "$(docker_get_env $IMAGE_NAME DOTNET_DEFAULT_CMD)" "default-cmd.sh"
 
   # DOTNET_CORE_VERSION
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_CORE_VERSION) "${dotnet_version_series}"
+  assert_equal "$(docker_get_env $IMAGE_NAME DOTNET_CORE_VERSION)" "${dotnet_version_series}"
   # DOTNET_FRAMEWORK
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_FRAMEWORK) "netcoreapp${dotnet_version_series}"
+  assert_equal "$(docker_get_env $IMAGE_NAME DOTNET_FRAMEWORK)" "netcoreapp${dotnet_version_series}"
 
   # When HTTP_PROXY is set, we set http_proxy to match (unless it's already set).
-  assert_equal $(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0"                      bash -c 'echo $http_proxy') "proxy0"
-  assert_equal $(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0 -e http_proxy=proxy1" bash -c 'echo $http_proxy') "proxy1"
+  assert_equal "$(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0"                      bash -c 'echo $http_proxy')" "proxy0"
+  assert_equal "$(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0 -e http_proxy=proxy1" bash -c 'echo $http_proxy')" "proxy1"
 
   # .NET Core determines culture based on LANG. It must be empty/unset to use the 'Invariant' culture
-  assert_equal $(docker_get_env $IMAGE_NAME LANG) ""
+  assert_equal "$(docker_get_env $IMAGE_NAME LANG)" ""
 
   # Like Microsoft images, we set this to 'true'
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_RUNNING_IN_CONTAINER) "true"
+  assert_equal "$(docker_get_env $IMAGE_NAME DOTNET_RUNNING_IN_CONTAINER)" "true"
 }
 
 test_debuggable() {

@@ -6,7 +6,7 @@ if [ "$DEV_MODE" == true ]; then
     # Also ignore '.s2i' since we can't handle changes in there.
     # note: nodemon ignores the following folders by default: '.git', '.nyc_output',
     #         '.sass-cache', 'bower_components', 'coverage', 'node_modules'.
-    DEV_MODE_IGNORE="bin obj wwwroot .s2i"
+    DEV_MODE_IGNORE='*/bin/* */obj/* */wwwroot/* .s2i'
     for IGNORE in $DEV_MODE_IGNORE; do
         NODEMON_OPTIONS="$NODEMON_OPTIONS --ignore $IGNORE"
     done

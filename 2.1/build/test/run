@@ -18,9 +18,12 @@
 #
 # Example usage: $ sudo ./test/run
 
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-centos7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-21-runtime-centos7}
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-fedora}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-21-runtime-fedora}
 else
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-rhel7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-21-runtime-rhel7}
@@ -31,7 +34,10 @@ test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
 sdk_default_version="2.1.300"
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
+sdk_latest_version="2.1.300"
+sdk_versions=( "2.1.300" )
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
 sdk_latest_version="2.1.300"
 sdk_versions=( "2.1.300" )
 else

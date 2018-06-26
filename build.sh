@@ -14,7 +14,11 @@
 # VERSIONS        The list of versions to build/test.
 #                 Defaults to all versions. i.e "1.0 1.1".
 #
-# BUILD_CENTOS    If 'true' build CentOS based images.
+# IMAGE_OS        Which base OS to use for the images.
+#                 Defaults to RHEL if run on rhel,
+#                 FEDORA if run on fedora,
+#                 centos otherwise.
+#                 Options are RHEL, CENTOS, and FEDORA
 #
 # TEST_PORT       specifies the port on the docker host
 #                 to bind to when creating containers
@@ -80,16 +84,27 @@ test_images() {
   check_result_msg $? "Tests FAILED!"
 }
 
-# Default to CentOS when not on RHEL.
-if ! [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
-  export BUILD_CENTOS=true
+# Default to CentOS when OS is not RHEL or Fedora.
+if [ "${IMAGE_OS}" == "" ]; then
+    if [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
+      export IMAGE_OS="RHEL"
+    elif [[ `grep "Fedora" /etc/redhat-release` ]]; then
+      export IMAGE_OS="FEDORA"
+    else
+      export IMAGE_OS="CENTOS"
+    fi
 fi
 
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
   VERSIONS="${VERSIONS:-1.0 2.0}"
   image_os="centos7"
   image_prefix="dotnet"
   docker_filename="Dockerfile"
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
+  VERSIONS="${VERSIONS:-2.0}"
+  image_os="fedora"
+  image_prefix="dotnet"
+  docker_filename="Dockerfile.fedora"
 else
   VERSIONS="${VERSIONS:-1.0 1.1 2.0 2.1}"
   image_os="rhel7"
