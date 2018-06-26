@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -e
+# Include filenames beginning with a '.' when installing the application source code.
+shopt -s dotglob
 
 # User settable environment
 DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
@@ -37,8 +39,10 @@ if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
   cd "$DOTNET_ASSEMBLY_NAME"
 fi
 
-echo "---> Copying application source ..."
-cp -Rf /tmp/src/. ./
+echo "---> Installing application source ..."
+if [ -d /tmp/src ]; then
+  mv /tmp/src/* ./
+fi
 
 # output assembly name
 if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then

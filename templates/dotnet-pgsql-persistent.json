@@ -128,10 +128,6 @@
                                 "value": "${DOTNET_CONFIGURATION}"
                             },
                             {
-                                "name": "DOTNET_PUBLISH",
-                                "value": "true"
-                            },
-                            {
                                 "name": "DOTNET_RESTORE_SOURCES",
                                 "value": "${DOTNET_RESTORE_SOURCES}"
                             },
@@ -442,20 +438,20 @@
             "displayName": "Memory Limit",
             "required": true,
             "description": "Maximum amount of memory the .NET Core container can use.",
-            "value": "512Mi"
+            "value": "128Mi"
         },
         {
             "name": "MEMORY_POSTGRESQL_LIMIT",
             "displayName": "Memory Limit (PostgreSQL)",
             "required": true,
             "description": "Maximum amount of memory the PostgreSQL container can use.",
-            "value": "512Mi"
+            "value": "128Mi"
         },
         {
             "name": "VOLUME_CAPACITY",
             "displayName": "Volume Capacity",
             "description": "Volume space available for data, e.g. 512Mi, 2Gi",
-            "value": "1Gi",
+            "value": "256Mi",
             "required": true
         },
         {
