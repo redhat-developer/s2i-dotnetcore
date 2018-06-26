@@ -39,6 +39,8 @@ RUN INSTALL_PKGS="rh-dotnetcore11 nss_wrapper tar rh-nodejs4-npm" && \
       --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
       $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
+# trim nodejs dependencies to reduce image size and to avoid rebuilds on kernel CVEs.
+    rpm -e --nodeps glibc-headers glibc-devel gcc gcc-c++ kernel-headers && \
     yum clean all -y && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/* && \

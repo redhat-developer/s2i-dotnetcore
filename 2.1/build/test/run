@@ -265,15 +265,16 @@ test_user() {
   assert_equal "${response}" "Hello world"
 }
 
-test_new_web_app() {
-  test_start
+test_template()
+{
+  local template=$1
+  info " template: $template"
 
   # newweb creates instantiates the 'dotnet new mvc' template
   # in the assemble script.
-
-  local app=newweb
+  local app=newtemplate
   # build image
-  local image=$(s2i_build ${app})
+  local image=$(s2i_build ${app} -e TEMPLATE=$template)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -284,8 +285,18 @@ test_new_web_app() {
   docker_rmi ${image}
 
   # app is working
-  # re-enable check when rc1: webapp does redirects (https://github.com/aspnet/BasicMiddleware/issues/315)
-  # assert_contains "${response}" "html"
+  assert_contains "${response}" "html"
+}
+
+test_templates() {
+  test_start
+
+  # mvc is a pure ASP.NET Core MVC web application
+  # angular and reactredux include a front-end which is built using npm packages.
+  local templates=(mvc angular reactredux)
+  for template in ${templates[@]}; do
+    test_template $template
+  done
 }
 
 test_config_configuration() {
@@ -587,7 +598,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
     test_aspnetapp
     test_devmode
     test_split_build
-    test_new_web_app
+    test_templates
     test_user
     test_certificates
   done
