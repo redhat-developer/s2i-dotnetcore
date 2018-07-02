@@ -5,14 +5,14 @@ set -e
 shopt -s dotglob
 
 if [ -n "${DOTNET_VERBOSITY}" ]; then
-  echo "--> Environment:"
+  echo "---> Environment:"
   env | sort
   VERBOSITY_OPTION="-v ${DOTNET_VERBOSITY}"
 else
   VERBOSITY_OPTION=""
 fi
 
-echo "---> Installing application source ..."
+echo "---> Installing application source..."
 if [ -d /tmp/src ]; then
   mv /tmp/src/* ./
 fi
@@ -32,7 +32,7 @@ echo "Using SDK: $(dotnet --version)"
 
 # npm
 if [ -n "${DOTNET_NPM_TOOLS}" ]; then
-  echo "---> Installing npm tools ..."
+  echo "---> Installing npm tools..."
 
   if [ ! -z $HTTP_PROXY ]; then
     echo "---> Setting npm http proxy"
@@ -172,6 +172,11 @@ fi
 
 # cleanup NuGet artifacts
 rm -rf ~/{.local,.nuget}
+
+if [ "$DOTNET_RM_SRC" == "true" ]; then
+  echo "---> Removing sources..."
+  rm -rf /opt/app-root/src/*
+fi
 
 # fix permissions
 fix-permissions /opt/app-root
