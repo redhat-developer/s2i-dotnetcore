@@ -152,6 +152,10 @@ a `.s2i/environment` file inside your source code repository.
 
     Configures the HTTP/HTTPS proxy used when building and running the application.
 
+* **DOTNET_RM_SRC**
+
+    When set to `true`, the source code will not be included in the image. Defaults to ``.
+
 * **NPM_MIRROR**
 
     Use a custom NPM registry mirror to download packages during the build process.

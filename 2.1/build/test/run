@@ -318,6 +318,7 @@ test_config_1() {
   local watch_path=$(docker_run ${image} bash -c "command -v dotnet-watch")
   local serve_path=$(docker_run ${image} bash -c "command -v dotnet-serve")
   local packed_app=$(docker_run ${image} ls /opt/app-root/app.tar.gz)
+  local src_folder_content=$(docker_run ${image} ls -a /opt/app-root/src)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -347,6 +348,10 @@ test_config_1() {
   assert_equal "${watch_path}" "/opt/app-root/.dotnet/tools/dotnet-watch"
   assert_equal "${serve_path}" "/opt/app-root/.dotnet/tools/dotnet-serve"
   assert_contains "${s2i_build}" "Tool 'dotnet-watch' (version '2.1.0-preview1-final') was successfully installed."
+  # DOTNET_RM_SRC=true
+  # The application folder contains a file and folder that starts with a '.', we verify that *all* files are removed.
+  assert_contains "${s2i_build}" "Removing sources..."
+  assert_contains "${src_folder_content}" "."$'\n'".."
 }
 
 test_config_2() {
