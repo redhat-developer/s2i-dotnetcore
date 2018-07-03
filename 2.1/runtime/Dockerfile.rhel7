@@ -11,7 +11,8 @@ ENV HOME=/opt/app-root \
     DOTNET_CORE_VERSION=2.1 \
     DOTNET_FRAMEWORK=netcoreapp2.1 \
 # Microsoft's images set this to enable detecting when an app is running in a container.
-    DOTNET_RUNNING_IN_CONTAINER=true
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir
 
 LABEL io.k8s.description="Platform for running .NET Core 2.1 applications" \
       io.k8s.display-name=".NET Core 2.1" \

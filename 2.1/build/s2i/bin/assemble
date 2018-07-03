@@ -31,7 +31,7 @@ fi
 echo "Using SDK: $(dotnet --version)"
 
 # Trust certificates from all DOTNET_SSL_DIRS.
-# Store them in the 'ssl_dir' which is picked up by the container-entrypoint.
+# Store them in the DOTNET_SSL_CERT_DIR which is picked up by the container-entrypoint.
 if [ -n "$DOTNET_SSL_DIRS" ]; then
 
   # Append SSL_CERT_DIR to DOTNET_SSL_DIRS.
@@ -42,7 +42,7 @@ if [ -n "$DOTNET_SSL_DIRS" ]; then
   DOTNET_SSL_DIRS="$DOTNET_SSL_DIRS $SSL_CERT_DIR"
 
   # Create certificate folder.
-  mkdir /opt/app-root/ssl_dir
+  mkdir "$DOTNET_SSL_CERT_DIR"
 
   # Populate it with certificates.
   CERT_ID=0
@@ -55,9 +55,9 @@ if [ -n "$DOTNET_SSL_DIRS" ]; then
       for CERT_FILE in ${CERTFILES[@]}
       do
         if [[ "$CERT_FILE" =~ ^/opt/app-root/src/* ]]; then
-          cp "$CERT_FILE" "/opt/app-root/ssl_dir/$CERT_ID"
+          cp "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
         else
-          ln -s "$CERT_FILE" "/opt/app-root/ssl_dir/$CERT_ID"
+          ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
         fi
         CERT_ID=$((CERT_ID + 1))
       done
@@ -65,7 +65,7 @@ if [ -n "$DOTNET_SSL_DIRS" ]; then
   done
 
   # Use the certificate folder.
-  export SSL_CERT_DIR=/opt/app-root/ssl_dir
+  export SSL_CERT_DIR="$DOTNET_SSL_CERT_DIR"
 fi
 
 # npm
