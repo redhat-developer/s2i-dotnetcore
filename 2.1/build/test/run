@@ -581,6 +581,7 @@ test_certificates() {
   # - /doesntexist : ignored
   # - certdir1     : contains 1 certificate in 1 file
   # - certdir2     : contains 2 certificates in 1 file
+  # DOTNET_RM_SRC=true to check these certificates are copied outside the src folder.
   local count_with_additional=$(docker_run_certificatecount -e DOTNET_SSL_DIRS='/doesntexist certdir1 certdir2')
   assert_equal "$count_with_additional" "$(($default_count + 3))"
 }
