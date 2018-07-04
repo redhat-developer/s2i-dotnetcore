@@ -12,5 +12,11 @@ if [ -z "$http_proxy" ] && [ ! -z "$HTTP_PROXY" ]; then
   export http_proxy="${HTTP_PROXY}"
 fi
 
+# When there is an DOTNET_SSL_CERT_DIR folder, use it as the SSL_CERT_DIR.
+# The assemble script creates this folder when DOTNET_SSL_DIRS is set.
+if [ -d "$DOTNET_SSL_CERT_DIR" ]; then
+  export SSL_CERT_DIR="$DOTNET_SSL_CERT_DIR"
+fi
+
 cmd="$1"; shift
 exec $cmd "$@"

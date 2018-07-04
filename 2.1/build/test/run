@@ -30,11 +30,12 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-sdk_default_version="2.1.301"
 if [ "$BUILD_CENTOS" = "true" ]; then
+sdk_default_version="2.1.300"
 sdk_latest_version="2.1.300"
 sdk_versions=( "2.1.300" )
 else
+sdk_default_version="2.1.301"
 sdk_latest_version="2.1.301"
 sdk_versions=( "2.1.301" )
 fi
@@ -548,6 +549,43 @@ test_devmode() {
   test_devmode_change
 }
 
+docker_run_certificatecount()
+{
+  local app=certificatecount
+
+  # build image
+  local image=$(s2i_build ${app} "$@")
+  local output=$(docker_run ${image})
+  # cleanup
+  docker_rmi ${image}
+
+  echo $output | awk '{print $NF}'
+}
+
+test_certificates() {
+  test_start
+
+  local default_count=$(docker_run_certificatecount)
+  # It is unlikely to have less than 100 certificates.
+  if [ "$default_count" -lt 100 ]; then
+    error "Default number of certificates is too low: '${default_count}'"
+    exit 1
+  fi
+
+  # DOTNET_SSL_DIRS=/doesntexist
+  # We add a non existing directory, which must be ingored.
+  local default_count_with_nonexist=$(docker_run_certificatecount -e DOTNET_SSL_DIRS=/doesntexist)
+  assert_equal "$default_count" "$default_count_with_nonexist"
+
+  # DOTNET_SSL_DIRS=/doesntexist certdir1 certdir2
+  # - /doesntexist : ignored
+  # - certdir1     : contains 1 certificate in 1 file
+  # - certdir2     : contains 2 certificates in 1 file
+  # DOTNET_RM_SRC=true to check these certificates are copied outside the src folder.
+  local count_with_additional=$(docker_run_certificatecount -e DOTNET_SSL_DIRS='/doesntexist certdir1 certdir2')
+  assert_equal "$count_with_additional" "$(($default_count + 3))"
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -568,6 +606,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
     test_split_build
     test_templates
     test_user
+    test_certificates
   done
   # when unset, default to the lowest sdk version
   info "default sdk(${sdk_default_version}):"

@@ -30,6 +30,44 @@ EOF
 fi
 echo "Using SDK: $(dotnet --version)"
 
+# Trust certificates from all DOTNET_SSL_DIRS.
+# Store them in the DOTNET_SSL_CERT_DIR which is picked up by the container-entrypoint.
+if [ -n "$DOTNET_SSL_DIRS" ]; then
+
+  # Append SSL_CERT_DIR to DOTNET_SSL_DIRS.
+  # If SSL_CERT_DIR is unset, use the default location.
+  if [ -z ${SSL_CERT_DIR+x} ]; then
+    SSL_CERT_DIR=/etc/pki/tls/certs
+  fi
+  DOTNET_SSL_DIRS="$DOTNET_SSL_DIRS $SSL_CERT_DIR"
+
+  # Create certificate folder.
+  mkdir "$DOTNET_SSL_CERT_DIR"
+
+  # Populate it with certificates.
+  CERT_ID=0
+  for SSL_DIR in $DOTNET_SSL_DIRS; do
+    # Ignore non-existing directories.
+    if [ -d "$SSL_DIR" ]; then
+      # Copy the file when it is in the src folder so it can't get removed by DOTNET_RM_SRC.
+      # Create symbolic links for files in other folders.
+      CERTFILES=(`find -L "$SSL_DIR" -maxdepth 1 -type f -exec realpath {} \;`)
+      for CERT_FILE in ${CERTFILES[@]}
+      do
+        if [[ "$CERT_FILE" =~ ^/opt/app-root/src/* ]]; then
+          cp "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
+        else
+          ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
+        fi
+        CERT_ID=$((CERT_ID + 1))
+      done
+    fi
+  done
+
+  # Use the certificate folder.
+  export SSL_CERT_DIR="$DOTNET_SSL_CERT_DIR"
+fi
+
 # npm
 if [ -n "${DOTNET_NPM_TOOLS}" ]; then
   echo "---> Installing npm tools..."
