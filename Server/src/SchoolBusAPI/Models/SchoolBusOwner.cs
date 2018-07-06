@@ -111,7 +111,6 @@ namespace SchoolBusAPI.Models
         /// Foreign key for PrimaryContact 
         /// </summary>   
         [ForeignKey("PrimaryContact")]
-		[JsonIgnore]
 		[MetaDataExtension (Description = "Link to the designated Primary Contact for the Inspector to the School Bus Owner organization.")]
         public int? PrimaryContactId { get; set; }
         

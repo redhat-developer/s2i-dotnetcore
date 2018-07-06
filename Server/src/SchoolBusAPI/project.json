@@ -41,7 +41,8 @@
     "Microsoft.AspNetCore.Mvc.Core": "1.1.1",
     "Hangfire.Core": "1.6.9",
     "Hangfire.PostgreSql.NetCore": "1.4.3",
-    "Dapper": "1.50.2"
+    "Dapper": "1.50.2",
+    "MailKit": "2.0.5"
   },
   "tools": {
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-preview4-final",

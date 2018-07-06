@@ -26,7 +26,7 @@ import KeySearchControl from '../components/KeySearchControl.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
+import SchoolBusesEmailDialog from '../views/dialogs/SchoolBusesEmailDialog.jsx';
 
 import { formatDateTime, toZuluTime } from '../utils/date';
 
@@ -63,6 +63,7 @@ var SchoolBuses = React.createClass({
 
     return {
       loading: true,
+      showEmailDialog: false,
       rightNow: Moment().format('MMMM Do YYYY, h:mm a'),
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || defaultSelectedDistricts,
@@ -259,7 +260,17 @@ var SchoolBuses = React.createClass({
   },
 
   email() {
+    this.setState({ showEmailDialog: true });
+  },
 
+  sendEmail(email){
+    Api.sendEmail(email).finally(() => {
+      this.setState({ showEmailDialog: false });
+    });
+  },
+
+  closeEmailDialog(){
+    this.setState({ showEmailDialog: false });
   },
 
   printSelectedDropdownItems(allItems, selectedItemIds) {
@@ -304,9 +315,7 @@ var SchoolBuses = React.createClass({
       <PageHeader id="pageHeader-print">School Bus Inspection Report: {this.state.rightNow}</PageHeader>
       <PageHeader id="subPageHeader-print">School Buses ({ numBuses })
         <ButtonGroup id="email-print-buttonGroup">
-          <Unimplemented>
             <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
-          </Unimplemented>
             <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
         </ButtonGroup>
       </PageHeader>
@@ -486,7 +495,9 @@ var SchoolBuses = React.createClass({
           }
         </SortTable>;
       })()}
-
+      { this.state.showEmailDialog &&
+      <SchoolBusesEmailDialog schoolBuses={this.props.schoolBuses} show={this.state.showEmailDialog} onSave={this.sendEmail} 
+      onClose={this.closeEmailDialog}/> }
     </div>;
   },
 });
