@@ -34,9 +34,9 @@ export const OWNER_REMOVED_BUS = 'A school bus was removed from Owner %e - Schoo
 export const OWNER_CONTACT_ADDED = 'Owner %e - Contact of %e was added.';
 export const OWNER_CONTACT_MODIFIED = 'Owner %e - Contact of %e was modified.';
 export const OWNER_CONTACT_DELETED = 'Owner %e - Contact of %e was deleted.';
-export const OWNER_ADDED_PRIMARY_CONTACT = 'Owner %e - Set contact %e as new primary contact.';
-export const OWNER_UPDATE_PRIMARY_CONTACT = 'Owner %e - Updated conatact %e as new primary contact.';
-export const OWNER_DELETED_PRIMARY_CONTACT = 'Owner %e - Set primary contact %e to non-primary.';
+export const OWNER_ADDED_PRIMARY_CONTACT = 'Owner %e - Set new contact %e as primary contact.';
+export const OWNER_UPDATE_PRIMARY_CONTACT = 'Owner %e - Updated contact %e to primary contact.';
+export const OWNER_DESELECTED_PRIMARY_CONTACT = 'Owner %e - Changed primary contact %e to non-primary.';
 
 export const USER_ADDED = 'User %e was added.';
 export const USER_MODIFIED = 'User %e was modified.';
@@ -259,6 +259,6 @@ export function logModifiedPrimaryContact(owner, contact){
   log(owner.historyEntity, OWNER_UPDATE_PRIMARY_CONTACT, contact.historyEntity);
 }
 
-export function logSetNonPrimaryContact(owner, contact){
-  log(owner.historyEntity, OWNER_DELETED_PRIMARY_CONTACT, contact.historyEntity);
+export function logDeselectedPrimaryContact(owner, contact){
+  log(owner.historyEntity, OWNER_DESELECTED_PRIMARY_CONTACT, contact.historyEntity);
 }
