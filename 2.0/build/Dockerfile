@@ -1,9 +1,10 @@
-FROM dotnet/dotnet-20-runtime-centos7
+FROM centos:7
 # This image provides a .NET Core 2.0 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:${PATH} \
-    STI_SCRIPTS_PATH=/usr/libexec/s2i
+    STI_SCRIPTS_PATH=/usr/libexec/s2i \
+    ASPNETCORE_URLS=http://*:8080
 
 LABEL io.k8s.description="Platform for building and running .NET Core 2.0 applications" \
       io.k8s.display-name=".NET Core 2.0" \
@@ -40,14 +41,14 @@ RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
     rm -rf /var/cache/yum/*
 
 # Directory with the sources is set as the working directory.
-RUN mkdir /opt/app-root/src
+RUN mkdir -p /opt/app-root/src
 WORKDIR /opt/app-root/src
 
 # Since $HOME is set to /opt/app-root, the yum install may have created config
 # directories (such as ~/.pki/nssdb) there. These will be owned by root and can
 # cause actions that work on all of /opt/app-root to fail. So we need to fix
 # the permissions on those too.
-RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
+RUN chown -R 1001:0 /opt/app-root && chmod -R og+rwx /opt/app-root
 
 ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs6"
 
@@ -55,7 +56,10 @@ ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs6"
 # We keep the patch at '0', the latest patch version is automatically picked up.
 ENV DOTNET_SDK_BASE_VERSION=2.0.0 \
 # Needed for the `dotnet watch` to detect changes in a container.
-    DOTNET_USE_POLLING_FILE_WATCHER=true
+    DOTNET_USE_POLLING_FILE_WATCHER=true  \
+    PATH=/opt/rh/rh-dotnet20/root/usr/bin:/opt/rh/rh-dotnet20/root/usr/sbin:/opt/rh/rh-nodejs6/root/usr/bin:$PATH \
+    CPATH=/opt/rh/rh-dotnet20/root/usr/include:$CPATH \
+    LD_LIBRARY_PATH=/opt/rh/rh-dotnet20/root/usr/lib64:/opt/rh/rh-nodejs6/root/usr/lib64:$LD_LIBRARY_PATH
 
 # Run container by default as user with id 1001 (default)
 USER 1001
