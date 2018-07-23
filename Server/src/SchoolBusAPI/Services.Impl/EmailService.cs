@@ -6,6 +6,7 @@ using SchoolBusAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
 using MailKit.Net.Smtp;
+using System.Net.Security;
 using MimeKit;
 using Microsoft.Extensions.Configuration;
 
@@ -41,16 +42,21 @@ namespace SchoolBusAPI.Services.Impl
             else
             {
                 char[] delimiterChars= { ' ',',',';' };
+                const string SMTP_SERVER_SSL_TRUSTED_THUMBPRINT = "BFD82C46D641F34DB1480255055F473B904FBA6B";
+
                 string fromAddressTitle = "School Bus Inspection System";
                 string SmtpServer = Configuration["SMTP_SERVER"];
                 int SmtpPort = int.Parse(Configuration["SMTP_PORT"]);
+
                 string emailTo = email.mailTo.ToString();
                 string[] emails = emailTo.Split(delimiterChars);
                 string mailCc = email.mailCc.ToString();
                 string[] ccs = mailCc.Split(delimiterChars);
+
                 string emailFrom = email.mailFrom.ToString();
                 string subject = email.subject.ToString();
                 string body = email.body.ToString();
+
                 try
                 {
                     var emailMessage = new MimeMessage();
@@ -79,21 +85,51 @@ namespace SchoolBusAPI.Services.Impl
 
                     try
                     {
-                        client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => {
-                            Console.WriteLine("sender: {0}",sender);
-                            Console.WriteLine("Certificate: {0}", certificate);
-                            Console.WriteLine("chain: {0}", chain);
-                            Console.WriteLine("sslPolicyErrors: {0}", sslPolicyErrors);
-                            return true;
+                        client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
+                        {
+                            Console.WriteLine("Starting certificate validation.");
+                            if (sslPolicyErrors == SslPolicyErrors.None)
+                            {
+                                Console.WriteLine("Cerficiate valid");
+                                return true;
+                            }
+
+                            if (chain.ChainElements == null || chain.ChainElements.Count == 0)
+                            {
+                                Console.WriteLine("No certificates found in chain.");
+                                return false;
+                            }
+
+                            Console.WriteLine("SSL Policy errors detected, validating certificate chain");
+                            foreach (var chainCertificate in chain.ChainElements)
+                            {
+                                if (chainCertificate.Certificate == null)
+                                {
+                                    Console.WriteLine($"No valid certificate found in current element: {chainCertificate.Information}");
+                                    continue;
+                                }
+                                bool trustedCertificate = (chainCertificate.Certificate.Thumbprint == SMTP_SERVER_SSL_TRUSTED_THUMBPRINT);
+
+                                Console.WriteLine($"Certificate Thumbprint ({chainCertificate.Certificate.Thumbprint}) is {(trustedCertificate ? "" : "not")} trusted");
+                                if (trustedCertificate) return true;
+                            }
+                            Console.WriteLine("Unable to validate certificate chain.");
+                            return false;
                         };
-                        client.Connect(SmtpServer, SmtpPort, false);
+
+                        client.Connect(SmtpServer, SmtpPort, MailKit.Security.SecureSocketOptions.Auto);
                     }
-                    catch (SmtpCommandException ex)
+                    catch (MailKit.Security.SslHandshakeException sslException)
                     {
-                        throw ex;
+                        Console.WriteLine($"Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}");
                     }
                     
                     client.Send(emailMessage);
+                    Console.WriteLine("Email sent.");
                     client.Disconnect(true);
                     
                     return new StatusCodeResult(200);

@@ -37,6 +37,7 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// Controller of sending email Api request
         /// </summary>
+        /// <Permission>Users with login permission in the system can send email</Permission>
         /// <returns></returns>
         [HttpPost]
         [Route("/api/schoolbuses/email")]
