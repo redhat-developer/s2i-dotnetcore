@@ -27,7 +27,8 @@ import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import SchoolBusesEmailDialog from '../views/dialogs/SchoolBusesEmailDialog.jsx';
-
+import EmailSendSuccessDialog from '../views/dialogs/EmailSendSuccessDialog.jsx';
+import EmailSendFailDialog from '../views/dialogs/EmailSendFailDialog.jsx';
 import { formatDateTime, toZuluTime } from '../utils/date';
 
 const BEFORE_TODAY = 'Before Today';
@@ -64,6 +65,11 @@ var SchoolBuses = React.createClass({
     return {
       loading: true,
       showEmailDialog: false,
+      showEmailSendConfirmDialog: false,
+      showEmailSendFailDialog : false,
+      email: {},
+      emailSendErrorMessage: '',
+
       rightNow: Moment().format('MMMM Do YYYY, h:mm a'),
       search: {
         selectedDistrictsIds: this.props.search.selectedDistrictsIds || defaultSelectedDistricts,
@@ -259,18 +265,52 @@ var SchoolBuses = React.createClass({
     });
   },
 
-  email() {
-    this.setState({ showEmailDialog: true });
+  openEmailDialog() {
+    this.setState({
+      email: {},
+      showEmailDialog: true, 
+    });
   },
 
   sendEmail(email){
-    Api.sendEmail(email).finally(() => {
-      this.setState({ showEmailDialog: false });
+    Api.sendEmail(email).then(response => {
+      if (response.mailSent){
+        this.openEmailSendConfirm();
+      } else {
+        this.openEmailSendFail(response);
+      }
+    }).finally(() => {
+      this.closeEmailDialog();
     });
+  },
+
+  retryEmailSend(){
+    this.closeEmailSendFail();
+    this.setState({ showEmailDialog: true });
   },
 
   closeEmailDialog(){
     this.setState({ showEmailDialog: false });
+  },
+
+  openEmailSendConfirm(){
+    this.setState({ showEmailSendConfirmDialog: true });
+  },
+
+  closeEmailSendConfirm(){
+    this.setState({ showEmailSendConfirmDialog: false });
+  },
+
+  openEmailSendFail(email){
+    this.setState({ 
+      email: email,
+      emailSendErrorMessage: email.errorInfo,
+      showEmailSendFailDialog: true,
+    });
+  },
+
+  closeEmailSendFail(){
+    this.setState({ showEmailSendFailDialog: false });
   },
 
   printSelectedDropdownItems(allItems, selectedItemIds) {
@@ -315,7 +355,7 @@ var SchoolBuses = React.createClass({
       <PageHeader id="pageHeader-print">School Bus Inspection Report: {this.state.rightNow}</PageHeader>
       <PageHeader id="subPageHeader-print">School Buses ({ numBuses })
         <ButtonGroup id="email-print-buttonGroup">
-            <Button onClick={ this.email }><Glyphicon glyph="envelope" title="E-mail" /></Button>
+            <Button onClick={ this.openEmailDialog }><Glyphicon glyph="envelope" title="E-mail" /></Button>
             <Button onClick={ this.print }><Glyphicon glyph="print" title="Print" /></Button>
         </ButtonGroup>
       </PageHeader>
@@ -497,7 +537,12 @@ var SchoolBuses = React.createClass({
       })()}
       { this.state.showEmailDialog &&
       <SchoolBusesEmailDialog schoolBuses={this.props.schoolBuses} show={this.state.showEmailDialog} onSave={this.sendEmail} 
-      onClose={this.closeEmailDialog}/> }
+      onClose={this.closeEmailDialog} email={this.state.email}/> }
+      { this.state.showEmailSendConfirmDialog &&
+      <EmailSendSuccessDialog show={this.state.showEmailSendConfirmDialog} onConfirm={this.closeEmailSendConfirm}/> }
+      { this.state.showEmailSendFailDialog &&
+      <EmailSendFailDialog show={this.state.showEmailSendFailDialog} onClose={this.closeEmailSendFail} 
+      onRetry={this.retryEmailSend} errorMessage={this.state.emailSendErrorMessage}/> }
     </div>;
   },
 });

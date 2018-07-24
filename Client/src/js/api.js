@@ -943,5 +943,7 @@ function getInspectorGroupId() {
 // Send Email
 ////////////////////
 export function sendEmail(email){
-  return new ApiRequest('schoolbuses/email').post(email);
+  return new ApiRequest('schoolbuses/email').post(email).then(response => {
+    return response;
+  });
 }

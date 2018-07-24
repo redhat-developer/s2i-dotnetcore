@@ -20,6 +20,7 @@ var SchoolBusesEmailDialog = React.createClass({
     show: React.PropTypes.bool,
     onSave: React.PropTypes.func.isRequired,
     onClose: React.PropTypes.func.isRequired,
+    email: React.PropTypes.object,
 
     owner: React.PropTypes.object.isRequired,
   },
@@ -41,6 +42,18 @@ var SchoolBusesEmailDialog = React.createClass({
 
   componentDidMount(){
     this.setState({ loadData: true });
+
+    //if user retry sending email
+    if(!_.isEmpty(this.props.email)){
+      var email = _.omit(this.props.email, ['errorInfo','mailSent']);
+      return this.setState({
+        mailTo: email.mailTo,
+        mailCc: email.mailCc,
+        subject: email.subject,
+        body: email.body,
+        loadData: false,
+      });
+    }
     
     this.fetchEmailAddress();
 

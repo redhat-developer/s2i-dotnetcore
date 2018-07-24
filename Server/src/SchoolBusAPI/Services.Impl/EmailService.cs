@@ -121,22 +121,31 @@ namespace SchoolBusAPI.Services.Impl
                     }
                     catch (MailKit.Security.SslHandshakeException sslException)
                     {
+                        email.mailSent = false;
+                        email.errorInfo = "Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.";
                         Console.WriteLine($"Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.");
+                        return new ObjectResult(email);
                     }
                     catch (Exception ex)
                     {
+                        email.mailSent = false;
+                        email.errorInfo = $"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}";
                         Console.WriteLine($"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}");
+                        return new ObjectResult(email);
                     }
                     
                     client.Send(emailMessage);
                     Console.WriteLine("Email sent.");
                     client.Disconnect(true);
-                    
-                    return new StatusCodeResult(200);
+
+                    email.mailSent = true;
+                    return new ObjectResult(email);
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    email.mailSent = false;
+                    email.errorInfo = $"Email send fail. Error: {ex.Message}";
+                    return new ObjectResult(email);
                 }
             }
         }
