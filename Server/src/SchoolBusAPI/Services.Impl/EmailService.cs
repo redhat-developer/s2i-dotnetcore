@@ -44,7 +44,7 @@ namespace SchoolBusAPI.Services.Impl
                 char[] delimiterChars= { ' ',',',';' };
                 const string SMTP_SERVER_SSL_TRUSTED_THUMBPRINT = "BFD82C46D641F34DB1480255055F473B904FBA6B";
 
-                string fromAddressTitle = "School Bus Inspection System";
+                string fromAddressTitle = email.userName.ToString();
                 string SmtpServer = Configuration["SMTP_SERVER"];
                 int SmtpPort = int.Parse(Configuration["SMTP_PORT"]);
 
@@ -144,7 +144,7 @@ namespace SchoolBusAPI.Services.Impl
                 catch (Exception ex)
                 {
                     email.mailSent = false;
-                    email.errorInfo = $"Email send fail. Error: {ex.Message}";
+                    email.errorInfo = $"Error: {ex.Message}";
                     return new ObjectResult(email);
                 }
             }

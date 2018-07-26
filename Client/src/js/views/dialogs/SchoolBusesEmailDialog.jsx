@@ -23,6 +23,7 @@ var SchoolBusesEmailDialog = React.createClass({
     email: React.PropTypes.object,
 
     owner: React.PropTypes.object.isRequired,
+    ui: React.PropTypes.object,
   },
 
   getInitialState(){
@@ -36,7 +37,13 @@ var SchoolBusesEmailDialog = React.createClass({
       body: 'Initial Message',
 
       mailToError: false,
+      mailCcError: false,
       subjectError: false,
+
+      ui : {
+        sortField: this.props.ui.sortField,
+        sortDesc: this.props.ui.sortDesc,
+      },
     };
   },
 
@@ -88,17 +95,21 @@ var SchoolBusesEmailDialog = React.createClass({
 
   populateBody(){
     this.setState({ loadData: true });
-    var schoolBuses = this.props.schoolBuses;
-    var body = 'Hi' + ',\n\nI am writing to you to require preparation for school bus inspection, please have following buses in hand.';
-    body += '\nThe buses I need are:\n';
+    var schoolBuses = _.sortBy(this.props.schoolBuses, this.state.ui.sortField);
+    if (this.state.ui.sortDesc) {
+      _.reverse(schoolBuses);
+    }
+    var body = 'Hi' + ',\n\nI am writing to you to require preparation for school bus inspection, please have following buses on hand.';
+    body += '\n\nThe buses I need are:\n';
     _.map(schoolBuses, (bus) => {
-      body += '\n' + '*Owner: ' + (bus.ownerName ? bus.ownerName : 'No data');
-      body += '\n' + '- District: ' + (bus.districtName ? bus.districtName : 'No data');
-      body += '\n' + '- Home Terminal: ' + (bus.homeTerminalCityPostal ? bus.homeTerminalCityPostal : 'No data');
-      body += '\n' + '- Registration: ' + (bus.icbcRegistrationNumber ? bus.icbcRegistrationNumber : 'No data');
-      body += '\n' + '- Unit Number: ' + (bus.unitNumber ? bus.unitNumber : 'No data');
-      body += '\n' + '- Permit: ' + (bus.permitNumber ? bus.permitNumber : 'No data');
+      body += '\n' + '*Owner: ' + bus.ownerName;
       body += '\n' + '- Inspection Date: ' + formatDateTime(bus.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR);
+      body += '\n' + '- Registration: ' + bus.icbcRegistrationNumber;
+      body += '\n' + '- Plate Number: ' + bus.licencePlateNumber;
+      body += '\n' + '- Unit Number: ' + bus.unitNumber;
+      body += '\n' + '- Permit: ' + bus.permitNumber;
+      body += '\n' + '- District: ' + bus.districtName;
+      body += '\n' + '- Home Terminal: ' + bus.homeTerminalCityPostal;
       return body += '\n';
     });
     body += '\n\nThank you for your cooperation.';
@@ -114,6 +125,7 @@ var SchoolBusesEmailDialog = React.createClass({
 
   onSave(){
     var email = {
+      userName: this.props.currentUser.name,
       mailFrom: this.state.mailFrom,
       mailTo: this.state.mailTo,
       mailCc: this.state.mailCc,
@@ -129,15 +141,47 @@ var SchoolBusesEmailDialog = React.createClass({
 
   isValid(){
     var isValid = true;
+    var re =  RegExp(/^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/);
 
     this.setState({
       mailToError: false,
+      mailCcError: false,
       subjectError: false,
     });
 
     if(isBlank(this.state.mailTo)){
       this.setState({ mailToError: 'Email address is required.' });
       isValid = false;
+    } else {
+      var mailTos = this.state.mailTo.split(/[;, ]/);
+      var invalidMailTo = [];
+      //remove empty string and find out invalid email
+      for(var a in mailTos){
+        if(mailTos[a] != '' && !re.test(mailTos[a])){
+          invalidMailTo.push(mailTos[a]);
+        }
+      }
+      //check if invalid email exist
+      if(invalidMailTo.length > 0){
+        this.setState({ mailToError: 'Email address in invalid format: ' + invalidMailTo.join(', ') });
+        isValid = false;
+      }
+    }
+
+    if(!isBlank(this.state.mailCc)){
+      var mailCcs = this.state.mailCc.split(/[;, ]/);
+      var invalidMailCc = [];
+      //remove empty string and find out invalid email
+      for(var b in mailCcs){
+        if(mailCcs[b] != '' && !re.test(mailCcs[b])){
+          invalidMailCc.push(mailCcs[b]);
+        }
+      }
+      //check if invalid email exist
+      if(invalidMailCc.length > 0){
+        this.setState({ mailCcError: 'Email address in invalid format: ' + invalidMailCc.join(', ') });
+        isValid = false;
+      }
     }
 
     if(isBlank(this.state.subject)){
@@ -161,7 +205,7 @@ var SchoolBusesEmailDialog = React.createClass({
             <Row>
               <Col md={12}>
 								<FormGroup controlId="mailTo" validationState={ this.state.mailToError ? 'error' : null }>
-									<ControlLabel>Email <sup>*</sup></ControlLabel>
+									<ControlLabel>Email <sup>*</sup></ControlLabel><span style={{fontSize: '12px' }}> (Use ; to separate addresses)</span>
                   <FormInputControl type="text" defaultValue={ this.state.mailTo } placeholder="example@email.com;" updateState={ this.updateState }/>
                   <HelpBlock>{ this.state.mailToError }</HelpBlock>
                 </FormGroup>
@@ -169,9 +213,10 @@ var SchoolBusesEmailDialog = React.createClass({
             </Row>
             <Row>
               <Col md={12}>
-								<FormGroup controlId="mailCc">
-									<ControlLabel>CC</ControlLabel>
+								<FormGroup controlId="mailCc" validationState={ this.state.mailCcError ? 'error' : null }>
+									<ControlLabel>CC </ControlLabel><span style={{fontSize: '12px' }}> (Use ; to separate addresses)</span>
                   <FormInputControl type="text" defaultValue={ this.state.mailCc } placeholder="example@email.com;" updateState={ this.updateState }/>
+                  <HelpBlock>{ this.state.mailCcError }</HelpBlock>
                 </FormGroup>
               </Col>
             </Row>
@@ -205,6 +250,7 @@ function mapStateToProps(state){
   return {
     owner: state.models.owner,
     currentUser: state.user,
+    ui: state.ui.schoolBuses,
   };
 }
 

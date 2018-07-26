@@ -32,7 +32,7 @@ var EmailSendFailDialog = React.createClass({
         <Row>
           <Col md={12}>
             {(() => {
-              return <div><h4>Email delivery fail.</h4>
+              return <div><h4>Email send fail.</h4>
               <h4>{errorMessage}</h4></div>;
             })()}
           </Col>

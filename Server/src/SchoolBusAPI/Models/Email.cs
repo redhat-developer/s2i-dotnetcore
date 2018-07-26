@@ -20,7 +20,8 @@ namespace SchoolBusAPI.Models
         /// <param name="subject">email subject</param>
         /// <param name="body">email body</param>
         /// <param name="errorInfo">error information when send email fail</param>
-        public Email(bool mailSent, string mailFrom, string mailTo, string mailCc, string subject, string body, string errorInfo)
+        /// <param name="userName">name of user that sending the email</param>
+        public Email(bool mailSent, string mailFrom, string mailTo, string mailCc, string subject, string body, string errorInfo, string userName)
         {
             this.mailSent = false;
             this.mailFrom = mailFrom;
@@ -29,6 +30,7 @@ namespace SchoolBusAPI.Models
             this.subject = subject;
             this.body = body;
             this.errorInfo = "";
+            this.userName = userName;
         }
 
         /// <summary>
@@ -59,5 +61,9 @@ namespace SchoolBusAPI.Models
         /// error information get set
         /// </summary>
         public string errorInfo { get; set; }
+        /// <summary>
+        /// name of user who sending email
+        /// </summary>
+        public string userName { get; set; }
     }
 }

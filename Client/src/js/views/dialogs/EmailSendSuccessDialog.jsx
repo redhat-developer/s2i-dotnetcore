@@ -17,14 +17,14 @@ var EmailSendSuccessDialog = React.createClass({
     return <ModalDialog id="emailSendConfirm" backdrop="static" bsSize="sm" show={this.props.show} onClose={this.onConfirm}
       title={<strong>Message</strong>} footer={
         <span>
-            <Button title="ok" bsStyle="primary" style={{ margin: 'auto' }} onClick={ this.onConfirm }>Ok</Button>
+            <Button title="ok" bsStyle="primary" onClick={ this.onConfirm }>Ok</Button>
         </span>
       }>
       <Form>
         <Row>
           <Col md={12}>
             {(() => {
-              return <div><h4>Email has been delivered successfully!</h4></div>;
+              return <div><h4>Email has been sent successfully!</h4></div>;
             })()}
           </Col>
         </Row>
