@@ -35,9 +35,9 @@ sdk_default_version="2.1.300"
 sdk_latest_version="2.1.300"
 sdk_versions=( "2.1.300" )
 else
-sdk_default_version="2.1.301"
-sdk_latest_version="2.1.301"
-sdk_versions=( "2.1.301" )
+sdk_default_version="2.1.302"
+sdk_latest_version="2.1.302"
+sdk_versions=( "2.1.302" )
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
