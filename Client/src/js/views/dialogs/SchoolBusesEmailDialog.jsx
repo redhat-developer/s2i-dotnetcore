@@ -11,7 +11,6 @@ import { isBlank } from '../../utils/string';
 import * as Constant from '../../constants';
 import * as Api from '../../api';
 import _ from 'lodash';
-import Moment from 'moment';
 
 var SchoolBusesEmailDialog = React.createClass({
   propTypes:{
@@ -30,15 +29,18 @@ var SchoolBusesEmailDialog = React.createClass({
     return {
       loadData: true,
 
+      schoolBuses: this.props.schoolBuses ? this.props.schoolBuses : null,
       mailFrom: this.props.currentUser && this.props.currentUser.email ? this.props.currentUser.email : '',
       mailTo: '',
       mailCc: '',
       subject: '',
-      body: 'Initial Message',
+      body: '',
 
       mailToError: false,
       mailCcError: false,
       subjectError: false,
+
+      lastInspectionDates: {},//last inspection date of school buses
 
       ui : {
         sortField: this.props.ui.sortField,
@@ -63,8 +65,7 @@ var SchoolBusesEmailDialog = React.createClass({
     }
     
     this.fetchEmailAddress();
-
-    this.populateBody();
+    this.fetchLastInspectionDate();
   },
 
   fetchEmailAddress(){
@@ -72,7 +73,7 @@ var SchoolBusesEmailDialog = React.createClass({
     var primaryContactIds = [];//Array store all primary contact id of owners who related to search result of school buses
     var emailAddresses = [];
     var count = 0;
-    _.map(this.props.schoolBuses, (bus) => {
+    _.map(this.state.schoolBuses, (bus) => {
       if(bus.schoolBusOwner && bus.schoolBusOwner.primaryContactId){primaryContactIds.push(bus.schoolBusOwner.primaryContactId);}
     });
     primaryContactIds = _.uniq(primaryContactIds);//remove duplicated id
@@ -80,6 +81,9 @@ var SchoolBusesEmailDialog = React.createClass({
     //get primary contacts
     _.map(primaryContactIds, (id) =>{
       Api.getContact(id).then(response => {
+        if(this.state.loadData == false){
+          this.setState({ loadData: true });
+        }
         emailAddresses.push(response.emailAddress);
         count++;
         if(count == primaryContactIds.length){
@@ -93,30 +97,68 @@ var SchoolBusesEmailDialog = React.createClass({
     });
   },
 
-  populateBody(){
+  fetchLastInspectionDate(){
     this.setState({ loadData: true });
-    var schoolBuses = _.sortBy(this.props.schoolBuses, this.state.ui.sortField);
+    var schoolBuses = _.sortBy(this.state.schoolBuses, this.state.ui.sortField);
     if (this.state.ui.sortDesc) {
       _.reverse(schoolBuses);
     }
-    var body = 'Hi' + ',\n\nI am writing to you to require preparation for school bus inspection, please have following buses on hand.';
-    body += '\n\nThe buses I need are:\n';
     _.map(schoolBuses, (bus) => {
-      body += '\n' + '*Owner: ' + bus.ownerName;
-      body += '\n' + '- Inspection Date: ' + formatDateTime(bus.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR);
-      body += '\n' + '- Registration: ' + bus.icbcRegistrationNumber;
-      body += '\n' + '- Plate Number: ' + bus.licencePlateNumber;
-      body += '\n' + '- Unit Number: ' + bus.unitNumber;
-      body += '\n' + '- Permit: ' + bus.permitNumber;
-      body += '\n' + '- District: ' + bus.districtName;
-      body += '\n' + '- Home Terminal: ' + bus.homeTerminalCityPostal;
+      Api.getSchoolBusInspections(bus.id).then(inspections => {//callback of inspections belong to a school bus
+        this.findLastInspectionDate(inspections);
+      });
+    });
+    this.setState({ loadData: false });
+  },
+
+  findLastInspectionDate(inspections){
+    var schoolBuses = this.state.schoolBuses;
+    var lastInspectionDate = []; //last inspection date of a school bus
+    var bus = _.find(inspections, 'schoolBus');
+    var busId = bus.schoolBus.id;
+    if(this.state.loadData == false){
+      this.setState({ loadData: true });
+    }
+    _.map(inspections, inspection => {
+      lastInspectionDate.push(inspection.inspectionDate);
+    });
+    lastInspectionDate.sort();
+    schoolBuses[busId].lastInspectionDate = lastInspectionDate[lastInspectionDate.length - 1];
+    this.setState({ 
+      schoolBuses: schoolBuses,
+      loadData: false,
+    }, () => {
+      this.populateBody();
+    });
+  },
+
+  populateBody(){
+    this.setState({ loadData: true });
+    var schoolBuses = _.sortBy(this.state.schoolBuses, this.state.ui.sortField);
+    if (this.state.ui.sortDesc) {
+      _.reverse(schoolBuses);
+    }
+
+    var body = 'According to CVSE records, the following school bus(es) are due or overdue for a re-inspection or annual mechanical school bus compliance inspection. ';
+    body += '\nPlease review the following list and advise if there are any changes required.';
+    body += '\nPlease contact me so that we may arrange a time and location for the inspection(s) to take place.';
+    body += '\n\nRegards,';
+    body += '\n' + this.props.currentUser.fullName;
+    body += '\n\n' + 'School Bus List:' + '\n';
+    _.map(schoolBuses, (bus) => {
+      body += '\n' + '*Owner: ' + bus.ownerName + '–';
+      body += '\n' + 'Last Inspection Date: ' + formatDateTime(bus.lastInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR);
+      body += '\n' + '- Registration: ' + (bus.icbcRegistrationNumber ? bus.icbcRegistrationNumber : 'null');
+      body += '\n' + '- Plate Number: ' + (bus.licencePlateNumber ? bus.licencePlateNumber : 'null');
+      body += '\n' + '- Unit Number: ' + (bus.unitNumber ? bus.unitNumber : 'null');
+      body += '\n' + '- Permit: ' + (bus.permitNumber ? bus.permitNumber : 'null');
+      body += '\n' + '- Home Terminal: ' + (bus.homeTerminalCityPostal ? bus.homeTerminalCityPostal : 'null');
       return body += '\n';
     });
-    body += '\n\nThank you for your cooperation.';
-    body += '\n\nBest Regards,';
-    body += '\n\n' + this.props.currentUser.fullName;
-    body += '\n' + Moment().format('MMMM Do YYYY');
-    this.setState({ body: body });
+    this.setState({ 
+      body: body,
+      loadData: false,
+    });
   },
 
   updateState(state, callback){

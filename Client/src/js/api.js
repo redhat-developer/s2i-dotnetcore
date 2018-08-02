@@ -484,6 +484,8 @@ export function getSchoolBusInspections(schoolBusId) {
     _.map(schoolBusInspections, inspection => { parseInspection(inspection); });
 
     store.dispatch({ type: Action.UPDATE_BUS_INSPECTIONS, schoolBusInspections: schoolBusInspections });
+
+    return schoolBusInspections;
   });
 }
 
