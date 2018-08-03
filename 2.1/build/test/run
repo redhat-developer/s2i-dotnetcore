@@ -31,9 +31,9 @@ test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
 if [ "$BUILD_CENTOS" = "true" ]; then
-sdk_default_version="2.1.300"
-sdk_latest_version="2.1.300"
-sdk_versions=( "2.1.300" )
+sdk_default_version="2.1.302"
+sdk_latest_version="2.1.302"
+sdk_versions=( "2.1.302" )
 else
 sdk_default_version="2.1.302"
 sdk_latest_version="2.1.302"
