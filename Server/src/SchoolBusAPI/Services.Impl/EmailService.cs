@@ -42,7 +42,7 @@ namespace SchoolBusAPI.Services.Impl
             else
             {
                 char[] delimiterChars= { ' ',',',';' };
-                const string SMTP_SERVER_SSL_TRUSTED_THUMBPRINT = "BFD82C46D641F34DB1480255055F473B904FBA6B";
+                string SMTP_SERVER_SSL_TRUSTED_THUMBPRINT = Configuration["SMTP_SERVER_SSL_TRUSTED_THUMBPRINT"];
 
                 string fromAddressTitle = email.userName.ToString();
                 string SmtpServer = Configuration["SMTP_SERVER"];
