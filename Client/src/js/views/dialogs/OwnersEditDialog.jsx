@@ -54,10 +54,9 @@ var OwnersEditDialog = React.createClass({
   didChange() {
     if (this.state.status !== this.props.owner.status) { return true; }
     if (this.state.name !== this.props.owner.name) { return true; }
-
     return false;
   },
-
+  
   isValid() {
     this.setState({
       nameError: false,
@@ -91,10 +90,9 @@ var OwnersEditDialog = React.createClass({
 
   render() {
     if (this.state.loading) { return <div style={{ textAlign: 'center' }}><Spinner/></div>; }
-
     return <EditDialog id="owners-edit" show={ this.props.show }
-      onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }
-      title= { <strong>School Bus Owner</strong> }>
+    onClose={ this.props.onClose } onSave={ this.onSave } didChange={ this.didChange } isValid={ this.isValid }
+    title= { <strong>School Bus Owner</strong> }>
       {(() => {
         return <Form>
           <Grid fluid>

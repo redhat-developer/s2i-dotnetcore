@@ -484,6 +484,8 @@ export function getSchoolBusInspections(schoolBusId) {
     _.map(schoolBusInspections, inspection => { parseInspection(inspection); });
 
     store.dispatch({ type: Action.UPDATE_BUS_INSPECTIONS, schoolBusInspections: schoolBusInspections });
+
+    return schoolBusInspections;
   });
 }
 
@@ -875,6 +877,8 @@ export function getContact(id){
     parseContact(contact);
 
     store.dispatch({ type: Action.UPDATE_CONTACT, contact: contact });
+
+    return response;
   });
 }
 
@@ -935,4 +939,13 @@ export function getVersion() {
 function getInspectorGroupId() {
   var inspectorGroup = _.find(store.getState().lookups.groups, { name: 'Inspector' });
   return inspectorGroup ? inspectorGroup.id : 0;
+}
+
+////////////////////
+// Send Email
+////////////////////
+export function sendEmail(email){
+  return new ApiRequest('schoolbuses/email').post(email).then(response => {
+    return response;
+  });
 }

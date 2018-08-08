@@ -32,6 +32,7 @@ namespace SchoolBusAPI
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ICurrentUserService, CurrentUserService>();
             services.AddTransient<ICCWDataService, CCWDataService>();
+            services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IDistrictService, DistrictService>();
             services.AddTransient<IGroupService, GroupService>();
             services.AddTransient<IInspectionService, InspectionService>();
