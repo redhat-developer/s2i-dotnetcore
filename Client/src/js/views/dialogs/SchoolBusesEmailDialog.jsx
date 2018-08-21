@@ -28,6 +28,8 @@ var SchoolBusesEmailDialog = React.createClass({
   getInitialState(){
     return {
       loadData: true,
+      loadEmail: true,
+      loadLastInspectionDate: true,
 
       schoolBuses: this.props.schoolBuses ? this.props.schoolBuses : null,
       mailFrom: this.props.currentUser && this.props.currentUser.email ? this.props.currentUser.email : '',
@@ -69,7 +71,7 @@ var SchoolBusesEmailDialog = React.createClass({
   },
 
   fetchEmailAddress(){
-    this.setState({ loadData: true });
+    this.setState({ loadEmail: true });
     var primaryContactIds = [];//Array store all primary contact id of owners who related to search result of school buses
     var emailAddresses = [];
     var count = 0;
@@ -81,16 +83,17 @@ var SchoolBusesEmailDialog = React.createClass({
     //get primary contacts
     _.map(primaryContactIds, (id) =>{
       Api.getContact(id).then(response => {
-        if(this.state.loadData == false){
-          this.setState({ loadData: true });
-        }
         emailAddresses.push(response.emailAddress);
         count++;
         if(count == primaryContactIds.length){
           this.setState({
             subject: 'Request School Bus Inspection ',
             mailTo: emailAddresses.join('; '),
-            loadData: false,
+            loadEmail: false,
+          }, () => {
+            if(!this.state.loadLastInspectionDate){
+              this.populateBody();
+            }
           });
         }
       });
@@ -98,7 +101,8 @@ var SchoolBusesEmailDialog = React.createClass({
   },
 
   fetchLastInspectionDate(){
-    this.setState({ loadData: true });
+    this.setState({ loadLastInspectionDate: true });
+    var count = 0;
     var schoolBuses = _.sortBy(this.state.schoolBuses, this.state.ui.sortField);
     if (this.state.ui.sortDesc) {
       _.reverse(schoolBuses);
@@ -106,34 +110,38 @@ var SchoolBusesEmailDialog = React.createClass({
     _.map(schoolBuses, (bus) => {
       Api.getSchoolBusInspections(bus.id).then(inspections => {//callback of inspections belong to a school bus
         this.findLastInspectionDate(inspections);
+        count++;
+        if(count == schoolBuses.length){
+          this.setState({
+            loadLastInspectionDate: false,
+          }, () => {
+            if(!this.state.loadEmail){
+              this.populateBody();
+            }
+          });
+        }
       });
     });
-    this.setState({ loadData: false });
   },
 
   findLastInspectionDate(inspections){
-    var schoolBuses = this.state.schoolBuses;
-    var lastInspectionDate = []; //last inspection date of a school bus
-    var bus = _.find(inspections, 'schoolBus');
-    var busId = bus.schoolBus.id;
-    if(this.state.loadData == false){
-      this.setState({ loadData: true });
+    if(!_.isEmpty(inspections)){
+      var schoolBuses = this.state.schoolBuses;
+      var lastInspectionDate = []; //last inspection date of a school bus
+      var bus = _.find(inspections, 'schoolBus');
+      var busId = bus.schoolBus.id;
+      _.map(inspections, inspection => {
+        lastInspectionDate.push(inspection.inspectionDate);
+      });
+      lastInspectionDate.sort();
+      schoolBuses[busId].lastInspectionDate = lastInspectionDate[lastInspectionDate.length - 1];
+      this.setState({ 
+        schoolBuses: schoolBuses,
+      });
     }
-    _.map(inspections, inspection => {
-      lastInspectionDate.push(inspection.inspectionDate);
-    });
-    lastInspectionDate.sort();
-    schoolBuses[busId].lastInspectionDate = lastInspectionDate[lastInspectionDate.length - 1];
-    this.setState({ 
-      schoolBuses: schoolBuses,
-      loadData: false,
-    }, () => {
-      this.populateBody();
-    });
   },
 
   populateBody(){
-    this.setState({ loadData: true });
     var schoolBuses = _.sortBy(this.state.schoolBuses, this.state.ui.sortField);
     if (this.state.ui.sortDesc) {
       _.reverse(schoolBuses);
@@ -147,7 +155,7 @@ var SchoolBusesEmailDialog = React.createClass({
     body += '\n\n' + 'School Bus List:' + '\n';
     _.map(schoolBuses, (bus) => {
       body += '\n' + '*Owner: ' + bus.ownerName + '–';
-      body += '\n' + 'Last Inspection Date: ' + formatDateTime(bus.lastInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR);
+      body += '\n' + 'Last Inspection Date: ' + (bus.lastInspectionDate ? formatDateTime(bus.lastInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) : 'null');
       body += '\n' + '- Registration: ' + (bus.icbcRegistrationNumber ? bus.icbcRegistrationNumber : 'null');
       body += '\n' + '- Plate Number: ' + (bus.licencePlateNumber ? bus.licencePlateNumber : 'null');
       body += '\n' + '- Unit Number: ' + (bus.unitNumber ? bus.unitNumber : 'null');
