@@ -12,10 +12,14 @@ if [ -z "$http_proxy" ] && [ ! -z "$HTTP_PROXY" ]; then
   export http_proxy="${HTTP_PROXY}"
 fi
 
-# When there is an DOTNET_SSL_CERT_DIR folder, use it as the SSL_CERT_DIR.
-# The assemble script creates this folder when DOTNET_SSL_DIRS is set.
-if [ -d "$DOTNET_SSL_CERT_DIR" ]; then
-  export SSL_CERT_DIR="$DOTNET_SSL_CERT_DIR"
+# Trust certificates from DOTNET_SSL_DIRS.
+if [ -n "$DOTNET_SSL_DIRS" ]; then
+  # The main process (PID 1) sets up a certificate folder. The other processes use it.
+  if [ $$ -eq 1 ]; then
+    source /opt/app-root/etc/trust_ssl_dirs
+  else
+    export SSL_CERT_DIR="$DOTNET_SSL_CERT_DIR"
+  fi
 fi
 
 cmd="$1"; shift

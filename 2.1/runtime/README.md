@@ -76,11 +76,11 @@ They must not to be overridden.
 
     These variables contain the working directory (`/opt/app-root/app`) and default CMD of the runtime image (`default-cmd.sh`).
 
-* **DOTNET_SSL_CERT_DIR**
+* **DOTNET_SSL_DIRS**
 
-    This variable is set to `/opt/app-root/ssl_dir`. This directory is not present in the runtime image.
-    When it added (e.g. by s2i assemble), it is used as `SSL_CERT_DIR`. `SSL_CERT_DIR` is used by applications (including `dotnet`)
-    to load CA certificates.
+    Used to specify a list of folders with additional certificates to trust. The certificates are trusted by each process that runs
+    during the build and all processes that runs in the image after the build (including the application that was built). The folders
+    can be absolute paths (starting with `/`) or paths in the source repository (e.g. `certificates`). Defaults to ``.
 
 * **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
 
