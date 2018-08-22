@@ -80,24 +80,35 @@ var SchoolBusesEmailDialog = React.createClass({
     });
     primaryContactIds = _.uniq(primaryContactIds);//remove duplicated id
 
-    //get primary contacts
-    _.map(primaryContactIds, (id) =>{
-      Api.getContact(id).then(response => {
-        emailAddresses.push(response.emailAddress);
-        count++;
-        if(count == primaryContactIds.length){
-          this.setState({
-            subject: 'Request School Bus Inspection ',
-            mailTo: emailAddresses.join('; '),
-            loadEmail: false,
-          }, () => {
-            if(!this.state.loadLastInspectionDate){
-              this.populateBody();
-            }
-          });
+    if(primaryContactIds.length > 0){
+      //get primary contacts
+      _.map(primaryContactIds, (id) =>{
+        Api.getContact(id).then(response => {
+          emailAddresses.push(response.emailAddress);
+          count++;
+          if(count == primaryContactIds.length){
+            this.setState({
+              subject: 'Request School Bus Inspection ',
+              mailTo: emailAddresses.join('; '),
+              loadEmail: false,
+            }, () => {
+              if(!this.state.loadLastInspectionDate){
+                this.populateBody();
+              }
+            });
+          }
+        });
+      });
+    } else {
+      this.setState({
+        subject: 'Request School Bus Inspection ',
+        loadEmail: false,
+      }, () => {
+        if(!this.state.loadLastInspectionDate){
+          this.populateBody();
         }
       });
-    });
+    }
   },
 
   fetchLastInspectionDate(){
@@ -107,21 +118,31 @@ var SchoolBusesEmailDialog = React.createClass({
     if (this.state.ui.sortDesc) {
       _.reverse(schoolBuses);
     }
-    _.map(schoolBuses, (bus) => {
-      Api.getSchoolBusInspections(bus.id).then(inspections => {//callback of inspections belong to a school bus
-        this.findLastInspectionDate(inspections);
-        count++;
-        if(count == schoolBuses.length){
-          this.setState({
-            loadLastInspectionDate: false,
-          }, () => {
-            if(!this.state.loadEmail){
-              this.populateBody();
-            }
-          });
+    if(schoolBuses.length > 0){
+      _.map(schoolBuses, (bus) => {
+        Api.getSchoolBusInspections(bus.id).then(inspections => {//callback of inspections belong to a school bus
+          this.findLastInspectionDate(inspections);
+          count++;
+          if(count == schoolBuses.length){
+            this.setState({
+              loadLastInspectionDate: false,
+            }, () => {
+              if(!this.state.loadEmail){
+                this.populateBody();
+              }
+            });
+          }
+        });
+      });
+    } else {
+      this.setState({
+        loadLastInspectionDate: false,
+      }, () => {
+        if(!this.state.loadEmail){
+          this.populateBody();
         }
       });
-    });
+    }
   },
 
   findLastInspectionDate(inspections){
