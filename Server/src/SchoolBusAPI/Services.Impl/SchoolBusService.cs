@@ -501,7 +501,7 @@ namespace SchoolBusAPI.Services.Impl
                     permitViewModel.SchoolBusOwnerProvince = schoolBus.CCWData.ICBCRegOwnerProv;
                     permitViewModel.SchoolBusOwnerCity = schoolBus.CCWData.ICBCRegOwnerCity;
                     permitViewModel.SchoolBusOwnerName = schoolBus.CCWData.ICBCRegOwnerName;
-                    
+
                 }
                 permitViewModel.PermitIssueDate = null;
                 if (schoolBus.PermitIssueDate != null)
@@ -571,7 +571,7 @@ namespace SchoolBusAPI.Services.Impl
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, targetUrl);
                     request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
-
+                    
                     request.Headers.Clear();
                     // transfer over the request headers.
                     foreach (var item in Request.Headers)
@@ -594,6 +594,7 @@ namespace SchoolBusAPI.Services.Impl
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine($"Send request failed. Log: {e.Message}");
                     result = null;
                 }
 
