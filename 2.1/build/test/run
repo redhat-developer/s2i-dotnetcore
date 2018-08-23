@@ -30,6 +30,7 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
+aspnet_latest_version=2.1.3
 if [ "$BUILD_CENTOS" = "true" ]; then
 sdk_default_version="2.1.302"
 sdk_latest_version="2.1.302"
@@ -586,6 +587,24 @@ test_certificates() {
   assert_equal "$count_with_additional" "$(($default_count + 3))"
 }
 
+test_aspnet_implicit_using_latest()
+{
+  # aspnetcoreimplicitversion contains a versionless reference
+  # to the Microsoft.AspNetCore.{App,All} packages.
+  # after the build, the assemble script prints out the resolved versions.
+  local app=aspnetcoreimplicitversion
+
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  # cleanup
+  docker_rmi ${image}
+
+  # verify the versionless references resolved to the latest version.
+  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.All": "'${aspnet_latest_version}'"'
+  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.App": "'${aspnet_latest_version}'"'
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -596,6 +615,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
     test_config
     test_usage
     test_s2i_sdk_version $sdk_version
+    test_aspnet_implicit_using_latest
     test_consoleapp
     test_multiframework
     test_fsharp
