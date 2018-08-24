@@ -78,8 +78,8 @@ They must not to be overridden.
 
 * **DOTNET_SSL_DIRS**
 
-    Used to specify a list of folders with additional certificates to trust. The certificates are trusted by each process that runs
-    during the build and all processes that run in the image after the build (including the application that was built). The folders
+    Used to specify a list of folders/files with additional certificates to trust. The certificates are trusted by each process that runs
+    during the build and all processes that run in the image after the build (including the application that was built). The items
     can be absolute paths (starting with `/`) or paths in the source repository (e.g. `certificates`). Defaults to ``.
 
 * **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
