@@ -578,13 +578,14 @@ test_certificates() {
   local default_count_with_nonexist=$(docker_run_certificatecount -e DOTNET_SSL_DIRS=/doesntexist)
   assert_equal "$default_count" "$default_count_with_nonexist"
 
-  # DOTNET_SSL_DIRS=/doesntexist certdir1 certdir2
-  # - /doesntexist : ignored
-  # - certdir1     : contains 1 certificate in 1 file
-  # - certdir2     : contains 2 certificates in 1 file
+  # DOTNET_SSL_DIRS=/doesntexist certdir1 certdir2 certdir3/cert.pem
+  # - /doesntexist      : ignored
+  # - certdir1          : contains 1 certificate in 1 file
+  # - certdir2          : contains 2 certificates in 1 file
+  # - certdir3/cert.pem : file containing 1 certificate
   # DOTNET_RM_SRC=true to check these certificates are copied outside the src folder.
-  local count_with_additional=$(docker_run_certificatecount -e DOTNET_SSL_DIRS='/doesntexist certdir1 certdir2')
-  assert_equal "$count_with_additional" "$(($default_count + 3))"
+  local count_with_additional=$(docker_run_certificatecount -e DOTNET_SSL_DIRS='/doesntexist certdir1 certdir2 certdir3/cert.pem')
+  assert_equal "$count_with_additional" "$(($default_count + 4))"
 }
 
 test_aspnet_implicit_using_latest()

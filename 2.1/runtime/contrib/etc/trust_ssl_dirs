@@ -31,15 +31,19 @@ if [ -n "$DOTNET_SSL_DIRS" ]; then
   # Populate it with certificates.
   CERT_ID=0
   for SSL_DIR in $_DOTNET_SSL_DIRS; do
-    # Ignore non-existing directories.
     if [ -d "$SSL_DIR" ]; then
-      # Create a symbolic link for each certificate.
+      # Create a symbolic link for each certificate in the directory.
       CERTFILES=(`find -L "$SSL_DIR" -maxdepth 1 -type f -exec realpath {} \;`)
       for CERT_FILE in ${CERTFILES[@]}
       do
         ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
         CERT_ID=$((CERT_ID + 1))
       done
+    elif [ -f "$SSL_DIR" ]; then
+      # Create a symbolic link to the file.
+      CERT_FILE=$(realpath "$SSL_DIR")
+      ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
+      CERT_ID=$((CERT_ID + 1))
     fi
   done
 
