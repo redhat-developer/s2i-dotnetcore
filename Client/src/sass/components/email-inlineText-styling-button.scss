@@ -1,0 +1,17 @@
+.inlineText-styling-button{
+  display: inline-block;
+  padding: 5px 4px;
+  margin-bottom: 5px;
+  margin-left: 2px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 0.5;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-color: #ccc; 
+  border-radius: 10px;
+}
