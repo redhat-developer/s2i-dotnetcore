@@ -30,17 +30,19 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-aspnet_latest_version=2.1.3
+# Versions of Microsoft.AspNetCore.{All,App} packages that are known by latest RHEL sdk.
+aspnet_latest_app_version=2.1.3
+aspnet_latest_all_version=2.1.3
 if [ "$BUILD_CENTOS" = "true" ]; then
-sdk_default_version="2.1.302"
-sdk_latest_version="2.1.302"
+# sdk versions supported on CentOS
 sdk_versions=( "2.1.302" )
 else
-sdk_default_version="2.1.302"
-sdk_latest_version="2.1.302"
+# sdk versions supported on RHEL
 sdk_versions=( "2.1.302" )
 fi
 
+sdk_default_version=${sdk_versions[0]}
+sdk_latest_version=${sdk_versions[-1]}
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
 s2i_image_tag() {
@@ -590,20 +592,36 @@ test_certificates() {
 
 test_aspnet_implicit_using_latest()
 {
+  test_start
+
   # aspnetcoreimplicitversion contains a versionless reference
   # to the Microsoft.AspNetCore.{App,All} packages.
   # after the build, the assemble script prints out the resolved versions.
   local app=aspnetcoreimplicitversion
-
-  # build image
   local image=$(s2i_image_tag ${app})
+
+  # verify the versionless references resolved to the latest version.
+  # build image
   local s2i_build=$(s2i_build_output_log ${app} ${image})
   # cleanup
   docker_rmi ${image}
 
-  # verify the versionless references resolved to the latest version.
-  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.All": "'${aspnet_latest_version}'"'
-  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.App": "'${aspnet_latest_version}'"'
+  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.All": "'${aspnet_latest_all_version}'"'
+  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.App": "'${aspnet_latest_app_version}'"'
+
+  # verify aspnet_latest_{app,all}_version have the correct values.
+  # If this fails, the variables in the test and environment variables in the Dockerfiles must be updated.
+  if [ "$sdk_version" == "$sdk_latest_version" -a "$BUILD_CENTOS" != "true" ]; then
+    info verifying aspnet_latest_{app,all}
+
+    # build image
+    s2i_build=$(s2i_build_output_log ${app} ${image} -e LatestPatchVersionForAspNetCoreApp2_1='' -e LatestPatchVersionForAspNetCoreAll2_1='')
+    # cleanup
+    docker_rmi ${image}
+
+    assert_contains "${s2i_build}" '"Microsoft.AspNetCore.All": "'${aspnet_latest_all_version}'"'
+    assert_contains "${s2i_build}" '"Microsoft.AspNetCore.App": "'${aspnet_latest_app_version}'"'
+  fi
 }
 
 info "Testing ${IMAGE_NAME}"
