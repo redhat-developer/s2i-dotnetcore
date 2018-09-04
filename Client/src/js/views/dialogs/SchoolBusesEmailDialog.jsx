@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import EditDialog from '../../components/EditDialog.jsx';
 import FormInputControl from '../../components/FormInputControl.jsx';
 import Spinner from '../../components/Spinner.jsx';
-import { Form, FormGroup, Grid, Well, Row, Col, ControlLabel, HelpBlock, Button } from 'react-bootstrap';
+import { Form, FormGroup, Grid, Well, Row, Col, ControlLabel, HelpBlock } from 'react-bootstrap';
 import {Editor, EditorState, ContentState, RichUtils, convertFromHTML } from 'draft-js';
 import {convertToHTML} from 'draft-convert';
 import { formatDateTime } from '../../utils/date';
@@ -340,9 +340,13 @@ var SchoolBusesEmailDialog = React.createClass({
                 <div>
                   <ControlLabel>Body </ControlLabel>
                     <Row>
-                      <Button className="inlineText-styling-button" title="Bold" onClick={this._onBoldClick}>Bold</Button>
-                      <Button className="inlineText-styling-button" title="Italic" onClick={this._onItalicClick}>Italic</Button>
-                      <Button className="inlineText-styling-button" title="Underline" onClick={this._onUnderlineClick}>Underline</Button>
+                      <div className="btn-toolbar" role="toolbar">
+                        <div className="btn-group" role="group">
+                          <button type="button" className="btn btn-secondary" title="Bold" onClick={this._onBoldClick}>Bold</button>
+                          <button type="button" className="btn btn-secondary" title="Italic" onClick={this._onItalicClick}>Italic</button>
+                          <button type="button" className="btn btn-secondary" title="Underline" onClick={this._onUnderlineClick}>Underline</button>
+                        </div>
+                      </div>
                     </Row>
                   <div className="richEditor">
                     <Editor
