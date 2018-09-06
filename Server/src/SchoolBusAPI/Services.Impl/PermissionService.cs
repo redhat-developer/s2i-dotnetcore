@@ -135,7 +135,7 @@ namespace SchoolBusAPI.Services.Impl
             if (permission == null)
             {
                 // Not Found
-                return new StatusCodeResult(400);
+                return new StatusCodeResult(404);
             }
             
             permission.Code = item.Code;

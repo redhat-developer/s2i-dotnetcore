@@ -73,15 +73,30 @@ function showError(err) {
   progressBarEl.classList.add('progress-bar-danger');
   progressBarEl.classList.remove('active');
   console.error(err);
-  var errorMessage = String(err);
+  var tranit = <a href="mailto:tranit@gov.bc.ca" target="_top">TRANIT</a>;
+  var errorInfor = [];
   if (err instanceof ApiError) {
-    errorMessage = err.message;
+    if(err.status){
+      switch(err.status){
+        case 401:
+          errorInfor.push('If you feel you are receiving this message in error, please contact ');
+          break;
+        default:
+          errorInfor.push('An unknown error has occoured. Please try again later. If the problem persists, please contact ');
+          break;
+      }
+    }else{
+      err.status = 'Unknown error code';
+    }
   }
 
+  errorInfor.push(tranit);
+  errorInfor.push('. ');
+  
   ReactDOM.render((
     <div id="loading-error-message">
       <h4>Error loading application</h4>
-      <p>{errorMessage}</p>
+      <p>{errorInfor}</p>
     </div>
   ), document.getElementById('init-error'));
 }
