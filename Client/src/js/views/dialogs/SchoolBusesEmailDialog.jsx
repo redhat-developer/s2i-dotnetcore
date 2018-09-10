@@ -5,8 +5,9 @@ import EditDialog from '../../components/EditDialog.jsx';
 import FormInputControl from '../../components/FormInputControl.jsx';
 import Spinner from '../../components/Spinner.jsx';
 import { Form, FormGroup, Grid, Well, Row, Col, ControlLabel, HelpBlock } from 'react-bootstrap';
-import {Editor, EditorState, ContentState, RichUtils, convertFromHTML } from 'draft-js';
-import {convertToHTML} from 'draft-convert';
+import { Editor, EditorState, ContentState, RichUtils, convertFromHTML } from 'draft-js';
+import { registerCopySource, handleDraftEditorPastedText } from 'draftjs-conductor'; //copy-pasted between Draft.js editor
+import { convertToHTML} from 'draft-convert';
 import { formatDateTime } from '../../utils/date';
 import { isBlank } from '../../utils/string';
 
@@ -54,6 +55,12 @@ var SchoolBusesEmailDialog = React.createClass({
     };
   },
 
+  componemtWillMount(){
+    if(this.copySource){
+      this.copySource.unregister();
+    }
+  },
+
   componentDidMount(){
     this.setState({ loadData: true });
 
@@ -61,7 +68,7 @@ var SchoolBusesEmailDialog = React.createClass({
     if(!_.isEmpty(this.props.email)){
       var email = _.omit(this.props.email, ['errorInfo','mailSent']);
       const blocksFromHTML = convertFromHTML(email.body);
-      const state = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks);
+      const state = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap);
       return this.setState({
         mailTo: email.mailTo,
         mailCc: email.mailCc,
@@ -73,6 +80,10 @@ var SchoolBusesEmailDialog = React.createClass({
     
     this.fetchEmailAddress();
     this.fetchLastInspectionDate();
+
+    if(this.editorRef != null){
+      this.copySource = registerCopySource(this.editorRef);
+    }
   },
 
   fetchEmailAddress(){
@@ -174,24 +185,23 @@ var SchoolBusesEmailDialog = React.createClass({
     }
 
     var text = '<b><u>School Bus List:</u></b>';
-    var body = '<p>According to CVSE records, the following school bus(es) are due or overdue for a re-inspection or annual mechanical school bus compliance inspection.<br><br>';
-    body += 'Please review the following list and advise if there are any changes required.<br>';
-    body += 'Please contact me so that we may arrange a time and location for the inspection(s) to take place.<br><br>';
-    body += 'Regards,<br>';
-    body += this.props.currentUser.fullName + '<br><br><br>';
-    body += text + '<br><br></p>';
+    var body = '<p>According to CVSE records, the following school bus(es) are due or overdue for a re-inspection or annual mechanical school bus compliance inspection.<br></p>';
+    body += '<p>Please review the following list and advise if there are any changes required.<br>';
+    body += 'Please contact me so that we may arrange a time and location for the inspection(s) to take place.<br></p>';
+    body += '<p>Regards,<br>';
+    body += this.props.currentUser.fullName + '<br></p>';
+    body += '<p>' + text + '<br></p>';
     _.map(schoolBuses, (bus) => {
-      body += '<p>' + '*Owner: ' + bus.ownerName + '–';
-      body += '<br>' + 'Last Inspection Date: ' + (bus.lastInspectionDate ? formatDateTime(bus.lastInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) : 'null');
-      body += '<br>' + '- Registration: ' + (bus.icbcRegistrationNumber ? bus.icbcRegistrationNumber : 'null');
-      body += '<br>' + '- Plate Number: ' + (bus.licencePlateNumber ? bus.licencePlateNumber : 'null');
-      body += '<br>' + '- Unit Number: ' + (bus.unitNumber ? bus.unitNumber : 'null');
-      body += '<br>' + '- Permit: ' + (bus.permitNumber ? bus.permitNumber : 'null');
-      body += '<br>' + '- Home Terminal: ' + (bus.homeTerminalCityPostal ? bus.homeTerminalCityPostal : 'null');
-      return body += '<br></p>';
+      body += '<p>*Owner: ' + bus.ownerName + '–' + '<br>';
+      body += 'Last Inspection Date: ' + (bus.lastInspectionDate ? formatDateTime(bus.lastInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) : 'null');
+      body += '<ul><li>Registration: ' + (bus.icbcRegistrationNumber ? bus.icbcRegistrationNumber : 'null') + '</li>';
+      body += '<li>Plate Number: ' + (bus.licencePlateNumber ? bus.licencePlateNumber : 'null') + '</li>';
+      body += '<li>Unit Number: ' + (bus.unitNumber ? bus.unitNumber : 'null') + '</li>';
+      body += '<li>Permit: ' + (bus.permitNumber ? bus.permitNumber : 'null') + '</li>';
+      return body += '<li>Home Terminal: ' + (bus.homeTerminalCityPostal ? bus.homeTerminalCityPostal : 'null') + '</li></ul><br></p>';
     });
     const blocksFromHTML = convertFromHTML(body);
-    const state = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks);
+    const state = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap);
     this.setState({
       editorState: EditorState.createWithContent(state),
       loadData: false,
@@ -203,7 +213,7 @@ var SchoolBusesEmailDialog = React.createClass({
   },
 
   onChange(editorState){
-    this.setState({editorState});
+    this.setState({editorState: editorState});
   },
 
   handleKeyCommand(command){
@@ -213,6 +223,16 @@ var SchoolBusesEmailDialog = React.createClass({
       return 'handled';
     }
     return 'not-handled';
+  },
+
+  handlePastedText(text, html){
+    let newState = handleDraftEditorPastedText(html, this.state.editorState);
+
+    if(newState){
+      this.onChange(newState);
+      return true;
+    }
+    return false;
   },
 
   _onBoldClick(){
@@ -229,7 +249,16 @@ var SchoolBusesEmailDialog = React.createClass({
 
   onSave(){
     var content =  this.state.editorState.getCurrentContent();
-    content = convertToHTML(content);
+    content = convertToHTML({
+      blockToHTML: (block) => {
+        switch (block.type){
+          case 'unstyled':
+            if(block.text === ' ' || block.text === ''){
+              return <br />;
+            }
+        }
+      },
+    })(content);
     var email = {
       userName: this.props.currentUser.name,
       mailFrom: this.state.mailFrom,
@@ -298,7 +327,8 @@ var SchoolBusesEmailDialog = React.createClass({
     return isValid;
   },
 
-  render(){ 
+  render(){
+
     return <div>
       <EditDialog title={<strong>Email to School Bus Owner</strong>} didChange={ this.didChange } isValid={ this.isValid } 
       onSave={ this.onSave } onClose={ this.props.onClose } show={ this.props.show } saveText={ 'Send' }>
@@ -348,14 +378,19 @@ var SchoolBusesEmailDialog = React.createClass({
                         </div>
                       </div>
                     </Row>
-                  <div className="richEditor">
                     <Editor
                       editorState={this.state.editorState}
                       handleKeyCommand={this.handleKeyCommand}
                       onChange={this.onChange}
+                      handlePastedText={this.handlePastedText}
+                      stripPastedStyles={false}
                       spellCheck={true}
+                      ref={(ref) => {
+                        if(ref != null){
+                          this.editorRef = ref;
+                        }
+                      }}
                     />
-                  </div>
                 </div>
               </Col>
             </Row>
