@@ -624,6 +624,28 @@ test_aspnet_implicit_using_latest()
   fi
 }
 
+test_binary()
+{
+  test_start
+
+  # precompiled contains 2 pre-compiled .net console applications
+  # console.dll: prints out "Hello World!"
+  # world2/console.dll: prints out "Hello World2!"
+  local app=precompiled
+
+  # verify the console.dll entry point assembly is detected and ran
+  local image=$(s2i_build ${app})
+  local output=$(docker_run ${image})
+  docker_rmi ${image}
+  assert_contains "${output}" "Hello World!"
+
+  # verify we can run world2/console.dll by setting DOTNET_STARTUP_ASSEMBLY
+  image=$(s2i_build ${app} -e DOTNET_STARTUP_ASSEMBLY=world2/console.dll)
+  output=$(docker_run ${image})
+  docker_rmi ${image}
+  assert_contains "${output}" "Hello World2!"
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -646,6 +668,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
     test_templates
     test_user
     test_certificates
+    test_binary
   done
   # when unset, default to the lowest sdk version
   info "default sdk(${sdk_default_version}):"
