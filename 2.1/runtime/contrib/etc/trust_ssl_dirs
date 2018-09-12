@@ -28,21 +28,32 @@ if [ -n "$DOTNET_SSL_DIRS" ]; then
   rm -rf "$DOTNET_SSL_CERT_DIR"
   mkdir "$DOTNET_SSL_CERT_DIR"
 
+  populate_cert() {
+    CERT_FILE=$(realpath "$1")
+    CERT_DEST="$DOTNET_SSL_CERT_DIR/_s2i$2"
+    if [[ "$CERT_FILE" =~ ^/opt/app-root/src/* ]]; then
+      # If the cert file is in the src dir, copy it.
+      # Otherwise it may get removed by DOTNET_RM_SRC
+      cp "$CERT_FILE" "$CERT_DEST"
+    else
+      # Create a symbolic link to the file.
+      ln -s "$CERT_FILE" "$CERT_DEST"
+    fi
+  }
+
   # Populate it with certificates.
   CERT_ID=0
   for SSL_DIR in $_DOTNET_SSL_DIRS; do
     if [ -d "$SSL_DIR" ]; then
-      # Create a symbolic link for each certificate in the directory.
-      CERTFILES=(`find -L "$SSL_DIR" -maxdepth 1 -type f -exec realpath {} \;`)
+      # Walk through each certificate in the directory.
+      CERTFILES=(`find -L "$SSL_DIR" -maxdepth 1 -type f`)
       for CERT_FILE in ${CERTFILES[@]}
       do
-        ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
+        populate_cert "$CERT_FILE" $CERT_ID
         CERT_ID=$((CERT_ID + 1))
       done
     elif [ -f "$SSL_DIR" ]; then
-      # Create a symbolic link to the file.
-      CERT_FILE=$(realpath "$SSL_DIR")
-      ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
+      populate_cert "$SSL_DIR" $CERT_ID
       CERT_ID=$((CERT_ID + 1))
     fi
   done
