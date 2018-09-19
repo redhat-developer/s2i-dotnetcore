@@ -84,7 +84,9 @@ var SchoolBusesEmailDialog = React.createClass({
       //get primary contacts
       _.map(primaryContactIds, (id) =>{
         Api.getContact(id).then(response => {
-          emailAddresses.push(response.emailAddress);
+          if(response.emailAddress != null && response.emailAddress != ''){
+            emailAddresses.push(response.emailAddress);
+          }
           count++;
           if(count == primaryContactIds.length){
             this.setState({
