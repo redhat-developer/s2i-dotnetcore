@@ -138,6 +138,11 @@ for SOURCE in $DOTNET_RESTORE_SOURCES; do
   RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
 done
 
+# If true, run dotnet restore with --disable-parallel
+if [ "$DOTNET_RESTORE_DISABLE_PARALLEL" = true ]; then
+  RESTORE_OPTIONS="$RESTORE_OPTIONS --disable-parallel"
+fi
+
 # run tests
 for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
     echo "---> Restoring test project ($TEST_PROJECT) dependencies..."

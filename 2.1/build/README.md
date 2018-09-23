@@ -110,6 +110,11 @@ a `.s2i/environment` file inside your source code repository.
     Used to specify the list of NuGet package sources used during the restore operation. This overrides 
     all of the sources specified in the NuGet.config file.
 
+* **DOTNET_RESTORE_DISABLE_PARALLEL**                                                                                                                                        
+           
+    When set to true disables restoring multiple projects in parallel. This reduces restore timeout errors when the build container is running with low cpu limits. 
+    Defaults to false.
+
 * **DOTNET_TOOLS**
 
     Used to specify a list of .NET tools to install before building the app. It is possible to install a specific version by postpending
