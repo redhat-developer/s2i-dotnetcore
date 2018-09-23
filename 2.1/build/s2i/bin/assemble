@@ -183,6 +183,11 @@ if [ "$BUILD_TYPE" == "source" ]; then
     RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
   done
 
+  # If true, run dotnet restore with --disable-parallel
+  if [ "$DOTNET_RESTORE_DISABLE_PARALLEL" = true ]; then
+    RESTORE_OPTIONS="$RESTORE_OPTIONS --disable-parallel"
+  fi
+  
   # run tests
   for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
       echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
@@ -196,7 +201,7 @@ if [ "$BUILD_TYPE" == "source" ]; then
   dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
   echo "---> Publishing application..."
   dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
-        --self-contained false /p:PublishWithAspNetCoreTargetManifest=false -o "$DOTNET_APP_PATH"
+         --self-contained false /p:PublishWithAspNetCoreTargetManifest=false -o "$DOTNET_APP_PATH"
 else
   # binary build: move pre-compiled application
   mv ./* "$DOTNET_APP_PATH"
