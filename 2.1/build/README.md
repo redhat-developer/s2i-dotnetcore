@@ -110,10 +110,10 @@ a `.s2i/environment` file inside your source code repository.
     Used to specify the list of NuGet package sources used during the restore operation. This overrides 
     all of the sources specified in the NuGet.config file.
 
-* **DOTNET_RESTORE_DISABLE_PARALLEL**                                                                                                                                        
-           
+* **DOTNET_RESTORE_DISABLE_PARALLEL**
+
     When set to true disables restoring multiple projects in parallel. This reduces restore timeout errors when the build container is running with low cpu limits. 
-    Defaults to false.
+    Defaults to `false`.
 
 * **DOTNET_TOOLS**
 
@@ -158,6 +158,11 @@ a `.s2i/environment` file inside your source code repository.
 * **NPM_MIRROR**
 
     Use a custom NPM registry mirror to download packages during the build process.
+
+* **DOTNET_STARTUP_ASSEMBLY**
+
+    Used to specify the path of the entrypoint assembly within the source repository. When set,
+    the source repository must contain a pre-built application. Defaults to ``.
 
 * **DOTNET_PACK**
 

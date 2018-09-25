@@ -68,7 +68,7 @@ else
         APP_DLL_NAME="${PROJFILE: : -7}.dll"
       fi
     else
-      # zero or more project files -> fail
+      # zero or more than 1 project files -> fail
       if [ ${#PROJFILES[@]} -eq 0 ]; then
         echo "error: DOTNET_STARTUP_PROJECT has no project file"
       else
