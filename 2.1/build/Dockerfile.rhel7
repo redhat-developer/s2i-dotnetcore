@@ -16,7 +16,7 @@ LABEL io.k8s.description="Platform for building and running .NET Core 2.1 applic
 LABEL name="dotnet/dotnet-21-rhel7" \
       com.redhat.component="rh-dotnet21-container" \
       version="2.1" \
-      release="4" \
+      release="10" \
       architecture="x86_64"
 
 # Labels consumed by Eclipse JBoss OpenShift plugin
@@ -29,7 +29,7 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-RUN INSTALL_PKGS="rh-nodejs8-npm rh-nodejs8-nodejs-nodemon rh-dotnet21-dotnet-sdk-2.1 rsync" && \
+RUN INSTALL_PKGS="rh-nodejs8-npm rh-nodejs8-nodejs-nodemon rh-dotnet21-dotnet-sdk-2.1 rh-dotnet21-dotnet-sdk-2.1.3xx rsync" && \
     yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
       --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
       $INSTALL_PKGS && \
@@ -56,8 +56,8 @@ ENV DOTNET_SDK_BASE_VERSION=2.1.300 \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_1=2.1.3 \
-    LatestPatchVersionForAspNetCoreAll2_1=2.1.3
+    LatestPatchVersionForAspNetCoreApp2_1=2.1.5 \
+    LatestPatchVersionForAspNetCoreAll2_1=2.1.5
 
 # Run container by default as user with id 1001 (default)
 USER 1001

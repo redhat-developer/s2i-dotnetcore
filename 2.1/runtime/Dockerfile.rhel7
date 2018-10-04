@@ -23,7 +23,7 @@ LABEL io.k8s.description="Platform for running .NET Core 2.1 applications" \
 LABEL name="dotnet/dotnet-21-runtime-rhel7" \
       com.redhat.component="rh-dotnet21-runtime-container" \
       version="2.1" \
-      release="4" \
+      release="10" \
       architecture="x86_64"
 
 # Don't download/extract docs for nuget packages
