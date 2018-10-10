@@ -211,8 +211,8 @@ var SchoolBuses = React.createClass({
         } else if (this.props.location.query[Constant.SCHOOL_BUS_REINSPECTIONS_QUERY]) {
           state.nextInspection = ALL;
           state.justReInspections = true;
-        } else if (this.props.location.query[Constant.SCHOOL_BUS_NEXT_30_DAYS_QUERY]) {
-          state.nextInspection = WITHIN_30_DAYS;
+        } else if (this.props.location.query[Constant.SCHOOL_BUS_NEXT_MONTH_QUERY]) {
+          state.nextInspection = NEXT_MONTH;
         }
 
         this.updateSearchState(state, this.fetch);

@@ -32,7 +32,7 @@ export const OWNER_DELETE_GRACE_PERIOD_HOURS = 24;
 export const SCHOOL_BUS_OWNER_QUERY = 'ownerId';
 export const SCHOOL_BUS_OVERDUE_QUERY = 'overdue';
 export const SCHOOL_BUS_REINSPECTIONS_QUERY = 'reinspections';
-export const SCHOOL_BUS_NEXT_30_DAYS_QUERY = 'next30days';
+export const SCHOOL_BUS_NEXT_MONTH_QUERY = 'nextMonth';
 
 // Date Formats
 export const DATE_FULL_MONTH_DAY_YEAR = 'MMMM D, YYYY';
