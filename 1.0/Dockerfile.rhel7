@@ -22,7 +22,7 @@ LABEL io.k8s.description="Platform for building and running .NET Core 1.0 applic
 LABEL name="dotnet/dotnetcore-10-rhel7" \
       com.redhat.component="rh-dotnetcore10-container" \
       version="1.0" \
-      release="40" \
+      release="42" \
       architecture="x86_64"
 
 COPY ./root/usr/bin /usr/bin
