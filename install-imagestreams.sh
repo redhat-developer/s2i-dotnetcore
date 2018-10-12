@@ -11,30 +11,23 @@ set -o pipefail
 if [ -t 1 ] && command -v tput > /dev/null; then
     # see if it supports colors
     ncolors=$(tput colors)
-    if [ -n "$ncolors" ] && [ $ncolors -ge 8 ]; then
-        bold="$(tput bold       || echo)"
+    if [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
         normal="$(tput sgr0     || echo)"
-        black="$(tput setaf 0   || echo)"
         red="$(tput setaf 1     || echo)"
-        green="$(tput setaf 2   || echo)"
         yellow="$(tput setaf 3  || echo)"
-        blue="$(tput setaf 4    || echo)"
-        magenta="$(tput setaf 5 || echo)"
-        cyan="$(tput setaf 6    || echo)"
-        white="$(tput setaf 7   || echo)"
     fi
 fi
 
 say_warning() {
-    printf "%b\n" "${yellow:-}Warning: $1${normal:-}"
+    printf "%b\\n" "${yellow:-}Warning: $1${normal:-}"
 }
 
 say_err() {
-    printf "%b\n" "${red:-}Error: $1${normal:-}" >&2
+    printf "%b\\n" "${red:-}Error: $1${normal:-}" >&2
 }
 
 say() {
-    printf "%b\n" "${normal:-}$1"
+    printf "%b\\n" "${normal:-}$1"
 }
 
 machine_has() {
@@ -67,18 +60,16 @@ show_help() {
 
 get_current_namespace() {
     local project
-    project=$(oc project -q 2>&1)
-    if [ $? -ne 0 ]; then
+    if ! project=$(oc project -q 2>&1); then
         say_err "Cannot determine current oc namespace."
         exit 1
     fi
-    echo $project
+    echo "$project"
 }
 
 has_dotnet_imagestream() {
     local streams;
-    streams=$(oc get -n "$namespace" is dotnet 2>&1)
-    if [ $? -ne 0 ]; then
+    if ! streams=$(oc get -n "$namespace" is dotnet 2>&1); then
         if [[ "$streams" == *"NotFound"* ]]; then
             return 1
         fi
@@ -89,28 +80,28 @@ has_dotnet_imagestream() {
 }
 
 has_secret_for_registry() {
-    local secrets;
-    secret_names=$(oc get secret -o name -n "$namespace")
-    if [ $? -ne 0 ]; then
+    local secret_names;
+    if ! secret_names=$(oc get secret -o name -n "$namespace"); then
         say_err "Cannot retrieve secrets."
         exit 1
     fi
     for secret_name in $secret_names; do
-        local secret=$(oc get "$secret_name" -o json -n "$namespace")
-        local secret_type=$(echo $secret | jq -r '.type')
+        local secret secret_type
+        secret=$(oc get "$secret_name" -o json -n "$namespace")
+        secret_type=$(echo "$secret" | jq -r '.type')
         local data;
         case "$secret_type" in
             "kubernetes.io/dockercfg")
-                data=$(echo $secret | jq -r '.data[".dockercfg"]')
+                data=$(echo "$secret" | jq -r '.data[".dockercfg"]')
                 ;;
             "kubernetes.io/dockerconfigjson")
-                data=$(echo $secret | jq -r '.data[".dockerconfigjson"]')
+                data=$(echo "$secret" | jq -r '.data[".dockerconfigjson"]')
                 ;;
             *)
                 continue
                 ;;
         esac
-        data=$(echo $data | base64 -d)
+        data=$(echo "$data" | base64 -d)
         if [[ "$data" == *"\"$registry\""* ]]; then
             return 0
         fi
@@ -121,12 +112,11 @@ has_secret_for_registry() {
 oc_delete()
 {
     local output;
-    output=$(oc delete $@ -n "$namespace" 2>&1)
-    if [ $? -ne 0 ]; then
-        if [[ "$streams" == *"NotFound"* ]]; then
+    if ! output=$(oc delete "$@" -n "$namespace" 2>&1); then
+        if [[ "$output" == *"NotFound"* ]]; then
             return 0
         fi
-        say_err "Cannot delete $@: $output"
+        say_err "Cannot delete $*: $output"
         return 1
     fi
     return 0
@@ -187,7 +177,7 @@ do
         --rm)
             remove=true
             ;;
-        -?|--?|-h|--help)
+        -\?|--\?|-h|--help)
             script_name="$(basename "$0")"
             show_help
             exit 0
@@ -236,7 +226,7 @@ if [ "$os" == "" ]; then
 fi
 
 # Inform user he may need a pull secret
-if [ "$create_secret" == false -a "$registry_requires_auth" == true ]; then
+if [ "$create_secret" == false ] && [ "$registry_requires_auth" == true ]; then
     say "note: The image streams for $os require authentication against $registry. See '--help' for more info."
 fi
 
