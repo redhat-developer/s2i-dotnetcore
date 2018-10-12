@@ -1,0 +1,3 @@
+# This is for the purpose of building this container
+# on the centos container pipeline.
+job-id: dotnet-21-centos7

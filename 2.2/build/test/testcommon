@@ -1,0 +1,196 @@
+# This code is the same for the build and runtime images.
+# The code is duplicated in both folders because the images are built
+# and tested after copying the sub-directories into a container repo.
+
+TEST_PORT=${TEST_PORT:-8080}
+CURLE_COULNDT_CONNECT=7
+
+if [ "$DEBUG" != "" ]; then
+  set -x
+fi
+
+info() {
+  echo -e "\e[1m[INFO] $@\e[0m"
+}
+
+error() {
+  echo -e "[ERROR] $@" >&2
+  # print stacktrace
+  i=0; while caller $i >&2 ;do ((i++)) ;done
+}
+
+assert_contains() {
+  local actual="$1"
+  local expected="$2"
+
+  if ! echo "${actual}" | grep -q "${expected}"; then
+    error "'${actual}' does not contain '${expected}'"
+    exit 1
+  fi
+}
+
+assert_equal() {
+  local actual="$1"
+  local expected="$2"
+
+  if ! [ "$actual" == "$expected" ]; then
+    error "'${actual}' does not equal '${expected}'"
+    exit 1
+  fi
+}
+
+test_start() {
+  info "Running ${FUNCNAME[1]}"
+}
+
+docker_run() {
+  local image="$1"
+  shift
+
+  docker_run_withargs "${image}" "" "$@"
+}
+
+docker_run_withargs() {
+  local image="$1"
+  local args="$2"
+  shift 2
+
+  local output;
+  output=$(docker run --rm ${args} ${image} "$@" 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+  else
+    echo "$output"
+  fi
+}
+
+docker_run_as() {
+  local image="$1"
+  local user="$2"
+  shift 2
+
+  local output;
+  output=$(docker run --rm --user="${user}" ${image} "$@" 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+  else
+    echo "$output"
+  fi
+}
+
+docker_run_as_d() {
+  local image="$1"
+  local user="$2"
+
+  local output;
+  output=$(docker run --user="${user}" -d -p ${TEST_PORT}:8080 ${image} 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-container"
+  else
+    echo "$output"
+  fi
+}
+
+docker_run_d() {
+  local image="$1"
+  local output;
+  output=$(docker run -d -p ${TEST_PORT}:8080 ${image} 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-container"
+  else
+    echo "$output"
+  fi
+}
+
+docker_get_env() {
+  local image="$1"
+  local name="$2"
+
+  local env=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{println $value}}{{end}}' ${image})
+  local line=$(echo "$env" | grep "${name}=")
+  echo ${line#*=}
+}
+
+docker_get_exposedports() {
+  local image="$1"
+  docker inspect -f '{{json .Config.ExposedPorts}}' ${image}
+}
+
+docker_build() {
+  local path="$1"
+  local output;
+  output=$(docker build -q $path  2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-image"
+  else
+    echo "$output"
+  fi
+}
+
+docker_exec() {
+  local container="$1"
+  shift
+
+  local output;
+  output=$(docker exec ${container} "$@" 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+  else
+    echo "$output"
+  fi
+}
+
+docker_rm() {
+  local container="$1"
+  docker rm -f "${container}" >/dev/null 2>&1
+}
+
+docker_rmi() {
+  local image="$1"
+  docker rmi -f "${image}" >/dev/null 2>&1
+}
+
+docker_commandpath() {
+  local image="$1"
+  local command="$2"
+
+  docker_run ${image} bash -c "command -v ${command}"
+}
+
+curl_retry() {
+  local url="$1"
+  local max_attempts="${2:-10}"
+
+  local output
+  local attempt=1
+  local rv=$CURLE_COULNDT_CONNECT
+  while [ $rv -eq $CURLE_COULNDT_CONNECT -a $attempt -le $max_attempts ]; do
+    output=$(curl -sS "$url" 2>&1)
+    rv=$?
+    if [ $rv -eq $CURLE_COULNDT_CONNECT ]; then
+      sleep 1
+    fi
+    attempt=$(( $attempt + 1 ))
+  done
+  if [ $rv -ne 0 ]; then
+    error "$output"
+  else
+    echo "$output"
+  fi
+}
+
+container_url() {
+  local container="$1"
+
+  local output;
+  output=$(docker inspect --format="{{ .NetworkSettings.IPAddress }}" "${container}")
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-url"
+  else
+    echo "http://$output:8080"
+  fi
+}

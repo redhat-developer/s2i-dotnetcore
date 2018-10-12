@@ -1,0 +1,239 @@
+#!/bin/bash
+
+set -e
+# Include filenames beginning with a '.' when installing the application source code.
+shopt -s dotglob
+
+if [ -n "${DOTNET_VERBOSITY}" ]; then
+  echo "---> Environment:"
+  env | sort
+  VERBOSITY_OPTION="-v ${DOTNET_VERBOSITY}"
+else
+  VERBOSITY_OPTION=""
+fi
+
+echo "---> Installing application source..."
+if [ -d /tmp/src ]; then
+  mv /tmp/src/* ./
+fi
+
+if [ "$DEV_MODE" == true ]; then
+  BUILD_TYPE=source
+else
+  if [ -n "${DOTNET_STARTUP_PROJECT}" -a -n "${DOTNET_STARTUP_ASSEMBLY}" ]; then
+    echo "error: DOTNET_STARTUP_PROJECT and DOTNET_STARTUP_ASSEMBLY are both set"
+    echo "Use DOTNET_STARTUP_PROJECT for source builds or DOTNET_STARTUP_ASSEMBLY for pre-built applications."
+    exit 1
+  fi
+
+  # determine candidate source projects (PROJFILES) or pre-built entrypoint assembly (DOTNET_STARTUP_ASSEMBLY)
+  if [ -n "${DOTNET_STARTUP_ASSEMBLY}" ]; then
+    # binary build
+    if [ ! -f "${DOTNET_STARTUP_ASSEMBLY}" ]; then
+      echo "error: Source does not contain DOTNET_STARTUP_ASSEMBLY: ${DOTNET_STARTUP_ASSEMBLY}"
+      exit 1
+    fi
+  else
+    # source build
+    PROJFILES=(`find "${DOTNET_STARTUP_PROJECT:-.}" -maxdepth 1 -name "*.??proj"`)
+    # If we didn't find a project file, see if we can do a binary build instead.
+    if [ -z "${DOTNET_STARTUP_ASSEMBLY}" -a ${#PROJFILES[@]} -eq 0 ]; then
+      # determine entrypoint assembly based on *.runtimeconfig.json files
+      RUNTIMECFGFILES=(`find -maxdepth 1 -name "*.runtimeconfig.json"`)
+      if [ ${#RUNTIMECFGFILES[@]} -eq 1 ]; then
+        DOTNET_STARTUP_ASSEMBLY="${RUNTIMECFGFILES[0]: : -19}.dll"
+      elif [ ${#RUNTIMECFGFILES[@]} -gt 1 ]; then
+        echo "error: Repository contains multiple startup assemblies"
+        echo "You can select the startup assembly by specifying DOTNET_STARTUP_ASSEMBLY."
+        exit 1
+      fi
+    fi
+  fi
+
+  if [ -n "${DOTNET_STARTUP_ASSEMBLY}" ]; then
+    # binary build
+    BUILD_TYPE=binary
+    APP_DLL_NAME="${DOTNET_STARTUP_ASSEMBLY}"
+    echo "Using pre-built application with entrypoint assembly: ${DOTNET_STARTUP_ASSEMBLY}"
+  else
+    # source build
+    BUILD_TYPE=source
+    if [ ${#PROJFILES[@]} -eq 1 ]; then
+      # single project file
+      DOTNET_STARTUP_PROJECT="${DOTNET_STARTUP_PROJECT:-.}"
+      if [ -n "$DOTNET_ASSEMBLY_NAME" ]; then
+        APP_DLL_NAME="${DOTNET_ASSEMBLY_NAME}.dll"
+      else
+        PROJFILE=$(basename ${PROJFILES[0]})
+        APP_DLL_NAME="${PROJFILE: : -7}.dll"
+      fi
+    else
+      # zero or more than 1 project files -> fail
+      if [ ${#PROJFILES[@]} -eq 0 ]; then
+        echo "error: DOTNET_STARTUP_PROJECT has no project file"
+      else
+        echo "error: DOTNET_STARTUP_PROJECT contains multiple project files"
+      fi
+      echo "You can specify the startup project by adding an '.s2i/environment' file to the source repository."
+      # find all projects and strip leading './'
+      PROJFILES=(`find -name "*.??proj" | sed "s|^\./||"`)
+      if [ ${#PROJFILES[@]} -eq 0 ]; then
+        echo "The source repository has no project files."
+      else
+        echo "The source repository contains the following projects:"
+        for PROJFILE in ${PROJFILES[@]}; do
+          echo "- ${PROJFILE}"
+        done
+        echo "Update the '.s2i/environment' file to specify the project you want to publish, for example DOTNET_STARTUP_PROJECT=${PROJFILES[0]}".
+      fi
+      exit 1
+    fi
+  fi
+fi
+
+if [ "$BUILD_TYPE" == "source" ]; then
+  # sdk version
+  DOTNET_SDK_VERSION="${DOTNET_SDK_VERSION:-$DOTNET_SDK_BASE_VERSION}"
+  if [ "$DOTNET_SDK_VERSION" != "latest" ]; then
+  cat >../global.json <<EOF
+{
+  "sdk": {
+    "version": "$DOTNET_SDK_VERSION"
+  }
+}
+EOF
+  fi
+  echo "Using SDK: $(dotnet --version)"
+
+  # Trust certificates from DOTNET_SSL_DIRS.
+  source /opt/app-root/etc/trust_ssl_dirs
+
+  # npm
+  if [ -n "${DOTNET_NPM_TOOLS}" ]; then
+    echo "---> Installing npm tools..."
+
+    if [ ! -z $HTTP_PROXY ]; then
+      echo "---> Setting npm http proxy"
+      npm config set proxy $HTTP_PROXY
+    fi
+    if [ ! -z $HTTPS_PROXY ]; then
+      echo "---> Setting npm https proxy"
+      npm config set https-proxy $HTTPS_PROXY
+    fi
+    if [ ! -z $NPM_MIRROR ]; then
+      echo "---> Setting npm mirror"
+      npm config set registry $NPM_MIRROR
+    fi
+
+    pushd $HOME
+    npm install ${DOTNET_NPM_TOOLS}
+    popd
+  fi
+
+  # dotnet tools
+  if [ -n "${DOTNET_TOOLS}" ]; then
+    # Build nuget sources list for when doing the restore
+    TOOL_RESTORE_OPTIONS=""
+    if [ -n "${DOTNET_RESTORE_SOURCES}" ]; then
+      # `dotnet tool install` doesn't have a `--source` parameter that behaves like
+      # `dotnet restore` (i.e. replacing vs adding sources). We generate a config file
+      # to have the same behavior.
+      cat >/tmp/ignore-global-nuget-sources <<EOF
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+<packageSources>
+    <clear />
+</packageSources>
+</configuration>
+EOF
+      TOOL_RESTORE_OPTIONS="--configfile /tmp/ignore-global-nuget-sources"
+      for SOURCE in $DOTNET_RESTORE_SOURCES; do
+        TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --add-source $SOURCE"
+      done
+    fi
+
+    for DOTNET_TOOL in $DOTNET_TOOLS; do
+      # Split the tool by '@' and treat the second part as the version if there is one.
+      DOTNET_TOOL_SPLIT=(${DOTNET_TOOL//@/ })
+      DOTNET_TOOL_NAME=${DOTNET_TOOL_SPLIT[0]}
+      if [ ${#DOTNET_TOOL_SPLIT[@]} -eq 1 ]; then
+        DOTNET_TOOL_VERSION_OPTION=""
+      else
+        DOTNET_TOOL_VERSION_OPTION="--version ${DOTNET_TOOL_SPLIT[1]}"
+      fi
+      dotnet tool install -g $VERBOSITY_OPTION $TOOL_RESTORE_OPTIONS $DOTNET_TOOL_VERSION_OPTION $DOTNET_TOOL_NAME
+    done
+  fi
+fi
+
+if [ "$DEV_MODE" == true ]; then
+  # fix permissions
+  fix-permissions /opt/app-root
+
+  exit 0
+fi
+
+if [ "$BUILD_TYPE" == "source" ]; then
+  # User settable environment
+  DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
+
+  # Build nuget sources list for when doing the restore
+  RESTORE_OPTIONS=""
+  for SOURCE in $DOTNET_RESTORE_SOURCES; do
+    RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
+  done
+
+  # If true, run dotnet restore with --disable-parallel
+  if [ "$DOTNET_RESTORE_DISABLE_PARALLEL" = true ]; then
+    RESTORE_OPTIONS="$RESTORE_OPTIONS --disable-parallel"
+  fi
+  
+  # run tests
+  for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
+      echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
+      dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
+      echo "---> Running test project: $TEST_PROJECT..."
+      dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK" $VERBOSITY_OPTION
+  done
+
+  # publish application
+  echo "---> Restoring application dependencies..."
+  dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
+  echo "---> Publishing application..."
+  dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
+         --self-contained false /p:PublishWithAspNetCoreTargetManifest=false -o "$DOTNET_APP_PATH"
+else
+  # binary build: move pre-compiled application
+  mv ./* "$DOTNET_APP_PATH"
+fi
+
+# check if the assembly used by the script exists
+if [ ! -f "$DOTNET_APP_PATH/${APP_DLL_NAME}" ]; then
+  echo "error: Build output does not contain entrypoint assembly: ${APP_DLL_NAME}"
+  exit 1
+fi
+
+# Create run script in publish folder
+cat << EOF >"$DOTNET_APP_PATH/$DOTNET_DEFAULT_CMD"
+#!/bin/bash
+
+exec dotnet ${APP_DLL_NAME} \$@
+EOF
+chmod +x "$DOTNET_APP_PATH/$DOTNET_DEFAULT_CMD"
+
+if [ "$DOTNET_PACK" == "true" ]; then
+  echo "---> Packing application..."
+  fix-permissions $DOTNET_APP_PATH
+  tar -czf /opt/app-root/app.tar.gz -C $DOTNET_APP_PATH .
+fi
+
+# cleanup NuGet artifacts
+rm -rf ~/{.local,.nuget}
+
+if [ "$DOTNET_RM_SRC" == "true" ]; then
+  echo "---> Removing sources..."
+  rm -rf /opt/app-root/src/*
+fi
+
+# fix permissions
+fix-permissions /opt/app-root
