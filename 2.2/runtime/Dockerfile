@@ -1,5 +1,5 @@
 FROM centos:7
-# This image provides a .NET Core 2.1 environment you can use to run your .NET
+# This image provides a .NET Core 2.2 environment you can use to run your .NET
 # applications.
 
 EXPOSE 8080
@@ -8,21 +8,21 @@ ENV HOME=/opt/app-root \
     PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     DOTNET_APP_PATH=/opt/app-root/app \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
-    DOTNET_CORE_VERSION=2.1 \
-    DOTNET_FRAMEWORK=netcoreapp2.1 \
+    DOTNET_CORE_VERSION=2.2 \
+    DOTNET_FRAMEWORK=netcoreapp2.2 \
 # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir
 
-LABEL io.k8s.description="Platform for running .NET Core 2.1 applications" \
-      io.k8s.display-name=".NET Core 2.1" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet21-runtime" \
+LABEL io.k8s.description="Platform for running .NET Core 2.2 applications" \
+      io.k8s.display-name=".NET Core 2.2" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet22-runtime" \
       io.openshift.expose-services="8080:http"
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-21-runtime-centos7" \
-      com.redhat.component="rh-dotnet21-runtime-container" \
-      version="2.1" \
+LABEL name="dotnet/dotnet-22-runtime-centos7" \
+      com.redhat.component="rh-dotnet22-runtime-container" \
+      version="2.2" \
       release="1" \
       architecture="x86_64"
 
@@ -42,6 +42,7 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
+# TODO: install 2.1 runtime: rh-dotnet22-dotnet-runtime-2.2
 RUN yum install -y centos-release-dotnet && \
     INSTALL_PKGS="rh-dotnet21-dotnet-runtime-2.1 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
@@ -50,9 +51,16 @@ RUN yum install -y centos-release-dotnet && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/*
 
+# TODO: enable rh-dotnet22 scl
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
     ENABLED_COLLECTIONS="rh-dotnet21"
+
+# TODO: remove Microsoft binaries
+RUN curl https://download.microsoft.com/download/D/5/9/D593CD8F-04E7-425D-962C-86FF4C90B1DA/dotnet-sdk-2.2.100-preview2-009404-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+    mkdir ~/dotnet-preview && \
+    tar xf /tmp/dotnet-sdk.tar.gz -C ~/dotnet-preview && \
+    rm -rf ~/dotnet-preview/shared/Microsoft.AspNetCore.*
 
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable

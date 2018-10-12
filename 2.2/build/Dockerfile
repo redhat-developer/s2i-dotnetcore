@@ -1,21 +1,21 @@
-FROM dotnet/dotnet-21-runtime-centos7
-# This image provides a .NET Core 2.1 environment you can use to run your .NET
+FROM dotnet/dotnet-22-runtime-centos7
+# This image provides a .NET Core 2.2 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
-LABEL io.k8s.description="Platform for building and running .NET Core 2.1 applications" \
-      io.k8s.display-name=".NET Core 2.1" \
+LABEL io.k8s.description="Platform for building and running .NET Core 2.2 applications" \
+      io.k8s.display-name=".NET Core 2.2" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet21" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet22" \
       io.openshift.expose-services="8080:http" \
       io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-21-centos7" \
-      com.redhat.component="rh-dotnet21-container" \
-      version="2.1" \
+LABEL name="dotnet/dotnet-22-centos7" \
+      com.redhat.component="rh-dotnet22-container" \
+      version="2.2" \
       release="1" \
       architecture="x86_64"
 
@@ -29,8 +29,9 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
+# TODO: install 2.2 sdk: rh-dotnet22-dotnet-sdk-2.2
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
-    INSTALL_PKGS="rh-nodejs8-npm rh-nodejs8-nodejs-nodemon rh-dotnet21-dotnet-sdk-2.1 rsync" && \
+    INSTALL_PKGS="rh-nodejs8-npm rh-nodejs8-nodejs-nodemon rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
@@ -51,12 +52,13 @@ ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs8"
 
 # For backwards compatibility, s2i builds default to the oldest sdk in the image.
 # We keep the patch at 'x00', the latest patch version is automatically picked up.
-ENV DOTNET_SDK_BASE_VERSION=2.1.300 \
+# TODO: update LatestPatchVersions below
+ENV DOTNET_SDK_BASE_VERSION=2.2.100 \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_1=2.1.3 \
-    LatestPatchVersionForAspNetCoreAll2_1=2.1.3
+    LatestPatchVersionForAspNetCoreApp2_2=2.2.0-preview2-35157 \
+    LatestPatchVersionForAspNetCoreAll2_2=2.2.0-preview2-35157
 
 # Run container by default as user with id 1001 (default)
 USER 1001

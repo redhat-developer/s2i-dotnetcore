@@ -16,17 +16,17 @@
 # Example usage: $ sudo ./test/run
 
 if [ "$BUILD_CENTOS" = "true" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-runtime-centos7}
 else
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-rhel7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-runtime-rhel7}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version_series="2.1"
-dotnet_version_suffix="302"
+dotnet_version_series="2.2"
+dotnet_version_suffix="100-preview2"
 dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
 
 test_dotnet() {
