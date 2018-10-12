@@ -28,6 +28,23 @@ Note: to build RHEL 7 based images, you need to run the build on a
 properly subscribed RHEL machine. To build CentOS images on RHEL, set
 BUILD_CENTOS=true. On non-RHEL, building CentOS images is the default.
 
+Installing
+----------------
+
+The Red Hat documentation for .NET Core describes the steps to [install the image streams](https://access.redhat.com/documentation/en-us/net_core/2.1/html/getting_started_guide/gs_dotnet_on_openshift#install_imagestreams).
+
+This repo contains a [bash script](https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.sh) that performs these steps.
+
+For example, to install the `rhel7` based images and add a secret for authenticating against the `registry.redhat.io` registry:
+
+```sh
+$ wget https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.sh
+$ chmod +x install-imagestreams.sh
+$ ./install-imagestreams.sh --os rhel7 -u <subscription_username> -p <subscription_password>
+```
+
+Run `./install-imagestreams.sh --help` for more information.
+
 Usage
 ---------------------------------
 
