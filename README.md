@@ -26,7 +26,7 @@ $ sudo VERSIONS=2.1 ./build.sh
 
 Note: to build RHEL 7 based images, you need to run the build on a
 properly subscribed RHEL machine. To build CentOS images on RHEL, set
-BUILD_CENTOS=true. On non-RHEL, building CentOS images is the default.
+IMAGE_OS=CENTOS. On non-RHEL, building CentOS images is the default.
 
 Installing
 ----------------

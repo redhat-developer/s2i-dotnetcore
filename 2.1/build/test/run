@@ -18,7 +18,7 @@
 #
 # Example usage: $ sudo ./test/run
 
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-centos7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-21-runtime-centos7}
 else
@@ -33,7 +33,7 @@ source ${test_dir}/testcommon
 # Versions of Microsoft.AspNetCore.{All,App} packages that are known by latest RHEL sdk.
 aspnet_latest_app_version=2.1.5
 aspnet_latest_all_version=2.1.5
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk versions supported on CentOS
 sdk_versions=( "2.1.302" )
 else
@@ -613,7 +613,7 @@ test_aspnet_implicit_using_latest()
 
   # verify aspnet_latest_{app,all}_version have the correct values.
   # If this fails, the variables in the test and environment variables in the Dockerfiles must be updated.
-  if [ "$sdk_version" == "$sdk_latest_version" -a "$BUILD_CENTOS" != "true" ]; then
+  if [ "$sdk_version" == "$sdk_latest_version" -a "$IMAGE_OS" != "CENTOS" ]; then
     info verifying aspnet_latest_{app,all}
 
     # build image
