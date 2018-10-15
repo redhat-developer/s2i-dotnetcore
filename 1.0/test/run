@@ -18,11 +18,7 @@
 #
 # Example usage: $ sudo ./test/run
 
-if ! [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
-  BUILD_CENTOS=true
-fi
-
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-10-centos7}
 else
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnetcore-10-rhel7}
@@ -45,7 +41,7 @@ declare -a WEB_APPS=(asp-net-hello-world asp-net-hello-world-envvar)
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$(readlink -zf ${test_dir}/..)
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
 dotnet_version="1.0.0-preview2-003320"
 else
 dotnet_version="1.0.0-preview2-003320"

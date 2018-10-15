@@ -14,7 +14,11 @@
 # VERSIONS        The list of versions to build/test.
 #                 Defaults to all versions. i.e "1.0 1.1".
 #
-# BUILD_CENTOS    If 'true' build CentOS based images.
+# IMAGE_OS        The base os image to use when building
+#                 the containers.
+#                 Options are CENTOS and RHEL.
+#                 Defaults to RHEL on a rhel system,
+#                 otherwise defaults to CENTOS.
 #
 # TEST_PORT       specifies the port on the docker host
 #                 to bind to when creating containers
@@ -80,12 +84,16 @@ test_images() {
   check_result_msg $? "Tests FAILED!"
 }
 
-# Default to CentOS when not on RHEL.
-if ! [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
-  export BUILD_CENTOS=true
+if [ -z ${IMAGE_OS+x} ]; then
+  # Default to CentOS when not on RHEL.
+  if [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
+    export IMAGE_OS="RHEL"
+  else
+    export IMAGE_OS="CENTOS"
+  fi
 fi
 
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
   VERSIONS="${VERSIONS:-1.0 2.1}"
   image_os="centos7"
   image_prefix="dotnet"
