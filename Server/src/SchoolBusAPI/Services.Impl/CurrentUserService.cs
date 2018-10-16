@@ -219,12 +219,15 @@ namespace SchoolBusAPI.Services.Impl
 
                 int overdue = _context.SchoolBuss
                 
-                .Where(x => x.Inspector.Id == id && x.NextInspectionDate <= DateTime.UtcNow && x.Status.ToLower() == "active")
+                .Where(x => x.Inspector.Id == id && x.NextInspectionDate < DateTime.Today && x.Status.ToLower() == "active")
                 .Select(x => x)
                 .Count();
 
+                DateTime nextmonth = DateTime.UtcNow.AddMonths(1);//nextMonth
+                DateTime dayOne = new DateTime(nextmonth.Year, nextmonth.Month, 1);//first day of next month
+                DateTime lastDay = dayOne.AddMonths(1).AddSeconds(-1);//last day of next month
                 int nextMonth = _context.SchoolBuss
-                    .Where(x => x.Inspector.Id == id && x.NextInspectionDate <= DateTime.UtcNow.AddMonths(1) && x.Status.ToLower() == "active")
+                    .Where(x => x.Inspector.Id == id && x.NextInspectionDate >= dayOne && x.NextInspectionDate <= lastDay && x.Status.ToLower() == "active")
                     .Select(x => x)
                     .Count();
 
@@ -235,7 +238,7 @@ namespace SchoolBusAPI.Services.Impl
 
                 int reInspections = _context.SchoolBuss
                     .Where(x => x.Inspector.Id == id)
-                    .Where(x => x.NextInspectionTypeCode == "Re-Inspection")                    
+                    .Where(x => x.NextInspectionTypeCode == "Re-Inspection" && x.Status.ToLower() == "active")                    
                     .Select(x => x)
                     .Count();
 
