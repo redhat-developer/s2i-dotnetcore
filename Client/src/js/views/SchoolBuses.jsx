@@ -273,14 +273,14 @@ var SchoolBuses = React.createClass({
   },
 
   sendEmail(email){
+    this.closeEmailDialog();
+
     Api.sendEmail(email).then(response => {
       if (response.mailSent){
         this.openEmailSendConfirm();
       } else {
         this.openEmailSendFail(response);
       }
-    }).finally(() => {
-      this.closeEmailDialog();
     });
   },
 

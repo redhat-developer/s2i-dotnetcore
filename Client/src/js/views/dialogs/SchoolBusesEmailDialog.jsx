@@ -5,6 +5,9 @@ import EditDialog from '../../components/EditDialog.jsx';
 import FormInputControl from '../../components/FormInputControl.jsx';
 import Spinner from '../../components/Spinner.jsx';
 import { Form, FormGroup, Grid, Well, Row, Col, ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Editor, EditorState, ContentState, RichUtils, convertFromHTML } from 'draft-js';
+import { registerCopySource, handleDraftEditorPastedText } from 'draftjs-conductor'; //copy-pasted between Draft.js editor
+import { convertToHTML} from 'draft-convert';
 import { formatDateTime } from '../../utils/date';
 import { isBlank } from '../../utils/string';
 
@@ -31,6 +34,7 @@ var SchoolBusesEmailDialog = React.createClass({
       loadEmail: true,
       loadLastInspectionDate: true,
 
+      editorState: EditorState.createEmpty(),
       schoolBuses: this.props.schoolBuses ? this.props.schoolBuses : null,
       mailFrom: this.props.currentUser && this.props.currentUser.email ? this.props.currentUser.email : '',
       mailTo: '',
@@ -51,23 +55,35 @@ var SchoolBusesEmailDialog = React.createClass({
     };
   },
 
+  componemtWillMount(){
+    if(this.copySource){
+      this.copySource.unregister();
+    }
+  },
+
   componentDidMount(){
     this.setState({ loadData: true });
 
     //if user retry sending email
     if(!_.isEmpty(this.props.email)){
       var email = _.omit(this.props.email, ['errorInfo','mailSent']);
+      const blocksFromHTML = convertFromHTML(email.body);
+      const state = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap);
       return this.setState({
         mailTo: email.mailTo,
         mailCc: email.mailCc,
         subject: email.subject,
-        body: email.body,
+        editorState: EditorState.createWithContent(state),
         loadData: false,
       });
     }
     
     this.fetchEmailAddress();
     this.fetchLastInspectionDate();
+
+    if(this.editorRef != null){
+      this.copySource = registerCopySource(this.editorRef);
+    }
   },
 
   fetchEmailAddress(){
@@ -168,24 +184,26 @@ var SchoolBusesEmailDialog = React.createClass({
       _.reverse(schoolBuses);
     }
 
-    var body = 'According to CVSE records, the following school bus(es) are due or overdue for a re-inspection or annual mechanical school bus compliance inspection. ';
-    body += '\nPlease review the following list and advise if there are any changes required.';
-    body += '\nPlease contact me so that we may arrange a time and location for the inspection(s) to take place.';
-    body += '\n\nRegards,';
-    body += '\n' + this.props.currentUser.fullName;
-    body += '\n\n' + 'School Bus List:' + '\n';
+    var text = '<b><u>School Bus List:</u></b>';
+    var body = '<p>According to CVSE records, the following school bus(es) are due or overdue for a re-inspection or annual mechanical school bus compliance inspection.<br></p>';
+    body += '<p>Please review the following list and advise if there are any changes required.<br>';
+    body += 'Please contact me so that we may arrange a time and location for the inspection(s) to take place.<br></p>';
+    body += '<p>Regards,<br>';
+    body += this.props.currentUser.fullName + '<br></p>';
+    body += '<p>' + text + '<br></p>';
     _.map(schoolBuses, (bus) => {
-      body += '\n' + '*Owner: ' + bus.ownerName + '–';
-      body += '\n' + 'Last Inspection Date: ' + (bus.lastInspectionDate ? formatDateTime(bus.lastInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) : 'null');
-      body += '\n' + '- Registration: ' + (bus.icbcRegistrationNumber ? bus.icbcRegistrationNumber : 'null');
-      body += '\n' + '- Plate Number: ' + (bus.licencePlateNumber ? bus.licencePlateNumber : 'null');
-      body += '\n' + '- Unit Number: ' + (bus.unitNumber ? bus.unitNumber : 'null');
-      body += '\n' + '- Permit: ' + (bus.permitNumber ? bus.permitNumber : 'null');
-      body += '\n' + '- Home Terminal: ' + (bus.homeTerminalCityPostal ? bus.homeTerminalCityPostal : 'null');
-      return body += '\n';
+      body += '<p>*Owner: ' + bus.ownerName + '–' + '<br>';
+      body += 'Last Inspection Date: ' + (bus.lastInspectionDate ? formatDateTime(bus.lastInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) : 'null');
+      body += '<ul><li>Registration: ' + (bus.icbcRegistrationNumber ? bus.icbcRegistrationNumber : 'null') + '</li>';
+      body += '<li>Plate Number: ' + (bus.licencePlateNumber ? bus.licencePlateNumber : 'null') + '</li>';
+      body += '<li>Unit Number: ' + (bus.unitNumber ? bus.unitNumber : 'null') + '</li>';
+      body += '<li>Permit: ' + (bus.permitNumber ? bus.permitNumber : 'null') + '</li>';
+      return body += '<li>Home Terminal: ' + (bus.homeTerminalCityPostal ? bus.homeTerminalCityPostal : 'null') + '</li></ul><br></p>';
     });
-    this.setState({ 
-      body: body,
+    const blocksFromHTML = convertFromHTML(body);
+    const state = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap);
+    this.setState({
+      editorState: EditorState.createWithContent(state),
       loadData: false,
     });
   },
@@ -194,14 +212,60 @@ var SchoolBusesEmailDialog = React.createClass({
     this.setState(state, callback);
   },
 
+  onChange(editorState){
+    this.setState({editorState: editorState});
+  },
+
+  handleKeyCommand(command){
+    const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
+    if(newState){
+      this.onChange(newState);
+      return 'handled';
+    }
+    return 'not-handled';
+  },
+
+  handlePastedText(text, html){
+    let newState = handleDraftEditorPastedText(html, this.state.editorState);
+
+    if(newState){
+      this.onChange(newState);
+      return true;
+    }
+    return false;
+  },
+
+  _onBoldClick(){
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState,'BOLD'));
+  },
+
+  _onItalicClick(){
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState,'ITALIC'));
+  },
+
+  _onUnderlineClick(){
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState,'UNDERLINE'));
+  },
+
   onSave(){
+    var content =  this.state.editorState.getCurrentContent();
+    content = convertToHTML({
+      blockToHTML: (block) => {
+        switch (block.type){
+          case 'unstyled':
+            if(block.text === ' ' || block.text === ''){
+              return <br />;
+            }
+        }
+      },
+    })(content);
     var email = {
       userName: this.props.currentUser.name,
       mailFrom: this.state.mailFrom,
       mailTo: this.state.mailTo,
       mailCc: this.state.mailCc,
       subject: this.state.subject,
-      body: this.state.body,
+      body: content,
     };
     this.props.onSave(email);
   },
@@ -263,7 +327,8 @@ var SchoolBusesEmailDialog = React.createClass({
     return isValid;
   },
 
-  render(){ 
+  render(){
+
     return <div>
       <EditDialog title={<strong>Email to School Bus Owner</strong>} didChange={ this.didChange } isValid={ this.isValid } 
       onSave={ this.onSave } onClose={ this.props.onClose } show={ this.props.show } saveText={ 'Send' }>
@@ -302,10 +367,31 @@ var SchoolBusesEmailDialog = React.createClass({
             </Row>
 						<Row>
               <Col md={12}>
-                <FormGroup controlId="body">
-                  <ControlLabel>Body</ControlLabel>
-                  <FormInputControl style={{height: '350px', overflow: 'auto' }} componentClass="textarea" value={ this.state.body } updateState={ this.updateState }/>
-                </FormGroup>
+                <div>
+                  <ControlLabel>Body </ControlLabel>
+                    <Row>
+                      <div className="btn-toolbar" role="toolbar">
+                        <div className="btn-group" role="group">
+                          <button type="button" className="btn btn-secondary" title="Bold" onClick={this._onBoldClick}>Bold</button>
+                          <button type="button" className="btn btn-secondary" title="Italic" onClick={this._onItalicClick}>Italic</button>
+                          <button type="button" className="btn btn-secondary" title="Underline" onClick={this._onUnderlineClick}>Underline</button>
+                        </div>
+                      </div>
+                    </Row>
+                    <Editor
+                      editorState={this.state.editorState}
+                      handleKeyCommand={this.handleKeyCommand}
+                      onChange={this.onChange}
+                      handlePastedText={this.handlePastedText}
+                      stripPastedStyles={false}
+                      spellCheck={true}
+                      ref={(ref) => {
+                        if(ref != null){
+                          this.editorRef = ref;
+                        }
+                      }}
+                    />
+                </div>
               </Col>
             </Row>
           </Well>

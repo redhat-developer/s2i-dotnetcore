@@ -79,7 +79,7 @@ namespace SchoolBusAPI.Services.Impl
                     }
 
                     emailMessage.Subject = subject;
-                    emailMessage.Body = new TextPart("plain") { Text = body };
+                    emailMessage.Body = new TextPart("html") { Text = body };
 
                     SmtpClient client = new SmtpClient();
 
