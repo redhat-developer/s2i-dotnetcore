@@ -48,7 +48,7 @@ var Home = React.createClass({
                 return <Row id="home-summary">
                   <h2>You have <a href={ `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_OVERDUE_QUERY }=true` }>{this.props.currentUser.overdueInspections}</a> overdue inspections</h2>
                   <h2>You have <a href={ `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_REINSPECTIONS_QUERY }=true` }>{this.props.currentUser.reInspections}</a> re-inspections scheduled</h2>
-                  <h2>You have <a href={ `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_NEXT_30_DAYS_QUERY }=true` }>{this.props.currentUser.dueNextMonthInspections}</a> inspections coming due in the next month</h2>
+                  <h2>You have <a href={ `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_NEXT_MONTH_QUERY }=true` }>{this.props.currentUser.dueNextMonthInspections}</a> inspections coming due in the next month</h2>
                 </Row>;
               }
             }

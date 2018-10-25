@@ -79,7 +79,7 @@ namespace SchoolBusAPI.Services.Impl
                     }
 
                     emailMessage.Subject = subject;
-                    emailMessage.Body = new TextPart("plain") { Text = body };
+                    emailMessage.Body = new TextPart("html") { Text = body };
 
                     SmtpClient client = new SmtpClient();
 
@@ -129,7 +129,7 @@ namespace SchoolBusAPI.Services.Impl
                     catch (Exception ex)
                     {
                         email.mailSent = false;
-                        email.errorInfo = $"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}";
+                        email.errorInfo = $"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}.";
                         Console.WriteLine($"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}");
                         return new ObjectResult(email);
                     }
@@ -144,7 +144,7 @@ namespace SchoolBusAPI.Services.Impl
                 catch (Exception ex)
                 {
                     email.mailSent = false;
-                    email.errorInfo = $"Error: {ex.Message}";
+                    email.errorInfo = $"Error: {ex.Message}.";
                     return new ObjectResult(email);
                 }
             }

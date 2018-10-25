@@ -211,8 +211,8 @@ var SchoolBuses = React.createClass({
         } else if (this.props.location.query[Constant.SCHOOL_BUS_REINSPECTIONS_QUERY]) {
           state.nextInspection = ALL;
           state.justReInspections = true;
-        } else if (this.props.location.query[Constant.SCHOOL_BUS_NEXT_30_DAYS_QUERY]) {
-          state.nextInspection = WITHIN_30_DAYS;
+        } else if (this.props.location.query[Constant.SCHOOL_BUS_NEXT_MONTH_QUERY]) {
+          state.nextInspection = NEXT_MONTH;
         }
 
         this.updateSearchState(state, this.fetch);
@@ -273,14 +273,16 @@ var SchoolBuses = React.createClass({
   },
 
   sendEmail(email){
+    this.closeEmailDialog();
+
     Api.sendEmail(email).then(response => {
-      if (response.mailSent){
+      if (response != undefined && response != null && response.mailSent != undefined && response.mailSent == true){//get valid response from server
         this.openEmailSendConfirm();
-      } else {
-        this.openEmailSendFail(response);
+      } else {//invalid response from server or mailSent == false
+        this.openEmailSendFail(email, response);
       }
-    }).finally(() => {
-      this.closeEmailDialog();
+    }).catch(err => {//when server pod down or get response from server timeout
+      this.openEmailSendFail(email, err);
     });
   },
 
@@ -301,12 +303,20 @@ var SchoolBuses = React.createClass({
     this.setState({ showEmailSendConfirmDialog: false });
   },
 
-  openEmailSendFail(email){
-    this.setState({ 
-      email: email,
-      emailSendErrorMessage: email.errorInfo,
-      showEmailSendFailDialog: true,
-    });
+  openEmailSendFail(email, response){
+    if(response == undefined || response == null || response.mailSent == undefined || response.mailSent == null){
+      this.setState({//if not getting response from server, customize the error message
+        email: email,
+        emailSendErrorMessage: 'An error occurred sending email. Server response timeout. Please try again later.',
+        showEmailSendFailDialog: true,
+      });
+    } else {//get error message from server, use its error message
+      this.setState({ 
+        email: email,
+        emailSendErrorMessage: response.errorInfo + ' Please try again later.',
+        showEmailSendFailDialog: true,
+      });
+    }
   },
 
   closeEmailSendFail(){
