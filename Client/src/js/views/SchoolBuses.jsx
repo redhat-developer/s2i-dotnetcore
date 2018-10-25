@@ -276,11 +276,13 @@ var SchoolBuses = React.createClass({
     this.closeEmailDialog();
 
     Api.sendEmail(email).then(response => {
-      if (response.mailSent){
+      if (response != undefined && response != null && response.mailSent != undefined && response.mailSent == true){//get valid response from server
         this.openEmailSendConfirm();
-      } else {
-        this.openEmailSendFail(response);
+      } else {//invalid response from server or mailSent == false
+        this.openEmailSendFail(email, response);
       }
+    }).catch(err => {//when server pod down or get response from server timeout
+      this.openEmailSendFail(email, err);
     });
   },
 
@@ -301,12 +303,20 @@ var SchoolBuses = React.createClass({
     this.setState({ showEmailSendConfirmDialog: false });
   },
 
-  openEmailSendFail(email){
-    this.setState({ 
-      email: email,
-      emailSendErrorMessage: email.errorInfo,
-      showEmailSendFailDialog: true,
-    });
+  openEmailSendFail(email, response){
+    if(response == undefined || response == null || response.mailSent == undefined || response.mailSent == null){
+      this.setState({//if not getting response from server, customize the error message
+        email: email,
+        emailSendErrorMessage: 'An error occurred sending email. Server response timeout. Please try again later.',
+        showEmailSendFailDialog: true,
+      });
+    } else {//get error message from server, use its error message
+      this.setState({ 
+        email: email,
+        emailSendErrorMessage: response.errorInfo + ' Please try again later.',
+        showEmailSendFailDialog: true,
+      });
+    }
   },
 
   closeEmailSendFail(){

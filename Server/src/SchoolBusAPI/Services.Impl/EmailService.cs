@@ -129,7 +129,7 @@ namespace SchoolBusAPI.Services.Impl
                     catch (Exception ex)
                     {
                         email.mailSent = false;
-                        email.errorInfo = $"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}";
+                        email.errorInfo = $"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}.";
                         Console.WriteLine($"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}");
                         return new ObjectResult(email);
                     }
@@ -144,7 +144,7 @@ namespace SchoolBusAPI.Services.Impl
                 catch (Exception ex)
                 {
                     email.mailSent = false;
-                    email.errorInfo = $"Error: {ex.Message}";
+                    email.errorInfo = $"Error: {ex.Message}.";
                     return new ObjectResult(email);
                 }
             }
