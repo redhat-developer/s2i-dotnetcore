@@ -138,15 +138,14 @@ namespace SchoolBusAPI
 
             TryMigrateDatabase(app, loggerFactory);
 
-            app.UseAuthentication(env);            
+            app.UseAuthentication(env);
             app.UseResponseCompression();
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseMvc();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUi();
-
-            
 
             if (env.IsDevelopment())
             {

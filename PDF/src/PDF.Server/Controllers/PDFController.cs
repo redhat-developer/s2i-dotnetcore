@@ -63,11 +63,30 @@ namespace PDF.Controllers
         public async Task<IActionResult> GetPDF([FromServices] INodeServices nodeServices, [FromBody]  Object rawdata )
         {
             JSONResponse result = null;
-            var options = new { format="letter", orientation= "landscape" };            
+            var options = new { format="letter", orientation= "landscape" };
 
-            // execute the Node.js component
-            result = await nodeServices.InvokeAsync<JSONResponse>("./pdf", "schoolbus_permit", rawdata, options); 
-                        
+            for (var i = 0; i < 2; i++)
+            {
+                try
+                {
+                    // execute the Node.js component
+                    result = await nodeServices.InvokeAsync<JSONResponse>("./pdf", "schoolbus_permit", rawdata, options);
+                    break;
+                }
+                catch
+                {
+                    if (i < 2)
+                    {
+                        _logger.LogInformation("exception: retry " + i);
+                        await Task.Delay(100 + 100 * i);
+                    }
+                    else
+                    {
+                        _logger.LogError("exception throw");
+                    }
+                }
+                
+            }
             return new FileContentResult(result.data, "application/pdf");
         }        
 
