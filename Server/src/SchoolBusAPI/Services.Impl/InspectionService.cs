@@ -341,7 +341,7 @@ namespace SchoolBusAPI.Services.Impl
             else
             {
                 // no data
-                return new StatusCodeResult(400);
+                return new StatusCodeResult(404);
             }                       
         }         
     }

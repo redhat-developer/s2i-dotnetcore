@@ -25,6 +25,10 @@ var TopNav = React.createClass({
 
   render: function () {
     let isCurrentUserAdmin = this.getIsCurrentUserAdmin();
+    var requestError = this.props.requestError;
+    var html = requestError.html ? JSON.parse(requestError.html) : null;
+    var errorTitle = html ? html.errorTitle : '';
+    var errorMessage = html ? html.errorMessage : '';
 
     return <div id="header">
       <nav id="header-main" className="navbar navbar-default navbar-fixed-top">
@@ -67,11 +71,12 @@ var TopNav = React.createClass({
             </NavItem>
           </Nav>
           <OverlayTrigger trigger="click" placement="bottom" rootClose overlay={
-              <Popover id="error-message" title={ this.props.requestError.status + ' – API Error' }>
-                <p><small>{ this.props.requestError.message }</small></p>
+              <Popover id="error-message" title={ errorTitle + ' (' + requestError.status + ')' }>
+                <p><small>{ errorMessage }</small></p>
+                <p><small>{ requestError.message }</small></p>
               </Popover>
             }>
-            <Button id="error-indicator" className={ this.props.requestError.message ? '' : 'hide' } bsStyle="danger" bsSize="xsmall">
+            <Button id="error-indicator" className={ requestError.message ? '' : 'hide' } bsStyle="danger" bsSize="xsmall">
               Error
               <Glyphicon glyph="exclamation-sign" />
             </Button>

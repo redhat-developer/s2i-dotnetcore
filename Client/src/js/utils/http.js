@@ -127,7 +127,7 @@ export function jsonRequest(path, options) {
     }
   }).catch(err => {
     if (err instanceof HttpError) {
-      var apiError = new ApiError(`API ${err.method} ${err.path} failed (${err.status})`, err.method, err.path, err.status, err.body);
+      var apiError = new ApiError(`API ${err.method} ${err.path} failed.`, err.method, err.path, err.status, err.body);
 
       store.dispatch({ type: Action.REQUESTS_ERROR, error: apiError });
 

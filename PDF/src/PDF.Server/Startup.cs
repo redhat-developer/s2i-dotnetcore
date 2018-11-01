@@ -48,7 +48,9 @@ namespace PDF
             services.AddApplicationInsightsTelemetry(Configuration);
 
             // Enable Node Services
-            services.AddNodeServices();
+            services.AddNodeServices(options => {
+                options.InvocationTimeoutMilliseconds = 4000;//4s timeout
+            });
 
             services.AddMvc().AddJsonOptions(
                     opts => {
