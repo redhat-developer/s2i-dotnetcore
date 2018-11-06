@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.1.0-sdk-projectjson
+FROM microsoft/dotnet:1.1.10-sdk-1.1.11
 # Dockerfile for package CCW
 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
