@@ -15,17 +15,17 @@ For example to create a Docker image for [s2i-dotnetcore-ex](https://github.com/
 
 Publish the application:
 ```
-$ git clone -b dotnetcore-2.1 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
+$ git clone -b dotnetcore-2.2 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
 $ cd s2i-dotnetcore-ex/app
 $ dotnet restore -r rhel.7-x64
-$ dotnet publish -f netcoreapp2.1 -c Release -r rhel.7-x64 --self-contained false
+$ dotnet publish -f netcoreapp2.2 -c Release -r rhel.7-x64 --self-contained false
 ```
 
 Create the Docker image:
 ```
 $ cat > Dockerfile <<EOF
-FROM dotnet/dotnet-21-runtime-rhel7
-ADD bin/Release/netcoreapp2.1/rhel.7-x64/publish/. .
+FROM dotnet/dotnet-22-runtime-rhel7
+ADD bin/Release/netcoreapp2.2/rhel.7-x64/publish/. .
 CMD [ "dotnet", "app.dll" ]
 EOF
 $ docker build -t s2i-dotnetcore-ex .
@@ -84,7 +84,7 @@ They must not to be overridden.
 
 * **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
 
-    These variables contain the framework (`netcoreapp2.1`) and .NET Core version (`2.1`) respectively.
+    These variables contain the framework (`netcoreapp2.2`) and .NET Core version (`2.2`) respectively.
 
 * **DOTNET_RUNNING_IN_CONTAINER**
 
