@@ -6,11 +6,7 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_m
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
 LABEL io.k8s.description="Platform for building and running .NET Core 2.1 applications" \
-      io.k8s.display-name=".NET Core 2.1" \
-      io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet21" \
-      io.openshift.expose-services="8080:http" \
-      io.s2i.scripts-url=image:///usr/libexec/s2i
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet21"
 
 # Labels consumed by Red Hat build service
 LABEL name="dotnet/dotnet-21-centos7" \
@@ -55,8 +51,8 @@ ENV DOTNET_SDK_BASE_VERSION=2.1.300 \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_1=2.1.3 \
-    LatestPatchVersionForAspNetCoreAll2_1=2.1.3
+    LatestPatchVersionForAspNetCoreApp2_1=2.1.5 \
+    LatestPatchVersionForAspNetCoreAll2_1=2.1.5
 
 # Run container by default as user with id 1001 (default)
 USER 1001
