@@ -1,31 +1,36 @@
-.Net Docker image
+.NET Core Runtime image
 =================
 
-This repository contains the source for building a docker image that
-can be used as a base in which to run already built .Net applications.
+This repository contains the source for building a container image that
+can be used as a base in which to run already built .NET Core applications.
 
-The image can be run using [Docker](http://docker.io).
+The container image can be used as a base image using [docker](http://docker.io)/[podman](https://podman.io/).
+Or you can build an application image using [s2i](https://github.com/openshift/source-to-image/releases).
+
+The image can be run using `docker`/`podman`.
 
 Usage
 ---------------------
-The distributale binaries of an application should be copied to this image and
-a new docker image should be created using this image as the base.
 
-For example to create a Docker image for [s2i-dotnetcore-ex](https://github.com/redhat-developer/s2i-dotnetcore-ex) 
+For example to create an image for [s2i-dotnetcore-ex](https://github.com/redhat-developer/s2i-dotnetcore-ex) 
 
 Publish the application:
 ```
 $ git clone -b dotnetcore-2.1 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
 $ cd s2i-dotnetcore-ex/app
-$ dotnet restore -r rhel.7-x64
-$ dotnet publish -f netcoreapp2.1 -c Release -r rhel.7-x64 --self-contained false
+$ dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App
 ```
 
-Create the Docker image:
+To create an image using `s2i`:
+```
+$ s2i build bin/Release/netcoreapp2.1/publish dotnet/dotnet-21-runtime-rhel7 s2i-dotnetcore-ex
+```
+
+To create an image using `docker`/`podman`:
 ```
 $ cat > Dockerfile <<EOF
 FROM dotnet/dotnet-21-runtime-rhel7
-ADD bin/Release/netcoreapp2.1/rhel.7-x64/publish/. .
+ADD bin/Release/netcoreapp2.1/publish/. .
 CMD [ "dotnet", "app.dll" ]
 EOF
 $ docker build -t s2i-dotnetcore-ex .
@@ -36,7 +41,7 @@ Start a container:
 $ docker run --rm -p 8080:8080 s2i-dotnetcore-ex
 ```
 
-Visit the web application that is running in the docker container with a browser at [http://localhost:8080].
+Visit the web application that is running in the container with a browser at [http://localhost:8080].
 
 Repository organization
 ------------------------

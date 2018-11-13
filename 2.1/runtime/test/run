@@ -100,18 +100,8 @@ test_port() {
   assert_equal $(docker_get_env $IMAGE_NAME ASPNETCORE_URLS) "http://*:8080"
 }
 
-test_aspnet() {
-  test_start
-
-  pushd ${test_dir}/aspnet-hello-world >/dev/null
-
-  # create image
-  cat >Dockerfile <<EOF
-FROM ${IMAGE_NAME}
-ADD app.tar.gz .
-CMD [ "dotnet", "aspnet-hello-world.dll" ]
-EOF
-  local image=$(docker_build .)
+verify_aspnet_image_works() {
+  local image=$1
 
   # start container
   local container=$(docker_run_d ${image})
@@ -126,8 +116,53 @@ EOF
 
   # assert
   assert_equal "${response}" "Hello World!"
+}
+
+test_aspnet() {
+  test_start
+
+  pushd ${test_dir}/aspnet-hello-world >/dev/null
+
+  # create image
+  cat >Dockerfile <<EOF
+FROM ${IMAGE_NAME}
+ADD app.tar.gz .
+CMD [ "dotnet", "aspnet-hello-world.dll" ]
+EOF
+  local image=$(docker_build .)
+
+  verify_aspnet_image_works $image
 
   popd >/dev/null
+}
+
+test_s2i_usage() {
+  test_start
+
+  local output=$(s2i usage ${IMAGE_NAME} 2>&1)
+
+  # s2i usage describes this is for pre-compiled applications
+  assert_contains "$output" "image for pre-compiled application"
+}
+
+test_s2i_build() {
+  test_start
+
+  local app=precompiled
+
+  # extract the pre-compiled application from the aspnet test
+  rm -rf ${test_dir}/${app}
+  mkdir ${test_dir}/${app} && tar -C ${test_dir}/${app} -xf ${test_dir}/aspnet-hello-world/app.tar.gz
+  # Verify the entry point assembly is detected and ran
+  local image=$(s2i_build $app)
+  verify_aspnet_image_works ${image}
+
+  # extract the pre-compiled application from the aspnet test in a nested folder
+  rm -rf ${test_dir}/${app}
+  mkdir -p ${test_dir}/${app}/nested && tar -C ${test_dir}/${app}/nested -xf ${test_dir}/aspnet-hello-world/app.tar.gz
+  # Verify the entry point assembly is detected and ran using DOTNET_STARTUP_ASSEMBLY.
+  image=$(s2i_build $app -e DOTNET_STARTUP_ASSEMBLY=nested/aspnet-hello-world.dll)
+  verify_aspnet_image_works ${image}
 }
 
 info "Testing ${IMAGE_NAME}"
@@ -140,6 +175,8 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_user
   test_port
   test_aspnet
+  test_s2i_usage
+  test_s2i_build
 fi
 
 info "All tests finished successfully."
