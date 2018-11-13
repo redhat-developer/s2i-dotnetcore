@@ -193,7 +193,7 @@ if [ "$BUILD_TYPE" == "source" ]; then
       echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
       dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
       echo "---> Running test project: $TEST_PROJECT..."
-      dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK" $VERBOSITY_OPTION
+      dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK" $VERBOSITY_OPTION --no-restore
   done
 
   # publish application
