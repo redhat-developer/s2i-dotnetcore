@@ -31,14 +31,14 @@ test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
 # Versions of Microsoft.AspNetCore.{All,App} packages that are known by latest RHEL sdk.
-aspnet_latest_app_version=2.1.5
-aspnet_latest_all_version=2.1.5
+aspnet_latest_app_version=2.1.6
+aspnet_latest_all_version=2.1.6
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk versions supported on CentOS
 sdk_versions=( "2.1.302" )
 else
 # sdk versions supported on RHEL
-sdk_versions=( "2.1.302" "2.1.403" )
+sdk_versions=( "2.1.302" "2.1.403" "2.1.500" )
 fi
 
 sdk_default_version=${sdk_versions[0]}
