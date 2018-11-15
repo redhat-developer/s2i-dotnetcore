@@ -51,8 +51,8 @@ ENV DOTNET_SDK_BASE_VERSION=2.1.300 \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_1=2.1.5 \
-    LatestPatchVersionForAspNetCoreAll2_1=2.1.5
+    LatestPatchVersionForAspNetCoreApp2_1=2.1.6 \
+    LatestPatchVersionForAspNetCoreAll2_1=2.1.6
 
 # Run container by default as user with id 1001 (default)
 USER 1001
