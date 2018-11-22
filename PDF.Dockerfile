@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.1.0-sdk-projectjson
+FROM microsoft/dotnet:1.1.10-sdk-1.1.11
 # Dockerfile for package PDF
 
 # Install Node.js
@@ -44,12 +44,12 @@ RUN npm install
 
 # setup the .NET Core application.
 
-RUN dotnet restore
+RUN dotnet restore PDF.Server.csproj
 
 ENV ASPNETCORE_URLS http://*:8080
 EXPOSE 8080
 
-RUN dotnet publish -c Release -o /app/out
+RUN dotnet publish PDF.Server.csproj -c Release -o /app/out
 # copy the node.js portion of the application
 COPY PDF/src/PDF.Server/pdf.js /app/out
 COPY PDF/src/PDF.Server/package.json /app/out
