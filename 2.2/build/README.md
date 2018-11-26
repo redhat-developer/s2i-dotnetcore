@@ -1,17 +1,17 @@
-.Net Docker image
+.NET Core SDK image
 =================
 
-This repository contains the source for building .Net applications
-as a reproducible Docker image using
+This repository contains the source for building .NET Core applications
+as a reproducible container image using
 [source-to-image](https://github.com/openshift/source-to-image).
-The resulting image can be run using [Docker](http://docker.io).
+The resulting image can be run using [docker](http://docker.io)/[podman](https://podman.io/).
 
 
 Usage
 ---------------------
 To build a simple [dotnet-sample-app](test/asp-net-hello-world) application
 using standalone [S2I](https://github.com/openshift/source-to-image) and then run the
-resulting image with [Docker](http://docker.io) execute:
+resulting image with `docker`/`podman` execute:
 
     ```
     $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=2.2/test/asp-net-hello-world dotnet/dotnet-22-rhel7 dotnet-sample-app
