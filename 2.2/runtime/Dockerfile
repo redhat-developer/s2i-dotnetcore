@@ -17,7 +17,9 @@ ENV HOME=/opt/app-root \
 LABEL io.k8s.description="Platform for running .NET Core 2.2 applications" \
       io.k8s.display-name=".NET Core 2.2" \
       io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet22-runtime" \
-      io.openshift.expose-services="8080:http"
+      io.openshift.expose-services="8080:http" \
+      io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
+      io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
 LABEL name="dotnet/dotnet-22-runtime-centos7" \
@@ -25,6 +27,9 @@ LABEL name="dotnet/dotnet-22-runtime-centos7" \
       version="2.2" \
       release="1" \
       architecture="x86_64"
+
+# Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
+COPY ./s2i/bin/ /usr/libexec/s2i
 
 # Don't download/extract docs for nuget packages
 ENV NUGET_XMLDOC_MODE=skip

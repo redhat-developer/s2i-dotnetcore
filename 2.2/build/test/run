@@ -46,35 +46,6 @@ sdk_default_version=${sdk_versions[0]}
 sdk_latest_version=${sdk_versions[-1]}
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
-s2i_image_tag() {
-  local app="$1"
-  echo "${IMAGE_NAME}-${app}"
-}
-
-s2i_build_output_log() {
-  local app="$1"
-  local tag="$2"
-  shift 2
-
-  docker_rmi ${tag}
-  s2i build --pull-policy=never -e DOTNET_SDK_VERSION=$sdk_version "$@" "file://${test_dir}/${app}" ${IMAGE_NAME} ${tag} 2>&1
-}
-
-s2i_build() {
-  local app="$1"
-  local tag=$(s2i_image_tag ${app})
-  shift 1
-
-  local output;
-  output=$(s2i_build_output_log ${app} ${tag} "$@")
-  if [ $? -ne 0 ]; then
-    error "$output"
-    echo "no-image"
-  else
-    echo "$tag"
-  fi
-}
-
 s2i_build_and_run() {
   local app="$1"
 
