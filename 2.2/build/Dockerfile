@@ -25,9 +25,8 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-# TODO: install 2.2 sdk: rh-dotnet22-dotnet-sdk-2.2
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
-    INSTALL_PKGS="rh-nodejs8-npm rh-nodejs8-nodejs-nodemon rsync" && \
+    INSTALL_PKGS="rh-nodejs8-npm rh-nodejs8-nodejs-nodemon rh-dotnet22-dotnet-sdk-2.2 rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
@@ -48,13 +47,12 @@ ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs8"
 
 # For backwards compatibility, s2i builds default to the oldest sdk in the image.
 # We keep the patch at 'x00', the latest patch version is automatically picked up.
-# TODO: update LatestPatchVersions below
 ENV DOTNET_SDK_BASE_VERSION=2.2.100 \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_2=2.2.0-preview2-35157 \
-    LatestPatchVersionForAspNetCoreAll2_2=2.2.0-preview2-35157
+    LatestPatchVersionForAspNetCoreApp2_2=2.2.0 \
+    LatestPatchVersionForAspNetCoreAll2_2=2.2.0
 
 # Run container by default as user with id 1001 (default)
 USER 1001
