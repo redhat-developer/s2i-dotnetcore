@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.1.0-sdk-projectjson
+FROM microsoft/dotnet:1.1.10-sdk-1.1.11
 # Dockerfile for package SchoolBusAPI
 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
@@ -13,11 +13,11 @@ RUN dotnet restore
 
 COPY Server /app/Server
 WORKDIR /app/Server/src/SchoolBusAPI/
-RUN dotnet restore
+RUN dotnet restore SchoolBusAPI.csproj
 
 ENV ASPNETCORE_URLS http://*:8080
 EXPOSE 8080
 
-RUN dotnet publish -c Release -o /app/out
+RUN dotnet publish SchoolBusAPI.csproj -c Release -o /app/out
 WORKDIR /app/out
 ENTRYPOINT ["dotnet", "/app/out/SchoolBusAPI.dll"]
