@@ -83,7 +83,7 @@
             "from":
             {
               "kind": "DockerImage",
-              "name": "microsoft/dotnet:1.1.0-sdk-projectjson"
+              "name": "microsoft/dotnet:1.1.10-sdk-1.1.11"
             },
             "generation": 2,
             "importPolicy": {}
