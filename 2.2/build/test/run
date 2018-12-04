@@ -320,10 +320,10 @@ test_config_1() {
   assert_contains "${s2i_build}" "bower@"
   assert_contains "${s2i_build}" "gulp@"
   assert_equal "${bower_path}" "/opt/app-root/node_modules/.bin/bower"
-  # DOTNET_TOOLS=dotnet-watch@2.2.0-preview2-35157 dotnet-serve
+  # DOTNET_TOOLS=dotnet-watch@2.2.0 dotnet-serve
   assert_equal "${watch_path}" "/opt/app-root/.dotnet/tools/dotnet-watch"
   assert_equal "${serve_path}" "/opt/app-root/.dotnet/tools/dotnet-serve"
-  assert_contains "${s2i_build}" "Tool 'dotnet-watch' (version '2.2.0-preview2-35157') was successfully installed."
+  assert_contains "${s2i_build}" "Tool 'dotnet-watch' (version '2.2.0') was successfully installed."
   # DOTNET_RM_SRC=true
   # The application folder contains a file and folder that starts with a '.', we verify that *all* files are removed.
   assert_contains "${s2i_build}" "Removing sources..."

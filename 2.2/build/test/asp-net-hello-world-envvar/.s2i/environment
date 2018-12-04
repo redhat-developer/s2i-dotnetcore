@@ -5,5 +5,5 @@ DOTNET_ASSEMBLY_NAME=SampleApp
 DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
 DOTNET_PACK=true
 DOTNET_NPM_TOOLS=bower gulp
-DOTNET_TOOLS=dotnet-watch@2.2.0-preview2-35157 dotnet-serve
+DOTNET_TOOLS=dotnet-watch@2.2.0 dotnet-serve
 DOTNET_RM_SRC=true
