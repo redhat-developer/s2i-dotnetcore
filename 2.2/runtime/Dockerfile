@@ -47,25 +47,17 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
-# TODO: install 2.1 runtime: rh-dotnet22-dotnet-runtime-2.2
 RUN yum install -y centos-release-dotnet && \
-    INSTALL_PKGS="rh-dotnet21-dotnet-runtime-2.1 nss_wrapper tar unzip" && \
+    INSTALL_PKGS="rh-dotnet22-dotnet-runtime-2.2 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/*
 
-# TODO: enable rh-dotnet22 scl
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
-    ENABLED_COLLECTIONS="rh-dotnet21"
-
-# TODO: remove Microsoft binaries
-RUN curl https://download.microsoft.com/download/D/5/9/D593CD8F-04E7-425D-962C-86FF4C90B1DA/dotnet-sdk-2.2.100-preview2-009404-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
-    mkdir ~/dotnet-preview && \
-    tar xf /tmp/dotnet-sdk.tar.gz -C ~/dotnet-preview && \
-    rm -rf ~/dotnet-preview/shared/Microsoft.AspNetCore.*
+    ENABLED_COLLECTIONS="rh-dotnet22"
 
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable

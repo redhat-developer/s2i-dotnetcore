@@ -18,7 +18,7 @@
 #
 # Example usage: $ sudo ./test/run
 
-if [ "$BUILD_CENTOS" = "true" ]; then
+if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-centos7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-22-runtime-centos7}
 else
@@ -32,14 +32,15 @@ source ${test_dir}/testcommon
 
 # Versions of Microsoft.AspNetCore.{All,App} packages that are known by latest RHEL sdk.
 # TODO: update latest patch versions below
-aspnet_latest_app_version=2.2.0-preview2-35157
-aspnet_latest_all_version=2.2.0-preview2-35157
-if [ "$BUILD_CENTOS" = "true" ]; then
+aspnet_latest_app_version=2.2.0
+aspnet_latest_all_version=2.2.0
+if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk versions supported on CentOS
-sdk_versions=( "2.2.100-preview2-009404" )
+error "No versions supported"
+exit 1
 else
 # sdk versions supported on RHEL
-sdk_versions=( "2.2.100-preview2-009404" )
+sdk_versions=( "2.2.100" )
 fi
 
 sdk_default_version=${sdk_versions[0]}
@@ -589,7 +590,7 @@ test_aspnet_implicit_using_latest()
     info verifying aspnet_latest_{app,all}
 
     # build image
-    s2i_build=$(s2i_build_output_log ${app} ${image} -e LatestPatchVersionForAspNetCoreApp2_1='' -e LatestPatchVersionForAspNetCoreAll2_1='')
+    s2i_build=$(s2i_build_output_log ${app} ${image} -e LatestPatchVersionForAspNetCoreApp2_2='' -e LatestPatchVersionForAspNetCoreAll2_2='')
     # cleanup
     docker_rmi ${image}
 
