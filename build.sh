@@ -99,7 +99,7 @@ if [ "$IMAGE_OS" = "CENTOS" ]; then
   image_prefix="dotnet"
   docker_filename="Dockerfile"
 else
-  VERSIONS="${VERSIONS:-1.0 1.1 2.1}"
+  VERSIONS="${VERSIONS:-1.0 1.1 2.1 2.2}"
   image_os="rhel7"
   image_prefix="dotnet"
   docker_filename="Dockerfile.rhel7"

@@ -1,0 +1,182 @@
+#!/bin/bash
+#
+# The 'run' script performs simple tests that verifies usability
+# of the image
+#
+# IMAGE_NAME specifies a name of the candidate image used for testing.
+# The image has to be available before this script is executed.
+#
+# TEST_PORT specifies the port on the docker host to be used for testing.
+# The container application will still use 8080, but this port will be bound
+# to the running container when testing asp.net projects.
+#
+# DEBUG environment variable, if not empty, makes 'run' to log every step
+# of testing.
+#
+# Example usage: $ sudo ./test/run
+
+if [ "$IMAGE_OS" = "CENTOS" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-runtime-centos7}
+else
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-runtime-rhel7}
+fi
+OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
+
+test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
+source ${test_dir}/testcommon
+
+dotnet_version_series="2.2"
+dotnet_version_suffix="100-preview2"
+dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
+
+test_dotnet() {
+  test_start
+
+  # ENTRYPOINT enables scl so dotnet is available
+  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Host"
+  assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
+  # Check version
+  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version  : ${dotnet_version}"$'\r\n'
+}
+
+test_envvars() {
+  test_start
+
+  # DOTNET_APP_PATH
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_APP_PATH) "/opt/app-root/app"
+  # DOTNET_DEFAULT_CMD
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DEFAULT_CMD) "default-cmd.sh"
+
+  # DOTNET_CORE_VERSION
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_CORE_VERSION) "${dotnet_version_series}"
+  # DOTNET_FRAMEWORK
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_FRAMEWORK) "netcoreapp${dotnet_version_series}"
+
+  # When HTTP_PROXY is set, we set http_proxy to match (unless it's already set).
+  assert_equal $(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0"                      bash -c 'echo $http_proxy') "proxy0"
+  assert_equal $(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0 -e http_proxy=proxy1" bash -c 'echo $http_proxy') "proxy1"
+
+  # .NET Core determines culture based on LANG. It must be empty/unset to use the 'Invariant' culture
+  assert_equal $(docker_get_env $IMAGE_NAME LANG) ""
+
+  # Like Microsoft images, we set this to 'true'
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_RUNNING_IN_CONTAINER) "true"
+}
+
+test_debuggable() {
+  test_start
+
+  # VSDBG (the .NET Core command line debugger) install script needs unzip
+  #   curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg
+  assert_equal "$(docker_commandpath $IMAGE_NAME unzip)" "/usr/bin/unzip"
+}
+
+test_default_cmd() {
+  test_start
+
+  assert_contains $(docker_run $IMAGE_NAME) "This is a runtime image for .NET Core"
+}
+
+test_user() {
+  test_start
+
+  # we run as user 'default'
+  assert_equal $(docker_run $IMAGE_NAME "whoami")           "default"
+  # other users are mapped to 'default'
+  assert_equal $(docker_run_as $IMAGE_NAME 100001 "whoami") "default"
+  # root is 'root'
+  assert_equal $(docker_run_as $IMAGE_NAME 0 "whoami")      "root"
+
+  # ensure the passwd file used by nss_wrapper can be overwritten
+  assert_equal $(docker_run_as $IMAGE_NAME 100001 "stat -c %a /opt/app-root/etc/passwd") "666"
+}
+
+test_port() {
+  test_start
+
+  # Port 8080 is exposed
+  assert_equal $(docker_get_exposedports $IMAGE_NAME) '{"8080/tcp":{}}'
+  # The environment variable used by ASP.NET Core matches
+  assert_equal $(docker_get_env $IMAGE_NAME ASPNETCORE_URLS) "http://*:8080"
+}
+
+verify_aspnet_image_works() {
+  local image=$1
+
+  # start container
+  local container=$(docker_run_d ${image})
+
+  # request
+  local url=$(container_url ${container})
+  local response=$(curl_retry ${url})
+
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # assert
+  assert_equal "${response}" "Hello World!"
+}
+
+test_aspnet() {
+  test_start
+
+  pushd ${test_dir}/aspnet-hello-world >/dev/null
+
+  # create image
+  cat >Dockerfile <<EOF
+FROM ${IMAGE_NAME}
+ADD app.tar.gz .
+CMD [ "dotnet", "aspnet-hello-world.dll" ]
+EOF
+  local image=$(docker_build .)
+
+  verify_aspnet_image_works $image
+
+  popd >/dev/null
+}
+
+test_s2i_usage() {
+  test_start
+
+  local output=$(s2i usage ${IMAGE_NAME} 2>&1)
+
+  # s2i usage describes this is for pre-compiled applications
+  assert_contains "$output" "image for pre-compiled application"
+}
+
+test_s2i_build() {
+  test_start
+
+  local app=precompiled
+
+  # extract the pre-compiled application from the aspnet test
+  rm -rf ${test_dir}/${app}
+  mkdir ${test_dir}/${app} && tar -C ${test_dir}/${app} -xf ${test_dir}/aspnet-hello-world/app.tar.gz
+  # Verify the entry point assembly is detected and ran
+  local image=$(s2i_build $app)
+  verify_aspnet_image_works ${image}
+
+  # extract the pre-compiled application from the aspnet test in a nested folder
+  rm -rf ${test_dir}/${app}
+  mkdir -p ${test_dir}/${app}/nested && tar -C ${test_dir}/${app}/nested -xf ${test_dir}/aspnet-hello-world/app.tar.gz
+  # Verify the entry point assembly is detected and ran using DOTNET_STARTUP_ASSEMBLY.
+  image=$(s2i_build $app -e DOTNET_STARTUP_ASSEMBLY=nested/aspnet-hello-world.dll)
+  verify_aspnet_image_works ${image}
+}
+
+info "Testing ${IMAGE_NAME}"
+
+if [ ${OPENSHIFT_ONLY} != true ]; then
+  test_dotnet
+  test_envvars
+  test_default_cmd
+  test_debuggable
+  test_user
+  test_port
+  test_aspnet
+  test_s2i_usage
+  test_s2i_build
+fi
+
+info "All tests finished successfully."

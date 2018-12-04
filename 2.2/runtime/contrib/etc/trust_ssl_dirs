@@ -1,0 +1,58 @@
+# Trust certificates from all DOTNET_SSL_DIRS.
+if [ -n "$DOTNET_SSL_DIRS" ]; then
+
+  # For backwards compatibility we need to run this in the src folder.
+  # Create one if it does not exist.
+  if [ ! -d /opt/app-root/src ]; then
+    mkdir /opt/app-root/src
+    _REMOVE_SRC_DIR=true
+  fi
+  pushd /opt/app-root/src >/dev/null
+
+  # Store SSL_CERT_DIR since we'll overwrite it and we want to support
+  # calling this script several times.
+  if [ -z ${_USER_SSL_CERT_DIR+x} ]; then
+    # If SSL_CERT_DIR is unset, use the default location.
+    if [ -z ${SSL_CERT_DIR+x} ]; then
+      _USER_SSL_CERT_DIR=/etc/pki/tls/certs
+    else
+      _USER_SSL_CERT_DIR="${SSL_CERT_DIR}"
+    fi
+    export _USER_SSL_CERT_DIR
+  fi
+
+  # Append _USER_SSL_CERT_DIR to DOTNET_SSL_DIRS.
+  _DOTNET_SSL_DIRS="$DOTNET_SSL_DIRS $_USER_SSL_CERT_DIR"
+
+  # Create/replace certificate folder.
+  rm -rf "$DOTNET_SSL_CERT_DIR"
+  mkdir "$DOTNET_SSL_CERT_DIR"
+
+  # Populate it with certificates.
+  CERT_ID=0
+  for SSL_DIR in $_DOTNET_SSL_DIRS; do
+    if [ -d "$SSL_DIR" ]; then
+      # Create a symbolic link for each certificate in the directory.
+      CERTFILES=(`find -L "$SSL_DIR" -maxdepth 1 -type f -exec realpath {} \;`)
+      for CERT_FILE in ${CERTFILES[@]}
+      do
+        ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
+        CERT_ID=$((CERT_ID + 1))
+      done
+    elif [ -f "$SSL_DIR" ]; then
+      # Create a symbolic link to the file.
+      CERT_FILE=$(realpath "$SSL_DIR")
+      ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
+      CERT_ID=$((CERT_ID + 1))
+    fi
+  done
+
+  popd >/dev/null
+  # Remove temporary src folder.
+  if [ "$_REMOVE_SRC_DIR" = true ] ; then
+    rm /opt/app-root/src
+  fi
+
+  # Use the certificate folder.
+  export SSL_CERT_DIR="$DOTNET_SSL_CERT_DIR"
+fi
