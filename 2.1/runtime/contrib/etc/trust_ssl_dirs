@@ -50,7 +50,7 @@ if [ -n "$DOTNET_SSL_DIRS" ]; then
   popd >/dev/null
   # Remove temporary src folder.
   if [ "$_REMOVE_SRC_DIR" = true ] ; then
-    rm /opt/app-root/src
+    rmdir /opt/app-root/src
   fi
 
   # Use the certificate folder.
