@@ -7,6 +7,7 @@ EXPOSE 8080
 ENV HOME=/opt/app-root \
     PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     DOTNET_APP_PATH=/opt/app-root/app \
+    DOTNET_DATA_PATH=/opt/app-root/data \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
     DOTNET_CORE_VERSION=2.2 \
     DOTNET_FRAMEWORK=netcoreapp2.2 \
