@@ -13,15 +13,16 @@ Versions
 
 * 1.0 (RHEL 7, CentOS 7)
 * 1.1 (RHEL 7)
-* 2.0 (RHEL 7, CentOS 7)
+* [RETIRED] 2.0 (RHEL 7, CentOS 7)
 * 2.1 (RHEL 7)
+* 2.2 (RHEL 7)
 
 Building
 ----------------
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ sudo VERSIONS=2.1 ./build.sh
+$ sudo VERSIONS=2.2 ./build.sh
 ```
 
 Note: to build RHEL 7 based images, you need to run the build on a
@@ -31,7 +32,7 @@ IMAGE_OS=CENTOS. On non-RHEL, building CentOS images is the default.
 Installing
 ----------------
 
-The Red Hat documentation for .NET Core describes the steps to [install the image streams](https://access.redhat.com/documentation/en-us/net_core/2.1/html/getting_started_guide/gs_dotnet_on_openshift#install_imagestreams).
+The Red Hat documentation for .NET Core describes the steps to [install the image streams](https://access.redhat.com/documentation/en-us/net_core/2.2/html/getting_started_guide/gs_dotnet_on_openshift#install_imagestreams).
 
 This repo contains a [bash script](https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.sh) that performs these steps.
 
@@ -47,6 +48,10 @@ Run `./install-imagestreams.sh --help` for more information.
 
 Usage
 ---------------------------------
+
+For information about usage of Docker image for .NET Core 2.2,
+see [2.2 builder usage documentation](2.2/build/README.md) and
+[2.2 runtime usage documentation](2.2/runtime/README.md).
 
 For information about usage of Docker image for .NET Core 2.1,
 see [2.1 builder usage documentation](2.1/build/README.md) and
