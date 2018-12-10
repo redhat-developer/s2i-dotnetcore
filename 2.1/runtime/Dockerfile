@@ -7,6 +7,7 @@ EXPOSE 8080
 ENV HOME=/opt/app-root \
     PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     DOTNET_APP_PATH=/opt/app-root/app \
+    DOTNET_DATA_PATH=/opt/app-root/data \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
     DOTNET_CORE_VERSION=2.1 \
     DOTNET_FRAMEWORK=netcoreapp2.1 \
@@ -67,7 +68,7 @@ ENV BASH_ENV=${CONTAINER_SCRIPTS_PATH}/etc/scl_enable \
     PROMPT_COMMAND=". ${CONTAINER_SCRIPTS_PATH}/etc/scl_enable"
 
 # Add default user
-RUN mkdir -p ${DOTNET_APP_PATH} && \
+RUN mkdir -p ${DOTNET_APP_PATH} ${DOTNET_DATA_PATH} && \
     useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
       -c "Default Application User" default
 
