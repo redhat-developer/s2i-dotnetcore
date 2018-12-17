@@ -337,7 +337,7 @@
                     "name": "SOURCE_REPOSITORY_REF",
                     "displayName": "Git Reference",
                     "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
-                    "value": "v0.1.28-prerelease"
+                    "value": "v0.1.29-prerelease"
                 },
                 {
                     "name": "DOTNET_STARTUP_PROJECT",
@@ -648,7 +648,7 @@
                     "name": "SOURCE_REPOSITORY_REF",
                     "displayName": "Git Reference",
                     "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
-                    "value": "v0.1.28-prerelease"
+                    "value": "v0.1.29-prerelease"
                 },
                 {
                     "name": "DOTNET_STARTUP_PROJECT",
