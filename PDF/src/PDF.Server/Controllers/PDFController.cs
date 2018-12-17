@@ -65,7 +65,7 @@ namespace PDF.Controllers
             JSONResponse result = null;
             var options = new { format="letter", orientation= "landscape" };
 
-            for (var i = 0; i < 2; i++)
+            for (var i = 0; i <= 2; i++)
             {
                 try
                 {
@@ -73,7 +73,7 @@ namespace PDF.Controllers
                     result = await nodeServices.InvokeAsync<JSONResponse>("./pdf", "schoolbus_permit", rawdata, options);
                     break;
                 }
-                catch
+                catch(Exception Ex)
                 {
                     if (i < 2)
                     {
@@ -82,7 +82,7 @@ namespace PDF.Controllers
                     }
                     else
                     {
-                        _logger.LogError("exception throw");
+                        _logger.LogError("Exception in call of PDF node services. ", Ex);
                     }
                 }
                 
