@@ -198,7 +198,7 @@
                                             },
                                             {
                                                 "name": "Storage__Path",
-                                                "value": "/opt/app-root/data/packages"
+                                                "value": "/opt/app-root/data"
                                             },
                                             {
                                                 "name": "Database__Type",
@@ -533,7 +533,7 @@
                                             },
                                             {
                                                 "name": "Storage__Path",
-                                                "value": "/opt/app-root/packages"
+                                                "value": "/opt/app-root"
                                             },
                                             {
                                                 "name": "Database__Type",
