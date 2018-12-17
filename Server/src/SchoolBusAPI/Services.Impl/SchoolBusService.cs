@@ -595,6 +595,7 @@ namespace SchoolBusAPI.Services.Impl
                 catch (Exception e)
                 {
                     result = null;
+                    Console.WriteLine(e.ToString());
                 }
 
                 finally
