@@ -77,6 +77,10 @@ OpenShift Templates
 -------------------
 
 The `templates` folder contains OpenShift templates. Some of these will be shipped with OpenShift.
+Templates under the `templates/community` folder are provided and maintained by the community.
+They are not supported or kept up-to-date by the maintainers of this repository and may fail when
+used with newer versions of .NET Core.
+
 If a template is not on your OpenShift installation, you can import it:
 
 ```
@@ -111,3 +115,8 @@ For more information on build chaining in OpenShift, [please see this doc](https
 The dotnet-pgsql-persistent creates a .NET Core service with a PostgreSQL backend. It provides parameters for all the environment
 variables of the s2i-dotnetcore builder and variables to setup the database. The database connection information is passed to the
 .NET application via the `ConnectionString` environment variable.
+
+**community/dotnet-baget.json**
+
+Provides templates for deploying a persistent, or ephemeral NuGet Server on OpenShift. These templates use BaGet,
+an open-source NuGet server implementation. Source code for BaGet can be found at: https://github.com/loic-sharma/BaGet.git.
