@@ -1,0 +1,667 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "metadata": {},
+    "items": [
+        {
+            "kind": "Template",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "dotnet-baget-persistent",
+                "annotations": {
+                    "openshift.io/display-name": "BaGet NuGet Package Server (persistent)",
+                    "description": "A lightweight NuGet service, see https://github.com/loic-sharma/BaGet.",
+                    "tags": "nuget,dotnet",
+                    "iconClass": "icon-dotnet"
+                }
+            },
+            "objects": [
+                {
+                    "kind": "Secret",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}-apikey"
+                    },
+                    "stringData": {
+                        "ApiKey": "${NUGET_API_KEY}"
+                    }
+                },
+                {
+                    "kind": "Service",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}"
+                    },
+                    "spec": {
+                        "ports": [
+                            {
+                                "name": "web",
+                                "port": 8080,
+                                "targetPort": 8080
+                            }
+                        ],
+                        "selector": {
+                            "name": "${NAME}"
+                        }
+                    }
+                },
+                {
+                    "kind": "ImageStream",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}",
+                        "annotations": {
+                            "description": "Keeps track of changes in the application image"
+                        }
+                    }
+                },
+                {
+                    "kind": "BuildConfig",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}",
+                        "annotations": {
+                            "description": "Defines how to build the application"
+                        }
+                    },
+                    "spec": {
+                        "source": {
+                            "type": "Git",
+                            "git": {
+                                "uri": "${SOURCE_REPOSITORY_URL}",
+                                "ref": "${SOURCE_REPOSITORY_REF}"
+                            }
+                        },
+                        "strategy": {
+                            "type": "Source",
+                            "sourceStrategy": {
+                                "from": {
+                                    "kind": "ImageStreamTag",
+                                    "namespace": "${NAMESPACE}",
+                                    "name": "${DOTNET_IMAGE_STREAM_TAG}"
+                                },
+                                "env": [
+                                    {
+                                        "name": "DOTNET_STARTUP_PROJECT",
+                                        "value": "${DOTNET_STARTUP_PROJECT}"
+                                    },
+                                    {
+                                        "name": "DOTNET_SDK_VERSION",
+                                        "value": "${DOTNET_SDK_VERSION}"
+                                    }
+                                ]
+                            }
+                        },
+                        "output": {
+                            "to": {
+                                "kind": "ImageStreamTag",
+                                "name": "${NAME}:latest"
+                            }
+                        },
+                        "triggers": [
+                            {
+                                "type": "ImageChange"
+                            },
+                            {
+                                "type": "ConfigChange"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "DeploymentConfig",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}",
+                        "annotations": {
+                            "description": "Defines how to deploy the application server"
+                        }
+                    },
+                    "spec": {
+                        "strategy": {
+                            "type": "Rolling",
+                            "rollingParams": {
+                                "updatePeriodSeconds": 1,
+                                "intervalSeconds": 1,
+                                "timeoutSeconds": 600,
+                                "maxUnavailable": "25%",
+                                "maxSurge": "25%"
+                            },
+                            "resources": {}
+                        },
+                        "triggers": [
+                            {
+                                "type": "ImageChange",
+                                "imageChangeParams": {
+                                    "automatic": true,
+                                    "containerNames": [
+                                        "dotnet"
+                                    ],
+                                    "from": {
+                                        "kind": "ImageStreamTag",
+                                        "name": "${NAME}:latest"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "ConfigChange"
+                            }
+                        ],
+                        "replicas": 1,
+                        "selector": {
+                            "name": "${NAME}"
+                        },
+                        "template": {
+                            "metadata": {
+                                "name": "${NAME}",
+                                "labels": {
+                                    "name": "${NAME}"
+                                }
+                            },
+                            "spec": {
+                                "volumes": [
+                                    {
+                                        "name": "${NAME}-data",
+                                        "persistentVolumeClaim": {
+                                            "claimName": "${NAME}-pvc"
+                                        }
+                                    }
+                                ],
+                                "containers": [
+                                    {
+                                        "name": "dotnet",
+                                        "image": " ",
+                                        "ports": [
+                                            {
+                                                "containerPort": 8080
+                                            }
+                                        ],
+                                        "volumeMounts": [
+                                            {
+                                                "name": "${NAME}-data",
+                                                "mountPath": "/opt/app-root/data"
+                                            }
+                                        ],
+                                        "env": [
+                                            {
+                                                "name": "ApiKey",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "name": "${NAME}-apikey",
+                                                        "key": "ApiKey"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "Storage__Type",
+                                                "value": "FileSystem"
+                                            },
+                                            {
+                                                "name": "Storage__Path",
+                                                "value": "/opt/app-root/data"
+                                            },
+                                            {
+                                                "name": "Database__Type",
+                                                "value": "Sqlite"
+                                            },
+                                            {
+                                                "name": "Database__ConnectionString",
+                                                "value": "Data Source=/opt/app-root/data/baget.db"
+                                            },
+                                            {
+                                                "name": "Search__Type",
+                                                "value": "Database"
+                                            },
+                                            {
+                                                "name": "Mirror__Enabled",
+                                                "value": "true"
+                                            },
+                                            {
+                                                "name": "Mirror__PackageSource",
+                                                "value": "${MIRROR_PACKAGESOURCE}"
+                                            },
+                                            {
+                                                "name": "PackageDeletionBehavior",
+                                                "value": "${DELETION_BEHAVIOR}"
+                                            }
+                                        ],
+                                        "resources": {
+                                            "limits": {
+                                                "memory": "${MEMORY_LIMIT}"
+                                            }
+                                        },
+                                        "livenessProbe": {
+                                            "httpGet": {
+                                                "path": "/",
+                                                "port": 8080,
+                                                "scheme": "HTTP"
+                                            },
+                                            "initialDelaySeconds": 40,
+                                            "timeoutSeconds": 10
+                                        },
+                                        "readinessProbe": {
+                                            "httpGet": {
+                                                "path": "/",
+                                                "port": 8080,
+                                                "scheme": "HTTP"
+                                            },
+                                            "initialDelaySeconds": 10,
+                                            "timeoutSeconds": 30
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "kind": "PersistentVolumeClaim",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}-pvc"
+                    },
+                    "spec": {
+                        "accessModes": [
+                            "ReadWriteOnce"
+                        ],
+                        "resources": {
+                            "requests": {
+                                "storage": "${VOLUME_CAPACITY}"
+                            }
+                        }
+                    }
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "NAME",
+                    "displayName": "Name",
+                    "description": "The name assigned to all of the frontend objects defined in this template.",
+                    "required": true,
+                    "value": "nuget"
+                },
+                {
+                    "name": "MIRROR_PACKAGESOURCE",
+                    "displayName": "Upstream Package Source",
+                    "description": "Packages that are not found locally will be retrieved from this server.",
+                    "required": true,
+                    "value": "https://api.nuget.org/v3/index.json"
+                },
+                {
+                    "name": "NUGET_API_KEY",
+                    "displayName": "NuGet API Key",
+                    "description": "Set this to a password required to push packages."
+                },
+                {
+                    "name": "DELETION_BEHAVIOR",
+                    "displayName": "Package deletion behavior",
+                    "description": "Set this to 'Unlist' to make packages undiscoverable, or 'HardDelete' to remove from storage.",
+                    "value": "Unlist"
+                },
+                {
+                    "name": "MEMORY_LIMIT",
+                    "displayName": "Memory Limit",
+                    "required": true,
+                    "description": "Maximum amount of memory the .NET Core container can use.",
+                    "value": "512Mi"
+                },
+                {
+                    "name": "VOLUME_CAPACITY",
+                    "displayName": "Volume Capacity",
+                    "description": "Volume space available for data, e.g. 512Mi, 2Gi",
+                    "value": "512Mi",
+                    "required": true
+                },
+                {
+                    "name": "DOTNET_IMAGE_STREAM_TAG",
+                    "displayName": ".NET builder",
+                    "required": true,
+                    "description": "The image stream tag which is used to build the code.",
+                    "value": "dotnet:2.2"
+                },
+                {
+                    "name": "NAMESPACE",
+                    "displayName": "Namespace",
+                    "required": true,
+                    "description": "The OpenShift Namespace where the .NET builder ImageStream resides.",
+                    "value": "openshift"
+                },
+                {
+                    "name": "SOURCE_REPOSITORY_URL",
+                    "displayName": "Git Repository URL",
+                    "required": true,
+                    "description": "The URL of the repository with your application source code.",
+                    "value": "https://github.com/loic-sharma/BaGet.git"
+                },
+                {
+                    "name": "SOURCE_REPOSITORY_REF",
+                    "displayName": "Git Reference",
+                    "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
+                    "value": "v0.1.29-prerelease"
+                },
+                {
+                    "name": "DOTNET_STARTUP_PROJECT",
+                    "displayName": "Startup Project",
+                    "description": "Set this to a project file (e.g. csproj) or a folder containing a single project file.",
+                    "value": "src/BaGet"
+                },
+                {
+                    "name": "DOTNET_SDK_VERSION",
+                    "displayName": "SDK Version",
+                    "description": "Set this to configure the default SDK version. This can be set to a specific version, '' (lowest version) or 'latest' (highest version)."
+                }
+            ]
+        },
+        {
+            "kind": "Template",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "dotnet-baget-ephemeral",
+                "annotations": {
+                    "openshift.io/display-name": "BaGet NuGet Package Server (ephemeral)",
+                    "description": "A lightweight NuGet service, see https://github.com/loic-sharma/BaGet.",
+                    "tags": "nuget,dotnet",
+                    "iconClass": "icon-dotnet"
+                }
+            },
+            "objects": [
+                {
+                    "kind": "Secret",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}-apikey"
+                    },
+                    "stringData": {
+                        "ApiKey": "${NUGET_API_KEY}"
+                    }
+                },
+                {
+                    "kind": "Service",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}"
+                    },
+                    "spec": {
+                        "ports": [
+                            {
+                                "name": "web",
+                                "port": 8080,
+                                "targetPort": 8080
+                            }
+                        ],
+                        "selector": {
+                            "name": "${NAME}"
+                        }
+                    }
+                },
+                {
+                    "kind": "ImageStream",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}",
+                        "annotations": {
+                            "description": "Keeps track of changes in the application image"
+                        }
+                    }
+                },
+                {
+                    "kind": "BuildConfig",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}",
+                        "annotations": {
+                            "description": "Defines how to build the application"
+                        }
+                    },
+                    "spec": {
+                        "source": {
+                            "type": "Git",
+                            "git": {
+                                "uri": "${SOURCE_REPOSITORY_URL}",
+                                "ref": "${SOURCE_REPOSITORY_REF}"
+                            }
+                        },
+                        "strategy": {
+                            "type": "Source",
+                            "sourceStrategy": {
+                                "from": {
+                                    "kind": "ImageStreamTag",
+                                    "namespace": "${NAMESPACE}",
+                                    "name": "${DOTNET_IMAGE_STREAM_TAG}"
+                                },
+                                "env": [
+                                    {
+                                        "name": "DOTNET_STARTUP_PROJECT",
+                                        "value": "${DOTNET_STARTUP_PROJECT}"
+                                    },
+                                    {
+                                        "name": "DOTNET_SDK_VERSION",
+                                        "value": "${DOTNET_SDK_VERSION}"
+                                    }
+                                ]
+                            }
+                        },
+                        "output": {
+                            "to": {
+                                "kind": "ImageStreamTag",
+                                "name": "${NAME}:latest"
+                            }
+                        },
+                        "triggers": [
+                            {
+                                "type": "ImageChange"
+                            },
+                            {
+                                "type": "ConfigChange"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "DeploymentConfig",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${NAME}",
+                        "annotations": {
+                            "description": "Defines how to deploy the application server"
+                        }
+                    },
+                    "spec": {
+                        "strategy": {
+                            "type": "Rolling",
+                            "rollingParams": {
+                                "updatePeriodSeconds": 1,
+                                "intervalSeconds": 1,
+                                "timeoutSeconds": 600,
+                                "maxUnavailable": "25%",
+                                "maxSurge": "25%"
+                            },
+                            "resources": {}
+                        },
+                        "triggers": [
+                            {
+                                "type": "ImageChange",
+                                "imageChangeParams": {
+                                    "automatic": true,
+                                    "containerNames": [
+                                        "dotnet"
+                                    ],
+                                    "from": {
+                                        "kind": "ImageStreamTag",
+                                        "name": "${NAME}:latest"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "ConfigChange"
+                            }
+                        ],
+                        "replicas": 1,
+                        "selector": {
+                            "name": "${NAME}"
+                        },
+                        "template": {
+                            "metadata": {
+                                "name": "${NAME}",
+                                "labels": {
+                                    "name": "${NAME}"
+                                }
+                            },
+                            "spec": {
+                                "containers": [
+                                    {
+                                        "name": "dotnet",
+                                        "image": " ",
+                                        "ports": [
+                                            {
+                                                "containerPort": 8080
+                                            }
+                                        ],
+                                        "env": [
+                                            {
+                                                "name": "ApiKey",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "name": "${NAME}-apikey",
+                                                        "key": "ApiKey"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "Storage__Type",
+                                                "value": "FileSystem"
+                                            },
+                                            {
+                                                "name": "Storage__Path",
+                                                "value": "/opt/app-root"
+                                            },
+                                            {
+                                                "name": "Database__Type",
+                                                "value": "Sqlite"
+                                            },
+                                            {
+                                                "name": "Database__ConnectionString",
+                                                "value": "Data Source=/opt/app-root/baget.db"
+                                            },
+                                            {
+                                                "name": "Search__Type",
+                                                "value": "Database"
+                                            },
+                                            {
+                                                "name": "Mirror__Enabled",
+                                                "value": "true"
+                                            },
+                                            {
+                                                "name": "Mirror__PackageSource",
+                                                "value": "${MIRROR_PACKAGESOURCE}"
+                                            },
+                                            {
+                                                "name": "PackageDeletionBehavior",
+                                                "value": "${DELETION_BEHAVIOR}"
+                                            }
+                                        ],
+                                        "resources": {
+                                            "limits": {
+                                                "memory": "${MEMORY_LIMIT}"
+                                            }
+                                        },
+                                        "livenessProbe": {
+                                            "httpGet": {
+                                                "path": "/",
+                                                "port": 8080,
+                                                "scheme": "HTTP"
+                                            },
+                                            "initialDelaySeconds": 40,
+                                            "timeoutSeconds": 10
+                                        },
+                                        "readinessProbe": {
+                                            "httpGet": {
+                                                "path": "/",
+                                                "port": 8080,
+                                                "scheme": "HTTP"
+                                            },
+                                            "initialDelaySeconds": 10,
+                                            "timeoutSeconds": 30
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "NAME",
+                    "displayName": "Name",
+                    "description": "The name assigned to all of the frontend objects defined in this template.",
+                    "required": true,
+                    "value": "nuget"
+                },
+                {
+                    "name": "MIRROR_PACKAGESOURCE",
+                    "displayName": "Upstream Package Source",
+                    "description": "Packages that are not found locally will be retrieved from this server.",
+                    "required": true,
+                    "value": "https://api.nuget.org/v3/index.json"
+                },
+                {
+                    "name": "NUGET_API_KEY",
+                    "displayName": "NuGet API Key",
+                    "description": "Set this to a password required to push packages."
+                },
+                {
+                    "name": "DELETION_BEHAVIOR",
+                    "displayName": "Package deletion behavior",
+                    "description": "Set this to 'Unlist' to make packages undiscoverable, or 'HardDelete' to remove from storage.",
+                    "value": "Unlist"
+                },
+                {
+                    "name": "MEMORY_LIMIT",
+                    "displayName": "Memory Limit",
+                    "required": true,
+                    "description": "Maximum amount of memory the .NET Core container can use.",
+                    "value": "512Mi"
+                },
+                {
+                    "name": "DOTNET_IMAGE_STREAM_TAG",
+                    "displayName": ".NET builder",
+                    "required": true,
+                    "description": "The image stream tag which is used to build the code.",
+                    "value": "dotnet:2.2"
+                },
+                {
+                    "name": "NAMESPACE",
+                    "displayName": "Namespace",
+                    "required": true,
+                    "description": "The OpenShift Namespace where the .NET builder ImageStream resides.",
+                    "value": "openshift"
+                },
+                {
+                    "name": "SOURCE_REPOSITORY_URL",
+                    "displayName": "Git Repository URL",
+                    "required": true,
+                    "description": "The URL of the repository with your application source code.",
+                    "value": "https://github.com/loic-sharma/BaGet.git"
+                },
+                {
+                    "name": "SOURCE_REPOSITORY_REF",
+                    "displayName": "Git Reference",
+                    "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
+                    "value": "v0.1.29-prerelease"
+                },
+                {
+                    "name": "DOTNET_STARTUP_PROJECT",
+                    "displayName": "Startup Project",
+                    "description": "Set this to a project file (e.g. csproj) or a folder containing a single project file.",
+                    "value": "src/BaGet"
+                },
+                {
+                    "name": "DOTNET_SDK_VERSION",
+                    "displayName": "SDK Version",
+                    "description": "Set this to configure the default SDK version. This can be set to a specific version, '' (lowest version) or 'latest' (highest version)."
+                }
+            ]
+        }
+    ]
+}
