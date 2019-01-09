@@ -40,7 +40,7 @@ error "No versions supported"
 exit 1
 else
 # sdk versions supported on RHEL
-sdk_versions=( "2.2.100" )
+sdk_versions=( "2.2.102" )
 fi
 
 sdk_default_version=${sdk_versions[0]}

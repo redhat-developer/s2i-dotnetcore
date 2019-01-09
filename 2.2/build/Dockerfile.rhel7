@@ -12,7 +12,7 @@ LABEL io.k8s.description="Platform for building and running .NET Core 2.2 applic
 LABEL name="dotnet/dotnet-22-rhel7" \
       com.redhat.component="rh-dotnet22-container" \
       version="2.2" \
-      release="1" \
+      release="2" \
       architecture="x86_64"
 
 # Labels consumed by Eclipse JBoss OpenShift plugin
