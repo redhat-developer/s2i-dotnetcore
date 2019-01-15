@@ -466,7 +466,9 @@ namespace SchoolBusAPI.Services.Impl
                 .Include(x => x.History)
                 .Include(x => x.Notes)
                 .Include(x => x.PrimaryContact)
-                .Select(x => x);           
+                .Select(x => x);
+
+            var result = new List<SchoolBusOwnerViewModel>();
 
             // Note that Districts searches SchoolBus Districts, not SchoolBusOwner Districts
             if (districts != null)
@@ -493,13 +495,15 @@ namespace SchoolBusAPI.Services.Impl
                     }
                 }
 
-                if (ids.Count > 0)
+                if (ids.Count == 0)
                 {
-                    data = data.Where(x => ids.Contains(x.Id));
+                    return new ObjectResult(result);
                 }
 
+                data = data.Where(x => ids.Contains(x.Id));
+
             }
-            
+
 
             if (inspectors != null)
             {
@@ -525,11 +529,12 @@ namespace SchoolBusAPI.Services.Impl
                     }
                 }
 
-                if (ids.Count > 0)
+                if (ids.Count == 0)
                 {
-                    data = data.Where(x => ids.Contains(x.Id));
+                    return new ObjectResult(result);
                 }
 
+                data = data.Where(x => ids.Contains(x.Id));
             }
 
 
@@ -546,7 +551,6 @@ namespace SchoolBusAPI.Services.Impl
             }
 
             // now convert the results to the view model.
-            var result = new List<SchoolBusOwnerViewModel>();
             foreach (SchoolBusOwner item in data)
             {
                 SchoolBusOwnerViewModel record = item.ToViewModel();                
