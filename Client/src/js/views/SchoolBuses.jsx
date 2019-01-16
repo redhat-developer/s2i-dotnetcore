@@ -108,16 +108,16 @@ var SchoolBuses = React.createClass({
       owner: this.state.search.ownerId || '',
     };
 
-    if (this.state.search.selectedDistrictsIds.length > 0) {
+    if (this.state.search.selectedDistrictsIds.length > 0 && this.state.search.selectedDistrictsIds.length != _.size(this.props.districts)) {
       searchParams.districts = this.state.search.selectedDistrictsIds;
     }
-    if (this.state.search.selectedInspectorsIds.length > 0) {
+    if (this.state.search.selectedInspectorsIds.length > 0 && this.state.search.selectedInspectorsIds.length != _.size(this.props.inspectors)) {
       searchParams.inspectors = this.state.search.selectedInspectorsIds;
     }
-    if (this.state.search.selectedCitiesIds.length > 0) {
+    if (this.state.search.selectedCitiesIds.length > 0 && this.state.search.selectedCitiesIds.length != _.size(this.props.cities)) {
       searchParams.cities = this.state.search.selectedCitiesIds;
     }
-    if (this.state.search.selectedSchoolDistrictsIds.length > 0) {
+    if (this.state.search.selectedSchoolDistrictsIds.length > 0 && this.state.search.selectedSchoolDistrictsIds.length != _.size(this.props.schoolDistricts)) {
       searchParams.schooldistricts = this.state.search.selectedSchoolDistrictsIds;
     }
 
