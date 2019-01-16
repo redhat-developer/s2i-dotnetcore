@@ -73,10 +73,10 @@ var Owners = React.createClass({
       owner: this.state.search.ownerId || '',
     };
 
-    if (this.state.search.selectedDistrictsIds.length > 0) {
+    if (this.state.search.selectedDistrictsIds.length > 0 && this.state.search.selectedDistrictsIds.length != _.size(this.props.districts)) {
       searchParams.districts = this.state.search.selectedDistrictsIds;
     }
-    if (this.state.search.selectedInspectorsIds.length > 0) {
+    if (this.state.search.selectedInspectorsIds.length > 0 && this.state.search.selectedInspectorsIds.length != _.size(this.props.inspectors)) {
       searchParams.inspectors = this.state.search.selectedInspectorsIds;
     }
 
