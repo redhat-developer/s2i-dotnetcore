@@ -59,7 +59,7 @@ var UserManagement = React.createClass({
       surname: this.state.search.surname,
     };
 
-    if (this.state.search.selectedDistrictsIds.length > 0) {
+    if (this.state.search.selectedDistrictsIds.length > 0 && this.state.search.selectedDistrictsIds.length != _.size(this.props.districts)) {
       searchParams.districts = this.state.search.selectedDistrictsIds;
     }
 
