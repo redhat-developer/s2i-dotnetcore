@@ -26,7 +26,17 @@ var TopNav = React.createClass({
   render: function () {
     let isCurrentUserAdmin = this.getIsCurrentUserAdmin();
     var requestError = this.props.requestError;
-    var html = requestError.html ? JSON.parse(requestError.html) : null;
+    var html;
+
+    if (requestError.html){
+      try {
+        html = JSON.parse(requestError.html);
+      } catch (e) {
+        console.log(requestError.html);
+        html = { errorTitle: 'Error', errorMessage: 'Internal error'};
+      }
+    }
+
     var errorTitle = html ? html.errorTitle : '';
     var errorMessage = html ? html.errorMessage : '';
 
