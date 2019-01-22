@@ -12,7 +12,7 @@ LABEL io.k8s.description="Platform for building and running .NET Core 2.1 applic
 LABEL name="dotnet/dotnet-21-rhel7" \
       com.redhat.component="rh-dotnet21-container" \
       version="2.1" \
-      release="11" \
+      release="13" \
       architecture="x86_64"
 
 # Labels consumed by Eclipse JBoss OpenShift plugin
@@ -52,8 +52,8 @@ ENV DOTNET_SDK_BASE_VERSION=2.1.300 \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_1=2.1.6 \
-    LatestPatchVersionForAspNetCoreAll2_1=2.1.6
+    LatestPatchVersionForAspNetCoreApp2_1=2.1.7 \
+    LatestPatchVersionForAspNetCoreAll2_1=2.1.7
 
 # Run container by default as user with id 1001 (default)
 USER 1001
