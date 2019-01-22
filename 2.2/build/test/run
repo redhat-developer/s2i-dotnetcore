@@ -32,15 +32,15 @@ source ${test_dir}/testcommon
 
 # Versions of Microsoft.AspNetCore.{All,App} packages that are known by latest RHEL sdk.
 # TODO: update latest patch versions below
-aspnet_latest_app_version=2.2.0
-aspnet_latest_all_version=2.2.0
+aspnet_latest_app_version=2.2.1
+aspnet_latest_all_version=2.2.1
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk versions supported on CentOS
 error "No versions supported"
 exit 1
 else
 # sdk versions supported on RHEL
-sdk_versions=( "2.2.102" )
+sdk_versions=( "2.2.103" )
 fi
 
 sdk_default_version=${sdk_versions[0]}
