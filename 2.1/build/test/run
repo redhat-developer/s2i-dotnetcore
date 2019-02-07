@@ -619,6 +619,61 @@ test_binary()
   assert_contains "${output}" "Hello World2!"
 }
 
+test_incremental()
+{
+  test_start
+
+  # asp-net-hello-world is an ASP.NET Core application
+  local app=asp-net-hello-world
+
+  # perform a first build, with the incremental flag
+  local image=$(s2i_image_tag ${app})
+  docker_rmi ${image}
+  local s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_RM_NUGET=false)
+  # verify packages are installed
+  assert_contains "${s2i_build}" "Installing System"
+  # verify the build completes succesfully
+  assert_contains "${s2i_build}" "Build completed successfully"
+
+  # perform a second build, with the incremental flag
+  s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_RM_NUGET=false)
+  # verify incremental build packages are installed
+  assert_contains "${s2i_build}" "Installing artifacts from incremental build"
+  # verify NO other packages are installed
+  assert_not_contains "${s2i_build}" "Installing System"
+  # verify the build completes succesfully
+  assert_contains "${s2i_build}" "Build completed successfully"
+
+  # cleanup
+  docker_rmi ${image}
+}
+
+test_incremental_without_packages()
+{
+  test_start
+
+  # asp-net-hello-world is an ASP.NET Core application
+  local app=asp-net-hello-world
+
+  # perform a first build without keeping packages
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_RM_NUGET=true)
+  # verify packages are installed
+  assert_contains "${s2i_build}" "Installing System"
+  # verify the build completes succesfully
+  assert_contains "${s2i_build}" "Build completed successfully"
+
+  # perform a second build, with the incremental flag
+  s2i_build=$(s2i_build_output_log ${app} ${image} --incremental)
+  # verify NO incremental packages are installed
+  assert_not_contains "${s2i_build}" "Installing artifacts from incremental build"
+  # verify the build completes succesfully
+  assert_contains "${s2i_build}" "Build completed successfully"
+
+  # cleanup
+  docker_rmi ${image}
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -642,6 +697,8 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
     test_user
     test_certificates
     test_binary
+    test_incremental
+    test_incremental_without_packages
   done
   # when unset, default to the lowest sdk version
   info "default sdk(${sdk_default_version}):"

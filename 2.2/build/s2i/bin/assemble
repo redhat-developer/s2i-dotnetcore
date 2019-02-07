@@ -12,6 +12,11 @@ else
   VERBOSITY_OPTION=""
 fi
 
+if [ -d /tmp/artifacts -a "$(ls -A /tmp/artifacts)" ]; then
+  echo "---> Installing artifacts from incremental build..."
+  mv /tmp/artifacts/* "${HOME}"
+fi
+
 echo "---> Installing application source..."
 if [ -d /tmp/src ]; then
   mv /tmp/src/* ./
@@ -228,7 +233,11 @@ if [ "$DOTNET_PACK" == "true" ]; then
 fi
 
 # cleanup NuGet artifacts
-rm -rf ~/{.local,.nuget}
+rm -rf /opt/app-root/.local
+DOTNET_RM_NUGET="${DOTNET_RM_NUGET:-true}"
+if [ "$DOTNET_RM_NUGET" == "true" ]; then
+  rm -rf /opt/app-root/.nuget
+fi
 
 if [ "$DOTNET_RM_SRC" == "true" ]; then
   echo "---> Removing sources..."
