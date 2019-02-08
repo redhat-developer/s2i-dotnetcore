@@ -14,7 +14,7 @@ fi
 
 if [ -d /tmp/artifacts -a "$(ls -A /tmp/artifacts)" ]; then
   echo "---> Installing artifacts from incremental build..."
-  mv /tmp/artifacts/* "${HOME}"
+  mv /tmp/artifacts/* /opt/app-root
 fi
 
 echo "---> Installing application source..."
@@ -130,7 +130,7 @@ EOF
       npm config set registry $NPM_MIRROR
     fi
 
-    pushd $HOME
+    pushd /opt/app-root
     npm install ${DOTNET_NPM_TOOLS}
     popd
   fi
