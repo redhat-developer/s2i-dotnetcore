@@ -12,7 +12,7 @@ else
   VERBOSITY_OPTION=""
 fi
 
-if [ -d /tmp/artifacts -a "$(ls -A /tmp/artifacts)" ]; then
+if [ "$(ls -A /tmp/artifacts 2>/dev/null)" ]; then
   echo "---> Installing artifacts from incremental build..."
   mv /tmp/artifacts/* /opt/app-root
 fi
