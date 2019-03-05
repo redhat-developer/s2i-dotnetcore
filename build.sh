@@ -47,9 +47,6 @@ base_image_name() {
 
 image_exists() {
   docker inspect $1 &>/dev/null
-  # docker returns a value on no results while podman returns null,
-  # so explicitly return the exit code for consistency.
-  return $?
 }
 
 check_result_msg() {
