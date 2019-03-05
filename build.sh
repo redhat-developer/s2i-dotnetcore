@@ -47,6 +47,9 @@ base_image_name() {
 
 image_exists() {
   docker inspect $1 &>/dev/null
+  # docker returns a value on no results while podman returns null,
+  # so explicitly return the exit code for consistency.
+  return $?
 }
 
 check_result_msg() {
@@ -94,7 +97,7 @@ if [ -z ${IMAGE_OS+x} ]; then
 fi
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  VERSIONS="${VERSIONS:-1.0 2.1}"
+  VERSIONS="${VERSIONS:-1.0 2.1 2.2}"
   image_os="centos7"
   image_prefix="dotnet"
   docker_filename="Dockerfile"
