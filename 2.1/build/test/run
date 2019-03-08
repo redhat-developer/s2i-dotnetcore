@@ -629,16 +629,14 @@ test_incremental()
   # perform a first build, with the incremental flag
   local image=$(s2i_image_tag ${app})
   docker_rmi ${image}
-  local s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_RM_NUGET=false)
+  local s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
   # verify packages are installed
   assert_contains "${s2i_build}" "Installing System"
   # verify the build completes succesfully
   assert_contains "${s2i_build}" "Build completed successfully"
 
   # perform a second build, with the incremental flag
-  s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_RM_NUGET=false)
-  # verify incremental build packages are installed
-  assert_contains "${s2i_build}" "Installing artifacts from incremental build"
+  s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
   # verify NO other packages are installed
   assert_not_contains "${s2i_build}" "Installing System"
   # verify the build completes succesfully
@@ -657,7 +655,7 @@ test_incremental_without_packages()
 
   # perform a first build without keeping packages
   local image=$(s2i_image_tag ${app})
-  local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_RM_NUGET=true)
+  local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=false)
   # verify packages are installed
   assert_contains "${s2i_build}" "Installing System"
   # verify the build completes succesfully
