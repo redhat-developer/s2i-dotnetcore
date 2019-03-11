@@ -36,8 +36,9 @@ aspnet_latest_app_version=2.2.2
 aspnet_latest_all_version=2.2.2
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk versions supported on CentOS
-error "No versions supported"
-exit 1
+sdk_versions=( "2.2.103" )
+aspnet_latest_app_version=2.2.1
+aspnet_latest_all_version=2.2.1
 else
 # sdk versions supported on RHEL
 sdk_versions=( "2.2.104" )
