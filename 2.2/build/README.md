@@ -31,12 +31,7 @@ Incremental builds
 
 The s2i image supports incremental builds. For incremental builds, NuGet packages
 will be re-used. To keep NuGet packages so they can be reused, you must set
-`DOTNET_RM_NUGET` to `false`.
-
-Note that the s2i builder does not remove unused NuGet packages on incremental
-builds. Over time the incremental application image may contain unused packages.
-To clean up those packages, you should occasionally perform a non-incremental build
-or perform a build with `DOTNET_RM_NUGET` set to `true`.
+`DOTNET_INCREMENTAL` to `true`.
 
 Repository organization
 ------------------------
@@ -167,10 +162,10 @@ a `.s2i/environment` file inside your source code repository.
 
     When set to `true`, the source code will not be included in the image. Defaults to ``.
 
-* **DOTNET_RM_NUGET**
+* **DOTNET_INCREMENTAL**
 
-    When set to `true`, the NuGet packages will not be included in the image.
-    Set this to `false` for incremental builds. Defaults to `true`.
+    When set to `true`, the NuGet packages will be kept so they can be re-used for an incremental build.
+    Defaults to `false`.
 
 * **NPM_MIRROR**
 

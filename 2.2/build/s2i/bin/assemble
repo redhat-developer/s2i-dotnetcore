@@ -12,11 +12,6 @@ else
   VERBOSITY_OPTION=""
 fi
 
-if [ "$(ls -A /tmp/artifacts 2>/dev/null)" ]; then
-  echo "---> Installing artifacts from incremental build..."
-  mv /tmp/artifacts/* /opt/app-root
-fi
-
 echo "---> Installing application source..."
 if [ -d /tmp/src ]; then
   mv /tmp/src/* ./
@@ -139,6 +134,10 @@ EOF
   if [ -n "${DOTNET_TOOLS}" ]; then
     # Build nuget sources list for when doing the restore
     TOOL_RESTORE_OPTIONS=""
+    if [ -d /tmp/artifacts/packages-for-incremental-build ]; then
+      # use packages-for-incremental-build as a source
+      TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --add-source file:///tmp/artifacts/packages-for-incremental-build"
+    fi
     if [ -n "${DOTNET_RESTORE_SOURCES}" ]; then
       # `dotnet tool install` doesn't have a `--source` parameter that behaves like
       # `dotnet restore` (i.e. replacing vs adding sources). We generate a config file
@@ -183,27 +182,40 @@ if [ "$BUILD_TYPE" == "source" ]; then
   DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
 
   # Build nuget sources list for when doing the restore
-  RESTORE_OPTIONS=""
+  RESTORE_SOURCE_OPTIONS=""
   for SOURCE in $DOTNET_RESTORE_SOURCES; do
-    RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
+    RESTORE_SOURCE_OPTIONS="$RESTORE_SOURCE_OPTIONS --source $SOURCE"
   done
+  INCREMENTAL_SOURCE_OPTION=""
+  if [ -d /tmp/artifacts/packages-for-incremental-build ]; then
+    INCREMENTAL_SOURCE_OPTION="--source file:///tmp/artifacts/packages-for-incremental-build"
+  fi
 
+  RESTORE_OPTIONS=""
   # If true, run dotnet restore with --disable-parallel
   if [ "$DOTNET_RESTORE_DISABLE_PARALLEL" = true ]; then
     RESTORE_OPTIONS="$RESTORE_OPTIONS --disable-parallel"
   fi
-  
+
   # run tests
   for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
       echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
-      dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
+      if [ -n "$INCREMENTAL_SOURCE_OPTION" ]; then
+        # perform a restore against packages-for-incremental-build
+        dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $INCREMENTAL_SOURCE_OPTION $VERBOSITY_OPTION >/dev/null 2>&1 || true
+      fi
+      dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $RESTORE_SOURCE_OPTIONS $VERBOSITY_OPTION
       echo "---> Running test project: $TEST_PROJECT..."
       dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK" $VERBOSITY_OPTION --no-restore
   done
 
   # publish application
   echo "---> Restoring application dependencies..."
-  dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
+  if [ -n "$INCREMENTAL_SOURCE_OPTION" ]; then
+    # perform a restore against packages-for-incremental-build
+    dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $INCREMENTAL_SOURCE_OPTION $VERBOSITY_OPTION >/dev/null 2>&1 || true
+  fi
+  dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $RESTORE_SOURCE_OPTIONS $VERBOSITY_OPTION
   echo "---> Publishing application..."
   dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
          --self-contained false /p:PublishWithAspNetCoreTargetManifest=false --no-restore -o "$DOTNET_APP_PATH"
@@ -233,11 +245,12 @@ if [ "$DOTNET_PACK" == "true" ]; then
 fi
 
 # cleanup NuGet artifacts
-rm -rf /opt/app-root/.local
-DOTNET_RM_NUGET="${DOTNET_RM_NUGET:-true}"
-if [ "$DOTNET_RM_NUGET" == "true" ]; then
-  rm -rf /opt/app-root/.nuget
+DOTNET_INCREMENTAL="${DOTNET_INCREMENTAL:-false}"
+if [ "$DOTNET_INCREMENTAL" == "true" ]; then
+  mkdir /opt/app-root/packages-for-incremental-build
+  find /opt/app-root/.nuget/packages -type f -maxdepth 3 -name '*.nupkg' -exec mv -t /opt/app-root/packages-for-incremental-build {} \+
 fi
+rm -rf /opt/app-root/{.nuget,.local}
 
 if [ "$DOTNET_RM_SRC" == "true" ]; then
   echo "---> Removing sources..."
