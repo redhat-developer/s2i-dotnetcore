@@ -44,7 +44,7 @@ image_dir=$(readlink -zf ${test_dir}/..)
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 dotnet_version="1.0.0-preview2-003320"
 else
-dotnet_version="1.0.0-preview2-003340"
+dotnet_version="1.0.0-preview2-003360"
 fi
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
