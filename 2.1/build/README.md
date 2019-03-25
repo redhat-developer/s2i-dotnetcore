@@ -103,8 +103,7 @@ a `.s2i/environment` file inside your source code repository.
 
 * **DOTNET_SDK_VERSION**
 
-    Used to select the default sdk version when building. If there is a `global.json` file in the source repository, that takes precedence.
-    When set to `latest` the latest sdk in the image is used. Defaults to the lowest sdk version available in the image.
+    Used to select the sdk version when building. If there is a `global.json` file in the source repository, that takes precedence.
 
 * **DOTNET_ASSEMBLY_NAME**
 
@@ -184,10 +183,6 @@ a `.s2i/environment` file inside your source code repository.
 
     When set to `true`, the application restart automatically when the source code changes. `dotnet run`
     is used to start the application.
-
-* **DOTNET_SDK_BASE_VERSION**
-
-    Contains the lowest sdk version available in the image. This is used as the default value for `DOTNET_SDK_VERSION`.
 
 * **DOTNET_USE_POLLING_FILE_WATCHER**
 

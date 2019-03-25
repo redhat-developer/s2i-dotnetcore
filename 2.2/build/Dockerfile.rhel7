@@ -12,7 +12,7 @@ LABEL io.k8s.description="Platform for building and running .NET Core 2.2 applic
 LABEL name="dotnet/dotnet-22-rhel7" \
       com.redhat.component="rh-dotnet22-container" \
       version="2.2" \
-      release="6" \
+      release="7" \
       architecture="x86_64"
 
 # Labels consumed by Eclipse JBoss OpenShift plugin
@@ -44,11 +44,7 @@ WORKDIR /opt/app-root/src
 # the permissions on those too.
 RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
 
-ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs8"
-
-# For backwards compatibility, s2i builds default to the oldest sdk in the image.
-# We keep the patch at 'x00', the latest patch version is automatically picked up.
-ENV DOTNET_SDK_BASE_VERSION=2.2.100 \
+ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs8" \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version

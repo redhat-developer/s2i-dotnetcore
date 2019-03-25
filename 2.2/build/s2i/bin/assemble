@@ -92,10 +92,8 @@ else
 fi
 
 if [ "$BUILD_TYPE" == "source" ]; then
-  # sdk version
-  DOTNET_SDK_VERSION="${DOTNET_SDK_VERSION:-$DOTNET_SDK_BASE_VERSION}"
-  if [ "$DOTNET_SDK_VERSION" != "latest" ]; then
-  cat >../global.json <<EOF
+  if [ -n ${DOTNET_SDK_VERSION} ]; then
+    cat >../global.json <<EOF
 {
   "sdk": {
     "version": "$DOTNET_SDK_VERSION"
