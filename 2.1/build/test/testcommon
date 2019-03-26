@@ -218,7 +218,8 @@ s2i_build_output_log() {
   if [[ "$@" != *"--incremental"* ]]; then
     docker_rmi ${tag}
   fi
-  s2i build --pull-policy=never -e DOTNET_SDK_VERSION=$sdk_version "$@" "file://${test_dir}/${app}" ${IMAGE_NAME} ${tag} 2>&1
+
+  s2i build --pull-policy=never "$@" "file://${test_dir}/${app}" ${IMAGE_NAME} ${tag} 2>&1
 }
 
 s2i_build() {

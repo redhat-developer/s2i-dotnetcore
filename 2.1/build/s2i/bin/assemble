@@ -92,15 +92,6 @@ else
 fi
 
 if [ "$BUILD_TYPE" == "source" ]; then
-  if [ -n ${DOTNET_SDK_VERSION} ]; then
-      cat >../global.json <<EOF
-{
-  "sdk": {
-    "version": "$DOTNET_SDK_VERSION"
-  }
-}
-EOF
-  fi
   echo "Using SDK: $(dotnet --version)"
 
   # Trust certificates from DOTNET_SSL_DIRS.

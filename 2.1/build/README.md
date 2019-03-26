@@ -101,10 +101,6 @@ a `.s2i/environment` file inside your source code repository.
 
     Used to select the project to run. This must be a project file (e.g. csproj, fsproj) or a folder containing a single project file. Defaults to `.`.
 
-* **DOTNET_SDK_VERSION**
-
-    Used to select the sdk version when building. If there is a `global.json` file in the source repository, that takes precedence.
-
 * **DOTNET_ASSEMBLY_NAME**
 
     Used to select the assembly to run. This must NOT include the `.dll` extension.
@@ -187,6 +183,10 @@ a `.s2i/environment` file inside your source code repository.
 * **DOTNET_USE_POLLING_FILE_WATCHER**
 
     This is set to `true` to ensure the `dotnet watch` command works in a container. This command is not used by the default scripts.
+
+* **[OBSOLETE] DOTNET_SDK_VERSION**
+
+    The s2i image only provides the latest SDK version.
 
 NPM
 ---
