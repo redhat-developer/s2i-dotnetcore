@@ -84,10 +84,6 @@
                                     {
                                         "name": "DOTNET_STARTUP_PROJECT",
                                         "value": "${DOTNET_STARTUP_PROJECT}"
-                                    },
-                                    {
-                                        "name": "DOTNET_SDK_VERSION",
-                                        "value": "${DOTNET_SDK_VERSION}"
                                     }
                                 ]
                             }
@@ -344,11 +340,6 @@
                     "displayName": "Startup Project",
                     "description": "Set this to a project file (e.g. csproj) or a folder containing a single project file.",
                     "value": "src/BaGet"
-                },
-                {
-                    "name": "DOTNET_SDK_VERSION",
-                    "displayName": "SDK Version",
-                    "description": "Set this to configure the default SDK version. This can be set to a specific version, '' (lowest version) or 'latest' (highest version)."
                 }
             ]
         },
@@ -433,10 +424,6 @@
                                     {
                                         "name": "DOTNET_STARTUP_PROJECT",
                                         "value": "${DOTNET_STARTUP_PROJECT}"
-                                    },
-                                    {
-                                        "name": "DOTNET_SDK_VERSION",
-                                        "value": "${DOTNET_SDK_VERSION}"
                                     }
                                 ]
                             }
@@ -655,11 +642,6 @@
                     "displayName": "Startup Project",
                     "description": "Set this to a project file (e.g. csproj) or a folder containing a single project file.",
                     "value": "src/BaGet"
-                },
-                {
-                    "name": "DOTNET_SDK_VERSION",
-                    "displayName": "SDK Version",
-                    "description": "Set this to configure the default SDK version. This can be set to a specific version, '' (lowest version) or 'latest' (highest version)."
                 }
             ]
         }

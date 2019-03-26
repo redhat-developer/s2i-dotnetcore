@@ -35,17 +35,15 @@ source ${test_dir}/testcommon
 aspnet_latest_app_version=2.2.3
 aspnet_latest_all_version=2.2.3
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-# sdk versions supported on CentOS
-sdk_versions=( "2.2.103" )
+# sdk version supported on CentOS
+sdk_version=2.2.103
 aspnet_latest_app_version=2.2.1
 aspnet_latest_all_version=2.2.1
 else
-# sdk versions supported on RHEL
-sdk_versions=( "2.2.105" )
+# sdk version supported on RHEL
+sdk_version=2.2.105
 fi
 
-sdk_default_version=${sdk_versions[0]}
-sdk_latest_version=${sdk_versions[-1]}
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
 s2i_build_and_run() {
@@ -126,7 +124,7 @@ test_image() {
 
   # verify dotnet is available
   local image_dotnet_version=$(docker_run ${IMAGE_NAME} 'dotnet --version')
-  assert_equal "${image_dotnet_version}" "${sdk_latest_version}"
+  assert_equal "${image_dotnet_version}" "${sdk_version}"
 
   # Verify $HOME != $CWD. See https://github.com/redhat-developer/s2i-dotnetcore/issues/28
   local working_dir=$(docker_run ${IMAGE_NAME} pwd)
@@ -587,7 +585,7 @@ test_aspnet_implicit_using_latest()
 
   # verify aspnet_latest_{app,all}_version have the correct values.
   # If this fails, the variables in the test and environment variables in the Dockerfiles must be updated.
-  if [ "$sdk_version" == "$sdk_latest_version" -a "$BUILD_CENTOS" != "true" ]; then
+  if [ "$BUILD_CENTOS" != "true" ]; then
     info verifying aspnet_latest_{app,all}
 
     # build image
@@ -679,34 +677,25 @@ info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
   test_image
-  for sdk_version in "${sdk_versions[@]}"
-  do
-    info "sdk ${sdk_version}:"
-    test_config
-    test_usage
-    test_s2i_sdk_version $sdk_version
-    test_aspnet_implicit_using_latest
-    test_consoleapp
-    test_multiframework
-    test_fsharp
-    test_vb
-    test_published_files
-    test_aspnetapp
-    test_devmode
-    test_split_build
-    test_templates
-    test_user
-    test_certificates
-    test_binary
-    test_incremental
-    test_incremental_without_packages
-  done
-  # when unset, default to the lowest sdk version
-  info "default sdk(${sdk_default_version}):"
-  sdk_version="" test_s2i_sdk_version $sdk_default_version
-  # when set to 'latest', use the higest sdk version
-  info "latest sdk(${sdk_latest_version}):"
-  sdk_version="latest" test_s2i_sdk_version $sdk_latest_version
+  info "sdk ${sdk_version}:"
+  test_config
+  test_usage
+  test_s2i_sdk_version $sdk_version
+  test_aspnet_implicit_using_latest
+  test_consoleapp
+  test_multiframework
+  test_fsharp
+  test_vb
+  test_published_files
+  test_aspnetapp
+  test_devmode
+  test_split_build
+  test_templates
+  test_user
+  test_certificates
+  test_binary
+  test_incremental
+  test_incremental_without_packages
 else
   test_imagestream_sample
 fi
