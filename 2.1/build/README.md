@@ -184,9 +184,9 @@ a `.s2i/environment` file inside your source code repository.
 
     This is set to `true` to ensure the `dotnet watch` command works in a container. This command is not used by the default scripts.
 
-* **[OBSOLETE] DOTNET_SDK_VERSION**
+* **[OBSOLETE - April 2019] DOTNET_SDK_VERSION**
 
-    The s2i image only provides the latest SDK version.
+    The s2i image only provides the latest SDK version. Previous versions of the SDK may contain known vulnerabilities.
 
 NPM
 ---
