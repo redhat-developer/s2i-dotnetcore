@@ -97,7 +97,7 @@
       "displayName": "Git Repository URL",
       "description": "The URL of the repository with your application source code.",
       "required": true,
-      "value": "https://github.com/ychung-mot/pdf.git"
+      "value": "https://github.com/bcgov/schoolbus.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
@@ -107,7 +107,8 @@
     {
       "name": "CONTEXT_DIR",
       "displayName": "Context Directory",
-      "description": "Set this to the relative path to your project if it is not in the root of your repository."
+      "description": "Set this to the relative path to your project if it is not in the root of your repository.",
+      "value": "/PDF2"
     }
   ]
 }
