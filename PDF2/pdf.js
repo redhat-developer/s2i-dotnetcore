@@ -17,8 +17,6 @@ module.exports = function (callback, templateName, viewData, pdfOptions) {
 			// render
 			var html = mustache.render( template, viewData );
 
-			console.log(pdfOptions);
-
 			// export as PDF
 			pdf.create(html, pdfOptions).toStream(function(err, stream){
 				if (err)
