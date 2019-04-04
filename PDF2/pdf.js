@@ -22,11 +22,8 @@ module.exports = function (callback, templateName, viewData, pdfOptions) {
 			// render
 			var html = mustache.render( template, viewData )
 
-			// PDF options
-			var options = Object.assign({}, DEFAULT_PDF_OPTIONS, pdfOptions);
-
 			// export as PDF
-			pdf.create(html, options).toStream(function(err, stream){
+			pdf.create(html, pdfOptions).toStream(function(err, stream){
 				if (err)
 				{
 					callback (err, null);
