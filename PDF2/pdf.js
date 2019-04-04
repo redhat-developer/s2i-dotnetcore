@@ -1,10 +1,5 @@
 module.exports = function (callback, templateName, viewData, pdfOptions) {
 
-	const DEFAULT_PDF_OPTIONS = {
-		format: 'letter',
-		orientation: 'landscape', // portrait or landscape
-	}
-
 	// https://www.npmjs.com/package/mustache
 	var mustache = require ('mustache');
 	// https://www.npmjs.com/package/html-pdf
@@ -20,7 +15,9 @@ module.exports = function (callback, templateName, viewData, pdfOptions) {
 		else
 		{
 			// render
-			var html = mustache.render( template, viewData )
+			var html = mustache.render( template, viewData );
+
+			console.log(pdfOptions);
 
 			// export as PDF
 			pdf.create(html, pdfOptions).toStream(function(err, stream){
