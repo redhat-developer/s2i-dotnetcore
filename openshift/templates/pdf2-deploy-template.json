@@ -102,13 +102,18 @@
                     "timeoutSeconds": 3,
                     "initialDelaySeconds": 30,
                     "httpGet": {
-                        "path": "/",
-                        "port": 8080
+                      "path": "/",
+                      "port": 8080
                     }
                 },
                 "resources": {
                     "limits": {
-                        "memory": "${MEMORY_LIMIT}"
+                      "cpu": "${CPU_LIMIT}",
+                      "memory": "${MEMORY_LIMIT}"
+                    },
+                    "requests": {
+                      "cpu": "${CPU_REQUEST}",
+                      "memory": "${MEMORY_REQUEST}"
                     }
                 },
                 "env": [
@@ -136,11 +141,32 @@
       "value": "tran-schoolbus-tools"
     },
     {
+      "name": "CPU_LIMIT",
+      "displayName": "CPU Limit",
+      "description": "Maximum size of CPU the container can use.",
+      "required": true,
+      "value": "400m"
+    },
+    {
+      "name": "CPU_REQUEST",
+      "displayName": "CPU Request",
+      "description": "Size of CPU the container can request.",
+      "required": true,
+      "value": "200m"
+    },
+    {
       "name": "MEMORY_LIMIT",
       "displayName": "Memory Limit",
       "description": "Maximum amount of memory the container can use.",
       "required": true,
       "value": "512Mi"
+    },
+    {
+      "name": "MEMORY_REQUEST",
+      "displayName": "Memory request",
+      "description": "Maximum amount of memory the container can request.",
+      "required": true,
+      "value": "256Mi"
     }
   ]
 }
