@@ -20,8 +20,14 @@ app.get('/', function (req, res) {
 app.post('/api/PDF/GetPDF', function (req, res) {
   var data = req.body;
   var options = {
-    "format": "letter",
-    "orientation": "landscape"
+		format: 'Letter',
+		orientation: 'landscape',
+		border: {
+			top: '0.3in',
+			right: '0.2in',
+			bottom: '0.2in',
+			left: '0.3in'
+		},
   };
 
   pdf(function(err, stream){
