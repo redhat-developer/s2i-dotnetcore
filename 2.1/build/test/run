@@ -31,8 +31,8 @@ test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
 # Versions of Microsoft.AspNetCore.{All,App} packages that are known by latest RHEL sdk.
-aspnet_latest_app_version=2.1.9
-aspnet_latest_all_version=2.1.9
+aspnet_latest_app_version=2.1.10
+aspnet_latest_all_version=2.1.10
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
 sdk_version=2.1.503
@@ -40,7 +40,7 @@ aspnet_latest_app_version=2.1.7
 aspnet_latest_all_version=2.1.7
 else
 # sdk version supported on RHEL
-sdk_version=2.1.505
+sdk_version=2.1.506
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -129,10 +129,10 @@ test_image() {
   local working_dir=$(docker_run ${IMAGE_NAME} pwd)
   assert_equal "${working_dir}" "/opt/app-root/src"
   local env=$(docker_run ${IMAGE_NAME} env)
-  assert_contains "${env}" "HOME=/opt/app-root"$'\n'
+  assert_contains "${env}" "HOME=/opt/app-root"$
 
   # Verify the `dotnet watch` command can detect file changes in the container.
-  assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true"$'\n'
+  assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true"$
 
   # verify npm is available
   local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
@@ -325,7 +325,7 @@ test_config_1() {
   # DOTNET_RM_SRC=true
   # The application folder contains a file and folder that starts with a '.', we verify that *all* files are removed.
   assert_contains "${s2i_build}" "Removing sources..."
-  assert_contains "${src_folder_content}" "."$'\n'".."
+  assert_not_contains "${src_folder_content}" "[^.]"
 }
 
 test_config_2() {
