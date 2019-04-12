@@ -130,10 +130,10 @@ test_image() {
   local working_dir=$(docker_run ${IMAGE_NAME} pwd)
   assert_equal "${working_dir}" "/opt/app-root/src"
   local env=$(docker_run ${IMAGE_NAME} env)
-  assert_contains "${env}" "HOME=/opt/app-root"$
+  assert_contains "${env}" "HOME=/opt/app-root$"
 
   # Verify the `dotnet watch` command can detect file changes in the container.
-  assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true"$
+  assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true$"
 
   # verify npm is available
   local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')

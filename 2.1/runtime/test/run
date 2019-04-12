@@ -36,7 +36,7 @@ test_dotnet() {
   assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Host"
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
   # Check version
-  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version: ${dotnet_version}"$
+  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version: ${dotnet_version}$"
 }
 
 test_envvars() {
