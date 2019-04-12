@@ -23,17 +23,24 @@ assert_contains() {
   local actual="$1"
   local expected="$2"
 
-  if ! echo "${actual}" | grep -q "${expected}"; then
+  if ! echo "${actual}" | grep -qP "${expected}"; then
     error "'${actual}' does not contain '${expected}'"
     exit 1
   fi
 }
 
+assert_contains_multiline() {
+  local actual=$(echo "$1" | tr -d '\r' | tr '\n' ' ')
+  local expected=$(echo "$2" | tr -d '\r' | tr '\n' ' ')
+
+  assert_contains "${actual}" "${expected}"
+
+}
 assert_not_contains() {
   local actual="$1"
   local unexpected="$2"
 
-  if echo "${actual}" | grep -q "${unexpected}"; then
+  if echo "${actual}" | grep -qP "${unexpected}"; then
     error "'${actual}' contains '${unexpected}'"
     exit 1
   fi
