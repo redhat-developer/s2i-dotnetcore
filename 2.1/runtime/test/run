@@ -26,7 +26,7 @@ test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
 dotnet_version_series="2.1"
-dotnet_version_suffix="302"
+dotnet_version_suffix="10"
 dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
 
 test_dotnet() {
@@ -36,7 +36,7 @@ test_dotnet() {
   assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Host"
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
   # Check version
-  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version  : ${dotnet_version}"$'\r\n'
+  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version: ${dotnet_version}$"
 }
 
 test_envvars() {

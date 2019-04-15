@@ -32,8 +32,8 @@ source ${test_dir}/testcommon
 
 # Versions of Microsoft.AspNetCore.{All,App} packages that are known by latest RHEL sdk.
 # TODO: update latest patch versions below
-aspnet_latest_app_version=2.2.3
-aspnet_latest_all_version=2.2.3
+aspnet_latest_app_version=2.2.4
+aspnet_latest_all_version=2.2.4
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
 sdk_version=2.2.103
@@ -41,7 +41,7 @@ aspnet_latest_app_version=2.2.1
 aspnet_latest_all_version=2.2.1
 else
 # sdk version supported on RHEL
-sdk_version=2.2.105
+sdk_version=2.2.106
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -74,8 +74,8 @@ You can specify the startup project by adding an '.s2i/environment' file to the 
 The source repository contains the following projects:
 - proj1/proj1.csproj
 - proj2/proj2.fsproj
-Update the '.s2i/environment' file to specify the project you want to publish, for example DOTNET_STARTUP_PROJECT=proj1/proj1.csproj"
-  assert_contains "${s2i_build}" "${expected}"
+Update the '.s2i/environment' file to specify the project you want to publish, for example DOTNET_STARTUP_PROJECT=proj1/proj1.csproj."
+  assert_contains_multiline "${s2i_build}" "${expected}"
 }
 
 test_s2i_sdk_version()
@@ -130,10 +130,10 @@ test_image() {
   local working_dir=$(docker_run ${IMAGE_NAME} pwd)
   assert_equal "${working_dir}" "/opt/app-root/src"
   local env=$(docker_run ${IMAGE_NAME} env)
-  assert_contains "${env}" "HOME=/opt/app-root"$'\n'
+  assert_contains "${env}" "HOME=/opt/app-root$"
 
   # Verify the `dotnet watch` command can detect file changes in the container.
-  assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true"$'\n'
+  assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true$"
 
   # verify npm is available
   local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
@@ -322,11 +322,11 @@ test_config_1() {
   # DOTNET_TOOLS=dotnet-watch@2.2.0 dotnet-serve
   assert_equal "${watch_path}" "/opt/app-root/.dotnet/tools/dotnet-watch"
   assert_equal "${serve_path}" "/opt/app-root/.dotnet/tools/dotnet-serve"
-  assert_contains "${s2i_build}" "Tool 'dotnet-watch' (version '2.2.0') was successfully installed."
+  assert_contains "${s2i_build}" "Tool 'dotnet-watch' \(version '2.2.0'\) was successfully installed."
   # DOTNET_RM_SRC=true
   # The application folder contains a file and folder that starts with a '.', we verify that *all* files are removed.
   assert_contains "${s2i_build}" "Removing sources..."
-  assert_contains "${src_folder_content}" "."$'\n'".."
+  assert_not_contains "${src_folder_content}" "[^.]"
 }
 
 test_config_2() {
@@ -355,16 +355,16 @@ test_config_2() {
   ## Environment
   assert_contains "${s2i_build}" "Environment:"
   assert_contains "${s2i_build}" "DOTNET_VERBOSITY=detailed"
-  # DOTNET_RESTORE_DISABLE_PARALLEL=true                                                                                                                                     
+  # DOTNET_RESTORE_DISABLE_PARALLEL=true
   assert_contains "${s2i_build}" "Running non-parallel restore"
   ## Test project restore
-  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/test/test1/test1.csproj" on node 1 (Restore target(s)).'
+  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/test/test1/test1.csproj" on node 1 \(Restore target\(s\)\).'
   ## Test project test
-  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/test/test1/test1.csproj" on node 1 (VSTest target(s)).'
+  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/test/test1/test1.csproj" on node 1 \(VSTest target\(s\)\).'
   ## App project restore
-  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 (Restore target(s)).'
+  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Restore target\(s\)\).'
   ## App project publish
-  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 (Publish target(s)).'
+  assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Publish target\(s\)\).'
 }
 
 test_config() {
