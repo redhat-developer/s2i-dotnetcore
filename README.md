@@ -14,8 +14,8 @@ Versions
 * 1.0 (RHEL 7, CentOS 7)
 * 1.1 (RHEL 7)
 * [RETIRED] 2.0 (RHEL 7, CentOS 7)
-* 2.1 (RHEL 7)
-* 2.2 (RHEL 7)
+* 2.1 (RHEL 7, CentOS 7)
+* 2.2 (RHEL 7, CentOS 7)
 
 Building
 ----------------
