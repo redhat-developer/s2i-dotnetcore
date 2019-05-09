@@ -14,7 +14,7 @@ using standalone [S2I](https://github.com/openshift/source-to-image) and then ru
 resulting image with [Docker](http://docker.io) execute:
 
     ```
-    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=2.0/test/asp-net-hello-world dotnet/dotnet-20-rhel7 dotnet-sample-app
+    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=2.0/build/test/asp-net-hello-world dotnet/dotnet-20-rhel7 dotnet-sample-app
     $ sudo docker run -p 8080:8080 dotnet-sample-app
     ```
 
