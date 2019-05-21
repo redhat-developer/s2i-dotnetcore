@@ -35,7 +35,7 @@ elif [ "$IMAGE_OS" = "RHEL8" ]; then
   dotnet_version_suffix="8"
 else
   dotnet_version_series="2.1"
-  dotnet_version_suffix="10"
+  dotnet_version_suffix="11"
 fi
 dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
 
