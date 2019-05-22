@@ -39,9 +39,9 @@ aspnet_latest_all_version=2.1.11
 npm_version=5.6.0
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
-sdk_version=2.1.503
-aspnet_latest_app_version=2.1.7
-aspnet_latest_all_version=2.1.7
+sdk_version=2.1.505
+aspnet_latest_app_version=2.1.9
+aspnet_latest_all_version=2.1.9
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
 sdk_version=2.1.504
