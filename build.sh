@@ -88,7 +88,7 @@ if [ -z ${IMAGE_OS+x} ]; then
   # Default to CentOS when not on RHEL.
   if [[ `grep "Red Hat Enterprise Linux Server release 7" /etc/redhat-release` ]]; then
     export IMAGE_OS="RHEL7"
-  elif [[ `grep "Red Hat Enterprise Linux Server release 8" /etc/redhat-release` ]]; then
+  elif [[ `grep "Red Hat Enterprise Linux release 8" /etc/redhat-release` ]]; then
     export IMAGE_OS="RHEL8"
   else
     export IMAGE_OS="CENTOS"
