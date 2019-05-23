@@ -35,9 +35,9 @@ aspnet_latest_app_version=2.1.10
 aspnet_latest_all_version=2.1.10
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
-sdk_version=2.1.503
-aspnet_latest_app_version=2.1.7
-aspnet_latest_all_version=2.1.7
+sdk_version=2.1.505
+aspnet_latest_app_version=2.1.9
+aspnet_latest_all_version=2.1.9
 else
 # sdk version supported on RHEL
 sdk_version=2.1.506
@@ -97,7 +97,7 @@ test_s2i_sdk_version()
 }
 
 test_s2i_usage() {
-  local output=$(s2i usage ${IMAGE_NAME} 2>&1)
+  local output=$(s2i_usage ${IMAGE_NAME} 2>&1)
 
   # s2i usage refers to the sample app
   assert_contains "$output" "${sample_app_url}"
@@ -391,7 +391,7 @@ test_split_build() {
   # extract app.tar.gz from build
   local image=$(s2i_build ${app})
   local container=$(docker create ${image})
-  docker cp ${container}:/opt/app-root/app.tar.gz .
+  docker cp ${container}:/opt/app-root/app.tar.gz app.tar.gz
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
@@ -433,7 +433,7 @@ test_imagestream_sample() {
   # build image
   local image=$(s2i_image_tag sample)
   docker_rmi ${tag}
-  local s2i_build=$(s2i build --pull-policy=always --context-dir=app --ref=dotnetcore-2.1 https://github.com/redhat-developer/s2i-dotnetcore-ex.git ${IMAGE_NAME} ${image} 2>&1)
+  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnetcore-2.1 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -629,18 +629,19 @@ test_incremental()
   # perform a first build, with the incremental flag
   local image=$(s2i_image_tag ${app})
   docker_rmi ${image}
-  local s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
+  local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=true)
+
   # verify packages are installed
   assert_contains "${s2i_build}" "Installing System"
   # verify the build completes succesfully
-  assert_contains "${s2i_build}" "Build completed successfully"
+  assert_completed_build ${image} "${s2i_build}"
 
   # perform a second build, with the incremental flag
   s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
   # verify NO other packages are installed
   assert_not_contains "${s2i_build}" "Installing System"
   # verify the build completes succesfully
-  assert_contains "${s2i_build}" "Build completed successfully"
+  assert_completed_build ${image} "${s2i_build}"
 
   # cleanup
   docker_rmi ${image}
@@ -659,14 +660,14 @@ test_incremental_without_packages()
   # verify packages are installed
   assert_contains "${s2i_build}" "Installing System"
   # verify the build completes succesfully
-  assert_contains "${s2i_build}" "Build completed successfully"
+  assert_completed_build ${image} "${s2i_build}"
 
   # perform a second build, with the incremental flag
   s2i_build=$(s2i_build_output_log ${app} ${image} --incremental)
   # verify NO incremental packages are installed
   assert_not_contains "${s2i_build}" "Installing artifacts from incremental build"
   # verify the build completes succesfully
-  assert_contains "${s2i_build}" "Build completed successfully"
+  assert_completed_build ${image} "${s2i_build}"
 
   # cleanup
   docker_rmi ${image}
@@ -687,10 +688,14 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_vb
   test_published_files
   test_aspnetapp
-  test_devmode
-  test_split_build
+  if [ -z "$USING_PODMAN" ]; then
+    test_devmode
+    test_split_build
+  fi
   test_templates
-  test_user
+  if [ -z "$USING_PODMAN" ]; then
+    test_user
+  fi
   test_certificates
   test_binary
   test_incremental

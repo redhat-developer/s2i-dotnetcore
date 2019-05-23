@@ -27,6 +27,9 @@ source ${test_dir}/testcommon
 
 dotnet_version_series="2.1"
 dotnet_version_suffix="10"
+if [ "$IMAGE_OS" = "CENTOS" ]; then
+dotnet_version_suffix=9
+fi
 dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
 
 test_dotnet() {
@@ -151,7 +154,7 @@ EOF
 test_s2i_usage() {
   test_start
 
-  local output=$(s2i usage ${IMAGE_NAME} 2>&1)
+  local output=$(s2i_usage ${IMAGE_NAME} 2>&1)
 
   # s2i usage describes this is for pre-compiled applications
   assert_contains "$output" "image for pre-compiled application"
@@ -185,7 +188,9 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_default_cmd
   test_data_folder
   test_debuggable
-  test_user
+  if [ -z "$USING_PODMAN" ]; then
+    test_user
+  fi
   test_port
   test_aspnet
   test_s2i_usage

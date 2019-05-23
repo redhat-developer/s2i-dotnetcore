@@ -4,20 +4,46 @@
 
 TEST_PORT=${TEST_PORT:-8080}
 CURLE_COULNDT_CONNECT=7
+CURLE_RECV_ERROR=56
 
+# Keep 'set +x' and log messages separate from stdout/err.
+exec 3>&1
 if [ "$DEBUG" != "" ]; then
+  BASH_XTRACEFD=3
   set -x
 fi
 
 info() {
-  echo -e "\e[1m[INFO] $@\e[0m"
+  echo -e "\e[1m[INFO] $@\e[0m" >&3
 }
 
 error() {
-  echo -e "[ERROR] $@" >&2
+  echo -e "[ERROR] $@" >&3
   # print stacktrace
-  i=0; while caller $i >&2 ;do ((i++)) ;done
+  i=0; while caller $i >&3 ;do ((i++)) ;done
 }
+
+_S2I_PATH=$(command -v s2i)
+if [ -z "$_S2I_PATH" ]; then
+  error "s2i is not on PATH. Please install s2i or download it from https://github.com/openshift/source-to-image."
+  exit 1
+fi
+
+_PODMAN_PATH=$(command -v podman)
+DOCKER_COMMAND=$(command -v docker)
+if [ "$DOCKER_COMMAND" -a ! "$DOCKER_COMMAND" == alias* ]; then
+  info "Using docker"
+  USING_PODMAN=""
+elif [ "$_PODMAN_PATH" ]; then
+  info "Using podman"
+  docker() {
+    $_PODMAN_PATH "$@"
+  }
+  USING_PODMAN=y
+else
+  error "docker/podman are not on PATH. Please install podman or docker."
+  exit 1
+fi
 
 assert_contains() {
   local actual="$1"
@@ -34,8 +60,8 @@ assert_contains_multiline() {
   local expected=$(echo "$2" | tr -d '\r' | tr '\n' ' ')
 
   assert_contains "${actual}" "${expected}"
-
 }
+
 assert_not_contains() {
   local actual="$1"
   local unexpected="$2"
@@ -53,6 +79,17 @@ assert_equal() {
   if ! [ "$actual" == "$expected" ]; then
     error "'${actual}' does not equal '${expected}'"
     exit 1
+  fi
+}
+
+assert_completed_build() {
+  local image="$1"
+  local log="$2"
+
+  if [ "$USING_PODMAN" ]; then
+    assert_contains "${log}" "COMMIT ${image}"
+  else
+    assert_contains "${log}" "Build completed successfully"
   fi
 }
 
@@ -138,12 +175,13 @@ docker_get_exposedports() {
 docker_build() {
   local path="$1"
   local output;
-  output=$(docker build -q $path  2>&1)
+  local id=$(cat /proc/sys/kernel/random/uuid)
+  output=$(docker build -t $id $path  2>&1)
   if [ $? -ne 0 ]; then
     error "$output"
     echo "no-image"
   else
-    echo "$output"
+    echo "$id"
   fi
 }
 
@@ -184,10 +222,10 @@ curl_retry() {
   local output
   local attempt=1
   local rv=$CURLE_COULNDT_CONNECT
-  while [ $rv -eq $CURLE_COULNDT_CONNECT -a $attempt -le $max_attempts ]; do
+  while [ $rv -ne 0 -a $attempt -le $max_attempts ]; do
     output=$(curl -sS "$url" 2>&1)
     rv=$?
-    if [ $rv -eq $CURLE_COULNDT_CONNECT ]; then
+    if [ $rv -eq $CURLE_COULNDT_CONNECT -o $rv -eq $CURLE_RECV_ERROR ]; then
       sleep 1
     fi
     attempt=$(( $attempt + 1 ))
@@ -201,20 +239,49 @@ curl_retry() {
 
 container_url() {
   local container="$1"
-
   local output;
   output=$(docker inspect --format="{{ .NetworkSettings.IPAddress }}" "${container}")
   if [ $? -ne 0 ]; then
     error "$output"
     echo "no-url"
   else
-    echo "http://$output:8080"
+    if [ "$USING_PODMAN" ]; then
+      echo "http://localhost:8080"
+    else
+      echo "http://$output:8080"
+   fi
   fi
 }
 
 s2i_image_tag() {
   local app="$1"
   echo "${IMAGE_NAME}-${app}"
+}
+
+s2i_build_core() {
+  local tag="$1"
+  local pull_policy="$2"
+  shift 2
+
+  if [ "$USING_PODMAN" ]; then
+    local pull_arg
+    if [ "$pull_policy" == "--pull-policy=never" ]; then
+      pull_arg="--pull=false"
+    elif [ "$pull_policy" == "--pull-policy=always" ]; then
+      pull_arg="--pull-always"
+    else
+      error "Unsupported pull_policy: $pull_policy"
+      exit 1
+    fi
+
+    build_folder=/tmp/s2i-dotnet/${tag}
+    rm -rf "$build_folder"
+    s2i build --as-dockerfile "$build_folder/Dockerfile" "$@" ${IMAGE_NAME} "${tag}" 2>&1
+    docker build $pull_arg --no-cache --security-opt label=disable -t "${tag}" "$build_folder" 2>&1
+    rm -rf "$build_folder"
+  else
+    s2i build $pull_policy "$@" ${IMAGE_NAME} ${tag} 2>&1
+  fi
 }
 
 s2i_build_output_log() {
@@ -225,7 +292,8 @@ s2i_build_output_log() {
   if [[ "$@" != *"--incremental"* ]]; then
     docker_rmi ${tag}
   fi
-  s2i build --pull-policy=never "$@" "file://${test_dir}/${app}" ${IMAGE_NAME} ${tag} 2>&1
+
+  s2i_build_core ${tag} --pull-policy=never "$@" "file://${test_dir}/${app}"
 }
 
 s2i_build() {
@@ -240,5 +308,14 @@ s2i_build() {
     echo "no-image"
   else
     echo "$tag"
+  fi
+}
+
+s2i_usage() {
+  local image="$1"
+  if [ "$USING_PODMAN" ]; then
+    docker run --rm $image bash -c /usr/libexec/s2i/usage
+  else
+    s2i usage $image
   fi
 }
