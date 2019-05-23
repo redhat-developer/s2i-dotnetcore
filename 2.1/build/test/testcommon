@@ -30,8 +30,8 @@ if [ -z "$_S2I_PATH" ]; then
 fi
 
 _PODMAN_PATH=$(command -v podman)
-DOCKER_COMMAND=$(command -v docker)
-if [ "$DOCKER_COMMAND" -a ! "$DOCKER_COMMAND" == alias* ]; then
+_DOCKER_COMMAND=$(command -v docker)
+if [ "$_DOCKER_COMMAND" ]; then
   info "Using docker"
   USING_PODMAN=""
 elif [ "$_PODMAN_PATH" ]; then
