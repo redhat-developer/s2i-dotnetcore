@@ -44,9 +44,9 @@ aspnet_latest_app_version=2.1.9
 aspnet_latest_all_version=2.1.9
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=2.1.504
-aspnet_latest_app_version=2.1.8
-aspnet_latest_all_version=2.1.8
+sdk_version=2.1.507
+aspnet_latest_app_version=2.1.11
+aspnet_latest_all_version=2.1.11
 npm_version=6.4.1
 else
 # sdk version supported on RHEL
