@@ -26,7 +26,7 @@ LABEL io.k8s.description="Platform for running .NET Core 2.2 applications" \
 LABEL name="dotnet/dotnet-22-runtime-rhel7" \
       com.redhat.component="rh-dotnet22-runtime-container" \
       version="2.2" \
-      release="8" \
+      release="9" \
       architecture="x86_64"
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.

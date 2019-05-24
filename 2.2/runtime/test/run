@@ -25,8 +25,13 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version_series="2.2"
-dotnet_version_suffix="4"
+if [ "$IMAGE_OS" = "CENTOS" ]; then
+  dotnet_version_series="2.2"
+  dotnet_version_suffix="3"
+else
+  dotnet_version_series="2.2"
+  dotnet_version_suffix="5"
+fi
 dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
 
 test_dotnet() {
