@@ -227,13 +227,20 @@ test_user() {
   test_start
 
   local app=asp-net-hello-world
-  # user to run the app (100002) is different than user that built the app (1001).
-  local run_user=100002
+  # user to run the app (30002) is different than user that built the app (1001).
+  local run_user=30002
 
   # build image
   local image=$(s2i_build ${app})
   # get username
-  local username=$(docker_run_as ${image} ${run_user} whoami)
+  if [ "$USING_PODMAN" ]; then
+    # podman adds a user to /etc/passwd which, and generate_container_user adds another.
+    # because the podman user is first in the file, it is returned by 'whoami'.
+    # We verify a wrapped passwd file exists and that it contains the generate_container_user user.
+    local wrapped_passwd=$(docker_run_as $IMAGE_NAME $run_user cat /opt/app-root/etc/passwd)
+  else
+    local username=$(docker_run_as ${image} ${run_user} whoami)
+  fi
   # start container
   local container=$(docker_run_as_d ${image} ${run_user})
   local url=$(container_url ${container})
@@ -242,9 +249,13 @@ test_user() {
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
+  docker_rmi ${image}-as-${run_user} # image created on podman systems by docker_run_as_d
 
-  # user is default
-  assert_equal "${username}" "default"
+  if [ "$USING_PODMAN" ]; then
+    assert_contains "$wrapped_passwd" "default:x:$run_user:0:Default Application User:/opt/app-root:/sbin/nologin"
+  else
+    assert_equal "${username}" "default"
+  fi
   # app is working
   assert_equal "${response}" "Hello world"
 }
@@ -415,8 +426,8 @@ ADD app.tar.gz .
 EOF
   image=$(docker_build .)
 
-  # user to run the app (100002) is different than user that built the app (1001).
-  local run_user=100002
+  # user to run the app (30002) is different than user that built the app (1001).
+  local run_user=30002
   # start container
   local container=$(docker_run_as_d ${image} ${run_user})
   local url=$(container_url ${container})
@@ -425,6 +436,7 @@ EOF
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
+  docker_rmi $(podman_image_as_user_name "$image" "$run_user") # image created on podman systems by docker_run_as_d
 
   # app works
   assert_equal "${response}" "Hello world"
@@ -465,8 +477,8 @@ test_devmode_user() {
   # This application is configured (.s2i/environment):
   #   DEV_MODE=true, DOTNET_STARTUP_PROJECT=src/app
   local app=devmode-src
-  # user to run the app (100002) is different than user that built the app (1001).
-  local run_user=100002
+  # user to run the app (30002) is different than user that built the app (1001).
+  local run_user=30002
 
   # build image
   local image=$(s2i_build ${app})
@@ -478,6 +490,7 @@ test_devmode_user() {
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
+  docker_rmi $(podman_image_as_user_name "$image" "$run_user") # image created on podman systems by docker_run_as_d
 
   # Check app was launched succesfully after uploading sources.
   assert_equal "${response}" "Hello World!"
@@ -698,14 +711,10 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_vb
   test_published_files
   test_aspnetapp
-  if [ -z "$USING_PODMAN" ]; then
-    test_devmode
-    test_split_build
-  fi
+  test_devmode
+  test_split_build
   test_templates
-  if [ -z "$USING_PODMAN" ]; then
-    test_user
-  fi
+  test_user
   test_certificates
   test_binary
   test_incremental
