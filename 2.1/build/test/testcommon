@@ -30,11 +30,11 @@ if [ -z "$_S2I_PATH" ]; then
 fi
 
 _PODMAN_PATH=$(command -v podman)
-_DOCKER_COMMAND=$(command -v docker)
-if [ "$_DOCKER_COMMAND" ]; then
+_DOCKER_PATH=$(command -v docker)
+if [ -f "$_DOCKER_PATH" ]; then
   info "Using docker"
   USING_PODMAN=""
-elif [ "$_PODMAN_PATH" ]; then
+elif [ -f "$_PODMAN_PATH" ]; then
   info "Using podman"
   docker() {
     $_PODMAN_PATH "$@"
@@ -277,7 +277,7 @@ s2i_build_core() {
     build_folder=/tmp/s2i-dotnet/${tag}
     rm -rf "$build_folder"
     s2i build --as-dockerfile "$build_folder/Dockerfile" "$@" ${IMAGE_NAME} "${tag}" 2>&1
-    docker build $pull_arg --no-cache --security-opt label=disable -t "${tag}" "$build_folder" 2>&1
+    podman build $pull_arg --no-cache --security-opt label=disable -t "${tag}" "$build_folder" 2>&1
     rm -rf "$build_folder"
   else
     s2i build $pull_policy "$@" ${IMAGE_NAME} ${tag} 2>&1
@@ -314,7 +314,7 @@ s2i_build() {
 s2i_usage() {
   local image="$1"
   if [ "$USING_PODMAN" ]; then
-    docker run --rm $image bash -c /usr/libexec/s2i/usage
+    podman run --rm $image bash -c /usr/libexec/s2i/usage
   else
     s2i usage $image
   fi
