@@ -1,18 +1,18 @@
-FROM dotnet/dotnet-22-runtime-rhel7
-# This image provides a .NET Core 2.2 environment you can use to run your .NET
+FROM ubi8/dotnet-21-runtime
+# This image provides a .NET Core 2.1 environment you can use to run your .NET
 # applications.
 
-ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:${PATH} \
+ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:/opt/app-root/.dotnet/tools/:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
-LABEL io.k8s.description="Platform for building and running .NET Core 2.2 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet22"
+LABEL io.k8s.description="Platform for building and running .NET Core 2.1 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-21"
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-22-rhel7" \
-      com.redhat.component="rh-dotnet22-container" \
-      version="2.2" \
-      release="9" \
+LABEL name="ubi8/dotnet-21" \
+      com.redhat.component="dotnet-21-container" \
+      version="2.1" \
+      release="13" \
       architecture="x86_64"
 
 # Labels consumed by Eclipse JBoss OpenShift plugin
@@ -25,10 +25,8 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-RUN INSTALL_PKGS="rh-nodejs8-npm rh-nodejs8-nodejs-nodemon rh-dotnet22-dotnet-sdk-2.2 rsync" && \
-    yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
-      --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
-      $INSTALL_PKGS && \
+RUN INSTALL_PKGS="npm nodejs-nodemon dotnet-sdk-2.1 rsync procps-ng findutils" && \
+    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
 # yum cache files may still exist (and quite large in size)
@@ -44,12 +42,11 @@ WORKDIR /opt/app-root/src
 # the permissions on those too.
 RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
 
-ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs8" \
-# Needed for the `dotnet watch` to detect changes in a container.
-    DOTNET_USE_POLLING_FILE_WATCHER=true \
+# Needed for the `dotnet watch` to detect changes in a container
+ENV  DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_2=2.2.5 \
-    LatestPatchVersionForAspNetCoreAll2_2=2.2.5
+    LatestPatchVersionForAspNetCoreApp2_1=2.1.11 \
+    LatestPatchVersionForAspNetCoreAll2_1=2.1.11
 
 # Run container by default as user with id 1001 (default)
 USER 1001

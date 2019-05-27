@@ -14,7 +14,7 @@ Versions
 * 1.0 (RHEL 7, CentOS 7)
 * 1.1 (RHEL 7)
 * [RETIRED] 2.0 (RHEL 7, CentOS 7)
-* 2.1 (RHEL 7, CentOS 7)
+* 2.1 (RHEL 7, RHEL 8, CentOS 7)
 * 2.2 (RHEL 7, CentOS 7)
 
 Building
@@ -26,8 +26,11 @@ $ sudo VERSIONS=2.2 ./build.sh
 ```
 
 Note: to build RHEL 7 based images, you need to run the build on a
-properly subscribed RHEL machine. To build CentOS images on RHEL, set
-IMAGE_OS=CENTOS. On non-RHEL, building CentOS images is the default.
+properly subscribed RHEL 7 machine. On RHEL 8 systems, RHEL 8 images
+are built by default. On non-RHEL, building CentOS images is the default.
+
+To override the default basis of the image, set IMAGE_OS to the desired
+base system, such as IMAGE_OS=CENTOS or IMAGE_OS=RHEL8.
 
 Installing
 ----------------

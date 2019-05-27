@@ -16,8 +16,8 @@
 #
 # IMAGE_OS        The base os image to use when building
 #                 the containers.
-#                 Options are CENTOS and RHEL.
-#                 Defaults to RHEL on a rhel system,
+#                 Options are CENTOS, RHEL7, and RHEL8.
+#                 Defaults to RHEL7/8 on a rhel system,
 #                 otherwise defaults to CENTOS.
 #
 # TEST_PORT       specifies the port on the docker host
@@ -93,8 +93,10 @@ test_images() {
 
 if [ -z ${IMAGE_OS+x} ]; then
   # Default to CentOS when not on RHEL.
-  if [[ `grep "Red Hat Enterprise Linux" /etc/redhat-release` ]]; then
-    export IMAGE_OS="RHEL"
+  if [[ `grep "Red Hat Enterprise Linux Server release 7" /etc/redhat-release` ]]; then
+    export IMAGE_OS="RHEL7"
+  elif [[ `grep "Red Hat Enterprise Linux release 8" /etc/redhat-release` ]]; then
+    export IMAGE_OS="RHEL8"
   else
     export IMAGE_OS="CENTOS"
   fi
@@ -102,19 +104,23 @@ fi
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
   VERSIONS="${VERSIONS:-1.0 2.1 2.2}"
-  image_os="centos7"
+  image_postfix="-centos7"
   image_prefix="dotnet"
   docker_filename="Dockerfile"
+elif [ "$IMAGE_OS" = "RHEL8" ]; then
+  VERSIONS="${VERSIONS:-2.1}"
+  image_prefix="ubi8"
+  docker_filename="Dockerfile.rhel8"
 else
   VERSIONS="${VERSIONS:-1.0 1.1 2.1 2.2}"
-  image_os="rhel7"
+  image_postfix="-rhel7"
   image_prefix="dotnet"
   docker_filename="Dockerfile.rhel7"
 fi
 
 for v in ${VERSIONS}; do
   if [ "$v" == "1.0" ] || [ "$v" == "1.1" ]; then
-    build_name="${image_prefix}/$(base_image_name ${v})-${image_os}"
+    build_name="${image_prefix}/$(base_image_name ${v})${image_postfix}"
 
     # Build the build image
     build_image "${v}" "${docker_filename}" "${build_name}"
@@ -129,8 +135,8 @@ for v in ${VERSIONS}; do
       popd &>/dev/null
     fi
   else
-    build_name="${image_prefix}/$(base_image_name ${v})-${image_os}"
-    runtime_name="${image_prefix}/$(base_image_name ${v})-runtime-${image_os}"
+    build_name="${image_prefix}/$(base_image_name ${v})${image_postfix}"
+    runtime_name="${image_prefix}/$(base_image_name ${v})-runtime${image_postfix}"
 
     # Build the runtime image
     build_image "${v}/runtime" "${docker_filename}" "${runtime_name}"
