@@ -31,7 +31,7 @@ fi
 
 _PODMAN_PATH=$(command -v podman)
 _DOCKER_PATH=$(command -v docker)
-if [ -f "$_DOCKER_PATH" ]; then
+if [ -f "$_DOCKER_PATH" ] && [[ "$(docker --version)" != *podman* ]]; then
   info "Using docker"
   USING_PODMAN=""
 elif [ -f "$_PODMAN_PATH" ]; then
