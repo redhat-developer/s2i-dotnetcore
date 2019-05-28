@@ -136,7 +136,7 @@ _podman_build_image_as_user()
 
   build_folder=/tmp/s2i-dotnet/${image_as_user}
   rm -rf "$build_folder"
-  mkdir "$build_folder"
+  mkdir -p "$build_folder"
   cat >"$build_folder/Dockerfile" <<EOF
 FROM ${image}
 USER ${user}
