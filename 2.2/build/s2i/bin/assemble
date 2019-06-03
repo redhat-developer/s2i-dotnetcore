@@ -76,7 +76,7 @@ else
       fi
       echo "You can specify the startup project by adding an '.s2i/environment' file to the source repository."
       # find all projects and strip leading './'
-      PROJFILES=(`find -name "*.??proj" | sed "s|^\./||"`)
+      PROJFILES=(`find -name "*.??proj" | sed "s|^\./||" | sort`)
       if [ ${#PROJFILES[@]} -eq 0 ]; then
         echo "The source repository has no project files."
       else
