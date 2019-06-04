@@ -187,7 +187,7 @@ docker_run_as_d() {
   if [ "$USING_PODMAN" ]; then
     local image_as_user=$(_podman_build_image_as_user "$image" "$user")
 
-    output=$(podman run -d --net=host -p ${TEST_PORT}:8080 ${image_as_user} 2>&1)
+    output=$(podman run -d -p ${TEST_PORT}:8080 ${image_as_user} 2>&1)
     run_rv=$?
   else
     output=$(docker run --user="${user}" -d -p ${TEST_PORT}:8080 ${image} 2>&1)
@@ -204,14 +204,7 @@ docker_run_as_d() {
 docker_run_d() {
   local image="$1"
   local output;
-  local run_rv;
-  if [ "$USING_PODMAN" ]; then
-    output=$(podman run -d --net=host -p ${TEST_PORT}:8080 ${image} 2>&1)
-    run_rv=$?
-  else
-    output=$(docker run -d -p ${TEST_PORT}:8080 ${image} 2>&1)
-    run_rv=$?
-  fi
+  output=$(docker run -d -p ${TEST_PORT}:8080 ${image} 2>&1)
   if [ $? -ne 0 ]; then
     error "$output"
     echo "no-container"
