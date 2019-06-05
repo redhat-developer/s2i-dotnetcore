@@ -118,41 +118,6 @@ docker_run_withargs() {
   fi
 }
 
-podman_image_as_user_name()
-{
-  local base="$1"
-  local user="$2"
-
-  echo ${base}-as-${user}
-}
-
-_podman_build_image_as_user()
-{
-  local base="$1"
-  local user="$2"
-
-  local image_as_user=$(podman_image_as_user_name "$base" "$user")
-  docker_rmi ${image_as_user}
-
-  build_folder=/tmp/s2i-dotnet/${image_as_user}
-  rm -rf "$build_folder"
-  mkdir -p "$build_folder"
-  cat >"$build_folder/Dockerfile" <<EOF
-FROM ${image}
-USER ${user}
-EOF
-  build=$(podman build --pull=false --no-cache --security-opt label=disable -t "${image_as_user}" "$build_folder" 2>&1)
-  rv=$?
-  rm -rf "$build_folder"
-
-  if [ $rv -ne 0 ]; then
-    error "$build"
-    echo "no-image"
-  else
-    echo "$image_as_user"
-  fi
-}
-
 docker_run_as() {
   local image="$1"
   local user="$2"
@@ -160,17 +125,8 @@ docker_run_as() {
 
   local output;
   local run_rv;
-  if [ "$USING_PODMAN" ]; then
-    local image_as_user=$(_podman_build_image_as_user "$image" "$user")
-
-    output=$(podman run --rm ${image_as_user} "$@" 2>&1)
-    run_rv=$?
-
-    docker_rmi "${image_as_user}"
-  else
-    output=$(docker run --rm --user="${user}" ${image} "$@" 2>&1)
-    run_rv=$?
-  fi
+  output=$(docker run --rm --user="${user}" ${image} "$@" 2>&1)
+  run_rv=$?
   if [ $run_rv -ne 0 ]; then
     error "$output"
   else
@@ -184,15 +140,8 @@ docker_run_as_d() {
 
   local output;
   local run_rv;
-  if [ "$USING_PODMAN" ]; then
-    local image_as_user=$(_podman_build_image_as_user "$image" "$user")
-
-    output=$(podman run -d -p ${TEST_PORT}:8080 ${image_as_user} 2>&1)
-    run_rv=$?
-  else
-    output=$(docker run --user="${user}" -d -p ${TEST_PORT}:8080 ${image} 2>&1)
-    run_rv=$?
-  fi
+  output=$(docker run --user="${user}" -d -p ${TEST_PORT}:8080 ${image} 2>&1)
+  run_rv=$?
   if [ $run_rv -ne 0 ]; then
     error "$output"
     echo "no-container"

@@ -436,7 +436,6 @@ EOF
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
-  docker_rmi $(podman_image_as_user_name "$image" "$run_user") # image created on podman systems by docker_run_as_d
 
   # app works
   assert_equal "${response}" "Hello world"
@@ -490,7 +489,6 @@ test_devmode_user() {
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
-  docker_rmi $(podman_image_as_user_name "$image" "$run_user") # image created on podman systems by docker_run_as_d
 
   # Check app was launched succesfully after uploading sources.
   assert_equal "${response}" "Hello World!"
