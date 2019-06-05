@@ -124,10 +124,8 @@ docker_run_as() {
   shift 2
 
   local output;
-  local run_rv;
   output=$(docker run --rm --user="${user}" ${image} "$@" 2>&1)
-  run_rv=$?
-  if [ $run_rv -ne 0 ]; then
+  if [ $? -ne 0 ]; then
     error "$output"
   else
     echo "$output"
@@ -139,10 +137,8 @@ docker_run_as_d() {
   local user="$2"
 
   local output;
-  local run_rv;
   output=$(docker run --user="${user}" -d -p ${TEST_PORT}:8080 ${image} 2>&1)
-  run_rv=$?
-  if [ $run_rv -ne 0 ]; then
+  if [ $? -ne 0 ]; then
     error "$output"
     echo "no-container"
   else
@@ -179,6 +175,7 @@ docker_get_exposedports() {
 docker_build() {
   local path="$1"
   local output;
+  # unique id to work around podman issue https://github.com/containers/libpod/issues/3191
   local id=$(cat /proc/sys/kernel/random/uuid)
   output=$(docker build --no-cache -t $id $path  2>&1)
   if [ $? -ne 0 ]; then
