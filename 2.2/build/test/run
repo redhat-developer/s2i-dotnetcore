@@ -98,7 +98,7 @@ test_s2i_sdk_version()
 }
 
 test_s2i_usage() {
-  local output=$(s2i usage ${IMAGE_NAME} 2>&1)
+  local output=$(s2i_usage ${IMAGE_NAME} 2>&1)
 
   # s2i usage refers to the sample app
   assert_contains "$output" "${sample_app_url}"
@@ -218,13 +218,20 @@ test_user() {
   test_start
 
   local app=asp-net-hello-world
-  # user to run the app (100002) is different than user that built the app (1001).
-  local run_user=100002
+  # user to run the app (30002) is different than user that built the app (1001).
+  local run_user=30002
 
   # build image
   local image=$(s2i_build ${app})
   # get username
-  local username=$(docker_run_as ${image} ${run_user} whoami)
+  if [ "$USING_PODMAN" ]; then
+    # podman adds a user to /etc/passwd which, and generate_container_user adds another.
+    # because the podman user is first in the file, it is returned by 'whoami'.
+    # We verify a wrapped passwd file exists and that it contains the generate_container_user user.
+    local wrapped_passwd=$(docker_run_as $IMAGE_NAME $run_user cat /opt/app-root/etc/passwd)
+  else
+    local username=$(docker_run_as ${image} ${run_user} whoami)
+  fi
   # start container
   local container=$(docker_run_as_d ${image} ${run_user})
   local url=$(container_url ${container})
@@ -233,9 +240,13 @@ test_user() {
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
+  docker_rmi ${image}-as-${run_user} # image created on podman systems by docker_run_as_d
 
-  # user is default
-  assert_equal "${username}" "default"
+  if [ "$USING_PODMAN" ]; then
+    assert_contains "$wrapped_passwd" "default:x:$run_user:0:Default Application User:/opt/app-root:/sbin/nologin"
+  else
+    assert_equal "${username}" "default"
+  fi
   # app is working
   assert_equal "${response}" "Hello world"
 }
@@ -392,7 +403,7 @@ test_split_build() {
   # extract app.tar.gz from build
   local image=$(s2i_build ${app})
   local container=$(docker create ${image})
-  docker cp ${container}:/opt/app-root/app.tar.gz .
+  docker cp ${container}:/opt/app-root/app.tar.gz app.tar.gz
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
@@ -406,8 +417,8 @@ ADD app.tar.gz .
 EOF
   image=$(docker_build .)
 
-  # user to run the app (100002) is different than user that built the app (1001).
-  local run_user=100002
+  # user to run the app (30002) is different than user that built the app (1001).
+  local run_user=30002
   # start container
   local container=$(docker_run_as_d ${image} ${run_user})
   local url=$(container_url ${container})
@@ -434,7 +445,7 @@ test_imagestream_sample() {
   # build image
   local image=$(s2i_image_tag sample)
   docker_rmi ${tag}
-  local s2i_build=$(s2i build --pull-policy=always --context-dir=app --ref=dotnetcore-2.2 https://github.com/redhat-developer/s2i-dotnetcore-ex.git ${IMAGE_NAME} ${image} 2>&1)
+  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnetcore-2.2 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -456,8 +467,8 @@ test_devmode_user() {
   # This application is configured (.s2i/environment):
   #   DEV_MODE=true, DOTNET_STARTUP_PROJECT=src/app
   local app=devmode-src
-  # user to run the app (100002) is different than user that built the app (1001).
-  local run_user=100002
+  # user to run the app (30002) is different than user that built the app (1001).
+  local run_user=30002
 
   # build image
   local image=$(s2i_build ${app})
@@ -585,7 +596,7 @@ test_aspnet_implicit_using_latest()
 
   # verify aspnet_latest_{app,all}_version have the correct values.
   # If this fails, the variables in the test and environment variables in the Dockerfiles must be updated.
-  if [ "$BUILD_CENTOS" != "true" ]; then
+  if [ "$IMAGE_OS" != "CENTOS" ]; then
     info verifying aspnet_latest_{app,all}
 
     # build image
@@ -630,18 +641,19 @@ test_incremental()
   # perform a first build, with the incremental flag
   local image=$(s2i_image_tag ${app})
   docker_rmi ${image}
-  local s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
+  local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=true)
+
   # verify packages are installed
   assert_contains "${s2i_build}" "Installing System"
   # verify the build completes succesfully
-  assert_contains "${s2i_build}" "Build completed successfully"
+  assert_completed_build ${image} "${s2i_build}"
 
   # perform a second build, with the incremental flag
   s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
   # verify NO other packages are installed
   assert_not_contains "${s2i_build}" "Installing System"
   # verify the build completes succesfully
-  assert_contains "${s2i_build}" "Build completed successfully"
+  assert_completed_build ${image} "${s2i_build}"
 
   # cleanup
   docker_rmi ${image}
@@ -660,14 +672,14 @@ test_incremental_without_packages()
   # verify packages are installed
   assert_contains "${s2i_build}" "Installing System"
   # verify the build completes succesfully
-  assert_contains "${s2i_build}" "Build completed successfully"
+  assert_completed_build ${image} "${s2i_build}"
 
   # perform a second build, with the incremental flag
   s2i_build=$(s2i_build_output_log ${app} ${image} --incremental)
   # verify NO incremental packages are installed
   assert_not_contains "${s2i_build}" "Installing artifacts from incremental build"
   # verify the build completes succesfully
-  assert_contains "${s2i_build}" "Build completed successfully"
+  assert_completed_build ${image} "${s2i_build}"
 
   # cleanup
   docker_rmi ${image}

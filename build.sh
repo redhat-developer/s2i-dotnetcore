@@ -35,6 +35,13 @@ if [ "${DEBUG}" == "true" ]; then
   set -x
 fi
 
+# Use podman instead of docker when available.
+if command -v podman >/dev/null; then
+  docker() {
+    podman "$@"
+  }
+fi
+
 base_image_name() {
   local version=$1
   local v_no_dot=$(echo ${version} | sed 's/\.//g')
