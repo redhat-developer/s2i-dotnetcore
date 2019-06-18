@@ -1,0 +1,90 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "metadata": {},
+    "items": [
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "aspnet-2.1",
+                "annotations": {
+                    "description": "Builds the aspnet:2.1 image"
+                }
+            },
+            "spec": {
+                "source": {
+                    "dockerfile": "FROM dotnet:2.1\nRUN bash -c 'dotnet new web -o /tmp/tmpfolder' &&  rm -rf /tmp/tmpfolder"
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "name": "dotnet:2.1"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "aspnet:2.1"
+                    }
+                },
+                "triggers": [
+                    {
+                        "type": "ImageChange"
+                    },
+                    {
+                        "type": "ConfigChange"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "aspnet-2.2",
+                "annotations": {
+                    "description": "Builds the aspnet:2.2 image"
+                }
+            },
+            "spec": {
+                "source": {
+                    "dockerfile": "FROM dotnet:2.2\nRUN bash -c 'dotnet new web -o /tmp/tmpfolder' &&  rm -rf /tmp/tmpfolder"
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "name": "dotnet:2.2"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "aspnet:2.2"
+                    }
+                },
+                "triggers": [
+                    {
+                        "type": "ImageChange"
+                    },
+                    {
+                        "type": "ConfigChange"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "aspnet"
+            }
+        }
+    ]
+}
