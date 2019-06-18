@@ -26,7 +26,7 @@ USER 0
 COPY ./s2i/bin/ /usr/libexec/s2i
 
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
-    INSTALL_PKGS="rh-nodejs8-npm rh-nodejs8-nodejs-nodemon rh-dotnet21-dotnet-sdk-2.1 rsync" && \
+    INSTALL_PKGS="rh-nodejs10-npm rh-nodejs10-nodejs-nodemon rh-dotnet21-dotnet-sdk-2.1 rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
@@ -43,7 +43,7 @@ WORKDIR /opt/app-root/src
 # the permissions on those too.
 RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
 
-ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs8" \
+ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs10" \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
