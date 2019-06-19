@@ -124,12 +124,12 @@ The dotnet-pgsql-persistent creates a .NET Core service with a PostgreSQL backen
 variables of the s2i-dotnetcore builder and variables to setup the database. The database connection information is passed to the
 .NET application via the `ConnectionString` environment variable.
 
+**aspnet-2.x.json**
+
+Provides `aspnet:2.1` and `aspnet:2.2` image streams that are built on top of `dotnet:2.1` and `dotnet:2.2` using a `Docker` strategy and include
+ASP.NET Core NuGet packages. Using these streams results in improved build speed, because the NuGet packages no longer need to be downloaded.
+
 **community/dotnet-baget.json**
 
 Provides templates for deploying a persistent, or ephemeral NuGet Server on OpenShift. These templates use BaGet,
 an open-source NuGet server implementation. Source code for BaGet can be found at: https://github.com/loic-sharma/BaGet.git.
-
-**community/aspnet-2.x.json**
-
-Provides `aspnet:2.1` and `aspnet:2.2` image streams that are built on top of `dotnet:2.1` and `dotnet:2.2` using a `Docker` strategy and include
-ASP.NET Core NuGet packages. Using these streams results in improved build speed, because the NuGet packages no longer need to be downloaded.
