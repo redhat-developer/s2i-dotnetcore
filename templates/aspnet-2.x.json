@@ -14,7 +14,7 @@
             },
             "spec": {
                 "source": {
-                    "dockerfile": "FROM dotnet:2.1\nRUN bash -c 'dotnet new web -o /tmp/tmpfolder && fix-permissions /opt/app-root' &&  rm -rf /tmp/tmpfolder"
+                    "dockerfile": "FROM dotnet:2.1\nRUN bash -c 'dotnet new web -o /tmp/tmpfolder && rm -rf /tmp/tmpfolder && fix-permissions /opt/app-root'"
                 },
                 "strategy": {
                     "type": "Docker",
@@ -52,7 +52,7 @@
             },
             "spec": {
                 "source": {
-                    "dockerfile": "FROM dotnet:2.2\nRUN bash -c 'dotnet new web -o /tmp/tmpfolder && fix-permissions /opt/app-root' &&  rm -rf /tmp/tmpfolder"
+                    "dockerfile": "FROM dotnet:2.2\nRUN bash -c 'dotnet new web -o /tmp/tmpfolder && rm -rf /tmp/tmpfolder && fix-permissions /opt/app-root'"
                 },
                 "strategy": {
                     "type": "Docker",
