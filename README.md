@@ -129,6 +129,18 @@ variables of the s2i-dotnetcore builder and variables to setup the database. The
 Provides `aspnet:2.1` and `aspnet:2.2` image streams that are built on top of `dotnet:2.1` and `dotnet:2.2` using a `Docker` strategy and include
 ASP.NET Core NuGet packages. Using these streams results in improved build speed, because the NuGet packages no longer need to be downloaded.
 
+You can add these imagestreams by running:
+```
+oc create -f https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/templates/aspnet-2.x.json
+```
+
+After the file is imported in OpenShift, OpenShift will build the `aspnet:2.1` and `aspnet:2.2` images. This will take a few minutes. Once that is
+complete, they can be used as replacements for the `dotnet:2.1` and `dotnet:2.2` image streams. For example:
+
+```
+oc new-app --name=myapp aspnet:2.2~https://github.com/redhat-developer/s2i-dotnetcore-ex#dotnetcore-2.2 --build-env DOTNET_STARTUP_PROJECT=app
+```
+
 **community/dotnet-baget.json**
 
 Provides templates for deploying a persistent, or ephemeral NuGet Server on OpenShift. These templates use BaGet,
