@@ -11,8 +11,8 @@ Versions
 
 .NET Core versions currently provided are:
 
-* 1.0 (RHEL 7, CentOS 7)
-* 1.1 (RHEL 7)
+* [RETIRED] 1.0 (RHEL 7, CentOS 7)
+* [RETIRED] 1.1 (RHEL 7)
 * [RETIRED] 2.0 (RHEL 7, CentOS 7)
 * 2.1 (RHEL 7, RHEL 8, CentOS 7)
 * 2.2 (RHEL 7, CentOS 7)
@@ -79,7 +79,7 @@ Image name structure
 2. Platform version (without dots)
 3. Base image: 'rhel7' or 'centos7'
 
-Examples: `dotnet/dotnetcore-10-rhel7`, `dotnet/dotnet-20-centos7`
+Examples: `dotnet/dotnetcore-10-rhel7`, `dotnet/dotnet-21-centos7`
 
 OpenShift Templates
 -------------------
