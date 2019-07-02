@@ -12,7 +12,7 @@
 #                 test application used in OpenShift
 #
 # VERSIONS        The list of versions to build/test.
-#                 Defaults to all versions. i.e "1.0 1.1".
+#                 Defaults to all versions. i.e "2.1 2.2".
 #
 # IMAGE_OS        The base os image to use when building
 #                 the containers.
@@ -28,7 +28,7 @@
 #
 # Usage:
 #       $ sudo ./build.sh
-#       $ sudo VERSIONS=1.0 ./build.sh
+#       $ sudo VERSIONS=2.1 ./build.sh
 #
 
 if [ "${DEBUG}" == "true" ]; then
@@ -45,11 +45,7 @@ fi
 base_image_name() {
   local version=$1
   local v_no_dot=$(echo ${version} | sed 's/\.//g')
-  if [[ "$version" == 1* ]]; then
-    echo "dotnetcore-${v_no_dot}";
-  else
-    echo "dotnet-${v_no_dot}";
-  fi
+  echo "dotnet-${v_no_dot}";
 }
 
 image_exists() {
@@ -103,7 +99,7 @@ if [ -z ${IMAGE_OS+x} ]; then
 fi
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  VERSIONS="${VERSIONS:-1.0 2.1 2.2}"
+  VERSIONS="${VERSIONS:-2.1 2.2}"
   image_postfix="-centos7"
   image_prefix="dotnet"
   docker_filename="Dockerfile"
@@ -112,53 +108,36 @@ elif [ "$IMAGE_OS" = "RHEL8" ]; then
   image_prefix="ubi8"
   docker_filename="Dockerfile.rhel8"
 else
-  VERSIONS="${VERSIONS:-1.0 1.1 2.1 2.2}"
+  VERSIONS="${VERSIONS:-2.1 2.2}"
   image_postfix="-rhel7"
   image_prefix="dotnet"
   docker_filename="Dockerfile.rhel7"
 fi
 
 for v in ${VERSIONS}; do
-  if [ "$v" == "1.0" ] || [ "$v" == "1.1" ]; then
-    build_name="${image_prefix}/$(base_image_name ${v})${image_postfix}"
+  build_name="${image_prefix}/$(base_image_name ${v})${image_postfix}"
+  runtime_name="${image_prefix}/$(base_image_name ${v})-runtime${image_postfix}"
 
-    # Build the build image
-    build_image "${v}" "${docker_filename}" "${build_name}"
-    test_images "${v}/test" "${build_name}"
+  # Build the runtime image
+  build_image "${v}/runtime" "${docker_filename}" "${runtime_name}"
+  test_images "${v}/runtime/test" "${runtime_name}"
 
-    if [ "$TEST_OPENSHIFT" = "true" ]; then
-      build_name="registry.access.redhat.com/${build_name}:latest"
-      pushd ${v} &>/dev/null
-        echo "Running OpenShift tests on image ${build_name} ..."
-        IMAGE_NAME="${build_name}" OPENSHIFT_ONLY=true ./test/run
-        check_result_msg $? "Tests for image ${build_name} FAILED!"
-      popd &>/dev/null
-    fi
-  else
-    build_name="${image_prefix}/$(base_image_name ${v})${image_postfix}"
-    runtime_name="${image_prefix}/$(base_image_name ${v})-runtime${image_postfix}"
+  # Build the build image
+  build_image "${v}/build" "${docker_filename}" "${build_name}"
+  test_images "${v}/build/test" "${build_name}" "${runtime_name}"
 
-    # Build the runtime image
-    build_image "${v}/runtime" "${docker_filename}" "${runtime_name}"
-    test_images "${v}/runtime/test" "${runtime_name}"
+  if [ "$TEST_OPENSHIFT" = "true" ]; then
+    build_name="registry.access.redhat.com/${build_name}:latest"
+    runtime_name="registry.access.redhat.com/${runtime_name}:latest"
+    pushd ${v} &>/dev/null
+      echo "Running OpenShift tests on image ${runtime_name} ..."
+      IMAGE_NAME="${runtime_name}" OPENSHIFT_ONLY=true ./runtime/test/run
+      check_result_msg $? "Tests for image ${runtime_name} FAILED!"
 
-    # Build the build image
-    build_image "${v}/build" "${docker_filename}" "${build_name}"
-    test_images "${v}/build/test" "${build_name}" "${runtime_name}"
-
-    if [ "$TEST_OPENSHIFT" = "true" ]; then
-      build_name="registry.access.redhat.com/${build_name}:latest"
-      runtime_name="registry.access.redhat.com/${runtime_name}:latest"
-      pushd ${v} &>/dev/null
-        echo "Running OpenShift tests on image ${runtime_name} ..."
-        IMAGE_NAME="${runtime_name}" OPENSHIFT_ONLY=true ./runtime/test/run
-        check_result_msg $? "Tests for image ${runtime_name} FAILED!"
-
-        echo "Running OpenShift tests on image ${build_name} ..."
-        IMAGE_NAME="${build_name}" RUNTIME_IMAGE_NAME="${runtime_name}" OPENSHIFT_ONLY=true ./build/test/run
-        check_result_msg $? "Tests for image ${build_name} FAILED!"
-      popd &>/dev/null
-    fi
+      echo "Running OpenShift tests on image ${build_name} ..."
+      IMAGE_NAME="${build_name}" RUNTIME_IMAGE_NAME="${runtime_name}" OPENSHIFT_ONLY=true ./build/test/run
+      check_result_msg $? "Tests for image ${build_name} FAILED!"
+    popd &>/dev/null
   fi
 done
 
