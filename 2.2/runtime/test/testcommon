@@ -331,4 +331,3 @@ s2i_usage() {
     s2i usage $image
   fi
 }
-
