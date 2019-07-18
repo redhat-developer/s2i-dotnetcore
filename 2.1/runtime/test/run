@@ -13,7 +13,13 @@
 # DEBUG environment variable, if not empty, makes 'run' to log every step
 # of testing.
 #
+# STOP_ON_ERROR determines if the tests should exit on encountering
+# the first error, or keep going and list all failed tests at the end.
+# Defaults to 'true', can be set to 'false'
+#
 # Example usage: $ sudo ./test/run
+
+STOP_ON_ERROR=${STOP_ON_ERROR:-true}
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-centos7}
@@ -208,6 +214,17 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_aspnet
   test_s2i_usage
   test_s2i_build
+fi
+
+if [ "$STOP_ON_ERROR" != "true" ]; then
+  failures=(${TEST_FAILURES})
+  if [ ${#failures[@]} -gt 0 ]; then
+    echo "[ERROR] Tests failed: ${#failures[@]}"
+    for item in ${failures[@]}; do
+      echo "  ${item}"
+    done
+    exit 1
+  fi
 fi
 
 info "All tests finished successfully."
