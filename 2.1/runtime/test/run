@@ -15,11 +15,13 @@
 #
 # Example usage: $ sudo ./test/run
 
+IMAGE_OS=${IMAGE_OS:-RHEL7}
+
 if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-centos7}
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
   IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-21-runtime}
-else
+elif [ "$IMAGE_OS" = "RHEL7" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-runtime-rhel7}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
@@ -27,17 +29,15 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
+dotnet_version_series=2.1
+
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  dotnet_version_series="2.1"
-  dotnet_version_suffix="9"
+dotnet_version=2.1.9
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-  dotnet_version_series="2.1"
-  dotnet_version_suffix="11"
-else
-  dotnet_version_series="2.1"
-  dotnet_version_suffix="11"
+dotnet_version=2.1.11
+elif [ "$IMAGE_OS" = "RHEL7" ]; then
+dotnet_version=2.1.11
 fi
-dotnet_version="${dotnet_version_series}.${dotnet_version_suffix}"
 
 test_dotnet() {
   test_start
