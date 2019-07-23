@@ -24,6 +24,9 @@
 #                 to bind to when creating containers
 #                 during the asp.net tests. Affects
 #                 tests only.
+#
+# FORCE           rebuild the containers even if they
+#                 already exist.
 # -----------------------------------------------------
 #
 # Usage:
@@ -34,6 +37,8 @@
 if [ "${DEBUG}" == "true" ]; then
   set -x
 fi
+
+FORCE=${FORCE:-false}
 
 # Use podman instead of docker when available.
 if command -v podman >/dev/null; then
@@ -65,14 +70,14 @@ build_image() {
   local path=$1
   local docker_filename=$2
   local name=$3
-  if ! image_exists ${name}; then
+  if $FORCE -o ! image_exists ${name}; then
     echo "Building Docker image ${name} ..."
     if [ ! -d "${path}" ]; then
       echo "No directory found at given location '${path}'. Skipping this image."
       return
     fi
     pushd ${path} &>/dev/null
-      docker build -f ${docker_filename} -t ${name} .
+      docker build --no-cache -f ${docker_filename} -t ${name} .
       check_result_msg $? "Building Docker image ${name} FAILED!"
     popd &>/dev/null
   fi

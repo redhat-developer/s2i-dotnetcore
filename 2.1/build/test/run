@@ -22,7 +22,11 @@
 #
 # Example usage: $ sudo ./test/run
 
+
 STOP_ON_ERROR=${STOP_ON_ERROR:-true}
+
+IMAGE_OS=${IMAGE_OS:-RHEL7}
+
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-centos7}
@@ -30,7 +34,7 @@ if [ "$IMAGE_OS" = "CENTOS" ]; then
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
   IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-21}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-ubi8/dotnet-21-runtime}
-else
+elif [ "$IMAGE_OS" = "RHEL7" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-21-rhel7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-21-runtime-rhel7}
 fi
@@ -39,10 +43,8 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-# Versions of Microsoft.AspNetCore.{All,App} packages that are known by latest RHEL sdk.
-aspnet_latest_app_version=2.1.11
-aspnet_latest_all_version=2.1.11
 npm_version=6.4.1
+
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
 sdk_version=2.1.505
@@ -53,10 +55,12 @@ elif [ "$IMAGE_OS" = "RHEL8" ]; then
 sdk_version=2.1.507
 aspnet_latest_app_version=2.1.11
 aspnet_latest_all_version=2.1.11
-npm_version=6.4.1
-else
-# sdk version supported on RHEL
+elif [ "$IMAGE_OS" = "RHEL7" ]; then
+# sdk version supported on RHEL7
 sdk_version=2.1.507
+aspnet_latest_app_version=2.1.11
+aspnet_latest_all_version=2.1.11
+npm_version=5.6.0
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"

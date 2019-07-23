@@ -22,12 +22,16 @@
 #
 # Example usage: $ sudo ./test/run
 
+
 STOP_ON_ERROR=${STOP_ON_ERROR:-true}
+
+IMAGE_OS=${IMAGE_OS:-RHEL7}
+
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-centos7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-22-runtime-centos7}
-else
+elif [ "$IMAGE_OS" = "RHEL7" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-rhel7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-22-runtime-rhel7}
 fi
@@ -36,18 +40,18 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-# Versions of Microsoft.AspNetCore.{All,App} packages that are known by latest RHEL sdk.
-# TODO: update latest patch versions below
-aspnet_latest_app_version=2.2.5
-aspnet_latest_all_version=2.2.5
+npm_version=6.4.1
+
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
 sdk_version=2.2.105
 aspnet_latest_app_version=2.2.3
 aspnet_latest_all_version=2.2.3
-else
-# sdk version supported on RHEL
+elif [ "$IMAGE_OS" = "RHEL7" ]; then
+# sdk version supported on RHEL7
 sdk_version=2.2.107
+aspnet_latest_app_version=2.2.5
+aspnet_latest_all_version=2.2.5
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -143,7 +147,7 @@ test_image() {
 
   # verify npm is available
   local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
-  assert_equal "${image_npm_version}" "6.4.1"
+  assert_equal "${image_npm_version}" "${npm_version}"
 }
 
 test_consoleapp() {
