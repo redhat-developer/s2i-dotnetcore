@@ -5,6 +5,7 @@
 TEST_PORT=${TEST_PORT:-8080}
 CURLE_COULNDT_CONNECT=7
 CURLE_RECV_ERROR=56
+TEST_FAILURES=""
 
 # Keep 'set +x' and log messages separate from stdout/err.
 exec 3>&1
@@ -21,6 +22,15 @@ error() {
   echo -e "[ERROR] $@" >&3
   # print stacktrace
   i=0; while caller $i >&3 ;do ((i++)) ;done
+}
+
+error_exit() {
+  local code=$1
+  if [ "$STOP_ON_ERROR" == "true" ]; then
+    exit $code
+  fi
+
+  TEST_FAILURES="${TEST_FAILURES} ${TEST_NAME}:${BASH_LINENO[1]}"
 }
 
 _S2I_PATH=$(command -v s2i)
@@ -51,7 +61,7 @@ assert_contains() {
 
   if ! echo "${actual}" | grep -qP "${expected}"; then
     error "'${actual}' does not contain '${expected}'"
-    exit 1
+    error_exit 1
   fi
 }
 
@@ -68,7 +78,7 @@ assert_not_contains() {
 
   if echo "${actual}" | grep -qP "${unexpected}"; then
     error "'${actual}' contains '${unexpected}'"
-    exit 1
+    error_exit 1
   fi
 }
 
@@ -78,7 +88,7 @@ assert_equal() {
 
   if ! [ "$actual" == "$expected" ]; then
     error "'${actual}' does not equal '${expected}'"
-    exit 1
+    error_exit 1
   fi
 }
 
@@ -95,6 +105,7 @@ assert_completed_build() {
 
 test_start() {
   info "Running ${FUNCNAME[1]}"
+  TEST_NAME="${FUNCNAME[1]}"
 }
 
 docker_run() {
