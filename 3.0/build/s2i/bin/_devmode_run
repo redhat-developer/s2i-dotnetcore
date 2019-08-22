@@ -1,0 +1,53 @@
+#!/bin/bash
+
+set -e
+
+DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
+# When unset, default to '.'
+# When empty, don't start the project.
+if [ -z ${DOTNET_STARTUP_PROJECT+x} ]; then
+  DOTNET_STARTUP_PROJECT="."
+fi
+
+# Build nuget sources list for when doing the restore
+RESTORE_OPTIONS=""
+for SOURCE in $DOTNET_RESTORE_SOURCES; do
+  RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
+done
+
+# `dotnet restore` may have left some lock files under NuGetScratch
+# because we killed this script while it was restoring.
+rm -rf /tmp/NuGetScratch
+
+# run tests
+for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
+    echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
+    dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS
+    echo "---> Running test project: $TEST_PROJECT..."
+    dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK"
+done
+
+# Stop if there is no DOTNET_STARTUP_PROJECT
+if [ -z "$DOTNET_STARTUP_PROJECT" ]; then
+  echo "No DOTNET_STARTUP_PROJECT."
+  exit 0
+fi
+
+# Split DOTNET_STARTUP_PROJECT_DIR in dir and filename
+if [ -d "$DOTNET_STARTUP_PROJECT" ]; then
+    DOTNET_STARTUP_PROJECT_DIR="$DOTNET_STARTUP_PROJECT"
+    DOTNET_STARTUP_PROJECT_NAME="."
+elif [ -e "$DOTNET_STARTUP_PROJECT" ]; then
+    DOTNET_STARTUP_PROJECT_DIR="$(dirname "$DOTNET_STARTUP_PROJECT")"
+    DOTNET_STARTUP_PROJECT_NAME="$(basename "$DOTNET_STARTUP_PROJECT")"
+else
+    echo "error: DOTNET_STARTUP_PROJECT not found"
+    exit 1
+fi
+
+# Run application
+cd "$DOTNET_STARTUP_PROJECT_DIR"
+echo "---> Restoring application dependencies..."
+dotnet restore "$DOTNET_STARTUP_PROJECT_NAME" $RESTORE_OPTIONS
+echo "---> Running application..."
+exec dotnet run -p "$DOTNET_STARTUP_PROJECT_NAME" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION"
