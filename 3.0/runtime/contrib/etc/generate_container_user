@@ -1,0 +1,23 @@
+# Set current user in nss_wrapper
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+
+# For the main process (PID 1) and children we ensure there is a known user.
+# For other processes (i.e. docker exec) the user isn't added, so it may be unknown.
+if [ $$ -eq 1 -a x"$USER_ID" != x"0" -a x"$USER_ID" != x"1001" ]; then
+
+    NSS_WRAPPER_PASSWD=/opt/app-root/etc/passwd
+    NSS_WRAPPER_GROUP=/etc/group
+
+    cat /etc/passwd | sed -e 's/^default:/builder:/' > $NSS_WRAPPER_PASSWD
+    # make sure this file is writable so it can be overwritten if it is persisted in an image.
+    fix-permissions $NSS_WRAPPER_PASSWD
+
+    echo "default:x:${USER_ID}:${GROUP_ID}:Default Application User:${HOME}:/sbin/nologin" >> $NSS_WRAPPER_PASSWD
+
+    export NSS_WRAPPER_PASSWD
+    export NSS_WRAPPER_GROUP
+
+    LD_PRELOAD=libnss_wrapper.so
+    export LD_PRELOAD
+fi
