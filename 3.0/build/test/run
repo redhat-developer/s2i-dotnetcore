@@ -29,11 +29,11 @@ IMAGE_OS=${IMAGE_OS:-RHEL7}
 
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-centos7}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-22-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-30-centos7}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-30-runtime-centos7}
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-rhel7}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-22-runtime-rhel7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-30-rhel7}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-30-runtime-rhel7}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -44,14 +44,10 @@ npm_version=6.4.1
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
-sdk_version=2.2.105
-aspnet_latest_app_version=2.2.3
-aspnet_latest_all_version=2.2.3
+sdk_version=3.0.100-preview8-013656
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=2.2.107
-aspnet_latest_app_version=2.2.5
-aspnet_latest_all_version=2.2.5
+sdk_version=3.0.100-preview8-013656
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -86,25 +82,6 @@ The source repository contains the following projects:
 - proj2/proj2.fsproj
 Update the '.s2i/environment' file to specify the project you want to publish, for example DOTNET_STARTUP_PROJECT=proj1/proj1.csproj."
   assert_contains_multiline "${s2i_build}" "${expected}"
-}
-
-test_s2i_sdk_version()
-{
-  test_start
-  local expected_version=$1
-
-  # The assemble script prints out the SDK version.
-  local app=sdkversion
-
-  # build image
-  local image=$(s2i_image_tag ${app})
-  local s2i_build=$(s2i_build_output_log ${app} ${image})
-
-  # cleanup
-  docker_rmi ${image}
-
-  # verify sdk version
-  assert_contains "${s2i_build}" "SDK Version: ${expected_version}"
 }
 
 test_s2i_usage() {
@@ -330,9 +307,9 @@ test_config_1() {
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
   # DOTNET_ASSEMBLY_NAME=SampleApp
-  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/netcoreapp2.2/SampleApp.dll"
+  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/netcoreapp3.0/SampleApp.dll"
   # DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
-  assert_contains "${s2i_build}" "Installing S2iDotNetCoreDummy"
+  assert_contains "${s2i_build}" "Restore completed" # Includes S2iDotNetCoreDummy from myget.org.
   # DOTNET_PACK=true
   assert_contains "${s2i_build}" "Packing application..."
   assert_equal "${packed_app}" "/opt/app-root/app.tar.gz"
@@ -340,10 +317,10 @@ test_config_1() {
   assert_contains "${s2i_build}" "bower@"
   assert_contains "${s2i_build}" "gulp@"
   assert_equal "${bower_path}" "/opt/app-root/node_modules/.bin/bower"
-  # DOTNET_TOOLS=dotnet-watch@2.2.0 dotnet-serve
+  # DOTNET_TOOLS=dotnet-watch@3.0.0 dotnet-serve
   assert_equal "${watch_path}" "/opt/app-root/.dotnet/tools/dotnet-watch"
   assert_equal "${serve_path}" "/opt/app-root/.dotnet/tools/dotnet-serve"
-  assert_contains "${s2i_build}" "Tool 'dotnet-watch' \(version '2.2.0'\) was successfully installed."
+  assert_contains "${s2i_build}" "Tool 'dotnet-watch' \(version '3.0.0-preview-18579-0056'\) was successfully installed."
   # DOTNET_RM_SRC=true
   # The application folder contains a file and folder that starts with a '.', we verify that *all* files are removed.
   assert_contains "${s2i_build}" "Removing sources..."
@@ -450,12 +427,12 @@ test_imagestream_sample() {
   # test the sample app defined with the imagestreams:
   # "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git",
   # "sampleContextDir": "app",
-  # "sampleRef": "dotnetcore-2.2"
+  # "sampleRef": "dotnetcore-3.0"
 
   # build image
   local image=$(s2i_image_tag sample)
   docker_rmi ${tag}
-  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnetcore-2.2 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
+  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnetcore-3.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -585,40 +562,6 @@ test_certificates() {
   assert_equal "$count_with_additional" "$(($default_count + 4))"
 }
 
-test_aspnet_implicit_using_latest()
-{
-  test_start
-
-  # aspnetcoreimplicitversion contains a versionless reference
-  # to the Microsoft.AspNetCore.{App,All} packages.
-  # after the build, the assemble script prints out the resolved versions.
-  local app=aspnetcoreimplicitversion
-  local image=$(s2i_image_tag ${app})
-
-  # verify the versionless references resolved to the latest version.
-  # build image
-  local s2i_build=$(s2i_build_output_log ${app} ${image})
-  # cleanup
-  docker_rmi ${image}
-
-  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.All": "'${aspnet_latest_all_version}'"'
-  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.App": "'${aspnet_latest_app_version}'"'
-
-  # verify aspnet_latest_{app,all}_version have the correct values.
-  # If this fails, the variables in the test and environment variables in the Dockerfiles must be updated.
-  if [ "$IMAGE_OS" != "CENTOS" ]; then
-    info verifying aspnet_latest_{app,all}
-
-    # build image
-    s2i_build=$(s2i_build_output_log ${app} ${image} -e LatestPatchVersionForAspNetCoreApp2_2='' -e LatestPatchVersionForAspNetCoreAll2_2='')
-    # cleanup
-    docker_rmi ${image}
-
-    assert_contains "${s2i_build}" '"Microsoft.AspNetCore.All": "'${aspnet_latest_all_version}'"'
-    assert_contains "${s2i_build}" '"Microsoft.AspNetCore.App": "'${aspnet_latest_app_version}'"'
-  fi
-}
-
 test_binary()
 {
   test_start
@@ -645,8 +588,8 @@ test_incremental()
 {
   test_start
 
-  # asp-net-hello-world is an ASP.NET Core application
-  local app=asp-net-hello-world
+  # asp-net-hello-world-envvar2 is an ASP.NET Core application
+  local app=asp-net-hello-world-envvar2
 
   # perform a first build, with the incremental flag
   local image=$(s2i_image_tag ${app})
@@ -654,14 +597,14 @@ test_incremental()
   local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=true)
 
   # verify packages are installed
-  assert_contains "${s2i_build}" "Installing System"
+  assert_contains "${s2i_build}" "Installing Newtonsoft.Json"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
   # perform a second build, with the incremental flag
   s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
   # verify NO other packages are installed
-  assert_not_contains "${s2i_build}" "Installing System"
+  assert_not_contains "${s2i_build}" "Installing Newtonsoft.Json"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
@@ -673,14 +616,14 @@ test_incremental_without_packages()
 {
   test_start
 
-  # asp-net-hello-world is an ASP.NET Core application
-  local app=asp-net-hello-world
+  # asp-net-hello-world-envvar2 is an ASP.NET Core application
+  local app=asp-net-hello-world-envvar2
 
   # perform a first build without keeping packages
   local image=$(s2i_image_tag ${app})
   local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=false)
   # verify packages are installed
-  assert_contains "${s2i_build}" "Installing System"
+  assert_contains "${s2i_build}" "Installing Newtonsoft.Json"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
@@ -699,11 +642,8 @@ info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
   test_image
-  info "sdk ${sdk_version}:"
   test_config
   test_usage
-  test_s2i_sdk_version $sdk_version
-  test_aspnet_implicit_using_latest
   test_consoleapp
   test_multiframework
   test_fsharp

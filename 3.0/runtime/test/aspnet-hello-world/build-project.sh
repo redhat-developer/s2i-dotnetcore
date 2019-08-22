@@ -2,7 +2,6 @@
 
 rm -rf bin obj
 
-dotnet restore -r rhel.7-x64
-dotnet publish -f netcoreapp2.2 -c Release -r rhel.7-x64 --self-contained false /p:PublishWithAspNetCoreTargetManifest=false
+dotnet publish -f netcoreapp3.0 -c Release
 
-tar -czvf app.tar.gz -C bin/Release/netcoreapp2.2/rhel.7-x64/publish .
+tar -czvf app.tar.gz -C bin/Release/netcoreapp3.0/publish .

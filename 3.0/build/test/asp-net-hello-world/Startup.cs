@@ -12,10 +12,8 @@ namespace SampleApp
 {
     public class Startup
     {
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
-            loggerFactory.AddConsole(LogLevel.Trace);
-
             app.UseStaticFiles();
 
             app.Run(async context =>
@@ -43,12 +41,7 @@ namespace SampleApp
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseKestrel(options =>
-                {
-                    // options.ThreadCount = 4;
-                    options.NoDelay = true;
-                    options.UseConnectionLogging();
-                })
+                .UseKestrel()
                 .UseUrls("http://0.0.0.0:8080")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()

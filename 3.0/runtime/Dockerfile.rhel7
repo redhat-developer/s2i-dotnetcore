@@ -1,5 +1,5 @@
 FROM rhel7
-# This image provides a .NET Core 2.2 environment you can use to run your .NET
+# This image provides a .NET Core 3.0 environment you can use to run your .NET
 # applications.
 
 EXPOSE 8080
@@ -9,24 +9,24 @@ ENV HOME=/opt/app-root \
     DOTNET_APP_PATH=/opt/app-root/app \
     DOTNET_DATA_PATH=/opt/app-root/data \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
-    DOTNET_CORE_VERSION=2.2 \
-    DOTNET_FRAMEWORK=netcoreapp2.2 \
+    DOTNET_CORE_VERSION=3.0 \
+    DOTNET_FRAMEWORK=netcoreapp3.0 \
 # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir
 
-LABEL io.k8s.description="Platform for running .NET Core 2.2 applications" \
-      io.k8s.display-name=".NET Core 2.2" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet22-runtime" \
+LABEL io.k8s.description="Platform for running .NET Core 3.0 applications" \
+      io.k8s.display-name=".NET Core 3.0" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet30-runtime" \
       io.openshift.expose-services="8080:http" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
       io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-22-runtime-rhel7" \
-      com.redhat.component="rh-dotnet22-runtime-container" \
-      version="2.2" \
-      release="9" \
+LABEL name="dotnet/dotnet-30-runtime-rhel7" \
+      com.redhat.component="rh-dotnet30-runtime-container" \
+      version="3.0" \
+      release="1" \
       architecture="x86_64"
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
@@ -48,7 +48,13 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
-RUN INSTALL_PKGS="rh-dotnet22-dotnet-runtime-2.2 nss_wrapper tar unzip" && \
+# TODO: remove Microsoft binaries
+RUN curl https://download.visualstudio.microsoft.com/download/pr/a0e368ac-7161-4bde-a139-1a3ef5a82bbe/439cdbb58950916d3718771c5d986c35/dotnet-sdk-3.0.100-preview8-013656-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+    mkdir ~/dotnet-preview && \
+    tar xf /tmp/dotnet-sdk.tar.gz -C ~/dotnet-preview
+
+# TODO: update INSTALL_PKGS (2.2 to 3.0)
+RUN INSTALL_PKGS="rh-dotnet30-dotnet-runtime-3.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
       --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
       $INSTALL_PKGS && \
@@ -57,6 +63,7 @@ RUN INSTALL_PKGS="rh-dotnet22-dotnet-runtime-2.2 nss_wrapper tar unzip" && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/*
 
+# TODO: updated ENABLED_COLLECTIONS
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
     ENABLED_COLLECTIONS="rh-dotnet22"
