@@ -70,7 +70,7 @@ build_image() {
   local path=$1
   local docker_filename=$2
   local name=$3
-  if $FORCE -o ! image_exists ${name}; then
+  if $FORCE || ! image_exists ${name}; then
     echo "Building Docker image ${name} ..."
     if [ ! -d "${path}" ]; then
       echo "No directory found at given location '${path}'. Skipping this image."
