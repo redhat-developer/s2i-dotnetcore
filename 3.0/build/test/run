@@ -31,6 +31,9 @@ IMAGE_OS=${IMAGE_OS:-RHEL7}
 if [ "$IMAGE_OS" = "CENTOS" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-30-centos7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-30-runtime-centos7}
+elif [ "$IMAGE_OS" = "RHEL8" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-30}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-ubi8/dotnet-30-runtime}
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-30-rhel7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-30-runtime-rhel7}
@@ -44,6 +47,9 @@ npm_version=6.4.1
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
+sdk_version=3.0.100-preview8-013656
+elif [ "$IMAGE_OS" = "RHEL8" ]; then
+# sdk version supported on RHEL8
 sdk_version=3.0.100-preview8-013656
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
