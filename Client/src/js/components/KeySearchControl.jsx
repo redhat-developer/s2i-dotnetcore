@@ -23,7 +23,7 @@ var KeySearchControl = React.createClass({
   },
 
   getInitialState() {
-    var items = KEY_SEARCH_ITEMS;
+    var items = KEY_SEARCH_ITEMS.slice();
     if (this.props.suppressPlate) {
       items.pop();
     }
