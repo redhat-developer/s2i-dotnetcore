@@ -54,7 +54,7 @@ RUN curl https://download.visualstudio.microsoft.com/download/pr/a0e368ac-7161-4
     tar xf /tmp/dotnet-sdk.tar.gz -C ~/dotnet-preview
 
 # TODO: update INSTALL_PKGS (2.2 to 3.0)
-RUN INSTALL_PKGS="rh-dotnet30-dotnet-runtime-3.0 nss_wrapper tar unzip" && \
+RUN INSTALL_PKGS="rh-dotnet22-dotnet-runtime-2.2 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs --disablerepo=\* \
       --enablerepo=rhel-7-server-rpms,rhel-server-rhscl-7-rpms,rhel-7-server-dotnet-rpms \
       $INSTALL_PKGS && \
