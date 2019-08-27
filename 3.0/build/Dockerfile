@@ -1,17 +1,17 @@
-FROM dotnet/dotnet-22-runtime-centos7
-# This image provides a .NET Core 2.2 environment you can use to run your .NET
+FROM dotnet/dotnet-30-runtime-centos7
+# This image provides a .NET Core 3.0 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
-LABEL io.k8s.description="Platform for building and running .NET Core 2.2 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet22"
+LABEL io.k8s.description="Platform for building and running .NET Core 3.0 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet30"
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-22-centos7" \
-      com.redhat.component="rh-dotnet22-container" \
-      version="2.2" \
+LABEL name="dotnet/dotnet-30-centos7" \
+      com.redhat.component="rh-dotnet30-container" \
+      version="3.0" \
       release="1" \
       architecture="x86_64"
 
@@ -25,6 +25,7 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
+# TODO: update INSTALL_PKGS (2.2 to 3.0)
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
     INSTALL_PKGS="rh-nodejs10-npm rh-nodejs10-nodejs-nodemon rh-dotnet22-dotnet-sdk-2.2 rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
@@ -45,10 +46,7 @@ RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
 
 ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs10" \
 # Needed for the `dotnet watch` to detect changes in a container.
-    DOTNET_USE_POLLING_FILE_WATCHER=true \
-# Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_2=2.2.2 \
-    LatestPatchVersionForAspNetCoreAll2_2=2.2.2
+    DOTNET_USE_POLLING_FILE_WATCHER=true
 
 # Run container by default as user with id 1001 (default)
 USER 1001

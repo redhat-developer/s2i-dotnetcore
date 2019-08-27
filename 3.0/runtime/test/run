@@ -26,21 +26,25 @@ IMAGE_OS=${IMAGE_OS:-RHEL7}
 
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-30-runtime-centos7}
+elif [ "$IMAGE_OS" = "RHEL8" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-30-runtime}
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-22-runtime-rhel7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-30-runtime-rhel7}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version_series="2.2"
+dotnet_version_series="3.0"
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-dotnet_version="2.2.3"
+dotnet_version="3.0.0-preview8-28405-07"
+elif [ "$IMAGE_OS" = "RHEL8" ]; then
+dotnet_version="3.0.0-preview8-28405-07"
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-dotnet_version="2.2.5"
+dotnet_version="3.0.0-preview8-28405-07"
 fi
 
 test_dotnet() {
