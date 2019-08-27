@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO: remove this
+export PATH=~/dotnet-preview:$PATH
+export DOTNET_ROOT=~/dotnet-preview
+
 # generate the project
 pushd /tmp/src
 dotnet new $TEMPLATE --no-restore

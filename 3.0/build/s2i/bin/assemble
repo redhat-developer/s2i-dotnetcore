@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO: remove this
+export PATH=~/dotnet-preview:$PATH
+export DOTNET_ROOT=~/dotnet-preview
+
 set -e
 # Include filenames beginning with a '.' when installing the application source code.
 shopt -s dotglob
@@ -207,7 +211,7 @@ if [ "$BUILD_TYPE" == "source" ]; then
   dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $RESTORE_SOURCE_OPTIONS $VERBOSITY_OPTION
   echo "---> Publishing application..."
   dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
-         --self-contained false /p:PublishWithAspNetCoreTargetManifest=false --no-restore -o "$DOTNET_APP_PATH"
+         --self-contained false --no-restore -o "$DOTNET_APP_PATH"
 else
   # binary build: move pre-compiled application
   mv ./* "$DOTNET_APP_PATH"

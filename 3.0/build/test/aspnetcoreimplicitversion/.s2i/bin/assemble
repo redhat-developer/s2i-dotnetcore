@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# call base assemble script
-$STI_SCRIPTS_PATH/assemble >/dev/null 2>&1
-
-# print the resolved dependencies
-cat ~/app/*.deps.json
