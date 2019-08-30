@@ -308,6 +308,7 @@ test_config_1() {
   docker_rmi ${image}
 
   # DOTNET_STARTUP_PROJECT=src/app
+  # DOTNET_RESTORE_CONFIGFILE=nosuchfile (build is succesfull without DOTNET_RESTORE_CONFIGFILE)
   assert_equal "${response}" "Hello world"
   # DOTNET_TEST_PROJECTS=test/test1 test/test2
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
@@ -371,12 +372,34 @@ test_config_2() {
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Publish target\(s\)\).'
 }
 
+test_config_3() {
+  # groups envvar tests which are performed against asp-net-hello-world-envvar3
+
+  local app=asp-net-hello-world-envvar3
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  # start container
+  local container=$(docker_run_d ${image})
+  local url=$(container_url ${container})
+  # request
+  local response=$(curl_retry ${url}/)
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # DOTNET_RESTORE_CONFIGFILE=src/app/NuGet.Config.s2i
+  # The config file was used to restore S2iDotNetCoreDummy and didn't cause issues for the test and tool install.
+  assert_equal "${response}" "Hello world"
+}
+
 test_config() {
   test_start
 
   test_config_configuration
   test_config_1
   test_config_2
+  test_config_3
 }
 
 test_split_build() {
@@ -603,14 +626,14 @@ test_incremental()
   local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=true)
 
   # verify packages are installed
-  assert_contains "${s2i_build}" "Installing Newtonsoft.Json"
+  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
   # perform a second build, with the incremental flag
   s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
   # verify NO other packages are installed
-  assert_not_contains "${s2i_build}" "Installing Newtonsoft.Json"
+  assert_not_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
@@ -629,7 +652,7 @@ test_incremental_without_packages()
   local image=$(s2i_image_tag ${app})
   local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=false)
   # verify packages are installed
-  assert_contains "${s2i_build}" "Installing Newtonsoft.Json"
+  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 

@@ -95,6 +95,18 @@ else
   fi
 fi
 
+DOTNET_CONFIGFILE_OPTION=""
+# When the configfile doesn't exist, we don't consider it an error.
+# This allows users to adopt a convention that a file at a certain location is picked up by s2i automatically.
+if [ -f "${DOTNET_RESTORE_CONFIGFILE}" ]; then
+  # We don't support 'DOTNET_RESTORE_CONFIGFILE' and 'DOTNET_RESTORE_SOURCES' being used together.
+  if [ -n "${DOTNET_RESTORE_SOURCES}" ]; then
+    echo "'DOTNET_RESTORE_CONFIGFILE' and 'DOTNET_RESTORE_SOURCES' cannot be used together. You can add your sources to the 'DOTNET_RESTORE_CONFIGFILE'."
+    exit 1
+  fi
+  DOTNET_CONFIGFILE_OPTION="--configfile ${DOTNET_RESTORE_CONFIGFILE}"
+fi
+
 if [ "$BUILD_TYPE" == "source" ]; then
   echo "Using SDK: $(dotnet --version)"
 
@@ -126,11 +138,6 @@ if [ "$BUILD_TYPE" == "source" ]; then
   # dotnet tools
   if [ -n "${DOTNET_TOOLS}" ]; then
     # Build nuget sources list for when doing the restore
-    TOOL_RESTORE_OPTIONS=""
-    if [ -d /tmp/artifacts/packages-for-incremental-build ]; then
-      # use packages-for-incremental-build as a source
-      TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --add-source file:///tmp/artifacts/packages-for-incremental-build"
-    fi
     if [ -n "${DOTNET_RESTORE_SOURCES}" ]; then
       # `dotnet tool install` doesn't have a `--source` parameter that behaves like
       # `dotnet restore` (i.e. replacing vs adding sources). We generate a config file
@@ -147,7 +154,12 @@ EOF
       for SOURCE in $DOTNET_RESTORE_SOURCES; do
         TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --add-source $SOURCE"
       done
+    else
+      TOOL_RESTORE_OPTIONS="$DOTNET_CONFIGFILE_OPTION"
     fi
+    # Add incremental packages source, and ensure folder exists for non-incremental build.
+    mkdir -p /tmp/artifacts/packages-for-incremental-build
+    TOOL_RESTORE_OPTIONS="$TOOL_RESTORE_OPTIONS --add-source file:///tmp/artifacts/packages-for-incremental-build"
 
     for DOTNET_TOOL in $DOTNET_TOOLS; do
       # Split the tool by '@' and treat the second part as the version if there is one.
@@ -175,14 +187,13 @@ if [ "$BUILD_TYPE" == "source" ]; then
   DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
 
   # Build nuget sources list for when doing the restore
-  RESTORE_SOURCE_OPTIONS=""
+  RESTORE_SOURCE_OPTIONS="$DOTNET_CONFIGFILE_OPTION"
   for SOURCE in $DOTNET_RESTORE_SOURCES; do
     RESTORE_SOURCE_OPTIONS="$RESTORE_SOURCE_OPTIONS --source $SOURCE"
   done
-  INCREMENTAL_SOURCE_OPTION=""
-  if [ -d /tmp/artifacts/packages-for-incremental-build ]; then
-    INCREMENTAL_SOURCE_OPTION="--source file:///tmp/artifacts/packages-for-incremental-build"
-  fi
+  # Add incremental packages source, and ensure folder exists for non-incremental build.
+  mkdir -p /tmp/artifacts/packages-for-incremental-build
+  RESTORE_SOURCE_OPTIONS="$RESTORE_SOURCE_OPTIONS /p:RestoreAdditionalProjectSources=file:///tmp/artifacts/packages-for-incremental-build"
 
   RESTORE_OPTIONS=""
   # If true, run dotnet restore with --disable-parallel
@@ -193,10 +204,6 @@ if [ "$BUILD_TYPE" == "source" ]; then
   # run tests
   for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
       echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
-      if [ -n "$INCREMENTAL_SOURCE_OPTION" ]; then
-        # perform a restore against packages-for-incremental-build
-        dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $INCREMENTAL_SOURCE_OPTION $VERBOSITY_OPTION >/dev/null 2>&1 || true
-      fi
       dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $RESTORE_SOURCE_OPTIONS $VERBOSITY_OPTION
       echo "---> Running test project: $TEST_PROJECT..."
       dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK" $VERBOSITY_OPTION --no-restore
@@ -204,10 +211,6 @@ if [ "$BUILD_TYPE" == "source" ]; then
 
   # publish application
   echo "---> Restoring application dependencies..."
-  if [ -n "$INCREMENTAL_SOURCE_OPTION" ]; then
-    # perform a restore against packages-for-incremental-build
-    dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $INCREMENTAL_SOURCE_OPTION $VERBOSITY_OPTION >/dev/null 2>&1 || true
-  fi
   dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $RESTORE_SOURCE_OPTIONS $VERBOSITY_OPTION
   echo "---> Publishing application..."
   dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \

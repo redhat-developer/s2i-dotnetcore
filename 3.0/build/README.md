@@ -110,7 +110,12 @@ a `.s2i/environment` file inside your source code repository.
 * **DOTNET_RESTORE_SOURCES**
 
     Used to specify the list of NuGet package sources used during the restore operation. This overrides 
-    all of the sources specified in the NuGet.config file.
+    all of the sources specified in the NuGet.config file. This variable cannot be combined with `DOTNET_RESTORE_CONFIGFILE`.
+
+* **DOTNET_RESTORE_CONFIGFILE**
+
+    Specifies a NuGet.Config file to be used for restore operations. When the file is not present, it won't cause the build to fail.
+    This variable cannot be combined with `DOTNET_RESTORE_SOURCES`.
 
 * **DOTNET_RESTORE_DISABLE_PARALLEL**
 

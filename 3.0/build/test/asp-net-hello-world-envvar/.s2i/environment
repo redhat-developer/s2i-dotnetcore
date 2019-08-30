@@ -7,3 +7,4 @@ DOTNET_PACK=true
 DOTNET_NPM_TOOLS=bower gulp
 DOTNET_TOOLS=dotnet-watch@3.0.0-preview-18579-0056 dotnet-serve
 DOTNET_RM_SRC=true
+DOTNET_RESTORE_CONFIGFILE=nosuchfile

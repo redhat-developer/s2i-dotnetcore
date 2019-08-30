@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <DebugType>portable</DebugType>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>SampleApp</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="wwwroot\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../lib/lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- S2iDotNetCoreDummy is used by test_config_3 -->
+    <PackageReference Include="S2iDotNetCoreDummy" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>
