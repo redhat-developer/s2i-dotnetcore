@@ -1,5 +1,0 @@
-DOTNET_STARTUP_PROJECT=src/app/app.csproj
-DOTNET_ASSEMBLY_NAME=SampleApp
-DOTNET_TEST_PROJECTS=test/test1
-DOTNET_TOOLS=dotnet-serve
-DOTNET_RESTORE_CONFIGFILE=src/app/NuGet.Config.s2i

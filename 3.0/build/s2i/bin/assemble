@@ -96,8 +96,6 @@ else
 fi
 
 DOTNET_CONFIGFILE_OPTION=""
-# When the configfile doesn't exist, we don't consider it an error.
-# This allows users to adopt a convention that a file at a certain location is picked up by s2i automatically.
 if [ -f "${DOTNET_RESTORE_CONFIGFILE}" ]; then
   # We don't support 'DOTNET_RESTORE_CONFIGFILE' and 'DOTNET_RESTORE_SOURCES' being used together.
   if [ -n "${DOTNET_RESTORE_SOURCES}" ]; then
@@ -105,6 +103,9 @@ if [ -f "${DOTNET_RESTORE_CONFIGFILE}" ]; then
     exit 1
   fi
   DOTNET_CONFIGFILE_OPTION="--configfile ${DOTNET_RESTORE_CONFIGFILE}"
+elif [ -n "${DOTNET_RESTORE_CONFIGFILE}" ]; then
+  echo "The DOTNET_RESTORE_CONFIGFILE '${DOTNET_RESTORE_CONFIGFILE}' does not exist."
+  exit 1
 fi
 
 if [ "$BUILD_TYPE" == "source" ]; then
