@@ -357,12 +357,10 @@ test_config_2() {
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
 
-  # DOTNET_VERBOSITY=detailed
+  # DOTNET_VERBOSITY=normal
   ## Environment
   assert_contains "${s2i_build}" "Environment:"
-  assert_contains "${s2i_build}" "DOTNET_VERBOSITY=detailed"
-  # DOTNET_RESTORE_DISABLE_PARALLEL=true
-  assert_contains "${s2i_build}" "Running non-parallel restore"
+  assert_contains "${s2i_build}" "DOTNET_VERBOSITY=normal"
   ## Test project restore
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/test/test1/test1.csproj" on node 1 \(Restore target\(s\)\).'
   ## Test project test
@@ -373,12 +371,27 @@ test_config_2() {
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Publish target\(s\)\).'
 }
 
+test_config_3() {
+  # groups envvar tests which are performed against dotnet-configuration-debug
+
+  local app=dotnet-configuration-debug
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  # cleanup
+  docker_rmi ${image}
+
+  # DOTNET_RESTORE_DISABLE_PARALLEL=true
+  assert_contains "${s2i_build}" "Running non-parallel restore"
+}
+
 test_config() {
   test_start
 
   test_config_configuration
   test_config_1
   test_config_2
+  test_config_3
 }
 
 test_split_build() {
