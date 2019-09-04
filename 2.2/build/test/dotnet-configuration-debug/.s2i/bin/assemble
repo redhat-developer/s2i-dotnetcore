@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# TODO: remove this
+export PATH=~/dotnet-preview:$PATH
+export DOTNET_ROOT=~/dotnet-preview
+
+# test_config_3 runs with DOTNET_VERBOSITY detailed to check DOTNET_RESTORE_DISABLE_PARALLEL.
+# To avoid log bloat, we filter the assemble output to the expected output.
+
+# call base assemble script
+$STI_SCRIPTS_PATH/assemble >/tmp/assemble_out
+ASSEMBLE_RESULT=$?
+
+if [ $ASSEMBLE_RESULT -eq 0 ] && grep 'non-parallel' /tmp/assemble_out; then
+  exit 0
+fi
+
+# Print the full log in case something went wrong.
+cat /tmp/assemble_out
+exit 1
