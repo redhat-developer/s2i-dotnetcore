@@ -10,7 +10,7 @@ if [ -z ${DOTNET_STARTUP_PROJECT+x} ]; then
 fi
 
 # Build nuget sources list for when doing the restore
-RESTORE_OPTIONS=""
+RESTORE_OPTIONS="$DOTNET_CONFIGFILE_OPTION"
 for SOURCE in $DOTNET_RESTORE_SOURCES; do
   RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
 done
