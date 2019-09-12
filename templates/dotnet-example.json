@@ -114,6 +114,18 @@
                             {
                                 "name": "DOTNET_TOOLS",
                                 "value": "${DOTNET_TOOLS}"
+                            },
+                            {
+                                "name": "DOTNET_TOOLS",
+                                "value": "${DOTNET_TOOLS}"
+                            },
+                            {
+                                "name": "DOTNET_PUBLISH_READYTORUN",
+                                "value": "${DOTNET_PUBLISH_READYTORUN}"
+                            },
+                            {
+                                "name": "DOTNET_RESTORE_CONFIGFILE",
+                                "value": "${DOTNET_RESTORE_CONFIGFILE}"
                             }
                         ]
                     }
@@ -303,6 +315,11 @@
             "value": "app"
         },
         {
+            "name": "DOTNET_PUBLISH_READYTORUN",
+            "displayName": "Ahead-of-time compilation",
+            "description": "Set this to 'true' to perform an ahead-of-time compilation."
+        },
+        {
             "name": "DOTNET_ASSEMBLY_NAME",
             "displayName": "Startup Assembly",
             "description": "Set this when the assembly name is overridden in the project file."
@@ -331,7 +348,12 @@
         {
             "name": "DOTNET_RESTORE_SOURCES",
             "displayName": "NuGet package sources",
-            "description": "Set this to override the NuGet.config sources."
+            "description": "Set this to override the NuGet.config sources. Cannot be combined with DOTNET_RESTORE_CONFIGFILE."
+        },
+        {
+            "name": "DOTNET_RESTORE_CONFIGFILE",
+            "displayName": "NuGet.Config file",
+            "description": "Set this to a Nuget.Config file. Cannot be combined with DOTNET_RESTORE_SOURCES."
         }
     ]
 }
