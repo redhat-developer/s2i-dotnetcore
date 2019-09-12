@@ -47,13 +47,13 @@ npm_version=6.4.1
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
-sdk_version=3.0.100-preview8-013656
+sdk_version=3.0.100-preview9-014004
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=3.0.100-preview8-013656
+sdk_version=3.0.100-preview9-014004
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=3.0.100-preview8-013656
+sdk_version=3.0.100-preview9-014004
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -369,6 +369,8 @@ test_config_2() {
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Restore target\(s\)\).'
   ## App project publish
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Publish target\(s\)\).'
+  ## DOTNET_PUBLISH_READYTORUN=true
+  assert_contains "${s2i_build}" '_CreateR2RImages'
 }
 
 test_config_3() {
