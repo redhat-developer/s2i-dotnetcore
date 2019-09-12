@@ -16,13 +16,14 @@ Versions
 * [RETIRED] 2.0 (RHEL 7, CentOS 7)
 * 2.1 (RHEL 7, RHEL 8, CentOS 7)
 * 2.2 (RHEL 7, CentOS 7)
+* 3.0 (RHEL 7, RHEL 8)
 
 Building
 ----------------
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ sudo VERSIONS=2.2 ./build.sh
+$ sudo VERSIONS=3.0 ./build.sh
 ```
 
 Note: to build RHEL 7 based images, you need to run the build on a
@@ -51,6 +52,10 @@ Run `./install-imagestreams.sh --help` for more information.
 
 Usage
 ---------------------------------
+
+For information about usage of Docker image for .NET Core 3.0,
+see [3.0 builder usage documentation](3.0/build/README.md) and
+[3.0 runtime usage documentation](3.0/runtime/README.md).
 
 For information about usage of Docker image for .NET Core 2.2,
 see [2.2 builder usage documentation](2.2/build/README.md) and
@@ -140,6 +145,8 @@ complete, they can be used as replacements for the `dotnet:2.1` and `dotnet:2.2`
 ```
 oc new-app --name=myapp aspnet:2.2~https://github.com/redhat-developer/s2i-dotnetcore-ex#dotnetcore-2.2 --build-env DOTNET_STARTUP_PROJECT=app
 ```
+
+**note**: `dotnet:3.0`+ image streams include ASP.NET Core build dependencies by default.
 
 **community/dotnet-baget.json**
 
