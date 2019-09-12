@@ -187,35 +187,41 @@ if [ "$BUILD_TYPE" == "source" ]; then
   # User settable environment
   DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
 
-  # Build nuget sources list for when doing the restore
-  RESTORE_SOURCE_OPTIONS="$DOTNET_CONFIGFILE_OPTION"
-  for SOURCE in $DOTNET_RESTORE_SOURCES; do
-    RESTORE_SOURCE_OPTIONS="$RESTORE_SOURCE_OPTIONS --source $SOURCE"
-  done
-  # Add incremental packages source, and ensure folder exists for non-incremental build.
-  mkdir -p /tmp/artifacts/packages-for-incremental-build
-  RESTORE_SOURCE_OPTIONS="$RESTORE_SOURCE_OPTIONS /p:RestoreAdditionalProjectSources=file:///tmp/artifacts/packages-for-incremental-build"
-
   RESTORE_OPTIONS=""
   # If true, run dotnet restore with --disable-parallel
   if [ "$DOTNET_RESTORE_DISABLE_PARALLEL" = true ]; then
     RESTORE_OPTIONS="$RESTORE_OPTIONS --disable-parallel"
   fi
 
+  # Build nuget sources list for when doing the restore
+  RESTORE_OPTIONS="$RESTORE_OPTIONS $DOTNET_CONFIGFILE_OPTION"
+  for SOURCE in $DOTNET_RESTORE_SOURCES; do
+    RESTORE_OPTIONS="$RESTORE_OPTIONS --source $SOURCE"
+  done
+  # Add incremental packages source, and ensure folder exists for non-incremental build.
+  mkdir -p /tmp/artifacts/packages-for-incremental-build
+  RESTORE_OPTIONS="$RESTORE_OPTIONS /p:RestoreAdditionalProjectSources=file:///tmp/artifacts/packages-for-incremental-build"
+
   # run tests
   for TEST_PROJECT in $DOTNET_TEST_PROJECTS; do
       echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
-      dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $RESTORE_SOURCE_OPTIONS $VERBOSITY_OPTION
+      dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
       echo "---> Running test project: $TEST_PROJECT..."
       dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK" $VERBOSITY_OPTION --no-restore
   done
 
   # publish application
+  DOTNET_PUBLISH_OPTIONS="--self-contained false --no-restore"
+  if [ "$DOTNET_PUBLISH_READYTORUN" = true ]; then
+    # we need to restore with an rid to aquire crossgen
+    RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-x64"
+    DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-x64 /p:PublishReadyToRun=true"
+  fi
   echo "---> Restoring application dependencies..."
-  dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $RESTORE_SOURCE_OPTIONS $VERBOSITY_OPTION
+  dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
   echo "---> Publishing application..."
   dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
-         --self-contained false --no-restore -o "$DOTNET_APP_PATH"
+         $DOTNET_PUBLISH_OPTIONS -o "$DOTNET_APP_PATH"
 else
   # binary build: move pre-compiled application
   mv ./* "$DOTNET_APP_PATH"

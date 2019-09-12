@@ -107,6 +107,11 @@ a `.s2i/environment` file inside your source code repository.
     Set this to the output assembly name specified in the project file (`PropertyGroup/AssemblyName`). This defaults
     to the project filename.
 
+* **DOTNET_PUBLISH_READYTORUN**
+
+    When set to `true`, the application will be compiled ahead-of-time. This reduces startup time by reducing the amount of work
+    the JIT needs to do when the application is loading. Defaults to ``.
+
 * **DOTNET_RESTORE_SOURCES**
 
     Used to specify the list of NuGet package sources used during the restore operation. This overrides 
@@ -188,10 +193,6 @@ a `.s2i/environment` file inside your source code repository.
 * **DOTNET_USE_POLLING_FILE_WATCHER**
 
     This is set to `true` to ensure the `dotnet watch` command works in a container. This command is not used by the default scripts.
-
-* **[OBSOLETE - April 2019] DOTNET_SDK_VERSION**
-
-    The s2i image only provides the latest SDK version. Previous versions of the SDK may contain known vulnerabilities.
 
 NPM
 ---

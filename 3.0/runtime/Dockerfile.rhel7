@@ -49,7 +49,7 @@ COPY ./contrib/ /opt/app-root
 COPY ./root/usr/bin /usr/bin
 
 # TODO: remove Microsoft binaries
-RUN curl https://download.visualstudio.microsoft.com/download/pr/a0e368ac-7161-4bde-a139-1a3ef5a82bbe/439cdbb58950916d3718771c5d986c35/dotnet-sdk-3.0.100-preview8-013656-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
+RUN curl https://download.visualstudio.microsoft.com/download/pr/498b8b41-7626-435e-bea8-878c39ccbbf3/c8df08e881d1bcf9a49a9ff5367090cc/dotnet-sdk-3.0.100-preview9-014004-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
     mkdir ~/dotnet-preview && \
     tar xf /tmp/dotnet-sdk.tar.gz -C ~/dotnet-preview
 
