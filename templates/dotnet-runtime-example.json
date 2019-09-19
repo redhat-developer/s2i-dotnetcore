@@ -325,14 +325,14 @@
             "displayName": ".NET Runtime Imagestream Tag",
             "description": "The image stream tag which is used to run the application.",
             "required": true,
-            "value": "dotnet-runtime:2.2"
+            "value": "dotnet-runtime:3.0"
         },
         {
             "name": "DOTNET_BUILD_IMAGE_STREAM_TAG",
             "displayName": ".NET builder",
             "required": true,
             "description": "The image stream tag which is used to build the application.",
-            "value": "dotnet:2.2"
+            "value": "dotnet:3.0"
         },
         {
             "name": "NAMESPACE",
@@ -358,7 +358,7 @@
             "name": "SOURCE_REPOSITORY_REF",
             "displayName": "Git Reference",
             "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
-            "value": "dotnetcore-2.2"
+            "value": "dotnetcore-3.0"
         },
         {
             "name": "CONTEXT_DIR",
