@@ -40,7 +40,7 @@ RUN mkdir /opt/app-root/src
 WORKDIR /opt/app-root/src
 
 # Trigger first time actions.
-RUN scl enable rh-dotnet30 -- dotnet help
+RUN dotnet help
 
 # Since $HOME is set to /opt/app-root, the yum install may have created config
 # directories (such as ~/.pki/nssdb) there. These will be owned by root and can
