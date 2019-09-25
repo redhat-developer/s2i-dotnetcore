@@ -116,10 +116,6 @@
                                 "value": "${DOTNET_TOOLS}"
                             },
                             {
-                                "name": "DOTNET_TOOLS",
-                                "value": "${DOTNET_TOOLS}"
-                            },
-                            {
                                 "name": "DOTNET_PUBLISH_READYTORUN",
                                 "value": "${DOTNET_PUBLISH_READYTORUN}"
                             },
