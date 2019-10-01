@@ -6,13 +6,14 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_m
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
 LABEL io.k8s.description="Platform for building and running .NET Core 2.1 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-21"
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-21" \
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
 
 # Labels consumed by Red Hat build service
 LABEL name="ubi8/dotnet-21" \
       com.redhat.component="dotnet-21-container" \
       version="2.1" \
-      release="13" \
+      release="34" \
       architecture="x86_64"
 
 # Labels consumed by Eclipse JBoss OpenShift plugin
@@ -45,8 +46,8 @@ RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
 # Needed for the `dotnet watch` to detect changes in a container
 ENV  DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_1=2.1.11 \
-    LatestPatchVersionForAspNetCoreAll2_1=2.1.11
+    LatestPatchVersionForAspNetCoreApp2_1=2.1.13 \
+    LatestPatchVersionForAspNetCoreAll2_1=2.1.13
 
 # Run container by default as user with id 1001 (default)
 USER 1001

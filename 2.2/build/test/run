@@ -49,9 +49,9 @@ aspnet_latest_app_version=2.2.3
 aspnet_latest_all_version=2.2.3
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=2.2.107
-aspnet_latest_app_version=2.2.5
-aspnet_latest_all_version=2.2.5
+sdk_version=2.2.109
+aspnet_latest_app_version=2.2.7
+aspnet_latest_all_version=2.2.7
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
