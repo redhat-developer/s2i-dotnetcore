@@ -35,9 +35,6 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # Don't download/extract docs for nuget packages
 ENV NUGET_XMLDOC_MODE=skip
 
-# Don't do initially populate of package cache
-ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-
 ## By default, ASP.NET Core runs on port 5000. We configure it to match
 ## the container port.
 ENV ASPNETCORE_URLS=http://*:8080
