@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# TODO: remove this
-export PATH=~/dotnet-preview:$PATH
-export DOTNET_ROOT=~/dotnet-preview
-
 # test_config_3 runs with DOTNET_VERBOSITY detailed to check DOTNET_RESTORE_DISABLE_PARALLEL.
 # To avoid log bloat, we filter the assemble output to the expected output.
 
