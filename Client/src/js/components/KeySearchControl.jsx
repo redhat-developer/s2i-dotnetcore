@@ -34,7 +34,7 @@ var KeySearchControl = React.createClass({
       items: items,
 
       key: item ? item.id : items[0].id,
-      text: this.props.search.keySearchText || '',
+      text: '',
       params: this.props.search.keySearchParams || null,
     };
   },
