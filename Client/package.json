@@ -4,7 +4,9 @@
   "description": "School Bus JavaScript Web Application",
   "main": "dist/index.html",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -79,6 +81,8 @@
     "toxy": "^0.3.12",
     "webpack": "~1.14.0",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.13.2"
-  }
+    "webpack-hot-middleware": "^2.13.2",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
