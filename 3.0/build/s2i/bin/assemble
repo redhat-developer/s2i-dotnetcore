@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# TODO: remove this
-export PATH=~/dotnet-preview:$PATH
-export DOTNET_ROOT=~/dotnet-preview
-
 set -e
 # Include filenames beginning with a '.' when installing the application source code.
 shopt -s dotglob
