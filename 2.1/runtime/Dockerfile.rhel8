@@ -20,14 +20,15 @@ LABEL io.k8s.description="Platform for running .NET Core 2.1 applications" \
       io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet21-runtime" \
       io.openshift.expose-services="8080:http" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
-      io.s2i.scripts-url=image:///usr/libexec/s2i
+      io.s2i.scripts-url=image:///usr/libexec/s2i \
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
 
 
 # Labels consumed by Red Hat build service
 LABEL name="ubi8/dotnet-21-runtime" \
       com.redhat.component="dotnet-21-runtime-container" \
       version="2.1" \
-      release="13" \
+      release="34" \
       architecture="x86_64"
 
 # Don't download/extract docs for nuget packages
