@@ -101,7 +101,7 @@ has_secret_for_registry() {
                 continue
                 ;;
         esac
-        data=$(echo "$data" | base64 -d)
+        data=$(echo "$data" | base64 --decode)
         if [[ "$data" == *"\"$registry\""* ]]; then
             return 0
         fi
