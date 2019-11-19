@@ -16,9 +16,9 @@
 #
 # IMAGE_OS        The base os image to use when building
 #                 the containers.
-#                 Options are CENTOS, RHEL7, and RHEL8.
-#                 Defaults to RHEL7/8 on a rhel system,
-#                 otherwise defaults to CENTOS.
+#                 Options are CENTOS, RHEL7, RHEL8, and
+#                 FEDORA.
+#                 Defaults to match the OS.
 #
 # TEST_PORT       specifies the port on the docker host
 #                 to bind to when creating containers
@@ -98,8 +98,13 @@ if [ -z ${IMAGE_OS+x} ]; then
     export IMAGE_OS="RHEL7"
   elif [[ `grep "Red Hat Enterprise Linux release 8" /etc/redhat-release` ]]; then
     export IMAGE_OS="RHEL8"
-  else
+  elif [[ `grep "CentOS" /etc/redhat-release` ]]; then
     export IMAGE_OS="CENTOS"
+  elif [[ `grep "Fedora" /etc/redhat-release` ]]; then
+    export IMAGE_OS="FEDORA"
+  else
+    echo 1>&2 "Set IMAGE_OS to specify the base image."
+    exit 1
   fi
 fi
 
@@ -112,6 +117,10 @@ elif [ "$IMAGE_OS" = "RHEL8" ]; then
   VERSIONS="${VERSIONS:-2.1}"
   image_prefix="ubi8"
   docker_filename="Dockerfile.rhel8"
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
+  VERSIONS="${VERSIONS:-3.1}"
+  image_prefix="fedora"
+  docker_filename="Dockerfile.fedora"
 else
   VERSIONS="${VERSIONS:-2.1 2.2}"
   image_postfix="-rhel7"

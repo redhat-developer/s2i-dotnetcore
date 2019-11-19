@@ -37,6 +37,9 @@ elif [ "$IMAGE_OS" = "RHEL8" ]; then
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
   IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-31-rhel7}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-31-runtime-rhel7}
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
+  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-31-rhel7}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-fedora/dotnet-31-runtime-rhel7}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -54,6 +57,10 @@ sdk_version=3.1.100-preview3-014645
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
 sdk_version=3.1.100-preview3-014645
+elif [ "$IMAGE_OS" = "FEDORA" ]; then
+# sdk version supported on RHEL7
+sdk_version=3.1.100-preview3-014645
+npm_version=6.12.0
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -677,7 +684,11 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_vb
   test_published_files
   test_aspnetapp
+if [ "$IMAGE_OS" != "FEDORA" ]; then
+  # Fedora doesn't have a nodemon package.
+  # TODO: look into installing it with 'npm install' when DEV_MODE == true.
   test_devmode
+fi
   test_split_build
   test_templates
   test_user
