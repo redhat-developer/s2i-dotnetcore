@@ -26,25 +26,25 @@ IMAGE_OS=${IMAGE_OS:-RHEL7}
 
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-30-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-31-runtime-centos7}
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-30-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-31-runtime}
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-30-runtime-rhel7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-31-runtime-rhel7}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version_series="3.0"
+dotnet_version_series="3.1"
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-dotnet_version="3.0.0"
+dotnet_version="3.1.0"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="3.0.0"
+dotnet_version="3.1.0"
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-dotnet_version="3.0.0"
+dotnet_version="3.1.0"
 fi
 
 test_dotnet() {
@@ -114,16 +114,16 @@ test_user() {
     # podman adds a user to /etc/passwd which, and generate_container_user adds another.
     # because the podman user is first in the file, it is returned by 'whoami'.
     # We verify a wrapped passwd file exists and that it contains the generate_container_user user.
-    local wrapped_passwd=$(docker_run_as $IMAGE_NAME 30001 cat /opt/app-root/etc/passwd)
-    assert_contains "$wrapped_passwd" "default:x:30001:0:Default Application User:/opt/app-root:/sbin/nologin"
+    local wrapped_passwd=$(docker_run_as $IMAGE_NAME 31001 cat /opt/app-root/etc/passwd)
+    assert_contains "$wrapped_passwd" "default:x:31001:0:Default Application User:/opt/app-root:/sbin/nologin"
   else
-    assert_equal $(docker_run_as $IMAGE_NAME 30001 whoami) "default"
+    assert_equal $(docker_run_as $IMAGE_NAME 31001 whoami) "default"
   fi
   # root is 'root'
   assert_equal $(docker_run_as $IMAGE_NAME 0 "whoami")      "root"
 
   # ensure the passwd file used by nss_wrapper can be overwritten
-  assert_equal $(docker_run_as $IMAGE_NAME 30001 "stat -c %a /opt/app-root/etc/passwd") "666"
+  assert_equal $(docker_run_as $IMAGE_NAME 31001 "stat -c %a /opt/app-root/etc/passwd") "666"
 }
 
 test_port() {

@@ -9,7 +9,7 @@ To use it, install S2I: https://github.com/openshift/source-to-image
 
 Sample invocation:
 
-sudo s2i build https://github.com/redhat-developer/s2i-dotnetcore-ex.git --context-dir=app --ref=dotnetcore-3.0 ${NAMESPACE}/dotnet-30-${DISTRO}7 dotnet-sample-app
+sudo s2i build https://github.com/redhat-developer/s2i-dotnetcore-ex.git --context-dir=app --ref=dotnetcore-3.1 ${NAMESPACE}/dotnet-31-${DISTRO}7 dotnet-sample-app
 
 You can then run the resulting image via:
 sudo docker run -p 8080:8080 dotnet-sample-app
