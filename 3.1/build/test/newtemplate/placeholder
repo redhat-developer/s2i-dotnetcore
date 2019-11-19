@@ -1,0 +1,3 @@
+This folder contains the 'new web template'.
+Instead of generating it once and storing it in the repo, we generate it in '.s2i/bin/assemble'.
+This ensures it is always up-to-date with the template provided by the sdk.
