@@ -178,6 +178,12 @@ function HasSecretForRegistry()
     return $false
 }
 
+If ( $args.Count -eq 0 )
+{
+    Get-Help $PSCommandPath
+    exit
+}
+
 # Check prerequisite tools
 if ((Get-Command "oc.exe" -ErrorAction SilentlyContinue) -eq $null) 
 { 
