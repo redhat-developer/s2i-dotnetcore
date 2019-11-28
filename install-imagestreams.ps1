@@ -1,42 +1,44 @@
 <#
 .SYNOPSIS
     OpenShift .NET Core S2I Installer
+
 .DESCRIPTION
     Install/Update/Remove .NET Core S2I streams.
+
+    Credentials are required for the pulling the rhel7 images. If the project does not contain a secret
+    for pulling the images yet, you can add one by specifying the '-User' and '-Password' options.
+    For more information see: https://access.redhat.com/articles/3399531.
+
 .PARAMETER OS
     Installs image streams based on this distro ('rhel7', 'rhel8', or 'centos7').
+
 .PARAMETER Namespace
     Namespace to add imagestreams to. Defaults to current 'oc' project.
     Set this to 'openshift' to install globally (requires admin priviledges).
+
 .PARAMETER Remove
     Remove the image streams.
+
 .PARAMETER User
     Username for pulling images from the registry..
+
 .PARAMETER Password
     Password for pulling images from the registry.
-#>
 
-# TODO how to make help work??
-# What is consuming this stuff above?
-# echo "OpenShift .NET Core S2I Installer"
-# echo "Usage: $script_name --os <os>"
-# echo "       $script_name --rm"
-# echo "       $script_name -h|-?|--help"
-# echo ""
-# echo "$script_name is a script for installing/updating/removing .NET S2I streams."
-# echo ""
-# echo "Options:"
-# echo "  --o,--os                           Installs image streams based on this distro ('rhel7', 'rhel8', or 'centos7')."
-# echo "  --n,--namespace                    Namespace to add imagestreams to. Defaults to current 'oc' project."
-# echo "                                     Set this to 'openshift' to install globally (requires admin priviledges)."
-# echo "  --rm                               Remove the image streams."
-# echo "  --u,--user                         Username for pulling images from the registry."
-# echo "  --p,--password                     Password for pulling images from the registry."
-# echo "  -?,--?,-h,--help                   Shows this help message."
-# echo ""
-# echo "Credentials are required for the pulling the rhel7 images. If the project does not contain a secret"
-# echo "for pulling the images yet, you can add one by specifying the '--user' and '--password' options."
-# echo "For more information see: https://access.redhat.com/articles/3399531."
+.LINK
+    https://github.com/redhat-developer/s2i-dotnetcore
+
+.EXAMPLE
+    .\install-imagestreams -OS rhel8
+
+    Install RHEL8 based image streams into the current OpenShift 'oc' project.
+
+.EXAMPLE
+
+    .\install-imagestreams -Remove
+
+    Remove all image streams from the current OpenShift 'oc' project.
+#>
 
 [cmdletbinding()]
 param(
@@ -99,7 +101,7 @@ function OcDelete([string] $arguments)
     }
     Else
     {
-        throw "Cannot delete $arguments : $stderr"
+        throw "Cannot delete ${arguments}: $stderr"
     }
 }
 
@@ -123,7 +125,6 @@ function HasDotnetImagestreams()
 
     If ($exitcode -ne 0)
     {
-        Say $stderr
         If ($stderr -like '*NotFound*')
         {
             return $false
@@ -225,11 +226,11 @@ $create_secret=[bool]$User
 # Inform user he may need a pull secret
 If (( $create_secret -eq $false) -and ($registry_requires_auth -eq $true))
 {
-    Say "note: The image streams for $OS require authentication against $registry. See '--help' for more info." # TODO: --help...
+    Say "note: The image streams for $OS require authentication against $registry. See 'Get-Help .\install-imagestreams.ps1' for more info."
 }
 
 # Determine namespace
-If (-not ($PSBoundParameters.ContainsKey("Namespace"))) # TODO: is this the proper way to check this?
+If (-not ($PSBoundParameters.ContainsKey("Namespace")))
 {
     $Namespace = GetCurrentNamespace
 }
@@ -258,6 +259,6 @@ If (HasDotnetImagestreams)
 }
 Else
 {
-    say "Installing image streams:"
+    Say "Installing image streams:"
     ExecuteCheckSuccess "oc.exe" "create -n $namespace -f $imagestreams_url"
 }
