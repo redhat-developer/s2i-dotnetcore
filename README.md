@@ -36,9 +36,13 @@ base system, such as IMAGE_OS=CENTOS or IMAGE_OS=RHEL8.
 Installing
 ----------------
 
-The Red Hat documentation for .NET Core describes the steps to [install the image streams](https://access.redhat.com/documentation/en-us/net_core/2.2/html/getting_started_guide/gs_dotnet_on_openshift#install_imagestreams).
+The image streams can be installed using the `dotnet_imagestreams_*.json` files with the OpenShift client `oc`.
 
-This repo contains a [bash script](https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.sh) that performs these steps.
+This repo contains a script that helps install/upgrade/remove the imagestreams.
+
+### Linux/macOS
+
+script: https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.sh
 
 For example, to install the `rhel7` based images and add a secret for authenticating against the `registry.redhat.io` registry:
 
@@ -48,7 +52,22 @@ $ chmod +x install-imagestreams.sh
 $ ./install-imagestreams.sh --os rhel7 -u <subscription_username> -p <subscription_password>
 ```
 
-Run `./install-imagestreams.sh --help` for more information.
+You can run `./install-imagestreams.sh --help` for more information.
+
+### Windows
+
+script: https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.ps1
+
+For example, to install the `rhel7` based images and add a secret for authenticating against the `registry.redhat.io` registry:
+
+```sh
+PS > Invoke-WebRequest https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.ps1 -UseBasicParsing -OutFile install-imagestreams.ps1
+PS > .\install-imagestreams.ps1 -OS rhel7 -User <subscription_username> -Password <subscription_password>
+```
+
+Running scripts may be prohibited by the `ExecutionPolicy`, you can relax the policy by running: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force`
+
+You can run `Get-Help .\install-imagestreams.ps1` for more information.
 
 Usage
 ---------------------------------
