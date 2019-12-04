@@ -50,16 +50,16 @@ npm_version=6.9.0
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
-sdk_version=3.1.100-preview3-014645
+sdk_version=3.1.100
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=3.1.100-preview3-014645
+sdk_version=3.1.100
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=3.1.100-preview3-014645
+sdk_version=3.1.100
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on RHEL7
-sdk_version=3.1.100-preview3-014645
+sdk_version=3.1.100
 npm_version=6.12.0
 fi
 
