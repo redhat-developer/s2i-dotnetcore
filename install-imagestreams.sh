@@ -45,7 +45,7 @@ show_help() {
     echo "$script_name is a script for installing/updating/removing .NET S2I streams."
     echo ""
     echo "Options:"
-    echo "  --o,--os                           Installs image streams based on this distro ('rhel7', 'rhel8', or 'centos7')."
+    echo "  --o,--os                           Installs image streams based on this distro ('rhel7', 'rhel8', 'centos7', or 'fedora')."
     echo "  --n,--namespace                    Namespace to add imagestreams to. Defaults to current 'oc' project."
     echo "                                     Set this to 'openshift' to install globally (requires admin priviledges)."
     echo "  --rm                               Remove the image streams."
@@ -162,10 +162,13 @@ do
             "rhel8")
                 imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_rhel8.json"
                 registry_requires_auth=false
-                registry="registry.access.redhat.com"
+                ;;
+            "fedora")
+                imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_fedora.json"
+                registry_requires_auth=false
                 ;;
             *)
-                say_err "Unsupported value for --os: '$os'. Valid values are 'centos7', 'rhel7', and 'rhel8'."
+                say_err "Unsupported value for --os: '$os'. Valid values are 'centos7', 'rhel7', 'rhel8', and 'fedora'."
                 exit 1
                 ;;
             esac

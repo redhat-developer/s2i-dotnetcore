@@ -10,7 +10,7 @@
     For more information see: https://access.redhat.com/articles/3399531.
 
 .PARAMETER OS
-    Installs image streams based on this distro ('rhel7', 'rhel8', or 'centos7').
+    Installs image streams based on this distro ('rhel7', 'rhel8', 'centos7', or 'fedora').
 
 .PARAMETER Namespace
     Namespace to add imagestreams to. Defaults to current 'oc' project.
@@ -221,9 +221,14 @@ switch ( $OS )
         $imagestreams_url = "https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_rhel8.json"
         $registry_requires_auth = $false
     }
+    "fedora"
+    {
+        $imagestreams_url = "https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_fedora.json"
+        $registry_requires_auth = $false
+    }
     default
     {
-        throw "Unsupported value for --os: $OS. Valid values are 'centos7', 'rhel7', and 'rhel8'."
+        throw "Unsupported value for --os: $OS. Valid values are 'centos7', 'rhel7', 'rhel8', and 'fedora'."
     }
 }
 
