@@ -46,6 +46,7 @@ show_help() {
     echo ""
     echo "Options:"
     echo "  --o,--os                           Installs image streams based on this distro ('rhel7', 'rhel8', 'centos7', or 'fedora')."
+    echo "  --i,--imagestreams                 Installs the imagestreams from the given path."
     echo "  --n,--namespace                    Namespace to add imagestreams to. Defaults to current 'oc' project."
     echo "                                     Set this to 'openshift' to install globally (requires admin priviledges)."
     echo "  --rm                               Remove the image streams."
@@ -148,7 +149,7 @@ do
             ;;
         -o|--os)
             shift
-            os="$1"
+            os=$(echo "$1" | tr '[:upper:]' '[:lower:]')
             case "$os" in
             "centos7")
                 imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_centos.json"
@@ -172,6 +173,10 @@ do
                 exit 1
                 ;;
             esac
+            ;;
+        -i|--imagestreams)
+            shift
+            imagestreams_url="$1"
             ;;
         -u|--user)
             shift
