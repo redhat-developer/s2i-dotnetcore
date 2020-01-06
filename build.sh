@@ -109,7 +109,7 @@ if [ -z ${IMAGE_OS+x} ]; then
 fi
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  VERSIONS="${VERSIONS:-2.1 2.2}"
+  VERSIONS="${VERSIONS:-2.1 2.2 3.1}"
   image_postfix="-centos7"
   image_prefix="dotnet"
   docker_filename="Dockerfile"
