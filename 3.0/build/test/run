@@ -50,10 +50,10 @@ if [ "$IMAGE_OS" = "CENTOS" ]; then
 sdk_version=3.0.100
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=3.0.100
+sdk_version=3.0.102
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=3.0.100
+sdk_version=3.0.102
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"

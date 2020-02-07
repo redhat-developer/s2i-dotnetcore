@@ -49,8 +49,13 @@ Repository organization
 
 * **Dockerfile.rhel7**
 
-  RHEL based Dockerfile. In order to perform build or test actions on this
+  RHEL 7 based Dockerfile. In order to perform build or test actions on this
   Dockerfile you need to run the action on a properly subscribed RHEL machine.
+
+* **Dockerfile.rhel8**
+
+  UBI 8 / RHEL 8 based Dockerfile. No RHEL subscription is required, but without
+  one only UBI RPMs can be added to the container.
 
 * **Dockerfile**
 

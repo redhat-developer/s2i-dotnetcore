@@ -93,7 +93,7 @@ elif [[ "$IMAGE_OS" = "rhel7" ]]; then
   VERSIONS="${VERSIONS:-2.1 3.0 3.1}"
   imagestreams_file_name=dotnet_imagestreams.json
 elif [[ "$IMAGE_OS" = "rhel8" ]]; then
-  VERSIONS="${VERSIONS:-2.1 3.0}"
+  VERSIONS="${VERSIONS:-2.1 3.0 3.1}"
   imagestreams_file_name=dotnet_imagestreams_rhel8.json
 else
   echo 1>&2 "error: Unknown or unsupported OS '$IMAGE_OS'. Set the env var IMAGE_OS to override this."

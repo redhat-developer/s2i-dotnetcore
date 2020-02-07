@@ -47,8 +47,8 @@ ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs10" \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_1=2.1.7 \
-    LatestPatchVersionForAspNetCoreAll2_1=2.1.7
+    LatestPatchVersionForAspNetCoreApp2_1=2.1.14 \
+    LatestPatchVersionForAspNetCoreAll2_1=2.1.14
 
 # Run container by default as user with id 1001 (default)
 USER 1001

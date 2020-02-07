@@ -46,8 +46,8 @@ RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
 # Needed for the `dotnet watch` to detect changes in a container
 ENV  DOTNET_USE_POLLING_FILE_WATCHER=true \
 # Make all sdks aware of the latest ASP.NET Core version
-    LatestPatchVersionForAspNetCoreApp2_1=2.1.13 \
-    LatestPatchVersionForAspNetCoreAll2_1=2.1.13
+    LatestPatchVersionForAspNetCoreApp2_1=2.1.15 \
+    LatestPatchVersionForAspNetCoreAll2_1=2.1.15
 
 # Run container by default as user with id 1001 (default)
 USER 1001

@@ -42,9 +42,9 @@ dotnet_version_series="3.0"
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 dotnet_version="3.0.0"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="3.0.0"
+dotnet_version="3.0.2"
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-dotnet_version="3.0.0"
+dotnet_version="3.0.2"
 fi
 
 test_dotnet() {
