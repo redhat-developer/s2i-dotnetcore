@@ -17,7 +17,7 @@ Versions
 * 2.1 (RHEL 7, RHEL 8, CentOS 7)
 * [RETIRED] 2.2 (RHEL 7, CentOS 7)
 * 3.0 (RHEL 7, RHEL 8)
-* 3.1 (RHEL 7, CentOS 7)
+* 3.1 (RHEL 7, RHEL 8, CentOS 7, Fedora)
 
 Building
 ----------------

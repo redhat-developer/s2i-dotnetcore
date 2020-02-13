@@ -40,11 +40,11 @@ source ${test_dir}/testcommon
 dotnet_version_series=2.1
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-dotnet_version=2.1.9
+dotnet_version=2.1.14
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version=2.1.13
+dotnet_version=2.1.15
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-dotnet_version=2.1.13
+dotnet_version=2.1.15
 fi
 
 test_dotnet() {
