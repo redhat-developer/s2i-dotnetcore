@@ -1,4 +1,5 @@
-FROM dotnet/dotnet-31-runtime-centos7
+FROM registry.centos.org/dotnet/dotnet-31-centos7
+#FROM dotnet/dotnet-31-runtime-centos7
 # This image provides a .NET Core 3.1 environment you can use to run your .NET
 # applications.
 
@@ -34,7 +35,7 @@ RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
     rm -rf /var/cache/yum/*
 
 # Directory with the sources is set as the working directory.
-RUN mkdir /opt/app-root/src
+#RUN mkdir /opt/app-root/src
 WORKDIR /opt/app-root/src
 
 # Trigger first time actions.
