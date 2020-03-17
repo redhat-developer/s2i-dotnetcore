@@ -28,7 +28,7 @@
     "babel-plugin-transform-object-rest-spread": "~6.20.2",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
-    "bluebird": "^3.3.4",
+    "bluebird": "3.3.5",
     "bootstrap": "^3.3.6",
     "del": "~2.2.0",
     "deps-ok": "~1.2.0",

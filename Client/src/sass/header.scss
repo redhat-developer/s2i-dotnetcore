@@ -1,3 +1,10 @@
+$nav-color: #38598a;
+$nav-dev-color: #448a38;
+$nav-tst-color: #f9a825;
+$nav-active-color: #5475a7;
+$nav-dev-active-color: lighten($nav-dev-color, 10%);
+$nav-tst-active-color: lighten($nav-tst-color, 10%);
+
 #banner {
   float: left;
   margin-top: 20px;
@@ -9,7 +16,7 @@
 
 #top-nav {
   margin-bottom: 0px;
-  background-color: #38598a;
+  background-color: $nav-color;
   border-radius: 0px;
   border: 0;
   border-top: 2px solid #fcba19;
@@ -51,6 +58,14 @@
   }
 }
 
+#top-nav.env-development {
+  background-color: $nav-dev-color;
+}
+
+#top-nav.env-test {
+  background-color: $nav-tst-color;
+}
+
 .navbar-default .navbar-nav > li > a {
   color: #fff;
 }
@@ -75,16 +90,34 @@
   background-color: #5475a7;
   text-decoration: underline;
 }
+
 .navbar-default .navbar-nav > .active > a {
   color: #fff;
-  background-color: #5475a7;
+  background-color: $nav-active-color;
   text-decoration: underline;
 }
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #fff;
-  background-color: #5475a7;
+  background-color: $nav-active-color;
 }
+
+.navbar-default.env-development .navbar-nav > .active > a {
+  background-color: $nav-dev-active-color;
+}
+.navbar-default.env-development .navbar-nav > .active > a:hover,
+.navbar-default.env-development .navbar-nav > .active > a:focus {
+  background-color: $nav-dev-active-color;
+}
+
+.navbar-default.env-test .navbar-nav > .active > a {
+  background-color: $nav-tst-active-color;
+}
+.navbar-default.env-test .navbar-nav > .active > a:hover,
+.navbar-default.env-test .navbar-nav > .active > a:focus {
+  background-color: $nav-tst-active-color;
+}
+
 .navbar-default .navbar-nav > .open > a {
   color: #fff;
   background-color: #38598a;

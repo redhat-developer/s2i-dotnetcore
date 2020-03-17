@@ -13,6 +13,7 @@ namespace SchoolBusCommon
         public string InformationalVersion { get; set; }
         public string TargetFramework { get; set; }
         public string ImageRuntimeVersion { get; set; }
+        public string Environment { get; set; }
         public IEnumerable<VersionInfo> Dependancies { get; set; }
     }
 }

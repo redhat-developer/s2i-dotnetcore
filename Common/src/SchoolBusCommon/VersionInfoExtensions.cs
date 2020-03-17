@@ -40,7 +40,7 @@ namespace SchoolBusCommon
             return info;
         }
 
-        public static ApplicationVersionInfo GetApplicationVersionInfo(this Assembly assembly, string commit = null)
+        public static ApplicationVersionInfo GetApplicationVersionInfo(this Assembly assembly, string environment = null, string commit = null)
         {
             DateTime creationTime = File.GetLastWriteTimeUtc(assembly.Location);
 
@@ -57,6 +57,7 @@ namespace SchoolBusCommon
                 TargetFramework = assembly.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName,
                 Title = assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title,
                 ImageRuntimeVersion = assembly.ImageRuntimeVersion,
+                Environment = environment,
                 Dependancies = assembly.GetReferencedAssemblies().ToIEnumerableVersionInfo()
             };
 

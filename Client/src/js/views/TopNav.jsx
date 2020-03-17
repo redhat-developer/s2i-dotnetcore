@@ -17,6 +17,7 @@ var TopNav = React.createClass({
     currentUser: React.PropTypes.object,
     showWorkingIndicator: React.PropTypes.bool,
     requestError: React.PropTypes.object,
+    version: React.PropTypes.object,
   },
 
   getIsCurrentUserAdmin () {
@@ -40,6 +41,11 @@ var TopNav = React.createClass({
     var errorTitle = html ? html.errorTitle : '';
     var errorMessage = html ? html.errorMessage : '';
 
+    let environment = '';
+    if(this.props.version.applicationVersions && this.props.version.applicationVersions.length > 0){
+      environment = `env-${this.props.version.applicationVersions[0].environment}`;
+    } 
+
     return <div id="header">
       <nav id="header-main" className="navbar navbar-default navbar-fixed-top">
         <div className="container">
@@ -50,7 +56,7 @@ var TopNav = React.createClass({
           </div>
           <h1 id="banner">CVSE School Bus Inspection Tracking System</h1>
         </div>
-        <Navbar id="top-nav">
+        <Navbar id="top-nav" className={environment}>
           <Nav>
             <LinkContainer to={{ pathname: `/${ Constant.HOME_PATHNAME }` }}>
               <NavItem eventKey={ 1 }>Home</NavItem>
@@ -104,6 +110,7 @@ function mapStateToProps(state) {
     currentUser: state.user,
     showWorkingIndicator: state.ui.requests.waiting,
     requestError: state.ui.requests.error,
+    version: state.version,
   };
 }
 

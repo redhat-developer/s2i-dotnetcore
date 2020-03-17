@@ -4,8 +4,8 @@
  * The School Bus application tracks that inspections are performed in a timely fashion. For each school bus the application tracks information about the bus (including data from ICBC, NSC, etc.), it's past and next inspection dates and results, contacts, and the inspector responsible for next inspecting the bus.
  *
  * OpenAPI spec version: v1
- * 
- * 
+ *
+ *
  */
 
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +24,7 @@ namespace SchoolBusAPI.Controllers
     {
         // Hack in the git commit id.
         private const string _commitKey = "OPENSHIFT_BUILD_COMMIT";
+        private const string _dotnetEnvKey = "ASPNETCORE_ENVIRONMENT";
 
         private readonly DbContext _context;
         private readonly IConfiguration _configuration;
@@ -41,7 +42,15 @@ namespace SchoolBusAPI.Controllers
                 return _configuration[_commitKey];
             }
         }
-     
+
+        private string Environment
+        {
+            get
+            {
+                return _configuration[_dotnetEnvKey].ToLowerInvariant();
+            }
+        }
+
         [AllowAnonymous]
         [HttpGet]
         [Route("version")]
@@ -72,7 +81,7 @@ namespace SchoolBusAPI.Controllers
         private ApplicationVersionInfo GetApplicationVersionInfo()
         {
             Assembly assembly = this.GetType().GetTypeInfo().Assembly;
-            return assembly.GetApplicationVersionInfo(this.CommitId);
+            return assembly.GetApplicationVersionInfo(this.Environment, this.CommitId);
         }
 
         private DatabaseVersionInfo GetDatabaseVersionInfo()
