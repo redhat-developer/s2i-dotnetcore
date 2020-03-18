@@ -46,7 +46,7 @@ $nav-tst-active-color: lighten($nav-tst-color, 10%);
     position: absolute;
     top: 21px;
     right: 22px;
-    background-color: #B72B2B;
+    background-color: #b72b2b;
     font-size: 13px;
     color: white;
     margin-top: -8px;
@@ -76,55 +76,63 @@ $nav-tst-active-color: lighten($nav-tst-color, 10%);
 .navbar-default .navbar-nav > li > a:focus {
   color: #fff;
 }
-.navbar-default .navbar-nav > li > .dropdown-menu {
-  color: #fff;
-  background-color: #38598a;
-  font-size: 13px;
-}
-.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
-  color: #fff;
-}
-.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
-.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
-  color: #fff;
-  background-color: #5475a7;
-  text-decoration: underline;
+
+@mixin nav-link-active-color($color, $active-color) {
+  .active {
+    a {
+      color: #fff;
+      background-color: $active-color;
+      text-decoration: underline;
+
+      &:hover,
+      &:focus {
+        background-color: $active-color;
+      }
+    }
+  }
+
+  li {
+    .dropdown-menu {
+      color: #fff;
+      background-color: $color;
+      font-size: 13px;
+
+      li {
+        a {
+          color: #fff;
+
+          &:hover,
+          &:focus {
+            background-color: $active-color;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .open {
+    a {
+      color: #fff;
+      background-color: $color;
+      text-decoration: underline;
+
+      &:hover,
+      &:focus {
+        background-color: $color;
+      }
+    }
+  }
 }
 
-.navbar-default .navbar-nav > .active > a {
-  color: #fff;
-  background-color: $nav-active-color;
-  text-decoration: underline;
-}
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
-  color: #fff;
-  background-color: $nav-active-color;
+.navbar-default .navbar-nav {
+  @include nav-link-active-color($nav-color, $nav-active-color);
 }
 
-.navbar-default.env-development .navbar-nav > .active > a {
-  background-color: $nav-dev-active-color;
-}
-.navbar-default.env-development .navbar-nav > .active > a:hover,
-.navbar-default.env-development .navbar-nav > .active > a:focus {
-  background-color: $nav-dev-active-color;
+.navbar-default.env-development .navbar-nav {
+  @include nav-link-active-color($nav-dev-color, $nav-dev-active-color);
 }
 
-.navbar-default.env-test .navbar-nav > .active > a {
-  background-color: $nav-tst-active-color;
-}
-.navbar-default.env-test .navbar-nav > .active > a:hover,
-.navbar-default.env-test .navbar-nav > .active > a:focus {
-  background-color: $nav-tst-active-color;
-}
-
-.navbar-default .navbar-nav > .open > a {
-  color: #fff;
-  background-color: #38598a;
-  text-decoration: underline;
-}
-.navbar-default .navbar-nav > .open > a:hover,
-.navbar-default .navbar-nav > .open > a:focus {
-  color: #fff;
-  background-color: #38598a;
+.navbar-default.env-test .navbar-nav {
+  @include nav-link-active-color($nav-tst-color, $nav-tst-active-color);
 }
