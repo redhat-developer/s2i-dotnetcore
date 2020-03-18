@@ -119,6 +119,7 @@ $nav-tst-active-color: lighten($nav-tst-color, 10%);
 
       &:hover,
       &:focus {
+        color: #fff;
         background-color: $color;
       }
     }
