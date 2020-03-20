@@ -96,11 +96,7 @@ assert_completed_build() {
   local image="$1"
   local log="$2"
 
-  if [ "$USING_PODMAN" ]; then
-    assert_contains "${log}" "COMMIT ${image}"
-  else
-    assert_contains "${log}" "Build completed successfully"
-  fi
+  assert_contains "${log}" "s2i build completed successfully"
 }
 
 test_start() {
@@ -290,9 +286,15 @@ s2i_build_core() {
     rm -rf "$build_folder"
     s2i build --as-dockerfile "$build_folder/Dockerfile" "$@" ${IMAGE_NAME} "${tag}" 2>&1
     podman build $pull_arg --no-cache --security-opt label=disable -t "${tag}" "$build_folder" 2>&1
+    if [ $? -eq 0 ]; then
+      echo "s2i build completed successfully"
+    fi
     rm -rf "$build_folder"
   else
     s2i build $pull_policy "$@" ${IMAGE_NAME} ${tag} 2>&1
+    if [ $? -eq 0 ]; then
+      echo "s2i build completed successfully"
+    fi
   fi
 }
 
