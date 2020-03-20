@@ -117,6 +117,7 @@ namespace SchoolBusAPI.Services.Impl
                             return false;
                         };
 
+                        client.CheckCertificateRevocation = false;
                         client.Connect(SmtpServer, SmtpPort, MailKit.Security.SecureSocketOptions.Auto);
                     }
                     catch (MailKit.Security.SslHandshakeException sslException)
