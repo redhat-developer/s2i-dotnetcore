@@ -18,6 +18,6 @@ if [ $$ -eq 1 -a x"$USER_ID" != x"0" -a x"$USER_ID" != x"1001" ]; then
     export NSS_WRAPPER_PASSWD
     export NSS_WRAPPER_GROUP
 
-    LD_PRELOAD=libnss_wrapper.so
+    LD_PRELOAD="libnss_wrapper.so ${LD_PRELOAD}"
     export LD_PRELOAD
 fi
