@@ -53,8 +53,8 @@ namespace SchoolBusAPI.Services.Impl
                 string mailCc = email.mailCc.ToString();
                 string[] ccs = mailCc.Split(delimiterChars);
 
-                string emailFrom = email.mailFrom.ToString();
-                string subject = email.subject.ToString();
+                string emailFrom = email.mailFrom.ToString().Trim();
+                string subject = email.subject.ToString().Trim();
                 string body = email.body.ToString();
 
                 try
@@ -100,21 +100,23 @@ namespace SchoolBusAPI.Services.Impl
                                 return false;
                             }
 
-                            Console.WriteLine("SSL Policy errors detected, validating certificate chain");
-                            foreach (var chainCertificate in chain.ChainElements)
-                            {
-                                if (chainCertificate.Certificate == null)
-                                {
-                                    Console.WriteLine($"No valid certificate found in current element: {chainCertificate.Information}");
-                                    continue;
-                                }
-                                bool trustedCertificate = (chainCertificate.Certificate.Thumbprint == SMTP_SERVER_SSL_TRUSTED_THUMBPRINT);
+                            //Console.WriteLine("SSL Policy errors detected, validating certificate chain");
+                            //foreach (var chainCertificate in chain.ChainElements)
+                            //{
+                            //    if (chainCertificate.Certificate == null)
+                            //    {
+                            //        Console.WriteLine($"No valid certificate found in current element: {chainCertificate.Information}");
+                            //        continue;
+                            //    }
+                            //    bool trustedCertificate = (chainCertificate.Certificate.Thumbprint == SMTP_SERVER_SSL_TRUSTED_THUMBPRINT);
 
-                                Console.WriteLine($"Certificate Thumbprint ({chainCertificate.Certificate.Thumbprint}) is {(trustedCertificate ? "" : "not")} trusted");
-                                if (trustedCertificate) return true;
-                            }
-                            Console.WriteLine("Unable to validate certificate chain.");
-                            return false;
+                            //    Console.WriteLine($"Certificate Thumbprint ({chainCertificate.Certificate.Thumbprint}) is {(trustedCertificate ? "" : "not")} trusted");
+                            //    if (trustedCertificate) return true;
+                            //}
+                            //Console.WriteLine("Unable to validate certificate chain.");
+                            //return false;
+
+                            return true;
                         };
 
                         client.CheckCertificateRevocation = false;
