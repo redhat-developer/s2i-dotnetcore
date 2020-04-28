@@ -43,25 +43,23 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-npm_version=6.4.1
+npm_version=6.13.4
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
 sdk_version=2.1.510
 aspnet_latest_app_version=2.1.14
 aspnet_latest_all_version=2.1.14
-npm_version=6.9.0
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=2.1.511
-aspnet_latest_app_version=2.1.15
-aspnet_latest_all_version=2.1.15
-npm_version=6.9.0
+sdk_version=2.1.513
+aspnet_latest_app_version=2.1.17
+aspnet_latest_all_version=2.1.17
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=2.1.511
-aspnet_latest_app_version=2.1.15
-aspnet_latest_all_version=2.1.15
+sdk_version=2.1.513
+aspnet_latest_app_version=2.1.17
+aspnet_latest_all_version=2.1.17
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
