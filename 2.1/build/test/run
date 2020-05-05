@@ -43,25 +43,17 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-npm_version=6.4.1
+npm_version=6.13.4
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
 sdk_version=2.1.510
-aspnet_latest_app_version=2.1.14
-aspnet_latest_all_version=2.1.14
-npm_version=6.9.0
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=2.1.511
-aspnet_latest_app_version=2.1.15
-aspnet_latest_all_version=2.1.15
-npm_version=6.9.0
+sdk_version=2.1.513
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=2.1.511
-aspnet_latest_app_version=2.1.15
-aspnet_latest_all_version=2.1.15
+sdk_version=2.1.513
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -608,39 +600,6 @@ test_certificates() {
   assert_equal "$count_with_additional" "$(($default_count + 4))"
 }
 
-test_aspnet_implicit_using_latest()
-{
-  test_start
-
-  # aspnetcoreimplicitversion contains a versionless reference
-  # to the Microsoft.AspNetCore.{App,All} packages.
-  # after the build, the assemble script prints out the resolved versions.
-  local app=aspnetcoreimplicitversion
-  local image=$(s2i_image_tag ${app})
-
-  # verify the versionless references resolved to the latest version.
-  # build image
-  local s2i_build=$(s2i_build_output_log ${app} ${image})
-  # cleanup
-  docker_rmi ${image}
-
-  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.All": "'${aspnet_latest_all_version}'"'
-  assert_contains "${s2i_build}" '"Microsoft.AspNetCore.App": "'${aspnet_latest_app_version}'"'
-
-  # verify aspnet_latest_{app,all}_version have the correct values.
-  # If this fails, the variables in the test and environment variables in the Dockerfiles must be updated.
-  if [ "$IMAGE_OS" != "CENTOS" ]; then
-    info verifying aspnet_latest_{app,all}
-
-    # build image
-    s2i_build=$(s2i_build_output_log ${app} ${image} -e LatestPatchVersionForAspNetCoreApp2_1='' -e LatestPatchVersionForAspNetCoreAll2_1='')
-    # cleanup
-    docker_rmi ${image}
-
-    assert_contains "${s2i_build}" '"Microsoft.AspNetCore.All": "'${aspnet_latest_all_version}'"'
-    assert_contains "${s2i_build}" '"Microsoft.AspNetCore.App": "'${aspnet_latest_app_version}'"'
-  fi
-}
 
 test_binary()
 {
@@ -726,7 +685,6 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_config
   test_usage
   test_s2i_sdk_version $sdk_version
-  test_aspnet_implicit_using_latest
   test_consoleapp
   test_multiframework
   test_fsharp
