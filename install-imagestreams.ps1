@@ -119,25 +119,6 @@ function GetCurrentNamespace()
     }
 }
 
-function HasDotnetImagestreams()
-{
-    $exitcode, $stdout, $stderr = Execute "oc.exe" "get -n $Namespace is dotnet"
-
-    If ($exitcode -ne 0)
-    {
-        If ($stderr -like '*NotFound*')
-        {
-            return $false
-        }
-        Else
-        {
-            throw "Cannot determine if the project already contains dotnet imagestreams."
-        }
-    }
-
-    return $true
-}
-
 function HasSecretForRegistry()
 {
     $exitcode, $stdout, $stderr = Execute "oc.exe" "get secret -o name -n $namespace"
@@ -263,13 +244,5 @@ If ( $create_secret -eq $true)
 }
 
 # Install/update imagestreams
-If (HasDotnetImagestreams)
-{
-    Say "Updating image streams:"
-    ExecuteCheckSuccess "oc.exe" "replace -n $namespace -f $imagestreams_url"
-}
-Else
-{
-    Say "Installing image streams:"
-    ExecuteCheckSuccess "oc.exe" "create -n $namespace -f $imagestreams_url"
-}
+Say "Updating image streams:"
+ExecuteCheckSuccess "oc.exe" "apply -n $namespace -f $imagestreams_url"

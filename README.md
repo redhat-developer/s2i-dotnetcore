@@ -121,7 +121,7 @@ used with newer versions of .NET Core.
 If a template is not on your OpenShift installation, you can import it:
 
 ```
-oc create -f <template.json>
+oc apply -f <template.json>
 ```
 
 To instantiate a template you can use the `oc new-app` command:
@@ -160,7 +160,7 @@ ASP.NET Core NuGet packages. Using these streams results in improved build speed
 
 You can add these imagestreams by running:
 ```
-oc create -f https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/templates/aspnet-2.x.json
+oc apply -f https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/templates/aspnet-2.x.json
 ```
 
 After the file is imported in OpenShift, OpenShift will build the `aspnet:2.1` images. This will take a few minutes. Once that is

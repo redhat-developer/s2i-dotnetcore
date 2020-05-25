@@ -68,18 +68,6 @@ get_current_namespace() {
     echo "$project"
 }
 
-has_dotnet_imagestream() {
-    local streams;
-    if ! streams=$(oc get -n "$namespace" is dotnet 2>&1); then
-        if [[ "$streams" == *"NotFound"* ]]; then
-            return 1
-        fi
-        say_err "Cannot determine if the project already contains dotnet imagestreams."
-        exit 1
-    fi
-    return 0
-}
-
 has_secret_for_registry() {
     local secret_names;
     if ! secret_names=$(oc get secret -o name -n "$namespace"); then
@@ -265,10 +253,5 @@ if [ "$create_secret" == true ]; then
 fi
 
 # Install/update imagestreams
-if has_dotnet_imagestream; then
-    say "Updating image streams:"
-    oc replace -n "$namespace" -f "$imagestreams_url"
-else
-    say "Installing image streams:"
-    oc create -n "$namespace" -f "$imagestreams_url"
-fi
+say "Updating image streams:"
+oc apply -n "$namespace" -f "$imagestreams_url"
