@@ -1,0 +1,215 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: ${PROJECT_NAME}
+labels:
+  template: server-deploy
+objects:
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      creationTimestamp: null
+      labels:
+        shared: true
+      name: ${NAME}
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      creationTimestamp: null
+      name: ${NAME}${SUFFIX}
+    spec:
+      replicas: 1
+      selector:
+        deploymentconfig: ${NAME}${SUFFIX}
+      strategy:
+        activeDeadlineSeconds: 21600
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 1
+          maxUnavailable: 1
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            deploymentconfig: ${NAME}${SUFFIX}
+        spec:
+          containers:
+            - image: ${NAME}:${VERSION}
+              name: server
+              ports:
+                - containerPort: 8080
+                  protocol: TCP
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 512Mi
+                limits:
+                  cpu: 750m
+                  memory: 768Mi
+              livenessProbe:
+                httpGet:
+                  path: /
+                  port: 8080
+                initialDelaySeconds: 30
+                periodSeconds: 5
+              env:
+                - name: DATABASE_SERVICE_NAME
+                  value: postgres
+                - name: POSTGRESQL_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgresql
+                      key: database-user
+                - name: POSTGRESQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgresql
+                      key: database-password
+                - name: POSTGRESQL_DATABASE
+                  value: schoolbus
+                - name: UserInitializationFile
+                  value: "/secrets/users.json"
+                - name: DistrictInitializationFile
+                  value: "/secrets/districts.json"
+                - name: RegionInitializationFile
+                  value: "/secrets/regions.json"
+                - name: CCWJurisdictionInitializationFile
+                  value: "/secrets/ccwjurisdictions.json"
+                - name: CCWInitializationFile
+                  value: "/ccwsecrets/ccw.json"
+                - name: CCW_SERVICE_NAME
+                  value: "${CCW_NAME}"
+                - name: PDF_SERVICE_NAME
+                  value: "${PDF_NAME}"
+                - name: ASPNETCORE_ENVIRONMENT
+                  value: Development
+              volumeMounts:
+                - name: server-docs
+                  mountPath: "/uploads"
+                - name: secret-volume
+                  mountPath: "/secrets"
+                  readOnly: true
+                - name: ccw-secret-volume
+                  mountPath: "/ccwsecrets"
+                  readOnly: true
+          volumes:
+            - name: server-docs
+              persistentVolumeClaim:
+                claimName: server-docs-pvc
+            - name: secret-volume
+              secret:
+                secretName: schoolbus-secret
+            - name: ccw-secret-volume
+              secret:
+                secretName: ccw-secret
+                defaultMode: 420
+      test: false
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - server
+            from:
+              kind: ImageStreamTag
+              name: ${NAME}:${VERSION}
+          type: ImageChange
+        - type: ConfigChange
+  - apiVersion: route.openshift.io/v1
+    kind: Route
+    metadata:
+      annotations:
+        haproxy.router.openshift.io/timeout: 1h
+      creationTimestamp: null
+      name: ${NAME}${SUFFIX}
+    spec:
+      host: ${HOST}
+      path: "/api"
+      port:
+        targetPort: web
+      tls:
+        termination: edge
+      to:
+        kind: Service
+        name: ${NAME}${SUFFIX}
+        weight: 100
+      wildcardPolicy: None
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      name: ${NAME}${SUFFIX}
+    spec:
+      ports:
+        - name: web
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+      selector:
+        deploymentconfig: ${NAME}${SUFFIX}
+parameters:
+  - description: Name of the project (SCHOOLBUS)
+    displayName: PROJECT_NAME
+    name: PROJECT_NAME
+    required: true
+    value: "schoolbus"
+  - description: A name used for all objects
+    displayName: Name
+    name: NAME
+    required: true
+    value: "server"
+  - description: A name suffix used for all objects
+    displayName: Suffix
+    name: SUFFIX
+    required: false
+    value: "-dev"
+  - description: Environment short name (dev,test,uat,prod)
+    displayName: ENV
+    name: ENV
+    required: false
+    value: "dev"
+  - description: A version used for the image tags
+    displayName: version
+    name: VERSION
+    required: true
+    value: "v1.0.0"
+  - description: The ASP Net Core deployment environment setting
+    displayName: AspNetCore Environment
+    name: ASPNETCORE_ENVIRONMENT
+    required: true
+    value: "Development"
+  - description: HOST
+    displayName: HOST
+    name: HOST
+    required: true
+    value: ""
+  - description: SOURCE_REPOSITORY_URL
+    displayName: SOURCE_REPOSITORY_URL
+    name: SOURCE_REPOSITORY_URL
+    required: false
+    value: ""
+  - description: SOURCE_REPOSITORY_REF
+    displayName: SOURCE_REPOSITORY_REF
+    name: SOURCE_REPOSITORY_REF
+    required: false
+    value: ""
+  - name: PDF_NAME
+    displayName: PDF Name
+    description:
+      The name assigned to all of the PDF microservice objects defined in
+      this template.
+    required: true
+    value: pdf2
+  - name: CCW_NAME
+    displayName: CCW Name
+    description:
+      The name assigned to all of the CCW microservice objects defined in
+      this template.
+    required: true
+    value: ccw
