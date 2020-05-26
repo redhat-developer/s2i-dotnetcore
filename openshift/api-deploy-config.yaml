@@ -61,7 +61,7 @@ objects:
                 periodSeconds: 5
               env:
                 - name: DATABASE_SERVICE_NAME
-                  value: postgres
+                  value: postgresql
                 - name: POSTGRESQL_USER
                   valueFrom:
                     secretKeyRef:
