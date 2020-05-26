@@ -163,7 +163,7 @@ parameters:
     displayName: Name
     name: NAME
     required: true
-    value: "server"
+    value: "api"
   - description: A name suffix used for all objects
     displayName: Suffix
     name: SUFFIX
