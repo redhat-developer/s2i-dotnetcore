@@ -42,7 +42,7 @@ objects:
           uri: ${SOURCE_REPOSITORY_URL}
           ref: ${SOURCE_REPOSITORY_REF}
         type: Git
-        contextDir: "/PDF"
+        contextDir: "PDF"
       strategy:
         type: Source
         sourceStrategy:
