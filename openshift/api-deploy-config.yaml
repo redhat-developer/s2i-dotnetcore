@@ -4,9 +4,9 @@ metadata:
   creationTimestamp: null
   name: ${PROJECT_NAME}
 labels:
-  template: server-deploy
+  template: api-deploy
 objects:
-  - apiVersion: v1
+  - apiVersion: v1 #is: api
     kind: ImageStream
     metadata:
       creationTimestamp: null
@@ -16,7 +16,17 @@ objects:
     spec:
       lookupPolicy:
         local: false
-  - apiVersion: v1
+  - apiVersion: v1 #pvc: api-docs-pvc
+    kind: PersistentVolumeClaim
+    metadata:
+      name: ${NAME}${SUFFIX}-docs-pvc
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: "${DOCUMENT_VOLUME_CAPACITY}"
+  - apiVersion: v1 #dc: api
     kind: DeploymentConfig
     metadata:
       creationTimestamp: null
@@ -102,7 +112,7 @@ objects:
           volumes:
             - name: server-docs
               persistentVolumeClaim:
-                claimName: server-docs-pvc
+                claimName: ${NAME}${SUFFIX}-docs-pvc
             - name: secret-volume
               secret:
                 secretName: schoolbus-secret
@@ -115,32 +125,13 @@ objects:
         - imageChangeParams:
             automatic: true
             containerNames:
-              - server
+              - api
             from:
               kind: ImageStreamTag
               name: ${NAME}:${VERSION}
           type: ImageChange
         - type: ConfigChange
-  - apiVersion: route.openshift.io/v1
-    kind: Route
-    metadata:
-      annotations:
-        haproxy.router.openshift.io/timeout: 1h
-      creationTimestamp: null
-      name: ${NAME}${SUFFIX}
-    spec:
-      host: ${HOST}
-      path: "/api"
-      port:
-        targetPort: web
-      tls:
-        termination: edge
-      to:
-        kind: Service
-        name: ${NAME}${SUFFIX}
-        weight: 100
-      wildcardPolicy: None
-  - apiVersion: v1
+  - apiVersion: v1 #service: api
     kind: Service
     metadata:
       creationTimestamp: null
@@ -205,7 +196,7 @@ parameters:
       The name assigned to all of the PDF microservice objects defined in
       this template.
     required: true
-    value: pdf2
+    value: pdf
   - name: CCW_NAME
     displayName: CCW Name
     description:
@@ -213,3 +204,8 @@ parameters:
       this template.
     required: true
     value: ccw
+  - name: DOCUMENT_VOLUME_CAPACITY
+    displayName: Document Volume Capacity
+    description: Volume space available for Document uploads, e.g. 512Mi, 2Gi.
+    value: 1Gi
+    required: true

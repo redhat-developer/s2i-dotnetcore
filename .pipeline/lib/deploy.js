@@ -32,6 +32,20 @@ module.exports = (settings) => {
     )
   );
 
+  objects.push(
+    ...oc.processDeploymentTemplate(
+      `${templatesLocalBaseUrl}/pdf-deploy-config.yaml`,
+      {
+        param: {
+          NAME: `${phases[phase].name}-pdf`,
+          SUFFIX: phases[phase].suffix,
+          VERSION: phases[phase].tag,
+          HOST: phases[phase].host,
+          ENV: phases[phase].phase,
+        },
+      }
+    )
+  );
   oc.applyRecommendedLabels(
     objects,
     phases[phase].name,
