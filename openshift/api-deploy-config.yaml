@@ -196,7 +196,7 @@ parameters:
       The name assigned to all of the PDF microservice objects defined in
       this template.
     required: true
-    value: pdf2
+    value: pdf
   - name: CCW_NAME
     displayName: CCW Name
     description:
