@@ -9,10 +9,10 @@ objects:
   - apiVersion: v1
     kind: ImageStream
     metadata:
-      name: dotnet
+      name: dotnet1
     spec:
       lookupPolicy:
-        local: fa
+        local: false
       tags:
         - annotations: null
           from:
@@ -78,7 +78,7 @@ parameters:
     displayName: Name
     name: NAME
     required: false
-    value: "server"
+    value: "api"
   - description: A name suffix used for all objects
     displayName: Suffix
     name: SUFFIX
@@ -88,14 +88,14 @@ parameters:
     displayName: version
     name: VERSION
     required: false
-    value: "1.0"
+    value: "1.4"
   - description: SOURCE_REPOSITORY_URL
     displayName: SOURCE_REPOSITORY_URL
     name: SOURCE_REPOSITORY_URL
     required: false
-    value: ""
+    value: "https://github.com/bcgov/schoolbus.git"
   - description: SOURCE_REPOSITORY_REF
     displayName: SOURCE_REPOSITORY_REF
     name: SOURCE_REPOSITORY_REF
     required: false
-    value: "master"
+    value: "1.4"

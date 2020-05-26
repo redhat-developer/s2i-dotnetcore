@@ -18,10 +18,10 @@ module.exports = (settings) => {
 
   objects.push(
     ...oc.processDeploymentTemplate(
-      `${templatesLocalBaseUrl}/server-deploy-config.yaml`,
+      `${templatesLocalBaseUrl}/api-deploy-config.yaml`,
       {
         param: {
-          NAME: `${phases[phase].name}-server`,
+          NAME: `${phases[phase].name}-api`,
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,
           HOST: phases[phase].host,
