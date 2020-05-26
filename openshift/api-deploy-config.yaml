@@ -52,7 +52,7 @@ objects:
         spec:
           containers:
             - image: ${NAME}:${VERSION}
-              name: server
+              name: api
               ports:
                 - containerPort: 8080
                   protocol: TCP
