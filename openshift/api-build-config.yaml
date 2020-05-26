@@ -66,6 +66,7 @@ objects:
         contextDir: ""
       strategy:
         dockerStrategy:
+          dockerfilePath : "Server/Dockerfile"
           noCache: true
         type: Docker
 parameters:
