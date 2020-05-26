@@ -25,7 +25,7 @@ const phases = {
     instance: `${name}-dev-${changeId}`,
     version: `${version}-${changeId}`,
     tag: `dev-${version}-${changeId}`,
-    host: `hmcr-${changeId}-tran-schoolbus-dev.pathfinder.gov.bc.ca`,
+    host: `cerberus-${changeId}-tran-schoolbus-dev.pathfinder.gov.bc.ca`,
     dotnet_env: "Development",
     transient: true,
   },

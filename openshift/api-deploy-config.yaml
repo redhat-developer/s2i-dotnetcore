@@ -175,11 +175,6 @@ parameters:
     name: ASPNETCORE_ENVIRONMENT
     required: true
     value: "Development"
-  - description: HOST
-    displayName: HOST
-    name: HOST
-    required: true
-    value: ""
   - description: SOURCE_REPOSITORY_URL
     displayName: SOURCE_REPOSITORY_URL
     name: SOURCE_REPOSITORY_URL
