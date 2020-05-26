@@ -63,7 +63,7 @@ objects:
           uri: ${SOURCE_REPOSITORY_URL}
           ref: ${SOURCE_REPOSITORY_REF}
         type: Git
-        contextDir: Server
+        contextDir: ""
       strategy:
         dockerStrategy:
           noCache: true
@@ -98,4 +98,4 @@ parameters:
     displayName: SOURCE_REPOSITORY_REF
     name: SOURCE_REPOSITORY_REF
     required: false
-    value: "1.4"
+    value: "master"
