@@ -4,27 +4,11 @@ metadata:
   creationTimestamp: null
   name: ${PROJECT_NAME}
 labels:
-  template: api-build
+  template: pdf-build
 objects:
   - apiVersion: v1
     kind: ImageStream
     metadata:
-      name: dotnet1
-    spec:
-      lookupPolicy:
-        local: false
-      tags:
-        - annotations: null
-          from:
-            kind: DockerImage
-            name: microsoft/dotnet:1.1.10-sdk-1.1.11
-          name: "1.1"
-          referencePolicy:
-            type: Local
-  - apiVersion: v1
-    kind: ImageStream
-    metadata:
-      creationTimestamp: null
       labels:
         shared: "true"
       name: ${NAME}
@@ -63,12 +47,15 @@ objects:
           uri: ${SOURCE_REPOSITORY_URL}
           ref: ${SOURCE_REPOSITORY_REF}
         type: Git
-        contextDir: ""
+        contextDir: "/PDF"
       strategy:
-        dockerStrategy:
-          dockerfilePath : "api.Dockerfile"
-          noCache: true
-        type: Docker
+        type: Source
+        sourceStrategy:
+          from:
+            kind: ImageStreamTag
+            namespace: openshift
+            name: nodejs:8
+            noCache: true
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
