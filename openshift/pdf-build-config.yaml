@@ -61,7 +61,7 @@ parameters:
     displayName: Name
     name: NAME
     required: false
-    value: "api"
+    value: "pdf"
   - description: A name suffix used for all objects
     displayName: Suffix
     name: SUFFIX
