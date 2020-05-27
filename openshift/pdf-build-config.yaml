@@ -56,7 +56,7 @@ parameters:
     displayName: PROJECT_NAME
     name: PROJECT_NAME
     required: true
-    value: "schoolbus"
+    value: "sb"
   - description: A name used for all objects
     displayName: Name
     name: NAME

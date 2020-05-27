@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.1.10-sdk-1.1.11
+FROM docker-registry.default.svc:5000/tran-schoolbus-tools/dotnet1:1.1
 # Dockerfile for package CCW
 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1

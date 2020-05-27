@@ -95,9 +95,9 @@ objects:
                 - name: CCWInitializationFile
                   value: "/ccwsecrets/ccw.json"
                 - name: CCW_SERVICE_NAME
-                  value: "${CCW_NAME}"
+                  value: "${PROJECT_NAME}-${CCW_NAME}${SUFFIX}"
                 - name: PDF_SERVICE_NAME
-                  value: "${PDF_NAME}"
+                  value: "${PROJECT_NAME}-${PDF_NAME}${SUFFIX}"
                 - name: ASPNETCORE_ENVIRONMENT
                   value: Development
               volumeMounts:
@@ -149,7 +149,7 @@ parameters:
     displayName: PROJECT_NAME
     name: PROJECT_NAME
     required: true
-    value: "schoolbus"
+    value: "sb"
   - description: A name used for all objects
     displayName: Name
     name: NAME

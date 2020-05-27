@@ -61,7 +61,7 @@ objects:
         contextDir: ""
       strategy:
         dockerStrategy:
-          dockerfilePath: "api.Dockerfile"
+          dockerfilePath: "Server/Dockerfile"
           noCache: true
         type: Docker
 parameters:
@@ -69,7 +69,7 @@ parameters:
     displayName: PROJECT_NAME
     name: PROJECT_NAME
     required: true
-    value: "schoolbus"
+    value: "sb"
   - description: A name used for all objects
     displayName: Name
     name: NAME
