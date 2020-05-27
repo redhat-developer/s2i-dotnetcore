@@ -42,6 +42,13 @@
               "namespace": "tran-schoolbus-prod"
             }
           }
+        },
+        ".": {
+          "jenkinsJobName": "sb",
+          "github_owner": "bcgov",
+          "github_repo": "schoolbus",
+          "jenkinsFilePath": "Jenkinsfile",
+          "uuid": "90775697-f0de-4236-9ad3-711741baf0c5"
         }
       }
     }
