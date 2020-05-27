@@ -48,7 +48,7 @@ dotnet_version="3.1.1"
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 dotnet_version="3.1.1"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="3.1.0-preview3.19553.2"
+dotnet_version="3.1.3"
 fi
 
 test_dotnet() {
