@@ -60,8 +60,8 @@ objects:
                 initialDelaySeconds: 30
                 periodSeconds: 5
               env:
-                - name: API_NAME
-                  value: "${PROJECT_NAME}-${API_NAME}${SUFFIX}"
+                - name: MIDDLEWARE_NAME
+                  value: "${PROJECT_NAME}-${API_NAME}${SUFFIX}:8080"
                 - name: ASPNETCORE_ENVIRONMENT
                   value: Development
       test: false
