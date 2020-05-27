@@ -1,0 +1,138 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: ${PROJECT_NAME}
+labels:
+  template: frontend-deploy
+objects:
+  - apiVersion: v1 #is: frontend
+    kind: ImageStream
+    metadata:
+      creationTimestamp: null
+      labels:
+        shared: true
+      name: ${NAME}
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: v1 #dc: frontend
+    kind: DeploymentConfig
+    metadata:
+      creationTimestamp: null
+      name: ${NAME}${SUFFIX}
+    spec:
+      replicas: 1
+      selector:
+        deploymentconfig: ${NAME}${SUFFIX}
+      strategy:
+        activeDeadlineSeconds: 21600
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 1
+          maxUnavailable: 1
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            deploymentconfig: ${NAME}${SUFFIX}
+        spec:
+          containers:
+            - image: ${NAME}:${VERSION}
+              name: frontend
+              ports:
+                - containerPort: 8080
+                  protocol: TCP
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  cpu: 750m
+                  memory: 512Mi
+              livenessProbe:
+                httpGet:
+                  path: /test/headers
+                  port: 8080
+                initialDelaySeconds: 30
+                periodSeconds: 5
+              env:
+                - name: API_NAME
+                  value: "${PROJECT_NAME}-${API_NAME}${SUFFIX}"
+                - name: ASPNETCORE_ENVIRONMENT
+                  value: Development
+      test: false
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - frontend
+            from:
+              kind: ImageStreamTag
+              name: ${NAME}:${VERSION}
+          type: ImageChange
+        - type: ConfigChange
+  - apiVersion: v1 #service: frontend
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      name: ${NAME}${SUFFIX}
+    spec:
+      ports:
+        - name: web
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+      selector:
+        deploymentconfig: ${NAME}${SUFFIX}
+parameters:
+  - description: Name of the project (SCHOOLBUS)
+    displayName: PROJECT_NAME
+    name: PROJECT_NAME
+    required: true
+    value: "sb"
+  - description: A name used for all objects
+    displayName: Name
+    name: NAME
+    required: true
+    value: "frontend"
+  - description: A name suffix used for all objects
+    displayName: Suffix
+    name: SUFFIX
+    required: false
+    value: "-dev"
+  - description: Environment short name (dev,test,uat,prod)
+    displayName: ENV
+    name: ENV
+    required: false
+    value: "dev"
+  - description: A version used for the image tags
+    displayName: version
+    name: VERSION
+    required: true
+    value: "v1.4.0"
+  - description: The ASP Net Core deployment environment setting
+    displayName: AspNetCore Environment
+    name: ASPNETCORE_ENVIRONMENT
+    required: true
+    value: "Development"
+  - description: SOURCE_REPOSITORY_URL
+    displayName: SOURCE_REPOSITORY_URL
+    name: SOURCE_REPOSITORY_URL
+    required: false
+    value: ""
+  - description: SOURCE_REPOSITORY_REF
+    displayName: SOURCE_REPOSITORY_REF
+    name: SOURCE_REPOSITORY_REF
+    required: false
+    value: ""
+  - name: API_NAME
+    displayName: API Name
+    description:
+      The name assigned to all of the PDF microservice objects defined in
+      this template.
+    required: true
+    value: api
