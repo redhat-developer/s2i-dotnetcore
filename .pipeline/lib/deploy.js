@@ -53,6 +53,7 @@ module.exports = (settings) => {
           NAME: `${phases[phase].name}-frontend`,
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,
+          HOST: phases[phase].host,
           ENV: phases[phase].phase,
           ASPNETCORE_ENVIRONMENT: phases[phase].dotnet_env,
         },

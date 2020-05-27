@@ -88,6 +88,25 @@ objects:
           targetPort: 8080
       selector:
         deploymentconfig: ${NAME}${SUFFIX}
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+      creationTimestamp: null
+      name: ${NAME}${SUFFIX}
+    spec:
+      host: ${HOST}
+      path: "/"
+      port:
+        targetPort: web
+      tls:
+        termination: edge
+      to:
+        kind: Service
+        name: ${NAME}${SUFFIX}
+        weight: 100
+      wildcardPolicy: None
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
@@ -119,6 +138,11 @@ parameters:
     name: ASPNETCORE_ENVIRONMENT
     required: true
     value: "Development"
+  - description: HOST
+    displayName: HOST
+    name: HOST
+    required: true
+    value: ""
   - description: SOURCE_REPOSITORY_URL
     displayName: SOURCE_REPOSITORY_URL
     name: SOURCE_REPOSITORY_URL
