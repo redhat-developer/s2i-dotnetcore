@@ -12,7 +12,7 @@
     <OutputType>Exe</OutputType>
     <PackageId>SchoolBusClient</PackageId>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;dnxcore50;netstandard1.6;portable-net452+win81</PackageTargetFallback>
-    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>1.1.10</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>
