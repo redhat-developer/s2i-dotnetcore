@@ -4,9 +4,9 @@ metadata:
   creationTimestamp: null
   name: ${PROJECT_NAME}
 labels:
-  template: frontend-deploy
+  template: ccw-deploy
 objects:
-  - apiVersion: v1 #is: frontend
+  - apiVersion: v1 #is: ccw
     kind: ImageStream
     metadata:
       creationTimestamp: null
@@ -16,7 +16,7 @@ objects:
     spec:
       lookupPolicy:
         local: false
-  - apiVersion: v1 #dc: frontend
+  - apiVersion: v1 #dc: ccw
     kind: DeploymentConfig
     metadata:
       creationTimestamp: null
@@ -42,16 +42,16 @@ objects:
         spec:
           containers:
             - image: ${NAME}:${VERSION}
-              name: frontend
+              name: ccw
               ports:
                 - containerPort: 8080
                   protocol: TCP
               resources:
                 requests:
-                  cpu: 100m
+                  cpu: 50m
                   memory: 256Mi
                 limits:
-                  cpu: 750m
+                  cpu: 500m
                   memory: 512Mi
               livenessProbe:
                 httpGet:
@@ -60,22 +60,45 @@ objects:
                 initialDelaySeconds: 30
                 periodSeconds: 5
               env:
-                - name: MIDDLEWARE_NAME
-                  value: "${PROJECT_NAME}-${API_NAME}${SUFFIX}:8080"
+                - name: DATABASE_SERVICE_NAME
+                  value: postgresql
+                - name: POSTGRESQL_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgresql
+                      key: database-user
+                - name: POSTGRESQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgresql
+                      key: database-password
+                - name: POSTGRESQL_DATABASE
+                  value: schoolbus
+                - name: CCWInitializationFile
+                  value: "/ccwsecrets/ccw.json"
                 - name: ASPNETCORE_ENVIRONMENT
                   value: Development
+              volumeMounts:
+                - name: ccw-secret-volume
+                  mountPath: "/ccwsecrets"
+                  readOnly: true
+          volumes:
+            - name: ccw-secret-volume
+              secret:
+                secretName: ccw-secret
+                defaultMode: 420
       test: false
       triggers:
         - imageChangeParams:
             automatic: true
             containerNames:
-              - frontend
+              - ccw
             from:
               kind: ImageStreamTag
               name: ${NAME}:${VERSION}
           type: ImageChange
         - type: ConfigChange
-  - apiVersion: v1 #service: frontend
+  - apiVersion: v1 #service: ccw
     kind: Service
     metadata:
       creationTimestamp: null
@@ -88,25 +111,6 @@ objects:
           targetPort: 8080
       selector:
         deploymentconfig: ${NAME}${SUFFIX}
-  - apiVersion: v1
-    kind: Route
-    metadata:
-      annotations:
-        haproxy.router.openshift.io/timeout: 5m
-      creationTimestamp: null
-      name: ${NAME}${SUFFIX}
-    spec:
-      host: ${HOST}
-      path: "/"
-      port:
-        targetPort: web
-      tls:
-        termination: edge
-      to:
-        kind: Service
-        name: ${NAME}${SUFFIX}
-        weight: 100
-      wildcardPolicy: None
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
@@ -117,7 +121,7 @@ parameters:
     displayName: Name
     name: NAME
     required: true
-    value: "frontend"
+    value: "ccw"
   - description: A name suffix used for all objects
     displayName: Suffix
     name: SUFFIX
@@ -138,11 +142,6 @@ parameters:
     name: ASPNETCORE_ENVIRONMENT
     required: true
     value: "Development"
-  - description: HOST
-    displayName: HOST
-    name: HOST
-    required: true
-    value: ""
   - description: SOURCE_REPOSITORY_URL
     displayName: SOURCE_REPOSITORY_URL
     name: SOURCE_REPOSITORY_URL
@@ -153,10 +152,3 @@ parameters:
     name: SOURCE_REPOSITORY_REF
     required: false
     value: ""
-  - name: API_NAME
-    displayName: API Name
-    description:
-      The name assigned to all of the PDF microservice objects defined in
-      this template.
-    required: true
-    value: api
