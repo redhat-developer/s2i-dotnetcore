@@ -47,6 +47,9 @@ objects:
       strategy:
         dockerStrategy:
           dockerfilePath: "FrontEnd/Dockerfile"
+          from:
+            kind: ImageStreamTag
+            name: ${PROJECT_NAME}-${CLIENT_NAME}${SUFFIX}
           noCache: true
         type: Docker
 parameters:
@@ -80,3 +83,8 @@ parameters:
     name: SOURCE_REPOSITORY_REF
     required: false
     value: "master"
+  - description: A name used for all objects
+    displayName: CLIENT_NAME
+    name: CLIENT_NAME
+    required: false
+    value: "client"
