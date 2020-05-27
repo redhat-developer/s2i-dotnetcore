@@ -49,7 +49,7 @@ objects:
           dockerfilePath: "FrontEnd/Dockerfile"
           from:
             kind: ImageStreamTag
-            name: ${PROJECT_NAME}-${CLIENT_NAME}${SUFFIX}
+            name: ${PROJECT_NAME}-${CLIENT_NAME}${VERSION}
           noCache: true
         type: Docker
 parameters:
