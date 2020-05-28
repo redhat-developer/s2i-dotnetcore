@@ -13,6 +13,9 @@ module.exports = (settings) => {
     Object.assign({ namespace: phases[phase].namespace }, options)
   );
 
+  //to keep the user and roles of the previous database
+  const dbUsers = { dev: "userUXN", test: "user7KU", prod: "userKIX" };
+
   const templatesLocalBaseUrl = oc.toFileUrl(
     path.resolve(__dirname, "../../openshift")
   );
@@ -34,6 +37,7 @@ module.exports = (settings) => {
           param: {
             NAME: `${phases[phase].name}-db`,
             SUFFIX: phases[phase].suffix,
+            POSTGRESQL_USER: dbUsers[phase],
           },
         }
       )
