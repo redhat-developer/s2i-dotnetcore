@@ -4,38 +4,8 @@ metadata:
   creationTimestamp: null
   name: ${PROJECT_NAME}
 labels:
-  template: api-build
+  template: ccw-build
 objects:
-  - apiVersion: v1
-    kind: ImageStream
-    metadata:
-      name: dotnet1
-    spec:
-      lookupPolicy:
-        local: false
-      tags:
-        - annotations: null
-          from:
-            kind: DockerImage
-            name: microsoft/dotnet:1.1.10-sdk-1.1.11
-          name: "1.1"
-          referencePolicy:
-            type: Local
-  - apiVersion: v1
-    kind: ImageStream
-    metadata:
-      name: postgresql-10-rhel8
-    spec:
-      lookupPolicy:
-        local: false
-      tags:
-        - annotations: null
-          from:
-            kind: DockerImage
-            name: registry.redhat.io/rhel8/postgresql-10
-          name: "1"
-          referencePolicy:
-            type: Local
   - apiVersion: v1
     kind: ImageStream
     metadata:
@@ -76,7 +46,7 @@ objects:
         contextDir: ""
       strategy:
         dockerStrategy:
-          dockerfilePath: "Server/Dockerfile"
+          dockerfilePath: "CCW/Dockerfile"
           noCache: true
         type: Docker
 parameters:
@@ -89,7 +59,7 @@ parameters:
     displayName: Name
     name: NAME
     required: false
-    value: "api"
+    value: "ccw"
   - description: A name suffix used for all objects
     displayName: Suffix
     name: SUFFIX
