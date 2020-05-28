@@ -2,7 +2,7 @@
 const { OpenShiftClientX } = require("@bcgov/pipeline-cli");
 const path = require("path");
 
-const util = require("./util");
+const util = require("./utils");
 
 module.exports = (settings) => {
   const phases = settings.phases;
