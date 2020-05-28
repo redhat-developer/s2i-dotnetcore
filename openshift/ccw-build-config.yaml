@@ -43,9 +43,10 @@ objects:
           uri: ${SOURCE_REPOSITORY_URL}
           ref: ${SOURCE_REPOSITORY_REF}
         type: Git
-        contextDir: "CCW"
+        contextDir: ""
       strategy:
         dockerStrategy:
+          dockerfilePath: "CCW/Dockerfile"
           noCache: true
         type: Docker
 parameters:
