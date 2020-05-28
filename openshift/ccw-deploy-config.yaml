@@ -53,12 +53,6 @@ objects:
                 limits:
                   cpu: 500m
                   memory: 512Mi
-              livenessProbe:
-                httpGet:
-                  path: /test/headers
-                  port: 8080
-                initialDelaySeconds: 30
-                periodSeconds: 5
               env:
                 - name: DATABASE_SERVICE_NAME
                   value: postgresql

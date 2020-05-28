@@ -2,6 +2,8 @@
 const { OpenShiftClientX } = require("@bcgov/pipeline-cli");
 const path = require("path");
 
+const util = require("./util");
+
 module.exports = (settings) => {
   const phases = settings.phases;
   const options = settings.options;
@@ -15,6 +17,42 @@ module.exports = (settings) => {
     path.resolve(__dirname, "../../openshift")
   );
   var objects = [];
+
+  const dbSecret = util.getSecret(
+    oc,
+    phases[phase].namespace,
+    `${phases[phase].name}-db${phases[phase].suffix}`
+  );
+
+  if (!dbSecret) {
+    console.log("Adding Db postgresql secret");
+
+    objects.push(
+      ...oc.processDeploymentTemplate(
+        `${templatesLocalBaseUrl}/secrets/db-postgresql-secrets.yaml`,
+        {
+          param: {
+            NAME: `${phases[phase].name}-db`,
+            SUFFIX: phases[phase].suffix,
+          },
+        }
+      )
+    );
+  }
+
+  objects.push(
+    ...oc.processDeploymentTemplate(
+      `${templatesLocalBaseUrl}/postgresql-deploy-config.yaml`,
+      {
+        param: {
+          NAME: `${phases[phase].name}-db`,
+          SUFFIX: phases[phase].suffix,
+          VERSION: phases[phase].tag,
+          ENV: phases[phase].phase,
+        },
+      }
+    )
+  );
 
   objects.push(
     ...oc.processDeploymentTemplate(
