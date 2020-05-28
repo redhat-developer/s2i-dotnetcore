@@ -24,6 +24,21 @@ objects:
   - apiVersion: v1
     kind: ImageStream
     metadata:
+      name: postgresql-10-rhel8
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: registry.redhat.io/rhel8/postgresql-10
+          name: "1"
+          referencePolicy:
+            type: Local
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
       creationTimestamp: null
       labels:
         shared: "true"
