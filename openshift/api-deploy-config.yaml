@@ -19,7 +19,7 @@ objects:
   - apiVersion: v1 #pvc: api-docs-pvc
     kind: PersistentVolumeClaim
     metadata:
-      name: ${NAME}${SUFFIX}-docs-pvc
+      name: ${NAME}-${ENV}-docs-pvc
     spec:
       accessModes:
         - ReadWriteOnce
@@ -112,7 +112,7 @@ objects:
           volumes:
             - name: server-docs
               persistentVolumeClaim:
-                claimName: ${NAME}${SUFFIX}-docs-pvc
+                claimName: ${NAME}-${ENV}-docs-pvc
             - name: secret-volume
               secret:
                 secretName: schoolbus-secret
