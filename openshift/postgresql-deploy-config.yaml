@@ -96,7 +96,7 @@ objects:
         - imageChangeParams:
             automatic: true
             containerNames:
-              - ${NAME}${SUFFIX}
+              - ${NAME}-${ENV}
             from:
               kind: ImageStreamTag
               name: ${IMAGE_STREAM_TAG}
