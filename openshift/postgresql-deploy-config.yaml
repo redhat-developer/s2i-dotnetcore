@@ -31,17 +31,17 @@ objects:
                 - name: POSTGRESQL_USER
                   valueFrom:
                     secretKeyRef:
-                      name: ${NAME}${SUFFIX}
+                      name: ${NAME}-${ENV}
                       key: database-user
                 - name: POSTGRESQL_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${NAME}${SUFFIX}
+                      name: ${NAME}-${ENV}
                       key: database-password
                 - name: POSTGRESQL_ADMIN_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${NAME}${SUFFIX}
+                      name: ${NAME}-${ENV}
                       key: admin-password
                 - name: POSTGRESQL_DATABASE
                   value: ${POSTGRESQL_DATABASE_NAME}
