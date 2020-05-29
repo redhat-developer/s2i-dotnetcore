@@ -58,7 +58,7 @@ objects:
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
               volumeMounts:
-                - name: "${NAME}${SUFFIX}-data"
+                - name: "${NAME}-${ENV}-data"
                   mountPath: "/var/lib/pgsql/data"
               livenessProbe:
                 tcpSocket:
@@ -107,7 +107,7 @@ objects:
     metadata:
       name: ${NAME}-${ENV}
     selector:
-      deploymentconfig: ${NAME}${ENV}
+      deploymentconfig: ${NAME}-${ENV}
     spec:
       storageClassName: "${PERSISTENT_VOLUME_CLASS}"
       accessModes:
