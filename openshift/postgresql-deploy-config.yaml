@@ -108,8 +108,6 @@ objects:
       name: ${NAME}-${ENV}
       labels:
         shared: "true"
-    selector:
-      deploymentconfig: ${NAME}${SUFFIX}
     spec:
       storageClassName: "${PERSISTENT_VOLUME_CLASS}"
       accessModes:
