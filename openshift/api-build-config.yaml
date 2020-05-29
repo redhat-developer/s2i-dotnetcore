@@ -10,6 +10,8 @@ objects:
     kind: ImageStream
     metadata:
       name: dotnet1
+      labels:
+        shared: "true"
     spec:
       lookupPolicy:
         local: false
