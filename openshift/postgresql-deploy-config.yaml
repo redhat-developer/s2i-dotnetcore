@@ -87,9 +87,9 @@ objects:
           securityContext: {}
           terminationGracePeriodSeconds: 30
           volumes:
-            - name: "${NAME}${SUFFIX}-data"
+            - name: "${NAME}-${ENV}-data"
               persistentVolumeClaim:
-                claimName: ${NAME}${SUFFIX}
+                claimName: ${NAME}-${ENV}
       test: false
       triggers:
         - type: ConfigChange
@@ -105,9 +105,9 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: ${NAME}${SUFFIX}
+      name: ${NAME}-${ENV}
     selector:
-      deploymentconfig: ${NAME}${SUFFIX}
+      deploymentconfig: ${NAME}${ENV}
     spec:
       storageClassName: "${PERSISTENT_VOLUME_CLASS}"
       accessModes:
