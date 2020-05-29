@@ -2,7 +2,7 @@
 const options = require("@bcgov/pipeline-cli").Util.parseArguments();
 const changeId = options.pr; //aka pull-request
 const version = "1.4.0";
-const name = "sb";
+const name = "sbi"; //project name prefix
 
 const phases = {
   build: {

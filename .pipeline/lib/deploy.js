@@ -36,6 +36,7 @@ module.exports = (settings) => {
         `${templatesLocalBaseUrl}/secrets/db-postgresql-secrets.yaml`,
         {
           param: {
+            PROJECT_NAME: `${phases[phase].name}`,
             NAME: `${phases[phase].name}-db`,
             SUFFIX: phases[phase].suffix,
             POSTGRESQL_USER: dbUsers[phase],
@@ -50,6 +51,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/postgresql-deploy-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${phases[phase].name}-db`,
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,
@@ -65,6 +67,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/api-deploy-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${phases[phase].name}-api`,
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,
@@ -80,6 +83,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/pdf-deploy-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${phases[phase].name}-pdf`,
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,
@@ -94,6 +98,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/frontend-deploy-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${phases[phase].name}-frontend`,
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,
@@ -110,6 +115,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/ccw-deploy-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${phases[phase].name}-ccw`,
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,
