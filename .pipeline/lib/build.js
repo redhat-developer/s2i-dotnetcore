@@ -19,6 +19,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/api-build-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${settings.phases[phase].name}-api`,
           SUFFIX: settings.phases[phase].suffix,
           VERSION: settings.phases[phase].tag,
@@ -34,6 +35,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/pdf-build-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${settings.phases[phase].name}-pdf`,
           SUFFIX: settings.phases[phase].suffix,
           VERSION: settings.phases[phase].tag,
@@ -49,6 +51,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/client-build-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${settings.phases[phase].name}-client`,
           SUFFIX: settings.phases[phase].suffix,
           VERSION: settings.phases[phase].tag,
@@ -64,6 +67,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/frontend-build-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${settings.phases[phase].name}-frontend`,
           SUFFIX: settings.phases[phase].suffix,
           VERSION: settings.phases[phase].tag,
@@ -79,6 +83,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/ccw-build-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${settings.phases[phase].name}-ccw`,
           SUFFIX: settings.phases[phase].suffix,
           VERSION: settings.phases[phase].tag,
