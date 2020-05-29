@@ -6,11 +6,11 @@ objects:
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
-      name: ${NAME}${SUFFIX}
+      name: ${NAME}-${ENV}
     spec:
       replicas: 1
       selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+        deploymentconfig: ${NAME}-${ENV}
       strategy:
         activeDeadlineSeconds: 21600
         resources: {}
@@ -19,14 +19,14 @@ objects:
           timeoutSeconds: 600
       template:
         metadata:
-          name: ${NAME}${SUFFIX}
+          name: ${NAME}-${ENV}
           labels:
-            deploymentconfig: ${NAME}${SUFFIX}
+            deploymentconfig: ${NAME}-${ENV}
         spec:
           containers:
             - image: docker-registry.default.svc:5000/tran-schoolbus-tools/${IMAGE_STREAM_TAG}
               imagePullPolicy: IfNotPresent
-              name: ${NAME}${SUFFIX}
+              name: ${NAME}-${ENV}
               env:
                 - name: POSTGRESQL_USER
                   valueFrom:
