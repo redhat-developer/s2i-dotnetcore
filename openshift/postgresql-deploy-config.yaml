@@ -106,8 +106,10 @@ objects:
     apiVersion: v1
     metadata:
       name: ${NAME}-${ENV}
+      labels:
+        shared: "true"
     selector:
-      deploymentconfig: ${NAME}-${ENV}
+      deploymentconfig: ${NAME}${SUFFIX}
     spec:
       storageClassName: "${PERSISTENT_VOLUME_CLASS}"
       accessModes:
