@@ -6,11 +6,11 @@ objects:
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
-      name: ${NAME}${SUFFIX}
+      name: ${NAME}-${ENV}
     spec:
       replicas: 1
       selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+        deploymentconfig: ${NAME}-${ENV}
       strategy:
         activeDeadlineSeconds: 21600
         resources: {}
@@ -19,29 +19,29 @@ objects:
           timeoutSeconds: 600
       template:
         metadata:
-          name: ${NAME}${SUFFIX}
+          name: ${NAME}-${ENV}
           labels:
-            deploymentconfig: ${NAME}${SUFFIX}
+            deploymentconfig: ${NAME}-${ENV}
         spec:
           containers:
             - image: docker-registry.default.svc:5000/tran-schoolbus-tools/${IMAGE_STREAM_TAG}
               imagePullPolicy: IfNotPresent
-              name: ${NAME}${SUFFIX}
+              name: ${NAME}-${ENV}
               env:
                 - name: POSTGRESQL_USER
                   valueFrom:
                     secretKeyRef:
-                      name: ${NAME}${SUFFIX}
+                      name: ${NAME}-${ENV}
                       key: database-user
                 - name: POSTGRESQL_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${NAME}${SUFFIX}
+                      name: ${NAME}-${ENV}
                       key: database-password
                 - name: POSTGRESQL_ADMIN_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${NAME}${SUFFIX}
+                      name: ${NAME}-${ENV}
                       key: admin-password
                 - name: POSTGRESQL_DATABASE
                   value: ${POSTGRESQL_DATABASE_NAME}
@@ -96,7 +96,7 @@ objects:
         - imageChangeParams:
             automatic: true
             containerNames:
-              - ${NAME}${SUFFIX}
+              - ${NAME}-${ENV}
             from:
               kind: ImageStreamTag
               name: ${IMAGE_STREAM_TAG}
@@ -106,8 +106,8 @@ objects:
     apiVersion: v1
     metadata:
       name: ${NAME}-${ENV}
-    selector:
-      deploymentconfig: ${NAME}-${ENV}
+      labels:
+        shared: "true"
     spec:
       storageClassName: "${PERSISTENT_VOLUME_CLASS}"
       accessModes:
@@ -118,7 +118,7 @@ objects:
   - kind: Service
     apiVersion: v1
     metadata:
-      name: ${NAME}${SUFFIX}
+      name: ${NAME}-${ENV}
     spec:
       ports:
         - name: postgresql
@@ -126,7 +126,7 @@ objects:
           port: 5432
           targetPort: 5432
       selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+        deploymentconfig: ${NAME}-${ENV}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
