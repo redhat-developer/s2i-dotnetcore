@@ -25,7 +25,7 @@ module.exports = (settings) => {
   const dbSecret = util.getSecret(
     oc,
     phases[phase].namespace,
-    `${phases[phase].name}-db${phases[phase].suffix}`
+    `${phases[phase].name}-db-${phases[phase].phase}`
   );
 
   if (!dbSecret) {
@@ -40,6 +40,7 @@ module.exports = (settings) => {
             NAME: `${phases[phase].name}-db`,
             SUFFIX: phases[phase].suffix,
             POSTGRESQL_USER: dbUsers[phase],
+            ENV: phases[phase].phase,
           },
         }
       )

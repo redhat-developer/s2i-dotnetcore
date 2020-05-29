@@ -25,6 +25,8 @@ objects:
     kind: ImageStream
     metadata:
       name: postgresql-10-rhel8
+      labels:
+        shared: "true"
     spec:
       lookupPolicy:
         local: false
