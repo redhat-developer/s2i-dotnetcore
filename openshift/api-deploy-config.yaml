@@ -21,7 +21,7 @@ objects:
     metadata:
       name: ${NAME}-${ENV}-docs-pvc
       labels:
-        shared: true
+        shared: "true"
     spec:
       accessModes:
         - ReadWriteOnce
