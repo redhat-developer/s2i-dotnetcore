@@ -55,16 +55,16 @@ objects:
                   memory: 512Mi
               env:
                 - name: DATABASE_SERVICE_NAME
-                  value: postgresql
+                  value: "${PROJECT_NAME}-${DB_NAME}${SUFFIX}"
                 - name: POSTGRESQL_USER
                   valueFrom:
                     secretKeyRef:
-                      name: postgresql
+                      name: "${PROJECT_NAME}-${DB_NAME}${SUFFIX}"
                       key: database-user
                 - name: POSTGRESQL_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: postgresql
+                      name: "${PROJECT_NAME}-${DB_NAME}${SUFFIX}"
                       key: database-password
                 - name: POSTGRESQL_DATABASE
                   value: schoolbus
@@ -146,3 +146,10 @@ parameters:
     name: SOURCE_REPOSITORY_REF
     required: false
     value: ""
+  - name: DB_NAME
+    displayName: DB Name
+    description:
+      The name assigned to all of the CCW microservice objects defined in
+      this template.
+    required: true
+    value: db

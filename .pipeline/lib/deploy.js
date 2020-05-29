@@ -15,6 +15,7 @@ module.exports = (settings) => {
 
   //to keep the user and roles of the previous database
   const dbUsers = { dev: "userUXN", test: "user7KU", prod: "userKIX" };
+  const dbSize = { dev: "1Gi", test: "1Gi", prod: "50Gi" };
 
   const templatesLocalBaseUrl = oc.toFileUrl(
     path.resolve(__dirname, "../../openshift")
@@ -53,6 +54,7 @@ module.exports = (settings) => {
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,
           ENV: phases[phase].phase,
+          PERSISTENT_VOLUME_SIZE: dbSize[phase],
         },
       }
     )
