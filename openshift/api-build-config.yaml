@@ -9,7 +9,7 @@ objects:
   - apiVersion: v1
     kind: ImageStream
     metadata:
-      name: dotnet1
+      name: dotnet-31-rhel7
       labels:
         shared: "true"
     spec:
@@ -79,10 +79,14 @@ objects:
         type: Git
         contextDir: ""
       strategy:
-        dockerStrategy:
-          dockerfilePath: "Server/Dockerfile"
-          noCache: true
-        type: Docker
+        sourceStrategy:
+          env:
+            - name: DOTNET_STARTUP_PROJECT
+              value: Server/src/SchoolBusApi/SchoolBusApi.csproj
+          from:
+            kind: ImageStreamTag
+            name: "dotnet-31-rhel7:3.1"
+        type: Source
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME

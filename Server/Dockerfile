@@ -1,4 +1,4 @@
-FROM docker-registry.default.svc:5000/tran-schoolbus-tools/dotnet1:1.1
+FROM docker-registry.default.svc:5000/tran-schoolbus-tools/dotnet-31-rhel7:3.1
 
 # Dockerfile for package SchoolBusAPI
 
