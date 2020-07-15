@@ -8,19 +8,8 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
 
@@ -48,7 +37,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">History created</response>
         [HttpPost]
         [Route("/api/histories/bulk")]
-        [SwaggerOperation("HistoriesBulkPost")]
+        //[SwaggerOperation("HistoriesBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult HistoriesBulkPost([FromBody]History[] items)
         {
@@ -61,8 +50,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/histories")]
-        [SwaggerOperation("HistoriesGet")]
-        [SwaggerResponse(200, type: typeof(List<History>))]
+        //[SwaggerOperation("HistoriesGet")]
+        //[SwaggerResponse(200, type: typeof(List<History>))]
         public virtual IActionResult HistoriesGet()
         {
             return this._service.HistoriesGetAsync();
@@ -76,7 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">History not found</response>
         [HttpPost]
         [Route("/api/histories/{id}/delete")]
-        [SwaggerOperation("HistoriesIdDeletePost")]
+        //[SwaggerOperation("HistoriesIdDeletePost")]
         public virtual IActionResult HistoriesIdDeletePost([FromRoute]int id)
         {
             return this._service.HistoriesIdDeletePostAsync(id);
@@ -90,8 +79,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">History not found</response>
         [HttpGet]
         [Route("/api/histories/{id}")]
-        [SwaggerOperation("HistoriesIdGet")]
-        [SwaggerResponse(200, type: typeof(History))]
+        //[SwaggerOperation("HistoriesIdGet")]
+        //[SwaggerResponse(200, type: typeof(History))]
         public virtual IActionResult HistoriesIdGet([FromRoute]int id)
         {
             return this._service.HistoriesIdGetAsync(id);
@@ -106,8 +95,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">History not found</response>
         [HttpPut]
         [Route("/api/histories/{id}")]
-        [SwaggerOperation("HistoriesIdPut")]
-        [SwaggerResponse(200, type: typeof(History))]
+        //[SwaggerOperation("HistoriesIdPut")]
+        //[SwaggerResponse(200, type: typeof(History))]
         public virtual IActionResult HistoriesIdPut([FromRoute]int id, [FromBody]History item)
         {
             return this._service.HistoriesIdPutAsync(id, item);
@@ -120,8 +109,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">History created</response>
         [HttpPost]
         [Route("/api/histories")]
-        [SwaggerOperation("HistoriesPost")]
-        [SwaggerResponse(200, type: typeof(History))]
+        //[SwaggerOperation("HistoriesPost")]
+        //[SwaggerResponse(200, type: typeof(History))]
         public virtual IActionResult HistoriesPost([FromBody]History item)
         {
             return this._service.HistoriesPostAsync(item);

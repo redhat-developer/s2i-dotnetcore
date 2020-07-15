@@ -157,7 +157,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         protected ClaimsPrincipal HttpContextUser
         {
-            get { return _httpContextAccessor.HttpContext.User; }
+            get { return _httpContextAccessor.HttpContext?.User; }
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace SchoolBusAPI.Models
 
             try
             {
-                result = HttpContextUser.FindFirst(ClaimTypes.Name).Value;
+                result = HttpContextUser?.FindFirst(ClaimTypes.Name).Value;
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace SchoolBusAPI.Models
 
             try
             {
-                string userId = HttpContextUser.FindFirst(SchoolBusAPI.Models.User.USERID_CLAIM).Value;
+                string userId = HttpContextUser?.FindFirst(SchoolBusAPI.Models.User.USERID_CLAIM).Value;
                 int id = int.Parse(userId);
                 result = Users.FirstOrDefault(x => x.Id == id);
             }
@@ -266,7 +266,7 @@ namespace SchoolBusAPI.Models
                     {
                         int affectedEntityId = (int)entry.CurrentValues["Id"];
 
-                        string entityName = Model.FindEntityType(entry.Entity.GetType()).Relational().TableName;
+                        string entityName = Model.FindEntityType(entry.Entity.GetType()).GetTableName();
 
                         if (entry.State == EntityState.Deleted)
                         {
@@ -322,7 +322,7 @@ namespace SchoolBusAPI.Models
                                     {
                                         audit.NewValue = item.CurrentValue.ToString();
                                     }
-                                    audit.PropertyName = item.Metadata.Relational().ColumnName;
+                                    audit.PropertyName = item.Metadata.GetColumnName();
                                     auditEntries.Add(audit);
                                 }
                             }

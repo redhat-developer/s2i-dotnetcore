@@ -8,21 +8,9 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
-using SchoolBusAPI.Authorization;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -49,7 +37,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpPost]
         [Route("/api/users/current/favourites/{id}/delete")]
-        [SwaggerOperation("UsersCurrentFavouritesIdDeletePost")]
+        //[SwaggerOperation("UsersCurrentFavouritesIdDeletePost")]
         public virtual IActionResult UsersCurrentFavouritesIdDeletePost([FromRoute]int id)
         {
             return this._service.UsersCurrentFavouritesIdDeletePostAsync(id);
@@ -63,8 +51,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">UserFavourite created</response>
         [HttpPost]
         [Route("/api/users/current/favourites")]
-        [SwaggerOperation("UsersCurrentFavouritesPost")]
-        [SwaggerResponse(200, type: typeof(UserFavourite))]
+        //[SwaggerOperation("UsersCurrentFavouritesPost")]
+        //[SwaggerResponse(200, type: typeof(UserFavourite))]
         public virtual IActionResult UsersCurrentFavouritesPost([FromBody]UserFavourite item)
         {
             return this._service.UsersCurrentFavouritesPostAsync(item);
@@ -78,8 +66,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">UserFavourite created</response>
         [HttpPut]
         [Route("/api/users/current/favourites")]
-        [SwaggerOperation("UsersCurrentFavouritesPut")]
-        [SwaggerResponse(200, type: typeof(UserFavourite))]
+        //[SwaggerOperation("UsersCurrentFavouritesPut")]
+        //[SwaggerResponse(200, type: typeof(UserFavourite))]
         public virtual IActionResult UsersCurrentFavouritesPut([FromBody]UserFavourite item)
         {
             return this._service.UsersCurrentFavouritesPutAsync(item);
@@ -94,8 +82,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/current/favourites/{type}")]
-        [SwaggerOperation("UsersCurrentFavouritesTypeGet")]
-        [SwaggerResponse(200, type: typeof(List<UserFavourite>))]
+        //[SwaggerOperation("UsersCurrentFavouritesTypeGet")]
+        //[SwaggerResponse(200, type: typeof(List<UserFavourite>))]
         public virtual IActionResult UsersCurrentFavouritesTypeGet([FromRoute]string type)
         {
             return this._service.UsersCurrentFavouritesTypeGetAsync(type);
@@ -108,8 +96,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/users/current")]
-        [SwaggerOperation("UsersCurrentGet")]
-        [SwaggerResponse(200, type: typeof(CurrentUserViewModel))]
+        //[SwaggerOperation("UsersCurrentGet")]
+        //[SwaggerResponse(200, type: typeof(CurrentUserViewModel))]
         public virtual IActionResult UsersCurrentGet()
         {
             return this._service.UsersCurrentGetAsync();

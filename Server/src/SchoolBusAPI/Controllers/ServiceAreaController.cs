@@ -8,19 +8,8 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
 
@@ -48,7 +37,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">ServiceArea created</response>
         [HttpPost]
         [Route("/api/serviceareas/bulk")]
-        [SwaggerOperation("ServiceareasBulkPost")]
+        //[SwaggerOperation("ServiceareasBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult ServiceareasBulkPost([FromBody]ServiceArea[] items)
         {
@@ -61,8 +50,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/serviceareas")]
-        [SwaggerOperation("ServiceareasGet")]
-        [SwaggerResponse(200, type: typeof(List<ServiceArea>))]
+        //[SwaggerOperation("ServiceareasGet")]
+        //[SwaggerResponse(200, type: typeof(List<ServiceArea>))]
         public virtual IActionResult ServiceareasGet()
         {
             return this._service.ServiceareasGetAsync();
@@ -76,7 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">ServiceArea not found</response>
         [HttpPost]
         [Route("/api/serviceareas/{id}/delete")]
-        [SwaggerOperation("ServiceareasIdDeletePost")]
+        //[SwaggerOperation("ServiceareasIdDeletePost")]
         public virtual IActionResult ServiceareasIdDeletePost([FromRoute]int id)
         {
             return this._service.ServiceareasIdDeletePostAsync(id);
@@ -90,8 +79,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">ServiceArea not found</response>
         [HttpGet]
         [Route("/api/serviceareas/{id}")]
-        [SwaggerOperation("ServiceareasIdGet")]
-        [SwaggerResponse(200, type: typeof(ServiceArea))]
+        //[SwaggerOperation("ServiceareasIdGet")]
+        //[SwaggerResponse(200, type: typeof(ServiceArea))]
         public virtual IActionResult ServiceareasIdGet([FromRoute]int id)
         {
             return this._service.ServiceareasIdGetAsync(id);
@@ -106,8 +95,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">ServiceArea not found</response>
         [HttpPut]
         [Route("/api/serviceareas/{id}")]
-        [SwaggerOperation("ServiceareasIdPut")]
-        [SwaggerResponse(200, type: typeof(ServiceArea))]
+        //[SwaggerOperation("ServiceareasIdPut")]
+        //[SwaggerResponse(200, type: typeof(ServiceArea))]
         public virtual IActionResult ServiceareasIdPut([FromRoute]int id, [FromBody]ServiceArea item)
         {
             return this._service.ServiceareasIdPutAsync(id, item);
@@ -120,8 +109,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">ServiceArea created</response>
         [HttpPost]
         [Route("/api/serviceareas")]
-        [SwaggerOperation("ServiceareasPost")]
-        [SwaggerResponse(200, type: typeof(ServiceArea))]
+        //[SwaggerOperation("ServiceareasPost")]
+        //[SwaggerResponse(200, type: typeof(ServiceArea))]
         public virtual IActionResult ServiceareasPost([FromBody]ServiceArea item)
         {
             return this._service.ServiceareasPostAsync(item);

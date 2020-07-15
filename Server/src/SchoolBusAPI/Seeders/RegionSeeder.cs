@@ -14,8 +14,8 @@ namespace SchoolBusAPI.Seeders
     {
         private string[] ProfileTriggers = { AllProfiles };
 
-        public RegionSeeder(IConfiguration configuration, IHostingEnvironment env, ILoggerFactory loggerFactory) 
-            : base(configuration, env, loggerFactory)
+        public RegionSeeder(IConfiguration configuration, IWebHostEnvironment env, ILogger logger) 
+            : base(configuration, env, logger)
         { }
 
         protected override IEnumerable<string> TriggerProfiles

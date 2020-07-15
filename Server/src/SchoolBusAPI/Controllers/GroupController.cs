@@ -8,19 +8,8 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
 
@@ -48,7 +37,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Group created</response>
         [HttpPost]
         [Route("/api/groups/bulk")]
-        [SwaggerOperation("GroupsBulkPost")]
+        //[SwaggerOperation("GroupsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult GroupsBulkPost([FromBody]Group[] items)
         {
@@ -61,8 +50,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/groups")]
-        [SwaggerOperation("GroupsGet")]
-        [SwaggerResponse(200, type: typeof(List<Group>))]
+        //[SwaggerOperation("GroupsGet")]
+        //[SwaggerResponse(200, type: typeof(List<Group>))]
         public virtual IActionResult GroupsGet()
         {
             return this._service.GroupsGetAsync();
@@ -76,7 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Group not found</response>
         [HttpPost]
         [Route("/api/groups/{id}/delete")]
-        [SwaggerOperation("GroupsIdDeletePost")]
+        //[SwaggerOperation("GroupsIdDeletePost")]
         public virtual IActionResult GroupsIdDeletePost([FromRoute]int id)
         {
             return this._service.GroupsIdDeletePostAsync(id);
@@ -90,8 +79,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Group not found</response>
         [HttpGet]
         [Route("/api/groups/{id}")]
-        [SwaggerOperation("GroupsIdGet")]
-        [SwaggerResponse(200, type: typeof(Group))]
+        //[SwaggerOperation("GroupsIdGet")]
+        //[SwaggerResponse(200, type: typeof(Group))]
         public virtual IActionResult GroupsIdGet([FromRoute]int id)
         {
             return this._service.GroupsIdGetAsync(id);
@@ -106,8 +95,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Group not found</response>
         [HttpPut]
         [Route("/api/groups/{id}")]
-        [SwaggerOperation("GroupsIdPut")]
-        [SwaggerResponse(200, type: typeof(Group))]
+        //[SwaggerOperation("GroupsIdPut")]
+        //[SwaggerResponse(200, type: typeof(Group))]
         public virtual IActionResult GroupsIdPut([FromRoute]int id, [FromBody]Group item)
         {
             return this._service.GroupsIdPutAsync(id, item);
@@ -121,8 +110,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/groups/{id}/users")]
-        [SwaggerOperation("GroupsIdUsersGet")]
-        [SwaggerResponse(200, type: typeof(List<UserViewModel>))]
+        //[SwaggerOperation("GroupsIdUsersGet")]
+        //[SwaggerResponse(200, type: typeof(List<UserViewModel>))]
         public virtual IActionResult GroupsIdUsersGet([FromRoute]int id)
         {
             return this._service.GroupsIdUsersGetAsync(id);
@@ -135,8 +124,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Group created</response>
         [HttpPost]
         [Route("/api/groups")]
-        [SwaggerOperation("GroupsPost")]
-        [SwaggerResponse(200, type: typeof(Group))]
+        //[SwaggerOperation("GroupsPost")]
+        //[SwaggerResponse(200, type: typeof(Group))]
         public virtual IActionResult GroupsPost([FromBody]Group item)
         {
             return this._service.GroupsPostAsync(item);

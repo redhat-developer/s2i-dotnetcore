@@ -8,19 +8,8 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
 
@@ -48,7 +37,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">District created</response>
         [HttpPost]
         [Route("/api/districts/bulk")]
-        [SwaggerOperation("DistrictsBulkPost")]
+        //[SwaggerOperation("DistrictsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult DistrictsBulkPost([FromBody]District[] items)
         {
@@ -61,8 +50,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/districts")]
-        [SwaggerOperation("DistrictsGet")]
-        [SwaggerResponse(200, type: typeof(List<District>))]
+        //[SwaggerOperation("DistrictsGet")]
+        //[SwaggerResponse(200, type: typeof(List<District>))]
         public virtual IActionResult DistrictsGet()
         {
             return this._service.DistrictsGetAsync();
@@ -76,7 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">District not found</response>
         [HttpPost]
         [Route("/api/districts/{id}/delete")]
-        [SwaggerOperation("DistrictsIdDeletePost")]
+        //[SwaggerOperation("DistrictsIdDeletePost")]
         public virtual IActionResult DistrictsIdDeletePost([FromRoute]int id)
         {
             return this._service.DistrictsIdDeletePostAsync(id);
@@ -90,8 +79,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">District not found</response>
         [HttpGet]
         [Route("/api/districts/{id}")]
-        [SwaggerOperation("DistrictsIdGet")]
-        [SwaggerResponse(200, type: typeof(District))]
+        //[SwaggerOperation("DistrictsIdGet")]
+        //[SwaggerResponse(200, type: typeof(District))]
         public virtual IActionResult DistrictsIdGet([FromRoute]int id)
         {
             return this._service.DistrictsIdGetAsync(id);
@@ -106,8 +95,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">District not found</response>
         [HttpPut]
         [Route("/api/districts/{id}")]
-        [SwaggerOperation("DistrictsIdPut")]
-        [SwaggerResponse(200, type: typeof(District))]
+        //[SwaggerOperation("DistrictsIdPut")]
+        //[SwaggerResponse(200, type: typeof(District))]
         public virtual IActionResult DistrictsIdPut([FromRoute]int id, [FromBody]District item)
         {
             return this._service.DistrictsIdPutAsync(id, item);
@@ -121,8 +110,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/districts/{id}/serviceareas")]
-        [SwaggerOperation("DistrictsIdServiceareasGet")]
-        [SwaggerResponse(200, type: typeof(List<ServiceArea>))]
+        //[SwaggerOperation("DistrictsIdServiceareasGet")]
+        //[SwaggerResponse(200, type: typeof(List<ServiceArea>))]
         public virtual IActionResult DistrictsIdServiceareasGet([FromRoute]int id)
         {
             return this._service.DistrictsIdServiceareasGetAsync(id);
@@ -135,8 +124,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">District created</response>
         [HttpPost]
         [Route("/api/districts")]
-        [SwaggerOperation("DistrictsPost")]
-        [SwaggerResponse(200, type: typeof(District))]
+        //[SwaggerOperation("DistrictsPost")]
+        //[SwaggerResponse(200, type: typeof(District))]
         public virtual IActionResult DistrictsPost([FromBody]District item)
         {
             return this._service.DistrictsPostAsync(item);

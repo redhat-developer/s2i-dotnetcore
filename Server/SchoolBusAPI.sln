@@ -1,12 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A9D01C84-816F-449E-B0B3-CA5CE4DB13A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolBusAPI", "src\SchoolBusAPI\SchoolBusAPI.csproj", "{292B510E-6283-4616-AD2A-D8A994FD4285}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{269F54D8-D61B-4258-A4C1-638BCDD8F18F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolBusCommon", "..\Common\src\SchoolBusCommon\SchoolBusCommon.csproj", "{FF1DB058-3D10-4065-A42B-E9EB5BEB0982}"
 EndProject
@@ -20,10 +18,6 @@ Global
 		{292B510E-6283-4616-AD2A-D8A994FD4285}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{292B510E-6283-4616-AD2A-D8A994FD4285}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{292B510E-6283-4616-AD2A-D8A994FD4285}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{269F54D8-D61B-4258-A4C1-638BCDD8F18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{269F54D8-D61B-4258-A4C1-638BCDD8F18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{269F54D8-D61B-4258-A4C1-638BCDD8F18F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{269F54D8-D61B-4258-A4C1-638BCDD8F18F}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{FF1DB058-3D10-4065-A42B-E9EB5BEB0982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF1DB058-3D10-4065-A42B-E9EB5BEB0982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF1DB058-3D10-4065-A42B-E9EB5BEB0982}.Release|Any CPU.ActiveCfg = Debug|Any CPU

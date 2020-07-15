@@ -53,7 +53,7 @@ namespace SchoolBusAPI.Models
 
         public static Role GetRole(this IDbAppContext context, string name)
         {
-            Role role = context.Roles.Where(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            Role role = context.Roles.Where(x => x.Name == name)
                     .Include(r => r.RolePermissions).ThenInclude(p => p.Permission)
                     .FirstOrDefault();
             return role;
@@ -61,12 +61,12 @@ namespace SchoolBusAPI.Models
 
         public static Group GetGroup(this IDbAppContext context, string name)
         {
-            return context.Groups.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return context.Groups.FirstOrDefault(x => x.Name == name);
         }
 
         public static User GetUserByGuid(this IDbAppContext context, string guid)
         {
-            User user = context.Users.Where(x => x.Guid != null && x.Guid.Equals(guid, StringComparison.OrdinalIgnoreCase))
+            User user = context.Users.Where(x => x.Guid != null && x.Guid == guid)
                     .Include(u => u.UserRoles).ThenInclude(r => r.Role).ThenInclude(rp => rp.RolePermissions).ThenInclude(p => p.Permission)
                     .Include(u => u.GroupMemberships).ThenInclude(gm => gm.Group)
                     .FirstOrDefault();
@@ -75,7 +75,7 @@ namespace SchoolBusAPI.Models
 
         public static User GetUserBySmUserId(this IDbAppContext context, string smUserId)
         {
-            User user = context.Users.Where(x => x.SmUserId != null && x.SmUserId.Equals(smUserId, StringComparison.OrdinalIgnoreCase))
+            User user = context.Users.Where(x => x.SmUserId != null && x.SmUserId == smUserId)
                     .Include(u => u.UserRoles).ThenInclude(r => r.Role).ThenInclude(rp => rp.RolePermissions).ThenInclude(p => p.Permission)
                     .Include(u => u.GroupMemberships).ThenInclude(gm => gm.Group)
                     .FirstOrDefault();
@@ -85,7 +85,7 @@ namespace SchoolBusAPI.Models
 
         public static CCWJurisdiction GetCCWJurisdictionByCode(this IDbAppContext context, string code)
         {
-            CCWJurisdiction item = context.CCWJurisdictions.Where(x => x.Code != null && x.Code.Equals(code, StringComparison.OrdinalIgnoreCase))                    
+            CCWJurisdiction item = context.CCWJurisdictions.Where(x => x.Code != null && x.Code == code)                    
                     .FirstOrDefault();
             return item;
         }

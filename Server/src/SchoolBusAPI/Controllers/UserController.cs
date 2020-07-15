@@ -8,17 +8,7 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
@@ -29,7 +19,8 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class UserController : Controller
+    [ApiController]
+    public class UserController : ControllerBase
     {
         private readonly IUserService _service;
 
@@ -48,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">User created</response>
         [HttpPost]
         [Route("/api/usergroups/bulk")]
-        [SwaggerOperation("UsergroupsBulkPost")]
+        //[SwaggerOperation("UsergroupsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UsergroupsBulkPost([FromBody]GroupMembership[] items)
         {
@@ -62,7 +53,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">User created</response>
         [HttpPost]
         [Route("/api/userroles/bulk")]
-        [SwaggerOperation("UserrolesBulkPost")]
+        //[SwaggerOperation("UserrolesBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UserrolesBulkPost([FromBody]UserRole[] items)
         {
@@ -77,7 +68,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpPost]
         [Route("/api/users/bulk")]
-        [SwaggerOperation("UsersBulkPost")]
+        //[SwaggerOperation("UsersBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UsersBulkPost([FromBody]User[] items)
         {
@@ -92,9 +83,9 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users")]
-        [SwaggerOperation("UsersGet")]
-        [SwaggerResponse(200, type: typeof(List<UserViewModel>))]
-        public virtual IActionResult UsersGet()
+        //[SwaggerOperation("UsersGet")]
+        //[SwaggerResponse(200, type: typeof(List<UserViewModel>))]
+        public IActionResult UsersGet()
         {
             return this._service.UsersGetAsync();
         }
@@ -108,7 +99,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpPost]
         [Route("/api/users/{id}/delete")]
-        [SwaggerOperation("UsersIdDeletePost")]
+        //[SwaggerOperation("UsersIdDeletePost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UsersIdDeletePost([FromRoute]int id)
         {
@@ -124,8 +115,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}/favourites")]
-        [SwaggerOperation("UsersIdFavouritesGet")]
-        [SwaggerResponse(200, type: typeof(List<UserFavourite>))]
+        //[SwaggerOperation("UsersIdFavouritesGet")]
+        //[SwaggerResponse(200, type: typeof(List<UserFavourite>))]
         public virtual IActionResult UsersIdFavouritesGet([FromRoute]int id)
         {
             return this._service.UsersIdFavouritesGetAsync(id);
@@ -140,7 +131,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">Favourites added to user</response>
         [HttpPost]
         [Route("/api/users/{id}/favourites")]
-        [SwaggerOperation("UsersIdFavouritesPost")]
+        //[SwaggerOperation("UsersIdFavouritesPost")]
         public virtual IActionResult UsersIdFavouritesPost([FromRoute]int id, [FromBody]UserFavourite[] item)
         {
             return this._service.UsersIdFavouritesPostAsync(id, item);
@@ -156,7 +147,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpPut]
         [Route("/api/users/{id}/favourites")]
-        [SwaggerOperation("UsersIdFavouritesPut")]
+        //[SwaggerOperation("UsersIdFavouritesPut")]
         public virtual IActionResult UsersIdFavouritesPut([FromRoute]int id, [FromBody]UserFavourite[] items)
         {
             return this._service.UsersIdFavouritesPutAsync(id, items);
@@ -171,8 +162,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}")]
-        [SwaggerOperation("UsersIdGet")]
-        [SwaggerResponse(200, type: typeof(UserViewModel))]
+        //[SwaggerOperation("UsersIdGet")]
+        //[SwaggerResponse(200, type: typeof(UserViewModel))]
         public virtual IActionResult UsersIdGet([FromRoute]int id)
         {
             return this._service.UsersIdGetAsync(id);
@@ -187,8 +178,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}/groups")]
-        [SwaggerOperation("UsersIdGroupsGet")]
-        [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
+        //[SwaggerOperation("UsersIdGroupsGet")]
+        //[SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
         public virtual IActionResult UsersIdGroupsGet([FromRoute]int id)
         {
             return this._service.UsersIdGroupsGetAsync(id);
@@ -204,8 +195,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpPost]
         [Route("/api/users/{id}/groups")]
-        [SwaggerOperation("UsersIdGroupsPost")]
-        [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
+        //[SwaggerOperation("UsersIdGroupsPost")]
+        //[SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UsersIdGroupsPost([FromRoute]int id, [FromBody]GroupMembershipViewModel item)
         {
@@ -222,8 +213,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpPut]
         [Route("/api/users/{id}/groups")]
-        [SwaggerOperation("UsersIdGroupsPut")]
-        [SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
+        //[SwaggerOperation("UsersIdGroupsPut")]
+        //[SwaggerResponse(200, type: typeof(List<GroupMembershipViewModel>))]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UsersIdGroupsPut([FromRoute]int id, [FromBody]GroupMembershipViewModel[] items)
         {
@@ -238,8 +229,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/users/{id}/notifications")]
-        [SwaggerOperation("UsersIdNotificationsGet")]
-        [SwaggerResponse(200, type: typeof(List<NotificationViewModel>))]
+        //[SwaggerOperation("UsersIdNotificationsGet")]
+        //[SwaggerResponse(200, type: typeof(List<NotificationViewModel>))]
         public virtual IActionResult UsersIdNotificationsGet([FromRoute]int id)
         {
             return this._service.UsersIdNotificationsGetAsync(id);
@@ -254,8 +245,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}/permissions")]
-        [SwaggerOperation("UsersIdPermissionsGet")]
-        [SwaggerResponse(200, type: typeof(List<PermissionViewModel>))]
+        //[SwaggerOperation("UsersIdPermissionsGet")]
+        //[SwaggerResponse(200, type: typeof(List<PermissionViewModel>))]
         public virtual IActionResult UsersIdPermissionsGet([FromRoute]int id)
         {
             return this._service.UsersIdPermissionsGetAsync(id);
@@ -271,8 +262,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpPut]
         [Route("/api/users/{id}")]
-        [SwaggerOperation("UsersIdPut")]
-        [SwaggerResponse(200, type: typeof(UserViewModel))]
+        //[SwaggerOperation("UsersIdPut")]
+        //[SwaggerResponse(200, type: typeof(UserViewModel))]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UsersIdPut([FromRoute]int id, [FromBody]UserViewModel item)
         {
@@ -288,8 +279,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}/roles")]
-        [SwaggerOperation("UsersIdRolesGet")]
-        [SwaggerResponse(200, type: typeof(List<UserRoleViewModel>))]
+        //[SwaggerOperation("UsersIdRolesGet")]
+        //[SwaggerResponse(200, type: typeof(List<UserRoleViewModel>))]
         public virtual IActionResult UsersIdRolesGet([FromRoute]int id)
         {
             return this._service.UsersIdRolesGetAsync(id);
@@ -304,8 +295,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Role created for user</response>
         [HttpPost]
         [Route("/api/users/{id}/roles")]
-        [SwaggerOperation("UsersIdRolesPost")]
-        [SwaggerResponse(200, type: typeof(UserRoleViewModel))]
+        //[SwaggerOperation("UsersIdRolesPost")]
+        //[SwaggerResponse(200, type: typeof(UserRoleViewModel))]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UsersIdRolesPost([FromRoute]int id, [FromBody]UserRoleViewModel item)
         {
@@ -322,8 +313,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpPut]
         [Route("/api/users/{id}/roles")]
-        [SwaggerOperation("UsersIdRolesPut")]
-        [SwaggerResponse(200, type: typeof(List<UserRoleViewModel>))]
+        //[SwaggerOperation("UsersIdRolesPut")]
+        //[SwaggerResponse(200, type: typeof(List<UserRoleViewModel>))]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UsersIdRolesPut([FromRoute]int id, [FromBody]UserRoleViewModel[] items)
         {
@@ -338,8 +329,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">User created</response>
         [HttpPost]
         [Route("/api/users")]
-        [SwaggerOperation("UsersPost")]
-        [SwaggerResponse(200, type: typeof(User))]
+        //[SwaggerOperation("UsersPost")]
+        //[SwaggerResponse(200, type: typeof(User))]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult UsersPost([FromBody]User item)
         {
@@ -356,8 +347,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/users/search")]
-        [SwaggerOperation("UsersSearchGet")]
-        [SwaggerResponse(200, type: typeof(List<UserViewModel>))]
+        //[SwaggerOperation("UsersSearchGet")]
+        //[SwaggerResponse(200, type: typeof(List<UserViewModel>))]
         public virtual IActionResult UsersSearchGet([FromQuery]int?[] districts, [FromQuery]string surname, [FromQuery]bool? includeInactive)
         {
             return this._service.UsersSearchGetAsync(districts, surname, includeInactive);

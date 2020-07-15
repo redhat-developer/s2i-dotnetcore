@@ -8,19 +8,8 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
 
@@ -48,7 +37,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Region created</response>
         [HttpPost]
         [Route("/api/regions/bulk")]
-        [SwaggerOperation("RegionsBulkPost")]
+        //[SwaggerOperation("RegionsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult RegionsBulkPost([FromBody]Region[] items)
         {
@@ -61,8 +50,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/regions")]
-        [SwaggerOperation("RegionsGet")]
-        [SwaggerResponse(200, type: typeof(List<Region>))]
+        //[SwaggerOperation("RegionsGet")]
+        //[SwaggerResponse(200, type: typeof(List<Region>))]
         public virtual IActionResult RegionsGet()
         {
             return this._service.RegionsGetAsync();
@@ -76,7 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Region not found</response>
         [HttpPost]
         [Route("/api/regions/{id}/delete")]
-        [SwaggerOperation("RegionsIdDeletePost")]
+        //[SwaggerOperation("RegionsIdDeletePost")]
         public virtual IActionResult RegionsIdDeletePost([FromRoute]int id)
         {
             return this._service.RegionsIdDeletePostAsync(id);
@@ -90,8 +79,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/regions/{id}/districts")]
-        [SwaggerOperation("RegionsIdDistrictsGet")]
-        [SwaggerResponse(200, type: typeof(List<District>))]
+        //[SwaggerOperation("RegionsIdDistrictsGet")]
+        //[SwaggerResponse(200, type: typeof(List<District>))]
         public virtual IActionResult RegionsIdDistrictsGet([FromRoute]int id)
         {
             return this._service.RegionsIdDistrictsGetAsync(id);
@@ -105,8 +94,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Region not found</response>
         [HttpGet]
         [Route("/api/regions/{id}")]
-        [SwaggerOperation("RegionsIdGet")]
-        [SwaggerResponse(200, type: typeof(Region))]
+        //[SwaggerOperation("RegionsIdGet")]
+        //[SwaggerResponse(200, type: typeof(Region))]
         public virtual IActionResult RegionsIdGet([FromRoute]int id)
         {
             return this._service.RegionsIdGetAsync(id);
@@ -121,8 +110,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Region not found</response>
         [HttpPut]
         [Route("/api/regions/{id}")]
-        [SwaggerOperation("RegionsIdPut")]
-        [SwaggerResponse(200, type: typeof(Region))]
+        //[SwaggerOperation("RegionsIdPut")]
+        //[SwaggerResponse(200, type: typeof(Region))]
         public virtual IActionResult RegionsIdPut([FromRoute]int id, [FromBody]Region item)
         {
             return this._service.RegionsIdPutAsync(id, item);
@@ -135,8 +124,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Region created</response>
         [HttpPost]
         [Route("/api/regions")]
-        [SwaggerOperation("RegionsPost")]
-        [SwaggerResponse(200, type: typeof(Region))]
+        //[SwaggerOperation("RegionsPost")]
+        //[SwaggerResponse(200, type: typeof(Region))]
         public virtual IActionResult RegionsPost([FromBody]Region item)
         {
             return this._service.RegionsPostAsync(item);
