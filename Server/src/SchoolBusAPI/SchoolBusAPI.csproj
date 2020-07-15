@@ -34,4 +34,8 @@
     <PackageReference Include="MailKit" Version="2.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
 </Project>
