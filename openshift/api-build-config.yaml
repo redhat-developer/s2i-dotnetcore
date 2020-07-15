@@ -19,8 +19,8 @@ objects:
         - annotations: null
           from:
             kind: DockerImage
-            name: microsoft/dotnet:1.1.10-sdk-1.1.11
-          name: "1.1"
+            name: registry.redhat.io/dotnet/dotnet-31-rhel7:3.1-5
+          name: "3.1"
           referencePolicy:
             type: Local
   - apiVersion: v1
