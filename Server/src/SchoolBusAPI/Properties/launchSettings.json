@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:59836/api/values",
+      "launchUrl": "http://localhost:59836/api/users",
       "environmentVariables": {
         "JWT__Audience": "hmcr-public-dev",
         "CCW_SERVICE_NAME": "CCW:8080",
@@ -28,7 +28,7 @@
     "SbApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:59837/api/values",
+      "launchUrl": "http://localhost:59837/api/users",
       "environmentVariables": {
         "JWT__Audience": "hmcr-public-dev",
         "CCW_SERVICE_NAME": "CCW:8080",
