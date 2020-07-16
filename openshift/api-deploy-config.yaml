@@ -72,20 +72,21 @@ objects:
                 initialDelaySeconds: 30
                 periodSeconds: 5
               env:
-                - name: DATABASE_SERVICE_NAME
-                  value: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
-                - name: POSTGRESQL_USER
+                - name: ConnectionStrings__Schoolbus
                   valueFrom:
                     secretKeyRef:
                       name: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
-                      key: database-user
-                - name: POSTGRESQL_PASSWORD
+                      key: connection-string
+                - name: JWT__Authority
                   valueFrom:
                     secretKeyRef:
-                      name: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
-                      key: database-password
-                - name: POSTGRESQL_DATABASE
-                  value: schoolbus
+                      name: sso-configs-${ENV}
+                      key: JWT_SSO_AUTHORITY
+                - name: JWT__Audience
+                  valueFrom:
+                    secretKeyRef:
+                      name: sso-configs-${ENV}
+                      key: JWT_SSO_AUDIENCE
                 - name: UserInitializationFile
                   value: "/secrets/users.json"
                 - name: DistrictInitializationFile
