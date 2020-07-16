@@ -180,6 +180,7 @@ namespace SchoolBusAPI
 
             //app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseRouting();
+            app.UseCors();
             app.UseAuthorization();
             app.UseAuthentication();
             app.UseEndpoints(endpoints =>
