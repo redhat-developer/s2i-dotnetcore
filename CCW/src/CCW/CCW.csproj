@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Schoolbus.WS.CcwFacade\Schoolbus.WS.CcwFacade.csproj" />
-    <ProjectReference Include="..\..\..\Common\src\SchoolBusCommon\SchoolBusCommon.csproj" />
   </ItemGroup>
 
   <ItemGroup>
