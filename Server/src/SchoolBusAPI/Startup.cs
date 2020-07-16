@@ -10,26 +10,31 @@
 
 using Hangfire;
 using Hangfire.PostgreSql;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SchoolBusAPI.Authentication;
 using SchoolBusAPI.Authorization;
+using SchoolBusAPI.Middlewares;
 using SchoolBusAPI.Models;
-using Swashbuckle.Swagger.Model;
-using Swashbuckle.SwaggerGen.Annotations;
 using System;
-using System.IO;
+using System.Linq;
+using System.Net.Mime;
 using System.Text;
-using System.Xml.XPath;
+using System.Text.Json;
 
 namespace SchoolBusAPI
 {
@@ -38,44 +43,65 @@ namespace SchoolBusAPI
     /// </summary>
     public class Startup
     {
-        private readonly IHostingEnvironment _hostingEnv;
+        //private readonly IWebHostEnvironment _hostingEnv;
 
-        public IConfigurationRoot Configuration { get; }
+        private IWebHostEnvironment _env;
+        public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            _hostingEnv = env;
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
-                // ReferenceLoopHandling is set to Ignore to prevent JSON parser issues with the user / roles model.
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            };
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
+            _env = env;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = GetConnectionString();
 
-            services.AddAuthorization();
-            services.RegisterPermissionHandler();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IDbAppContextFactory, DbAppContextFactory>(CreateDbAppContextFactory);            
-            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddHttpContextAccessor();
 
-            // Add database context
-            // - Pattern should be using Configuration.GetConnectionString("Schoolbus") directly; see GetConnectionString for more details.
-            services.AddDbContext<DbAppContext>(options => options.UseNpgsql(connectionString));           
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.Authority = Configuration.GetValue<string>("JWT:Authority");
+                options.Audience = Configuration.GetValue<string>("JWT:Audience");
+                options.RequireHttpsMetadata = false;
+                options.IncludeErrorDetails = true;
+                options.EventsType = typeof(SbJwtBearerEvents);
+            });
+
+            services.AddSingleton<IDbAppContextFactory, DbAppContextFactory>(CreateDbAppContextFactory);
+
+            //Add database context
+            //- Pattern should be using Configuration.GetConnectionString("Schoolbus") directly; see GetConnectionString for more details.
+            services.AddDbContext<DbAppContext>(options => options.UseNpgsql(connectionString));
+
+            services.AddCors();
+
+            services
+                .AddControllers(options =>
+               {
+                   var policy = new AuthorizationPolicyBuilder()
+                       .RequireAuthenticatedUser()
+                       .Build();
+                   options.Filters.Add(new AuthorizeFilter(policy));
+               })
+               .AddNewtonsoftJson(options =>
+               {
+                   options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                   options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+                   options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
+                   options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+                   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+               })
+               .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.RegisterPermissionHandler();
+            services.AddScoped<SbJwtBearerEvents>();
 
             // allow for large files to be uploaded
             services.Configure<FormOptions>(options =>
@@ -83,125 +109,132 @@ namespace SchoolBusAPI
                 options.MultipartBodyLengthLimit = 1073741824; // 1 GB
             });
 
-            services.AddResponseCompression();
-
-            // Add framework services.
-            services.AddMvc(options => options.AddDefaultAuthorizationPolicyFilter())
-                .AddJsonOptions(
-                    opts => {
-                        opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                        opts.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-                        opts.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
-                        opts.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
-                        // ReferenceLoopHandling is set to Ignore to prevent JSON parser issues with the user / roles model.
-                        opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                    });
-
-            // enable Hangfire
+            //enable Hangfire
             PostgreSqlStorage storage = new PostgreSqlStorage(connectionString);
             services.AddHangfire(x => x.UseStorage(storage));
 
-            // Configure Swagger
-            services.AddSwaggerGen();
-            services.ConfigureSwaggerGen(options =>
-            {
-                options.SingleApiVersion(new Info
-                {
-                    Version = "v1",
-                    Title = "SBI REST API",
-                    Description = "School Bus Inspection System"
-                });
+            //// Configure Swagger
+            //services.AddSwaggerGen();
+            //services.ConfigureSwaggerGen(options =>
+            //{
+            //    options.SingleApiVersion(new Info
+            //    {
+            //        Version = "v1",
+            //        Title = "SBI REST API",
+            //        Description = "School Bus Inspection System"
+            //    });
 
-                options.DescribeAllEnumsAsStrings();
+            //    options.DescribeAllEnumsAsStrings();
 
-                // The swagger API documentation pages look far better with code documentation
-                // as input, but we need to protect the application from crashing on startup
-                // if the code documetation does not get generated for some reason.
-                string codeDocPath = $"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml";
-                if (File.Exists(codeDocPath))
-                {
-                    var comments = new XPathDocument(codeDocPath);
-                    options.OperationFilter<XmlCommentsOperationFilter>(comments);
-                    options.ModelFilter<XmlCommentsModelFilter>(comments);
-                }
-            });
+            //    // The swagger API documentation pages look far better with code documentation
+            //    // as input, but we need to protect the application from crashing on startup
+            //    // if the code documetation does not get generated for some reason.
+            //    string codeDocPath = $"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml";
+            //    if (File.Exists(codeDocPath))
+            //    {
+            //        var comments = new XPathDocument(codeDocPath);
+            //        options.OperationFilter<XmlCommentsOperationFilter>(comments);
+            //        options.ModelFilter<XmlCommentsModelFilter>(comments);
+            //    }
+            //});
 
             // Add application services.
             services.RegisterApplicationServices();
+
+            services.AddHealthChecks()
+                .AddNpgSql(connectionString, name: "SB-DB-Check", failureStatus: HealthStatus.Degraded, tags: new string[] { "pgsql", "db" });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-            TryMigrateDatabase(app, loggerFactory);
-
-            app.UseAuthentication(env);
-            app.UseResponseCompression();
-            app.UseStatusCodePagesWithReExecute("/error/{0}");
-            app.UseMvc();
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-            app.UseSwagger();
-            app.UseSwaggerUi();
-
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
+
+            app.UseMiddleware<ExceptionMiddleware>();
+
+            TryMigrateDatabase(app, logger);
+
+            var healthCheckOptions = new HealthCheckOptions
+            {
+                ResponseWriter = async (c, r) =>
+                {
+                    c.Response.ContentType = MediaTypeNames.Application.Json;
+                    var result = JsonSerializer.Serialize(
+                       new
+                       {
+                           checks = r.Entries.Select(e =>
+                      new {
+                          description = e.Key,
+                          status = e.Value.Status.ToString(),
+                          tags = e.Value.Tags,
+                          responseTime = e.Value.Duration.TotalMilliseconds
+                      }),
+                           totalResponseTime = r.TotalDuration.TotalMilliseconds
+                       });
+                    await c.Response.WriteAsync(result);
+                }
+            };
+
+            app.UseHealthChecks("/healthz", healthCheckOptions);
+
+            //app.UseStatusCodePagesWithReExecute("/error/{0}");
+            app.UseRouting();
+            app.UseCors();
+            app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             // enable Hangfire
             app.UseHangfireServer();
             app.UseHangfireDashboard(); // this enables the /hangfire action
-            
+
             // this should be set as an environment variable.  
             // Only enable when doing a new PROD deploy to populate CCW data and link it to the bus data.
             if (!string.IsNullOrEmpty(Configuration["ENABLE_HANGFIRE_CREATE"]))
             {
-                SetupHangfireCreateJob(app, loggerFactory);
+                SetupHangfireCreateJob(app, logger);
             }
 
             // this should be set as an environment variable
-            if (! string.IsNullOrEmpty (Configuration["ENABLE_HANGFIRE_UPDATE"]))
+            if (!string.IsNullOrEmpty(Configuration["ENABLE_HANGFIRE_UPDATE"]))
             {
-                SetupHangfireUpdateJob(app, loggerFactory);
+                SetupHangfireUpdateJob(app, logger);
             }
-
-            
         }
 
         // TODO:
         // - Should database migration be done here; in Startup?
-        private void TryMigrateDatabase(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        private void TryMigrateDatabase(IApplicationBuilder app, ILogger<Startup> logger)
         {
-            ILogger log = loggerFactory.CreateLogger(typeof(Startup));
-            log.LogInformation("Attempting to migrate the database ...");
+            logger.LogInformation("Attempting to migrate the database ...");
 
             try
             {
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    log.LogInformation("Fetching the application's database context ...");
+                    logger.LogInformation("Fetching the application's database context ...");
                     DbContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
 
-                    log.LogInformation("Migrating the database ...");
+                    logger.LogInformation("Migrating the database ...");
                     context.Database.Migrate();
-                    log.LogInformation("The database migration complete.");
+                    logger.LogInformation("The database migration complete.");
 
-                    log.LogInformation("Updating the databse documentation ...");
+                    logger.LogInformation("Updating the databse documentation ...");
                     DbCommentsUpdater<DbAppContext> updater = new DbCommentsUpdater<DbAppContext>((DbAppContext)context);
                     updater.UpdateDatabaseDescriptions();
-                    log.LogInformation("The database documentation has been updated.");
+                    logger.LogInformation("The database documentation has been updated.");
 
-                    log.LogInformation("Adding/Updating seed data ...");
-                    Seeders.SeedFactory<DbAppContext> seederFactory = new Seeders.SeedFactory<DbAppContext>(Configuration, _hostingEnv, loggerFactory);
+                    logger.LogInformation("Adding/Updating seed data ...");
+                    Seeders.SeedFactory<DbAppContext> seederFactory = new Seeders.SeedFactory<DbAppContext>(Configuration, _env, logger);
                     seederFactory.Seed(context as DbAppContext);
-                    log.LogInformation("Seeding operations are complete.");
+                    logger.LogInformation("Seeding operations are complete.");
                 }
 
-                log.LogInformation("All database migration activities are complete.");
+                logger.LogInformation("All database migration activities are complete.");
             }
             catch (Exception e)
             {
@@ -211,7 +244,7 @@ namespace SchoolBusAPI
                 msg.AppendLine("Please ensure a database is available and the connection string is correct.");
                 msg.AppendLine("If you are running in a development environment, ensure your test database and server configuration match the project's default connection string.");
 
-                log.LogCritical(new EventId(-1, "Database Migration Failed"), e, msg.ToString());
+                logger.LogCritical(new EventId(-1, "Database Migration Failed"), e, msg.ToString());
             }
         }
 
@@ -257,10 +290,9 @@ namespace SchoolBusAPI
         /// </summary>
         /// <param name="app"></param>
         /// <param name="loggerFactory"></param>
-        private void SetupHangfireCreateJob(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        private void SetupHangfireCreateJob(IApplicationBuilder app, ILogger<Startup> logger)
         {
-            ILogger log = loggerFactory.CreateLogger(typeof(Startup));
-            log.LogInformation("Attempting setup of Hangfire Create CCW job ...");
+            logger.LogInformation("Attempting setup of Hangfire Create CCW job ...");
 
             // get credentials
             string cCW_userId = Configuration["CCW_userId"];
@@ -274,7 +306,7 @@ namespace SchoolBusAPI
                 {
                     string connectionString = GetConnectionString();
                     
-                    log.LogInformation("Creating Hangfire job for CCW population ...");
+                    logger.LogInformation("Creating Hangfire job for CCW population ...");
                     // every 15 seconds we see if a CCW record needs to be created for a bus.  We only create one CCW record at a time.
                     BackgroundJob.Schedule(() => CCWTools.PopulateCCWJob(connectionString, cCW_userId, cCW_guid, cCW_directory, ccwHost), TimeSpan.FromSeconds(15));
                 }
@@ -284,7 +316,7 @@ namespace SchoolBusAPI
                 StringBuilder msg = new StringBuilder();
                 msg.AppendLine("Failed to setup Hangfire job.");
                 
-                log.LogCritical(new EventId(-1, "Hangfire job setup failed"), e, msg.ToString());
+                logger.LogCritical(new EventId(-1, "Hangfire job setup failed"), e, msg.ToString());
             }
         }
 
@@ -294,10 +326,9 @@ namespace SchoolBusAPI
         /// <param name="app"></param>
         /// <param name="loggerFactory"></param>
 
-        private void SetupHangfireUpdateJob(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        private void SetupHangfireUpdateJob(IApplicationBuilder app, ILogger<Startup> logger)
         {
-            ILogger log = loggerFactory.CreateLogger(typeof(Startup));
-            log.LogInformation("Attempting setup of Hangfire Update CCW job ...");
+            logger.LogInformation("Attempting setup of Hangfire Update CCW job ...");
 
             // get credentials
             string cCW_userId = Configuration["CCW_userId"];
@@ -311,7 +342,7 @@ namespace SchoolBusAPI
                 {
                     string connectionString = GetConnectionString();
                     
-                    log.LogInformation("Creating Hangfire job for CCW update ...");
+                    logger.LogInformation("Creating Hangfire job for CCW update ...");
                     // every 5 minutes we see if a CCW record needs to be updated.  We only update one CCW record at a time.
                     BackgroundJob.Schedule(() => CCWTools.UpdateCCWJob(connectionString, cCW_userId, cCW_guid, cCW_directory, ccwHost), TimeSpan.FromMinutes(5));
                 }
@@ -321,7 +352,7 @@ namespace SchoolBusAPI
                 StringBuilder msg = new StringBuilder();
                 msg.AppendLine("Failed to setup Hangfire job.");
 
-                log.LogCritical(new EventId(-1, "Hangfire job setup failed"), e, msg.ToString());
+                logger.LogCritical(new EventId(-1, "Hangfire job setup failed"), e, msg.ToString());
             }
         }
     }

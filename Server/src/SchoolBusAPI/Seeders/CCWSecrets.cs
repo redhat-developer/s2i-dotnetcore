@@ -14,8 +14,8 @@ namespace SchoolBusAPI.Seeders
     {
         private string[] ProfileTriggers = { AllProfiles };
 
-        public CCWSecrets(IConfigurationRoot configuration, IHostingEnvironment env, ILoggerFactory loggerFactory) 
-            : base(configuration, env, loggerFactory)
+        public CCWSecrets(IConfigurationRoot configuration, IWebHostEnvironment env, ILogger logger) 
+            : base(configuration, env, logger)
         { }
 
 

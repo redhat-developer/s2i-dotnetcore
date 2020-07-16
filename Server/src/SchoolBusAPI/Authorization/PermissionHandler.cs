@@ -26,14 +26,22 @@ namespace SchoolBusAPI.Authorization
     /// </remarks>
     public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
-            if (context.User.HasPermissions(requirement.RequiredPermissions.ToArray()))
+            var user = context.User;
+
+            if (!user.Identity.IsAuthenticated)
+            {
+                context.Fail();
+                return Task.CompletedTask;
+            }
+
+            if (user.HasPermissions(requirement.RequiredPermissions.ToArray()))
             {
                 context.Succeed(requirement);
             }
 
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

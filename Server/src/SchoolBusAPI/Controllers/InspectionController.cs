@@ -8,19 +8,8 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Swashbuckle.SwaggerGen.Annotations;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
 
@@ -48,7 +37,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Inspection created</response>
         [HttpPost]
         [Route("/api/inspections/bulk")]
-        [SwaggerOperation("InspectionsBulkPost")]
+        //[SwaggerOperation("InspectionsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult InspectionsBulkPost([FromBody]Inspection[] items)
         {
@@ -60,8 +49,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/inspections")]
-        [SwaggerOperation("InspectionsGet")]
-        [SwaggerResponse(200, type: typeof(List<Inspection>))]
+        //[SwaggerOperation("InspectionsGet")]
+        //[SwaggerResponse(200, type: typeof(List<Inspection>))]
         public virtual IActionResult InspectionsGet()
         {
             return this._service.InspectionsGetAsync();
@@ -75,7 +64,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Inspection not found</response>
         [HttpPost]
         [Route("/api/inspections/{id}/delete")]
-        [SwaggerOperation("InspectionsIdDeletePost")]
+        //[SwaggerOperation("InspectionsIdDeletePost")]
         public virtual IActionResult InspectionsIdDeletePost([FromRoute]int id)
         {
             return this._service.InspectionsIdDeletePostAsync(id, User.HasPermissions(Permission.ADMIN));
@@ -89,8 +78,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Inspection not found</response>
         [HttpGet]
         [Route("/api/inspections/{id}")]
-        [SwaggerOperation("InspectionsIdGet")]
-        [SwaggerResponse(200, type: typeof(Inspection))]
+        //[SwaggerOperation("InspectionsIdGet")]
+        //[SwaggerResponse(200, type: typeof(Inspection))]
         public virtual IActionResult InspectionsIdGet([FromRoute]int id)
         {
             return this._service.InspectionsIdGetAsync(id);
@@ -105,8 +94,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Inspection not found</response>
         [HttpPut]
         [Route("/api/inspections/{id}")]
-        [SwaggerOperation("InspectionsIdPut")]
-        [SwaggerResponse(200, type: typeof(Inspection))]
+        //[SwaggerOperation("InspectionsIdPut")]
+        //[SwaggerResponse(200, type: typeof(Inspection))]
         public virtual IActionResult InspectionsIdPut([FromRoute]int id, [FromBody]Inspection item)
         {
             return this._service.InspectionsIdPutAsync(id, item);
@@ -119,8 +108,8 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Inspection created</response>
         [HttpPost]
         [Route("/api/inspections")]
-        [SwaggerOperation("InspectionsPost")]
-        [SwaggerResponse(200, type: typeof(Inspection))]
+        //[SwaggerOperation("InspectionsPost")]
+        //[SwaggerResponse(200, type: typeof(Inspection))]
         public virtual IActionResult InspectionsPost([FromBody]Inspection item)
         {
             return this._service.InspectionsPostAsync(item);

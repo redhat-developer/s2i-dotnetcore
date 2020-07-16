@@ -12,8 +12,8 @@ namespace SchoolBusAPI.Seeders
     {
         private string[] ProfileTriggers = { AllProfiles };
 
-        public RoleSeeder(IConfiguration configuration, IHostingEnvironment env, ILoggerFactory loggerFactory) 
-            : base(configuration, env, loggerFactory)
+        public RoleSeeder(IConfiguration configuration, IWebHostEnvironment env, ILogger logger) 
+            : base(configuration, env, logger)
         { }
 
         protected override IEnumerable<string> TriggerProfiles

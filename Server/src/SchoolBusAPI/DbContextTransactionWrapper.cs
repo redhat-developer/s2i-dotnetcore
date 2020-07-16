@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SchoolBusAPI
@@ -20,6 +19,8 @@ namespace SchoolBusAPI
         }
 
         internal bool _existingTransaction { get; set; }
+
+        public Guid TransactionId => throw new NotImplementedException();
 
         /// <summary>
         /// Commits all changes made to the database in the current transaction.
@@ -55,6 +56,30 @@ namespace SchoolBusAPI
             if (!_existingTransaction)
             {
                 _transaction.Dispose();
+            }
+        }
+
+        public async Task CommitAsync(CancellationToken cancellationToken = default)
+        {
+            if (!_existingTransaction)
+            {
+                await _transaction.CommitAsync();
+            }
+        }
+
+        public async Task RollbackAsync(CancellationToken cancellationToken = default)
+        {
+            if (!_existingTransaction)
+            {
+                await _transaction.RollbackAsync();
+            }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (!_existingTransaction)
+            {
+                await _transaction.DisposeAsync();
             }
         }
     }
