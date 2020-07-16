@@ -13,13 +13,16 @@ using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
@@ -28,7 +31,10 @@ using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Middlewares;
 using SchoolBusAPI.Models;
 using System;
+using System.Linq;
+using System.Net.Mime;
 using System.Text;
+using System.Text.Json;
 
 namespace SchoolBusAPI
 {
@@ -134,6 +140,9 @@ namespace SchoolBusAPI
 
             // Add application services.
             services.RegisterApplicationServices();
+
+            services.AddHealthChecks()
+                .AddNpgSql(connectionString, name: "SB-DB-Check", failureStatus: HealthStatus.Degraded, tags: new string[] { "pgsql", "db" });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -145,6 +154,29 @@ namespace SchoolBusAPI
             app.UseMiddleware<ExceptionMiddleware>();
 
             TryMigrateDatabase(app, logger);
+
+            var healthCheckOptions = new HealthCheckOptions
+            {
+                ResponseWriter = async (c, r) =>
+                {
+                    c.Response.ContentType = MediaTypeNames.Application.Json;
+                    var result = JsonSerializer.Serialize(
+                       new
+                       {
+                           checks = r.Entries.Select(e =>
+                      new {
+                          description = e.Key,
+                          status = e.Value.Status.ToString(),
+                          tags = e.Value.Tags,
+                          responseTime = e.Value.Duration.TotalMilliseconds
+                      }),
+                           totalResponseTime = r.TotalDuration.TotalMilliseconds
+                       });
+                    await c.Response.WriteAsync(result);
+                }
+            };
+
+            app.UseHealthChecks("/healthz", healthCheckOptions);
 
             //app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseRouting();

@@ -67,7 +67,7 @@ objects:
                   memory: 768Mi
               livenessProbe:
                 httpGet:
-                  path: /
+                  path: /healthz
                   port: 8080
                 initialDelaySeconds: 30
                 periodSeconds: 5
