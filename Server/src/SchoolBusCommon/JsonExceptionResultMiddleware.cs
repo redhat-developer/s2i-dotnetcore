@@ -35,7 +35,7 @@ namespace SchoolBusCommon
         public JsonExceptionResultMiddleware(
                 RequestDelegate next,
                 ILoggerFactory loggerFactory,
-                IHostingEnvironment hostingEnvironment,
+                IWebHostEnvironment hostingEnvironment,
                 System.Diagnostics.DiagnosticSource diagnosticSource)
             {
                 if (next == null)

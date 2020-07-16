@@ -12,7 +12,6 @@
 using System;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace SchoolBusCommon
 {
@@ -26,7 +25,7 @@ namespace SchoolBusCommon
         /// <summary>
         /// The table prefix for this application
         /// </summary>
-        public const string TABLE_PREFIX = "SBI_"; 
+        public const string TABLE_PREFIX = "SBI_";
 
         /// <summary>
         /// Implements the following naming convention:
@@ -36,14 +35,15 @@ namespace SchoolBusCommon
         /// </summary>
         /// <param name="modelBuilder"></param>
         public static void UpperCaseUnderscoreSingularConvention(this ModelBuilder modelBuilder)
-        {            
+        {
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 // Skip shadow types
                 if (entityType.ClrType == null)
                     continue;
 
-                entityType.Relational().TableName = TABLE_PREFIX + ConvertName(entityType.ClrType.Name);
+                //entityType.Relational().TableName = TABLE_PREFIX + ConvertName(entityType.ClrType.Name);
+                entityType.SetTableName(TABLE_PREFIX + ConvertName(entityType.ClrType.Name));
 
                 // Now convert the column names.
                 foreach (var entityProperty in entityType.GetProperties())
@@ -51,14 +51,16 @@ namespace SchoolBusCommon
                     // Special case for the primary key.
                     // Primary key has a prefix of the table name, excluding the application prefix.
                     if (entityProperty.Name != null && entityProperty.Name.ToLowerInvariant().Equals("id"))
-                    {
-                        entityProperty.Relational().ColumnName = ConvertName(entityType.ClrType.Name) + "_ID";
+                    {                        
+                        //entityProperty.Relational().ColumnName = ConvertName(entityType.ClrType.Name) + "_ID";
+                        entityProperty.SetColumnName(ConvertName(entityType.ClrType.Name) + "_ID");
                     }
                     else
                     {
-                        entityProperty.Relational().ColumnName = ConvertName(entityProperty.Name);
+                        //entityProperty.Relational().ColumnName = ConvertName(entityProperty.Name);
+                        entityProperty.SetColumnName(ConvertName(entityProperty.Name));
                     }
-                    
+
                 }
             }
         }
