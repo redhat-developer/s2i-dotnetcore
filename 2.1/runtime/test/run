@@ -174,6 +174,28 @@ EOF
   popd >/dev/null
 }
 
+test_run_dotnet_in_dockerfile() {
+  test_start
+
+  pushd ${test_dir}/dockerfile-run-dotnet >/dev/null
+
+  # build image from Dockerfile that uses the 'dotnet' command on a RUN instruction.
+  cat >Dockerfile <<EOF
+FROM ${IMAGE_NAME}
+RUN dotnet --info
+EOF
+  local image=$(docker_build .)
+  local output=$(docker_run ${image})
+
+  # cleanup
+  docker_rmi ${image}
+
+  # verify the image build produced a working image
+  assert_contains "$output" "This is a runtime image for .NET Core"
+
+  popd >/dev/null
+}
+
 test_s2i_usage() {
   test_start
 
@@ -216,6 +238,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_aspnet
   test_s2i_usage
   test_s2i_build
+  test_run_dotnet_in_dockerfile
 fi
 
 if [ "$STOP_ON_ERROR" != "true" ]; then

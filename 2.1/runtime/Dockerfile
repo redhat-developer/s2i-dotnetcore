@@ -48,6 +48,9 @@ COPY ./contrib/ /opt/app-root
 
 COPY ./root/usr/bin /usr/bin
 
+# Make dotnet command available even when scl is not enabled.
+RUN ln -s /opt/app-root/etc/scl_enable_dotnet /usr/bin/dotnet
+
 RUN yum install -y centos-release-dotnet && \
     INSTALL_PKGS="rh-dotnet21-dotnet-runtime-2.1 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
