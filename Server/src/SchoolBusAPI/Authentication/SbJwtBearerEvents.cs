@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Models;
 using System;
 using System.Security.Claims;
@@ -41,17 +42,9 @@ namespace SchoolBusAPI.Authentication
 
         public override async Task TokenValidated(TokenValidatedContext context)
         {
-            var principal = context.Principal;
-            var preferredUsername = principal.FindFirstValue("preferred_username");
+            var (username, userGuid, directory) = context.Principal.GetUserInfo();
 
-            var usernames = preferredUsername.Split("@");
-            var username = usernames[0].ToUpperInvariant();
-            var directory = usernames[1].ToUpperInvariant();
-
-            var userGuidClaim = directory.ToUpperInvariant() == "IDIR" ? "idir_userid" : "bceid_userid";
-            var userGuid = new Guid(principal.FindFirstValue(userGuidClaim));
-
-            var user = _dbContext.LoadUser(username, userGuid.ToString("N").ToUpperInvariant());
+            var user = _dbContext.LoadUser(username, userGuid);
 
             if (user == null)
             {

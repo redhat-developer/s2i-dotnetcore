@@ -22,6 +22,12 @@ namespace SchoolBusAPI.Models
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Name, user.SmUserId));
 
+            var directory = user.SmAuthorizationDirectory?.ToUpperInvariant() ?? "IDIR";
+            claims.Add(new Claim("preferred_username", $"{user.SmUserId}@{directory}"));
+
+            var idType = directory == "IDIR" ? "idir_userid" : "bceid_userid";
+            claims.Add(new Claim(idType, user.Guid));
+
             if (!string.IsNullOrEmpty(user.Surname))
                 claims.Add(new Claim(ClaimTypes.Surname, user.Surname));
 
