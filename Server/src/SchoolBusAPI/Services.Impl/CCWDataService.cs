@@ -8,24 +8,12 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Specialized;
-using System.Net.Http;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.AspNetCore.Http;
+using SchoolBusAPI.Extensions;
 
 namespace SchoolBusAPI.Services.Impl
 {
@@ -86,22 +74,8 @@ namespace SchoolBusAPI.Services.Impl
         /// <response code="404">Vehicle not found in CCW system</response>
         public virtual IActionResult CcwdataFetchGetAsync(string regi, string vin, string plate)
         {            
-            string cCW_userId = null;
-            string cCW_guid = null;
-            string cCW_directory = null;
+            var (cCW_userId, cCW_guid, cCW_directory) = User.GetUserInfo();
 
-            if (Request.Headers.ContainsKey("SM_UNIVERSALID"))
-            {
-                cCW_userId = Request.Headers["SM_UNIVERSALID"];
-            }
-            if (Request.Headers.ContainsKey("SMGOV_USERGUID"))
-            {
-                cCW_guid = Request.Headers["SMGOV_USERGUID"];
-            }
-            if (Request.Headers.ContainsKey("SM_AUTHDIRNAME"))
-            {
-                cCW_directory = Request.Headers["SM_AUTHDIRNAME"];
-            }
             string ccwHost = Configuration["CCW_SERVICE_NAME"];
             CCWData result = CCWTools.FetchCCW (regi, vin, plate, cCW_userId, cCW_guid, cCW_directory, ccwHost);
 
