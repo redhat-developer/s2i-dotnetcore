@@ -54,20 +54,11 @@ objects:
                   cpu: 500m
                   memory: 512Mi
               env:
-                - name: DATABASE_SERVICE_NAME
-                  value: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
-                - name: POSTGRESQL_USER
+                - name: ConnectionStrings__Schoolbus
                   valueFrom:
                     secretKeyRef:
                       name: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
-                      key: database-user
-                - name: POSTGRESQL_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
-                      key: database-password
-                - name: POSTGRESQL_DATABASE
-                  value: schoolbus
+                      key: connection-string
                 - name: CCWInitializationFile
                   value: "/ccwsecrets/ccw.json"
                 - name: ASPNETCORE_ENVIRONMENT

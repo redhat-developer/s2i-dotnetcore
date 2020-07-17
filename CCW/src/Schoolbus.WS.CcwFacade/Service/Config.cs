@@ -7,7 +7,7 @@ namespace SchoolBus.WS.CCW.Facade.Service
     {
         private readonly IConfiguration _configuration;
 
-        public Config (IConfigurationRoot configuration)
+        public Config (IConfiguration configuration)
         {
             _configuration = configuration;
         }

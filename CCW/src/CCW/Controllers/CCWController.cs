@@ -29,7 +29,7 @@ namespace CCW.Controllers
 
         protected ILogger _logger;
 
-        public CCWController(IHttpContextAccessor httpContextAccessor, IConfigurationRoot configuration, DbAppContext context, ILoggerFactory loggerFactory)
+        public CCWController(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, ILoggerFactory loggerFactory)
         {
             Configuration = configuration;
 

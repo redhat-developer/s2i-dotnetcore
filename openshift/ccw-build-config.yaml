@@ -43,12 +43,16 @@ objects:
           uri: ${SOURCE_REPOSITORY_URL}
           ref: ${SOURCE_REPOSITORY_REF}
         type: Git
-        contextDir: ""
+        contextDir: "CCW"
       strategy:
-        dockerStrategy:
-          dockerfilePath: "CCW/Dockerfile"
-          noCache: true
-        type: Docker
+        sourceStrategy:
+          env:
+            - name: DOTNET_STARTUP_PROJECT
+              value: src/CCW/CCW.csproj
+          from:
+            kind: ImageStreamTag
+            name: "dotnet-31-rhel7:3.1"
+        type: Source
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME

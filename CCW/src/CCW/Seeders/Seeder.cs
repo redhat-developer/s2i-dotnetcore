@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,13 @@ namespace CCW.Seeders
     {
         public const string AllProfiles = "all";
 
-        private IHostingEnvironment _env;
+        private IWebHostEnvironment _env;
         protected ILogger _logger;
 
-        internal Seeder(IConfigurationRoot configuration, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        internal Seeder(IConfiguration configuration, IWebHostEnvironment env, ILogger logger)
         {
             _env = env;
-            _logger = loggerFactory.CreateLogger(typeof(Seeder<T>));
+            _logger = logger;
             Configuration = configuration;
         }
 

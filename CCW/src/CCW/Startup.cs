@@ -1,87 +1,62 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using CCW.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using CCW.Models;
 using System;
-using System.IO;
-using System.Text;
-using Swashbuckle.Swagger.Model;
-using Swashbuckle.SwaggerGen.Annotations;
 
 namespace CCW
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        private IWebHostEnvironment _env;
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);                
-
-            if (env.IsEnvironment("Development"))
-            {
-                // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
-                builder.AddApplicationInsightsSettings(developerMode: true);
-            }            
-
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
-            
+            Configuration = configuration;
+            _env = env;
         }
-
-        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+
             services.AddSingleton<IDbAppContextFactory, DbAppContextFactory>(CreateDbAppContextFactory);
+
             // Add database context
             services.AddDbContext<DbAppContext>(options => options.UseNpgsql(GetConnectionString()));
-            services.AddSingleton(provider => Configuration);
-            // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddMvc().AddJsonOptions(
-                    opts => {
-                        opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                        opts.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-                        opts.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
-                        opts.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
-                        // ReferenceLoopHandling is set to Ignore to prevent JSON parser issues with the user / roles model.
-                        opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                    });
-
-            // Configure Swagger
-            services.AddSwaggerGen();
-            services.ConfigureSwaggerGen(options =>
-            {
-                options.SingleApiVersion(new Info
+            services
+                .AddControllers()
+                .AddNewtonsoftJson(options =>
                 {
-                    Version = "v1",
-                    Title = "CCW REST API",
-                    Description = "Microservice used by the SchoolBus Inspection System"
-                });
-
-                options.DescribeAllEnumsAsStrings();                
-            });
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+                    options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
+                    options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            if (env.IsDevelopment())
+                app.UseDeveloperExceptionPage();
+
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 DbContext context = serviceScope.ServiceProvider.GetService<DbAppContext>();
 
-                Seeders.SeedFactory<DbAppContext> seederFactory = new Seeders.SeedFactory<DbAppContext>(Configuration, env, loggerFactory);
+                Seeders.SeedFactory<DbAppContext> seederFactory = new Seeders.SeedFactory<DbAppContext>(Configuration, env, logger);
                 seederFactory.Seed(context as DbAppContext);
             }
 
@@ -90,14 +65,11 @@ namespace CCW
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseApplicationInsightsRequestTelemetry();
-
-            app.UseApplicationInsightsExceptionTelemetry();
-
-            app.UseMvc();
-            app.UseDefaultFiles();
-            app.UseSwagger();
-            app.UseSwaggerUi();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         // ToDo:
@@ -107,13 +79,12 @@ namespace CCW
         // -- This way the configuration provider is performing all of the lifting and the connection string can be retrieved in a single consistent manner.
         private string GetConnectionString()
         {
-            string connectionString = string.Empty;
-
             string host = Configuration["DATABASE_SERVICE_NAME"];
             string username = Configuration["POSTGRESQL_USER"];
             string password = Configuration["POSTGRESQL_PASSWORD"];
             string database = Configuration["POSTGRESQL_DATABASE"];
 
+            string connectionString;
             if (string.IsNullOrEmpty(host) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(database))
             {
                 // When things get cleaned up properly, this is the only call we'll have to make.
