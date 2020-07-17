@@ -14,19 +14,17 @@ namespace CCW.Seeders
  /// </summary>
     public class SeedFactory<T> where T : DbContext
     {
-        private readonly IHostingEnvironment _env;
-        private readonly ILoggerFactory _loggerFactory;
+        private readonly IWebHostEnvironment _env;
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
 
         private List<Seeder<T>> SeederInstances = new List<Seeder<T>>();
 
-        public SeedFactory(IConfigurationRoot configuration, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public SeedFactory(IConfiguration configuration, IWebHostEnvironment env, ILogger logger)
         {
             _env = env;
-            _loggerFactory = loggerFactory;
-            _logger = _loggerFactory.CreateLogger(typeof(SeedFactory<T>));
             _configuration = configuration;
+            _logger = logger;
 
             this.LoadSeeders();
             SeederInstances.Sort(new SeederComparer<T>());
@@ -41,7 +39,7 @@ namespace CCW.Seeders
             foreach (Type type in Types)
             {
                 _logger.LogDebug($"\tCreating instance of {type.Name}...");
-                SeederInstances.Add((Seeder<T>)Activator.CreateInstance(type, _configuration, _env, _loggerFactory));
+                SeederInstances.Add((Seeder<T>)Activator.CreateInstance(type, _configuration, _env, _logger));
             }
 
             _logger.LogDebug($"\tA total of {Types.Count} seeders loaded.");

@@ -43,8 +43,6 @@ namespace SchoolBusAPI
     /// </summary>
     public class Startup
     {
-        //private readonly IWebHostEnvironment _hostingEnv;
-
         private IWebHostEnvironment _env;
         public IConfiguration Configuration { get; }
 
@@ -84,21 +82,21 @@ namespace SchoolBusAPI
 
             services
                 .AddControllers(options =>
-               {
-                   var policy = new AuthorizationPolicyBuilder()
-                       .RequireAuthenticatedUser()
-                       .Build();
-                   options.Filters.Add(new AuthorizeFilter(policy));
-               })
-               .AddNewtonsoftJson(options =>
-               {
-                   options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                   options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-                   options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
-                   options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
-                   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-               })
-               .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                {
+                    var policy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .Build();
+                    options.Filters.Add(new AuthorizeFilter(policy));
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+                    options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
+                    options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.RegisterPermissionHandler();
             services.AddScoped<SbJwtBearerEvents>();

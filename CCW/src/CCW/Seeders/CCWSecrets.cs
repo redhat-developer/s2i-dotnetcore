@@ -1,10 +1,8 @@
 ﻿using CCW.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -14,8 +12,8 @@ namespace CCW.Seeders
     {
         private string[] ProfileTriggers = { AllProfiles };
 
-        public CCWSecrets(IConfigurationRoot configuration, IHostingEnvironment env, ILoggerFactory loggerFactory) 
-            : base(configuration, env, loggerFactory)
+        public CCWSecrets(IConfiguration configuration, IWebHostEnvironment env, ILogger logger)
+            : base(configuration, env, logger)
         { }
 
 
