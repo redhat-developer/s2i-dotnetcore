@@ -98,9 +98,9 @@ objects:
                 - name: CCWInitializationFile
                   value: "/ccwsecrets/ccw.json"
                 - name: CCW_SERVICE_NAME
-                  value: "${PROJECT_NAME}-${CCW_NAME}${SUFFIX}"
+                  value: "http://${PROJECT_NAME}-${CCW_NAME}${SUFFIX}:8080"
                 - name: PDF_SERVICE_NAME
-                  value: "${PROJECT_NAME}-${PDF_NAME}${SUFFIX}"
+                  value: "http://${PROJECT_NAME}-${PDF_NAME}${SUFFIX}:8080"
                 - name: ASPNETCORE_ENVIRONMENT
                   value: Development
               volumeMounts:
