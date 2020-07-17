@@ -46,6 +46,7 @@ module.exports = (settings) => {
     )
   );
 
+  /*
   objects.push(
     ...oc.processDeploymentTemplate(
       `${templatesLocalBaseUrl}/client-build-config.yaml`,
@@ -77,7 +78,7 @@ module.exports = (settings) => {
       }
     )
   );
-
+*/
   objects.push(
     ...oc.processDeploymentTemplate(
       `${templatesLocalBaseUrl}/ccw-build-config.yaml`,
