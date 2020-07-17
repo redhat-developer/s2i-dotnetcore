@@ -94,6 +94,7 @@ module.exports = (settings) => {
     )
   );
 
+  /*
   objects.push(
     ...oc.processDeploymentTemplate(
       `${templatesLocalBaseUrl}/frontend-deploy-config.yaml`,
@@ -110,6 +111,7 @@ module.exports = (settings) => {
       }
     )
   );
+  */
 
   objects.push(
     ...oc.processDeploymentTemplate(
