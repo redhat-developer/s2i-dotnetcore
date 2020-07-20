@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SchoolBus.WS.CCW.Facade.Service;
 using SchoolBus.WS.CCW.Reference;
 using System.ServiceModel;
-using Microsoft.EntityFrameworkCore;
 using CCW.Models;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 
 namespace CCW.Controllers
 {
     [Route("api/[controller]")]
-    public class CCWController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class CCWController : ControllerBase
     {
         private readonly IConfiguration Configuration;
         private readonly DbAppContext _context;
