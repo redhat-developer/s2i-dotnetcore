@@ -18,7 +18,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class NotificationEventController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class NotificationEventController : ControllerBase
     {
         private readonly INotificationEventService _service;
 

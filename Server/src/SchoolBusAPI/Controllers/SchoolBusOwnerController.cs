@@ -19,7 +19,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class SchoolBusOwnerController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class SchoolBusOwnerController : ControllerBase
     {
         private readonly ISchoolBusOwnerService _service;
 

@@ -18,7 +18,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class GroupController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class GroupController : ControllerBase
     {
         private readonly IGroupService _service;
 

@@ -19,6 +19,7 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
+    [ApiVersion("1.0")]
     [ApiController]
     public class UserController : ControllerBase
     {

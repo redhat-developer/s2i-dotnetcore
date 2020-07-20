@@ -18,7 +18,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class NoteController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class NoteController : ControllerBase
     {
         private readonly INoteService _service;
 

@@ -25,7 +25,9 @@ namespace SchoolBusAPI.Controllers
     /// Provides examples of how to apply permission checks.
     /// </remarks>
     [Route("api/test")]
-    public class TestController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class TestController : ControllerBase
     {
         private readonly ITestService _service;
 

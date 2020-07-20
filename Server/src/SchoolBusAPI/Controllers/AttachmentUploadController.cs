@@ -18,7 +18,9 @@ using SchoolBusAPI.Mappings;
 
 namespace SchoolBusAPI.Controllers
 {
-    public class AttachmentUploadController
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class AttachmentUploadController : ControllerBase
     {
         private readonly IAttachmentUploadService _service;
         public AttachmentUploadController(IAttachmentUploadService service)

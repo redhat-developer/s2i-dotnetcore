@@ -18,7 +18,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class CCWDataController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class CCWDataController : ControllerBase
     {
         private readonly ICCWDataService _service;
 

@@ -19,7 +19,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class AttachmentController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class AttachmentController : ControllerBase
     {
         private readonly IAttachmentService _service;
 
