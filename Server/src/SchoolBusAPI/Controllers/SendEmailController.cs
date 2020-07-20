@@ -21,7 +21,9 @@ namespace SchoolBusAPI.Controllers
 {   /// <summary>
     /// 
     /// </summary>
-    public class SendEmailController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class SendEmailController : ControllerBase
     {
         private readonly IEmailService _service;
 

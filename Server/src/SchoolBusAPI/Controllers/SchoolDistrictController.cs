@@ -18,7 +18,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class SchoolDistrictController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class SchoolDistrictController : ControllerBase
     {
         private readonly ISchoolDistrictService _service;
 

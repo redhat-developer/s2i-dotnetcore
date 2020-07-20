@@ -18,7 +18,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class HistoryController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class HistoryController : ControllerBase
     {
         private readonly IHistoryService _service;
 

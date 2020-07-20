@@ -20,7 +20,9 @@ namespace SchoolBusAPI.Controllers
 {
     [Authorize]
     [Route("api")]
-    public class VersionController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class VersionController : ControllerBase
     {
         // Hack in the git commit id.
         private const string _commitKey = "OPENSHIFT_BUILD_COMMIT";

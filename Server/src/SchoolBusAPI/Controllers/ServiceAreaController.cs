@@ -18,7 +18,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class ServiceAreaController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class ServiceAreaController : ControllerBase
     {
         private readonly IServiceAreaService _service;
 

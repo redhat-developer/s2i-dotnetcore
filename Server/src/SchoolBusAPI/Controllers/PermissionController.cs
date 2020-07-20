@@ -19,7 +19,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class PermissionController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class PermissionController : ControllerBase
     {
         private readonly IPermissionService _service;
 

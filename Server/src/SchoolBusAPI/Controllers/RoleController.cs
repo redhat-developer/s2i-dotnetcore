@@ -19,7 +19,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class RoleController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class RoleController : ControllerBase
     {
         private readonly IRoleService _service;
 

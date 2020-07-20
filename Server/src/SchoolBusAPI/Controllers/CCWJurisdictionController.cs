@@ -18,7 +18,9 @@ namespace SchoolBusAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public partial class CCWJurisdictionController : Controller
+    [ApiVersion("1.0")]
+    [ApiController]
+    public class CCWJurisdictionController : ControllerBase
     {
         private readonly ICCWJurisdictionService _service;
 
