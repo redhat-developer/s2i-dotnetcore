@@ -1,13 +1,8 @@
 {
   "name": "schoolbus-client",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "School Bus JavaScript Web Application",
-  "main": "dist/index.html",
-  "scripts": {
-    "test": "gulp test",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
-  },
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git@github.com:bcgov/schoolbus.git"
@@ -18,71 +13,55 @@
   ],
   "contributors": [
     "Séamus O'Connor <seamus.oconnor@pneumaticweb.com> (http://pneumaticweb.com/)",
-    "Randy Posynick <randy.posynick@gmail.com>"
+    "Randy Posynick <randy.posynick@gmail.com>",
+    "Neal Li <neal.li@gov.bc.ca"
   ],
-  "license": "UNLICENSED",
-  "private": true,
   "dependencies": {
-    "babel-core": "^6.9.1",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-transform-object-rest-spread": "~6.20.2",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.5.0",
-    "bluebird": "3.3.5",
-    "bootstrap": "^3.3.6",
-    "del": "~2.2.0",
-    "deps-ok": "~1.2.0",
-    "draft-convert": "^2.1.4",
-    "draft-js": "^0.10.5",
-    "draftjs-conductor": "^0.2.1",
-    "eslint": "^3.12.2",
-    "eslint-loader": "^1.3.0",
-    "eslint-plugin-react": "^6.8.0",
-    "expect.js": "~0.3.1",
-    "express": "^4.13.4",
-    "gulp": "github:gulpjs/gulp#6d71a65",
-    "gulp-autoprefixer": "~3.1.0",
-    "gulp-clean-css": "^2.0.10",
-    "gulp-compile-handlebars": "~0.6.1",
-    "gulp-concat": "~2.6.0",
-    "gulp-live-server": "0.0.30",
-    "gulp-load-plugins": "~1.6.0",
-    "gulp-mocha": "~3.0.1",
-    "gulp-mocha-phantomjs": "~0.12.0",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": "~1.2.2",
-    "gulp-rev-all": "^0.9.7",
-    "gulp-sass": "~3.0.0",
-    "gulp-size": "~2.1.0",
-    "gulp-sourcemaps": "~1.9.1",
-    "gulp-uglify": "~2.0.0",
-    "gulp-util": "~3.0.7",
-    "gulp-watch": "~4.3.5",
-    "gulp-webpack": "~1.5.0",
-    "http-proxy-middleware": "^0.17.3",
-    "jquery": "^3.1.1",
-    "lodash": "^4.17.2",
-    "minimist": "^1.2.0",
-    "mocha": "^3.2.0",
-    "moment": "^2.17.1",
-    "morgan": "^1.7.0",
-    "object-assign-shim": "^1.0.0",
-    "react": "^15.0.0",
-    "react-bootstrap": "^0.30.7",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "bootstrap": "^3.4.1",
+    "draft-convert": "^2.1.10",
+    "draft-js": "^0.11.6",
+    "draftjs-conductor": "^1.0.1",
+    "http-proxy-middleware": "^1.0.5",
+    "jquery": "^3.5.1",
+    "keycloak-js": "^10.0.2",
+    "lodash": "^4.17.19",
+    "moment": "^2.27.0",
+    "node-sass": "^4.14.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-bootstrap": "^0.33.1",
     "react-bootstrap-datetimepicker": "0.0.22",
-    "react-datetime": "^2.8.6",
-    "react-dom": "^15.0.0",
-    "react-hot-loader": "^1.3.1",
-    "react-overlays": "^0.6.10",
-    "react-redux": "^5.0.1",
-    "react-router": "^3.0.0",
+    "react-datetime": "^2.16.3",
+    "react-dom": "^16.13.1",
+    "react-overlays": "^0.8.0",
+    "react-redux": "^5.1.2",
+    "react-router": "^3.2.2",
     "react-router-bootstrap": "^0.23.1",
-    "redux": "^3.6.0",
-    "toxy": "^0.3.12",
-    "webpack": "~1.14.0",
-    "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.13.2",
-    "snyk": "^1.189.0"
+    "react-scripts": "3.4.1",
+    "redux": "^3.7.2"
   },
-  "snyk": true
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

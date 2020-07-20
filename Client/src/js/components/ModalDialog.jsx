@@ -1,39 +1,32 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Modal } from 'react-bootstrap';
+import { Modal } from "react-bootstrap";
 
-import _ from 'lodash';
+import _ from "lodash";
 
-var ModalDialog = React.createClass({
-  propTypes: {
-    title: React.PropTypes.node,
-    footer: React.PropTypes.node,
-    onClose: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    children: React.PropTypes.node,
-  },
+class ModalDialog extends React.Component {
+  static propTypes = {
+    title: PropTypes.node,
+    footer: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    children: PropTypes.node,
+  };
 
   render() {
-    var props = _.omit(this.props, 'title', 'footer', 'onClose');
+    var props = _.omit(this.props, "title", "footer", "onClose");
 
-    return <Modal onHide={ this.props.onClose } { ...props }>
-      <Modal.Header closeButton>
-        { this.props.title &&
-          <Modal.Title>
-            { this.props.title }
-          </Modal.Title>
-        }
-      </Modal.Header>
-      <Modal.Body>
-        { this.props.children }
-      </Modal.Body>
-      { this.props.footer &&
-        <Modal.Footer>
-          { this.props.footer }
-        </Modal.Footer>
-      }
-    </Modal>;
-  },
-});
+    return (
+      <Modal onHide={this.props.onClose} {...props}>
+        <Modal.Header closeButton>
+          {this.props.title && <Modal.Title>{this.props.title}</Modal.Title>}
+        </Modal.Header>
+        <Modal.Body>{this.props.children}</Modal.Body>
+        {this.props.footer && <Modal.Footer>{this.props.footer}</Modal.Footer>}
+      </Modal>
+    );
+  }
+}
 
 export default ModalDialog;

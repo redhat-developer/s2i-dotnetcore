@@ -1,29 +1,39 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Popover, Glyphicon, OverlayTrigger } from 'react-bootstrap';
+import { Popover, Glyphicon, OverlayTrigger } from "react-bootstrap";
 
-import _ from 'lodash';
+import _ from "lodash";
 
-
-var InfoButton = React.createClass({
-  propTypes: {
-    title: React.PropTypes.string.isRequired,
-    className: React.PropTypes.string,
-    children: React.PropTypes.node,
-  },
+class InfoButton extends React.Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    children: PropTypes.node,
+  };
 
   render() {
-    var props = _.omit(this.props, 'className', 'children');
+    var props = _.omit(this.props, "className", "children");
 
-    return <OverlayTrigger trigger="click" placement="right" rootClose
-      overlay={ <Popover id="info" title={ this.props.title }>
-        { this.props.children }
-      </Popover> }
-    >
-      <Glyphicon className={ `info-button ${this.props.className || ''}` } { ...props } glyph="info-sign" />
-    </OverlayTrigger>;
-  },
-});
-
+    return (
+      <OverlayTrigger
+        trigger="click"
+        placement="right"
+        rootClose
+        overlay={
+          <Popover id="info" title={this.props.title}>
+            {this.props.children}
+          </Popover>
+        }
+      >
+        <Glyphicon
+          className={`info-button ${this.props.className || ""}`}
+          {...props}
+          glyph="info-sign"
+        />
+      </OverlayTrigger>
+    );
+  }
+}
 
 export default InfoButton;

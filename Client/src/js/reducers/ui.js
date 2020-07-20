@@ -1,4 +1,4 @@
-import * as Action from '../actionTypes';
+import * as Action from "../actionTypes";
 
 const DEFAULT_STATE = {
   requests: {
@@ -17,22 +17,29 @@ const DEFAULT_STATE = {
 };
 
 export default function uiReducer(state = DEFAULT_STATE, action) {
-  var newState = {};
-
-  switch(action.type) {
+  switch (action.type) {
     // Requests
 
     case Action.REQUESTS_BEGIN:
-      return { ...state, requests: {
-        waiting: true,
-        error: {},
-      }};
+      return {
+        ...state,
+        requests: {
+          waiting: true,
+          error: {},
+        },
+      };
 
     case Action.REQUESTS_END:
-      return { ...state, requests: { ...state.requests, ...{ waiting: false } } };
+      return {
+        ...state,
+        requests: { ...state.requests, ...{ waiting: false } },
+      };
 
     case Action.REQUESTS_ERROR:
-      return { ...state, requests: { ...state.requests, ...{ error: action.error } } };
+      return {
+        ...state,
+        requests: { ...state.requests, ...{ error: action.error } },
+      };
 
     case Action.REQUESTS_CLEAR:
       return { ...state, requests: { waiting: false, error: {} } };
@@ -62,7 +69,8 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
 
     case Action.UPDATE_HISTORY_UI:
       return { ...state, history: action.history };
-  }
 
-  return { ...state, ...newState };
+    default:
+      return state;
+  }
 }

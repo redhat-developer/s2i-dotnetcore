@@ -1,4 +1,4 @@
-import * as Action from '../actionTypes';
+import * as Action from "../actionTypes";
 
 const DEFAULT_LOOKUPS = {
   cities: {},
@@ -15,8 +15,7 @@ const DEFAULT_LOOKUPS = {
 };
 
 export default function lookupsReducer(state = DEFAULT_LOOKUPS, action) {
-  switch(action.type) {
-
+  switch (action.type) {
     // Loaded once at init time, as they do not change very often, and
     // certainly not within the app.
 
@@ -52,7 +51,8 @@ export default function lookupsReducer(state = DEFAULT_LOOKUPS, action) {
 
     case Action.UPDATE_ROLES_LOOKUP:
       return { ...state, roles: action.roles };
-  }
 
-  return state;
+    default:
+      return state;
+  }
 }

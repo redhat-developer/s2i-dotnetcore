@@ -4,12 +4,17 @@
 @import "views/all";
 @import "components/all";
 
-#app {
+#app,
+#root {
   height: 100%;
 }
 
 #main {
   height: 100%;
+}
+
+#screen {
+  padding-top: 122px;
 }
 
 .page-header {
@@ -55,6 +60,10 @@ th {
 }
 
 @keyframes rotate {
-  0%    { transform: rotate(0deg); }
-  100%  { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -1,6 +1,6 @@
-import _ from 'lodash';
+import _ from "lodash";
 
-import * as Action from '../actionTypes';
+import * as Action from "../actionTypes";
 
 const DEFAULT_MODELS = {
   favourites: {},
@@ -31,19 +31,25 @@ const DEFAULT_MODELS = {
 };
 
 export default function modelsReducer(state = DEFAULT_MODELS, action) {
-  switch(action.type) {
+  switch (action.type) {
     // Favourites
     case Action.UPDATE_FAVOURITES:
       return { ...state, favourites: action.favourites };
 
     case Action.ADD_FAVOURITE:
-      return { ...state, favourites: { ...state.favourites, ...action.favourite } };
+      return {
+        ...state,
+        favourites: { ...state.favourites, ...action.favourite },
+      };
 
     case Action.UPDATE_FAVOURITE:
-      return { ...state, favourites: { ...state.favourites, ...action.favourite } };
+      return {
+        ...state,
+        favourites: { ...state.favourites, ...action.favourite },
+      };
 
     case Action.DELETE_FAVOURITE:
-      return { ...state, favourites: _.omit(state.favourites, [ action.id ]) };
+      return { ...state, favourites: _.omit(state.favourites, [action.id]) };
 
     // Users
     case Action.UPDATE_USERS:
@@ -111,7 +117,7 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
 
     // Owners
     case Action.UPDATE_OWNER_CONTACTS:
-      return { ...state, ownerContacts: action.ownerContacts};
+      return { ...state, ownerContacts: action.ownerContacts };
 
     case Action.UPDATE_OWNERS:
       return { ...state, owners: action.owners };
@@ -141,10 +147,10 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
     case Action.UPDATE_ROLE_PERMISSIONS:
       return { ...state, rolePermissions: action.rolePermissions };
 
-      // History
+    // History
     case Action.UPDATE_HISTORY:
       return { ...state, history: action.history };
+    default:
+      return state;
   }
-
-  return state;
 }

@@ -1,18 +1,19 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Checkbox } from 'react-bootstrap';
+import { Checkbox } from "react-bootstrap";
 
-import _ from 'lodash';
+import _ from "lodash";
 
-var CheckboxControl = React.createClass({
-  propTypes: {
-    type: React.PropTypes.string,
-    updateState: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-    children: React.PropTypes.node,
-  },
+class CheckboxControl extends React.Component {
+  static propTypes = {
+    type: PropTypes.string,
+    updateState: PropTypes.func,
+    onChange: PropTypes.func,
+    children: PropTypes.node,
+  };
 
-  changed(e) {
+  changed = (e) => {
     // On change listener
     if (this.props.onChange) {
       this.props.onChange(e);
@@ -23,15 +24,17 @@ var CheckboxControl = React.createClass({
       // Use e.target.id insted of this.props.id because it comes from the controlId.
       this.props.updateState({ [e.target.id]: e.target.checked });
     }
-  },
+  };
 
   render() {
-    var props = _.omit(this.props, 'updateState');
+    var props = _.omit(this.props, "updateState");
 
-    return <Checkbox className="checkbox-control" { ...props } onChange={ this.changed }>
-      { this.props.children }
-    </Checkbox>;
-  },
-});
+    return (
+      <Checkbox className="checkbox-control" {...props} onChange={this.changed}>
+        {this.props.children}
+      </Checkbox>
+    );
+  }
+}
 
 export default CheckboxControl;

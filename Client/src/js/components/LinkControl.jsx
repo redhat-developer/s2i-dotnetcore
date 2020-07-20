@@ -1,33 +1,34 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { FormControl, InputGroup, ControlLabel, Button, Glyphicon } from 'react-bootstrap';
+import {
+  FormControl,
+  InputGroup,
+  ControlLabel,
+  Button,
+  Glyphicon,
+} from "react-bootstrap";
 
-import _ from 'lodash';
+import _ from "lodash";
 
-var LinkControl = React.createClass({
-  propTypes: {
+class LinkControl extends React.Component {
+  static propTypes = {
     // url(value) returns a URL, default is value.
-    url: React.PropTypes.func,
-    value: React.PropTypes.string,
-    id: React.PropTypes.string,
-    label: React.PropTypes.string,
-    title: React.PropTypes.string,
-    className: React.PropTypes.string,
-    updateState: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-  },
+    url: PropTypes.func,
+    value: PropTypes.string,
+    id: PropTypes.string,
+    label: PropTypes.string,
+    title: PropTypes.string,
+    className: PropTypes.string,
+    updateState: PropTypes.func,
+    onChange: PropTypes.func,
+  };
 
-  getInitialState() {
-    return {
-      url: this.getUrl(this.props.value),
-    };
-  },
-
-  getUrl(value) {
+  getUrl = (value) => {
     return this.props.url ? this.props.url(value) : value;
-  },
+  };
 
-  changed(e) {
+  changed = (e) => {
     // On change listener
     if (this.props.onChange) {
       this.props.onChange(e);
@@ -43,24 +44,37 @@ var LinkControl = React.createClass({
     this.setState({
       url: this.getUrl(e.target.value),
     });
-  },
+  };
+
+  state = {
+    url: this.getUrl(this.props.value),
+  };
 
   render() {
-    var props = _.omit(this.props, 'updateState', 'url', 'id');
+    var props = _.omit(this.props, "updateState", "url", "id");
 
-    return <div className={ `link-control ${this.props.className || ''}` } id={ this.props.id }>
-      {(() => {
-        // Inline label
-        if (this.props.label) { return <ControlLabel>{ this.props.label }</ControlLabel>; }
-      })()}
-      <InputGroup>
-        <FormControl { ...props } type="text" onChange={ this.changed }/>
-        <InputGroup.Button>
-          <Button target="_blank" href={ this.state.url }><Glyphicon glyph="link" title={ this.props.title }/></Button>
-        </InputGroup.Button>
-      </InputGroup>
-    </div>;
-  },
-});
+    return (
+      <div
+        className={`link-control ${this.props.className || ""}`}
+        id={this.props.id}
+      >
+        {(() => {
+          // Inline label
+          if (this.props.label) {
+            return <ControlLabel>{this.props.label}</ControlLabel>;
+          }
+        })()}
+        <InputGroup>
+          <FormControl {...props} type="text" onChange={this.changed} />
+          <InputGroup.Button>
+            <Button target="_blank" href={this.state.url}>
+              <Glyphicon glyph="link" title={this.props.title} />
+            </Button>
+          </InputGroup.Button>
+        </InputGroup>
+      </div>
+    );
+  }
+}
 
 export default LinkControl;

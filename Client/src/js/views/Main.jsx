@@ -1,31 +1,33 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 
-import * as Api from '../api';
+import * as Api from "../api";
 
-import TopNav from './TopNav.jsx';
-import Footer from './Footer.jsx';
+import TopNav from "./TopNav.jsx";
+import Footer from "./Footer.jsx";
 
-
-var Main = React.createClass({
-  propTypes: {
-    children: React.PropTypes.object,
-  },
+class Main extends React.Component {
+  static propTypes = {
+    children: PropTypes.object,
+  };
 
   componentDidMount() {
     Api.getVersion();
-  },
+  }
 
-  render: function() {
-    return <div id ="main">
-      <TopNav/>
-      <div id="screen" className="template container">
-        {this.props.children}
+  render() {
+    return (
+      <div id="main">
+        <TopNav />
+        <div id="screen" className="template container">
+          {this.props.children}
+        </div>
+        <Footer />
       </div>
-      <Footer/>
-    </div>;
-  },
-});
+    );
+  }
+}
 
 export default connect()(Main);

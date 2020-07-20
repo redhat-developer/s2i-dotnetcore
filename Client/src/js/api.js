@@ -10,41 +10,51 @@ import { lastFirstName, firstLastName, concat } from './utils/string';
 
 import _ from 'lodash';
 
-
 ////////////////////
 // Users
 ////////////////////
 
 function parseUser(user) {
-  if (!user.district) { user.district = { id: 0, name: '' }; }
-  if (!user.userRoles) { user.userRoles = []; }
-  if (!user.groupMemberships) { user.groupMemberships = []; }
+  if (!user.district) {
+    user.district = { id: 0, name: '' };
+  }
+  if (!user.userRoles) {
+    user.userRoles = [];
+  }
+  if (!user.groupMemberships) {
+    user.groupMemberships = [];
+  }
 
   user.name = lastFirstName(user.surname, user.givenName);
   user.fullName = firstLastName(user.givenName, user.surname);
   user.districtName = user.district.name;
 
-  user.path = `${ Constant.USERS_PATHNAME }/${ user.id }`;
-  user.url = `#/${ user.path }`;
+  user.path = `${Constant.USERS_PATHNAME}/${user.id}`;
+  user.url = `#/${user.path}`;
   user.historyEntity = History.makeHistoryEntity(History.USER, user);
 
-  user.groupNames = _.chain(user.groupMemberships).filter(membership => {
-    return membership.group && membership.group.name;
-  }).map(membership =>{
-    return membership.group.name;
-  }).sortBy(name =>{
-    return name;
-  }).join(', ').value();
+  user.groupNames = _.chain(user.groupMemberships)
+    .filter((membership) => {
+      return membership.group && membership.group.name;
+    })
+    .map((membership) => {
+      return membership.group.name;
+    })
+    .sortBy((name) => {
+      return name;
+    })
+    .join(', ')
+    .value();
 
   // This field is formatted to be used in updateUserGroups(), which expects
   // [ { groupId: 1 }, { groupId: 2 }, ... ]
-  user.groupIds = _.filter(user.groupMemberships, membership => {
+  user.groupIds = _.filter(user.groupMemberships, (membership) => {
     return membership.group && membership.group.id;
-  }).map(membership =>{
+  }).map((membership) => {
     return { groupId: membership.group.id };
   });
 
-  _.each(user.userRoles, userRole =>{
+  _.each(user.userRoles, (userRole) => {
     userRole.roleId = userRole.role && userRole.role.id ? userRole.role.id : 0;
     userRole.roleName = userRole.role && userRole.role.name ? userRole.role.name : '';
     userRole.effectiveDateSort = sortableDateTime(user.effectiveDate);
@@ -55,15 +65,14 @@ function parseUser(user) {
   user.canDelete = true;
 
   var inspectorGroupId = getInspectorGroupId();
-  var isInspector = _.find(user.groupMemberships, membership => {
-    return (membership.group && membership.group.id === inspectorGroupId);
+  var isInspector = _.find(user.groupMemberships, (membership) => {
+    return membership.group && membership.group.id === inspectorGroupId;
   });
   user.isInspector = isInspector !== undefined;
-
 }
 
 export function getCurrentUser() {
-  return new ApiRequest('/users/current').get().then(response => {
+  return new ApiRequest('/users/current').get().then((response) => {
     var user = response;
 
     // Add display fields
@@ -74,17 +83,17 @@ export function getCurrentUser() {
 }
 
 //Check if current user is Administrator
-export function isAdmin(){
+export function isAdmin() {
   var roles = store.getState().user.userRoles;
   var roleCount = roles.length;
   var permissions = [];
   var isAdmin = [];
 
-  for(var i = 0; i < roleCount; i++){
+  for (var i = 0; i < roleCount; i++) {
     var role = roles[i].role;
-    if(role != null){
+    if (role != null) {
       permissions[i] = role.rolePermissions;
-      isAdmin.push(_.some(permissions[i],['permission.code', 'ADMIN']));
+      isAdmin.push(_.some(permissions[i], ['permission.code', 'ADMIN']));
     }
   }
 
@@ -92,31 +101,35 @@ export function isAdmin(){
 }
 
 export function searchUsers(params) {
-  return new ApiRequest('/users/search').get(params).then(response => {
+  return new ApiRequest('/users/search').get(params).then((response) => {
     // Normalize the response
-    var users = _.fromPairs(response.map(user => [ user.id, user ]));
+    var users = _.fromPairs(response.map((user) => [user.id, user]));
 
     // Add display fields
-    _.map(users, user => { parseUser(user); });
+    _.map(users, (user) => {
+      parseUser(user);
+    });
 
     store.dispatch({ type: Action.UPDATE_USERS, users: users });
   });
 }
 
 export function getUsers() {
-  return new ApiRequest('/users').get().then(response => {
+  return new ApiRequest('/users').get().then((response) => {
     // Normalize the response
-    var users = _.fromPairs(response.map(user => [ user.id, user ]));
+    var users = _.fromPairs(response.map((user) => [user.id, user]));
 
     // Add display fields
-    _.map(users, user => { parseUser(user); });
+    _.map(users, (user) => {
+      parseUser(user);
+    });
 
     store.dispatch({ type: Action.UPDATE_USERS, users: users });
   });
 }
 
 export function getUser(userId) {
-  return new ApiRequest(`/users/${ userId }`).get().then(response => {
+  return new ApiRequest(`/users/${userId}`).get().then((response) => {
     var user = response;
 
     // Add display fields
@@ -127,7 +140,7 @@ export function getUser(userId) {
 }
 
 export function addUser(user) {
-  return new ApiRequest('/users').post(user).then(response => {
+  return new ApiRequest('/users').post(user).then((response) => {
     var user = response;
 
     // Add display fields
@@ -138,7 +151,7 @@ export function addUser(user) {
 }
 
 export function updateUser(user) {
-  return new ApiRequest(`/users/${ user.id }`).put(user).then(response => {
+  return new ApiRequest(`/users/${user.id}`).put(user).then((response) => {
     var user = response;
 
     // Add display fields
@@ -149,7 +162,7 @@ export function updateUser(user) {
 }
 
 export function deleteUser(user) {
-  return new ApiRequest(`/users/${ user.id }/delete`).post().then(response => {
+  return new ApiRequest(`/users/${user.id}/delete`).post().then((response) => {
     var user = response;
 
     // Add display fields
@@ -160,37 +173,39 @@ export function deleteUser(user) {
 }
 
 export function addUserHistory(userId, history) {
-  return new ApiRequest(`/users/${ userId }/history`).post(history);
+  return new ApiRequest(`/users/${userId}/history`).post(history);
 }
 
 export function getUserHistory(userId, params) {
-  return new ApiRequest(`/users/${ userId }/history`).get(params).then(response => {
+  return new ApiRequest(`/users/${userId}/history`).get(params).then((response) => {
     // Normalize the response
-    var history = _.fromPairs(response.map(history => [ history.id, history ]));
+    var history = _.fromPairs(response.map((history) => [history.id, history]));
 
     // Add display fields
-    _.map(history, history => { parseHistory(history); });
+    _.map(history, (history) => {
+      parseHistory(history);
+    });
 
     store.dispatch({ type: Action.UPDATE_HISTORY, history: history });
   });
 }
 
 export function updateUserGroups(user) {
-  return new ApiRequest(`/users/${ user.id }/groups`).put(user.groupIds).then(() => {
+  return new ApiRequest(`/users/${user.id}/groups`).put(user.groupIds).then(() => {
     // After updating the user's group, refresh the user state.
     return getUser(user.id);
   });
 }
 
 export function addUserRole(userId, userRole) {
-  return new ApiRequest(`/users/${ userId }/roles`).post(userRole).then(() => {
+  return new ApiRequest(`/users/${userId}/roles`).post(userRole).then(() => {
     // After updating the user's role, refresh the user state.
     return getUser(userId);
   });
 }
 
 export function updateUserRoles(userId, userRoleArray) {
-  return new ApiRequest(`/users/${ userId }/roles`).put(userRoleArray).then(() => {
+  return new ApiRequest(`/users/${userId}/roles`).put(userRoleArray).then(() => {
     // After updating the user's role, refresh the user state.
     return getUser(userId);
   });
@@ -204,25 +219,27 @@ function parseRole(role) {
   role.canEdit = true;
   role.canDelete = false;
 
-  role.path = `${ Constant.ROLES_PATHNAME }/${ role.id }`;
-  role.url = `#/${ role.path }`;
+  role.path = `${Constant.ROLES_PATHNAME}/${role.id}`;
+  role.url = `#/${role.path}`;
   role.historyEntity = History.makeHistoryEntity(History.ROLE, role);
 }
 
 export function searchRoles(params) {
-  return new ApiRequest('/roles').get(params).then(response => {
+  return new ApiRequest('/roles').get(params).then((response) => {
     // Normalize the response
-    var roles = _.fromPairs(response.map(role => [ role.id, role ]));
+    var roles = _.fromPairs(response.map((role) => [role.id, role]));
 
     // Add display fields
-    _.map(roles, role => { parseRole(role); });
+    _.map(roles, (role) => {
+      parseRole(role);
+    });
 
     store.dispatch({ type: Action.UPDATE_ROLES, roles: roles });
   });
 }
 
 export function getRole(roleId) {
-  return new ApiRequest(`/roles/${ roleId }`).get().then(response => {
+  return new ApiRequest(`/roles/${roleId}`).get().then((response) => {
     var role = response;
 
     // Add display fields
@@ -233,7 +250,7 @@ export function getRole(roleId) {
 }
 
 export function addRole(role) {
-  return new ApiRequest('/roles').post(role).then(response => {
+  return new ApiRequest('/roles').post(role).then((response) => {
     var role = response;
 
     // Add display fields
@@ -244,7 +261,7 @@ export function addRole(role) {
 }
 
 export function updateRole(role) {
-  return new ApiRequest(`/roles/${ role.id }`).put(role).then(response => {
+  return new ApiRequest(`/roles/${role.id}`).put(role).then((response) => {
     var role = response;
 
     // Add display fields
@@ -255,7 +272,7 @@ export function updateRole(role) {
 }
 
 export function deleteRole(role) {
-  return new ApiRequest(`/roles/${ role.id }/delete`).post().then(response => {
+  return new ApiRequest(`/roles/${role.id}/delete`).post().then((response) => {
     var role = response;
 
     // Add display fields
@@ -266,15 +283,18 @@ export function deleteRole(role) {
 }
 
 export function getRolePermissions(roleId) {
-  return new ApiRequest(`/roles/${ roleId }/permissions`).get().then(response => {
-    var permissions = _.fromPairs(response.map(permission => [ permission.id, permission ]));
+  return new ApiRequest(`/roles/${roleId}/permissions`).get().then((response) => {
+    var permissions = _.fromPairs(response.map((permission) => [permission.id, permission]));
 
-    store.dispatch({ type: Action.UPDATE_ROLE_PERMISSIONS, rolePermissions: permissions });
+    store.dispatch({
+      type: Action.UPDATE_ROLE_PERMISSIONS,
+      rolePermissions: permissions,
+    });
   });
 }
 
 export function updateRolePermissions(roleId, permissionsArray) {
-  return new ApiRequest(`/roles/${ roleId }/permissions`).put(permissionsArray).then(() => {
+  return new ApiRequest(`/roles/${roleId}/permissions`).put(permissionsArray).then(() => {
     // After updating the role's permissions, refresh the permissions state.
     return getRolePermissions(roleId);
   });
@@ -285,34 +305,37 @@ export function updateRolePermissions(roleId, permissionsArray) {
 ////////////////////
 
 export function getFavourites(type) {
-  return new ApiRequest(`/users/current/favourites/${ type }`).get().then(response => {
+  return new ApiRequest(`/users/current/favourites/${type}`).get().then((response) => {
     // Normalize the response
-    var favourites = _.fromPairs(response.map(favourite => [ favourite.id, favourite ]));
+    var favourites = _.fromPairs(response.map((favourite) => [favourite.id, favourite]));
 
-    store.dispatch({ type: Action.UPDATE_FAVOURITES, favourites: favourites });
+    store.dispatch({
+      type: Action.UPDATE_FAVOURITES,
+      favourites: favourites,
+    });
   });
 }
 
 export function addFavourite(favourite) {
-  return new ApiRequest('/users/current/favourites').post(favourite).then(response => {
+  return new ApiRequest('/users/current/favourites').post(favourite).then((response) => {
     // Normalize the response
-    var favourite = _.fromPairs([[ response.id, response ]]);
+    var favourite = _.fromPairs([[response.id, response]]);
 
     store.dispatch({ type: Action.ADD_FAVOURITE, favourite: favourite });
   });
 }
 
 export function updateFavourite(favourite) {
-  return new ApiRequest('/users/current/favourites').put(favourite).then(response => {
+  return new ApiRequest('/users/current/favourites').put(favourite).then((response) => {
     // Normalize the response
-    var favourite = _.fromPairs([[ response.id, response ]]);
+    var favourite = _.fromPairs([[response.id, response]]);
 
     store.dispatch({ type: Action.UPDATE_FAVOURITE, favourite: favourite });
   });
 }
 
 export function deleteFavourite(favourite) {
-  return new ApiRequest(`/users/current/favourites/${ favourite.id }/delete`).post().then(response => {
+  return new ApiRequest(`/users/current/favourites/${favourite.id}/delete`).post().then((response) => {
     // No needs to normalize, as we just want the id from the response.
     store.dispatch({ type: Action.DELETE_FAVOURITE, id: response.id });
   });
@@ -331,17 +354,29 @@ function parseCCW(ccw) {
 }
 
 function parseSchoolBus(bus) {
-  if (!bus.schoolBusOwner)   { bus.schoolBusOwner   = { id: 0, name: '' }; }
-  if (!bus.district)         { bus.district         = { id: 0, name: '' }; }
-  if (!bus.schoolDistrict)   { bus.schoolDistrict   = { id: 0, name: '', shortName: '' }; }
-  if (!bus.homeTerminalCity) { bus.homeTerminalCity = { id: 0, name: '' }; }
-  if (!bus.inspector)        { bus.inspector        = { id: 0, givenName: '', surname: '' }; }
+  if (!bus.schoolBusOwner) {
+    bus.schoolBusOwner = { id: 0, name: '' };
+  }
+  if (!bus.district) {
+    bus.district = { id: 0, name: '' };
+  }
+  if (!bus.schoolDistrict) {
+    bus.schoolDistrict = { id: 0, name: '', shortName: '' };
+  }
+  if (!bus.homeTerminalCity) {
+    bus.homeTerminalCity = { id: 0, name: '' };
+  }
+  if (!bus.inspector) {
+    bus.inspector = { id: 0, givenName: '', surname: '' };
+  }
 
-  if (bus.ccwData) { parseCCW(bus.ccwData); }
+  if (bus.ccwData) {
+    parseCCW(bus.ccwData);
+  }
 
   bus.isActive = bus.status === Constant.STATUS_ACTIVE;
   bus.ownerName = bus.schoolBusOwner.name;
-  bus.ownerURL = bus.schoolBusOwner.id ? `#/${ Constant.OWNERS_PATHNAME }/${ bus.schoolBusOwner.id }` : '';
+  bus.ownerURL = bus.schoolBusOwner.id ? `#/${Constant.OWNERS_PATHNAME}/${bus.schoolBusOwner.id}` : '';
   bus.districtName = bus.district.name;
   bus.schoolDistrictName = bus.schoolDistrict.name;
   bus.homeTerminalAddress = concat(bus.homeTerminalAddress1, bus.homeTerminalAddress2, ', ');
@@ -353,9 +388,9 @@ function parseSchoolBus(bus) {
   bus.isReinspection = bus.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   bus.nextInspectionDateSort = sortableDateTime(bus.nextInspectionDate);
 
-  bus.path = `${ Constant.BUSES_PATHNAME }/${ bus.id }`;
-  bus.url = `#/${ bus.path }`;
-  bus.name = `VIN ${ bus.vehicleIdentificationNumber }`;
+  bus.path = `${Constant.BUSES_PATHNAME}/${bus.id}`;
+  bus.url = `#/${bus.path}`;
+  bus.name = `VIN ${bus.vehicleIdentificationNumber}`;
   bus.historyEntity = History.makeHistoryEntity(History.BUS, bus);
 
   bus.canView = true;
@@ -364,28 +399,30 @@ function parseSchoolBus(bus) {
 }
 
 export function searchSchoolBuses(params) {
-  return new ApiRequest('/schoolbuses/search').get(params).then(response => {
+  return new ApiRequest('/schoolbuses/search').get(params).then((response) => {
     // Normalize the response
-    var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
+    var schoolBuses = _.fromPairs(response.map((schoolBus) => [schoolBus.id, schoolBus]));
 
     // Add display fields
-    _.map(schoolBuses, bus => { parseSchoolBus(bus); });
+    _.map(schoolBuses, (bus) => {
+      parseSchoolBus(bus);
+    });
 
     store.dispatch({ type: Action.UPDATE_BUSES, schoolBuses: schoolBuses });
   });
 }
 
 export function getSchoolBuses() {
-  return new ApiRequest('/schoolbuses').get().then(response => {
+  return new ApiRequest('/schoolbuses').get().then((response) => {
     // Normalize the response
-    var schoolBuses = _.fromPairs(response.map(schoolBus => [ schoolBus.id, schoolBus ]));
+    var schoolBuses = _.fromPairs(response.map((schoolBus) => [schoolBus.id, schoolBus]));
 
     store.dispatch({ type: Action.UPDATE_BUSES, schoolBuses: schoolBuses });
   });
 }
 
 export function getSchoolBus(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${ schoolBusId }`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}`).get().then((response) => {
     var bus = response;
 
     // Add display fields
@@ -396,7 +433,7 @@ export function getSchoolBus(schoolBusId) {
 }
 
 export function addSchoolBus(schoolBus) {
-  return new ApiRequest('/schoolbuses').post(schoolBus).then(response => {
+  return new ApiRequest('/schoolbuses').post(schoolBus).then((response) => {
     var bus = response;
 
     // Add display fields
@@ -407,7 +444,7 @@ export function addSchoolBus(schoolBus) {
 }
 
 export function updateSchoolBus(schoolBus) {
-  return new ApiRequest(`/schoolbuses/${ schoolBus.id }`).put(schoolBus).then(response => {
+  return new ApiRequest(`/schoolbuses/${schoolBus.id}`).put(schoolBus).then((response) => {
     var bus = response;
 
     // Add display fields
@@ -418,7 +455,7 @@ export function updateSchoolBus(schoolBus) {
 }
 
 export function deleteSchoolBus(schoolBus) {
-  return new ApiRequest(`/schoolbuses/${ schoolBus.id }/delete`).post().then(response => {
+  return new ApiRequest(`/schoolbuses/${schoolBus.id}/delete`).post().then((response) => {
     var bus = response;
 
     // Add display fields
@@ -429,16 +466,19 @@ export function deleteSchoolBus(schoolBus) {
 }
 
 export function getSchoolBusAttachments(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${ schoolBusId }/attachments`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/attachments`).get().then((response) => {
     // Normalize the response
-    var schoolBusAttachments = _.fromPairs(response.map(attachment => [ attachment.id, attachment ]));
+    var schoolBusAttachments = _.fromPairs(response.map((attachment) => [attachment.id, attachment]));
 
-    store.dispatch({ type: Action.UPDATE_BUS_ATTACHMENTS, schoolBusAttachments: schoolBusAttachments });
+    store.dispatch({
+      type: Action.UPDATE_BUS_ATTACHMENTS,
+      schoolBusAttachments: schoolBusAttachments,
+    });
   });
 }
 
 export function addSchoolBusCCW(ccw) {
-  return new ApiRequest('/ccwdata').post(ccw).then(response => {
+  return new ApiRequest('/ccwdata').post(ccw).then((response) => {
     var schoolBusCCW = response || {};
 
     // Add display fields
@@ -449,57 +489,70 @@ export function addSchoolBusCCW(ccw) {
 }
 
 export function getSchoolBusCCW(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${ schoolBusId }/ccwdata`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/ccwdata`).get().then((response) => {
     var schoolBusCCW = response || {};
 
     // Add display fields
     parseCCW(schoolBusCCW);
 
-    store.dispatch({ type: Action.UPDATE_BUS_CCW, schoolBusCCW: schoolBusCCW });
+    store.dispatch({
+      type: Action.UPDATE_BUS_CCW,
+      schoolBusCCW: schoolBusCCW,
+    });
   });
 }
 
 export function addSchoolBusHistory(schoolBusId, history) {
-  return new ApiRequest(`/schoolbuses/${ schoolBusId }/history`).post(history);
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/history`).post(history);
 }
 
 export function getSchoolBusHistory(schoolBusId, params) {
-  return new ApiRequest(`/schoolbuses/${ schoolBusId }/history`).get(params).then(response => {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/history`).get(params).then((response) => {
     // Normalize the response
-    var history = _.fromPairs(response.map(history => [ history.id, history ]));
+    var history = _.fromPairs(response.map((history) => [history.id, history]));
 
     // Add display fields
-    _.map(history, history => { parseHistory(history); });
+    _.map(history, (history) => {
+      parseHistory(history);
+    });
 
     store.dispatch({ type: Action.UPDATE_HISTORY, history: history });
   });
 }
 
 export function getSchoolBusInspections(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${ schoolBusId }/inspections`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/inspections`).get().then((response) => {
     // Normalize the response
-    var schoolBusInspections = _.fromPairs(response.map(inspection => [ inspection.id, inspection ]));
+    var schoolBusInspections = _.fromPairs(response.map((inspection) => [inspection.id, inspection]));
 
     // Add display fields
-    _.map(schoolBusInspections, inspection => { parseInspection(inspection); });
+    _.map(schoolBusInspections, (inspection) => {
+      parseInspection(inspection);
+    });
 
-    store.dispatch({ type: Action.UPDATE_BUS_INSPECTIONS, schoolBusInspections: schoolBusInspections });
+    store.dispatch({
+      type: Action.UPDATE_BUS_INSPECTIONS,
+      schoolBusInspections: schoolBusInspections,
+    });
 
     return schoolBusInspections;
   });
 }
 
 export function getSchoolBusNotes(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${ schoolBusId }/notes`).get().then(response => {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/notes`).get().then((response) => {
     // Normalize the response
-    var schoolBusNotes = _.fromPairs(response.map(note => [ note.id, note ]));
+    var schoolBusNotes = _.fromPairs(response.map((note) => [note.id, note]));
 
-    store.dispatch({ type: Action.UPDATE_BUS_NOTES, schoolBusNotes: schoolBusNotes });
+    store.dispatch({
+      type: Action.UPDATE_BUS_NOTES,
+      schoolBusNotes: schoolBusNotes,
+    });
   });
 }
 
 export function newSchoolBusPermit(schoolBusId) {
-  return new ApiRequest(`/schoolbuses/${ schoolBusId }/newpermit`).put().then(response => {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/newpermit`).put().then((response) => {
     var bus = response;
 
     // Add display fields
@@ -511,7 +564,7 @@ export function newSchoolBusPermit(schoolBusId) {
 
 export function getSchoolBusPermitURL(schoolBusId) {
   // Not an API call, per se, as it must be called from the browser window.
-  return `${ location.origin }${ location.pathname}api/schoolbuses/${ schoolBusId }/pdfpermit`;
+  return `${window.location.origin}${window.location.pathname}api/schoolbuses/${schoolBusId}/pdfpermit`;
 }
 
 ////////////////////
@@ -519,8 +572,7 @@ export function getSchoolBusPermitURL(schoolBusId) {
 ////////////////////
 
 export function searchCCW(params) {
-
-/*
+  /*
   // For devenv testing
 
   var ccwResponse = {
@@ -573,7 +625,7 @@ export function searchCCW(params) {
   });
 */
 
-  return new ApiRequest('/ccwdata/fetch').get(params).then(response => {
+  return new ApiRequest('/ccwdata/fetch').get(params).then((response) => {
     var ccw = response || {};
 
     // Add display fields
@@ -588,21 +640,25 @@ export function searchCCW(params) {
 ////////////////////
 
 function parseInspection(inspection) {
-  inspection.inspectorName = inspection.inspector ? firstLastName(inspection.inspector.givenName, inspection.inspector.surname) : '';
+  inspection.inspectorName = inspection.inspector
+    ? firstLastName(inspection.inspector.givenName, inspection.inspector.surname)
+    : '';
   inspection.isReinspection = inspection.inspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   inspection.inspectionDateSort = sortableDateTime(inspection.inspectionDate);
 
-  inspection.path = inspection.schoolBus ? `${ Constant.BUSES_PATHNAME }/${ inspection.schoolBus.id }/${ Constant.INSPECTION_PATHNAME }/${ inspection.id }` : null;
-  inspection.url = inspection.path ? `#/${ inspection.path }` : null;
-  inspection.name = `(${ formatDateTime(inspection.inspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) })`;
+  inspection.path = inspection.schoolBus
+    ? `${Constant.BUSES_PATHNAME}/${inspection.schoolBus.id}/${Constant.INSPECTION_PATHNAME}/${inspection.id}`
+    : null;
+  inspection.url = inspection.path ? `#/${inspection.path}` : null;
+  inspection.name = `(${formatDateTime(inspection.inspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)})`;
   inspection.historyEntity = History.makeHistoryEntity(History.INSPECTION, inspection);
 
-  inspection.canEdit = (hoursAgo(inspection.createdDate) <= Constant.INSPECTION_EDIT_GRACE_PERIOD_HOURS) || isAdmin();
-  inspection.canDelete = (hoursAgo(inspection.createdDate) <= Constant.INSPECTION_DELETE_GRACE_PERIOD_HOURS) || isAdmin();
+  inspection.canEdit = hoursAgo(inspection.createdDate) <= Constant.INSPECTION_EDIT_GRACE_PERIOD_HOURS || isAdmin();
+  inspection.canDelete = hoursAgo(inspection.createdDate) <= Constant.INSPECTION_DELETE_GRACE_PERIOD_HOURS || isAdmin();
 }
 
 export function getInspection(id) {
-  return new ApiRequest(`/inspections/${ id }`).get().then(response => {
+  return new ApiRequest(`/inspections/${id}`).get().then((response) => {
     var inspection = response;
 
     // Add display fields
@@ -613,7 +669,7 @@ export function getInspection(id) {
 }
 
 export function addInspection(inspection) {
-  return new ApiRequest('/inspections').post(inspection).then(response => {
+  return new ApiRequest('/inspections').post(inspection).then((response) => {
     // Normalize the response
     var inspection = response;
 
@@ -625,26 +681,32 @@ export function addInspection(inspection) {
 }
 
 export function updateInspection(inspection) {
-  return new ApiRequest(`/inspections/${ inspection.id }`).put(inspection).then(response => {
+  return new ApiRequest(`/inspections/${inspection.id}`).put(inspection).then((response) => {
     // Normalize the response
     var inspection = response;
 
     // Add display fields
     parseInspection(inspection);
 
-    store.dispatch({ type: Action.UPDATE_INSPECTION, inspection: inspection });
+    store.dispatch({
+      type: Action.UPDATE_INSPECTION,
+      inspection: inspection,
+    });
   });
 }
 
 export function deleteInspection(inspection) {
-  return new ApiRequest(`/inspections/${ inspection.id }/delete`).post().then(response => {
+  return new ApiRequest(`/inspections/${inspection.id}/delete`).post().then((response) => {
     // Normalize the response
     var inspection = response;
 
     // Add display fields
     parseInspection(inspection);
 
-    store.dispatch({ type: Action.DELETE_INSPECTION, inspection: inspection });
+    store.dispatch({
+      type: Action.DELETE_INSPECTION,
+      inspection: inspection,
+    });
   });
 }
 
@@ -654,36 +716,41 @@ export function deleteInspection(inspection) {
 
 function parseOwner(owner) {
   owner.isActive = owner.status === Constant.STATUS_ACTIVE;
-  owner.busesURL = `#/${ Constant.BUSES_PATHNAME }?${ Constant.SCHOOL_BUS_OWNER_QUERY }=${ owner.id }`;
-  owner.primaryContactName = owner.primaryContact ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname) : '';
+  owner.busesURL = `#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_OWNER_QUERY}=${owner.id}`;
+  owner.primaryContactName = owner.primaryContact
+    ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname)
+    : '';
   owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
   owner.isOverdue = owner.daysToInspection < 0;
   owner.isReinspection = owner.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
   owner.nextInspectionDateSort = sortableDateTime(owner.nextInspectionDate);
 
-  owner.path = `${ Constant.OWNERS_PATHNAME }/${ owner.id }`;
-  owner.url = `#/${ owner.path }`;
+  owner.path = `${Constant.OWNERS_PATHNAME}/${owner.id}`;
+  owner.url = `#/${owner.path}`;
   owner.historyEntity = History.makeHistoryEntity(History.OWNER, owner);
 
   owner.canView = true;
   owner.canEdit = true;
-  owner.canDelete = owner.numberOfBuses === 0 && hoursAgo(owner.dateCreated) <= Constant.OWNER_DELETE_GRACE_PERIOD_HOURS;
+  owner.canDelete =
+    owner.numberOfBuses === 0 && hoursAgo(owner.dateCreated) <= Constant.OWNER_DELETE_GRACE_PERIOD_HOURS;
 }
 
 export function searchOwners(params) {
-  return new ApiRequest('/schoolbusowners/search').get(params).then(response => {
+  return new ApiRequest('/schoolbusowners/search').get(params).then((response) => {
     // Normalize the response
-    var owners = _.fromPairs(response.map(owner => [ owner.id, owner ]));
+    var owners = _.fromPairs(response.map((owner) => [owner.id, owner]));
 
     // Add display fields
-    _.map(owners, owner => { parseOwner(owner); });
+    _.map(owners, (owner) => {
+      parseOwner(owner);
+    });
 
     store.dispatch({ type: Action.UPDATE_OWNERS, owners: owners });
   });
 }
 
 export function getOwner(ownerId) {
-  return new ApiRequest(`/schoolbusowners/${ ownerId }/view`).get().then(response => {
+  return new ApiRequest(`/schoolbusowners/${ownerId}/view`).get().then((response) => {
     var owner = response;
 
     // Add display fields
@@ -694,19 +761,21 @@ export function getOwner(ownerId) {
 }
 
 export function getOwners() {
-  return new ApiRequest('/schoolbusowners').get().then(response => {
+  return new ApiRequest('/schoolbusowners').get().then((response) => {
     // Normalize the response
-    var owners = _.fromPairs(response.map(owner => [ owner.id, owner ]));
+    var owners = _.fromPairs(response.map((owner) => [owner.id, owner]));
 
     // Add display fields
-    _.map(owners, owner => { parseOwner(owner); });
+    _.map(owners, (owner) => {
+      parseOwner(owner);
+    });
 
     store.dispatch({ type: Action.UPDATE_OWNERS_LOOKUP, owners: owners });
   });
 }
 
 export function addOwner(owner) {
-  return new ApiRequest('/schoolbusowners').post(owner).then(response => {
+  return new ApiRequest('/schoolbusowners').post(owner).then((response) => {
     var owner = response;
 
     // Add display fields
@@ -717,7 +786,7 @@ export function addOwner(owner) {
 }
 
 export function updateOwner(owner) {
-  return new ApiRequest(`/schoolbusowners/${ owner.id }`).put(owner).then(response => {
+  return new ApiRequest(`/schoolbusowners/${owner.id}`).put(owner).then((response) => {
     var owner = response;
 
     // Add display fields
@@ -728,7 +797,7 @@ export function updateOwner(owner) {
 }
 
 export function deleteOwner(owner) {
-  return new ApiRequest(`/schoolbusowners/${ owner.id }/delete`).post().then(response => {
+  return new ApiRequest(`/schoolbusowners/${owner.id}/delete`).post().then((response) => {
     var owner = response;
 
     // Add display fields
@@ -739,30 +808,37 @@ export function deleteOwner(owner) {
 }
 
 export function addOwnerHistory(ownerId, history) {
-  return new ApiRequest(`/schoolbusowners/${ ownerId }/history`).post(history);
+  return new ApiRequest(`/schoolbusowners/${ownerId}/history`).post(history);
 }
 
 export function getOwnerHistory(ownerId, params) {
-  return new ApiRequest(`/schoolbusowners/${ ownerId }/history`).get(params).then(response => {
+  return new ApiRequest(`/schoolbusowners/${ownerId}/history`).get(params).then((response) => {
     // Normalize the response
-    var history = _.fromPairs(response.map(history => [ history.id, history ]));
+    var history = _.fromPairs(response.map((history) => [history.id, history]));
 
     // Add display fields
-    _.map(history, history => { parseHistory(history); });
+    _.map(history, (history) => {
+      parseHistory(history);
+    });
 
     store.dispatch({ type: Action.UPDATE_HISTORY, history: history });
   });
 }
 
-export function getOwnerContacts(ownerId){
-  return new ApiRequest(`/schoolbusowners/${ ownerId }/contacts`).get().then(response => {
+export function getOwnerContacts(ownerId) {
+  return new ApiRequest(`/schoolbusowners/${ownerId}/contacts`).get().then((response) => {
     // Normalize the response
-    var ownerContacts = _.fromPairs(response.map(contact => [ contact.id, contact ]));
+    var ownerContacts = _.fromPairs(response.map((contact) => [contact.id, contact]));
 
     // Add display fields
-    _.map(ownerContacts, contact => { parseContact(contact); });
+    _.map(ownerContacts, (contact) => {
+      parseContact(contact);
+    });
 
-    store.dispatch({ type: Action.UPDATE_OWNER_CONTACTS, ownerContacts: ownerContacts }); 
+    store.dispatch({
+      type: Action.UPDATE_OWNER_CONTACTS,
+      ownerContacts: ownerContacts,
+    });
   });
 }
 
@@ -771,54 +847,63 @@ export function getOwnerContacts(ownerId){
 ////////////////////
 
 export function getCities() {
-  return new ApiRequest('/cities').get().then(response => {
+  return new ApiRequest('/cities').get().then((response) => {
     // Normalize the response
-    var cities = _.fromPairs(response.map(city => [ city.id, city ]));
+    var cities = _.fromPairs(response.map((city) => [city.id, city]));
 
     store.dispatch({ type: Action.UPDATE_CITIES_LOOKUP, cities: cities });
   });
 }
 
 export function getDistricts() {
-  return new ApiRequest('/districts').get().then(response => {
+  return new ApiRequest('/districts').get().then((response) => {
     // Normalize the response
-    var districts = _.fromPairs(response.map(district => [ district.id, district ]));
+    var districts = _.fromPairs(response.map((district) => [district.id, district]));
 
-    store.dispatch({ type: Action.UPDATE_DISTRICTS_LOOKUP, districts: districts });
+    store.dispatch({
+      type: Action.UPDATE_DISTRICTS_LOOKUP,
+      districts: districts,
+    });
   });
 }
 
 export function getRegions() {
-  return new ApiRequest('/regions').get().then(response => {
+  return new ApiRequest('/regions').get().then((response) => {
     // Normalize the response
-    var regions = _.fromPairs(response.map(region => [ region.id, region ]));
+    var regions = _.fromPairs(response.map((region) => [region.id, region]));
 
     store.dispatch({ type: Action.UPDATE_REGIONS_LOOKUP, regions: regions });
   });
 }
 
 export function getSchoolDistricts() {
-  return new ApiRequest('/schooldistricts').get().then(response => {
+  return new ApiRequest('/schooldistricts').get().then((response) => {
     // Normalize the response
-    var schoolDistricts = _.fromPairs(response.map(schoolDistrict => [ schoolDistrict.id, schoolDistrict ]));
+    var schoolDistricts = _.fromPairs(response.map((schoolDistrict) => [schoolDistrict.id, schoolDistrict]));
 
-    store.dispatch({ type: Action.UPDATE_SCHOOL_DISTRICTS_LOOKUP, schoolDistricts: schoolDistricts });
+    store.dispatch({
+      type: Action.UPDATE_SCHOOL_DISTRICTS_LOOKUP,
+      schoolDistricts: schoolDistricts,
+    });
   });
 }
 
 export function getServiceAreas() {
-  return new ApiRequest('/serviceareas').get().then(response => {
+  return new ApiRequest('/serviceareas').get().then((response) => {
     // Normalize the response
-    var serviceAreas = _.fromPairs(response.map(serviceArea => [ serviceArea.id, serviceArea ]));
+    var serviceAreas = _.fromPairs(response.map((serviceArea) => [serviceArea.id, serviceArea]));
 
-    store.dispatch({ type: Action.UPDATE_SERVICE_AREAS_LOOKUP, serviceAreas: serviceAreas });
+    store.dispatch({
+      type: Action.UPDATE_SERVICE_AREAS_LOOKUP,
+      serviceAreas: serviceAreas,
+    });
   });
 }
 
 export function getGroups() {
-  return new ApiRequest('/groups').get().then(response => {
+  return new ApiRequest('/groups').get().then((response) => {
     // Normalize the response
-    var groups = _.fromPairs(response.map(group => [ group.id, group ]));
+    var groups = _.fromPairs(response.map((group) => [group.id, group]));
 
     store.dispatch({ type: Action.UPDATE_GROUPS_LOOKUP, groups: groups });
   });
@@ -827,32 +912,40 @@ export function getGroups() {
 export function getInspectors() {
   var inspectorGroupId = getInspectorGroupId();
 
-  return new ApiRequest(`/groups/${ inspectorGroupId }/users`).get().then(response => {
+  return new ApiRequest(`/groups/${inspectorGroupId}/users`).get().then((response) => {
     // Normalize the response
-    var users = _.fromPairs(response.map(user => [ user.id, user ]));
+    var users = _.fromPairs(response.map((user) => [user.id, user]));
 
     // Add display fields
-    _.map(users, user => { parseUser(user); });
+    _.map(users, (user) => {
+      parseUser(user);
+    });
 
-    store.dispatch({ type: Action.UPDATE_INSPECTORS_LOOKUP, inspectors: users });
+    store.dispatch({
+      type: Action.UPDATE_INSPECTORS_LOOKUP,
+      inspectors: users,
+    });
   });
 }
 
 export function getRoles() {
-  return new ApiRequest('/roles').get().then(response => {
+  return new ApiRequest('/roles').get().then((response) => {
     // Normalize the response
-    var roles = _.fromPairs(response.map(role => [ role.id, role ]));
+    var roles = _.fromPairs(response.map((role) => [role.id, role]));
 
     store.dispatch({ type: Action.UPDATE_ROLES_LOOKUP, roles: roles });
   });
 }
 
 export function getPermissions() {
-  return new ApiRequest('/permissions').get().then(response => {
+  return new ApiRequest('/permissions').get().then((response) => {
     // Normalize the response
-    var permissions = _.fromPairs(response.map(permission => [ permission.id, permission ]));
+    var permissions = _.fromPairs(response.map((permission) => [permission.id, permission]));
 
-    store.dispatch({ type: Action.UPDATE_PERMISSIONS_LOOKUP, permissions: permissions });
+    store.dispatch({
+      type: Action.UPDATE_PERMISSIONS_LOOKUP,
+      permissions: permissions,
+    });
   });
 }
 
@@ -860,18 +953,20 @@ export function getPermissions() {
 // Contacts
 ////////////////////
 
-function parseContact(contact){
-  contact.path = contact.schoolBusOwner ? `${ Constant.OWNERS_PATHNAME }/${ contact.schoolBusOwner.id }/${ Constant.CONTACT_PATHNAME }/${ contact.id }` : null;
-  contact.url = contact.path ? `#/${ contact.path }` : null;
-  contact.name = `${ firstLastName(contact.givenName, contact.surname) }`;
+function parseContact(contact) {
+  contact.path = contact.schoolBusOwner
+    ? `${Constant.OWNERS_PATHNAME}/${contact.schoolBusOwner.id}/${Constant.CONTACT_PATHNAME}/${contact.id}`
+    : null;
+  contact.url = contact.path ? `#/${contact.path}` : null;
+  contact.name = `${firstLastName(contact.givenName, contact.surname)}`;
   contact.historyEntity = History.makeHistoryEntity(History.CONTACT, contact);
-  
+
   contact.canDelete = true;
   contact.canEdit = true;
 }
 
-export function getContact(id){
-  return new ApiRequest(`/contacts/${ id }`).get().then(response => {
+export function getContact(id) {
+  return new ApiRequest(`/contacts/${id}`).get().then((response) => {
     var contact = response;
 
     parseContact(contact);
@@ -882,8 +977,8 @@ export function getContact(id){
   });
 }
 
-export function addContact(contact){
-  return new ApiRequest('/contacts').post(contact).then(response => {
+export function addContact(contact) {
+  return new ApiRequest('/contacts').post(contact).then((response) => {
     var contact = response;
 
     parseContact(contact);
@@ -894,8 +989,8 @@ export function addContact(contact){
   });
 }
 
-export function updateContact(contact){
-  return new ApiRequest(`/contacts/${ contact.id }`).put(contact).then(response => {
+export function updateContact(contact) {
+  return new ApiRequest(`/contacts/${contact.id}`).put(contact).then((response) => {
     var contact = response;
 
     parseContact(contact);
@@ -904,8 +999,8 @@ export function updateContact(contact){
   });
 }
 
-export function deleteContact(contact){
-  return new ApiRequest(`/contacts/${ contact.id }/delete`).post().then(response => {
+export function deleteContact(contact) {
+  return new ApiRequest(`/contacts/${contact.id}/delete`).post().then((response) => {
     var contact = response;
 
     parseContact(contact);
@@ -927,7 +1022,7 @@ function parseHistory(history) {
 ////////////////////
 
 export function getVersion() {
-  return new ApiRequest('/version').get().then(response => {
+  return new ApiRequest('/version').get().then((response) => {
     store.dispatch({ type: Action.UPDATE_VERSION, version: response });
   });
 }
@@ -937,15 +1032,17 @@ export function getVersion() {
 ////////////////////
 
 function getInspectorGroupId() {
-  var inspectorGroup = _.find(store.getState().lookups.groups, { name: 'Inspector' });
+  var inspectorGroup = _.find(store.getState().lookups.groups, {
+    name: 'Inspector',
+  });
   return inspectorGroup ? inspectorGroup.id : 0;
 }
 
 ////////////////////
 // Send Email
 ////////////////////
-export function sendEmail(email){
-  return new ApiRequest('schoolbuses/email').post(email).then(response => {
+export function sendEmail(email) {
+  return new ApiRequest('schoolbuses/email').post(email).then((response) => {
     return response;
   });
 }
