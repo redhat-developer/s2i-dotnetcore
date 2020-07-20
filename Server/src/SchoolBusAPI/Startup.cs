@@ -108,8 +108,7 @@ namespace SchoolBusAPI
             });
 
             //enable Hangfire
-            PostgreSqlStorage storage = new PostgreSqlStorage(connectionString);
-            services.AddHangfire(x => x.UseStorage(storage));
+            services.AddHangfire(x => x.UsePostgreSqlStorage(connectionString));
 
             //// Configure Swagger
             //services.AddSwaggerGen();
