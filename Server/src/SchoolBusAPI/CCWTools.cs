@@ -22,128 +22,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace SchoolBusAPI
 {
-    public class CCWTools 
+    public static class CCWTools 
     {
-        /// <summary>
-        /// Hangfire job to populate CCW data.  Only used for a deploy to PROD with a new database.
-        /// </summary>
-        /// <param name="connectionString"></param>
-        /// <param name="Configuration"></param>
-        public static void PopulateCCWJob (string connectionString, string cCW_userId, string cCW_guid, string cCW_directory, string ccwHost)
-        {
-            // sanity check
-            if (connectionString != null && cCW_userId != null && cCW_guid != null && cCW_directory != null && ccwHost != null)
-            {
-
-                DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
-                options.UseNpgsql(connectionString);
-                DbAppContext context = new DbAppContext(null, options.Options);
-
-                // make a database connection and see if there are any records that are missing the CCW link.
-                // we restrict the query to records not updated in the last 6 hours so that the batch process does not repeatedly try a failed record. 
-                var data = context.SchoolBuss
-                    .FirstOrDefault(x => x.CCWDataId == null && x.LastUpdateTimestamp < DateTime.UtcNow.AddHours(-1));
-
-                if (data != null)
-                {
-
-                    // get the data for the request from the result of the database query.
-                    string regi = data.ICBCRegistrationNumber;
-                    string vin = data.VehicleIdentificationNumber;
-                    string plate = data.LicencePlateNumber;
-
-                    // Fetch the record.
-                    CCWData cCWData = FetchCCW(ccwHost, regi, vin, plate, cCW_userId, cCW_guid, cCW_directory);
-                    data.CCWData = cCWData;
-
-                    // ensure that the record is touched in the database
-                    data.LastUpdateTimestamp = DateTime.UtcNow;
-
-                    // save changes.
-                    context.SchoolBuss.Update(data);
-                    context.SaveChanges();
-                }
-            }                
-        }
-
-        /// <summary>
-        /// Hangfire job to refresh existing data.
-        /// </summary>
-        /// <param name="connectionString"></param>
-        /// <param name="Configuration"></param>
-        public static void UpdateCCWJob(string connectionString, string cCW_userId, string cCW_guid, string cCW_directory, string ccwHost)
-        {
-            // sanity check
-            if (connectionString != null && cCW_userId != null && cCW_guid != null && cCW_directory != null && ccwHost != null)
-            {
-                // make a database connection and see if there are any records that need to be updated.
-                DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
-                options.UseNpgsql(connectionString);
-                DbAppContext context = new DbAppContext(null, options.Options);
-
-                // first get a few metrics.  we only want to update a max of 1% the database per day.
-                int databaseTotal = context.CCWDatas.Count();
-
-                int dailyTotal = context.CCWDatas
-                    .Where(x => x.LastUpdateTimestamp < DateTime.UtcNow.AddDays(-1))
-                    .Select(x => x)
-                    .Count();
-
-                if (databaseTotal > 0 && dailyTotal < databaseTotal / 100)
-                {
-                    // make a database connection and see if there are any records that are missing the CCW link.                
-                    var data = context.CCWDatas
-                        .OrderBy(x => x.LastUpdateTimestamp)
-                        .FirstOrDefault(x => x.LastUpdateTimestamp < DateTime.UtcNow.AddDays(-1));
-
-                    if (data != null)
-                    {
-
-                        // get the data for the request from the result of the database query.
-                        string regi = data.ICBCRegistrationNumber;
-                        string vin = data.ICBCVehicleIdentificationNumber;
-                        // plate is excluded from the batch update because it can be shared.
-                        string plate = null;
-
-                        // Fetch the record.
-                        CCWData cCWData = FetchCCW(regi, vin, plate, cCW_userId, cCW_guid, cCW_directory, ccwHost);
-
-                        if (cCWData == null) // fetch did not work, but we don't want it to fire again, so update the timestamp.
-                        {
-                            // ensure that the record is touched in the database
-                            data.LastUpdateTimestamp = DateTime.UtcNow;
-                            //update records in SchoolBus table
-                            bool exists = context.SchoolBuss.Any(x => x.CCWDataId == cCWData.Id);
-                            if (exists)
-                            {
-                                SchoolBus bus = context.SchoolBuss.First(a => a.CCWDataId == cCWData.Id);
-                                if (cCWData.ICBCRegistrationNumber != null && bus.ICBCRegistrationNumber != null && !cCWData.ICBCRegistrationNumber.Equals(bus.ICBCRegistrationNumber))
-                                {
-                                    bus.ICBCRegistrationNumber = cCWData.ICBCRegistrationNumber;
-                                }
-
-                                if (cCWData.ICBCVehicleIdentificationNumber != null && bus.VehicleIdentificationNumber !=null && !cCWData.ICBCVehicleIdentificationNumber.Equals(bus.VehicleIdentificationNumber))
-                                {
-                                    bus.VehicleIdentificationNumber = cCWData.ICBCVehicleIdentificationNumber;
-                                }
-
-                                if (cCWData.ICBCLicencePlateNumber != null && bus.LicencePlateNumber != null && !cCWData.ICBCLicencePlateNumber.Equals(bus.LicencePlateNumber))
-                                {
-                                    bus.LicencePlateNumber = cCWData.ICBCLicencePlateNumber;
-                                }
-
-                                context.SchoolBuss.Update(bus);
-                            }
-                            
-                            context.CCWDatas.Update(data);
-                            context.SaveChanges();
-                            
-                        }
-                    }
-                }
-            }                   
-        }
-
         /// <summary>
         /// Fetch CCW data from the microservice
         /// </summary>
@@ -181,16 +61,18 @@ namespace SchoolBusAPI
             {
                 parametersToAdd.Add("plate", plate);
             }
+
             var targetUrl = ccwHost + "/api/CCW/GetCCW";
             string newUri = QueryHelpers.AddQueryString(targetUrl, parametersToAdd);
 
             // call the microservice
-            HttpClient client = new HttpClient();
+            using HttpClient client = new HttpClient();
 
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, newUri);
                 request.Headers.Clear();
+
                 // transfer over the request headers.
                 request.Headers.Add("SM_UNIVERSALID", cCW_userId);
                 request.Headers.Add("SMGOV_USERGUID", cCW_guid);
@@ -212,21 +94,6 @@ namespace SchoolBusAPI
             catch (Exception e)
             {
                 result = null;
-            }
-
-            finally
-            {
-                if (client != null)
-                {
-                    try
-                    {
-                        client.Dispose();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.ToString());
-                    }
-                }
             }
 
             return result;
