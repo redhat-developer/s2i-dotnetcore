@@ -61,6 +61,8 @@ namespace SchoolBusAPI.Hangfire
                     return;
                 }
 
+                data.LastUpdateTimestamp = DateTime.UtcNow;
+
                 // get the data for the request from the result of the database query.
                 string regi = data.ICBCRegistrationNumber;
                 string vin = data.VehicleIdentificationNumber;
@@ -80,7 +82,6 @@ namespace SchoolBusAPI.Hangfire
                 data.CCWData = cCWData;
 
                 // ensure that the record is touched in the database
-                data.LastUpdateTimestamp = DateTime.UtcNow;
                 _context.SaveChanges();
                 _logger.LogInformation($"[Hangfire] PopulateCCWJob - Saved bus record with the ID {data.Id}.");
             }
@@ -134,8 +135,8 @@ namespace SchoolBusAPI.Hangfire
                 if (cCWData == null)
                 {
                     _logger.LogInformation($"[Hangfire] UpdateCCWJob - No data from CCW for regi: {regi} vin: {vin}, plate: {plate}.");
-                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - Updated bus record timestamp with the ID {data.Id}.");
                     _context.SaveChanges();
+                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - Updated bus record timestamp with the ID {data.Id}.");
                     return;
                 }
 
