@@ -157,7 +157,7 @@ namespace SchoolBusAPI.Hangfire
                     }
 
                     _context.SaveChanges();
-                    _logger.LogInformation($"[Hangfire] PopulateCCWJob - Saved bus record with the ID {data.Id}.");
+                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - Saved bus record with the ID {data.Id}.");
                 }
             }
 
