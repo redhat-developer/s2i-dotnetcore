@@ -72,6 +72,8 @@ namespace SchoolBusAPI.Hangfire
                 if (cCWData == null)
                 {
                     _logger.LogInformation($"[Hangfire] PopulateCCWJob - No data from CCW for regi: {regi} vin: {vin}, plate: {plate}.");
+                    _context.SaveChanges();
+                    _logger.LogInformation($"[Hangfire] PopulateCCWJob - Updated bus record timestamp with the ID {data.Id}.");
                     return;
                 }
 
@@ -132,6 +134,7 @@ namespace SchoolBusAPI.Hangfire
                 if (cCWData == null)
                 {
                     _logger.LogInformation($"[Hangfire] UpdateCCWJob - No data from CCW for regi: {regi} vin: {vin}, plate: {plate}.");
+                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - Updated bus record timestamp with the ID {data.Id}.");
                     _context.SaveChanges();
                     return;
                 }
