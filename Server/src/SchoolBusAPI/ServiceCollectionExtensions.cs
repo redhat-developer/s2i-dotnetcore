@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using SchoolBusAPI.Controllers;
 using SchoolBusAPI.Services;
-using SchoolBusAPI.Services.Impl;
 
 namespace SchoolBusAPI
 {
