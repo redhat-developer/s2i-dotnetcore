@@ -312,8 +312,8 @@ namespace SchoolBusAPI
 
             try
             {
-                // every 15 seconds we see if a CCW record needs to be created for a bus.  We only create one CCW record at a time.
-                BackgroundJob.Schedule<CcwJobService>(x => x.PopulateCCWJob(), TimeSpan.FromSeconds(15));
+                // every 1 minute we see if a CCW record needs to be created for a bus.  We only create one CCW record at a time.
+                RecurringJob.AddOrUpdate<CcwJobService>(x => x.PopulateCCWJob(), $"*/5 * * * *");
                 logger.LogInformation("Created Hangfire job for CCW population ...");
             }
             catch (Exception e)
@@ -337,8 +337,8 @@ namespace SchoolBusAPI
             
             try
             {
-                // every 5 minutes we see if a CCW record needs to be updated.  We only update one CCW record at a time.
-                BackgroundJob.Schedule<CcwJobService>(x => x.UpdateCCWJob(), TimeSpan.FromSeconds(5));
+                // every 1 minutes we see if a CCW record needs to be updated.  We only update one CCW record at a time.
+                RecurringJob.AddOrUpdate<CcwJobService>(x => x.UpdateCCWJob(), $"*/1 * * * *");
                 logger.LogInformation("Creatted Hangfire job for CCW update ...");
             }
             catch (Exception e)
