@@ -4,7 +4,7 @@ using SchoolBusAPI.Models;
 using System;
 using System.Security.Claims;
 
-namespace SchoolBusAPI.Services.Impl
+namespace SchoolBusAPI.Services
 {
     public abstract class ServiceBase
     {

@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.Services.Impl;
+using SchoolBusAPI.Services;
 using SchoolBusCommon;
 
 namespace SchoolBusAPI.Controllers

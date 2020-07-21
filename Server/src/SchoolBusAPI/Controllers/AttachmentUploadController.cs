@@ -1,20 +1,14 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.Services.Impl;
-using SchoolBusCommon;
 using System.Collections.Generic;
 using System.IO;
-using System;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Mappings;
+using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Controllers
 {
