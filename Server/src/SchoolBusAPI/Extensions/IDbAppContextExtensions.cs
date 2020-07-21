@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using SchoolBusAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace SchoolBusAPI.Models
+namespace SchoolBusAPI.Extensions
 {
     public static class IDbAppContextExtensions
     {
@@ -82,7 +83,6 @@ namespace SchoolBusAPI.Models
             return user;
         }
 
-
         public static CCWJurisdiction GetCCWJurisdictionByCode(this IDbAppContext context, string code)
         {
             CCWJurisdiction item = context.CCWJurisdictions.Where(x => x.Code != null && x.Code == code)                    
@@ -90,7 +90,41 @@ namespace SchoolBusAPI.Models
             return item;
         }
 
-        
+        public static User LoadUser(this IDbAppContext context, string username, string guid = null)
+        {
+            User user = null;
+            if (!string.IsNullOrEmpty(guid))
+            {
+                user = context.GetUserByGuid(guid);
+            }
+
+            if (user == null)
+            {
+                user = context.GetUserBySmUserId(username);
+            }
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (guid != null)
+            {
+                if (string.IsNullOrEmpty(user.Guid))
+                {
+                    // Self register ...
+                    user.Guid = guid;
+                    context.SaveChanges();
+                }
+                else if (!user.Guid.Equals(guid, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Registered users are not allowed to change their SiteMinder IDs ...
+                    return null;
+                }
+            }
+
+            return user;
+        }
 
         /// <summary>
         /// Adds initial CCWJurisdictions from a file

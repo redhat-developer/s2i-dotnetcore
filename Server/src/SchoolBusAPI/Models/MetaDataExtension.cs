@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace SchoolBusAPI
+namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// Utility class used for the column comment (description) feature

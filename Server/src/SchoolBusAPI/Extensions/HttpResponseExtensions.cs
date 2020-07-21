@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SchoolBusAPI
+namespace SchoolBusAPI.Extensions
 {
     public static class HttpResponseExtensions
     {

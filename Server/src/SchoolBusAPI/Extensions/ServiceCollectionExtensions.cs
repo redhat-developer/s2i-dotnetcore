@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SchoolBusAPI.Controllers;
 using SchoolBusAPI.Services;
 
-namespace SchoolBusAPI
+namespace SchoolBusAPI.Extensions
 {
     /// <summary>
     /// Utility extension added to aspnet core to facilitate registration of application-specific services

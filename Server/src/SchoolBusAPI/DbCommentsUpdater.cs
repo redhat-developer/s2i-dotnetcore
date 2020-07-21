@@ -6,7 +6,6 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI
@@ -93,12 +92,6 @@ namespace SchoolBusAPI
                 tableName = ((TableAttribute)tableAttrs[0]).Name;
             }
 
-            //var tableAttrsArray = tableAttrs.ToArray<Attribute>();
-            //if (tableAttrsArray.Length > 0)
-            //{
-            //    tableName = ((TableAttribute)tableAttrsArray[0]).Name;
-            //}
-
             //  get the table description
             var tableExtAttrs = tableType.GetTypeInfo().GetCustomAttributes(typeof(MetaDataExtension), false);
             if (tableExtAttrs.Length > 0)
@@ -106,26 +99,9 @@ namespace SchoolBusAPI
                 SetTableDescription(tableName, ((MetaDataExtension)tableExtAttrs[0]).Description);
             }
 
-            //var tableExtAttrssArray = tableExtAttrs.ToArray<Attribute>();
-            //if (tableExtAttrssArray.Length > 0)
-            //{
-            //    SetTableDescription(tableName, ((MetaDataExtension)tableExtAttrssArray[0]).Description);
-            //}
-
             foreach (PropertyInfo entityProperty in entityType.GetProperties().OfType<PropertyInfo>())
             {
                 //// Not all properties have MemberInfo, so a null check is required.
-                //if (entityProperty.MemberInfo != null)
-                //{
-                //    // get the custom attributes for this field.                
-                //    var attrs = entityProperty.MemberInfo.GetCustomAttributes(typeof(MetaDataExtension), false);
-                //    var attrsArray = attrs.ToArray<Attribute>();
-                //    if (attrsArray.Length > 0)
-                //    {
-                //        SetColumnDescription(tableName, entityProperty.GetColumnName(), ((MetaDataExtension)attrsArray[0]).Description);
-                //    }
-                //}
-
                 if (entityProperty != null)
                 {
                     var attrs = entityProperty.GetCustomAttributes(typeof(MetaDataExtension), false);
@@ -147,7 +123,7 @@ namespace SchoolBusAPI
         {
             // Postgres has the COMMENT command to update a description.
             string query = "COMMENT ON COLUMN \"" + tableName + "\".\"" + columnName + "\" IS '" + description.Replace("'", "\'") + "'";
-            context.Database.ExecuteSqlCommand(query);
+            context.Database.ExecuteSqlRaw(query);
         }
 
         /// <summary>
@@ -159,11 +135,10 @@ namespace SchoolBusAPI
         {
             // Postgres has the COMMENT command to update a description.
             string query = "COMMENT ON TABLE \"" + tableName + "\" IS '" + description.Replace("'", "\'") + "'";
-            context.Database.ExecuteSqlCommand(query);
+            context.Database.ExecuteSqlRaw(query);
         }
-
-
     }
+
     public static class ReflectionUtil
     {
 
