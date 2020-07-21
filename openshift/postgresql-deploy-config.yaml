@@ -7,6 +7,8 @@ objects:
     kind: DeploymentConfig
     metadata:
       name: ${NAME}-${ENV}
+    labels:
+      shared: "true"
     spec:
       replicas: 1
       selector:
@@ -119,6 +121,8 @@ objects:
     apiVersion: v1
     metadata:
       name: ${NAME}-${ENV}
+    labels:
+      shared: "true"
     spec:
       ports:
         - name: postgresql

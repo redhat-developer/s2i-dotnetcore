@@ -47,21 +47,21 @@ module.exports = (settings) => {
     );
   }
 
-  // objects.push(
-  //   ...oc.processDeploymentTemplate(
-  //     `${templatesLocalBaseUrl}/postgresql-deploy-config.yaml`,
-  //     {
-  //       param: {
-  //         PROJECT_NAME: `${phases[phase].name}`,
-  //         NAME: `${phases[phase].name}-db`,
-  //         SUFFIX: phases[phase].suffix,
-  //         VERSION: phases[phase].tag,
-  //         ENV: phases[phase].phase,
-  //         PERSISTENT_VOLUME_SIZE: phases[phase].dbSize,
-  //       },
-  //     }
-  //   )
-  // );
+  objects.push(
+    ...oc.processDeploymentTemplate(
+      `${templatesLocalBaseUrl}/postgresql-deploy-config.yaml`,
+      {
+        param: {
+          PROJECT_NAME: `${phases[phase].name}`,
+          NAME: `${phases[phase].name}-db`,
+          SUFFIX: phases[phase].suffix,
+          VERSION: phases[phase].tag,
+          ENV: phases[phase].phase,
+          PERSISTENT_VOLUME_SIZE: phases[phase].dbSize,
+        },
+      }
+    )
+  );
 
   objects.push(
     ...oc.processDeploymentTemplate(
