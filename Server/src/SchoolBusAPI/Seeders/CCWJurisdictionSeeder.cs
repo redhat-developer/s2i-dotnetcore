@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Models;
 using System;
 using System.Collections.Generic;

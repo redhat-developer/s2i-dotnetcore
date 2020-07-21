@@ -28,6 +28,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using SchoolBusAPI.Authentication;
 using SchoolBusAPI.Authorization;
+using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Middlewares;
 using SchoolBusAPI.Models;
 using System;
