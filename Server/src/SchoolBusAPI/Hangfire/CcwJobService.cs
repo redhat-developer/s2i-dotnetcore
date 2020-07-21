@@ -123,7 +123,7 @@ namespace SchoolBusAPI.Hangfire
                 // plate is excluded from the batch update because it can be shared.
                 string plate = null;
 
-                // Fetch the record.
+                // Fetch the record. this FetchCCW actually updates CCWData too. Refer to CCW microservice
                 CCWData cCWData = CCWTools.FetchCCW(_ccwHost, regi, vin, plate, _userId, _userGuid, _directory);
 
                 data.LastUpdateTimestamp = DateTime.UtcNow;
