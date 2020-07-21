@@ -1,5 +1,6 @@
 "use strict";
 const options = require("@bcgov/pipeline-cli").Util.parseArguments();
+
 const changeId = options.pr; //aka pull-request
 const version = "1.4.0";
 const name = "sbi"; //project name prefix
@@ -27,6 +28,8 @@ const phases = {
     tag: `dev-${version}-${changeId}`,
     host: `cerberus-${changeId}-tran-schoolbus-dev.pathfinder.gov.bc.ca`,
     dotnet_env: "Development",
+    dbUser: "userUXN",
+    dbSize: "1Gi",
     transient: true,
   },
   test: {
@@ -39,6 +42,8 @@ const phases = {
     version: `${version}`,
     tag: `test-${version}`,
     host: `cerberus-tran-schoolbus-tst.pathfinder.gov.bc.ca`,
+    dbUser: "user7KU",
+    dbSize: "1Gi",
     dotnet_env: "Staging",
   },
   prod: {
@@ -51,6 +56,8 @@ const phases = {
     version: `${version}`,
     tag: `prod-${version}`,
     host: `cerberus-tran-schoolbus-prd.pathfinder.gov.bc.ca`,
+    dbUser: "userKIX",
+    dbSize: "50Gi",
     dotnet_env: "Production",
   },
 };

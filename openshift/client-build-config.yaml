@@ -6,6 +6,21 @@ metadata:
 labels:
   template: client-build
 objects:
+  - apiVersion: "v1"
+    kind: ImageStream
+    metadata:
+      name: nginx-116-rhel8
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: registry.redhat.io/rhel8/nginx-116:1-39
+          name: "1"
+          referencePolicy:
+            type: Local
   - apiVersion: v1
     kind: ImageStream
     metadata:
@@ -38,12 +53,17 @@ objects:
           cpu: 1
           memory: 2Gi
       postCommit: {}
+      resources:
+        requests:
+          cpu: 1
+        limits:
+          cpu: 2
       source:
         git:
           uri: ${SOURCE_REPOSITORY_URL}
           ref: ${SOURCE_REPOSITORY_REF}
         type: Git
-        contextDir: "Client"
+        contextDir: client
       strategy:
         dockerStrategy:
           noCache: true
@@ -68,14 +88,19 @@ parameters:
     displayName: version
     name: VERSION
     required: false
-    value: "1.4"
+    value: "1.0"
   - description: SOURCE_REPOSITORY_URL
     displayName: SOURCE_REPOSITORY_URL
     name: SOURCE_REPOSITORY_URL
     required: false
-    value: "https://github.com/bcgov/schoolbus.git"
+    value: ""
   - description: SOURCE_REPOSITORY_REF
     displayName: SOURCE_REPOSITORY_REF
     name: SOURCE_REPOSITORY_REF
     required: false
     value: "master"
+  - description: DEPLOY_SUBDIRECTORY
+    displayName: DEPLOY_SUBDIRECTORY
+    name: DEPLOY_SUBDIRECTORY
+    required: true
+    value: "/"

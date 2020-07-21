@@ -4,19 +4,19 @@ metadata:
   creationTimestamp: null
   name: ${PROJECT_NAME}
 labels:
-  template: frontend-deploy
+  template: client-config
 objects:
-  - apiVersion: v1 #is: frontend
+  - apiVersion: v1
     kind: ImageStream
     metadata:
       creationTimestamp: null
       labels:
-        shared: true
+        shared: "true"
       name: ${NAME}
     spec:
       lookupPolicy:
         local: false
-  - apiVersion: v1 #dc: frontend
+  - apiVersion: v1
     kind: DeploymentConfig
     metadata:
       creationTimestamp: null
@@ -25,15 +25,7 @@ objects:
       replicas: 1
       selector:
         deploymentconfig: ${NAME}${SUFFIX}
-      strategy:
-        activeDeadlineSeconds: 21600
-        rollingParams:
-          intervalSeconds: 1
-          maxSurge: 1
-          maxUnavailable: 1
-          timeoutSeconds: 600
-          updatePeriodSeconds: 1
-        type: Rolling
+      strategy: {}
       template:
         metadata:
           creationTimestamp: null
@@ -42,40 +34,49 @@ objects:
         spec:
           containers:
             - image: ${NAME}:${VERSION}
-              name: frontend
+              name: client
               ports:
                 - containerPort: 8080
                   protocol: TCP
               resources:
                 requests:
-                  cpu: 100m
-                  memory: 256Mi
+                  cpu: 250m
+                  memory: 32Mi
                 limits:
-                  cpu: 750m
-                  memory: 512Mi
-              livenessProbe:
-                httpGet:
-                  path: /test/headers
-                  port: 8080
-                initialDelaySeconds: 30
-                periodSeconds: 5
+                  cpu: 250m
+                  memory: 64Mi
               env:
-                - name: MIDDLEWARE_NAME
-                  value: "${PROJECT_NAME}-${API_NAME}${SUFFIX}:8080"
-                - name: ASPNETCORE_ENVIRONMENT
-                  value: Development
+                - name: REACT_APP_SSO_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: sso-configs-${ENV}
+                      key: CLIENT_SSO_HOST
+                - name: REACT_APP_SSO_REALM
+                  valueFrom:
+                    secretKeyRef:
+                      name: sso-configs-${ENV}
+                      key: CLIENT_SSO_REALM
+                - name: REACT_APP_SSO_CLIENT
+                  valueFrom:
+                    secretKeyRef:
+                      name: sso-configs-${ENV}
+                      key: CLIENT_SSO_CLIENTID
+                - name: REACT_APP_API_HOST
+                  value: ${HOST}
+                - name: DEPLOY_SUFFIX
+                  value: ${SUFFIX}
       test: false
       triggers:
         - imageChangeParams:
             automatic: true
             containerNames:
-              - frontend
+              - client
             from:
               kind: ImageStreamTag
               name: ${NAME}:${VERSION}
           type: ImageChange
         - type: ConfigChange
-  - apiVersion: v1 #service: frontend
+  - apiVersion: v1
     kind: Service
     metadata:
       creationTimestamp: null
@@ -88,11 +89,11 @@ objects:
           targetPort: 8080
       selector:
         deploymentconfig: ${NAME}${SUFFIX}
-  - apiVersion: v1
+  - apiVersion: route.openshift.io/v1
     kind: Route
     metadata:
       annotations:
-        haproxy.router.openshift.io/timeout: 5m
+        haproxy.router.openshift.io/timeout: 1h
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
     spec:
@@ -117,7 +118,7 @@ parameters:
     displayName: Name
     name: NAME
     required: true
-    value: "frontend"
+    value: "client"
   - description: A name suffix used for all objects
     displayName: Suffix
     name: SUFFIX
@@ -132,12 +133,7 @@ parameters:
     displayName: version
     name: VERSION
     required: true
-    value: "v1.4.0"
-  - description: The ASP Net Core deployment environment setting
-    displayName: AspNetCore Environment
-    name: ASPNETCORE_ENVIRONMENT
-    required: true
-    value: "Development"
+    value: "v1.0.0"
   - description: HOST
     displayName: HOST
     name: HOST
@@ -153,10 +149,3 @@ parameters:
     name: SOURCE_REPOSITORY_REF
     required: false
     value: ""
-  - name: API_NAME
-    displayName: API Name
-    description:
-      The name assigned to all of the PDF microservice objects defined in
-      this template.
-    required: true
-    value: api

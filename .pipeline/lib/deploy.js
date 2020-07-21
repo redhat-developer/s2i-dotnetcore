@@ -3,6 +3,7 @@ const { OpenShiftClientX } = require("@bcgov/pipeline-cli");
 const path = require("path");
 
 const util = require("./utils");
+const KeyCloakClient = require("./keycloak");
 
 module.exports = (settings) => {
   const phases = settings.phases;
@@ -13,20 +14,19 @@ module.exports = (settings) => {
     Object.assign({ namespace: phases[phase].namespace }, options)
   );
 
-  //to keep the user and roles of the previous database
-  const dbUsers = { dev: "userUXN", test: "user7KU", prod: "userKIX" };
-  const dbSize = { dev: "1Gi", test: "1Gi", prod: "50Gi" };
-
   const templatesLocalBaseUrl = oc.toFileUrl(
     path.resolve(__dirname, "../../openshift")
   );
   var objects = [];
+  const kc = new KeyCloakClient(settings, oc);
 
   const dbSecret = util.getSecret(
     oc,
     phases[phase].namespace,
     `${phases[phase].name}-db-${phases[phase].phase}`
   );
+
+  kc.addUris();
 
   if (!dbSecret) {
     console.log("Adding Db postgresql secret");
@@ -39,7 +39,7 @@ module.exports = (settings) => {
             PROJECT_NAME: `${phases[phase].name}`,
             NAME: `${phases[phase].name}-db`,
             SUFFIX: phases[phase].suffix,
-            POSTGRESQL_USER: dbUsers[phase],
+            POSTGRESQL_USER: phases[phase].dbUser,
             ENV: phases[phase].phase,
           },
         }
@@ -47,21 +47,21 @@ module.exports = (settings) => {
     );
   }
 
-  objects.push(
-    ...oc.processDeploymentTemplate(
-      `${templatesLocalBaseUrl}/postgresql-deploy-config.yaml`,
-      {
-        param: {
-          PROJECT_NAME: `${phases[phase].name}`,
-          NAME: `${phases[phase].name}-db`,
-          SUFFIX: phases[phase].suffix,
-          VERSION: phases[phase].tag,
-          ENV: phases[phase].phase,
-          PERSISTENT_VOLUME_SIZE: dbSize[phase],
-        },
-      }
-    )
-  );
+  // objects.push(
+  //   ...oc.processDeploymentTemplate(
+  //     `${templatesLocalBaseUrl}/postgresql-deploy-config.yaml`,
+  //     {
+  //       param: {
+  //         PROJECT_NAME: `${phases[phase].name}`,
+  //         NAME: `${phases[phase].name}-db`,
+  //         SUFFIX: phases[phase].suffix,
+  //         VERSION: phases[phase].tag,
+  //         ENV: phases[phase].phase,
+  //         PERSISTENT_VOLUME_SIZE: phases[phase].dbSize,
+  //       },
+  //     }
+  //   )
+  // );
 
   objects.push(
     ...oc.processDeploymentTemplate(
@@ -94,25 +94,6 @@ module.exports = (settings) => {
     )
   );
 
-  /*
-  objects.push(
-    ...oc.processDeploymentTemplate(
-      `${templatesLocalBaseUrl}/frontend-deploy-config.yaml`,
-      {
-        param: {
-          PROJECT_NAME: `${phases[phase].name}`,
-          NAME: `${phases[phase].name}-frontend`,
-          SUFFIX: phases[phase].suffix,
-          VERSION: phases[phase].tag,
-          HOST: phases[phase].host,
-          ENV: phases[phase].phase,
-          ASPNETCORE_ENVIRONMENT: phases[phase].dotnet_env,
-        },
-      }
-    )
-  );
-  */
-
   objects.push(
     ...oc.processDeploymentTemplate(
       `${templatesLocalBaseUrl}/ccw-deploy-config.yaml`,
@@ -124,6 +105,21 @@ module.exports = (settings) => {
           VERSION: phases[phase].tag,
           ENV: phases[phase].phase,
           ASPNETCORE_ENVIRONMENT: phases[phase].dotnet_env,
+        },
+      }
+    )
+  );
+
+  objects.push(
+    ...oc.processDeploymentTemplate(
+      `${templatesLocalBaseUrl}/client-deploy-config.yaml`,
+      {
+        param: {
+          NAME: `${phases[phase].name}-client`,
+          SUFFIX: phases[phase].suffix,
+          VERSION: phases[phase].tag,
+          ENV: phases[phase].phase,
+          HOST: phases[phase].host,
         },
       }
     )
