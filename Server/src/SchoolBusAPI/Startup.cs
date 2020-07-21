@@ -29,6 +29,7 @@ using Newtonsoft.Json.Serialization;
 using SchoolBusAPI.Authentication;
 using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Extensions;
+using SchoolBusAPI.Hangfire;
 using SchoolBusAPI.Middlewares;
 using SchoolBusAPI.Models;
 using System;
@@ -109,7 +110,19 @@ namespace SchoolBusAPI
             });
 
             //enable Hangfire
-            services.AddHangfire(x => x.UsePostgreSqlStorage(connectionString));
+            services.AddHangfire(configuration => 
+                configuration
+                //.UseSerilogLogProvider()
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UsePostgreSqlStorage(connectionString)
+            );
+
+            services.AddHangfireServer(options =>
+            {
+                options.WorkerCount = 1;
+            });
 
             //// Configure Swagger
             //services.AddSwaggerGen();
@@ -186,21 +199,20 @@ namespace SchoolBusAPI
                 endpoints.MapControllers();
             });
 
-            // enable Hangfire
-            app.UseHangfireServer();
+            // enable Hangfire Dashboard
             app.UseHangfireDashboard(); // this enables the /hangfire action
 
             // this should be set as an environment variable.  
             // Only enable when doing a new PROD deploy to populate CCW data and link it to the bus data.
             if (!string.IsNullOrEmpty(Configuration["ENABLE_HANGFIRE_CREATE"]))
             {
-                SetupHangfireCreateJob(app, logger);
+                SetupHangfireCreateJob(logger);
             }
 
             // this should be set as an environment variable
             if (!string.IsNullOrEmpty(Configuration["ENABLE_HANGFIRE_UPDATE"]))
             {
-                SetupHangfireUpdateJob(app, logger);
+                SetupHangfireUpdateJob(logger);
             }
         }
 
@@ -288,7 +300,7 @@ namespace SchoolBusAPI
         /// </summary>
         /// <param name="app"></param>
         /// <param name="loggerFactory"></param>
-        private void SetupHangfireCreateJob(IApplicationBuilder app, ILogger<Startup> logger)
+        private void SetupHangfireCreateJob(ILogger<Startup> logger)
         {
             logger.LogInformation("Attempting setup of Hangfire Create CCW job ...");
 
@@ -300,14 +312,9 @@ namespace SchoolBusAPI
 
             try
             {
-                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                {
-                    string connectionString = GetConnectionString();
-                    
-                    logger.LogInformation("Creating Hangfire job for CCW population ...");
-                    // every 15 seconds we see if a CCW record needs to be created for a bus.  We only create one CCW record at a time.
-                    BackgroundJob.Schedule(() => CCWTools.PopulateCCWJob(connectionString, cCW_userId, cCW_guid, cCW_directory, ccwHost), TimeSpan.FromSeconds(15));
-                }
+                // every 15 seconds we see if a CCW record needs to be created for a bus.  We only create one CCW record at a time.
+                BackgroundJob.Schedule<CcwJobService>(x => x.PopulateCCWJob(), TimeSpan.FromSeconds(15));
+                logger.LogInformation("Created Hangfire job for CCW population ...");
             }
             catch (Exception e)
             {
@@ -324,26 +331,15 @@ namespace SchoolBusAPI
         /// <param name="app"></param>
         /// <param name="loggerFactory"></param>
 
-        private void SetupHangfireUpdateJob(IApplicationBuilder app, ILogger<Startup> logger)
+        private void SetupHangfireUpdateJob(ILogger<Startup> logger)
         {
             logger.LogInformation("Attempting setup of Hangfire Update CCW job ...");
-
-            // get credentials
-            string cCW_userId = Configuration["CCW_userId"];
-            string cCW_guid = Configuration["CCW_guid"];
-            string cCW_directory = Configuration["CCW_directory"];
-            string ccwHost = Configuration["CCW_SERVICE_NAME"];
             
             try
             {
-                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                {
-                    string connectionString = GetConnectionString();
-                    
-                    logger.LogInformation("Creating Hangfire job for CCW update ...");
-                    // every 5 minutes we see if a CCW record needs to be updated.  We only update one CCW record at a time.
-                    BackgroundJob.Schedule(() => CCWTools.UpdateCCWJob(connectionString, cCW_userId, cCW_guid, cCW_directory, ccwHost), TimeSpan.FromMinutes(5));
-                }
+                // every 5 minutes we see if a CCW record needs to be updated.  We only update one CCW record at a time.
+                BackgroundJob.Schedule<CcwJobService>(x => x.UpdateCCWJob(), TimeSpan.FromSeconds(5));
+                logger.LogInformation("Creatted Hangfire job for CCW update ...");
             }
             catch (Exception e)
             {

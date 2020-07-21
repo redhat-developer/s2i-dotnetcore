@@ -11,6 +11,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using SchoolBusAPI.Controllers;
+using SchoolBusAPI.Hangfire;
 using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Extensions
@@ -27,33 +28,33 @@ namespace SchoolBusAPI.Extensions
         /// <returns></returns>
         public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<ICityService, CityService>();
-            services.AddTransient<ICurrentUserService, CurrentUserService>();
-            services.AddTransient<ICCWDataService, CCWDataService>();
-            services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<IDistrictService, DistrictService>();
-            services.AddTransient<IGroupService, GroupService>();
-            services.AddTransient<IInspectionService, InspectionService>();
-            services.AddTransient<INotificationService, NotificationService>();
-            services.AddTransient<INotificationEventService, NotificationEventService>();
-            services.AddTransient<IPermissionService, PermissionService>();
-            services.AddTransient<IRegionService, RegionService>();
-            services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<ISchoolBusService, SchoolBusService>();
-            services.AddTransient<IAttachmentService, AttachmentService>();
-            services.AddTransient<IHistoryService, HistoryService>();
-            services.AddTransient<INoteService, NoteService>();
-            services.AddTransient<ISchoolBusOwnerService, SchoolBusOwnerService>();
-            services.AddTransient<IAttachmentService, AttachmentService>();
-            services.AddTransient<IContactService, ContactService>();
-            services.AddTransient<IHistoryService, HistoryService>();
-            services.AddTransient<INoteService, NoteService>();
-            services.AddTransient<ISchoolDistrictService, SchoolDistrictService>();
-            services.AddTransient<IServiceAreaService, ServiceAreaService>();
-            services.AddTransient<IUserService, UserService>();            
-            services.AddTransient<ITestService, TestService>();
-            services.AddTransient<IAttachmentUploadService,AttachmentUploadService>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<ICCWDataService, CCWDataService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IDistrictService, DistrictService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IInspectionService, InspectionService>();
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<INotificationEventService, NotificationEventService>();
+            services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IRegionService, RegionService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ISchoolBusService, SchoolBusService>();
+            services.AddScoped<IAttachmentService, AttachmentService>();
+            services.AddScoped<IHistoryService, HistoryService>();
+            services.AddScoped<INoteService, NoteService>();
+            services.AddScoped<ISchoolBusOwnerService, SchoolBusOwnerService>();
+            services.AddScoped<IAttachmentService, AttachmentService>();
+            services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IHistoryService, HistoryService>();
+            services.AddScoped<INoteService, NoteService>();
+            services.AddScoped<ISchoolDistrictService, SchoolDistrictService>();
+            services.AddScoped<IServiceAreaService, ServiceAreaService>();
+            services.AddScoped<IUserService, UserService>();            
+            services.AddScoped<ITestService, TestService>();
+            services.AddScoped<IAttachmentUploadService,AttachmentUploadService>();
+            services.AddScoped<ICcwJobService, CcwJobService>();
             return services;
         }
     }
