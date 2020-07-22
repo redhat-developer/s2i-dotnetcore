@@ -69,7 +69,7 @@ namespace SchoolBusAPI.Hangfire
                 string plate = data.LicencePlateNumber;
 
                 // Fetch the record.
-                CCWData cCWData = CCWTools.FetchCCW(_ccwHost, regi, vin, plate, _userId, _userGuid, _directory);
+                CCWData cCWData = CCWTools.FetchCCW(regi, vin, plate, _userId, _userGuid, _directory, _ccwHost);
 
                 if (cCWData == null)
                 {
@@ -127,7 +127,7 @@ namespace SchoolBusAPI.Hangfire
                 string plate = null;
 
                 // Fetch the record. this FetchCCW actually updates CCWData too. Refer to CCW microservice
-                CCWData cCWData = CCWTools.FetchCCW(_ccwHost, regi, vin, plate, _userId, _userGuid, _directory);
+                CCWData cCWData = CCWTools.FetchCCW(regi, vin, plate, _userId, _userGuid, _directory, _ccwHost);
 
                 data.LastUpdateTimestamp = DateTime.UtcNow;
 
