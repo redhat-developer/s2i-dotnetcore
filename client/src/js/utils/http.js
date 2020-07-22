@@ -115,18 +115,9 @@ export function request(path, options) {
 }
 
 export function jsonRequest(path, options) {
-  keycloak
-    .updateToken()
-    .then((refreshed) => {
-      if (refreshed) {
-        console.log('Token was successfully refreshed');
-      } else {
-        console.log('Token is still valid');
-      }
-    })
-    .catch(() => {
-      console.log('Failed to refresh the token, or the session has expired');
-    });
+  keycloak.updateToken().catch(() => {
+    console.log('Failed to refresh the token, or the session has expired');
+  });
 
   var jsonHeaders = {
     Accept: 'application/json',
