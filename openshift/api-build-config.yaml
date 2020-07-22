@@ -82,7 +82,7 @@ objects:
         sourceStrategy:
           env:
             - name: DOTNET_STARTUP_PROJECT
-              value: Server/SchoolBusAPI/SchoolBusAPI.csproj
+              value: SchoolBusAPI/SchoolBusAPI.csproj
           from:
             kind: ImageStreamTag
             name: "dotnet-31-rhel7:3.1"
