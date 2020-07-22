@@ -1,22 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { PageHeader, Well, Row, Col } from "react-bootstrap";
-import { Button, ButtonGroup, Glyphicon } from "react-bootstrap";
+import { PageHeader, Well, Row, Col } from 'react-bootstrap';
+import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 
-import $ from "jquery";
+import preval from 'preval.macro';
 
-import * as Api from "../api";
-import * as Constant from "../constants";
+import * as Api from '../api';
+import * as Constant from '../constants';
 
-import ColDisplay from "../components/ColDisplay.jsx";
-import Spinner from "../components/Spinner.jsx";
-import Unimplemented from "../components/Unimplemented.jsx";
+import ColDisplay from '../components/ColDisplay.jsx';
+import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
 
-import { formatDateTime } from "../utils/date";
-import { request } from "../utils/http";
+import { formatDateTime } from '../utils/date';
 
 class Version extends React.Component {
   static propTypes = {
@@ -26,43 +25,25 @@ class Version extends React.Component {
   state = {
     loading: false,
     showRawSection: false,
-    buildtime: "",
-    version: "",
-    commit: "",
+    buildtime: '',
+    version: '',
+    commit: '',
   };
 
   componentDidMount() {
     this.setState({ loading: true });
     Api.getVersion().finally(() => {
-      this.fetchLocal().finally(() => {
-        this.setState({ loading: false });
-      });
+      this.setState({ loading: false });
     });
   }
-
-  fetchLocal = () => {
-    return request("buildinfo.html", { silent: true })
-      .then((xhr) => {
-        if (xhr.status === 200) {
-          this.setState({
-            buildTime: $(xhr.responseText).find("#buildtime").text(),
-            version: $(xhr.responseText).find("#version").text(),
-            commit: $(xhr.responseText).find("#commit").text(),
-          });
-        }
-      })
-      .catch((err) => {
-        console.err("Failed to find buildinfo: ", err);
-      });
-  };
 
   showRaw = (e) => {
     if (this.state.showRawSection) {
       this.setState({ showRawSection: false });
-      e.target.textContent = "Show Raw Versions";
+      e.target.textContent = 'Show Raw Versions';
     } else {
       this.setState({ showRawSection: true });
-      e.target.textContent = "Hide Raw Versions";
+      e.target.textContent = 'Hide Raw Versions';
     }
   };
 
@@ -97,34 +78,22 @@ class Version extends React.Component {
         {(() => {
           if (this.state.loading) {
             return (
-              <div style={{ textAlign: "center" }}>
+              <div style={{ textAlign: 'center' }}>
                 <Spinner />
               </div>
             );
           }
 
           var applicationVersion = {};
-          if (
-            this.props.version.applicationVersions &&
-            this.props.version.applicationVersions.length > 0
-          ) {
+          if (this.props.version.applicationVersions && this.props.version.applicationVersions.length > 0) {
             applicationVersion = this.props.version.applicationVersions[0];
           }
           var databaseVersion = {};
-          var lastMigration = "";
-          if (
-            this.props.version.databaseVersions &&
-            this.props.version.databaseVersions.length > 0
-          ) {
+          var lastMigration = '';
+          if (this.props.version.databaseVersions && this.props.version.databaseVersions.length > 0) {
             databaseVersion = this.props.version.databaseVersions[0];
-            if (
-              databaseVersion.appliedMigrations &&
-              databaseVersion.appliedMigrations.length > 0
-            ) {
-              lastMigration =
-                databaseVersion.appliedMigrations[
-                  databaseVersion.appliedMigrations.length - 1
-                ];
+            if (databaseVersion.appliedMigrations && databaseVersion.appliedMigrations.length > 0) {
+              lastMigration = databaseVersion.appliedMigrations[databaseVersion.appliedMigrations.length - 1];
             }
           }
 
@@ -139,10 +108,7 @@ class Version extends React.Component {
                 </Row>
                 <Row>
                   <ColDisplay md={12} label="Build Time">
-                    {formatDateTime(
-                      this.state.buildTime,
-                      Constant.DATE_TIME_READABLE
-                    )}
+                    {formatDateTime(preval`module.exports = new Date();`, Constant.DATE_TIME_READABLE)}
                   </ColDisplay>
                 </Row>
                 {/*
@@ -152,7 +118,7 @@ class Version extends React.Component {
 */}
                 <Row>
                   <ColDisplay md={12} label="Git Commit">
-                    {this.state.commit}
+                    {process.env.REACT_APP_GIT_SHA}
                   </ColDisplay>
                 </Row>
                 <Row>
@@ -170,10 +136,7 @@ class Version extends React.Component {
                 </Row>
                 <Row>
                   <ColDisplay md={12} label="Build Time">
-                    {formatDateTime(
-                      applicationVersion.fileCreationTime,
-                      Constant.DATE_TIME_READABLE
-                    )}
+                    {formatDateTime(applicationVersion.fileCreationTime, Constant.DATE_TIME_READABLE)}
                   </ColDisplay>
                 </Row>
                 <Row>
@@ -211,10 +174,7 @@ class Version extends React.Component {
                 </Row>
               </Well>
               <Button onClick={this.showRaw}>Show Raw Versions</Button>
-              <Well
-                style={{ marginTop: "20px" }}
-                className={this.state.showRawSection ? "" : "hide"}
-              >
+              <Well style={{ marginTop: '20px' }} className={this.state.showRawSection ? '' : 'hide'}>
                 <div>{JSON.stringify(this.props.version)}</div>
               </Well>
             </div>
