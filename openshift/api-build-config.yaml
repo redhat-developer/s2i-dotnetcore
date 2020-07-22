@@ -77,12 +77,12 @@ objects:
           uri: ${SOURCE_REPOSITORY_URL}
           ref: ${SOURCE_REPOSITORY_REF}
         type: Git
-        contextDir: ""
+        contextDir: "Server"
       strategy:
         sourceStrategy:
           env:
             - name: DOTNET_STARTUP_PROJECT
-              value: Server/src/SchoolBusAPI/SchoolBusAPI.csproj
+              value: Server/SchoolBusAPI/SchoolBusAPI.csproj
           from:
             kind: ImageStreamTag
             name: "dotnet-31-rhel7:3.1"
