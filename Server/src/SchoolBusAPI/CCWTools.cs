@@ -91,8 +91,10 @@ namespace SchoolBusAPI
                     result = JsonConvert.DeserializeObject<CCWData>(jsonString);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Console.WriteLine("[Hangfire] exception while CCW call.");
+                Console.WriteLine($"[Hangfire] {ex}");
                 result = null;
             }
 
