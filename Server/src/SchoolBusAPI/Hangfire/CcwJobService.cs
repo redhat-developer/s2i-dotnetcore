@@ -116,7 +116,7 @@ namespace SchoolBusAPI.Hangfire
 
                 if (data == null)
                 {
-                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - All records up to {DateTime.UtcNow.AddDays(-1)} has been done.");
+                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - Skipping CCW call. All records up to {DateTime.UtcNow.AddDays(-1)} have already been updated.");
                     return;
                 }
 

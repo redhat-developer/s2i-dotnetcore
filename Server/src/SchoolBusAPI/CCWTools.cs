@@ -93,8 +93,8 @@ namespace SchoolBusAPI
             }
             catch (Exception ex)
             {
-                Console.WriteLine("[Hangfire] exception while CCW call.");
-                Console.WriteLine($"[Hangfire] {ex}");
+                Console.WriteLine("Exception while CCW call.");
+                Console.WriteLine($"{ex}");
                 result = null;
             }
 
