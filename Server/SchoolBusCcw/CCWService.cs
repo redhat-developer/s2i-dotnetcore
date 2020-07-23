@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.ServiceModel;
+using System.Text;
 using Ws.Ccw.Reference;
 
 namespace SchoolBusCcw
@@ -53,7 +54,7 @@ namespace SchoolBusCcw
             }
             catch (AggregateException ae)
             {
-                ae.Handle(ex => HandleFaultException(logPrefix, function, ex));
+                ae.Handle(ex => HandleFaultException(logPrefix, function, ex, serialNumber));
                 return null;
             }
             catch (Exception e)
@@ -84,7 +85,7 @@ namespace SchoolBusCcw
             }
             catch (AggregateException ae)
             {
-                ae.Handle(ex => HandleFaultException(logPrefix, function, ex));
+                ae.Handle(ex => HandleFaultException(logPrefix, function, ex, registrationNumber));
                 return null;
             }
             catch (Exception e)
@@ -115,7 +116,7 @@ namespace SchoolBusCcw
             }
             catch (AggregateException ae)
             {
-                ae.Handle(ex => HandleFaultException(logPrefix, function, ex));
+                ae.Handle(ex => HandleFaultException(logPrefix, function, ex, licensePlateNumber));
                 return null;
             }
             catch (Exception e)
@@ -146,7 +147,7 @@ namespace SchoolBusCcw
             }
             catch (AggregateException ae)
             {
-                ae.Handle(ex => HandleFaultException(logPrefix, function, ex));
+                ae.Handle(ex => HandleFaultException(logPrefix, function, ex, decalNumber));
                 return null;
             }
             catch (Exception e)
@@ -177,7 +178,7 @@ namespace SchoolBusCcw
             }
             catch (AggregateException ae)
             {
-                ae.Handle(ex => HandleFaultException(logPrefix, function, ex));
+                ae.Handle(ex => HandleFaultException(logPrefix, function, ex, registrationNumber, date.ToString("yyyy-MM-dd")));
                 return null;
             }
             catch (Exception e)
@@ -208,7 +209,7 @@ namespace SchoolBusCcw
             }
             catch (AggregateException ae)
             {
-                ae.Handle(ex => HandleFaultException(logPrefix, function, ex));
+                ae.Handle(ex => HandleFaultException(logPrefix, function, ex, clientNumber, organizationNameCode));
                 return null;
             }
             catch (Exception e)
@@ -239,7 +240,7 @@ namespace SchoolBusCcw
             }
             catch (AggregateException ae)
             {
-                ae.Handle(ex => HandleFaultException(logPrefix, function, ex));
+                ae.Handle(ex => HandleFaultException(logPrefix, function, ex, clientNumber, organizationNameCode));
                 return null;
             }
             catch (Exception e)
@@ -250,9 +251,17 @@ namespace SchoolBusCcw
             }
         }
 
-        private bool HandleFaultException(string logPrefix, string function, Exception ex)
+        private bool HandleFaultException(string logPrefix, string function, Exception ex, params string[] args)
         {
-            _logger.LogInformation($"{logPrefix} Aggregate Exception occured while calling {function}.");
+            var arguments = new StringBuilder();
+            for (var i = 0; i < args.Length; i++)
+            {
+                arguments.Append($"arg[i]: {args[i]}, ");
+            }
+
+            var parameters = arguments.ToString().Trim().TrimEnd(',');
+
+            _logger.LogInformation($"{logPrefix} Aggregate Exception occured while calling {function}({parameters})");
 
             if (ex is FaultException<CVSECommonException>) // From the web service.
             {
