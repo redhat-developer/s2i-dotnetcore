@@ -256,7 +256,7 @@ namespace SchoolBusCcw
             var arguments = new StringBuilder();
             for (var i = 0; i < args.Length; i++)
             {
-                arguments.Append($"arg[i]: {args[i]}, ");
+                arguments.Append($"{args[i]}, ");
             }
 
             var parameters = arguments.ToString().Trim().TrimEnd(',');
