@@ -25,6 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using SchoolBusAPI.Authentication;
 using SchoolBusAPI.Authorization;
@@ -33,8 +34,10 @@ using SchoolBusAPI.Hangfire;
 using SchoolBusAPI.Middlewares;
 using SchoolBusAPI.Models;
 using SchoolBusCcw;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
@@ -126,30 +129,39 @@ namespace SchoolBusAPI
                 options.WorkerCount = 1;
             });
 
-            //// Configure Swagger
-            //services.AddSwaggerGen();
-            //services.ConfigureSwaggerGen(options =>
-            //{
-            //    options.SingleApiVersion(new Info
-            //    {
-            //        Version = "v1",
-            //        Title = "SBI REST API",
-            //        Description = "School Bus Inspection System"
-            //    });
+            // Configure Swagger
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "School Bus REST API",
+                    Description = "Highway Maintenance Contract Reporting System"
+                });
 
-            //    options.DescribeAllEnumsAsStrings();
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "SchoolBusApi.xml");
+                options.IncludeXmlComments(filePath);
 
-            //    // The swagger API documentation pages look far better with code documentation
-            //    // as input, but we need to protect the application from crashing on startup
-            //    // if the code documetation does not get generated for some reason.
-            //    string codeDocPath = $"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml";
-            //    if (File.Exists(codeDocPath))
-            //    {
-            //        var comments = new XPathDocument(codeDocPath);
-            //        options.OperationFilter<XmlCommentsOperationFilter>(comments);
-            //        options.ModelFilter<XmlCommentsModelFilter>(comments);
-            //    }
-            //});
+                var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+
+                options.AddSecurityDefinition("Bearer", securitySchema);
+
+                var securityRequirement = new OpenApiSecurityRequirement();
+                securityRequirement.Add(securitySchema, new[] { "Bearer" });
+                options.AddSecurityRequirement(securityRequirement);
+            });
 
             // Add application services.
             services.RegisterApplicationServices();
@@ -201,6 +213,13 @@ namespace SchoolBusAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint(Configuration.GetSection("Constants:SwaggerApiUrl").Value, "School Bus REST API v1");
+                options.DocExpansion(DocExpansion.None);
             });
 
             // enable Hangfire Dashboard
@@ -343,7 +362,7 @@ namespace SchoolBusAPI
             {
                 // every 5 minutes we see if a CCW record needs to be updated.  We only update one CCW record at a time.
                 RecurringJob.AddOrUpdate<CcwJobService>(x => x.UpdateCCWJob(), $"*/5 * * * *");
-                logger.LogInformation("Creatted Hangfire job for CCW update ...");
+                logger.LogInformation("Created Hangfire job for CCW update ...");
             }
             catch (Exception e)
             {
