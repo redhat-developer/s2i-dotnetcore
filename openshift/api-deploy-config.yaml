@@ -95,12 +95,43 @@ objects:
                   value: "/secrets/regions.json"
                 - name: CCWJurisdictionInitializationFile
                   value: "/secrets/ccwjurisdictions.json"
-                - name: CCWInitializationFile
-                  value: "/ccwsecrets/ccw.json"
-                - name: CCW_SERVICE_NAME
-                  value: "http://${PROJECT_NAME}-${CCW_NAME}${SUFFIX}:8080"
                 - name: PDF_SERVICE_NAME
                   value: "http://${PROJECT_NAME}-${PDF_NAME}${SUFFIX}:8080"
+                - name: CCW_USER_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_USER_ID
+                - name: CCW_USER_GUID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_USER_GUID
+                - name: CCW_USER_DIR
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_USER_DIR
+                - name: CCW_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_PASSWORD
+                - name: CCW_ENDPOINT_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_ENDPOINT_URL
+                - name: CCW_APP_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_APP_ID
+                - name: CCW_BATCH_APP_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_BATCH_APP_ID
                 - name: ASPNETCORE_ENVIRONMENT
                   value: Development
               volumeMounts:
@@ -109,9 +140,6 @@ objects:
                 - name: secret-volume
                   mountPath: "/secrets"
                   readOnly: true
-                - name: ccw-secret-volume
-                  mountPath: "/ccwsecrets"
-                  readOnly: true
           volumes:
             - name: server-docs
               persistentVolumeClaim:
@@ -119,10 +147,6 @@ objects:
             - name: secret-volume
               secret:
                 secretName: schoolbus-secret
-            - name: ccw-secret-volume
-              secret:
-                secretName: ccw-secret
-                defaultMode: 420
       test: false
       triggers:
         - imageChangeParams:

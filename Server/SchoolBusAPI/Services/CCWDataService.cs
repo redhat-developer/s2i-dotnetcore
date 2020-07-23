@@ -14,6 +14,11 @@ using SchoolBusAPI.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using SchoolBusAPI.Extensions;
+using Ws.Ccw.Reference;
+using SchoolBusCcw;
+using System;
+using Microsoft.Extensions.Logging;
+using System.ServiceModel;
 
 namespace SchoolBusAPI.Services
 {
@@ -76,6 +81,18 @@ namespace SchoolBusAPI.Services
         /// <param name="item"></param>
         /// <response code="201">CCWData created</response>
         IActionResult CcwdataPostAsync(CCWData item);
+
+        /// <summary>
+        /// Get CCW data from CCW web service and update DB from the returned data
+        /// </summary>
+        /// <param name="regi"></param>
+        /// <param name="plate"></param>
+        /// <param name="vin"></param>
+        /// <param name="userId"></param>
+        /// <param name="guid"></param>
+        /// <param name="directory"></param>
+        /// <returns></returns>
+        CCWData GetCCW(string regi, string plate, string vin, string userId, string guid, string directory);
     }
 
     /// <summary>
@@ -84,15 +101,19 @@ namespace SchoolBusAPI.Services
     public class CCWDataService : ServiceBase, ICCWDataService
     {
         private readonly DbAppContext _context;
-        private readonly IConfiguration Configuration;
+        private readonly IConfiguration _configuration;
+        private readonly ICCWService _ccwService;
+        private readonly ILogger<CCWDataService> _logger;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public CCWDataService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context) : base(httpContextAccessor, context)
+        public CCWDataService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, ICCWService ccwService, ILogger<CCWDataService> logger) : base(httpContextAccessor, context)
         {
             _context = context;
-            Configuration = configuration;
+            _configuration = configuration;
+            _ccwService = ccwService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -135,12 +156,9 @@ namespace SchoolBusAPI.Services
         /// <response code="404">Vehicle not found in CCW system</response>
         public virtual IActionResult CcwdataFetchGetAsync(string regi, string vin, string plate)
         {
-            var (cCW_userId, cCW_guid, cCW_directory) = User.GetUserInfo();
+            var (userId, guid, directory) = User.GetUserInfo();
 
-            string ccwHost = Configuration["CCW_SERVICE_NAME"];
-            CCWData result = CCWTools.FetchCCW(regi, vin, plate, cCW_userId, cCW_guid, cCW_directory, ccwHost);
-
-            // return the result, or 404 if no result was found.
+            CCWData result = GetCCW(regi, plate, vin, userId, guid, directory);
 
             if (result != null)
             {
@@ -150,6 +168,260 @@ namespace SchoolBusAPI.Services
             {
                 return new StatusCodeResult(404);
             }
+        }
+
+        public CCWData GetCCW(string regi, string plate, string vin, string userId, string guid, string directory)
+        {
+            // check we have the right headers.
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(guid) || string.IsNullOrEmpty(directory))
+            {
+                return null;
+            }
+
+            // Check for the following data:
+            // 1. registration
+            // 2. plate
+            // 3. decal
+
+            VehicleDescription vehicle = null;
+            if (regi != null)
+            {
+                // format the regi.
+                try
+                {
+                    int registration = int.Parse(regi);
+                    // zero padded, 8 digits
+                    regi = registration.ToString("D8");
+                }
+                catch (Exception e)
+                {
+                    _logger.LogInformation("Exception occured parsing registration number " + regi);
+                }
+
+                try
+                {
+                    vehicle = _ccwService.GetBCVehicleForRegistrationNumber(regi, userId, guid, directory);
+                }
+                catch (Exception e)
+                {
+                    vehicle = null;
+                }
+            }
+            if (vehicle == null && plate != null) // check the plate.
+            {
+                try
+                {
+                    vehicle = _ccwService.GetBCVehicleForLicensePlateNumber(plate, userId, guid, directory);
+                }
+                catch (Exception e)
+                {
+                    vehicle = null;
+                }
+            }
+            if (vehicle == null && vin != null) // check the vin.
+            {
+                try
+                {
+                    vehicle = _ccwService.GetBCVehicleForSerialNumber(vin, userId, guid, directory);
+                }
+                catch (Exception e)
+                {
+                    vehicle = null;
+                }
+            }
+            if (vehicle == null)
+            {
+                return null;
+            }
+            else
+            {
+                string icbcRegistrationNumber = vehicle.registrationNumber;
+                CCWData ccwdata = null;
+                bool existing = false;
+                if (_context.CCWDatas.Any(x => x.ICBCRegistrationNumber == icbcRegistrationNumber))
+                {
+                    ccwdata = _context.CCWDatas.First(x => x.ICBCRegistrationNumber == icbcRegistrationNumber);
+                    existing = true;
+
+                    _logger.LogInformation("Found record for Registration # " + ccwdata.ICBCRegistrationNumber);
+                }
+                else
+                {
+                    _logger.LogInformation("Creating new record");
+                    ccwdata = new CCWData();
+                }
+                // update the ccw record.
+
+                ccwdata.ICBCBody = vehicle.bodyCode;
+                ccwdata.ICBCColour = vehicle.colour;
+                ccwdata.ICBCCVIPDecal = vehicle.inspectionDecalNumber;
+                ccwdata.ICBCCVIPExpiry = vehicle.inspectionExpiryDate;
+                ccwdata.ICBCFleetUnitNo = SanitizeInt(vehicle.fleetUnitNumber);
+                ccwdata.ICBCFuel = vehicle.fuelTypeDescription;
+                ccwdata.ICBCGrossVehicleWeight = SanitizeInt(vehicle.grossVehicleWeight);
+                ccwdata.ICBCMake = vehicle.make;
+                ccwdata.ICBCModel = vehicle.model;
+                ccwdata.ICBCGrossVehicleWeight = SanitizeInt(vehicle.grossVehicleWeight);
+                ccwdata.ICBCModelYear = SanitizeInt(vehicle.modelYear);
+                ccwdata.ICBCNetWt = SanitizeInt(vehicle.netWeight);
+                ccwdata.ICBCNotesAndOrders = vehicle.cvipDataFromLastInspection;
+                ccwdata.ICBCOrderedOn = vehicle.firstOpenOrderDate;
+                ccwdata.ICBCRateClass = vehicle.rateClass;
+                ccwdata.ICBCRebuiltStatus = vehicle.statusCode;
+                ccwdata.ICBCRegistrationNumber = vehicle.registrationNumber;
+                ccwdata.ICBCRegOwnerAddr1 = vehicle.owner.mailingAddress1;
+                ccwdata.ICBCRegOwnerAddr2 = vehicle.owner.mailingAddress2;
+                ccwdata.ICBCRegOwnerCity = vehicle.owner.mailingAddress3;
+                ccwdata.ICBCRegOwnerName = vehicle.owner.name1;
+                ccwdata.ICBCRegOwnerPODL = vehicle.principalOperatorDlNum;
+                ccwdata.ICBCRegOwnerPostalCode = vehicle.owner.postalCode;
+                ccwdata.ICBCRegOwnerProv = vehicle.owner.mailingAddress4;
+                ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;
+                ccwdata.ICBCSeatingCapacity = SanitizeInt(vehicle.seatingCapacity);
+                ccwdata.ICBCVehicleType = vehicle.vehicleType + " - " + vehicle.vehicleTypeDescription;
+
+                ccwdata.ICBCVehicleIdentificationNumber = vehicle.serialNumber;
+
+                ccwdata.NSCPlateDecal = vehicle.decalNumber;
+                ccwdata.NSCPolicyEffectiveDate = vehicle.policyStartDate;
+                ccwdata.NSCPolicyExpiryDate = vehicle.policyExpiryDate;
+                ccwdata.NSCPolicyStatus = vehicle.policyStatus + " - " + vehicle.policyStatusDescription;
+
+                // policyAquiredCurrentStatusDate is the preferred field, however it is often null.
+                if (vehicle.policyAcquiredCurrentStatusDate != null)
+                {
+                    ccwdata.NSCPolicyStatusDate = vehicle.policyAcquiredCurrentStatusDate;
+                }
+                else if (vehicle.policyTerminationDate != null)
+                {
+                    ccwdata.NSCPolicyStatusDate = vehicle.policyTerminationDate;
+                }
+                else if (vehicle.policyReplacedOnDate != null)
+                {
+                    ccwdata.NSCPolicyStatusDate = vehicle.policyReplacedOnDate;
+                }
+                else if (vehicle.policyStartDate != null)
+                {
+                    ccwdata.NSCPolicyStatusDate = vehicle.policyStartDate;
+                }
+
+                if (vehicle.owner != null)
+                {
+                    ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;
+                }
+                ccwdata.ICBCLicencePlateNumber = vehicle.policyNumber;
+                // these fields are the same.
+                ccwdata.NSCPolicyNumber = vehicle.policyNumber;
+                ccwdata.NSCClientNum = vehicle.nscNumber;
+
+                ccwdata.DateFetched = DateTime.UtcNow;
+
+                // get the nsc client organization data.
+
+                bool foundNSCData = false;
+
+                if (!string.IsNullOrEmpty(ccwdata.NSCPolicyNumber))
+                {
+                    string organizationNameCode = "LE";
+                    try
+                    {
+                        ClientOrganization clientOrganization = _ccwService.GetCurrentClientOrganization(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
+                        foundNSCData = true;
+                        ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
+                        ccwdata.NSCCarrierName = clientOrganization.displayName;
+                        ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
+                    }
+                    catch (AggregateException ae)
+                    {
+                        _logger.LogInformation("Aggregate Exception occured during GetCurrentClientOrganization");
+                        ae.Handle((x) =>
+                        {
+                            if (x is FaultException<CVSECommonException>) // From the web service.
+                            {
+                                _logger.LogError("CVSECommonException:");
+                                FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
+                                _logger.LogError("errorId: {0}", fault.Detail.errorId);
+                                _logger.LogError("errorMessage: {0}", fault.Detail.errorMessage);
+                                _logger.LogError("systemError: {0}", fault.Detail.systemError);
+                                return true;
+                            }
+                            return true; // ignore other exceptions
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogInformation("Unknown Error retrieving NSC data.");
+                    }
+
+                    // now try the individual service if there was no match.
+
+                    if (foundNSCData == false)
+                    {
+                        try
+                        {
+                            ClientIndividual clientIndividual = _ccwService.GetCurrentClientIndividual(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
+                            foundNSCData = true;
+                            ccwdata.NSCCarrierConditions = clientIndividual.nscInformation.carrierStatus;
+                            ccwdata.NSCCarrierName = clientIndividual.displayName;
+                            ccwdata.NSCCarrierSafetyRating = clientIndividual.nscInformation.safetyRating;
+                        }
+                        catch (AggregateException ae)
+                        {
+                            _logger.LogInformation("Aggregate Exception occured during GetCurrentClientIndividual");
+                            ae.Handle((x) =>
+                            {
+                                if (x is FaultException<CVSECommonException>) // From the web service.
+                                {
+                                    _logger.LogError("CVSECommonException:");
+                                    FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
+                                    _logger.LogError("errorId: {0}", fault.Detail.errorId);
+                                    _logger.LogError("errorMessage: {0}", fault.Detail.errorMessage);
+                                    _logger.LogError("systemError: {0}", fault.Detail.systemError);
+                                    return true;
+                                }
+                                return true; // ignore other exceptions
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.LogInformation("Unknown Error retrieving Individual NSC data.");
+                        }
+                    }
+                }
+
+                if (ccwdata.Id > 0)
+                {
+                    _context.Update(ccwdata);
+                }
+                else
+                {
+                    _context.Add(ccwdata);
+                }
+                _context.SaveChanges();
+
+
+                return ccwdata;
+            }
+
+        }
+
+        /// <summary>
+        /// Utility function to convert strings to nullable int.
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        private int? SanitizeInt(string val)
+        {
+            int? result = null;
+            try
+            {
+                result = int.Parse(val);
+            }
+            catch (Exception e)
+            {
+                result = null;
+            }
+            return result;
         }
 
         /// <summary>

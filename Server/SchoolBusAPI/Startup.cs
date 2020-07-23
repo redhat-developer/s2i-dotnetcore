@@ -32,6 +32,7 @@ using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Hangfire;
 using SchoolBusAPI.Middlewares;
 using SchoolBusAPI.Models;
+using SchoolBusCcw;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -155,6 +156,8 @@ namespace SchoolBusAPI
 
             services.AddHealthChecks()
                 .AddNpgSql(connectionString, name: "SB-DB-Check", failureStatus: HealthStatus.Degraded, tags: new string[] { "pgsql", "db" });
+
+            services.AddCCWServiceClient(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
