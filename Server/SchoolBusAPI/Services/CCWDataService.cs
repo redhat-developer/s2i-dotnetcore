@@ -201,45 +201,17 @@ namespace SchoolBusAPI.Services
                     _logger.LogInformation($"{logPrefix} Exception occured parsing registration number {regi}.");
                 }
 
-                try
-                {
-                    vehicle = _ccwService.GetBCVehicleForRegistrationNumber(regi, userId, guid, directory);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogInformation($"{logPrefix} Exception while calling GetBCVehicleForRegistrationNumber {regi}.");
-                    _logger.LogInformation($"{logPrefix} {e}");
-
-                    vehicle = null;
-                }
+                vehicle = _ccwService.GetBCVehicleForRegistrationNumber(regi, userId, guid, directory);
             }
+
             if (vehicle == null && plate != null) // check the plate.
             {
-                try
-                {
-                    vehicle = _ccwService.GetBCVehicleForLicensePlateNumber(plate, userId, guid, directory);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogInformation($"{logPrefix} Exception while calling GetBCVehicleForLicensePlateNumber {plate}.");
-                    _logger.LogInformation($"{logPrefix} {e}");
-
-                    vehicle = null;
-                }
+                vehicle = _ccwService.GetBCVehicleForLicensePlateNumber(plate, userId, guid, directory);
             }
+
             if (vehicle == null && vin != null) // check the vin.
             {
-                try
-                {
-                    vehicle = _ccwService.GetBCVehicleForSerialNumber(vin, userId, guid, directory);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogInformation($"{logPrefix} Exception while calling GetBCVehicleForSerialNumber {vin}.");
-                    _logger.LogInformation($"{logPrefix} {e}");
-
-                    vehicle = null;
-                }
+                vehicle = _ccwService.GetBCVehicleForSerialNumber(vin, userId, guid, directory);
             }
 
             if (vehicle == null)
@@ -320,6 +292,7 @@ namespace SchoolBusAPI.Services
             {
                 ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;
             }
+
             ccwdata.ICBCLicencePlateNumber = vehicle.policyNumber;
             // these fields are the same.
             ccwdata.NSCPolicyNumber = vehicle.policyNumber;
@@ -334,69 +307,28 @@ namespace SchoolBusAPI.Services
             if (!string.IsNullOrEmpty(ccwdata.NSCPolicyNumber))
             {
                 string organizationNameCode = "LE";
-                try
+
+                ClientOrganization clientOrganization = _ccwService.GetCurrentClientOrganization(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
+
+                if (clientOrganization != null)
                 {
-                    ClientOrganization clientOrganization = _ccwService.GetCurrentClientOrganization(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
                     foundNSCData = true;
                     ccwdata.NSCCarrierConditions = clientOrganization.nscInformation.carrierStatus;
                     ccwdata.NSCCarrierName = clientOrganization.displayName;
                     ccwdata.NSCCarrierSafetyRating = clientOrganization.nscInformation.safetyRating;
                 }
-                catch (AggregateException ae)
-                {
-                    _logger.LogInformation($"{logPrefix} Aggregate Exception occured during GetCurrentClientOrganization");
-                    ae.Handle((x) =>
-                    {
-                        if (x is FaultException<CVSECommonException>) // From the web service.
-                        {
-                            _logger.LogInformation($"{logPrefix} CVSECommonException:");
-                            FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
-                            _logger.LogInformation($"{logPrefix}   errorId: {0}", fault.Detail.errorId);
-                            _logger.LogInformation($"{logPrefix}   errorMessage: {0}", fault.Detail.errorMessage);
-                            _logger.LogInformation($"{logPrefix}   systemError: {0}", fault.Detail.systemError);
-                            return true;
-                        }
-                        return true; // ignore other exceptions
-                    });
-                }
-                catch (Exception e)
-                {
-                    _logger.LogInformation($"{logPrefix} Unknown Error retrieving NSC data.");
-                    _logger.LogInformation($"{logPrefix} {e}");
-                }
 
                 // now try the individual service if there was no match.
                 if (foundNSCData == false)
                 {
-                    try
+                    ClientIndividual clientIndividual = _ccwService.GetCurrentClientIndividual(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
+
+                    if (clientIndividual != null)
                     {
-                        ClientIndividual clientIndividual = _ccwService.GetCurrentClientIndividual(ccwdata.NSCClientNum, organizationNameCode, userId, guid, directory);
                         foundNSCData = true;
                         ccwdata.NSCCarrierConditions = clientIndividual.nscInformation.carrierStatus;
                         ccwdata.NSCCarrierName = clientIndividual.displayName;
                         ccwdata.NSCCarrierSafetyRating = clientIndividual.nscInformation.safetyRating;
-                    }
-                    catch (AggregateException ae)
-                    {
-                        _logger.LogInformation($"{logPrefix} Aggregate Exception occured during GetCurrentClientIndividual");
-                        ae.Handle((x) =>
-                        {
-                            if (x is FaultException<CVSECommonException>) // From the web service.
-                            {
-                                _logger.LogInformation($"{logPrefix} CVSECommonException:");
-                                FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
-                                _logger.LogInformation($"{logPrefix}   errorId: {0}", fault.Detail.errorId);
-                                _logger.LogInformation($"{logPrefix}   errorMessage: {0}", fault.Detail.errorMessage);
-                                _logger.LogInformation($"{logPrefix}   systemError: {0}", fault.Detail.systemError);
-                                return true;
-                            }
-                            return true; // ignore other exceptions
-                        });
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.LogInformation($"{logPrefix} Unknown Error retrieving Individual NSC data.");
-                        _logger.LogInformation($"{logPrefix} {e}");
                     }
                 }
             }
