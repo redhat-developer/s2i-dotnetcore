@@ -351,9 +351,9 @@ namespace SchoolBusAPI.Services
                         {
                             _logger.LogInformation($"{logPrefix} CVSECommonException:");
                             FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
-                            _logger.LogInformation($"{logPrefix} errorId: {0}", fault.Detail.errorId);
-                            _logger.LogInformation($"{logPrefix} errorMessage: {0}", fault.Detail.errorMessage);
-                            _logger.LogInformation($"{logPrefix} systemError: {0}", fault.Detail.systemError);
+                            _logger.LogInformation($"{logPrefix}   errorId: {0}", fault.Detail.errorId);
+                            _logger.LogInformation($"{logPrefix}   errorMessage: {0}", fault.Detail.errorMessage);
+                            _logger.LogInformation($"{logPrefix}   systemError: {0}", fault.Detail.systemError);
                             return true;
                         }
                         return true; // ignore other exceptions
@@ -378,16 +378,16 @@ namespace SchoolBusAPI.Services
                     }
                     catch (AggregateException ae)
                     {
-                        _logger.LogInformation("Aggregate Exception occured during GetCurrentClientIndividual");
+                        _logger.LogInformation($"{logPrefix} Aggregate Exception occured during GetCurrentClientIndividual");
                         ae.Handle((x) =>
                         {
                             if (x is FaultException<CVSECommonException>) // From the web service.
                             {
                                 _logger.LogInformation($"{logPrefix} CVSECommonException:");
                                 FaultException<CVSECommonException> fault = (FaultException<CVSECommonException>)x;
-                                _logger.LogInformation($"{logPrefix} errorId: {0}", fault.Detail.errorId);
-                                _logger.LogInformation($"{logPrefix} errorMessage: {0}", fault.Detail.errorMessage);
-                                _logger.LogInformation($"{logPrefix} systemError: {0}", fault.Detail.systemError);
+                                _logger.LogInformation($"{logPrefix}   errorId: {0}", fault.Detail.errorId);
+                                _logger.LogInformation($"{logPrefix}   errorMessage: {0}", fault.Detail.errorMessage);
+                                _logger.LogInformation($"{logPrefix}   systemError: {0}", fault.Detail.systemError);
                                 return true;
                             }
                             return true; // ignore other exceptions
