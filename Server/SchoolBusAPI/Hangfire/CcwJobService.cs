@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.Services;
+using SchoolBusCcw;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,37 +20,37 @@ namespace SchoolBusAPI.Hangfire
     {
         private readonly DbAppContext _context;
         private readonly IConfiguration _configuration;
+        private readonly ICCWDataService _ccwDataService;
         private readonly ILogger _logger;
 
         private readonly string _userId;
         private readonly string _userGuid;
-        private readonly string _directory;
-        private readonly string _ccwHost;
+        private readonly string _userDir;
 
-        public CcwJobService(DbAppContext context, IConfiguration configuration, ILogger<CcwJobService> logger)
+        public CcwJobService(DbAppContext context, IConfiguration configuration, ICCWDataService ccwDataService, ILogger<CcwJobService> logger)
         {
             _context = context;
             _configuration = configuration;
+            _ccwDataService = ccwDataService;
             _logger = logger;
 
-            _userId = _configuration["CCW_userId"];
-            _userGuid = _configuration["CCW_guid"];
-            _directory = _configuration["CCW_directory"];
-            _ccwHost = _configuration["CCW_SERVICE_NAME"];
+            _userId = _configuration["CCW_USER_ID"];
+            _userGuid = _configuration["CCW_USER_GUID"];
+            _userDir = _configuration["CCW_USER_DIR"];
         }
 
-    /// <summary>
-    /// Hangfire job to populate CCW data.  Only used for a deploy to PROD with a new database.
-    /// </summary>
-    /// <param name="connectionString"></param>
-    /// <param name="Configuration"></param>
-    [AutomaticRetry(Attempts = 0)]
+        /// <summary>
+        /// Hangfire job to populate CCW data.  Only used for a deploy to PROD with a new database.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="Configuration"></param>
+        [AutomaticRetry(Attempts = 0)]
         public async Task PopulateCCWJob()
         {
             await Task.CompletedTask;
 
             // sanity check
-            if (_userId != null && _userGuid != null && _directory != null && _ccwHost != null)
+            if (_userId != null && _userGuid != null && _userDir != null)
             {
                 // make a database connection and see if there are any records that are missing the CCW link.
                 // we restrict the query to records not updated in the last 6 hours so that the batch process does not repeatedly try a failed record. 
@@ -69,7 +71,7 @@ namespace SchoolBusAPI.Hangfire
                 string plate = data.LicencePlateNumber;
 
                 // Fetch the record.
-                CCWData cCWData = CCWTools.FetchCCW(regi, vin, plate, _userId, _userGuid, _directory, _ccwHost);
+                CCWData cCWData = _ccwDataService.GetCCW(regi, plate, vin, _userId, _userGuid, _userDir);
 
                 if (cCWData == null)
                 {
@@ -98,7 +100,7 @@ namespace SchoolBusAPI.Hangfire
             await Task.CompletedTask;
 
             // sanity check
-            if (_userId != null && _userGuid != null && _directory != null && _ccwHost != null)
+            if (_userId != null && _userGuid != null && _userDir != null)
             {
                 int maxUpdateCount = _context.CCWDatas
                     .Count(x => x.LastUpdateTimestamp > DateTime.UtcNow.AddDays(-1));
@@ -127,7 +129,7 @@ namespace SchoolBusAPI.Hangfire
                 string plate = null;
 
                 // Fetch the record. this FetchCCW actually updates CCWData too. Refer to CCW microservice
-                CCWData cCWData = CCWTools.FetchCCW(regi, vin, plate, _userId, _userGuid, _directory, _ccwHost);
+                CCWData cCWData = _ccwDataService.GetCCW(regi, plate, vin, _userId, _userGuid, _userDir);
 
                 data.LastUpdateTimestamp = DateTime.UtcNow;
 
@@ -144,7 +146,7 @@ namespace SchoolBusAPI.Hangfire
                 bool exists = _context.SchoolBuss.Any(x => x.CCWDataId == cCWData.Id);
                 if (exists)
                 {
-                    SchoolBus bus = _context.SchoolBuss.First(a => a.CCWDataId == cCWData.Id);
+                    var bus = _context.SchoolBuss.First(a => a.CCWDataId == cCWData.Id);
                     if (cCWData.ICBCRegistrationNumber != null && bus.ICBCRegistrationNumber != null && !cCWData.ICBCRegistrationNumber.Equals(bus.ICBCRegistrationNumber))
                     {
                         bus.ICBCRegistrationNumber = cCWData.ICBCRegistrationNumber;

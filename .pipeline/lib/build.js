@@ -48,22 +48,6 @@ module.exports = (settings) => {
 
   objects.push(
     ...oc.processDeploymentTemplate(
-      `${templatesLocalBaseUrl}/ccw-build-config.yaml`,
-      {
-        param: {
-          PROJECT_NAME: `${phases[phase].name}`,
-          NAME: `${settings.phases[phase].name}-ccw`,
-          SUFFIX: settings.phases[phase].suffix,
-          VERSION: settings.phases[phase].tag,
-          SOURCE_REPOSITORY_URL: `${oc.git.uri}`,
-          SOURCE_REPOSITORY_REF: `${oc.git.branch_ref}`,
-        },
-      }
-    )
-  );
-
-  objects.push(
-    ...oc.processDeploymentTemplate(
       `${templatesLocalBaseUrl}/client-build-config.yaml`,
       {
         param: {
