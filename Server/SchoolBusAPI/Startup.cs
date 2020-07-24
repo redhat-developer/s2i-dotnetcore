@@ -320,8 +320,7 @@ namespace SchoolBusAPI
         /// Setup the Hangfire job to populate the CCW Data table.
         /// Only necessary after a new deploy to PROD with an empty database.
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="loggerFactory"></param>
+        /// <param name="logger"></param>
         private void SetupHangfireCreateJob(ILogger<Startup> logger)
         {
             logger.LogInformation("Attempting setup of Hangfire Create CCW job ...");
@@ -350,9 +349,7 @@ namespace SchoolBusAPI
         /// <summary>
         /// Setup the Hangfire job to update the CCW Data table.        
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="loggerFactory"></param>
-
+        /// <param name="logger"></param>
         private void SetupHangfireUpdateJob(ILogger<Startup> logger)
         {
             logger.LogInformation("Attempting setup of Hangfire Update CCW job ...");
