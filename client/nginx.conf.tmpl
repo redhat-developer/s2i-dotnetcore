@@ -78,16 +78,16 @@ http {
             proxy_set_header X-Real-IP $remote_addr;
 
             # proxy_hide_header WWW-Authenticate;
-            
+
             proxy_pass http://sbi-api${DEPLOY_SUFFIX}:8080;
         }
 
-        #location /swagger/ {
-        #    proxy_set_header HOST $host;
-        #    proxy_set_header X-Forwarded-Proto $scheme;
-        #    proxy_set_header X-Real-IP $remote_addr;
-        #    proxy_pass http://sbi-api${DEPLOY_SUFFIX}:8080/swagger/;
-        #}
+        location /swagger/ {
+            proxy_set_header HOST $host;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_pass http://sbi-api${DEPLOY_SUFFIX}:8080/swagger/;
+        }
 
         location / {
             root   /opt/app-root/src;
