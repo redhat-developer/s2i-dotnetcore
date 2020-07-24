@@ -135,7 +135,7 @@ namespace SchoolBusAPI
                 {
                     Version = "v1",
                     Title = "School Bus REST API",
-                    Description = "Highway Maintenance Contract Reporting System"
+                    Description = "School Bus Inspection System"
                 });
 
                 var filePath = Path.Combine(System.AppContext.BaseDirectory, "SchoolBusApi.xml");
