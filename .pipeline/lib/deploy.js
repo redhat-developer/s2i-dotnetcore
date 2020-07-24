@@ -65,6 +65,17 @@ module.exports = (settings) => {
 
   objects.push(
     ...oc.processDeploymentTemplate(
+      `${templatesLocalBaseUrl}/configmaps/api-appsettings.yaml`,
+      {
+        param: {
+          ENV: phases[phase].phase,
+        },
+      }
+    )
+  );
+
+  objects.push(
+    ...oc.processDeploymentTemplate(
       `${templatesLocalBaseUrl}/api-deploy-config.yaml`,
       {
         param: {

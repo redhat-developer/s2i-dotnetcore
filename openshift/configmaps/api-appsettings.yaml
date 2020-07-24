@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: "true"
+objects:
+  - apiVersion: v1
+    data:
+      appsettings.json: |-
+        {
+          "AllowedHosts": "*",
+          "Constants": {
+              "SwaggerApiUrl": "/swagger/v1/swagger.json"
+          },
+          "Serilog": {
+              "MinimumLevel": {
+              "Default": "Information",
+              "Override": {
+                  "Microsoft": "Warning",
+                  "System": "Warning"
+                }
+              },
+              "WriteTo": [
+                {
+                    "Name": "Async",
+                    "Args": {
+                        "configure": [
+                            { "Name": "Console" }
+                        ]
+                    }
+                },
+                {
+                    "Name": "SbiPostgreSql",
+                    "Args": {
+                        "connectionString": "Schoolbus",
+                        "tableName": "sbilog",
+                        "needAutoCreateTable": true
+                    }
+                }
+              ],
+              "Enrich": [
+                "FromLogContext",
+                "WithMachineName"
+              ]
+          },
+          "ConnectionStrings": {
+              "Schoolbus": "Host=localhost;Username=test1;Password=test1;Database=test1"
+          },
+          "JWT": {
+              "Authority": "https://sso-dev.pathfinder.gov.bc.ca/auth/realms/<realmid>",
+              "Audience": "<app-id>"
+          },
+          "CCW_USER_ID": "user",
+          "CCW_USER_GUID": "guid",
+          "CCW_USER_DIR": "dir",
+          "CCW_ENDPOINT_URL": "http://ccw",
+          "CCW_APP_ID": "appId",
+          "CCW_BATCH_APP_ID": "batchAppId",
+          "CCW_PASSWORD": "password",
+          "ENABLE_HANGFIRE_CREATE": "Y",
+          "ENABLE_HANGFIRE_UPDATE": "Y",
+          "SMTP_SERVER": "apps.smtp.gov.bc.ca",
+          "SMTP_PORT": 25
+        }
+    kind: ConfigMap
+    metadata:
+      name: api-appsettings-${ENV}
+      labels:
+        shared: "true"
+parameters:
+  - description: Deployment environment (dev, test, uat, prod)
+    displayName: ENV
+    name: ENV
+    required: true
+    value: "dev"
