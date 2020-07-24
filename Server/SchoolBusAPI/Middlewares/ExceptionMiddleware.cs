@@ -30,7 +30,7 @@ namespace SchoolBusAPI.Middlewares
                 if (!httpContext.Response.HasStarted)
                 {
                     var guid = Guid.NewGuid();
-                    _logger.LogError($"HMCR Exception{guid}: {ex}");
+                    _logger.LogError($"SBI Exception{guid}: {ex}");
                     await HandleExceptionAsync(httpContext, guid);
                 }
             }
@@ -46,7 +46,7 @@ namespace SchoolBusAPI.Middlewares
                 Title = "An unexpected error occurred!",
                 Status = StatusCodes.Status500InternalServerError,
                 Detail = "The instance value should be used to identify the problem when calling customer support",
-                Instance = $"urn:hmcr:error:{Guid.NewGuid()}"
+                Instance = $"urn:sbi:error:{Guid.NewGuid()}"
             };
 
             problem.Extensions.Add("traceId", context.TraceIdentifier);
