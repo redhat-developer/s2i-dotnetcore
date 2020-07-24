@@ -9,4 +9,4 @@ echo "window.RUNTIME_REACT_APP_SSO_CLIENT='${REACT_APP_SSO_CLIENT}';" >> $JS_PAT
 echo "window.RUNTIME_REACT_APP_API_HOST='${REACT_APP_API_HOST}';" >> $JS_PATH
 
 echo "---> Creating nginx.conf ..."
-envsubst '${DEPLOY_SUFFIX}' < /tmp/src/nginx.conf.tmpl > /etc/nginx/nginx.conf
+envsubst '${DEPLOY_SUFFIX} ${APP_NAME}' < /tmp/src/nginx.conf.tmpl > /etc/nginx/nginx.conf

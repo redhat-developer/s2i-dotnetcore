@@ -110,6 +110,7 @@ module.exports = (settings) => {
       `${templatesLocalBaseUrl}/client-deploy-config.yaml`,
       {
         param: {
+          PROJECT_NAME: `${phases[phase].name}`,
           NAME: `${phases[phase].name}-client`,
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,

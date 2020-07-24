@@ -79,14 +79,14 @@ http {
 
             # proxy_hide_header WWW-Authenticate;
 
-            proxy_pass http://sbi-api${DEPLOY_SUFFIX}:8080;
+            proxy_pass http://${APP_NAME}-api${DEPLOY_SUFFIX}:8080;
         }
 
         location /swagger/ {
             proxy_set_header HOST $host;
             proxy_set_header X-Forwarded-Proto $scheme;
             proxy_set_header X-Real-IP $remote_addr;
-            proxy_pass http://sbi-api${DEPLOY_SUFFIX}:8080/swagger/;
+            proxy_pass http://${APP_NAME}-api${DEPLOY_SUFFIX}:8080/swagger/;
         }
 
         location / {
