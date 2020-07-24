@@ -140,6 +140,9 @@ objects:
                 - name: secret-volume
                   mountPath: "/secrets"
                   readOnly: true
+                - name: ${NAME}${SUFFIX}-config-volume
+                  mountPath: /opt/app-root/configmap
+                  readOnly: true
           volumes:
             - name: server-docs
               persistentVolumeClaim:
@@ -147,6 +150,10 @@ objects:
             - name: secret-volume
               secret:
                 secretName: schoolbus-secret
+            - name: ${NAME}${SUFFIX}-config-volume
+              configMap:
+                defaultMode: 420
+                name: api-appsettings-${ENV}
       test: false
       triggers:
         - imageChangeParams:
