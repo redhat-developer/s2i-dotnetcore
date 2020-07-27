@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Well, Dropdown, FormControl, MenuItem } from "react-bootstrap";
+import { Well, Dropdown, FormControl, MenuItem } from 'react-bootstrap';
 
-import RootCloseMenu from "./RootCloseMenu.jsx";
+import RootCloseMenu from './RootCloseMenu.jsx';
 
-import _ from "lodash";
+import _ from 'lodash';
 
 class FilterDropdown extends React.Component {
   static propTypes = {
@@ -26,9 +26,9 @@ class FilterDropdown extends React.Component {
 
   state = {
     selectedId: this.props.selectedId || 0,
-    title: "",
-    filterTerm: "",
-    fieldName: this.props.fieldName || "name",
+    title: '',
+    filterTerm: '',
+    fieldName: this.props.fieldName || 'name',
     open: false,
   };
 
@@ -60,14 +60,14 @@ class FilterDropdown extends React.Component {
         return selected[this.state.fieldName];
       }
     }
-    return this.props.placeholder || "Select item";
+    return this.props.placeholder || 'Select item';
   };
 
   itemSelected = (selectedId) => {
     this.toggle(false);
 
     this.setState({
-      selectedId: selectedId || "",
+      selectedId: selectedId || '',
       title: this.buildTitle(this.props.items, selectedId),
     });
 
@@ -94,12 +94,12 @@ class FilterDropdown extends React.Component {
     this.setState(
       {
         open: open,
-        filterTerm: "",
+        filterTerm: '',
       },
       () => {
         if (open) {
           this.input.focus();
-          this.input.value = "";
+          this.input.value = '';
         }
       }
     );
@@ -116,17 +116,17 @@ class FilterDropdown extends React.Component {
 
     if (this.state.filterTerm.length > 0) {
       items = _.filter(items, (item) => {
-        return (
-          item[this.state.fieldName]
-            .toLowerCase()
-            .indexOf(this.state.filterTerm) !== -1
-        );
+        const itemFieldName = item[this.state.fieldName];
+
+        if (!itemFieldName) return false;
+
+        return itemFieldName.toLowerCase().indexOf(this.state.filterTerm) !== -1;
       });
     }
 
     return (
       <Dropdown
-        className={`filter-dropdown ${this.props.className || ""}`}
+        className={`filter-dropdown ${this.props.className || ''}`}
         id={this.props.id}
         title={this.state.title}
         disabled={this.props.disabled}
@@ -149,18 +149,12 @@ class FilterDropdown extends React.Component {
             <ul>
               {this.props.blankLine && this.state.filterTerm.length === 0 && (
                 <MenuItem key={0} eventKey={0} onSelect={this.itemSelected}>
-                  {typeof this.props.blankLine === "string"
-                    ? this.props.blankLine
-                    : " "}
+                  {typeof this.props.blankLine === 'string' ? this.props.blankLine : ' '}
                 </MenuItem>
               )}
               {_.map(items, (item) => {
                 return (
-                  <MenuItem
-                    key={item.id}
-                    eventKey={item.id}
-                    onSelect={this.itemSelected}
-                  >
+                  <MenuItem key={item.id} eventKey={item.id} onSelect={this.itemSelected}>
                     {item[this.state.fieldName]}
                   </MenuItem>
                 );
