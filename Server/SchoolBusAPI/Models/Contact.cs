@@ -248,7 +248,7 @@ namespace SchoolBusAPI.Models
             sb.Append("  City: ").Append(City).Append("\n");
             sb.Append("  Province: ").Append(Province).Append("\n");
             sb.Append("  PostalCode: ").Append(PostalCode).Append("\n");
-            sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwner).Append("\n");
+            sb.Append("  SchoolBusOwner: ").Append(SchoolBusOwnerId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
