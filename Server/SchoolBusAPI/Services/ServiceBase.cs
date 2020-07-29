@@ -9,7 +9,6 @@ namespace SchoolBusAPI.Services
     public abstract class ServiceBase
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IDbAppContext _context;
 
         public ServiceBase(IHttpContextAccessor httpContextAccessor, DbAppContext context)
         {
@@ -41,14 +40,14 @@ namespace SchoolBusAPI.Services
                 string rawuid = User.FindFirst(SchoolBusAPI.Models.User.USERID_CLAIM).Value;
                 result = int.Parse(rawuid);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = null;
             }
             return result;
         }
 
-
+        /// <summary>
         /// Returns the current Site Minder User ID
         /// </summary>
         /// <returns></returns>
@@ -60,7 +59,7 @@ namespace SchoolBusAPI.Services
             {
                 result = User.FindFirst(ClaimTypes.Name).Value;                
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = null;
             }

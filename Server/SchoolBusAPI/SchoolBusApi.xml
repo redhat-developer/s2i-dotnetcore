@@ -24,21 +24,18 @@
             Allows declarative claims based permissions to be applied to controller methods for authorization.
             </summary>
             <remarks>
-            This attribute works well at the controller level.  Refer to <see cref="T:SchoolBusAPI.Controllers.TestController"/>
-            for examples.  That said this attribute is not triggered by default when applied to methods inside
+            This attribute works well at the controller level. That said this attribute is not triggered by default when applied to methods inside
             a service implementation of a controller.  For instance, many of the controllers in the project are
             auto-generated with the implementation being deferred to a service implementation which is injected
             at runtime (good pattern).  This attribute will work when applied directly to methods of the controller, 
             but will not be triggered when applied to the corresponding methods of the implementation.
             
             As a workaround you can use the <see cref="M:SchoolBusAPI.Authorization.ClaimsPrincipalExtensions.HasPermissions(System.Security.Claims.ClaimsPrincipal,System.String[])"/> 
-            extension method, <see cref="T:SchoolBusAPI.Controllers.TestController"/> contains samples of this too.
-            You will need to have the HttpContext injected into the service implementation via dependency injection in order
+            extension method, You will need to have the HttpContext injected into the service implementation via dependency injection in order
             to access the User (ClaimsPrincipal) in order to perform the permissions check.
             
             A more permanent solution would be to implement a provider that looks for the attribute on service implementations
-            and ensures it is executed.  We had a similar situation in DARS which was solved by implementing a 
-            ActionDescriptorFilterProvider and IFilterProvider <see cref="!:DARS.Server.Filters.DarsFilterProvider"/>
+            and ensures it is executed. 
             </remarks>
             <see href="http://benjamincollins.com/blog/practical-permission-based-authorization-in-asp-net-core/"/>
         </member>
@@ -4861,121 +4858,6 @@
             <param name="item"></param>
             <response code="201">ServiceArea created</response>
         </member>
-        <member name="T:SchoolBusAPI.Controllers.TestController">
-            <summary>
-            Test Controller
-            </summary>
-            <remarks>
-            Provides examples of how to apply permission checks.
-            </remarks>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestController.EchoHeaders">
-            <summary>
-            Echoes headers for trouble shooting purposes.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestController.GetLoginPermissionAttributeMessage">
-            <summary>
-            An example of applying claims based permissions using <see cref="T:SchoolBusAPI.Authorization.RequiresPermissionAttribute"/>.
-            </summary>
-            <remarks>
-            The user requires the Login permission in order to call this endpoint.  The attribute is applied at the controller level.
-            </remarks>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestController.GetLoginPermissionServiceMessage">
-            <summary>
-            An example of applying claims based permissions using the <see cref="!:ClaimsPrincipalExtensions.HasPermissions(ClaimsPrincipal, string[])"/> extension method.
-            </summary>
-            <remarks>
-            The user requires the Login permission in order to call this endpoint.  The extension method is called inside the service implementation.
-            </remarks>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestController.GetAdminPermissionAttributeMessage">
-            <summary>
-            An example of applying claims based permissions using <see cref="T:SchoolBusAPI.Authorization.RequiresPermissionAttribute"/>.
-            </summary>
-            <remarks>
-            The user requires the Admin permission in order to call this endpoint.  The attribute is applied at the controller level.
-            </remarks>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestController.GetAdminPermissionServiceAttributeMessage">
-            <summary>
-            An example of applying claims based permissions using <see cref="T:SchoolBusAPI.Authorization.RequiresPermissionAttribute"/> at the service implementation level.
-            </summary>
-            <remarks>
-            The attribute is applied at the service implementation level.  This currently does not work.  Refer to the documentation on <see cref="T:SchoolBusAPI.Authorization.RequiresPermissionAttribute"/> for details.
-            As a workaround use the <see cref="!:ClaimsPrincipalExtensions.HasPermissions(ClaimsPrincipal, string[])"/> extension method when applying permissions inside the service implementation.
-            </remarks>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestController.GetAdminPermissionServiceMessage">
-            <summary>
-            An example of applying claims based permissions using the <see cref="!:ClaimsPrincipalExtensions.HasPermissions(ClaimsPrincipal, string[])"/> extension method.
-            </summary>
-            <remarks>
-            The user requires the Admin permission in order to call this endpoint.  The extension method is called inside the service implementation.
-            </remarks>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestController.GetOtherGroupServiceMessage">
-            <summary>
-            An example of applying claims based access using the <see cref="!:ClaimsPrincipalExtensions.IsInGroup(this ClaimsPrincipal user, string group)"/> extension method.
-            </summary>
-            <remarks>
-            The user must be a member of the "Other" group in order to call this endpoint.  The extension method is called inside the service implementation.
-            </remarks>
-        </member>
-        <member name="T:SchoolBusAPI.Controllers.TestService">
-            <summary>
-            TestService, the service implementation for <see cref="T:SchoolBusAPI.Controllers.TestController"/>
-            </summary>
-            <remarks>
-            Provides an example of how to split up the controller and service implementation while still being able to apply permissions 
-            checks to the authenticated user.
-            </remarks>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestService.EchoHeaders">
-            <summary>
-            Echoes headers for trouble shooting purposes.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestService.GetAuthenticatedMessage">
-            <summary>
-            An example of relying on the controller level to apply permissions.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestService.GetLoginPermissionAttributeMessage">
-            <summary>
-            An example of relying on the controller level to apply permissions.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestService.GetLoginPermissionServiceMessage">
-            <summary>
-            An example of using the <see cref="!:ClaimsPrincipalExtensions.HasPermissions(ClaimsPrincipal, string[])"/> extension method at the service implementation level.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestService.GetAdminPermissionAttributeMessage">
-            <summary>
-            An example of relying on the controller level to apply permissions.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestService.GetAdminPermissionServiceAttributeMessage">
-            <summary>
-            An example of applying the <see cref="T:SchoolBusAPI.Authorization.RequiresPermissionAttribute"/> at the service level.
-            </summary>
-            <remarks>
-            This currently does not work.  Refer to the documentation on <see cref="T:SchoolBusAPI.Authorization.RequiresPermissionAttribute"/> for details.
-            As a workaround use the <see cref="!:ClaimsPrincipalExtensions.HasPermissions(ClaimsPrincipal, string[])"/> extension method when applying permissions inside the service implementation.
-            </remarks>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestService.GetAdminPermissionServiceMessage">
-            <summary>
-            An example of using the <see cref="!:ClaimsPrincipalExtensions.HasPermissions(ClaimsPrincipal, string[])"/> extension method at the service implementation level.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.TestService.GetOtherGroupServiceMessage">
-            <summary>
-            An example of using the <see cref="!:ClaimsPrincipalExtensions.IsInGroup(this ClaimsPrincipal user, string group)"/> extension method at the service implementation level.
-            </summary>
-        </member>
         <member name="T:SchoolBusAPI.Controllers.UserController">
             <summary>
             
@@ -5330,15 +5212,11 @@
             <summary>
             Hangfire job to populate CCW data.  Only used for a deploy to PROD with a new database.
             </summary>
-            <param name="connectionString"></param>
-            <param name="Configuration"></param>
         </member>
         <member name="M:SchoolBusAPI.Hangfire.CcwJobService.UpdateCCWJob">
             <summary>
             Hangfire job to refresh existing data.
             </summary>
-            <param name="connectionString"></param>
-            <param name="Configuration"></param>
         </member>
         <member name="M:SchoolBusAPI.Helpers.CsvArrayBinder.BindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext)">
             <summary>
@@ -5641,7 +5519,8 @@
             <summary>
             
             </summary>
-            <param name="id">id of Attachment to fetch</param>
+            <param name="id">id of Attachment</param>
+            <param name="body">body of Attachment</param>
             <response code="200">OK</response>
             <response code="404">Attachment not found</response>
         </member>
@@ -6262,7 +6141,7 @@
             </summary>
             <remarks>Updates a district</remarks>
             <param name="id">id of District to update</param>
-            <param name="item"></param>
+            <param name="body"></param>
             <response code="200">OK</response>
             <response code="404">District not found</response>
         </member>
@@ -6528,7 +6407,8 @@
             <summary>
             
             </summary>
-            <param name="id">id of History to fetch</param>
+            <param name="id">id of History</param>
+            <param name="body">body of History</param>
             <response code="200">OK</response>
             <response code="404">History not found</response>
         </member>
@@ -6604,7 +6484,7 @@
             <summary>
             
             </summary>
-            <param name="body"></param>
+            <param name="items"></param>
             <response code="201">Inspections created</response>
         </member>
         <member name="M:SchoolBusAPI.Services.InspectionService.InspectionsGetAsync">
@@ -6635,7 +6515,8 @@
             <summary>
             
             </summary>
-            <param name="id">id of Inspection to fetch</param>
+            <param name="id">id of Inspection</param>
+            <param name="item">item of Inspection</param>
             <response code="200">OK</response>
             <response code="404">Inspection not found</response>
         </member>
@@ -6739,7 +6620,8 @@
             <summary>
             
             </summary>
-            <param name="id">id of Note to fetch</param>
+            <param name="id">id of Note</param>
+            <param name="body">body of Note</param>
             <response code="200">OK</response>
             <response code="404">Note not found</response>
         </member>
@@ -6843,7 +6725,8 @@
             <summary>
             
             </summary>
-            <param name="id">id of NotificationEvent to fetch</param>
+            <param name="id">id of NotificationEvent</param>
+            <param name="body">body of NotificationEvent</param>
             <response code="200">OK</response>
             <response code="404">NotificationEvent not found</response>
         </member>
@@ -6947,7 +6830,8 @@
             <summary>
             
             </summary>
-            <param name="id">id of Notification to fetch</param>
+            <param name="id">id of Notification</param>
+            <param name="body">body of Notification</param>
             <response code="200">OK</response>
             <response code="404">Notification not found</response>
         </member>
@@ -6955,7 +6839,7 @@
             <summary>
             
             </summary>
-            <param name="body"></param>
+            <param name="item"></param>
             <response code="201">Notification created</response>
         </member>
         <member name="T:SchoolBusAPI.Services.IPermissionService">
@@ -7567,11 +7451,12 @@
         </member>
         <member name="M:SchoolBusAPI.Services.SchoolBusOwnerService.SchoolbusownersIdHistoryGetAsync(System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
-            
+            Returns History for a particular SchoolBusOwner
             </summary>
-            <remarks>Returns History for a particular SchoolBusOwner</remarks>
-            <param name="id">id of SchoolBusOwner to fetch History for</param>
-            <response code="200">OK</response>
+            <param name="id"></param>
+            <param name="offset"></param>
+            <param name="limit"></param>
+            <returns></returns>
         </member>
         <member name="M:SchoolBusAPI.Services.SchoolBusOwnerService.SchoolbusownersIdNotesGetAsync(System.Int32)">
             <summary>
@@ -7790,11 +7675,10 @@
         </member>
         <member name="M:SchoolBusAPI.Services.SchoolBusService.SchoolbusesBulkPostAsync(SchoolBusAPI.Models.SchoolBus[])">
             <summary>
-            Creates several school buses
+            Creates several school buses. Used for bulk creation of schoolbus records.
             </summary>
-            <remarks>Used for bulk creation of schoolbus records.</remarks>
-            <param name="body"></param>
-            <response code="201">SchoolBus items created</response>
+            <param name="items"></param>
+            <returns></returns>
         </member>
         <member name="M:SchoolBusAPI.Services.SchoolBusService.SchoolbusesIdGetAsync(System.Int32)">
             <summary>
@@ -7839,11 +7723,12 @@
         </member>
         <member name="M:SchoolBusAPI.Services.SchoolBusService.SchoolbusesIdHistoryGetAsync(System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
-            
+            Returns History for a particular SchoolBus
             </summary>
-            <remarks>Returns History for a particular SchoolBus</remarks>
-            <param name="id">id of SchoolBus to fetch SchoolBusHistory for</param>
-            <response code="200">OK</response>
+            <param name="id"></param>
+            <param name="offset"></param>
+            <param name="limit"></param>
+            <returns></returns>
         </member>
         <member name="M:SchoolBusAPI.Services.SchoolBusService.SchoolbusesIdHistoryPostAsync(System.Int32,SchoolBusAPI.Models.History)">
             <summary>
@@ -7874,10 +7759,9 @@
             <summary>
             Updates a single school bus object
             </summary>
-            <remarks></remarks>
-            <param name="id">Id of SchoolBus to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Not Found</response>
+            <param name="id"></param>
+            <param name="item"></param>
+            <returns></returns>
         </member>
         <member name="M:SchoolBusAPI.Services.SchoolBusService.SchoolbusesPostAsync(SchoolBusAPI.Models.SchoolBus)">
             <summary>
@@ -8126,7 +8010,7 @@
             </summary>
             <remarks>Updates a Service Area</remarks>
             <param name="id">id of Service Area to update</param>
-            <param name="item"></param>
+            <param name="body"></param>
             <response code="200">OK</response>
             <response code="404">Service Area not found</response>
         </member>
@@ -8144,7 +8028,12 @@
             </summary>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SchoolBusAPI.Services.ServiceBase.GetCurrentSmUserId" -->
+        <member name="M:SchoolBusAPI.Services.ServiceBase.GetCurrentSmUserId">
+            <summary>
+            Returns the current Site Minder User ID
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:SchoolBusAPI.Services.IUserService">
             <summary>
             
@@ -8442,7 +8331,7 @@
             </summary>
             <remarks>Adds a user to groups</remarks>
             <param name="id">id of User to update</param>
-            <param name="items"></param>
+            <param name="item"></param>
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>

@@ -296,12 +296,10 @@ namespace SchoolBusAPI.Services
         }
 
         /// <summary>
-        /// Creates several school buses
+        /// Creates several school buses. Used for bulk creation of schoolbus records.
         /// </summary>
-        /// <remarks>Used for bulk creation of schoolbus records.</remarks>
-        /// <param name="body"></param>
-        /// <response code="201">SchoolBus items created</response>
-
+        /// <param name="items"></param>
+        /// <returns></returns>
         public virtual IActionResult SchoolbusesBulkPostAsync(SchoolBus[] items)
         {
             if (items == null)
@@ -468,11 +466,12 @@ namespace SchoolBusAPI.Services
         }
 
         /// <summary>
-        /// 
+        /// Returns History for a particular SchoolBus
         /// </summary>
-        /// <remarks>Returns History for a particular SchoolBus</remarks>
-        /// <param name="id">id of SchoolBus to fetch SchoolBusHistory for</param>
-        /// <response code="200">OK</response>
+        /// <param name="id"></param>
+        /// <param name="offset"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
         public virtual IActionResult SchoolbusesIdHistoryGetAsync(int id, int? offset, int? limit)
         {
             bool exists = _context.SchoolBuss.Any(a => a.Id == id);
@@ -631,46 +630,9 @@ namespace SchoolBusAPI.Services
                     permitViewModel.SchoolBusOwnerName = schoolBus.CCWData.ICBCRegOwnerName;
 
                 }
-                permitViewModel.PermitIssueDate = null;
-                if (schoolBus.PermitIssueDate != null)
-                {
-                    // Since the PDF template is raw HTML and won't convert a date object, we must adjust the time zone here.                    
-                    TimeZoneInfo tzi = null;
-                    try
-                    {
-                        // try the IANA timzeone first.
-                        tzi = TimeZoneInfo.FindSystemTimeZoneById("America / Vancouver");
-                    }
-                    catch (Exception e)
-                    {
-                        tzi = null;
-                    }
 
-                    if (tzi == null)
-                    {
-                        try
-                        {
-                            tzi = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
-                        }
-                        catch (Exception e)
-                        {
-                            tzi = null;
-                        }
-                    }
-                    DateTime dto = DateTime.UtcNow;
-                    if (tzi != null)
-                    {
-                        dto = TimeZoneInfo.ConvertTime((DateTime)schoolBus.PermitIssueDate, tzi);
-
-                    }
-                    else
-                    {
-                        dto = (DateTime)schoolBus.PermitIssueDate;
-
-                    }
-                    permitViewModel.PermitIssueDate = dto.ToString("yyyy-MM-dd");
-
-                }
+                permitViewModel.PermitIssueDate = schoolBus.PermitIssueDate == null ?
+                    null : ConvertUtcToPacificTime((DateTime)schoolBus.PermitIssueDate).ToString("yyyy-MM-dd");
 
                 permitViewModel.PermitNumber = schoolBus.PermitNumber;
                 permitViewModel.RestrictionsText = schoolBus.RestrictionsText;
@@ -760,13 +722,40 @@ namespace SchoolBusAPI.Services
             }
         }
 
+        private static DateTime ConvertUtcToPacificTime(DateTime utcDate)
+        {
+            var date = ConvertTimeFromUtc(utcDate, "America/Vancouver");
+
+            if (date != null)
+                return (DateTime)date;
+
+            date = ConvertTimeFromUtc(utcDate, "Pacific Standard Time");
+
+            if (date != null)
+                return (DateTime)date;
+
+            return utcDate;
+        }
+
+        private static DateTime? ConvertTimeFromUtc(DateTime date, string timeZoneId)
+        {
+            try
+            {
+                var timezone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+                return TimeZoneInfo.ConvertTimeFromUtc(date, timezone);
+            }
+            catch (TimeZoneNotFoundException)
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Updates a single school bus object
         /// </summary>
-        /// <remarks></remarks>
-        /// <param name="id">Id of SchoolBus to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Not Found</response>
+        /// <param name="id"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public virtual IActionResult SchoolbusesIdPutAsync(int id, SchoolBus item)
         {
             // adjust school bus owner

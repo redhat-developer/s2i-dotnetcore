@@ -28,7 +28,7 @@ namespace SchoolBusAPI.Seeders
             _logger = logger;
 
             this.LoadSeeders();
-            SeederInstances.Sort(new SeederComparer<T>());
+            SeederInstances.Sort(new SeederComparer());
         }
 
         private void LoadSeeders()
@@ -54,7 +54,7 @@ namespace SchoolBusAPI.Seeders
             });
         }
 
-        private class SeederComparer<T> : Comparer<Seeder<T>> where T : DbContext
+        private class SeederComparer : Comparer<Seeder<T>>
         {
             public override int Compare(Seeder<T> x, Seeder<T> y)
             {

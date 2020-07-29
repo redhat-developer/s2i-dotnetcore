@@ -164,7 +164,8 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
 
-        /// <param name="id">id of NotificationEvent to fetch</param>
+        /// <param name="id">id of NotificationEvent</param>
+        /// <param name="body">body of NotificationEvent</param>
         /// <response code="200">OK</response>
         /// <response code="404">NotificationEvent not found</response>
 

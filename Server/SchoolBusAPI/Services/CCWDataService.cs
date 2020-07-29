@@ -360,7 +360,7 @@ namespace SchoolBusAPI.Services
             {
                 result = int.Parse(val);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = null;
             }

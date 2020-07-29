@@ -162,7 +162,8 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
 
-        /// <param name="id">id of Note to fetch</param>
+        /// <param name="id">id of Note</param>
+        /// <param name="body">body of Note</param>
         /// <response code="200">OK</response>
         /// <response code="404">Note not found</response>
 

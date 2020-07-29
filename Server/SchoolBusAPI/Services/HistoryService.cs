@@ -162,7 +162,8 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
 
-        /// <param name="id">id of History to fetch</param>
+        /// <param name="id">id of History</param>
+        /// <param name="body">body of History</param>
         /// <response code="200">OK</response>
         /// <response code="404">History not found</response>
 

@@ -189,7 +189,7 @@ namespace SchoolBusAPI.Services
         /// </summary>
         /// <remarks>Updates a Service Area</remarks>
         /// <param name="id">id of Service Area to update</param>
-        /// <param name="item"></param>
+        /// <param name="body"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Service Area not found</response>
         public virtual IActionResult ServiceareasIdPutAsync(int id, ServiceArea body)
