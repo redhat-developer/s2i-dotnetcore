@@ -193,7 +193,8 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
 
-        /// <param name="id">id of Attachment to fetch</param>
+        /// <param name="id">id of Attachment</param>
+        /// <param name="body">body of Attachment</param>
         /// <response code="200">OK</response>
         /// <response code="404">Attachment not found</response>
 

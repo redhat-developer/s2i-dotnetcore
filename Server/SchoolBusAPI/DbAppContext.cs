@@ -172,7 +172,7 @@ namespace SchoolBusAPI.Models
             {
                 result = HttpContextUser?.FindFirst(ClaimTypes.Name).Value;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = null;
             }
@@ -189,7 +189,7 @@ namespace SchoolBusAPI.Models
                 int id = int.Parse(userId);
                 result = Users.FirstOrDefault(x => x.Id == id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = null;
             }

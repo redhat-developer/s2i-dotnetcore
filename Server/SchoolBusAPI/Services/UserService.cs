@@ -709,7 +709,7 @@ namespace SchoolBusAPI.Services
         /// </summary>
         /// <remarks>Adds a user to groups</remarks>
         /// <param name="id">id of User to update</param>
-        /// <param name="items"></param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdGroupsPostAsync(int id, GroupMembershipViewModel item)
@@ -738,7 +738,8 @@ namespace SchoolBusAPI.Services
                         found = true;
                     }
                 }
-                if (found == false && item.GroupId != null)
+
+                if (found == false)
                 {
                     GroupMembership groupMembership = new GroupMembership();
                     // set user and group. 

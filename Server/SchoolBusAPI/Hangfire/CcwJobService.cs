@@ -42,8 +42,6 @@ namespace SchoolBusAPI.Hangfire
         /// <summary>
         /// Hangfire job to populate CCW data.  Only used for a deploy to PROD with a new database.
         /// </summary>
-        /// <param name="connectionString"></param>
-        /// <param name="Configuration"></param>
         [AutomaticRetry(Attempts = 0)]
         public async Task PopulateCCWJob()
         {
@@ -92,8 +90,6 @@ namespace SchoolBusAPI.Hangfire
         /// <summary>
         /// Hangfire job to refresh existing data.
         /// </summary>
-        /// <param name="connectionString"></param>
-        /// <param name="Configuration"></param>
         [AutomaticRetry(Attempts = 0)]
         public async Task UpdateCCWJob()
         {

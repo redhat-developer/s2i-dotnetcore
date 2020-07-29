@@ -167,7 +167,8 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
 
-        /// <param name="id">id of Notification to fetch</param>
+        /// <param name="id">id of Notification</param>
+        /// <param name="body">body of Notification</param>
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>
 
@@ -191,7 +192,7 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
 
-        /// <param name="body"></param>
+        /// <param name="item"></param>
         /// <response code="201">Notification created</response>
 
         public virtual IActionResult NotificationsPostAsync(Notification item)

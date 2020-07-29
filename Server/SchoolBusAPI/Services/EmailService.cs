@@ -18,7 +18,7 @@ namespace SchoolBusAPI.Services
         /// </summary>
         /// <param name="mail">email object</param>
         /// <returns></returns>
-        IActionResult EmailSend([FromBody]Email mail);
+        IActionResult EmailSend([FromBody] Email mail);
     }
 
     /// <summary>
@@ -131,7 +131,7 @@ namespace SchoolBusAPI.Services
                         client.CheckCertificateRevocation = false;
                         client.Connect(SmtpServer, SmtpPort, MailKit.Security.SecureSocketOptions.Auto);
                     }
-                    catch (MailKit.Security.SslHandshakeException sslException)
+                    catch (MailKit.Security.SslHandshakeException)
                     {
                         email.mailSent = false;
                         email.errorInfo = "Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.";

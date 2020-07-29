@@ -88,7 +88,7 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
 
-        /// <param name="body"></param>
+        /// <param name="items"></param>
         /// <response code="201">Inspections created</response>
 
         public virtual IActionResult InspectionsBulkPostAsync(Inspection[] items)
@@ -262,7 +262,8 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
 
-        /// <param name="id">id of Inspection to fetch</param>
+        /// <param name="id">id of Inspection</param>
+        /// <param name="item">item of Inspection</param>
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
 

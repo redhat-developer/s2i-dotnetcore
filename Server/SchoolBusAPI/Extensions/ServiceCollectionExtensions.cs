@@ -52,7 +52,6 @@ namespace SchoolBusAPI.Extensions
             services.AddScoped<ISchoolDistrictService, SchoolDistrictService>();
             services.AddScoped<IServiceAreaService, ServiceAreaService>();
             services.AddScoped<IUserService, UserService>();            
-            services.AddScoped<ITestService, TestService>();
             services.AddScoped<IAttachmentUploadService,AttachmentUploadService>();
             services.AddScoped<ICcwJobService, CcwJobService>();
             return services;

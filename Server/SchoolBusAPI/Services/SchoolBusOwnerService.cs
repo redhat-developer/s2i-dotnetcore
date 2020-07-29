@@ -328,11 +328,12 @@ namespace SchoolBusAPI.Services
         }
 
         /// <summary>
-        /// 
+        /// Returns History for a particular SchoolBusOwner
         /// </summary>
-        /// <remarks>Returns History for a particular SchoolBusOwner</remarks>
-        /// <param name="id">id of SchoolBusOwner to fetch History for</param>
-        /// <response code="200">OK</response>
+        /// <param name="id"></param>
+        /// <param name="offset"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
         public virtual IActionResult SchoolbusownersIdHistoryGetAsync(int id, int? offset, int? limit)
         {
             bool exists = _context.SchoolBusOwners.Any(a => a.Id == id);
