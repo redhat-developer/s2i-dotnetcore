@@ -63,10 +63,15 @@ Resource404.prototype = Object.create(Error.prototype, {
 });
 
 export function request(path, options) {
+  keycloak.updateToken(10).catch(() => {
+    console.log('Failed to refresh the token, or the session has expired');
+  });
+
   options = options || {};
   options.headers = Object.assign(
     {
       'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Bearer ${keycloak.token}`,
     },
     options.headers || {}
   );
@@ -115,13 +120,8 @@ export function request(path, options) {
 }
 
 export function jsonRequest(path, options) {
-  keycloak.updateToken().catch(() => {
-    console.log('Failed to refresh the token, or the session has expired');
-  });
-
   var jsonHeaders = {
     Accept: 'application/json',
-    Authorization: `Bearer ${keycloak.token}`,
   };
 
   if (options.body) {
