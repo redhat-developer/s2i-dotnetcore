@@ -923,7 +923,7 @@ namespace SchoolBusAPI.Services
             {
                 // Normalize vin to ignore case and whitespaces
                 vin = vin.Replace(" ", String.Empty).ToUpperInvariant();
-                data = data.Where(x => x.VehicleIdentificationNumber.ToUpperInvariant().Contains(vin));
+                data = data.Where(x => x.VehicleIdentificationNumber.ToUpper().Contains(vin));
                 keySearch = true;
             }
 
@@ -931,7 +931,7 @@ namespace SchoolBusAPI.Services
             {
                 // Normalize plate to ignore case and whitespaces
                 plate = plate.Replace(" ", String.Empty).ToUpperInvariant();
-                data = data.Where(x => x.LicencePlateNumber.Replace(" ", String.Empty).ToUpperInvariant().Contains(plate));
+                data = data.Where(x => x.LicencePlateNumber.Replace(" ", String.Empty).ToUpper().Contains(plate));
                 keySearch = true;
             }
 
