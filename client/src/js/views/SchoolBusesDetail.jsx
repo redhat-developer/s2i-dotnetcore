@@ -1,43 +1,37 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { Well, Row, Col } from "react-bootstrap";
-import {
-  Alert,
-  Label,
-  Button,
-  ButtonGroup,
-  Glyphicon,
-  Checkbox,
-} from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Well, Row, Col } from 'react-bootstrap';
+import { Alert, Label, Button, ButtonGroup, Glyphicon, Checkbox } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-import _ from "lodash";
+import _ from 'lodash';
+import { saveAs } from 'file-saver';
 
-import HistoryListDialog from "./dialogs/HistoryListDialog.jsx";
-import InspectionEditDialog from "./dialogs/InspectionEditDialog.jsx";
-import SchoolBusesEditDialog from "./dialogs/SchoolBusesEditDialog.jsx";
+import HistoryListDialog from './dialogs/HistoryListDialog.jsx';
+import InspectionEditDialog from './dialogs/InspectionEditDialog.jsx';
+import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
 
-import * as Action from "../actionTypes";
-import * as Api from "../api";
-import * as Constant from "../constants";
-import * as History from "../history";
-import store from "../store";
+import * as Action from '../actionTypes';
+import * as Api from '../api';
+import * as Constant from '../constants';
+import * as History from '../history';
+import store from '../store';
 
-import BadgeLabel from "../components/BadgeLabel.jsx";
-import ColDisplay from "../components/ColDisplay.jsx";
-import DeleteButton from "../components/DeleteButton.jsx";
-import EditButton from "../components/EditButton.jsx";
-import InfoButton from "../components/InfoButton.jsx";
-import SchoolBusBodyDescription from "../components/SchoolBusBodyDescription.jsx";
-import SortTable from "../components/SortTable.jsx";
-import Spinner from "../components/Spinner.jsx";
-import Unimplemented from "../components/Unimplemented.jsx";
+import BadgeLabel from '../components/BadgeLabel.jsx';
+import ColDisplay from '../components/ColDisplay.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
+import InfoButton from '../components/InfoButton.jsx';
+import SchoolBusBodyDescription from '../components/SchoolBusBodyDescription.jsx';
+import SortTable from '../components/SortTable.jsx';
+import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
 
-import { formatDateTime } from "../utils/date";
-import { concat, plural } from "../utils/string";
+import { formatDateTime } from '../utils/date';
+import { concat, plural } from '../utils/string';
 
 class SchoolBusesDetail extends React.Component {
   static propTypes = {
@@ -64,11 +58,11 @@ class SchoolBusesDetail extends React.Component {
 
     inspection: {},
 
-    isNew: this.props.params.schoolBusId === "0",
+    isNew: this.props.params.schoolBusId === '0',
 
     ui: {
       // Inspections
-      sortField: this.props.ui.sortField || "inspectionDateSort",
+      sortField: this.props.ui.sortField || 'inspectionDateSort',
       sortDesc: this.props.ui.sortDesc !== false, // defaults to true
     },
   };
@@ -76,11 +70,7 @@ class SchoolBusesDetail extends React.Component {
   componentDidMount() {
     // Don't just check if this is new. Make sure we're coming in through the Owner screen and not
     // via a refresh of the screen. Also, make sure we have CCW data.
-    if (
-      this.state.isNew &&
-      this.props.owner.id &&
-      this.props.schoolBusCCW.icbcRegistrationNumber
-    ) {
+    if (this.state.isNew && this.props.owner.id && this.props.schoolBusCCW.icbcRegistrationNumber) {
       // Clear the spinners
       this.setState({
         loadingSchoolBus: false,
@@ -93,12 +83,9 @@ class SchoolBusesDetail extends React.Component {
         schoolBus: {
           id: 0,
           schoolBusOwner: { id: this.props.owner.id },
-          icbcRegistrationNumber:
-            this.props.schoolBusCCW.icbcRegistrationNumber || "",
-          licencePlateNumber:
-            this.props.schoolBusCCW.icbcLicencePlateNumber || "",
-          vehicleIdentificationNumber:
-            this.props.schoolBusCCW.icbcVehicleIdentificationNumber || "",
+          icbcRegistrationNumber: this.props.schoolBusCCW.icbcRegistrationNumber || '',
+          licencePlateNumber: this.props.schoolBusCCW.icbcLicencePlateNumber || '',
+          vehicleIdentificationNumber: this.props.schoolBusCCW.icbcVehicleIdentificationNumber || '',
           ccwData: this.props.schoolBusCCW,
         },
       });
@@ -122,7 +109,7 @@ class SchoolBusesDetail extends React.Component {
   openInspection = (props) => {
     var inspection = null;
 
-    if (props.params.inspectionId === "0") {
+    if (props.params.inspectionId === '0') {
       // New
       inspection = {
         id: 0,
@@ -155,17 +142,13 @@ class SchoolBusesDetail extends React.Component {
         // Fetch CCW to make sure it's up to date
         var params = {};
         if (this.props.schoolBus.icbcRegistrationNumber) {
-          params[
-            Constant.CCW_REGISTRATION
-          ] = this.props.schoolBus.icbcRegistrationNumber;
+          params[Constant.CCW_REGISTRATION] = this.props.schoolBus.icbcRegistrationNumber;
         }
         if (this.props.schoolBus.licencePlateNumber) {
           params[Constant.CCW_PLATE] = this.props.schoolBus.licencePlateNumber;
         }
         if (this.props.schoolBus.vehicleIdentificationNumber) {
-          params[
-            Constant.CCW_VIN
-          ] = this.props.schoolBus.vehicleIdentificationNumber;
+          params[Constant.CCW_VIN] = this.props.schoolBus.vehicleIdentificationNumber;
         }
         if (Object.keys(params).length > 0) {
           return Api.searchCCW(params).then(() => {
@@ -211,12 +194,8 @@ class SchoolBusesDetail extends React.Component {
   onSaveEdit = (schoolBus) => {
     if (schoolBus.id) {
       // Check for school bus status or owner change
-      var statusChanged =
-        this.props.schoolBus.status !== schoolBus.status ? true : false;
-      var ownerChanged =
-        this.props.schoolBus.schoolBusOwner.id !== schoolBus.schoolBusOwner.id
-          ? true
-          : false;
+      var statusChanged = this.props.schoolBus.status !== schoolBus.status ? true : false;
+      var ownerChanged = this.props.schoolBus.schoolBusOwner.id !== schoolBus.schoolBusOwner.id ? true : false;
 
       Api.updateSchoolBus(schoolBus).then(() => {
         // Log existing SchoolBus modified
@@ -310,10 +289,7 @@ class SchoolBusesDetail extends React.Component {
           // Log it
           History.logNewInspection(this.props.schoolBus, this.props.inspection);
         } else {
-          History.logModifiedInspection(
-            this.props.schoolBus,
-            this.props.inspection
-          );
+          History.logModifiedInspection(this.props.schoolBus, this.props.inspection);
         }
 
         // Refresh the inspections table
@@ -360,8 +336,9 @@ class SchoolBusesDetail extends React.Component {
 
   printPermit = () => {
     this.setState({ workingOnPermit: true });
-    // Get path to PDF API call and call it in a new browser window.
-    window.open(Api.getSchoolBusPermitURL(this.props.params.schoolBusId));
+    Api.getSchoolBusPermit(this.props.params.schoolBusId).then((response) => {
+      saveAs(response.response, `Permit-${this.props.params.schoolBusId}.pdf`);
+    });
     this.setState({ workingOnPermit: false });
   };
 
@@ -375,31 +352,29 @@ class SchoolBusesDetail extends React.Component {
     }
 
     var inspectionNotice =
-      (bus.isReinspection ? "&reg; " : "") +
-      (bus.isOverdue ? "Overdue &ndash; " : "") +
+      (bus.isReinspection ? '&reg; ' : '') +
+      (bus.isOverdue ? 'Overdue &ndash; ' : '') +
       daysToInspection +
-      " " +
-      plural(daysToInspection, "day", "days") +
-      " &ndash; " +
+      ' ' +
+      plural(daysToInspection, 'day', 'days') +
+      ' &ndash; ' +
       formatDateTime(bus.nextInspectionDate, Constant.DATE_FULL_MONTH_DAY_YEAR);
 
     var inspectionStyle = bus.isOverdue
-      ? "danger"
+      ? 'danger'
       : daysToInspection <= Constant.INSPECTION_DAYS_DUE_WARNING
-      ? "warning"
-      : "success";
+      ? 'warning'
+      : 'success';
 
     return (
       <div id="school-buses-detail">
         <div>
           <Row id="school-buses-top">
             <Col md={10}>
-              <Label bsStyle={bus.isActive ? "success" : "danger"}>
-                {bus.isActive ? "Verified Active" : bus.status}
+              <Label bsStyle={bus.isActive ? 'success' : 'danger'}>
+                {bus.isActive ? 'Verified Active' : bus.status}
               </Label>
-              <Label className={bus.isOutOfProvince ? "" : "hide"}>
-                Out of Province
-              </Label>
+              <Label className={bus.isOutOfProvince ? '' : 'hide'}>Out of Province</Label>
               {bus.nextInspectionDate && (
                 <span
                   className={`label label-${inspectionStyle}`}
@@ -439,7 +414,7 @@ class SchoolBusesDetail extends React.Component {
           {(() => {
             if (this.state.loadingSchoolBus) {
               return (
-                <div style={{ textAlign: "center" }}>
+                <div style={{ textAlign: 'center' }}>
                   <Spinner />
                 </div>
               );
@@ -450,7 +425,7 @@ class SchoolBusesDetail extends React.Component {
                 <Row>
                   <Col md={12}>
                     <h1>
-                      School Bus Owner:{" "}
+                      School Bus Owner:{' '}
                       <small>
                         <a href={bus.ownerURL}>{bus.ownerName}</a>
                       </small>
@@ -462,44 +437,32 @@ class SchoolBusesDetail extends React.Component {
                     <h1 id="school-buses-keys">
                       Registration: <small>{bus.icbcRegistrationNumber}</small>
                       &nbsp;Plate: <small>{bus.licencePlateNumber}</small>
-                      &nbsp;VIN:{" "}
-                      <small>{bus.vehicleIdentificationNumber}</small>
+                      &nbsp;VIN: <small>{bus.vehicleIdentificationNumber}</small>
                       &nbsp;Permit: <small>{bus.permitNumber}</small>
                       {bus.permitNumber ? (
                         <Button onClick={this.printPermit} bsSize="small">
                           {this.state.workingOnPermit ? (
-                            <span
-                              id="permitSpinner"
-                              style={{ textAlign: "center", marginLeft: -10 }}
-                            >
+                            <span id="permitSpinner" style={{ textAlign: 'center', marginLeft: -10 }}>
                               <Spinner />
                             </span>
                           ) : (
-                            "Print Permit"
+                            'Print Permit'
                           )}
                         </Button>
                       ) : (
                         <Button onClick={this.generatePermit} bsSize="small">
                           {this.state.workingOnPermit ? (
-                            <span
-                              id="permitSpinner"
-                              style={{ textAlign: "center", marginLeft: -10 }}
-                            >
+                            <span id="permitSpinner" style={{ textAlign: 'center', marginLeft: -10 }}>
                               <Spinner />
                             </span>
                           ) : (
-                            "Generate Permit"
+                            'Generate Permit'
                           )}
                         </Button>
                       )}
                       {bus.permitIssueDate && (
                         <small id="issued-date">
-                          &nbsp;(Issued:{" "}
-                          {formatDateTime(
-                            bus.permitIssueDate,
-                            Constant.DATE_SHORT_MONTH_DAY_YEAR
-                          )}
-                          )
+                          &nbsp;(Issued: {formatDateTime(bus.permitIssueDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)})
                         </small>
                       )}
                     </h1>
@@ -513,13 +476,9 @@ class SchoolBusesDetail extends React.Component {
             <Col md={6}>
               <Well>
                 <h3>
-                  School Bus Data{" "}
+                  School Bus Data{' '}
                   <span className="pull-right">
-                    <Button
-                      title="Edit Bus"
-                      bsSize="small"
-                      onClick={this.openEditDialog}
-                    >
+                    <Button title="Edit Bus" bsSize="small" onClick={this.openEditDialog}>
                       <Glyphicon glyph="pencil" />
                     </Button>
                   </span>
@@ -527,7 +486,7 @@ class SchoolBusesDetail extends React.Component {
                 {(() => {
                   if (this.state.loadingSchoolBus) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
@@ -597,14 +556,9 @@ class SchoolBusesDetail extends React.Component {
                       </Row>
                       <Row>
                         <ColDisplay md={4} label="Independent School">
-                          <Checkbox
-                            defaultChecked={bus.isIndependentSchool}
-                            disabled
-                          ></Checkbox>
+                          <Checkbox defaultChecked={bus.isIndependentSchool} disabled></Checkbox>
                         </ColDisplay>
-                        <ColDisplay md={8}>
-                          {bus.independentSchoolName}
-                        </ColDisplay>
+                        <ColDisplay md={8}>{bus.independentSchoolName}</ColDisplay>
                       </Row>
                       <Row>
                         <ColDisplay md={12} label="Unit Number">
@@ -632,50 +586,37 @@ class SchoolBusesDetail extends React.Component {
                 {(() => {
                   if (this.state.loadingSchoolBusInspections) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
                   }
 
                   var addInspectionButton = (
-                    <Button
-                      title="Add Inspection"
-                      onClick={this.addInspection}
-                      bsSize="xsmall"
-                    >
+                    <Button title="Add Inspection" onClick={this.addInspection} bsSize="xsmall">
                       <Glyphicon glyph="plus" />
                       &nbsp;<strong>Add</strong>
                     </Button>
                   );
 
-                  if (
-                    Object.keys(this.props.schoolBusInspections).length === 0
-                  ) {
-                    return (
-                      <Alert bsStyle="success">
-                        No inspections {addInspectionButton}
-                      </Alert>
-                    );
+                  if (Object.keys(this.props.schoolBusInspections).length === 0) {
+                    return <Alert bsStyle="success">No inspections {addInspectionButton}</Alert>;
                   }
 
-                  var inspections = _.sortBy(
-                    this.props.schoolBusInspections,
-                    this.state.ui.sortField
-                  );
+                  var inspections = _.sortBy(this.props.schoolBusInspections, this.state.ui.sortField);
                   if (this.state.ui.sortDesc) {
                     _.reverse(inspections);
                   }
 
                   var headers = [
-                    { field: "inspectionDateSort", title: "Date" },
-                    { field: "inspectionTypeCode", title: "Type" },
-                    { field: "inspectionResultCode", title: "Status" },
-                    { field: "inspectorName", title: "Inspector" },
+                    { field: 'inspectionDateSort', title: 'Date' },
+                    { field: 'inspectionTypeCode', title: 'Type' },
+                    { field: 'inspectionResultCode', title: 'Status' },
+                    { field: 'inspectorName', title: 'Inspector' },
                     {
-                      field: "addInspection",
-                      title: "Add Inspection",
-                      style: { textAlign: "right" },
+                      field: 'addInspection',
+                      title: 'Add Inspection',
+                      style: { textAlign: 'right' },
                       node: addInspectionButton,
                     },
                   ];
@@ -691,35 +632,21 @@ class SchoolBusesDetail extends React.Component {
                       {_.map(inspections, (inspection) => {
                         return (
                           <tr key={inspection.id}>
-                            <td>
-                              {formatDateTime(
-                                inspection.inspectionDate,
-                                Constant.DATE_SHORT_MONTH_DAY_YEAR
-                              )}
-                            </td>
+                            <td>{formatDateTime(inspection.inspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}</td>
                             <td>
                               {inspection.inspectionTypeCode}
-                              {inspection.isReinspection ? (
-                                <BadgeLabel bsStyle="info">R</BadgeLabel>
-                              ) : null}
+                              {inspection.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null}
                             </td>
                             <td>{inspection.inspectionResultCode}</td>
                             <td>{inspection.inspectorName}</td>
-                            <td style={{ textAlign: "right" }}>
+                            <td style={{ textAlign: 'right' }}>
                               <ButtonGroup>
                                 <DeleteButton
                                   name="Inspection"
                                   hide={!inspection.canDelete}
-                                  onConfirm={this.deleteInspection.bind(
-                                    this,
-                                    inspection
-                                  )}
+                                  onConfirm={this.deleteInspection.bind(this, inspection)}
                                 />
-                                <EditButton
-                                  name="Inspection"
-                                  view={!inspection.canEdit}
-                                  pathname={inspection.path}
-                                />
+                                <EditButton name="Inspection" view={!inspection.canEdit} pathname={inspection.path} />
                               </ButtonGroup>
                             </td>
                           </tr>
@@ -738,7 +665,7 @@ class SchoolBusesDetail extends React.Component {
                 {(() => {
                   if (this.state.loadingSchoolBus) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
@@ -751,10 +678,7 @@ class SchoolBusesDetail extends React.Component {
                           {ccw.nscPolicyNumber}
                         </ColDisplay>
                         <ColDisplay md={4} label="Status Date">
-                          {formatDateTime(
-                            ccw.nscPolicyStatusDate,
-                            Constant.DATE_SHORT_MONTH_DAY_YEAR
-                          )}
+                          {formatDateTime(ccw.nscPolicyStatusDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
                         <ColDisplay md={4} label="Status">
                           {ccw.nscPolicyStatus}
@@ -762,16 +686,10 @@ class SchoolBusesDetail extends React.Component {
                       </Row>
                       <Row>
                         <ColDisplay md={4} label="Effective Date">
-                          {formatDateTime(
-                            ccw.nscPolicyEffectiveDate,
-                            Constant.DATE_SHORT_MONTH_DAY_YEAR
-                          )}
+                          {formatDateTime(ccw.nscPolicyEffectiveDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
                         <ColDisplay md={4} label="Expiry Date">
-                          {formatDateTime(
-                            ccw.nscPolicyExpiryDate,
-                            Constant.DATE_SHORT_MONTH_DAY_YEAR
-                          )}
+                          {formatDateTime(ccw.nscPolicyExpiryDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
                         <ColDisplay md={4} label="Plate Decal #">
                           {ccw.nscPlateDecal}
@@ -790,7 +708,7 @@ class SchoolBusesDetail extends React.Component {
                 {(() => {
                   if (this.state.loadingSchoolBus) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
@@ -812,11 +730,7 @@ class SchoolBusesDetail extends React.Component {
                       <Row>
                         <ColDisplay md={8} label="Address">
                           {(() => {
-                            if (
-                              ccw.icbcRegOwnerAddr1 &&
-                              ccw.icbcRegOwnerAddr2 &&
-                              city
-                            ) {
+                            if (ccw.icbcRegOwnerAddr1 && ccw.icbcRegOwnerAddr2 && city) {
                               return (
                                 <div>
                                   {ccw.icbcRegOwnerAddr1}
@@ -827,10 +741,7 @@ class SchoolBusesDetail extends React.Component {
                                 </div>
                               );
                             }
-                            if (
-                              ccw.icbcRegOwnerAddr1 &&
-                              ccw.icbcRegOwnerAddr2
-                            ) {
+                            if (ccw.icbcRegOwnerAddr1 && ccw.icbcRegOwnerAddr2) {
                               return (
                                 <div>
                                   {ccw.icbcRegOwnerAddr1}
@@ -839,11 +750,7 @@ class SchoolBusesDetail extends React.Component {
                                 </div>
                               );
                             }
-                            if (
-                              (ccw.icbcRegOwnerAddr1 ||
-                                ccw.icbcRegOwnerAddr2) &&
-                              city
-                            ) {
+                            if ((ccw.icbcRegOwnerAddr1 || ccw.icbcRegOwnerAddr2) && city) {
                               return (
                                 <div>
                                   {ccw.icbcRegOwnerAddr1}
@@ -886,7 +793,7 @@ class SchoolBusesDetail extends React.Component {
                 {(() => {
                   if (this.state.loadingSchoolBus) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
@@ -927,7 +834,7 @@ class SchoolBusesDetail extends React.Component {
                 {(() => {
                   if (this.state.loadingSchoolBus) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
@@ -990,19 +897,13 @@ class SchoolBusesDetail extends React.Component {
                           {ccw.icbcFleetUnitNo}
                         </ColDisplay>
                         <ColDisplay md={3} label="CVIP Expiry">
-                          {formatDateTime(
-                            ccw.icbccvipExpiry,
-                            Constant.DATE_SHORT_MONTH_DAY_YEAR
-                          )}
+                          {formatDateTime(ccw.icbccvipExpiry, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
                         <ColDisplay md={3} label="N&amp;O">
                           {ccw.icbcNotesAndOrders}
                         </ColDisplay>
                         <ColDisplay md={3} label="Ordered On">
-                          {formatDateTime(
-                            ccw.icbcOrderedOn,
-                            Constant.DATE_SHORT_MONTH_DAY_YEAR
-                          )}
+                          {formatDateTime(ccw.icbcOrderedOn, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
                       </Row>
                     </div>
@@ -1015,19 +916,14 @@ class SchoolBusesDetail extends React.Component {
             <Row>
               <Col md={12}>
                 <span id="school-buses-ccw-fetched">
-                  ICBC data last fetched on{" "}
-                  {formatDateTime(ccw.dateFetched, Constant.DATE_TIME_READABLE)}
+                  ICBC data last fetched on {formatDateTime(ccw.dateFetched, Constant.DATE_TIME_READABLE)}
                 </span>
               </Col>
             </Row>
           )}
         </div>
         {this.state.showEditDialog && (
-          <SchoolBusesEditDialog
-            show={this.state.showEditDialog}
-            onSave={this.onSaveEdit}
-            onClose={this.onCloseEdit}
-          />
+          <SchoolBusesEditDialog show={this.state.showEditDialog} onSave={this.onSaveEdit} onClose={this.onCloseEdit} />
         )}
         {this.state.showHistoryDialog && (
           <HistoryListDialog

@@ -562,6 +562,10 @@ export function newSchoolBusPermit(schoolBusId) {
   });
 }
 
+export function getSchoolBusPermit(schoolBusId) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/pdfpermit`).getBlob();
+}
+
 export function getSchoolBusPermitURL(schoolBusId) {
   // Not an API call, per se, as it must be called from the browser window.
   return `${window.location.origin}${window.location.pathname}api/schoolbuses/${schoolBusId}/pdfpermit`;

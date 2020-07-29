@@ -70,7 +70,6 @@ export function request(path, options) {
   options = options || {};
   options.headers = Object.assign(
     {
-      'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `Bearer ${keycloak.token}`,
     },
     options.headers || {}
@@ -101,6 +100,9 @@ export function request(path, options) {
     var qs = _.map(options.querystring, (value, key) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join(
       '&'
     );
+
+    if (options.responseType) xhr.responseType = options.responseType;
+
     xhr.open(method, `${path}${qs ? '?' : ''}${qs}`, true);
 
     Object.keys(options.headers).forEach((key) => {
@@ -164,6 +166,10 @@ export function ApiRequest(path) {
 
 ApiRequest.prototype.get = function apiGet(params) {
   return jsonRequest(this.path, { method: 'GET', querystring: params });
+};
+
+ApiRequest.prototype.getBlob = function apiGet() {
+  return request(this.path, { method: 'GET', responseType: 'blob' });
 };
 
 ApiRequest.prototype.post = function apiPost(data) {
