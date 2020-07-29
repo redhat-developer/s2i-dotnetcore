@@ -62,10 +62,12 @@ Resource404.prototype = Object.create(Error.prototype, {
   },
 });
 
-export function request(path, options) {
-  keycloak.updateToken(10).catch(() => {
+export async function request(path, options) {
+  try {
+    await keycloak.updateToken(10);
+  } catch {
     console.log('Failed to refresh the token, or the session has expired');
-  });
+  }
 
   options = options || {};
   options.headers = Object.assign(
