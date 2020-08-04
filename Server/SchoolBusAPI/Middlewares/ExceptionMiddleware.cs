@@ -27,12 +27,12 @@ namespace SchoolBusAPI.Middlewares
             }
             catch (Exception ex)
             {
-                if (!httpContext.Response.HasStarted)
-                {
-                    var guid = Guid.NewGuid();
-                    _logger.LogError($"SBI Exception{guid}: {ex}");
-                    await HandleExceptionAsync(httpContext, guid);
-                }
+                if (httpContext.Response.HasStarted || httpContext.RequestAborted.IsCancellationRequested)
+                    return;
+
+                var guid = Guid.NewGuid();
+                _logger.LogError($"HMCR Exception{guid}: {ex}");
+                await HandleExceptionAsync(httpContext, guid);
             }
         }
 
