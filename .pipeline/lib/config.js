@@ -31,6 +31,9 @@ const phases = {
     dbUser: "userUXN",
     dbSize: "1Gi",
     transient: true,
+    backupVolume: "bk-tran-schoolbus-dev-1unden2n8ik4",
+    backupVolumeSize: "1Gi",
+    verificationVolumeSize: "1Gi",
   },
   test: {
     namespace: "tran-schoolbus-test",
@@ -45,6 +48,9 @@ const phases = {
     dbUser: "user7KU",
     dbSize: "1Gi",
     dotnet_env: "Staging",
+    backupVolume: "bk-tran-schoolbus-test-wrpk9cgnxdxu",
+    backupVolumeSize: "1Gi",
+    verificationVolumeSize: "1Gi",
   },
   prod: {
     namespace: "tran-schoolbus-prod",
@@ -59,6 +65,9 @@ const phases = {
     dbUser: "userKIX",
     dbSize: "50Gi",
     dotnet_env: "Production",
+    backupVolume: "bk-tran-schoolbus-prod-ak9opru2trr6",
+    backupVolumeSize: "5Gi",
+    verificationVolumeSize: "50Gi",
   },
 };
 
