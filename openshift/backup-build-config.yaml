@@ -9,9 +9,13 @@ objects:
   - apiVersion: v1
     kind: ImageStream
     metadata:
-      name: ${NAME}
+      creationTimestamp: null
       labels:
         shared: "true"
+      name: ${NAME}
+    spec:
+      lookupPolicy:
+        local: false
   - apiVersion: v1
     kind: BuildConfig
     metadata:
@@ -20,10 +24,20 @@ objects:
         build: ${NAME}${SUFFIX}
       name: ${NAME}${SUFFIX}
     spec:
-      triggers:
-        - type: "ImageChange"
-        - type: "ConfigChange"
-      runPolicy: "Serial"
+      nodeSelector: null
+      completionDeadlineSeconds: 600
+      output:
+        to:
+          kind: ImageStreamTag
+          name: ${NAME}:${VERSION}
+      resources:
+        limits:
+          cpu: 2
+          memory: 4Gi
+        requests:
+          cpu: 1
+          memory: 2Gi
+      postCommit: {}
       source:
         git:
           uri: ${SOURCE_REPOSITORY_URL}
@@ -34,10 +48,6 @@ objects:
         dockerStrategy:
           dockerfilePath: ${DOCKER_FILE_PATH}
         type: "Docker"
-      output:
-        to:
-          kind: "ImageStreamTag"
-          name: ${NAME}:${VERSION}
 parameters:
   - description: A name used for all objects
     displayName: Name
