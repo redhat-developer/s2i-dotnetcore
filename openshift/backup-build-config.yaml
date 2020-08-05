@@ -46,9 +46,6 @@ objects:
         contextDir: ${SOURCE_CONTEXT_DIR}
       strategy:
         dockerStrategy:
-          from:
-            kind: "${SOURCE_IMAGE_KIND}"
-            name: "${SOURCE_IMAGE_NAME}:${SOURCE_IMAGE_TAG}"
           dockerfilePath: ${DOCKER_FILE_PATH}
         type: "Docker"
 parameters:
@@ -87,18 +84,3 @@ parameters:
     name: DOCKER_FILE_PATH
     required: true
     value: "Dockerfile"
-  - description: SOURCE_IMAGE_KIND
-    displayName: SOURCE_IMAGE_KIND
-    name: SOURCE_IMAGE_KIND
-    required: true
-    value: "DockerImage"
-  - description: SOURCE_IMAGE_NAME
-    displayName: SOURCE_IMAGE_NAME
-    name: SOURCE_IMAGE_NAME
-    required: true
-    value: "registry.access.redhat.com/rhscl/postgresql-10-rhel7"
-  - description: SOURCE_IMAGE_TAG
-    displayName: SOURCE_IMAGE_TAG
-    name: SOURCE_IMAGE_TAG
-    required: true
-    value: "latest"
