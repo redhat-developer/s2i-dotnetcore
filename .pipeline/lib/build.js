@@ -14,6 +14,21 @@ module.exports = (settings) => {
     path.resolve(__dirname, "../../openshift")
   );
 
+  // objects.push(
+  //   ...oc.processDeploymentTemplate(
+  //     `${templatesLocalBaseUrl}/backup-build-config.yaml`,
+  //     {
+  //       param: {
+  //         NAME: `${settings.phases[phase].name}-backup`,
+  //         SUFFIX: settings.phases[phase].suffix,
+  //         VERSION: settings.phases[phase].tag,
+  //         SOURCE_REPOSITORY_URL: `${oc.git.uri}`,
+  //         SOURCE_REPOSITORY_REF: `${oc.git.branch_ref}`,
+  //       },
+  //     }
+  //   )
+  // );
+
   objects.push(
     ...oc.processDeploymentTemplate(
       `${templatesLocalBaseUrl}/api-build-config.yaml`,
@@ -52,21 +67,6 @@ module.exports = (settings) => {
       {
         param: {
           NAME: `${settings.phases[phase].name}-client`,
-          SUFFIX: settings.phases[phase].suffix,
-          VERSION: settings.phases[phase].tag,
-          SOURCE_REPOSITORY_URL: `${oc.git.uri}`,
-          SOURCE_REPOSITORY_REF: `${oc.git.branch_ref}`,
-        },
-      }
-    )
-  );
-
-  objects.push(
-    ...oc.processDeploymentTemplate(
-      `${templatesLocalBaseUrl}/backup-build-config.yaml`,
-      {
-        param: {
-          NAME: `${settings.phases[phase].name}-backup`,
           SUFFIX: settings.phases[phase].suffix,
           VERSION: settings.phases[phase].tag,
           SOURCE_REPOSITORY_URL: `${oc.git.uri}`,

@@ -63,6 +63,25 @@ module.exports = (settings) => {
     )
   );
 
+  // objects.push(
+  //   ...oc.processDeploymentTemplate(
+  //     `${templatesLocalBaseUrl}/backup-deploy-config.yaml`,
+  //     {
+  //       param: {
+  //         PROJECT_NAME: `${phases[phase].name}`,
+  //         NAME: `${phases[phase].name}-backup`,
+  //         SUFFIX: phases[phase].suffix,
+  //         VERSION: phases[phase].tag,
+  //         ENV: phases[phase].phase,
+  //         HOST: phases[phase].host,
+  //         BACKUP_VOLUME_NAME: phases[phase].backupVolume,
+  //         BACKUP_VOLUME_SIZE: phases[phase].backupVolumeSize,
+  //         VERIFICATION_VOLUME_SIZE: phases[phase].verificationVolumeSize,
+  //       },
+  //     }
+  //   )
+  // );
+
   objects.push(
     ...oc.processDeploymentTemplate(
       `${templatesLocalBaseUrl}/configmaps/api-appsettings.yaml`,
@@ -116,25 +135,6 @@ module.exports = (settings) => {
           VERSION: phases[phase].tag,
           ENV: phases[phase].phase,
           HOST: phases[phase].host,
-        },
-      }
-    )
-  );
-
-  objects.push(
-    ...oc.processDeploymentTemplate(
-      `${templatesLocalBaseUrl}/backup-deploy-config.yaml`,
-      {
-        param: {
-          PROJECT_NAME: `${phases[phase].name}`,
-          NAME: `${phases[phase].name}-backup`,
-          SUFFIX: phases[phase].suffix,
-          VERSION: phases[phase].tag,
-          ENV: phases[phase].phase,
-          HOST: phases[phase].host,
-          BACKUP_VOLUME_NAME: phases[phase].backupVolume,
-          BACKUP_VOLUME_SIZE: phases[phase].backupVolumeSize,
-          VERIFICATION_VOLUME_SIZE: phases[phase].verificationVolumeSize,
         },
       }
     )
