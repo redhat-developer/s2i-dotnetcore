@@ -12,22 +12,6 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: "${BACKUP_VOLUME_NAME}"
-      labels:
-        app: "${NAME}-persistent"
-        template: "${NAME}-persistent-template"
-    labels:
-      shared: "true"
-    spec:
-      storageClassName: "${BACKUP_VOLUME_CLASS}"
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: "${BACKUP_VOLUME_SIZE}"
-  - kind: PersistentVolumeClaim
-    apiVersion: v1
-    metadata:
       name: "${NAME}-${VERIFICATION_VOLUME_NAME}"
       labels:
         app: "${NAME}-persistent"
