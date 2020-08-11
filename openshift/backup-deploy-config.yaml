@@ -156,6 +156,11 @@ objects:
                   mountPath: "${CONFIG_MOUNT_PATH}${CONFIG_FILE_NAME}"
                   subPath: "${CONFIG_FILE_NAME}"
 parameters:
+  - description: Name of the project (SCHOOLBUS)
+    displayName: PROJECT_NAME
+    name: PROJECT_NAME
+    required: true
+    value: "sbi"
   - name: NAME
     displayName: Name
     description:
