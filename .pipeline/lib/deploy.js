@@ -73,7 +73,6 @@ module.exports = (settings) => {
           SUFFIX: phases[phase].suffix,
           VERSION: phases[phase].tag,
           ENV: phases[phase].phase,
-          HOST: phases[phase].host,
           BACKUP_VOLUME_NAME: phases[phase].backupVolume,
           BACKUP_VOLUME_SIZE: phases[phase].backupVolumeSize,
           VERIFICATION_VOLUME_SIZE: phases[phase].verificationVolumeSize,
