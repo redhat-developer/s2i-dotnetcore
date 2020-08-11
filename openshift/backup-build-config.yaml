@@ -53,7 +53,7 @@ parameters:
     displayName: Name
     name: NAME
     required: false
-    value: "backup"
+    value: "sbi-backup"
   - description: A name suffix used for all objects
     displayName: Suffix
     name: SUFFIX
@@ -63,7 +63,7 @@ parameters:
     displayName: version
     name: VERSION
     required: false
-    value: "1.4"
+    value: "latest"
   - description: SOURCE_REPOSITORY_URL
     displayName: SOURCE_REPOSITORY_URL
     name: SOURCE_REPOSITORY_URL
