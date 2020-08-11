@@ -73,7 +73,7 @@ parameters:
     displayName: SOURCE_REPOSITORY_REF
     name: SOURCE_REPOSITORY_REF
     required: false
-    value: ""
+    value: "master"
   - description: SOURCE_CONTEXT_DIR
     displayName: SOURCE_CONTEXT_DIR
     name: SOURCE_CONTEXT_DIR
