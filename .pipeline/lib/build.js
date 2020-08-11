@@ -14,18 +14,18 @@ module.exports = (settings) => {
     path.resolve(__dirname, "../../openshift")
   );
 
-  objects.push(
-    ...oc.processDeploymentTemplate(
-      `${templatesLocalBaseUrl}/backup-build-config.yaml`,
-      {
-        param: {
-          NAME: `${settings.phases[phase].name}-backup`,
-          SUFFIX: settings.phases[phase].suffix,
-          VERSION: settings.phases[phase].tag,
-        },
-      }
-    )
-  );
+  // objects.push(
+  //   ...oc.processDeploymentTemplate(
+  //     `${templatesLocalBaseUrl}/backup-build-config.yaml`,
+  //     {
+  //       param: {
+  //         NAME: `${settings.phases[phase].name}-backup`,
+  //         SUFFIX: settings.phases[phase].suffix,
+  //         VERSION: settings.phases[phase].tag,
+  //       },
+  //     }
+  //   )
+  // );
 
   objects.push(
     ...oc.processDeploymentTemplate(
