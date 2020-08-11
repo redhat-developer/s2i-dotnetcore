@@ -22,6 +22,8 @@ module.exports = (settings) => {
           NAME: `${settings.phases[phase].name}-backup`,
           SUFFIX: settings.phases[phase].suffix,
           VERSION: settings.phases[phase].tag,
+          SOURCE_REPOSITORY_URL:
+            "https://github.com/BCDevOps/backup-container.git",
         },
       }
     )
