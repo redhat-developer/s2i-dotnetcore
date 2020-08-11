@@ -4,6 +4,7 @@ metadata:
   name: "${NAME}-deployment-template"
 objects:
   - kind: ConfigMap
+    apiVersion: v1
     metadata:
       name: ${CONFIG_MAP_NAME}
     data:
