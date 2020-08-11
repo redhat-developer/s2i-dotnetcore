@@ -78,7 +78,7 @@ parameters:
     displayName: SOURCE_CONTEXT_DIR
     name: SOURCE_CONTEXT_DIR
     required: false
-    value: "docker"
+    value: "/docker"
   - description: DOCKER_FILE_PATH
     displayName: DOCKER_FILE_PATH
     name: DOCKER_FILE_PATH
