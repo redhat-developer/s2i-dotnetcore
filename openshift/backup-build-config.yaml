@@ -67,17 +67,17 @@ parameters:
   - description: SOURCE_REPOSITORY_URL
     displayName: SOURCE_REPOSITORY_URL
     name: SOURCE_REPOSITORY_URL
-    required: true
+    required: false
     value: "https://github.com/BCDevOps/backup-container.git"
   - description: SOURCE_REPOSITORY_REF
     displayName: SOURCE_REPOSITORY_REF
     name: SOURCE_REPOSITORY_REF
-    required: true
-    value: "master"
+    required: false
+    value: ""
   - description: SOURCE_CONTEXT_DIR
     displayName: SOURCE_CONTEXT_DIR
     name: SOURCE_CONTEXT_DIR
-    required: true
+    required: false
     value: "docker"
   - description: DOCKER_FILE_PATH
     displayName: DOCKER_FILE_PATH
