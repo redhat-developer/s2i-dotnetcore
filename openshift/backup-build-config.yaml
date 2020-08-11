@@ -73,12 +73,12 @@ parameters:
     displayName: SOURCE_REPOSITORY_REF
     name: SOURCE_REPOSITORY_REF
     required: false
-    value: "master"
+    value: ""
   - description: SOURCE_CONTEXT_DIR
     displayName: SOURCE_CONTEXT_DIR
     name: SOURCE_CONTEXT_DIR
     required: false
-    value: "docker"
+    value: "/docker"
   - description: DOCKER_FILE_PATH
     displayName: DOCKER_FILE_PATH
     name: DOCKER_FILE_PATH
