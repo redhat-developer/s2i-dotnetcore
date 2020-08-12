@@ -45,7 +45,7 @@ show_help() {
     echo "$script_name is a script for installing/updating/removing .NET S2I streams."
     echo ""
     echo "Options:"
-    echo "  --o,--os                           Installs image streams based on this distro ('rhel7', 'rhel8', 'centos7', or 'fedora')."
+    echo "  --o,--os                           Installs image streams based on this distro ('rhel', 'centos', or 'fedora')."
     echo "  --i,--imagestreams                 Installs the imagestreams from the given path."
     echo "  --n,--namespace                    Namespace to add imagestreams to. Defaults to current 'oc' project."
     echo "                                     Set this to 'openshift' to install globally (requires admin priviledges)."
@@ -54,7 +54,7 @@ show_help() {
     echo "  --p,--password                     Password for pulling images from the registry."
     echo "  -?,--?,-h,--help                   Shows this help message."
     echo ""
-    echo "Credentials are required for the pulling the rhel7 images. If the project does not contain a secret"
+    echo "Credentials are required for the pulling the RHEL images. If the project does not contain a secret"
     echo "for pulling the images yet, you can add one by specifying the '--user' and '--password' options."
     echo "For more information see: https://access.redhat.com/articles/3399531."
 }
@@ -151,25 +151,25 @@ do
             shift
             os=$(echo "$1" | tr '[:upper:]' '[:lower:]')
             case "$os" in
-            "centos7")
+            "centos*")
                 imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_centos.json"
                 registry_requires_auth=false
-                ;;
-            "rhel7")
-                imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json"
-                registry_requires_auth=true
-                registry="registry.redhat.io"
                 ;;
             "rhel8")
                 imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_rhel8.json"
                 registry_requires_auth=false
+                ;;
+            "rhel*")
+                imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json"
+                registry_requires_auth=true
+                registry="registry.redhat.io"
                 ;;
             "fedora")
                 imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_fedora.json"
                 registry_requires_auth=false
                 ;;
             *)
-                say_err "Unsupported value for --os: '$os'. Valid values are 'centos7', 'rhel7', 'rhel8', and 'fedora'."
+                say_err "Unsupported value for --os: '$os'. Valid values are 'centos', 'rhel', and 'fedora'."
                 exit 1
                 ;;
             esac

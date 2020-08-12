@@ -13,7 +13,7 @@ usage () {
   echo " Usage:"
   echo "      $0"
   echo "      IMAGE_OS=FEDORA $0"
-  echo "      IMAGE_OS=RHEL7 REGISTRY_USERNAME=<user> REGISTRY_PASSWORD=<password> $0"
+  echo "      IMAGE_OS=RHEL REGISTRY_USERNAME=<user> REGISTRY_PASSWORD=<password> $0"
   echo ""
   echo "Test that the imagestreams file is valid by installing it into an OpenShift instance."
   echo ""
@@ -27,7 +27,7 @@ usage () {
   echo ""
   echo "IMAGE_OS            The base os image to use when building"
   echo "                    the containers."
-  echo "                    Options are CENTOS7, RHEL7, RHEL8, and"
+  echo "                    Options are CENTOS, RHEL, and"
   echo "                    FEDORA."
   echo "                    Defaults to match the OS."
   echo ""
@@ -83,22 +83,24 @@ if [[ -z "$IMAGE_OS" ]]; then
 fi
 IMAGE_OS=$(echo "$IMAGE_OS" | tr '[:upper:]' '[:lower:]')
 
-if [[ "$IMAGE_OS" = "centos7" ]]; then
+case "$IMAGE_OS" in
+"centos*")
   VERSIONS="${VERSIONS:-2.1 3.1}"
   imagestreams_file_name=dotnet_imagestreams_centos.json
-elif [[ "$IMAGE_OS" = "fedora" ]]; then
+  ;;
+"fedora")
   VERSIONS="${VERSIONS:-3.1}"
   imagestreams_file_name=dotnet_imagestreams_fedora.json
-elif [[ "$IMAGE_OS" = "rhel7" ]]; then
+  ;;
+"rhel*")
   VERSIONS="${VERSIONS:-2.1 3.1}"
   imagestreams_file_name=dotnet_imagestreams.json
-elif [[ "$IMAGE_OS" = "rhel8" ]]; then
-  VERSIONS="${VERSIONS:-2.1 3.1}"
-  imagestreams_file_name=dotnet_imagestreams_rhel8.json
-else
+  ;;
+*)
   echo 1>&2 "error: Unknown or unsupported OS '$IMAGE_OS'. Set the env var IMAGE_OS to override this."
   exit 1
-fi
+  ;;
+esac
 
 if [[ -z "${TIMEOUT:-}" ]]; then
   TIMEOUT=180

@@ -5,12 +5,12 @@
 .DESCRIPTION
     Install/Update/Remove .NET Core S2I streams.
 
-    Credentials are required for the pulling the rhel7 images. If the project does not contain a secret
+    Credentials are required for the pulling the RHEL images. If the project does not contain a secret
     for pulling the images yet, you can add one by specifying the '-User' and '-Password' options.
     For more information see: https://access.redhat.com/articles/3399531.
 
 .PARAMETER OS
-    Installs image streams based on this distro ('rhel7', 'rhel8', 'centos7', or 'fedora').
+    Installs image streams based on this distro ('rhel', 'centos', or 'fedora').
 
 .PARAMETER Namespace
     Namespace to add imagestreams to. Defaults to current 'oc' project.
@@ -29,9 +29,9 @@
     https://github.com/redhat-developer/s2i-dotnetcore
 
 .EXAMPLE
-    .\install-imagestreams -OS rhel8
+    .\install-imagestreams -OS rhel
 
-    Install RHEL8 based image streams into the current OpenShift 'oc' project.
+    Install RHEL based image streams into the current OpenShift 'oc' project.
 
 .EXAMPLE
 
@@ -203,23 +203,24 @@ if($Remove.IsPresent)
 }
 
 # The OS parameter is required.
-switch ( $OS )
+switch -wildcard ( $OS )
 {
-    "centos7"
+    "centos*"
     {
         $imagestreams_url = "https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_centos.json"
         $registry_requires_auth = $false
-    }
-    "rhel7"
-    {
-        $imagestreams_url = "https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json"
-        $registry_requires_auth = $true
-        $registry="registry.redhat.io"
     }
     "rhel8"
     {
         $imagestreams_url = "https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_rhel8.json"
         $registry_requires_auth = $false
+        break
+    }
+    "rhel*"
+    {
+        $imagestreams_url = "https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json"
+        $registry_requires_auth = $true
+        $registry="registry.redhat.io"
     }
     "fedora"
     {
@@ -228,7 +229,7 @@ switch ( $OS )
     }
     default
     {
-        throw "Unsupported value for --os: $OS. Valid values are 'centos7', 'rhel7', 'rhel8', and 'fedora'."
+        throw "Unsupported value for --os: $OS. Valid values are 'centos', 'rhel', and 'fedora'."
     }
 }
 
