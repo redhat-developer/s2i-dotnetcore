@@ -39,7 +39,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Contact created</response>
         [HttpPost]
         [Route("/api/contacts/bulk")]
-        //[SwaggerOperation("ContactsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult ContactsBulkPost([FromBody]Contact[] items)
         {
@@ -52,8 +51,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/contacts")]
-        //[SwaggerOperation("ContactsGet")]
-        //[SwaggerResponse(200, type: typeof(List<Contact>))]
         public virtual IActionResult ContactsGet()
         {
             return this._service.ContactsGetAsync();
@@ -67,7 +64,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Contact not found</response>
         [HttpPost]
         [Route("/api/contacts/{id}/delete")]
-        //[SwaggerOperation("ContactsIdDeletePost")]
         public virtual IActionResult ContactsIdDeletePost([FromRoute]int id)
         {
             return this._service.ContactsIdDeletePostAsync(id);
@@ -81,8 +77,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Contact not found</response>
         [HttpGet]
         [Route("/api/contacts/{id}")]
-        //[SwaggerOperation("ContactsIdGet")]
-        //[SwaggerResponse(200, type: typeof(Contact))]
         public virtual IActionResult ContactsIdGet([FromRoute]int id)
         {
             return this._service.ContactsIdGetAsync(id);
@@ -97,8 +91,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Contact not found</response>
         [HttpPut]
         [Route("/api/contacts/{id}")]
-        //[SwaggerOperation("ContactsIdPut")]
-        //[SwaggerResponse(200, type: typeof(Contact))]
         public virtual IActionResult ContactsIdPut([FromRoute]int id, [FromBody]Contact item)
         {
             return this._service.ContactsIdPutAsync(id, item);
@@ -111,8 +103,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Contact created</response>
         [HttpPost]
         [Route("/api/contacts")]
-        //[SwaggerOperation("ContactsPost")]
-        //[SwaggerResponse(200, type: typeof(Contact))]
         public virtual IActionResult ContactsPost([FromBody]Contact item)
         {
             return this._service.ContactsPostAsync(item);

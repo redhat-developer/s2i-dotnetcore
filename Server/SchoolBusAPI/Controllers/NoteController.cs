@@ -39,7 +39,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Note created</response>
         [HttpPost]
         [Route("/api/notes/bulk")]
-        //[SwaggerOperation("NotesBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult NotesBulkPost([FromBody]Note[] items)
         {
@@ -52,8 +51,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/notes")]
-        //[SwaggerOperation("NotesGet")]
-        //[SwaggerResponse(200, type: typeof(List<Note>))]
         public virtual IActionResult NotesGet()
         {
             return this._service.NotesGetAsync();
@@ -67,7 +64,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Note not found</response>
         [HttpPost]
         [Route("/api/notes/{id}/delete")]
-        //[SwaggerOperation("NotesIdDeletePost")]
         public virtual IActionResult NotesIdDeletePost([FromRoute]int id)
         {
             return this._service.NotesIdDeletePostAsync(id);
@@ -81,8 +77,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Note not found</response>
         [HttpGet]
         [Route("/api/notes/{id}")]
-        //[SwaggerOperation("NotesIdGet")]
-        //[SwaggerResponse(200, type: typeof(Note))]
         public virtual IActionResult NotesIdGet([FromRoute]int id)
         {
             return this._service.NotesIdGetAsync(id);
@@ -97,8 +91,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Note not found</response>
         [HttpPut]
         [Route("/api/notes/{id}")]
-        //[SwaggerOperation("NotesIdPut")]
-        //[SwaggerResponse(200, type: typeof(Note))]
         public virtual IActionResult NotesIdPut([FromRoute]int id, [FromBody]Note item)
         {
             return this._service.NotesIdPutAsync(id, item);
@@ -111,8 +103,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Note created</response>
         [HttpPost]
         [Route("/api/notes")]
-        //[SwaggerOperation("NotesPost")]
-        //[SwaggerResponse(200, type: typeof(Note))]
         public virtual IActionResult NotesPost([FromBody]Note item)
         {
             return this._service.NotesPostAsync(item);

@@ -39,7 +39,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">SchoolDistrict created</response>
         [HttpPost]
         [Route("/api/schooldistricts/bulk")]
-        //[SwaggerOperation("SchooldistrictsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult SchooldistrictsBulkPost([FromBody]SchoolDistrict[] items)
         {
@@ -52,8 +51,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schooldistricts")]
-        //[SwaggerOperation("SchooldistrictsGet")]
-        //[SwaggerResponse(200, type: typeof(List<SchoolDistrict>))]
         public virtual IActionResult SchooldistrictsGet()
         {
             return this._service.SchooldistrictsGetAsync();
@@ -67,7 +64,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">SchoolDistrict not found</response>
         [HttpPost]
         [Route("/api/schooldistricts/{id}/delete")]
-        //[SwaggerOperation("SchooldistrictsIdDeletePost")]
         public virtual IActionResult SchooldistrictsIdDeletePost([FromRoute]int id)
         {
             return this._service.SchooldistrictsIdDeletePostAsync(id);
@@ -81,8 +77,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">SchoolDistrict not found</response>
         [HttpGet]
         [Route("/api/schooldistricts/{id}")]
-        //[SwaggerOperation("SchooldistrictsIdGet")]
-        //[SwaggerResponse(200, type: typeof(SchoolDistrict))]
         public virtual IActionResult SchooldistrictsIdGet([FromRoute]int id)
         {
             return this._service.SchooldistrictsIdGetAsync(id);
@@ -97,8 +91,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">SchoolDistrict not found</response>
         [HttpPut]
         [Route("/api/schooldistricts/{id}")]
-        //[SwaggerOperation("SchooldistrictsIdPut")]
-        //[SwaggerResponse(200, type: typeof(SchoolDistrict))]
         public virtual IActionResult SchooldistrictsIdPut([FromRoute]int id, [FromBody]SchoolDistrict item)
         {
             return this._service.SchooldistrictsIdPutAsync(id, item);
@@ -111,8 +103,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">SchoolDistrict created</response>
         [HttpPost]
         [Route("/api/schooldistricts")]
-        //[SwaggerOperation("SchooldistrictsPost")]
-        //[SwaggerResponse(200, type: typeof(SchoolDistrict))]
         public virtual IActionResult SchooldistrictsPost([FromBody]SchoolDistrict item)
         {
             return this._service.SchooldistrictsPostAsync(item);
