@@ -39,7 +39,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">CCWJurisdiction created</response>
         [HttpPost]
         [Route("/api/ccwjurisdictions/bulk")]
-        //[SwaggerOperation("CcwjurisdictionsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult CcwjurisdictionsBulkPost([FromBody]CCWJurisdiction[] items)
         {
@@ -52,8 +51,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/ccwjurisdictions")]
-        //[SwaggerOperation("CcwjurisdictionsGet")]
-        //[SwaggerResponse(200, type: typeof(List<CCWJurisdiction>))]
         public virtual IActionResult CcwjurisdictionsGet()
         {
             return this._service.CcwjurisdictionsGetAsync();
@@ -67,7 +64,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">CCWJurisdiction not found</response>
         [HttpPost]
         [Route("/api/ccwjurisdictions/{id}/delete")]
-        //[SwaggerOperation("CcwjurisdictionsIdDeletePost")]
         public virtual IActionResult CcwjurisdictionsIdDeletePost([FromRoute]int id)
         {
             return this._service.CcwjurisdictionsIdDeletePostAsync(id);
@@ -81,8 +77,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">CCWJurisdiction not found</response>
         [HttpGet]
         [Route("/api/ccwjurisdictions/{id}")]
-        //[SwaggerOperation("CcwjurisdictionsIdGet")]
-        //[SwaggerResponse(200, type: typeof(CCWJurisdiction))]
         public virtual IActionResult CcwjurisdictionsIdGet([FromRoute]int id)
         {
             return this._service.CcwjurisdictionsIdGetAsync(id);
@@ -97,8 +91,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">CCWJurisdiction not found</response>
         [HttpPut]
         [Route("/api/ccwjurisdictions/{id}")]
-        //[SwaggerOperation("CcwjurisdictionsIdPut")]
-        //[SwaggerResponse(200, type: typeof(CCWJurisdiction))]
         public virtual IActionResult CcwjurisdictionsIdPut([FromRoute]int id, [FromBody]CCWJurisdiction item)
         {
             return this._service.CcwjurisdictionsIdPutAsync(id, item);
@@ -111,8 +103,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">CCWJurisdiction created</response>
         [HttpPost]
         [Route("/api/ccwjurisdictions")]
-        //[SwaggerOperation("CcwjurisdictionsPost")]
-        //[SwaggerResponse(200, type: typeof(CCWJurisdiction))]
         public virtual IActionResult CcwjurisdictionsPost([FromBody]CCWJurisdiction item)
         {
             return this._service.CcwjurisdictionsPostAsync(item);

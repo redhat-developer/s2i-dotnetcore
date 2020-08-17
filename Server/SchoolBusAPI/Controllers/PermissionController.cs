@@ -40,7 +40,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Permission created</response>
         [HttpPost]
         [Route("/api/permissions/bulk")]
-        //[SwaggerOperation("PermissionsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult PermissionsBulkPost([FromBody]Permission[] items)
         {
@@ -53,8 +52,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/permissions")]
-        //[SwaggerOperation("PermissionsGet")]
-        //[SwaggerResponse(200, type: typeof(List<PermissionViewModel>))]
         public virtual IActionResult PermissionsGet()
         {
             return this._service.PermissionsGetAsync();
@@ -68,7 +65,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Permission not found</response>
         [HttpPost]
         [Route("/api/permissions/{id}/delete")]
-        //[SwaggerOperation("PermissionsIdDeletePost")]
         public virtual IActionResult PermissionsIdDeletePost([FromRoute]int id)
         {
             return this._service.PermissionsIdDeletePostAsync(id);
@@ -82,8 +78,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Permission not found</response>
         [HttpGet]
         [Route("/api/permissions/{id}")]
-        //[SwaggerOperation("PermissionsIdGet")]
-        //[SwaggerResponse(200, type: typeof(PermissionViewModel))]
         public virtual IActionResult PermissionsIdGet([FromRoute]int id)
         {
             return this._service.PermissionsIdGetAsync(id);
@@ -98,8 +92,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Permission not found</response>
         [HttpPut]
         [Route("/api/permissions/{id}")]
-        //[SwaggerOperation("PermissionsIdPut")]
-        //[SwaggerResponse(200, type: typeof(PermissionViewModel))]
         public virtual IActionResult PermissionsIdPut([FromRoute]int id, [FromBody]PermissionViewModel item)
         {
             return this._service.PermissionsIdPutAsync(id, item);
@@ -112,8 +104,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Permission created</response>
         [HttpPost]
         [Route("/api/permissions")]
-        //[SwaggerOperation("PermissionsPost")]
-        //[SwaggerResponse(200, type: typeof(PermissionViewModel))]
         public virtual IActionResult PermissionsPost([FromBody]PermissionViewModel item)
         {
             return this._service.PermissionsPostAsync(item);

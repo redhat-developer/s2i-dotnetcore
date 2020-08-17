@@ -40,7 +40,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Role created</response>
         [HttpPost]
         [Route("/api/rolepermissions/bulk")]
-        //[SwaggerOperation("RolepermissionsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult RolepermissionsBulkPost([FromBody]RolePermission[] items)
         {
@@ -54,7 +53,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Role created</response>
         [HttpPost]
         [Route("/api/roles/bulk")]
-        //[SwaggerOperation("RolesBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult RolesBulkPost([FromBody]Role[] items)
         {
@@ -67,8 +65,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/roles")]
-        //[SwaggerOperation("RolesGet")]
-        //[SwaggerResponse(200, type: typeof(List<RoleViewModel>))]
         public virtual IActionResult RolesGet()
         {
             return this._service.RolesGetAsync();
@@ -82,7 +78,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPost]
         [Route("/api/roles/{id}/delete")]
-        //[SwaggerOperation("RolesIdDeletePost")]
         public virtual IActionResult RolesIdDeletePost([FromRoute]int id)
         {
             return this._service.RolesIdDeletePostAsync(id);
@@ -96,8 +91,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpGet]
         [Route("/api/roles/{id}")]
-        //[SwaggerOperation("RolesIdGet")]
-        //[SwaggerResponse(200, type: typeof(RoleViewModel))]
         public virtual IActionResult RolesIdGet([FromRoute]int id)
         {
             return this._service.RolesIdGetAsync(id);
@@ -111,8 +104,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/roles/{id}/permissions")]
-        //[SwaggerOperation("RolesIdPermissionsGet")]
-        //[SwaggerResponse(200, type: typeof(List<PermissionViewModel>))]
         public virtual IActionResult RolesIdPermissionsGet([FromRoute]int id)
         {
             return this._service.RolesIdPermissionsGetAsync(id);
@@ -128,8 +119,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPost]
         [Route("/api/roles/{id}/permissions")]
-        //[SwaggerOperation("RolesIdPermissionsPost")]
-        //[SwaggerResponse(200, type: typeof(List<PermissionViewModel>))]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult RolesIdPermissionsPost([FromRoute]int id, [FromBody]PermissionViewModel item)
         {
@@ -146,8 +135,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPut]
         [Route("/api/roles/{id}/permissions")]
-        //[SwaggerOperation("RolesIdPermissionsPut")]
-        //[SwaggerResponse(200, type: typeof(List<PermissionViewModel>))]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult RolesIdPermissionsPut([FromRoute]int id, [FromBody]PermissionViewModel[] items)
         {
@@ -163,8 +150,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPut]
         [Route("/api/roles/{id}")]
-        //[SwaggerOperation("RolesIdPut")]
-        //[SwaggerResponse(200, type: typeof(RoleViewModel))]
         public virtual IActionResult RolesIdPut([FromRoute]int id, [FromBody]RoleViewModel item)
         {
             return this._service.RolesIdPutAsync(id, item);
@@ -178,8 +163,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/roles/{id}/users")]
-        //[SwaggerOperation("RolesIdUsersGet")]
-        //[SwaggerResponse(200, type: typeof(List<UserRoleViewModel>))]
         public virtual IActionResult RolesIdUsersGet([FromRoute]int id)
         {
             return this._service.RolesIdUsersGetAsync(id);
@@ -195,8 +178,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPut]
         [Route("/api/roles/{id}/users")]
-        //[SwaggerOperation("RolesIdUsersPut")]
-        //[SwaggerResponse(200, type: typeof(List<UserRoleViewModel>))]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult RolesIdUsersPut([FromRoute]int id, [FromBody]UserRoleViewModel[] items)
         {
@@ -210,8 +191,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Role created</response>
         [HttpPost]
         [Route("/api/roles")]
-        //[SwaggerOperation("RolesPost")]
-        //[SwaggerResponse(200, type: typeof(RoleViewModel))]
         public virtual IActionResult RolesPost([FromBody]RoleViewModel item)
         {
             return this._service.RolesPostAsync(item);

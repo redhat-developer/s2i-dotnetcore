@@ -40,7 +40,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Attachment created</response>
         [HttpPost]
         [Route("/api/attachments/bulk")]
-        ////[SwaggerOperation("AttachmentsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult AttachmentsBulkPost([FromBody]Attachment[] items)
         {
@@ -53,8 +52,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/attachments")]
-        ////[SwaggerOperation("AttachmentsGet")]
-        ////[SwaggerResponse(200, type: typeof(List<Attachment>))]
         public virtual IActionResult AttachmentsGet()
         {
             return this._service.AttachmentsGetAsync();
@@ -68,7 +65,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Attachment not found</response>
         [HttpPost]
         [Route("/api/attachments/{id}/delete")]
-        ////[SwaggerOperation("AttachmentsIdDeletePost")]
         public virtual IActionResult AttachmentsIdDeletePost([FromRoute]int id)
         {
             return this._service.AttachmentsIdDeletePostAsync(id);
@@ -82,7 +78,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Attachment not found in CCW system</response>
         [HttpGet]
         [Route("/api/attachments/{id}/download")]
-        //[SwaggerOperation("AttachmentsIdDownloadGet")]
         public virtual IActionResult AttachmentsIdDownloadGet([FromRoute]int id)
         {
             return this._service.AttachmentsIdDownloadGetAsync(id);
@@ -96,8 +91,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Attachment not found</response>
         [HttpGet]
         [Route("/api/attachments/{id}")]
-        //[SwaggerOperation("AttachmentsIdGet")]
-        //[SwaggerResponse(200, type: typeof(Attachment))]
         public virtual IActionResult AttachmentsIdGet([FromRoute]int id)
         {
             return this._service.AttachmentsIdGetAsync(id);
@@ -112,8 +105,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Attachment not found</response>
         [HttpPut]
         [Route("/api/attachments/{id}")]
-        //[SwaggerOperation("AttachmentsIdPut")]
-        //[SwaggerResponse(200, type: typeof(Attachment))]
         public virtual IActionResult AttachmentsIdPut([FromRoute]int id, [FromBody]Attachment item)
         {
             return this._service.AttachmentsIdPutAsync(id, item);
@@ -126,8 +117,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Attachment created</response>
         [HttpPost]
         [Route("/api/attachments")]
-        //[SwaggerOperation("AttachmentsPost")]
-        //[SwaggerResponse(200, type: typeof(Attachment))]
         public virtual IActionResult AttachmentsPost([FromBody]Attachment item)
         {
             return this._service.AttachmentsPostAsync(item);

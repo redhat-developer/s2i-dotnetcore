@@ -39,7 +39,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Notification created</response>
         [HttpPost]
         [Route("/api/notifications/bulk")]
-        //[SwaggerOperation("NotificationsBulkPost")]
         [RequiresPermission(Permission.ADMIN)]
         public virtual IActionResult NotificationsBulkPost([FromBody]Notification[] items)
         {
@@ -52,8 +51,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/notifications")]
-        //[SwaggerOperation("NotificationsGet")]
-        //[SwaggerResponse(200, type: typeof(List<Notification>))]
         public virtual IActionResult NotificationsGet()
         {
             return this._service.NotificationsGetAsync();
@@ -67,7 +64,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Notification not found</response>
         [HttpPost]
         [Route("/api/notifications/{id}/delete")]
-        //[SwaggerOperation("NotificationsIdDeletePost")]
         public virtual IActionResult NotificationsIdDeletePost([FromRoute]int id)
         {
             return this._service.NotificationsIdDeletePostAsync(id);
@@ -81,8 +77,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Notification not found</response>
         [HttpGet]
         [Route("/api/notifications/{id}")]
-        //[SwaggerOperation("NotificationsIdGet")]
-        //[SwaggerResponse(200, type: typeof(Notification))]
         public virtual IActionResult NotificationsIdGet([FromRoute]int id)
         {
             return this._service.NotificationsIdGetAsync(id);
@@ -97,8 +91,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Notification not found</response>
         [HttpPut]
         [Route("/api/notifications/{id}")]
-        //[SwaggerOperation("NotificationsIdPut")]
-        //[SwaggerResponse(200, type: typeof(Notification))]
         public virtual IActionResult NotificationsIdPut([FromRoute]int id, [FromBody]Notification item)
         {
             return this._service.NotificationsIdPutAsync(id, item);
@@ -111,8 +103,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Notification created</response>
         [HttpPost]
         [Route("/api/notifications")]
-        //[SwaggerOperation("NotificationsPost")]
-        //[SwaggerResponse(200, type: typeof(Notification))]
         public virtual IActionResult NotificationsPost([FromBody]Notification item)
         {
             return this._service.NotificationsPostAsync(item);
