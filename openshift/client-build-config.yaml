@@ -17,7 +17,7 @@ objects:
         - annotations: null
           from:
             kind: DockerImage
-            name: registry.redhat.io/rhel8/nginx-116:1-39
+            name: registry.redhat.io/rhel8/nginx-116:1-58
           name: "1"
           referencePolicy:
             type: Local
