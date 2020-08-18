@@ -37,22 +37,22 @@ objects:
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
-      name: "${NAME}"
+      name: "${NAME}-${ENV}"
       labels:
-        template: "${NAME}-deployment"
+        template: "${NAME}-${ENV}"
       annotations:
-        description: Defines how to deploy the ${NAME} server
+        description: Defines how to deploy the ${NAME}-${ENV}
     spec:
       strategy:
         type: Recreate
       replicas: 1
       selector:
-        name: "${NAME}"
+        name: "${NAME}-${ENV}"
       template:
         metadata:
-          name: "${NAME}"
+          name: "${NAME}-${ENV}"
           labels:
-            name: "${NAME}"
+            name: "${NAME}-${ENV}"
         spec:
           volumes:
             - name: "${BACKUP_VOLUME_NAME}"
@@ -68,7 +68,7 @@ objects:
                   - key: "${CONFIG_FILE_NAME}-${ENV}"
                     path: "${CONFIG_FILE_NAME}-${ENV}"
           containers:
-            - name: "${NAME}-${ENV}"
+            - name: "backup"
               image: docker-registry.default.svc:5000/tran-schoolbus-tools/${NAME}:latest
               ports: []
               env:
