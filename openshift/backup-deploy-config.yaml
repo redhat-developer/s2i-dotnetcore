@@ -6,9 +6,9 @@ objects:
   - kind: ConfigMap
     apiVersion: v1
     metadata:
-      name: ${CONFIG_MAP_NAME}
+      name: ${CONFIG_MAP_NAME}-${ENV}
     data:
-      "${CONFIG_FILE_NAME}": "${PROJECT_NAME}-${DB_NAME}-${ENV}/${DATABASE_NAME}\n0 23 * * * default ./backup.sh -s"
+      "${CONFIG_FILE_NAME}-${ENV}": "${PROJECT_NAME}-${DB_NAME}-${ENV}/${DATABASE_NAME}\n0 23 * * * default ./backup.sh -s"
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
@@ -63,12 +63,12 @@ objects:
                 claimName: "${NAME}-${VERIFICATION_VOLUME_NAME}"
             - name: "${NAME}-config-volume"
               configMap:
-                name: "${CONFIG_MAP_NAME}"
+                name: "${CONFIG_MAP_NAME}-${ENV}"
                 items:
-                  - key: "${CONFIG_FILE_NAME}"
-                    path: "${CONFIG_FILE_NAME}"
+                  - key: "${CONFIG_FILE_NAME}-${ENV}"
+                    path: "${CONFIG_FILE_NAME}-${ENV}"
           containers:
-            - name: "${NAME}"
+            - name: "${NAME}-${ENV}"
               image: docker-registry.default.svc:5000/tran-schoolbus-tools/${NAME}:latest
               ports: []
               env:
