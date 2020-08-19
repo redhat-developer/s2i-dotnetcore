@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Contact created</response>
         [HttpPost]
         [Route("/api/contacts/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult ContactsBulkPost([FromBody]Contact[] items)
         {
             return this._service.ContactsBulkPostAsync(items);

@@ -87,20 +87,21 @@ namespace SchoolBusAPI.Models
 		[JsonIgnore]
 		[MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a Permission")]
         public int? PermissionId { get; set; }
-        
+
+        /// <summary>
+        /// The date on which a permission previously assigned to a role was removed from that role.
+        /// </summary>
+        /// <value>The date on which a permission previously assigned to a role was removed from that role.</value>
+        [MetaDataExtension(Description = "The date on which a permission previously assigned to a role was removed from that role.")]
+        public DateTime? ExpiryDate { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("class RolePermission {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Role: ").Append(Role).Append("\n");
-            sb.Append("  Permission: ").Append(Permission).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
+            return ToJson();
         }
 
         /// <summary>

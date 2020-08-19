@@ -234,100 +234,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:SchoolBusAPI.Models.Permission">
-            <summary>
-            
-            </summary>
-            <summary>
-            The set of permissions defined in the application. Each permission is given a name and triggers some behavior defined in the application. For example, a permission might allow users to see data or to have access to functionality restricted to users without that permission. Permissions are created as needed to the application and are added to the permissions table by data migrations executed at the time the software that uses the permission is deployed.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Models.Permission.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Models.Permission.#ctor(System.Int32,System.String,System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.Models.Permission" /> class.
-            </summary>
-            <param name="Id">A system-generated unique identifier for a Permission (required).</param>
-            <param name="Code">The name of the permission referenced in the software of the application. (required).</param>
-            <param name="Name">The &amp;#39;user friendly&amp;#39; name of the permission exposed to the user selecting the permissions to be included in a Role. (required).</param>
-            <param name="Description">A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role. (required).</param>
-        </member>
-        <member name="P:SchoolBusAPI.Models.Permission.Id">
-            <summary>
-            A system-generated unique identifier for a Permission
-            </summary>
-            <value>A system-generated unique identifier for a Permission</value>
-        </member>
-        <member name="P:SchoolBusAPI.Models.Permission.Code">
-            <summary>
-            The name of the permission referenced in the software of the application.
-            </summary>
-            <value>The name of the permission referenced in the software of the application.</value>
-        </member>
-        <member name="P:SchoolBusAPI.Models.Permission.Name">
-            <summary>
-            The &#39;user friendly&#39; name of the permission exposed to the user selecting the permissions to be included in a Role.
-            </summary>
-            <value>The &#39;user friendly&#39; name of the permission exposed to the user selecting the permissions to be included in a Role.</value>
-        </member>
-        <member name="P:SchoolBusAPI.Models.Permission.Description">
-            <summary>
-            A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role.
-            </summary>
-            <value>A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role.</value>
-        </member>
-        <member name="M:SchoolBusAPI.Models.Permission.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.Models.Permission.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.Models.Permission.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.Models.Permission.Equals(SchoolBusAPI.Models.Permission)">
-            <summary>
-            Returns true if Permission instances are equal
-            </summary>
-            <param name="other">Instance of Permission to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.Models.Permission.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.Models.Permission.op_Equality(SchoolBusAPI.Models.Permission,SchoolBusAPI.Models.Permission)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.Models.Permission.op_Inequality(SchoolBusAPI.Models.Permission,SchoolBusAPI.Models.Permission)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.Models.Role">
             <summary>
             
@@ -380,6 +286,12 @@
             A description of the role as set by the user creating&#x2F;updating the role.
             </summary>
             <value>A description of the role as set by the user creating&#x2F;updating the role.</value>
+        </member>
+        <member name="P:SchoolBusAPI.Models.Role.ExpiryDate">
+            <summary>
+            The date on which a role was removed.
+            </summary>
+            <value>The date on which a role was removed.</value>
         </member>
         <member name="P:SchoolBusAPI.Models.Role.RolePermissions">
             <summary>
@@ -2877,6 +2789,103 @@
             <param name="right"></param>
             <returns></returns>
         </member>
+        <member name="T:SchoolBusAPI.Models.Permission">
+            <summary>
+            The set of permissions defined in the application. Each permission is given a name and triggers some behavior defined in the application. For example, a permission might allow users to see data or to have access to functionality restricted to users without that permission. Permissions are created as needed to the application and are added to the permissions table by data migrations executed at the time the software that uses the permission is deployed.
+            </summary>
+        </member>
+        <member name="M:SchoolBusAPI.Models.Permission.#ctor">
+            <summary>
+            Default constructor, required by entity framework
+            </summary>
+        </member>
+        <member name="M:SchoolBusAPI.Models.Permission.#ctor(System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SchoolBusAPI.Models.Permission" /> class.
+            </summary>
+            <param name="Id">A system-generated unique identifier for a Permission (required).</param>
+            <param name="Code">The name of the permission referenced in the software of the application. (required).</param>
+            <param name="Name">The &amp;#39;user friendly&amp;#39; name of the permission exposed to the user selecting the permissions to be included in a Role. (required).</param>
+            <param name="Description">A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role. (required).</param>
+        </member>
+        <member name="P:SchoolBusAPI.Models.Permission.Id">
+            <summary>
+            A system-generated unique identifier for a Permission
+            </summary>
+            <value>A system-generated unique identifier for a Permission</value>
+        </member>
+        <member name="P:SchoolBusAPI.Models.Permission.Code">
+            <summary>
+            The name of the permission referenced in the software of the application.
+            </summary>
+            <value>The name of the permission referenced in the software of the application.</value>
+        </member>
+        <member name="P:SchoolBusAPI.Models.Permission.Name">
+            <summary>
+            The &#39;user friendly&#39; name of the permission exposed to the user selecting the permissions to be included in a Role.
+            </summary>
+            <value>The &#39;user friendly&#39; name of the permission exposed to the user selecting the permissions to be included in a Role.</value>
+        </member>
+        <member name="P:SchoolBusAPI.Models.Permission.Description">
+            <summary>
+            A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role.
+            </summary>
+            <value>A description of the purpose of the permission and exposed to the user selecting the permissions to be included in a Role.</value>
+        </member>
+        <member name="P:SchoolBusAPI.Models.Permission.ExpiryDate">
+            <summary>
+            The date on which a permission was removed.
+            </summary>
+            <value>The date on which a permission was removed.</value>
+        </member>
+        <member name="M:SchoolBusAPI.Models.Permission.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:SchoolBusAPI.Models.Permission.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:SchoolBusAPI.Models.Permission.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:SchoolBusAPI.Models.Permission.Equals(SchoolBusAPI.Models.Permission)">
+            <summary>
+            Returns true if Permission instances are equal
+            </summary>
+            <param name="other">Instance of Permission to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:SchoolBusAPI.Models.Permission.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="M:SchoolBusAPI.Models.Permission.op_Equality(SchoolBusAPI.Models.Permission,SchoolBusAPI.Models.Permission)">
+            <summary>
+            Equals
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SchoolBusAPI.Models.Permission.op_Inequality(SchoolBusAPI.Models.Permission,SchoolBusAPI.Models.Permission)">
+            <summary>
+            Not Equals
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
         <member name="T:SchoolBusAPI.Models.Region">
             <summary>
             The MOTI-defined Regions - must match the official MOTI List
@@ -3020,6 +3029,12 @@
             <summary>
             Foreign key for Permission 
             </summary>   
+        </member>
+        <member name="P:SchoolBusAPI.Models.RolePermission.ExpiryDate">
+            <summary>
+            The date on which a permission previously assigned to a role was removed from that role.
+            </summary>
+            <value>The date on which a permission previously assigned to a role was removed from that role.</value>
         </member>
         <member name="M:SchoolBusAPI.Models.RolePermission.ToString">
             <summary>
@@ -9087,6 +9102,11 @@
             Gets or Sets Id
             </summary>
         </member>
+        <member name="P:SchoolBusAPI.ViewModels.PermissionViewModel.ExpiryDate">
+            <summary>
+            Gets or Sets ExpiryDate
+            </summary>
+        </member>
         <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.ToString">
             <summary>
             Returns the string presentation of the object
@@ -9348,6 +9368,11 @@
             Gets or Sets Id
             </summary>
         </member>
+        <member name="P:SchoolBusAPI.ViewModels.RolePermissionViewModel.ExpiryDate">
+            <summary>
+            Gets or Sets ExpiryDate
+            </summary>
+        </member>
         <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.ToString">
             <summary>
             Returns the string presentation of the object
@@ -9427,6 +9452,11 @@
         <member name="P:SchoolBusAPI.ViewModels.RoleViewModel.Description">
             <summary>
             Gets or Sets Description
+            </summary>
+        </member>
+        <member name="P:SchoolBusAPI.ViewModels.RoleViewModel.ExpiryDate">
+            <summary>
+            Gets or Sets ExpiryDate
             </summary>
         </member>
         <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.ToString">

@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">History created</response>
         [HttpPost]
         [Route("/api/histories/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult HistoriesBulkPost([FromBody]History[] items)
         {
             return this._service.HistoriesBulkPostAsync(items);

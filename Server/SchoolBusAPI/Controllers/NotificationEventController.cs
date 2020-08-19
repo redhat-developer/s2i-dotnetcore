@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">NotificationEvent created</response>
         [HttpPost]
         [Route("/api/notificationevents/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotificationeventsBulkPost([FromBody]NotificationEvent[] items)
         {
             return this._service.NotificationeventsBulkPostAsync(items);

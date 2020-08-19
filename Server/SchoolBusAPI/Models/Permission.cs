@@ -89,21 +89,21 @@ namespace SchoolBusAPI.Models
         [MaxLength(255)]
         
         public string Description { get; set; }
-        
+
+        /// <summary>
+        /// The date on which a permission was removed.
+        /// </summary>
+        /// <value>The date on which a permission was removed.</value>
+        [MetaDataExtension(Description = "The date on which a permission was removed")]
+        public DateTime? ExpiryDate { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("class Permission {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
+            return ToJson();
         }
 
         /// <summary>

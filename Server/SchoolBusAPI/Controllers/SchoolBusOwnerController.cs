@@ -40,7 +40,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">SchoolBusOwner created</response>
         [HttpPost]
         [Route("/api/schoolbusowners/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult SchoolbusownersBulkPost([FromBody]SchoolBusOwner[] items)
         {
             return this._service.SchoolbusownersBulkPostAsync(items);

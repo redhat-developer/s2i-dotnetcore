@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Group created</response>
         [HttpPost]
         [Route("/api/groups/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult GroupsBulkPost([FromBody]Group[] items)
         {
             return this._service.GroupsBulkPostAsync(items);

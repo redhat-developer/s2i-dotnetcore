@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">CCWData created</response>
         [HttpPost]
         [Route("/api/ccwdata/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
         public virtual IActionResult CcwdataBulkPost([FromBody]CCWData[] items)
         {
             return this._service.CcwdataBulkPostAsync(items);

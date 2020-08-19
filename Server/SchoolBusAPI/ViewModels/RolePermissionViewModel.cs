@@ -69,18 +69,18 @@ namespace SchoolBusAPI.ViewModels
         public int? Id { get; set; }
 
         /// <summary>
+        /// Gets or Sets ExpiryDate
+        /// </summary>
+        [DataMember(Name = "expiryDate")]
+        public DateTime? ExpiryDate { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("class RolePermissionViewModel {\n");
-            sb.Append("  RoleId: ").Append(RoleId).Append("\n");
-            sb.Append("  PermissionId: ").Append(PermissionId).Append("\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
+            return ToJson();
         }
 
         /// <summary>

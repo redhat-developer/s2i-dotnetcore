@@ -40,7 +40,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Attachment created</response>
         [HttpPost]
         [Route("/api/attachments/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult AttachmentsBulkPost([FromBody]Attachment[] items)
         {
             return this._service.AttachmentsBulkPostAsync(items);
@@ -52,6 +52,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/attachments")]
+        [RequiresPermission(Permissions.SchoolBusRead, Permissions.OwnerRead)]
         public virtual IActionResult AttachmentsGet()
         {
             return this._service.AttachmentsGetAsync();
@@ -65,6 +66,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Attachment not found</response>
         [HttpPost]
         [Route("/api/attachments/{id}/delete")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult AttachmentsIdDeletePost([FromRoute]int id)
         {
             return this._service.AttachmentsIdDeletePostAsync(id);
@@ -78,6 +80,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Attachment not found in CCW system</response>
         [HttpGet]
         [Route("/api/attachments/{id}/download")]
+        [RequiresPermission(Permissions.SchoolBusRead, Permissions.OwnerRead)]
         public virtual IActionResult AttachmentsIdDownloadGet([FromRoute]int id)
         {
             return this._service.AttachmentsIdDownloadGetAsync(id);
@@ -91,6 +94,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Attachment not found</response>
         [HttpGet]
         [Route("/api/attachments/{id}")]
+        [RequiresPermission(Permissions.SchoolBusRead, Permissions.OwnerRead)]
         public virtual IActionResult AttachmentsIdGet([FromRoute]int id)
         {
             return this._service.AttachmentsIdGetAsync(id);
@@ -105,6 +109,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Attachment not found</response>
         [HttpPut]
         [Route("/api/attachments/{id}")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult AttachmentsIdPut([FromRoute]int id, [FromBody]Attachment item)
         {
             return this._service.AttachmentsIdPutAsync(id, item);
@@ -117,6 +122,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Attachment created</response>
         [HttpPost]
         [Route("/api/attachments")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult AttachmentsPost([FromBody]Attachment item)
         {
             return this._service.AttachmentsPostAsync(item);

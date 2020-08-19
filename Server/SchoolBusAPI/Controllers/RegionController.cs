@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Region created</response>
         [HttpPost]
         [Route("/api/regions/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult RegionsBulkPost([FromBody]Region[] items)
         {
             return this._service.RegionsBulkPostAsync(items);
