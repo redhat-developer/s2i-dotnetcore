@@ -8,8 +8,8 @@
  * 
  */
 
-using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -79,7 +79,7 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public ContactService(IHttpContextAccessor httpContextAccessor, DbAppContext context) : base(httpContextAccessor, context)
+        public ContactService(IHttpContextAccessor httpContextAccessor, DbAppContext context, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
         }

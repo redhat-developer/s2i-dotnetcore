@@ -9,6 +9,8 @@
  */
 
 using System.Linq;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
 
@@ -68,14 +70,14 @@ namespace SchoolBusAPI.Services
     /// <summary>
     /// 
     /// </summary>
-    public class NotificationEventService : INotificationEventService
+    public class NotificationEventService : ServiceBase, INotificationEventService
     {
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public NotificationEventService(DbAppContext context)
+        public NotificationEventService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
         }

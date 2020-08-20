@@ -9,21 +9,14 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Security.Claims;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using SchoolBusAPI.Mappings;
 using SchoolBusAPI.Models;
-using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
 {
@@ -83,7 +76,7 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public CurrentUserService(IHttpContextAccessor httpContextAccessor, DbAppContext context) : base(httpContextAccessor, context)
+        public CurrentUserService(IHttpContextAccessor httpContextAccessor, DbAppContext context, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
         }
@@ -245,6 +238,7 @@ namespace SchoolBusAPI.Services
             if (id != null)
             {
                 User currentUser = _context.Users
+                                        .AsNoTracking()
                                         .Include(x => x.District)
                                         .Include(x => x.GroupMemberships)
                                         .ThenInclude(y => y.Group)
@@ -293,6 +287,19 @@ namespace SchoolBusAPI.Services
                 //Added By Simon Di to screen out all the ineffective roles (expired)
                 var thisUserRoles = result.UserRoles.Where(x => (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
                 result.UserRoles = thisUserRoles.ToList();
+
+                result.Permissions =
+                    currentUser
+                    .UserRoles
+                    .Where(ur => (ur.EffectiveDate == DateTime.MinValue || ur.EffectiveDate <= DateTime.Now) && (!ur.ExpiryDate.HasValue || ur.ExpiryDate == DateTime.MinValue || ur.ExpiryDate > DateTime.Now))
+                    .Select(ur => ur.Role)
+                    .Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Now) //active roles
+                    .SelectMany(r => r.RolePermissions.Select(rp => rp.Permission))
+                    .Where(p => !p.ExpiryDate.HasValue || p.ExpiryDate == DateTime.MinValue || p.ExpiryDate > DateTime.Now) //active permissions
+                    .ToLookup(p => p.Code)
+                    .Select(p => p.First())
+                    .Select(p => p.Code)
+                    .ToList();                
 
                 return new ObjectResult(result);
             }

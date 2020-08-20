@@ -9,6 +9,8 @@
  */
 
 using System.Linq;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
 
@@ -71,7 +73,7 @@ namespace SchoolBusAPI.Services
         IActionResult AttachmentsPostAsync(Attachment item);
     }
 
-    public class AttachmentService : IAttachmentService
+    public class AttachmentService : ServiceBase, IAttachmentService
     {
 
         private readonly DbAppContext _context;
@@ -79,7 +81,7 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public AttachmentService(DbAppContext context)
+        public AttachmentService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
         }

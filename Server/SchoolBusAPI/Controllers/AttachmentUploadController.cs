@@ -10,6 +10,7 @@ using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Mappings;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
+using AutoMapper;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -60,18 +61,12 @@ namespace SchoolBusAPI.Controllers
     {
         private readonly IConfiguration Configuration;
         private readonly DbAppContext _context;
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="httpContextAccessor"></param>
-        /// <param name="configuration"></param>
-        /// <param name="context"></param>
-        public AttachmentUploadService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context) : base(httpContextAccessor, context)
+
+        public AttachmentUploadService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             Configuration = configuration;
             _context = context;
         }
-
 
         /// <summary>
         /// Utility function used by the various attachment upload functions

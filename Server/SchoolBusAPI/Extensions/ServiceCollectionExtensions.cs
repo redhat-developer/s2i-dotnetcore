@@ -8,10 +8,12 @@
  * 
  */
 
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using SchoolBusAPI.Controllers;
 using SchoolBusAPI.Hangfire;
+using SchoolBusAPI.Mappings;
 using SchoolBusAPI.Services;
 
 namespace SchoolBusAPI.Extensions
@@ -54,6 +56,16 @@ namespace SchoolBusAPI.Extensions
             services.AddScoped<IUserService, UserService>();            
             services.AddScoped<IAttachmentUploadService,AttachmentUploadService>();
             services.AddScoped<ICcwJobService, CcwJobService>();
+
+            var mappingConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new ModelToViewModelProfile());
+                cfg.AddProfile(new ViewModelToModelProfile());
+            });
+
+            var mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             return services;
         }
     }

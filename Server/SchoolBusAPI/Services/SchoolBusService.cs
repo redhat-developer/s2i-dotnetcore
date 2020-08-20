@@ -23,6 +23,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using System.Text;
+using AutoMapper;
 
 namespace SchoolBusAPI.Services
 {
@@ -176,7 +177,7 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context) : base(httpContextAccessor, context)
+        public SchoolBusService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
             Configuration = configuration;
