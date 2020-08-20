@@ -105,17 +105,13 @@ namespace SchoolBusAPI.Services
             bool exists = _context.Groups.Any(a => a.Id == id);
             if (exists)
             {
-                var result = new List<UserViewModel>();
                 var data = _context.GroupMemberships
                     .Include("User")
                     .Include("Group")
                     .Where(x => x.Group.Id == id);
 
-                // extract the users
-                foreach (var item in data)
-                {
-                    result.Add(item.User.ToViewModel());
-                }
+                var result = Mapper.Map<List<UserViewModel>>(data);
+
                 return new ObjectResult(result);
             }
             else
@@ -160,7 +156,8 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         public virtual IActionResult GroupsGetAsync()
         {
-            var result = _context.Groups.Select(x => x.ToViewModel()).ToList();
+            var result = Mapper.Map<List<GroupViewModel>>(_context.Groups);
+
             return new ObjectResult(result);
         }
 

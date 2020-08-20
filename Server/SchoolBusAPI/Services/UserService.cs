@@ -17,6 +17,7 @@ using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Mappings;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using System;
 
 namespace SchoolBusAPI.Services
 {
@@ -375,16 +376,16 @@ namespace SchoolBusAPI.Services
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersGetAsync()
         {
-            var result = _context.Users
+            var users = _context.Users
                 .Include(x => x.District)
                 .Include(x => x.GroupMemberships)
                 .ThenInclude(y => y.Group)
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
                 .ThenInclude(z => z.RolePermissions)
-                .ThenInclude(z => z.Permission)
-                .Select(x => x.ToViewModel()).ToList();
-            return new ObjectResult(result);
+                .ThenInclude(z => z.Permission);
+
+            return new ObjectResult(Mapper.Map<List<UserViewModel>>(users));
         }
 
         /// <summary>
@@ -423,7 +424,8 @@ namespace SchoolBusAPI.Services
 
             _context.Users.Remove(user);
             _context.SaveChanges();
-            return new ObjectResult(user.ToViewModel());
+
+            return new ObjectResult(Mapper.Map<UserViewModel>(user));
         }
 
         /// <summary>
@@ -599,7 +601,7 @@ namespace SchoolBusAPI.Services
                 // Not Found
                 return new StatusCodeResult(404);
             }
-            return new ObjectResult(user.ToViewModel());
+            return new ObjectResult(Mapper.Map<UserViewModel>(user));
         }
 
         /// <summary>
@@ -615,21 +617,15 @@ namespace SchoolBusAPI.Services
                 .Include(x => x.GroupMemberships)
                 .ThenInclude(y => y.Group)
                 .First(x => x.Id == id);
+            
             if (user == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
             }
-            var result = new List<GroupMembershipViewModel>();
-            var data = user.GroupMemberships;
-            foreach (var item in data)
-            {
-                if (item != null)
-                {
-                    GroupMembershipViewModel record = item.ToViewModel();
-                    result.Add(record);
-                }
-            }
+
+            var result = Mapper.Map<List<GroupMembershipViewModel>>(user.GroupMemberships);
+
             return new ObjectResult(result);
         }
 
@@ -801,38 +797,20 @@ namespace SchoolBusAPI.Services
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdPermissionsGetAsync(int id)
         {
-            var user = _context.Users
-                .Include(x => x.District)
-                .Include(x => x.GroupMemberships)
-                .ThenInclude(y => y.Group)
-                .Include(x => x.UserRoles)
-                .ThenInclude(y => y.Role)
-                .ThenInclude(z => z.RolePermissions)
-                .ThenInclude(z => z.Permission)
-                .FirstOrDefault(x => x.Id == id);
-            if (user == null)
-            {
-                // Not Found
-                return new StatusCodeResult(404);
-            }
+            var permissions =
+                _context.Users
+                .FirstOrDefault(u => u.Id == id)
+                .UserRoles
+                .Where(ur => (ur.EffectiveDate == DateTime.MinValue || ur.EffectiveDate <= DateTime.Now) && (!ur.ExpiryDate.HasValue || ur.ExpiryDate == DateTime.MinValue || ur.ExpiryDate > DateTime.Now))
+                .Select(ur => ur.Role)
+                .Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Now) //active roles
+                .SelectMany(r => r.RolePermissions.Select(rp => rp.Permission))
+                .Where(p => !p.ExpiryDate.HasValue || p.ExpiryDate == DateTime.MinValue || p.ExpiryDate > DateTime.Now) //active permissions
+                .ToLookup(p => p.Code)
+                .Select(p => p.First())
+                .ToList();
 
-            List<PermissionViewModel> permissions = new List<PermissionViewModel>();
-
-            if (user.UserRoles != null)
-            {
-                foreach (var item in user.UserRoles)
-                {
-                    if (item.Role != null && item.Role.RolePermissions != null)
-                    {
-                        foreach (var permission in item.Role.RolePermissions)
-                        {
-                            permissions.Add(permission.Permission.ToViewModel());
-                        }
-                    }
-                }
-            }
             return new ObjectResult(permissions);
-
         }
 
         /// <summary>
@@ -881,7 +859,7 @@ namespace SchoolBusAPI.Services
             // Save changes
             _context.Users.Update(user);
             _context.SaveChanges();
-            return new ObjectResult(user.ToViewModel());
+            return new ObjectResult(Mapper.Map<UserViewModel>(user));
         }
 
         /// <summary>
@@ -893,35 +871,19 @@ namespace SchoolBusAPI.Services
         /// <response code="404">User not found</response>
         public virtual IActionResult UsersIdRolesGetAsync(int id)
         {
-
             var user = _context.Users
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
                 .First(x => x.Id == id);
+
             if (user == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
             }
-            var result = new List<UserRoleViewModel>();
-            var data = user.UserRoles;
-            foreach (var item in data)
-            {
-                if (item != null)
-                {
-                    int userRoleId = item.Id;
-                    bool exists = _context.UserRoles.Any(x => x.Id == userRoleId);
-                    if (exists)
-                    {
-                        UserRole userRole = _context.UserRoles
-                            .Include(x => x.Role)
-                            .First(x => x.Id == userRoleId);
-                        UserRoleViewModel record = userRole.ToViewModel();
-                        record.UserId = user.Id;
-                        result.Add(record);
-                    }
-                }
-            }
+
+            var result = Mapper.Map<List<UserRoleViewModel>>(user.UserRoles);
+
             return new ObjectResult(result);
         }
 
@@ -1124,12 +1086,7 @@ namespace SchoolBusAPI.Services
             }
 
             // now convert the results to the view model.
-            var result = new List<UserViewModel>();
-            foreach (User item in data)
-            {
-                UserViewModel record = item.ToViewModel();
-                result.Add(record);
-            }
+            var result = Mapper.Map<List<UserViewModel>>(data);
 
             return new ObjectResult(result);
         }
