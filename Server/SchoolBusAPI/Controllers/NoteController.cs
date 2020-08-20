@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Note created</response>
         [HttpPost]
         [Route("/api/notes/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotesBulkPost([FromBody]Note[] items)
         {
             return this._service.NotesBulkPostAsync(items);

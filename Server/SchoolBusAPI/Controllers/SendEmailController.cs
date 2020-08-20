@@ -43,7 +43,6 @@ namespace SchoolBusAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("/api/schoolbuses/email")]
-        [RequiresPermission(Permission.LOGIN)]
         public virtual IActionResult EmailSend([FromBody]Email mail)
         {
             return this._service.EmailSend(mail);

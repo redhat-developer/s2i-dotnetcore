@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">City created</response>
         [HttpPost]
         [Route("/api/cities/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult CitiesBulkPost([FromBody]City[] items)
         {
             return this._service.CitiesBulkPostAsync(items);

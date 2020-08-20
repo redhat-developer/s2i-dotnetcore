@@ -40,7 +40,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Role created</response>
         [HttpPost]
         [Route("/api/rolepermissions/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult RolepermissionsBulkPost([FromBody]RolePermission[] items)
         {
             return this._service.RolepermissionsBulkPostAsync(items);
@@ -53,7 +53,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Role created</response>
         [HttpPost]
         [Route("/api/roles/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult RolesBulkPost([FromBody]Role[] items)
         {
             return this._service.RolesBulkPostAsync(items);
@@ -119,7 +119,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPost]
         [Route("/api/roles/{id}/permissions")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult RolesIdPermissionsPost([FromRoute]int id, [FromBody]PermissionViewModel item)
         {
             return this._service.RolesIdPermissionsPostAsync(id, item);
@@ -135,7 +135,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPut]
         [Route("/api/roles/{id}/permissions")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult RolesIdPermissionsPut([FromRoute]int id, [FromBody]PermissionViewModel[] items)
         {
             return this._service.RolesIdPermissionsPutAsync(id, items);
@@ -178,7 +178,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPut]
         [Route("/api/roles/{id}/users")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.UserWrite)]
         public virtual IActionResult RolesIdUsersPut([FromRoute]int id, [FromBody]UserRoleViewModel[] items)
         {
             return this._service.RolesIdUsersPutAsync(id, items);

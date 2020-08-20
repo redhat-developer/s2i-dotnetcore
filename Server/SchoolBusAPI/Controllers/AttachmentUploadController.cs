@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Mappings;
 using SchoolBusAPI.Services;
+using SchoolBusAPI.Authorization;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -24,6 +25,7 @@ namespace SchoolBusAPI.Controllers
 
         [HttpPost]
         [Route("/api/schoolbuses/{id}/attachments")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
         public virtual IActionResult SchoolbusesIdAttachmentsPost([FromRoute] int Id, [FromForm] IList<IFormFile> files)
         {
             return _service.SchoolbusesIdAttachmentsPostAsync(Id, files);
@@ -32,6 +34,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/schoolbuses/{id}/attachmentsForm")]
         [Produces("text/html")]
+        [RequiresPermission(Permissions.SchoolBusRead)]
         public virtual IActionResult SchoolbusesIdAttachmentsFormGet([FromRoute] int Id)
         {
             return new ObjectResult("<html><body><form method=\"post\" action=\"/api/schoolbuses/"+Id+"/attachments\" enctype=\"multipart/form-data\"><input type=\"file\" name = \"files\" multiple /><input type = \"submit\" value = \"Upload\" /></body></html>");
@@ -39,6 +42,7 @@ namespace SchoolBusAPI.Controllers
 
         [HttpPost]
         [Route("/api/schoolbusowners/{id}/attachments")]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult SchoolbusownersIdAttachmentsPost([FromRoute] int Id, [FromForm] IList<IFormFile> files)
         {
             return _service.SchoolbusownersIdAttachmentsPostAsync(Id, files);

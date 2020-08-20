@@ -40,7 +40,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Permission created</response>
         [HttpPost]
         [Route("/api/permissions/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult PermissionsBulkPost([FromBody]Permission[] items)
         {
             return this._service.PermissionsBulkPostAsync(items);

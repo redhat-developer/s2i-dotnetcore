@@ -52,7 +52,6 @@ namespace SchoolBusAPI.Models
             this.Name = Name;
             this.Description = Description;
 
-
             this.RolePermissions = RolePermissions;
             this.UserRoles = UserRoles;
         }
@@ -81,7 +80,14 @@ namespace SchoolBusAPI.Models
         [MaxLength(255)]
         
         public string Description { get; set; }
-        
+
+        /// <summary>
+        /// The date on which a role was removed.
+        /// </summary>
+        /// <value>The date on which a role was removed.</value>
+        [MetaDataExtension(Description = "The date on which a role was removed")]
+        public DateTime? ExpiryDate { get; set; }
+
         /// <summary>
         /// Gets or Sets RolePermissions
         /// </summary>
@@ -98,15 +104,7 @@ namespace SchoolBusAPI.Models
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("class Role {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  RolePermissions: ").Append(RolePermissions).Append("\n");
-            sb.Append("  UserRoles: ").Append(UserRoles).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
+            return ToJson();
         }
 
         /// <summary>

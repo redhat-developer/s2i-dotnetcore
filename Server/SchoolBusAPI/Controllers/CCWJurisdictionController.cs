@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">CCWJurisdiction created</response>
         [HttpPost]
         [Route("/api/ccwjurisdictions/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult CcwjurisdictionsBulkPost([FromBody]CCWJurisdiction[] items)
         {
             return this._service.CcwjurisdictionsBulkPostAsync(items);

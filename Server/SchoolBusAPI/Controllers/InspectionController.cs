@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Inspection created</response>
         [HttpPost]
         [Route("/api/inspections/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult InspectionsBulkPost([FromBody]Inspection[] items)
         {
             return this._service.InspectionsBulkPostAsync(items);
@@ -65,7 +65,7 @@ namespace SchoolBusAPI.Controllers
         [Route("/api/inspections/{id}/delete")]
         public virtual IActionResult InspectionsIdDeletePost([FromRoute]int id)
         {
-            return this._service.InspectionsIdDeletePostAsync(id, User.HasPermissions(Permission.ADMIN));
+            return this._service.InspectionsIdDeletePostAsync(id, User.HasPermissions(Permissions.SchoolBusWrite));
         }
 
         /// <summary>

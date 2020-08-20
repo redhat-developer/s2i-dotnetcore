@@ -24,14 +24,6 @@ namespace SchoolBusAPI.Seeders
             get { return ProfileTriggers; }
         }
 
-        public override Type InvokeAfter
-        {
-            get
-            {
-                return typeof(RoleSeeder);
-            }
-        }
-
         protected override void Invoke(DbAppContext context)
         {
             UpdateUsers(context);

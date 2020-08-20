@@ -39,7 +39,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">ServiceArea created</response>
         [HttpPost]
         [Route("/api/serviceareas/bulk")]
-        [RequiresPermission(Permission.ADMIN)]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult ServiceareasBulkPost([FromBody]ServiceArea[] items)
         {
             return this._service.ServiceareasBulkPostAsync(items);
