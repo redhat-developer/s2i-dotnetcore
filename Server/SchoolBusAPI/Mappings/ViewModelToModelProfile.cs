@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Mappings
 {
@@ -6,6 +8,8 @@ namespace SchoolBusAPI.Mappings
     {
         public ViewModelToModelProfile()
         {
+            CreateMap<PermissionViewModel, Permission>();
+            CreateMap<RoleViewModel, Role>();
 
         }
     }

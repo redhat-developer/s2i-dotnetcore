@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
-using SchoolBusAPI.Mappings;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 
@@ -224,7 +223,7 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a collection of roles</remarks>
+        /// <remarks>Returns a collection of active roles</remarks>
         /// <response code="200">OK</response>
         public virtual IActionResult RolesGetAsync()
         {
@@ -249,14 +248,11 @@ namespace SchoolBusAPI.Services
                 // Not Found
                 return new StatusCodeResult(404);
             }
-            // remove associated role permission records
-            var itemsToRemove = _context.RolePermissions.Where(x => x.Role.Id == role.Id);
-            foreach (var item in itemsToRemove)
-            {
-                _context.RolePermissions.Remove(item);
-            }
-            _context.Roles.Remove(role);
+
+            role.ExpiryDate = DateTime.Today;
+
             _context.SaveChanges();
+
             return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
 
@@ -269,11 +265,13 @@ namespace SchoolBusAPI.Services
         public virtual IActionResult RolesIdGetAsync(int id)
         {
             var role = _context.Roles.FirstOrDefault(x => x.Id == id);
+
             if (role == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
             }
+
             return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
 
@@ -286,11 +284,10 @@ namespace SchoolBusAPI.Services
         public virtual IActionResult RolesIdPermissionsGetAsync(int id)
         {
             // Eager loading of related data
-            var role = _context.Roles
-                .Where(x => x.Id == id)
+            var role = _context.Roles.AsNoTracking()
                 .Include(x => x.RolePermissions)
                 .ThenInclude(rp => rp.Permission)
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.Id == id);
 
             if (role == null)
             {
@@ -298,7 +295,12 @@ namespace SchoolBusAPI.Services
                 return new StatusCodeResult(404);
             }
 
-            var permissions = role.RolePermissions.Select(x => x.Permission);
+            var permissions =
+                role
+                .RolePermissions
+                .Where(rp => !rp.ExpiryDate.HasValue || rp.ExpiryDate == DateTime.MinValue || rp.ExpiryDate > DateTime.Now)
+                .Select(rp => rp.Permission)
+                .Where(p => !p.ExpiryDate.HasValue || p.ExpiryDate == DateTime.MinValue || p.ExpiryDate > DateTime.Now);
 
             return new ObjectResult(Mapper.Map<List<PermissionViewModel>>(permissions));
         }
@@ -356,7 +358,7 @@ namespace SchoolBusAPI.Services
                 _context.SaveChanges();
                 txn.Commit();
 
-                var result = Mapper.Map<RolePermissionViewModel>(_context.RolePermissions);
+                var result = Mapper.Map<List<RolePermissionViewModel>>(role.RolePermissions);
 
                 return new ObjectResult(result);
             }
@@ -407,7 +409,7 @@ namespace SchoolBusAPI.Services
                 _context.SaveChanges();
                 txn.Commit();
 
-                return new ObjectResult(Mapper.Map<List<RolePermissionViewModel>>(_context.RolePermissions));
+                return new ObjectResult(Mapper.Map<List<RolePermissionViewModel>>(role.RolePermissions));
             }
         }
 
@@ -452,7 +454,7 @@ namespace SchoolBusAPI.Services
                 _context.SaveChanges();
                 txn.Commit();
 
-                return new ObjectResult(Mapper.Map<List<RolePermissionViewModel>>(_context.RolePermissions));
+                return new ObjectResult(Mapper.Map<List<RolePermissionViewModel>>(role.RolePermissions));
             }
         }
 
@@ -472,12 +474,10 @@ namespace SchoolBusAPI.Services
                 return new StatusCodeResult(404);
             }
 
-            role.Name = item.Name;
-            role.Description = item.Description;
+            Mapper.Map(item, role);
             _context.Roles.Update(role);
-
-            // Save changes
             _context.SaveChanges();
+
             return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
 
@@ -585,6 +585,7 @@ namespace SchoolBusAPI.Services
                             UserRole newUserRole = new UserRole();
                             newUserRole.EffectiveDate = DateTime.UtcNow;
                             newUserRole.Role = role;
+
                             user.UserRoles.Add(newUserRole);
                             _context.Users.Update(user);
                             data_changed = true;
@@ -613,12 +614,11 @@ namespace SchoolBusAPI.Services
         public virtual IActionResult RolesPostAsync(RoleViewModel item)
         {
             var role = new Role();
-            role.Description = item.Description;
-            role.Name = item.Name;
 
-            // Save changes
+            Mapper.Map(item, role);
             _context.Roles.Add(role);
             _context.SaveChanges();
+
             return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
     }

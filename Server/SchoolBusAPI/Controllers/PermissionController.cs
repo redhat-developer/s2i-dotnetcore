@@ -52,6 +52,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/permissions")]
+        [RequiresPermission(Permissions.RoleRead)]
         public virtual IActionResult PermissionsGet()
         {
             return this._service.PermissionsGetAsync();
@@ -65,6 +66,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Permission not found</response>
         [HttpPost]
         [Route("/api/permissions/{id}/delete")]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult PermissionsIdDeletePost([FromRoute]int id)
         {
             return this._service.PermissionsIdDeletePostAsync(id);
@@ -78,6 +80,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Permission not found</response>
         [HttpGet]
         [Route("/api/permissions/{id}")]
+        [RequiresPermission(Permissions.RoleRead)]
         public virtual IActionResult PermissionsIdGet([FromRoute]int id)
         {
             return this._service.PermissionsIdGetAsync(id);
@@ -92,6 +95,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Permission not found</response>
         [HttpPut]
         [Route("/api/permissions/{id}")]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult PermissionsIdPut([FromRoute]int id, [FromBody]PermissionViewModel item)
         {
             return this._service.PermissionsIdPutAsync(id, item);
@@ -104,6 +108,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Permission created</response>
         [HttpPost]
         [Route("/api/permissions")]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult PermissionsPost([FromBody]PermissionViewModel item)
         {
             return this._service.PermissionsPostAsync(item);
