@@ -273,7 +273,10 @@ namespace SchoolBusAPI.Services
                 SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners
                     .Include(x => x.Attachments)
                     .First(a => a.Id == id);
-                var result = MappingExtensions.GetAttachmentListAsViewModel(schoolBusOwner.Attachments);
+                
+                //var result = MappingExtensions.GetAttachmentListAsViewModel(schoolBusOwner.Attachments);
+                var result = Mapper.Map<List<AttachmentViewModel>>(schoolBusOwner.Attachments);
+
                 return new ObjectResult(result);
             }
             else
@@ -359,7 +362,9 @@ namespace SchoolBusAPI.Services
 
                 for (int i = (int)offset; i < data.Count() && i < offset + limit; i++)
                 {
-                    result.Add(data[i].ToViewModel(id));
+                    var viewModel = Mapper.Map<HistoryViewModel>(data[i]);
+                    viewModel.AffectedEntityId = id;
+                    result.Add(viewModel);
                 }
 
                 return new ObjectResult(result);
@@ -524,11 +529,13 @@ namespace SchoolBusAPI.Services
             if (exists)
             {
                 SchoolBusOwner schoolBusOwner = _context.SchoolBusOwners.Include(x => x.PrimaryContact).First(a => a.Id == id);
-                SchoolBusOwnerViewModel result = schoolBusOwner.ToViewModel();
+                SchoolBusOwnerViewModel result = Mapper.Map<SchoolBusOwnerViewModel>(schoolBusOwner);
+
                 // populate the calculated fields.
                 result.NextInspectionDate = GetNextInspectionDate(id);
                 result.NumberOfBuses = GetNumberSchoolBuses(id);
                 result.NextInspectionTypeCode = GetNextInspectionTypeCode(id);
+
                 return new ObjectResult(result);
             }
             else
@@ -657,12 +664,8 @@ namespace SchoolBusAPI.Services
                 data = data.Where(x => x.Status == "Active");
             }
 
-            // now convert the results to the view model.
-            foreach (SchoolBusOwner item in data)
-            {
-                SchoolBusOwnerViewModel record = item.ToViewModel();
-                result.Add(record);
-            }
+            result = Mapper.Map<List<SchoolBusOwnerViewModel>>(data);
+
             // second pass to get the calculated fields
             foreach (SchoolBusOwnerViewModel item in result)
             {

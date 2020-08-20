@@ -15,6 +15,7 @@ using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Mappings;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using System.Collections.Generic;
 
 namespace SchoolBusAPI.Services
 {
@@ -120,8 +121,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         public virtual IActionResult PermissionsGetAsync()
         {
-            var result = _context.Permissions.Select(x => x.ToViewModel()).ToList();
-            return new ObjectResult(result);
+            return new ObjectResult(Mapper.Map<List<PermissionViewModel>>(_context.Permissions));
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace SchoolBusAPI.Services
 
             _context.Permissions.Remove(permission);
             _context.SaveChanges();
-            return new ObjectResult(permission.ToViewModel());
+            return new ObjectResult(Mapper.Map<PermissionViewModel>(permission));
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace SchoolBusAPI.Services
                 // Not Found
                 return new StatusCodeResult(404);
             }
-            return new ObjectResult(permission.ToViewModel());
+            return new ObjectResult(Mapper.Map<PermissionViewModel>(permission));
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace SchoolBusAPI.Services
             // Save changes
             _context.Permissions.Update(permission);
             _context.SaveChanges();
-            return new ObjectResult(permission.ToViewModel());
+            return new ObjectResult(Mapper.Map<PermissionViewModel>(permission));
         }
 
 

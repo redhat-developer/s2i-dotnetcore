@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolBusAPI.Mappings;
 using SchoolBusAPI.Models;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
 {
@@ -248,7 +249,7 @@ namespace SchoolBusAPI.Services
                                         .ThenInclude(z => z.Permission)
                                         .First(x => x.Id == id);
 
-                var result = currentUser.ToCurrentUserViewModel();
+                var result = Mapper.Map<CurrentUserViewModel>(currentUser);
 
                 // get the name for the current logged in user
                 result.GivenName = User.FindFirst(ClaimTypes.GivenName).Value;

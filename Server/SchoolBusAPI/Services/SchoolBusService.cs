@@ -389,7 +389,9 @@ namespace SchoolBusAPI.Services
                 SchoolBus schoolBus = _context.SchoolBuss
                     .Include(x => x.Attachments)
                     .First(a => a.Id == id);
-                var result = MappingExtensions.GetAttachmentListAsViewModel(schoolBus.Attachments);
+
+                var result = Mapper.Map<List<AttachmentViewModel>>(schoolBus.Attachments);
+
                 return new ObjectResult(result);
             }
             else
@@ -496,7 +498,9 @@ namespace SchoolBusAPI.Services
 
                 for (int i = (int)offset; i < data.Count() && i < offset + limit; i++)
                 {
-                    result.Add(data[i].ToViewModel(id));
+                    var viewModel = Mapper.Map<HistoryViewModel>(data[i]);
+                    viewModel.AffectedEntityId = id;
+                    result.Add(viewModel);
                 }
 
                 return new ObjectResult(result);

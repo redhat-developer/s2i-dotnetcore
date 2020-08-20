@@ -228,13 +228,11 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         public virtual IActionResult RolesGetAsync()
         {
-            List<RoleViewModel> result = new List<RoleViewModel>();
-            var data = _context.Roles.Select(x => x);
-            foreach (var item in data)
-            {
-                result.Add(item.ToViewModel());
-            }
-            return new ObjectResult(result);
+            var data = _context.Roles
+                .AsNoTracking()
+                .Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Now);
+
+            return new ObjectResult(Mapper.Map<List<RoleViewModel>>(data));
         }
 
         /// <summary>
@@ -259,7 +257,7 @@ namespace SchoolBusAPI.Services
             }
             _context.Roles.Remove(role);
             _context.SaveChanges();
-            return new ObjectResult(role.ToViewModel());
+            return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
 
         /// <summary>
@@ -276,7 +274,7 @@ namespace SchoolBusAPI.Services
                 // Not Found
                 return new StatusCodeResult(404);
             }
-            return new ObjectResult(role.ToViewModel());
+            return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
 
         /// <summary>
@@ -300,11 +298,9 @@ namespace SchoolBusAPI.Services
                 return new StatusCodeResult(404);
             }
 
-            var dbPermissions = role.RolePermissions.Select(x => x.Permission);
+            var permissions = role.RolePermissions.Select(x => x.Permission);
 
-            // Create DTO with serializable response
-            var result = dbPermissions.Select(x => x.ToViewModel()).ToList();
-            return new ObjectResult(result);
+            return new ObjectResult(Mapper.Map<List<PermissionViewModel>>(permissions));
         }
 
         /// <summary>
@@ -360,10 +356,8 @@ namespace SchoolBusAPI.Services
                 _context.SaveChanges();
                 txn.Commit();
 
-                List<RolePermission> dbPermissions = _context.RolePermissions.ToList();
+                var result = Mapper.Map<RolePermissionViewModel>(_context.RolePermissions);
 
-                // Create DTO with serializable response
-                var result = dbPermissions.Select(x => x.ToViewModel()).ToList();
                 return new ObjectResult(result);
             }
         }
@@ -413,11 +407,7 @@ namespace SchoolBusAPI.Services
                 _context.SaveChanges();
                 txn.Commit();
 
-                List<RolePermission> dbPermissions = _context.RolePermissions.ToList();
-
-                // Create DTO with serializable response
-                var result = dbPermissions.Select(x => x.ToViewModel()).ToList();
-                return new ObjectResult(result);
+                return new ObjectResult(Mapper.Map<List<RolePermissionViewModel>>(_context.RolePermissions));
             }
         }
 
@@ -462,11 +452,7 @@ namespace SchoolBusAPI.Services
                 _context.SaveChanges();
                 txn.Commit();
 
-                List<RolePermission> dbPermissions = _context.RolePermissions.ToList();
-
-                // Create DTO with serializable response
-                var result = dbPermissions.Select(x => x.ToViewModel()).ToList();
-                return new ObjectResult(result);
+                return new ObjectResult(Mapper.Map<List<RolePermissionViewModel>>(_context.RolePermissions));
             }
         }
 
@@ -492,7 +478,7 @@ namespace SchoolBusAPI.Services
 
             // Save changes
             _context.SaveChanges();
-            return new ObjectResult(role.ToViewModel());
+            return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
 
         /// <summary>
@@ -633,7 +619,7 @@ namespace SchoolBusAPI.Services
             // Save changes
             _context.Roles.Add(role);
             _context.SaveChanges();
-            return new ObjectResult(role.ToViewModel());
+            return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
     }
 }

@@ -131,7 +131,7 @@ namespace SchoolBusAPI.Controllers
                 _context.SchoolBuss.Update(schoolbus);
                 _context.SaveChanges();
 
-                List<AttachmentViewModel> result = MappingExtensions.GetAttachmentListAsViewModel(schoolbus.Attachments);
+                var result = Mapper.Map<List<AttachmentViewModel>>(schoolbus.Attachments);
 
                 return new ObjectResult(result);
             }
@@ -169,7 +169,7 @@ namespace SchoolBusAPI.Controllers
                 _context.SchoolBusOwners.Update(schoolBusOwner);
                 _context.SaveChanges();
 
-                List<AttachmentViewModel> result = MappingExtensions.GetAttachmentListAsViewModel(schoolBusOwner.Attachments);
+                var result = Mapper.Map<List<AttachmentViewModel>>(schoolBusOwner.Attachments);
 
                 return new ObjectResult(result);
             }
