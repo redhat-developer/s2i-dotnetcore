@@ -39,16 +39,12 @@ namespace SchoolBusAPI.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="RoleViewModel" /> class.
         /// </summary>
-        /// <param name="Id">Id (required).</param>
-        /// <param name="Name">Name (required).</param>
-        /// <param name="Description">Description (required).</param>
-        public RoleViewModel(int Id, string Name, string Description)
+        public RoleViewModel(int Id, string Name, string Description, DateTime? expiryDate)
         {   
             this.Id = Id;
             this.Name = Name;
             this.Description = Description;
-
-
+            this.ExpiryDate = expiryDate;
         }
 
         /// <summary>

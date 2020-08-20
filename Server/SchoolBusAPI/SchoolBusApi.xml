@@ -6815,7 +6815,7 @@
             <summary>
             
             </summary>
-            <remarks>Returns a collection of permissions</remarks>
+            <remarks>Returns a collection of active permissions</remarks>
             <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.PermissionService.PermissionsIdDeletePostAsync(System.Int32)">
@@ -7109,7 +7109,7 @@
             <summary>
             
             </summary>
-            <remarks>Returns a collection of roles</remarks>
+            <remarks>Returns a collection of active roles</remarks>
             <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.RoleService.RolesIdDeletePostAsync(System.Int32)">
@@ -9318,13 +9318,10 @@
             Default constructor, required by entity framework
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.#ctor(System.Int32,System.String,System.String)">
+        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.#ctor(System.Int32,System.String,System.String,System.Nullable{System.DateTime})">
             <summary>
             Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.RoleViewModel" /> class.
             </summary>
-            <param name="Id">Id (required).</param>
-            <param name="Name">Name (required).</param>
-            <param name="Description">Description (required).</param>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.RoleViewModel.Id">
             <summary>

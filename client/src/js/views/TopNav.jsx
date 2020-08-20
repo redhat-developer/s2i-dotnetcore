@@ -9,7 +9,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import * as Constant from '../constants';
 
-import _ from 'lodash';
+//import _ from 'lodash';
 import Spinner from '../components/Spinner.jsx';
 import bcLogo from '../../images/gov/gov3_bc_logo.png';
 

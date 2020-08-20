@@ -12,10 +12,11 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
-using SchoolBusAPI.Mappings;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using System.Collections.Generic;
+using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolBusAPI.Services
 {
@@ -111,17 +112,22 @@ namespace SchoolBusAPI.Services
 
             // Save the changes
             _context.SaveChanges();
+
             return new NoContentResult();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a collection of permissions</remarks>
+        /// <remarks>Returns a collection of active permissions</remarks>
         /// <response code="200">OK</response>
         public virtual IActionResult PermissionsGetAsync()
         {
-            return new ObjectResult(Mapper.Map<List<PermissionViewModel>>(_context.Permissions));
+            var permissions = _context.Permissions
+                .AsNoTracking()
+                .Where(p => !p.ExpiryDate.HasValue || p.ExpiryDate == DateTime.MinValue || p.ExpiryDate > DateTime.Now);
+
+            return new ObjectResult(Mapper.Map<List<PermissionViewModel>>(permissions));
         }
 
         /// <summary>
@@ -138,12 +144,11 @@ namespace SchoolBusAPI.Services
                 // Not Found
                 return new StatusCodeResult(404);
             }
-            // remove any user role associations.            
-            var toRemove = _context.RolePermissions.Where(x => x.Permission.Id == id).ToList();
-            toRemove.ForEach(x => _context.RolePermissions.Remove(x));
 
-            _context.Permissions.Remove(permission);
+            permission.ExpiryDate = DateTime.Today;
+
             _context.SaveChanges();
+
             return new ObjectResult(Mapper.Map<PermissionViewModel>(permission));
         }
 
@@ -157,11 +162,13 @@ namespace SchoolBusAPI.Services
         public virtual IActionResult PermissionsIdGetAsync(int id)
         {
             var permission = _context.Permissions.FirstOrDefault(x => x.Id == id);
+
             if (permission == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
             }
+
             return new ObjectResult(Mapper.Map<PermissionViewModel>(permission));
         }
 
@@ -181,13 +188,12 @@ namespace SchoolBusAPI.Services
                 return new StatusCodeResult(404);
             }
 
-            permission.Code = item.Code;
-            permission.Description = item.Code;
-            permission.Name = item.Name;
+            Mapper.Map(item, permission);
 
             // Save changes
             _context.Permissions.Update(permission);
             _context.SaveChanges();
+
             return new ObjectResult(Mapper.Map<PermissionViewModel>(permission));
         }
 
@@ -206,14 +212,13 @@ namespace SchoolBusAPI.Services
             }
             var permission = new Permission();
 
-            permission.Code = item.Code;
-            permission.Description = item.Code;
-            permission.Name = item.Name;
+            Mapper.Map(item, permission);
 
             // Save changes
             _context.Permissions.Add(permission);
             _context.SaveChanges();
-            return new ObjectResult(permission);
+
+            return new ObjectResult(Mapper.Map<PermissionViewModel>(permission));
         }
     }
 }

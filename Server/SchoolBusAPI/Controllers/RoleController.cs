@@ -65,6 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/roles")]
+        [RequiresPermission(Permissions.RoleRead)]
         public virtual IActionResult RolesGet()
         {
             return this._service.RolesGetAsync();
@@ -78,6 +79,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPost]
         [Route("/api/roles/{id}/delete")]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult RolesIdDeletePost([FromRoute]int id)
         {
             return this._service.RolesIdDeletePostAsync(id);
@@ -91,6 +93,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpGet]
         [Route("/api/roles/{id}")]
+        [RequiresPermission(Permissions.RoleRead)]
         public virtual IActionResult RolesIdGet([FromRoute]int id)
         {
             return this._service.RolesIdGetAsync(id);
@@ -104,6 +107,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/roles/{id}/permissions")]
+        [RequiresPermission(Permissions.RoleRead)]
         public virtual IActionResult RolesIdPermissionsGet([FromRoute]int id)
         {
             return this._service.RolesIdPermissionsGetAsync(id);
@@ -150,6 +154,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Role not found</response>
         [HttpPut]
         [Route("/api/roles/{id}")]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult RolesIdPut([FromRoute]int id, [FromBody]RoleViewModel item)
         {
             return this._service.RolesIdPutAsync(id, item);
@@ -163,6 +168,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/roles/{id}/users")]
+        [RequiresPermission(Permissions.UserRead)]
         public virtual IActionResult RolesIdUsersGet([FromRoute]int id)
         {
             return this._service.RolesIdUsersGetAsync(id);
@@ -191,6 +197,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Role created</response>
         [HttpPost]
         [Route("/api/roles")]
+        [RequiresPermission(Permissions.RoleWrite)]
         public virtual IActionResult RolesPost([FromBody]RoleViewModel item)
         {
             return this._service.RolesPostAsync(item);
