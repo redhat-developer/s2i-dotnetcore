@@ -1,26 +1,27 @@
 import { createStore } from 'redux';
+import { devToolsEnhancer } from 'redux-devtools-extension';
 import allReducers from './reducers/all';
 
-const store = createStore(allReducers);
+const store = createStore(allReducers, devToolsEnhancer());
 
 store.getModel = function storeGetModel(modelType, id) {
   var models = store.getState().models;
 
-  if(!modelType) {
+  if (!modelType) {
     throw new TypeError('param modelType required');
   }
 
-  if(!id) {
+  if (!id) {
     throw new TypeError('param id required');
   }
 
-  if(!(modelType in models)) {
+  if (!(modelType in models)) {
     throw new Error(`No model of type ${modelType} in store`);
   }
 
   var model = (models[modelType] || {})[id];
 
-  if(!model) {
+  if (!model) {
     throw new Error(`No ${modelType} model with id of ${id} in store`);
   }
 
