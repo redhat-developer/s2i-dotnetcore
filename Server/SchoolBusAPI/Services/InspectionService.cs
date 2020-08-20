@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace SchoolBusAPI.Services
 {
@@ -79,7 +80,7 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public InspectionService(IHttpContextAccessor httpContextAccessor, DbAppContext context) : base(httpContextAccessor, context)
+        public InspectionService(IHttpContextAccessor httpContextAccessor, DbAppContext context, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
         }

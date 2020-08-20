@@ -106,6 +106,9 @@ namespace SchoolBusAPI.ViewModels
         [DataMember(Name="userRoles")]
         public List<UserRole> UserRoles { get; set; }
 
+        [DataMember(Name ="permissions")]
+        public List<string> Permissions { get; set; }
+
         /// <summary>
         /// Gets or Sets SmUserId
         /// </summary>

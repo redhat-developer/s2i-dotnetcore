@@ -8,17 +8,12 @@
  * 
  */
 
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using SchoolBusAPI.Mappings;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
@@ -87,14 +82,14 @@ namespace SchoolBusAPI.Services
     /// <summary>
     /// 
     /// </summary>
-    public class GroupService : IGroupService
+    public class GroupService : ServiceBase, IGroupService
     {
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public GroupService(DbAppContext context)
+        public GroupService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
         }

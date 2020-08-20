@@ -12,6 +12,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace SchoolBusAPI.Services
 {
@@ -77,14 +79,14 @@ namespace SchoolBusAPI.Services
     /// <summary>
     /// 
     /// </summary>
-    public class RegionService : IRegionService
+    public class RegionService : ServiceBase, IRegionService
     {
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public RegionService(DbAppContext context)
+        public RegionService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
         }

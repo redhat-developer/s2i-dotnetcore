@@ -16,6 +16,8 @@ using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using SchoolBusAPI.Mappings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace SchoolBusAPI.Services
 {
@@ -135,14 +137,14 @@ namespace SchoolBusAPI.Services
     /// <summary>
     /// 
     /// </summary>
-    public class SchoolBusOwnerService : ISchoolBusOwnerService
+    public class SchoolBusOwnerService : ServiceBase, ISchoolBusOwnerService
     {
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusOwnerService(DbAppContext context)
+        public SchoolBusOwnerService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
         }

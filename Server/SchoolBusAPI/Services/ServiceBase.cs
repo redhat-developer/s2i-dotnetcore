@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
 using System;
@@ -10,10 +11,11 @@ namespace SchoolBusAPI.Services
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ServiceBase(IHttpContextAccessor httpContextAccessor, DbAppContext context)
+        public ServiceBase(IHttpContextAccessor httpContextAccessor, DbAppContext context, IMapper mapper)
         {
             _httpContextAccessor = httpContextAccessor;
             DbContext = context;
+            Mapper = mapper;
         }
 
         protected IDbAppContext DbContext { get; private set;  }
@@ -26,6 +28,8 @@ namespace SchoolBusAPI.Services
         {
             get { return _httpContextAccessor.HttpContext.User; }
         }
+
+        protected IMapper Mapper { get; private set; }
 
         /// <summary>
         /// Returns the current user ID

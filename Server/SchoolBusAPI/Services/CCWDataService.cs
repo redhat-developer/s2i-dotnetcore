@@ -18,7 +18,7 @@ using Ws.Ccw.Reference;
 using SchoolBusCcw;
 using System;
 using Microsoft.Extensions.Logging;
-using System.ServiceModel;
+using AutoMapper;
 
 namespace SchoolBusAPI.Services
 {
@@ -108,7 +108,7 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public CCWDataService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, ICCWService ccwService, ILogger<CCWDataService> logger) : base(httpContextAccessor, context)
+        public CCWDataService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, ICCWService ccwService, ILogger<CCWDataService> logger, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
             _configuration = configuration;

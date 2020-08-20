@@ -5,6 +5,8 @@ using MailKit.Net.Smtp;
 using System.Net.Security;
 using MimeKit;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace SchoolBusAPI.Services
 {
@@ -24,15 +26,14 @@ namespace SchoolBusAPI.Services
     /// <summary>
     /// 
     /// </summary>
-    public class EmailService : IEmailService
+    public class EmailService : ServiceBase, IEmailService
     {
         private readonly IConfiguration Configuration;
 
         /// <summary>
         /// Create a email service
         /// </summary>
-        /// <param name="configuration"></param>
-        public EmailService(IConfiguration configuration)
+        public EmailService(DbAppContext context, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             Configuration = configuration;
         }

@@ -9,6 +9,8 @@
  */
 
 using System.Linq;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
 
@@ -68,14 +70,14 @@ namespace SchoolBusAPI.Services
     /// <summary>
     /// 
     /// </summary>
-    public class HistoryService : IHistoryService
+    public class HistoryService : ServiceBase, IHistoryService
     {
         private readonly DbAppContext _context;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public HistoryService(DbAppContext context)
+        public HistoryService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
         }

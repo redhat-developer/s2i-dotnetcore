@@ -3547,14 +3547,6 @@
             <param name="item"></param>
             <response code="201">Attachment created</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentUploadService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="httpContextAccessor"></param>
-            <param name="configuration"></param>
-            <param name="context"></param>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.AttachmentUploadService.AddFilesToAttachments(System.Collections.Generic.List{SchoolBusAPI.Models.Attachment},System.Collections.Generic.IList{Microsoft.AspNetCore.Http.IFormFile})">
             <summary>
             Utility function used by the various attachment upload functions
@@ -5488,7 +5480,7 @@
             <param name="item"></param>
             <response code="201">Attachment created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.AttachmentService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.AttachmentService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -5623,7 +5615,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.CCWDataService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext,SchoolBusCcw.ICCWService,Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Services.CCWDataService})">
+        <member name="M:SchoolBusAPI.Services.CCWDataService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext,SchoolBusCcw.ICCWService,Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Services.CCWDataService},AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -5795,7 +5787,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.CityService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.CityService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -5905,7 +5897,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.ContactService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.ContactService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,SchoolBusAPI.Models.DbAppContext,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6005,7 +5997,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.CurrentUserService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.CurrentUserService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,SchoolBusAPI.Models.DbAppContext,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6113,7 +6105,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.DistrictService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.DistrictService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6193,11 +6185,10 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.EmailService.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:SchoolBusAPI.Services.EmailService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a email service
             </summary>
-            <param name="configuration"></param>
         </member>
         <member name="M:SchoolBusAPI.Services.EmailService.EmailSend(SchoolBusAPI.Models.Email)">
             <summary>
@@ -6269,7 +6260,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.GroupService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.GroupService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6384,7 +6375,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.HistoryService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.HistoryService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6490,7 +6481,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.InspectionService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.InspectionService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,SchoolBusAPI.Models.DbAppContext,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6597,7 +6588,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.NoteService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.NoteService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6702,7 +6693,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.NotificationEventService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.NotificationEventService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6807,7 +6798,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.NotificationService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.NotificationService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6912,7 +6903,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.PermissionService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.PermissionService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -7027,7 +7018,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.RegionService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.RegionService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -7198,7 +7189,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.RoleService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -7430,7 +7421,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.SchoolBusOwnerService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.SchoolBusOwnerService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -7677,7 +7668,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.SchoolBusService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.SchoolBusService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -7872,7 +7863,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.SchoolDistrictService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.SchoolDistrictService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -7982,7 +7973,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.ServiceAreaService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.ServiceAreaService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -8237,7 +8228,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.#ctor(SchoolBusAPI.Models.DbAppContext)">
+        <member name="M:SchoolBusAPI.Services.UserService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
