@@ -108,7 +108,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/groups/{id}/users")]
-        [RequiresPermission(Permissions.UserRead)]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult GroupsIdUsersGet([FromRoute]int id)
         {
             return this._service.GroupsIdUsersGetAsync(id);
