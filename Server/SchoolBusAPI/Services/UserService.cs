@@ -1104,7 +1104,7 @@ namespace SchoolBusAPI.Services
                 data = data.Where(u => u.Active == true);
             }                
 
-            var result = Mapper.Map<List<UserViewModel>>(data);
+            var result = Mapper.Map<List<InspectorViewModel>>(data);
 
             return new ObjectResult(result);
         }

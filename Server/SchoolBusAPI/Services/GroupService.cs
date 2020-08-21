@@ -106,11 +106,10 @@ namespace SchoolBusAPI.Services
             if (exists)
             {
                 var data = _context.GroupMemberships
-                    .Include("User")
-                    .Include("Group")
-                    .Where(x => x.Group.Id == id);
+                    .Where(x => x.Group.Id == id)
+                    .Select(x => x.User);
 
-                var result = Mapper.Map<List<GroupMembershipViewModel>>(data);
+                var result = Mapper.Map<List<InspectorViewModel>>(data);
 
                 return new ObjectResult(result);
             }

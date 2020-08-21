@@ -333,7 +333,7 @@ namespace SchoolBusAPI.Controllers
 
         [HttpGet]
         [Route("/api/users/inspectors")]
-        [RequiresPermission(Permissions.UserRead)]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult UserInspectorsGet([FromQuery] bool? includeInactive)
         {
             return this._service.UserInspectorsGet(includeInactive);
