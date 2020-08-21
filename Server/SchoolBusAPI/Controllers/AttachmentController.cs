@@ -49,18 +49,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/attachments")]
-        [RequiresPermission(Permissions.SchoolBusRead, Permissions.OwnerRead)]
-        public virtual IActionResult AttachmentsGet()
-        {
-            return this._service.AttachmentsGetAsync();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of Attachment to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Attachment not found</response>

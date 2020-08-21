@@ -1,5 +1,4 @@
-﻿using System;
-using SchoolBusAPI.Models;
+﻿using SchoolBusAPI.Models;
 using System.Security.Claims;
 
 namespace SchoolBusAPI.Authorization
@@ -24,6 +23,11 @@ namespace SchoolBusAPI.Authorization
                 hasRequiredPermissions = hasPermissions;
             }
             return hasRequiredPermissions;
+        }
+
+        public static bool IsSystemAdmin(this ClaimsPrincipal user)
+        {
+            return user.IsInRole(Roles.SystemAdmininstrator);
         }
     }
 }

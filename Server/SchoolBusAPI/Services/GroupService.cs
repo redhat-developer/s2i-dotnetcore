@@ -110,7 +110,7 @@ namespace SchoolBusAPI.Services
                     .Include("Group")
                     .Where(x => x.Group.Id == id);
 
-                var result = Mapper.Map<List<UserViewModel>>(data);
+                var result = Mapper.Map<List<GroupMembershipViewModel>>(data);
 
                 return new ObjectResult(result);
             }

@@ -31,12 +31,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        IActionResult HistoriesGetAsync();
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of History to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">History not found</response>
@@ -104,17 +98,7 @@ namespace SchoolBusAPI.Services
 
             return new NoContentResult();
         }
-        /// <summary>
-        /// 
-        /// </summary>
 
-        /// <response code="200">OK</response>
-
-        public virtual IActionResult HistoriesGetAsync()
-        {
-            var result = _context.Historys.ToList();
-            return new ObjectResult(result);
-        }
         /// <summary>
         /// 
         /// </summary>

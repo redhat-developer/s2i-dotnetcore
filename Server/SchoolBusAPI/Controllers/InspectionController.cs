@@ -39,20 +39,10 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Inspection created</response>
         [HttpPost]
         [Route("/api/inspections/bulk")]
-        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
         public virtual IActionResult InspectionsBulkPost([FromBody]Inspection[] items)
         {
             return this._service.InspectionsBulkPostAsync(items);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/inspections")]
-        public virtual IActionResult InspectionsGet()
-        {
-            return this._service.InspectionsGetAsync();
         }
 
         /// <summary>
@@ -63,9 +53,10 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Inspection not found</response>
         [HttpPost]
         [Route("/api/inspections/{id}/delete")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
         public virtual IActionResult InspectionsIdDeletePost([FromRoute]int id)
         {
-            return this._service.InspectionsIdDeletePostAsync(id, User.HasPermissions(Permissions.SchoolBusWrite));
+            return this._service.InspectionsIdDeletePostAsync(id);
         }
 
         /// <summary>
@@ -76,6 +67,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Inspection not found</response>
         [HttpGet]
         [Route("/api/inspections/{id}")]
+        [RequiresPermission(Permissions.SchoolBusRead)]
         public virtual IActionResult InspectionsIdGet([FromRoute]int id)
         {
             return this._service.InspectionsIdGetAsync(id);
@@ -90,6 +82,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Inspection not found</response>
         [HttpPut]
         [Route("/api/inspections/{id}")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
         public virtual IActionResult InspectionsIdPut([FromRoute]int id, [FromBody]Inspection item)
         {
             return this._service.InspectionsIdPutAsync(id, item);
@@ -102,6 +95,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Inspection created</response>
         [HttpPost]
         [Route("/api/inspections")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
         public virtual IActionResult InspectionsPost([FromBody]Inspection item)
         {
             return this._service.InspectionsPostAsync(item);

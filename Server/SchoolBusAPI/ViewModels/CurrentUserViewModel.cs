@@ -10,15 +10,10 @@
 
 using System;
 using System.Linq;
-using System.IO;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
@@ -121,6 +116,16 @@ namespace SchoolBusAPI.ViewModels
         [DataMember(Name="smAuthorizationDirectory")]
         public string SmAuthorizationDirectory { get; set; }
 
+        public bool IsSystemAdmin 
+        { 
+            get
+            {
+                if (UserRoles == null)
+                    return false;
+
+                return UserRoles.Any(r => r.Role.Name == Roles.SystemAdmininstrator);
+            }
+        }
         /// <summary>
         /// Gets or Sets GroupMemberships
         /// </summary>

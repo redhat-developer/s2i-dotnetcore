@@ -51,6 +51,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/groups")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult GroupsGet()
         {
             return this._service.GroupsGetAsync();
@@ -64,6 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Group not found</response>
         [HttpPost]
         [Route("/api/groups/{id}/delete")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult GroupsIdDeletePost([FromRoute]int id)
         {
             return this._service.GroupsIdDeletePostAsync(id);
@@ -77,6 +79,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Group not found</response>
         [HttpGet]
         [Route("/api/groups/{id}")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult GroupsIdGet([FromRoute]int id)
         {
             return this._service.GroupsIdGetAsync(id);
@@ -91,6 +94,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Group not found</response>
         [HttpPut]
         [Route("/api/groups/{id}")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult GroupsIdPut([FromRoute]int id, [FromBody]Group item)
         {
             return this._service.GroupsIdPutAsync(id, item);
@@ -104,6 +108,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/groups/{id}/users")]
+        [RequiresPermission(Permissions.UserRead)]
         public virtual IActionResult GroupsIdUsersGet([FromRoute]int id)
         {
             return this._service.GroupsIdUsersGetAsync(id);
@@ -116,6 +121,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Group created</response>
         [HttpPost]
         [Route("/api/groups")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult GroupsPost([FromBody]Group item)
         {
             return this._service.GroupsPostAsync(item);

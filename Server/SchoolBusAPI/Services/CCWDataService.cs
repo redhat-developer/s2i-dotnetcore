@@ -47,12 +47,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        IActionResult CcwdataGetAsync();
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of CCWData to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">CCWData not found</response>
@@ -365,16 +359,6 @@ namespace SchoolBusAPI.Services
                 result = null;
             }
             return result;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <response code="200">OK</response>
-        public virtual IActionResult CcwdataGetAsync()
-        {
-            var result = _context.CCWDatas.ToList();
-            return new ObjectResult(result);
         }
 
         /// <summary>

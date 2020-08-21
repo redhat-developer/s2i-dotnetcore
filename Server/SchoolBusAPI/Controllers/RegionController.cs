@@ -51,6 +51,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/regions")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult RegionsGet()
         {
             return this._service.RegionsGetAsync();
@@ -64,6 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Region not found</response>
         [HttpPost]
         [Route("/api/regions/{id}/delete")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult RegionsIdDeletePost([FromRoute]int id)
         {
             return this._service.RegionsIdDeletePostAsync(id);
@@ -77,6 +79,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/regions/{id}/districts")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult RegionsIdDistrictsGet([FromRoute]int id)
         {
             return this._service.RegionsIdDistrictsGetAsync(id);
@@ -90,6 +93,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Region not found</response>
         [HttpGet]
         [Route("/api/regions/{id}")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult RegionsIdGet([FromRoute]int id)
         {
             return this._service.RegionsIdGetAsync(id);
@@ -104,6 +108,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Region not found</response>
         [HttpPut]
         [Route("/api/regions/{id}")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult RegionsIdPut([FromRoute]int id, [FromBody]Region item)
         {
             return this._service.RegionsIdPutAsync(id, item);
@@ -116,6 +121,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Region created</response>
         [HttpPost]
         [Route("/api/regions")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult RegionsPost([FromBody]Region item)
         {
             return this._service.RegionsPostAsync(item);

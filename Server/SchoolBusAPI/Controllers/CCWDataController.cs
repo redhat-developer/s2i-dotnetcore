@@ -55,20 +55,10 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Vehicle not found in CCW system</response>
         [HttpGet]
         [Route("/api/ccwdata/fetch")]
+        [RequiresPermission(Permissions.SchoolBusRead)]
         public virtual IActionResult CcwdataFetchGet([FromQuery]string regi, [FromQuery]string vin, [FromQuery]string plate)
         {
             return this._service.CcwdataFetchGetAsync(regi, vin, plate);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/ccwdata")]
-        public virtual IActionResult CcwdataGet()
-        {
-            return this._service.CcwdataGetAsync();
         }
 
         /// <summary>
@@ -79,6 +69,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">CCWData not found</response>
         [HttpPost]
         [Route("/api/ccwdata/{id}/delete")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
         public virtual IActionResult CcwdataIdDeletePost([FromRoute]int id)
         {
             return this._service.CcwdataIdDeletePostAsync(id);
@@ -92,6 +83,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">CCWData not found</response>
         [HttpGet]
         [Route("/api/ccwdata/{id}")]
+        [RequiresPermission(Permissions.SchoolBusRead)]
         public virtual IActionResult CcwdataIdGet([FromRoute]int id)
         {
             return this._service.CcwdataIdGetAsync(id);
@@ -106,6 +98,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">CCWData not found</response>
         [HttpPut]
         [Route("/api/ccwdata/{id}")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
         public virtual IActionResult CcwdataIdPut([FromRoute]int id, [FromBody]CCWData item)
         {
             return this._service.CcwdataIdPutAsync(id, item);
@@ -118,6 +111,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">CCWData created</response>
         [HttpPost]
         [Route("/api/ccwdata")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
         public virtual IActionResult CcwdataPost([FromBody]CCWData item)
         {
             return this._service.CcwdataPostAsync(item);

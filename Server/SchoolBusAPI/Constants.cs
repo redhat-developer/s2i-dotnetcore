@@ -14,4 +14,10 @@
         public const string CodeRead = "CODE-R";
         public const string CodeWrite = "CODE-W";
     }
+
+    public class Roles
+    {
+        public const string SystemAdmininstrator = "System Administrator";
+        public const string Inspector = "Inspector";
+    }
 }

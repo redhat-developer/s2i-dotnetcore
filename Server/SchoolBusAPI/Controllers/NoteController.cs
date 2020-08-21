@@ -48,22 +48,12 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/notes")]
-        public virtual IActionResult NotesGet()
-        {
-            return this._service.NotesGetAsync();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of Note to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Note not found</response>
         [HttpPost]
         [Route("/api/notes/{id}/delete")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotesIdDeletePost([FromRoute]int id)
         {
             return this._service.NotesIdDeletePostAsync(id);
@@ -77,6 +67,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Note not found</response>
         [HttpGet]
         [Route("/api/notes/{id}")]
+        [RequiresPermission(Permissions.SchoolBusRead, Permissions.OwnerRead)]
         public virtual IActionResult NotesIdGet([FromRoute]int id)
         {
             return this._service.NotesIdGetAsync(id);
@@ -91,6 +82,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Note not found</response>
         [HttpPut]
         [Route("/api/notes/{id}")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotesIdPut([FromRoute]int id, [FromBody]Note item)
         {
             return this._service.NotesIdPutAsync(id, item);
@@ -103,6 +95,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Note created</response>
         [HttpPost]
         [Route("/api/notes")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotesPost([FromBody]Note item)
         {
             return this._service.NotesPostAsync(item);

@@ -18,7 +18,6 @@ using System.Reflection;
 
 namespace SchoolBusAPI.Controllers
 {
-    [Authorize]
     [Route("api")]
     [ApiVersion("1.0")]
     [ApiController]
@@ -53,7 +52,6 @@ namespace SchoolBusAPI.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("version")]
         public virtual IActionResult GetServerVersionInfo()
@@ -64,7 +62,6 @@ namespace SchoolBusAPI.Controllers
             return Ok(info);
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("server/version")]
         public virtual IActionResult GetServerVersion()
@@ -72,7 +69,6 @@ namespace SchoolBusAPI.Controllers
             return Ok(GetApplicationVersionInfo());
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("database/version")]
         public virtual IActionResult GetDatabaseVersion()

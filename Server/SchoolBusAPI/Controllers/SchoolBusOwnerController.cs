@@ -52,6 +52,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusowners")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult SchoolbusownersGet()
         {
             return this._service.SchoolbusownersGetAsync();
@@ -65,6 +66,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusowners/{id}/attachments")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult SchoolbusownersIdAttachmentsGet([FromRoute]int id)
         {
             return this._service.SchoolbusownersIdAttachmentsGetAsync(id);
@@ -78,6 +80,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">SchoolBusOwner not found</response>
         [HttpPost]
         [Route("/api/schoolbusowners/{id}/delete")]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult SchoolbusownersIdDeletePost([FromRoute]int id)
         {
             return this._service.SchoolbusownersIdDeletePostAsync(id);
@@ -91,6 +94,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">SchoolBusOwner not found</response>
         [HttpGet]
         [Route("/api/schoolbusowners/{id}")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult SchoolbusownersIdGet([FromRoute]int id)
         {
             return this._service.SchoolbusownersIdGetAsync(id);
@@ -106,6 +110,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusowners/{id}/history")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult SchoolbusownersIdHistoryGet([FromRoute]int id, [FromQuery]int? offset, [FromQuery]int? limit)
         {
             return this._service.SchoolbusownersIdHistoryGetAsync(id, offset, limit);
@@ -120,6 +125,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">History created</response>
         [HttpPost]
         [Route("/api/schoolbusowners/{id}/history")]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult SchoolbusownersIdHistoryPost([FromRoute]int id, [FromBody]History item)
         {
             return this._service.SchoolbusownersIdHistoryPostAsync(id, item);
@@ -133,6 +139,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusowners/{id}/notes")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult SchoolbusownersIdNotesGet([FromRoute]int id)
         {
             return this._service.SchoolbusownersIdNotesGetAsync(id);
@@ -147,6 +154,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">SchoolBusOwner not found</response>
         [HttpPut]
         [Route("/api/schoolbusowners/{id}")]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult SchoolbusownersIdPut([FromRoute]int id, [FromBody]SchoolBusOwner item)
         {
             return this._service.SchoolbusownersIdPutAsync(id, item);
@@ -160,6 +168,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusowners/{id}/view")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult SchoolbusownersIdViewGet([FromRoute]int id)
         {
             return this._service.SchoolbusownersIdViewGetAsync(id);
@@ -172,6 +181,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">SchoolBusOwner created</response>
         [HttpPost]
         [Route("/api/schoolbusowners")]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult SchoolbusownersPost([FromBody]SchoolBusOwner item)
         {
             return this._service.SchoolbusownersPostAsync(item);
@@ -188,6 +198,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusowners/search")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult SchoolbusownersSearchGet(
             [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] districts, 
             [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] inspectors,
@@ -205,6 +216,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code = "404">school bus owner not found</response>
         [HttpGet]
         [Route("/api/schoolbusowners/{id}/contacts")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult SchoolbusesIdInspectionsGet([FromRoute]int id)
         {
             return this._service.SchoolbuseownersIdContactsGetAsync(id);

@@ -3436,6 +3436,12 @@
             Foreign key for Role 
             </summary>   
         </member>
+        <member name="P:SchoolBusAPI.Models.UserRole.User">
+            <summary>
+            A foreign key reference to the system-generated unique identifier for a User
+            </summary>
+            <value>A foreign key reference to the system-generated unique identifier for a User</value>       
+        </member>
         <member name="M:SchoolBusAPI.Models.UserRole.ToString">
             <summary>
             Returns the string presentation of the object
@@ -3500,12 +3506,6 @@
             </summary>
             <param name="items"></param>
             <response code="201">Attachment created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentController.AttachmentsGet">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Controllers.AttachmentController.AttachmentsIdDeletePost(System.Int32)">
             <summary>
@@ -3597,12 +3597,6 @@
             <response code="200">OK</response>
             <response code="404">Vehicle not found in CCW system</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.CCWDataController.CcwdataGet">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.CCWDataController.CcwdataIdDeletePost(System.Int32)">
             <summary>
             
@@ -3634,61 +3628,6 @@
             </summary>
             <param name="item"></param>
             <response code="201">CCWData created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Controllers.CCWJurisdictionController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.CCWJurisdictionController.#ctor(SchoolBusAPI.Services.ICCWJurisdictionService)">
-            <summary>
-            Create a controller and set the service
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.CCWJurisdictionController.CcwjurisdictionsBulkPost(SchoolBusAPI.Models.CCWJurisdiction[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">CCWJurisdiction created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.CCWJurisdictionController.CcwjurisdictionsGet">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.CCWJurisdictionController.CcwjurisdictionsIdDeletePost(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of CCWJurisdiction to delete</param>
-            <response code="200">OK</response>
-            <response code="404">CCWJurisdiction not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.CCWJurisdictionController.CcwjurisdictionsIdGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of CCWJurisdiction to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">CCWJurisdiction not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.CCWJurisdictionController.CcwjurisdictionsIdPut(System.Int32,SchoolBusAPI.Models.CCWJurisdiction)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of CCWJurisdiction to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">CCWJurisdiction not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.CCWJurisdictionController.CcwjurisdictionsPost(SchoolBusAPI.Models.CCWJurisdiction)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">CCWJurisdiction created</response>
         </member>
         <member name="T:SchoolBusAPI.Controllers.CityController">
             <summary>
@@ -3993,12 +3932,6 @@
             <param name="items"></param>
             <response code="201">History created</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.HistoryController.HistoriesGet">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.HistoryController.HistoriesIdDeletePost(System.Int32)">
             <summary>
             
@@ -4047,12 +3980,6 @@
             </summary>
             <param name="items"></param>
             <response code="201">Inspection created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.InspectionController.InspectionsGet">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Controllers.InspectionController.InspectionsIdDeletePost(System.Int32)">
             <summary>
@@ -4103,12 +4030,6 @@
             <param name="items"></param>
             <response code="201">Note created</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.NoteController.NotesGet">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.NoteController.NotesIdDeletePost(System.Int32)">
             <summary>
             
@@ -4158,12 +4079,6 @@
             <param name="items"></param>
             <response code="201">Notification created</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationController.NotificationsGet">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.NotificationController.NotificationsIdDeletePost(System.Int32)">
             <summary>
             
@@ -4212,12 +4127,6 @@
             </summary>
             <param name="items"></param>
             <response code="201">NotificationEvent created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationEventController.NotificationeventsGet">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Controllers.NotificationEventController.NotificationeventsIdDeletePost(System.Int32)">
             <summary>
@@ -4449,24 +4358,6 @@
             </summary>
             <param name="id">id of Role to fetch</param>
             <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Role not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesIdUsersGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Gets all the users for a role</remarks>
-            <param name="id">id of Role to fetch</param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesIdUsersPut(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the users for a role</remarks>
-            <param name="id">id of Role to update</param>
-            <param name="items"></param>
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
@@ -5330,12 +5221,6 @@
             <param name="items"></param>
             <response code="201">Attachment created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IAttachmentService.AttachmentsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.IAttachmentService.AttachmentsIdDeletePostAsync(System.Int32)">
             <summary>
             
@@ -5387,12 +5272,6 @@
             </summary>
             <param name="items"></param>
             <response code="201">Attachments created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.AttachmentService.AttachmentsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.AttachmentService.AttachmentsIdDeletePostAsync(System.Int32)">
             <summary>
@@ -5455,12 +5334,6 @@
             <param name="plate">License Plate String</param>
             <response code="200">OK</response>
             <response code="404">Vehicle not found in CCW system</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ICCWDataService.CcwdataGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.ICCWDataService.CcwdataIdDeletePostAsync(System.Int32)">
             <summary>
@@ -5540,12 +5413,6 @@
             <param name="val"></param>
             <returns></returns>
         </member>
-        <member name="M:SchoolBusAPI.Services.CCWDataService.CcwdataGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.CCWDataService.CcwdataIdDeletePostAsync(System.Int32)">
             <summary>
             
@@ -5577,56 +5444,6 @@
             </summary>
             <param name="item"></param>
             <response code="201">CCWData created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Services.ICCWJurisdictionService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ICCWJurisdictionService.CcwjurisdictionsBulkPostAsync(SchoolBusAPI.Models.CCWJurisdiction[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">CCWJurisdiction created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ICCWJurisdictionService.CcwjurisdictionsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ICCWJurisdictionService.CcwjurisdictionsIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of CCWJurisdiction to delete</param>
-            <response code="200">OK</response>
-            <response code="404">CCWJurisdiction not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ICCWJurisdictionService.CcwjurisdictionsIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of CCWJurisdiction to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">CCWJurisdiction not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ICCWJurisdictionService.CcwjurisdictionsIdPutAsync(System.Int32,SchoolBusAPI.Models.CCWJurisdiction)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of CCWJurisdiction to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">CCWJurisdiction not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ICCWJurisdictionService.CcwjurisdictionsPostAsync(SchoolBusAPI.Models.CCWJurisdiction)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">CCWJurisdiction created</response>
         </member>
         <member name="T:SchoolBusAPI.Services.ICityService">
             <summary>
@@ -6228,12 +6045,6 @@
             <param name="items"></param>
             <response code="201">History created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IHistoryService.HistoriesGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.IHistoryService.HistoriesIdDeletePostAsync(System.Int32)">
             <summary>
             
@@ -6283,12 +6094,6 @@
             <param name="items"></param>
             <response code="201">SchoolBusOwnerHistories created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.HistoryService.HistoriesGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.HistoryService.HistoriesIdDeletePostAsync(System.Int32)">
             <summary>
             
@@ -6333,18 +6138,11 @@
             <param name="items"></param>
             <response code="201">Inspection created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IInspectionService.InspectionsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IInspectionService.InspectionsIdDeletePostAsync(System.Int32,System.Boolean)">
+        <member name="M:SchoolBusAPI.Services.IInspectionService.InspectionsIdDeletePostAsync(System.Int32)">
             <summary>
             
             </summary>
             <param name="id">id of Inspection to delete</param>
-            <param name="isAdmin">is current has permission of ADMIN</param>
             <response code="200">OK</response>
             <response code="404">Inspection not found</response>
         </member>
@@ -6389,19 +6187,11 @@
             <param name="items"></param>
             <response code="201">Inspections created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.InspectionService.InspectionsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.InspectionService.InspectionsIdDeletePostAsync(System.Int32,System.Boolean)">
+        <member name="M:SchoolBusAPI.Services.InspectionService.InspectionsIdDeletePostAsync(System.Int32)">
             <summary>
             
             </summary>
             <param name="id">id of Inspection to delete</param>
-            <param name="isAdmin">is current user has permission of ADMIN</param>
-            
             <response code="200">OK</response>
             <response code="404">Inspection not found</response>
         </member>
@@ -6440,12 +6230,6 @@
             </summary>
             <param name="items"></param>
             <response code="201">Note created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INoteService.NotesGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.INoteService.NotesIdDeletePostAsync(System.Int32)">
             <summary>
@@ -6496,12 +6280,6 @@
             <param name="items"></param>
             <response code="201">Notes created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.NoteService.NotesGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.NoteService.NotesIdDeletePostAsync(System.Int32)">
             <summary>
             
@@ -6545,12 +6323,6 @@
             </summary>
             <param name="items"></param>
             <response code="201">NotificationEvent created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationEventService.NotificationeventsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.INotificationEventService.NotificationeventsIdDeletePostAsync(System.Int32)">
             <summary>
@@ -6601,12 +6373,6 @@
             <param name="items"></param>
             <response code="201">NotificationEvents created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.NotificationEventService.NotificationeventsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.NotificationEventService.NotificationeventsIdDeletePostAsync(System.Int32)">
             <summary>
             
@@ -6650,12 +6416,6 @@
             </summary>
             <param name="items"></param>
             <response code="201">Notification created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationService.NotificationsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.INotificationService.NotificationsIdDeletePostAsync(System.Int32)">
             <summary>
@@ -6705,12 +6465,6 @@
             </summary>
             <param name="items"></param>
             <response code="201">Notifications created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationService.NotificationsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.NotificationService.NotificationsIdDeletePostAsync(System.Int32)">
             <summary>
@@ -7055,24 +6809,6 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesIdUsersGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Gets all the users for a role</remarks>
-            <param name="id">id of Role to fetch</param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesIdUsersPutAsync(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the users for a role</remarks>
-            <param name="id">id of Role to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">Role not found</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.IRoleService.RolesPostAsync(SchoolBusAPI.ViewModels.RoleViewModel)">
             <summary>
             
@@ -7172,24 +6908,6 @@
             </summary>
             <param name="id">id of Role to update</param>
             <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Role not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesIdUsersGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Gets all the users for a role</remarks>
-            <param name="id">id of Role to fetch</param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesIdUsersPutAsync(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the users for a role</remarks>
-            <param name="id">id of Role to update</param>
-            <param name="items"></param>
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>

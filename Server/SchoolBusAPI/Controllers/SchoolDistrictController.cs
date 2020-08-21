@@ -51,6 +51,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schooldistricts")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult SchooldistrictsGet()
         {
             return this._service.SchooldistrictsGetAsync();
@@ -64,6 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">SchoolDistrict not found</response>
         [HttpPost]
         [Route("/api/schooldistricts/{id}/delete")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult SchooldistrictsIdDeletePost([FromRoute]int id)
         {
             return this._service.SchooldistrictsIdDeletePostAsync(id);
@@ -77,6 +79,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">SchoolDistrict not found</response>
         [HttpGet]
         [Route("/api/schooldistricts/{id}")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult SchooldistrictsIdGet([FromRoute]int id)
         {
             return this._service.SchooldistrictsIdGetAsync(id);
@@ -91,6 +94,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">SchoolDistrict not found</response>
         [HttpPut]
         [Route("/api/schooldistricts/{id}")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult SchooldistrictsIdPut([FromRoute]int id, [FromBody]SchoolDistrict item)
         {
             return this._service.SchooldistrictsIdPutAsync(id, item);
@@ -103,6 +107,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">SchoolDistrict created</response>
         [HttpPost]
         [Route("/api/schooldistricts")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult SchooldistrictsPost([FromBody]SchoolDistrict item)
         {
             return this._service.SchooldistrictsPostAsync(item);
