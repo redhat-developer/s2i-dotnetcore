@@ -77,6 +77,8 @@ namespace SchoolBusAPI.ViewModels
         [DataMember(Name="id")]
         public int? Id { get; set; }
 
+        [DataMember(Name = "group")]
+        public GroupViewModel Group { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
