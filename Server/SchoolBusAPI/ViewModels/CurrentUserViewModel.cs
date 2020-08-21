@@ -25,47 +25,6 @@ namespace SchoolBusAPI.ViewModels
     public partial class CurrentUserViewModel : IEquatable<CurrentUserViewModel>
     {
         /// <summary>
-        /// Default constructor, required by entity framework
-        /// </summary>
-        public CurrentUserViewModel()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CurrentUserViewModel" /> class.
-        /// </summary>
-        /// <param name="Id">Id.</param>
-        /// <param name="GivenName">GivenName.</param>
-        /// <param name="Surname">Surname.</param>
-        /// <param name="Email">Email.</param>
-        /// <param name="Active">Active.</param>
-        /// <param name="UserRoles">UserRoles.</param>
-        /// <param name="SmUserId">SmUserId.</param>
-        /// <param name="SmAuthorizationDirectory">SmAuthorizationDirectory.</param>
-        /// <param name="GroupMemberships">GroupMemberships.</param>
-        /// <param name="District">The District to which this User is affliated..</param>
-        /// <param name="OverdueInspections">OverdueInspections.</param>
-        /// <param name="ScheduledInspections">ScheduledInspections.</param>
-        /// <param name="DueNextMonthInspections">DueNextMonthInspections.</param>
-        /// <param name="ReInspections">ReInspections.</param>
-        public CurrentUserViewModel(int? Id = null, string GivenName = null, string Surname = null, string Email = null, bool? Active = null, List<UserRole> UserRoles = null, string SmUserId = null, string SmAuthorizationDirectory = null, List<GroupMembership> GroupMemberships = null, District District = null, int? OverdueInspections = null, int? ScheduledInspections = null, int? DueNextMonthInspections = null, int? ReInspections = null)
-        {               this.Id = Id;
-            this.GivenName = GivenName;
-            this.Surname = Surname;
-            this.Email = Email;
-            this.Active = Active;
-            this.UserRoles = UserRoles;
-            this.SmUserId = SmUserId;
-            this.SmAuthorizationDirectory = SmAuthorizationDirectory;
-            this.GroupMemberships = GroupMemberships;
-            this.District = District;
-            this.OverdueInspections = OverdueInspections;
-            this.ScheduledInspections = ScheduledInspections;
-            this.DueNextMonthInspections = DueNextMonthInspections;
-            this.ReInspections = ReInspections;
-        }
-
-        /// <summary>
         /// Gets or Sets Id
         /// </summary>
         [DataMember(Name="id")]
@@ -98,8 +57,8 @@ namespace SchoolBusAPI.ViewModels
         /// <summary>
         /// Gets or Sets UserRoles
         /// </summary>
-        [DataMember(Name="userRoles")]
-        public List<UserRole> UserRoles { get; set; }
+        [DataMember(Name = "userRoles")]
+        public List<UserRoleViewModel> UserRoles { get; set; }
 
         [DataMember(Name ="permissions")]
         public List<string> Permissions { get; set; }
@@ -116,6 +75,7 @@ namespace SchoolBusAPI.ViewModels
         [DataMember(Name="smAuthorizationDirectory")]
         public string SmAuthorizationDirectory { get; set; }
 
+        [DataMember(Name = "isSystemAdmin")]
         public bool IsSystemAdmin 
         { 
             get
@@ -130,7 +90,7 @@ namespace SchoolBusAPI.ViewModels
         /// Gets or Sets GroupMemberships
         /// </summary>
         [DataMember(Name="groupMemberships")]
-        public List<GroupMembership> GroupMemberships { get; set; }
+        public List<GroupMembershipViewModel> GroupMemberships { get; set; }
 
         /// <summary>
         /// The District to which this User is affliated.

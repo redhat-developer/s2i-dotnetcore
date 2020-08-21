@@ -8142,30 +8142,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.#ctor(System.Nullable{System.Int32},System.String,System.String,System.String,System.Nullable{System.Boolean},System.Collections.Generic.List{SchoolBusAPI.Models.UserRole},System.String,System.String,System.Collections.Generic.List{SchoolBusAPI.Models.GroupMembership},SchoolBusAPI.Models.District,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.CurrentUserViewModel" /> class.
-            </summary>
-            <param name="Id">Id.</param>
-            <param name="GivenName">GivenName.</param>
-            <param name="Surname">Surname.</param>
-            <param name="Email">Email.</param>
-            <param name="Active">Active.</param>
-            <param name="UserRoles">UserRoles.</param>
-            <param name="SmUserId">SmUserId.</param>
-            <param name="SmAuthorizationDirectory">SmAuthorizationDirectory.</param>
-            <param name="GroupMemberships">GroupMemberships.</param>
-            <param name="District">The District to which this User is affliated..</param>
-            <param name="OverdueInspections">OverdueInspections.</param>
-            <param name="ScheduledInspections">ScheduledInspections.</param>
-            <param name="DueNextMonthInspections">DueNextMonthInspections.</param>
-            <param name="ReInspections">ReInspections.</param>
-        </member>
         <member name="P:SchoolBusAPI.ViewModels.CurrentUserViewModel.Id">
             <summary>
             Gets or Sets Id
@@ -9566,20 +9542,6 @@
             <summary>
             Default constructor, required by entity framework
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserViewModel.#ctor(System.Int32,System.Boolean,System.String,System.String,System.String,System.String,System.Collections.Generic.List{SchoolBusAPI.Models.UserRole},System.Collections.Generic.List{SchoolBusAPI.Models.GroupMembership},SchoolBusAPI.Models.District)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.UserViewModel" /> class.
-            </summary>
-            <param name="Id">Id (required).</param>
-            <param name="Active">Active (required).</param>
-            <param name="GivenName">GivenName.</param>
-            <param name="Surname">Surname.</param>
-            <param name="Email">Email.</param>
-            <param name="SmUserId">SmUserId.</param>
-            <param name="UserRoles">UserRoles.</param>
-            <param name="GroupMemberships">GroupMemberships.</param>
-            <param name="District">The District to which this User is affliated..</param>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.UserViewModel.Id">
             <summary>
