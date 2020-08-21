@@ -22,8 +22,7 @@ class TopNav extends React.Component {
   };
 
   getIsCurrentUserAdmin = () => {
-    //return _.some(this.props.currentUser.userRoles, ["roleId", 2]);
-    return true;
+    return this.props.currentUser.isSystemAdmin;
   };
 
   render() {

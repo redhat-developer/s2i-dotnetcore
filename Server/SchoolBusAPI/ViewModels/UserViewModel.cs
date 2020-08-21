@@ -10,15 +10,10 @@
 
 using System;
 using System.Linq;
-using System.IO;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
@@ -34,32 +29,6 @@ namespace SchoolBusAPI.ViewModels
         /// </summary>
         public UserViewModel()
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserViewModel" /> class.
-        /// </summary>
-        /// <param name="Id">Id (required).</param>
-        /// <param name="Active">Active (required).</param>
-        /// <param name="GivenName">GivenName.</param>
-        /// <param name="Surname">Surname.</param>
-        /// <param name="Email">Email.</param>
-        /// <param name="SmUserId">SmUserId.</param>
-        /// <param name="UserRoles">UserRoles.</param>
-        /// <param name="GroupMemberships">GroupMemberships.</param>
-        /// <param name="District">The District to which this User is affliated..</param>
-        public UserViewModel(int Id, bool Active, string GivenName = null, string Surname = null, string Email = null, string SmUserId = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null)
-        {   
-            this.Id = Id;
-            this.Active = Active;
-
-            this.GivenName = GivenName;
-            this.Surname = Surname;
-            this.Email = Email;
-            this.SmUserId = SmUserId;
-            this.UserRoles = UserRoles;
-            this.GroupMemberships = GroupMemberships;
-            this.District = District;
         }
 
         /// <summary>
@@ -102,13 +71,13 @@ namespace SchoolBusAPI.ViewModels
         /// Gets or Sets UserRoles
         /// </summary>
         [DataMember(Name="userRoles")]
-        public List<UserRole> UserRoles { get; set; }
+        public List<UserRoleViewModel> UserRoles { get; set; }
 
         /// <summary>
         /// Gets or Sets GroupMemberships
         /// </summary>
         [DataMember(Name="groupMemberships")]
-        public List<GroupMembership> GroupMemberships { get; set; }
+        public List<GroupMembershipViewModel> GroupMemberships { get; set; }
 
         /// <summary>
         /// The District to which this User is affliated.
@@ -124,19 +93,7 @@ namespace SchoolBusAPI.ViewModels
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("class UserViewModel {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Active: ").Append(Active).Append("\n");
-            sb.Append("  GivenName: ").Append(GivenName).Append("\n");
-            sb.Append("  Surname: ").Append(Surname).Append("\n");
-            sb.Append("  Email: ").Append(Email).Append("\n");
-            sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
-            sb.Append("  UserRoles: ").Append(UserRoles).Append("\n");
-            sb.Append("  GroupMemberships: ").Append(GroupMemberships).Append("\n");
-            sb.Append("  District: ").Append(District).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
+            return ToJson();
         }
 
         /// <summary>

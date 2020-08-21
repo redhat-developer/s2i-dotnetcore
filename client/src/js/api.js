@@ -84,20 +84,7 @@ export function getCurrentUser() {
 
 //Check if current user is Administrator
 export function isAdmin() {
-  var roles = store.getState().user.userRoles;
-  var roleCount = roles.length;
-  var permissions = [];
-  var isAdmin = [];
-
-  for (var i = 0; i < roleCount; i++) {
-    var role = roles[i].role;
-    if (role != null) {
-      permissions[i] = role.rolePermissions;
-      isAdmin.push(_.some(permissions[i], ['permission.code', 'ADMIN']));
-    }
-  }
-
-  return isAdmin.includes(true);
+  return store.getState().user.isSystemAdmin;
 }
 
 export function searchUsers(params) {

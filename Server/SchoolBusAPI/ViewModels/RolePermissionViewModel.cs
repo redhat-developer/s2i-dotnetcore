@@ -68,6 +68,9 @@ namespace SchoolBusAPI.ViewModels
         [DataMember(Name="id")]
         public int? Id { get; set; }
 
+        [DataMember(Name="permission")]
+        public PermissionViewModel Permission { get; set; }
+
         /// <summary>
         /// Gets or Sets ExpiryDate
         /// </summary>
