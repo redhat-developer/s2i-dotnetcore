@@ -31,12 +31,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        IActionResult NotificationsGetAsync();
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of Notification to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>
@@ -104,17 +98,7 @@ namespace SchoolBusAPI.Services
 
             return new NoContentResult();
         }
-        /// <summary>
-        /// 
-        /// </summary>
 
-        /// <response code="200">OK</response>
-
-        public virtual IActionResult NotificationsGetAsync()
-        {
-            var result = _context.Notifications.ToList();
-            return new ObjectResult(result);
-        }
         /// <summary>
         /// 
         /// </summary>

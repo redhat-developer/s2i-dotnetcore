@@ -81,6 +81,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users")]
+        [RequiresPermission(Permissions.UserRead)]
         public IActionResult UsersGet()
         {
             return this._service.UsersGetAsync();
@@ -110,6 +111,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}/favourites")]
+        [RequiresPermission(Permissions.UserRead)]
         public virtual IActionResult UsersIdFavouritesGet([FromRoute]int id)
         {
             return this._service.UsersIdFavouritesGetAsync(id);
@@ -124,6 +126,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">Favourites added to user</response>
         [HttpPost]
         [Route("/api/users/{id}/favourites")]
+        [RequiresPermission(Permissions.UserWrite)]
         public virtual IActionResult UsersIdFavouritesPost([FromRoute]int id, [FromBody]UserFavourite[] item)
         {
             return this._service.UsersIdFavouritesPostAsync(id, item);
@@ -139,6 +142,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpPut]
         [Route("/api/users/{id}/favourites")]
+        [RequiresPermission(Permissions.UserWrite)]
         public virtual IActionResult UsersIdFavouritesPut([FromRoute]int id, [FromBody]UserFavourite[] items)
         {
             return this._service.UsersIdFavouritesPutAsync(id, items);
@@ -153,6 +157,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}")]
+        [RequiresPermission(Permissions.UserRead)]
         public virtual IActionResult UsersIdGet([FromRoute]int id)
         {
             return this._service.UsersIdGetAsync(id);
@@ -167,6 +172,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}/groups")]
+        [RequiresPermission(Permissions.UserRead)]
         public virtual IActionResult UsersIdGroupsGet([FromRoute]int id)
         {
             return this._service.UsersIdGroupsGetAsync(id);
@@ -212,6 +218,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/users/{id}/notifications")]
+        [RequiresPermission(Permissions.UserRead)]
         public virtual IActionResult UsersIdNotificationsGet([FromRoute]int id)
         {
             return this._service.UsersIdNotificationsGetAsync(id);
@@ -226,6 +233,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}/permissions")]
+        [RequiresPermission(Permissions.UserRead)]
         public virtual IActionResult UsersIdPermissionsGet([FromRoute]int id)
         {
             return this._service.UsersIdPermissionsGetAsync(id);
@@ -256,6 +264,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users/{id}/roles")]
+        [RequiresPermission(Permissions.UserRead)]
         public virtual IActionResult UsersIdRolesGet([FromRoute]int id)
         {
             return this._service.UsersIdRolesGetAsync(id);
@@ -316,9 +325,19 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/users/search")]
+        [RequiresPermission(Permissions.UserRead)]
         public virtual IActionResult UsersSearchGet([FromQuery]int?[] districts, [FromQuery]string surname, [FromQuery]bool? includeInactive)
         {
             return this._service.UsersSearchGetAsync(districts, surname, includeInactive);
         }
+
+        [HttpGet]
+        [Route("/api/users/inspectors")]
+        [RequiresPermission(Permissions.UserRead)]
+        public virtual IActionResult UserInspectorsGet([FromQuery] bool? includeInactive)
+        {
+            return this._service.UserInspectorsGet(includeInactive);
+        }
+
     }
 }

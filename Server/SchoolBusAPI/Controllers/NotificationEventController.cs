@@ -48,22 +48,12 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/notificationevents")]
-        public virtual IActionResult NotificationeventsGet()
-        {
-            return this._service.NotificationeventsGetAsync();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of NotificationEvent to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">NotificationEvent not found</response>
         [HttpPost]
         [Route("/api/notificationevents/{id}/delete")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotificationeventsIdDeletePost([FromRoute]int id)
         {
             return this._service.NotificationeventsIdDeletePostAsync(id);
@@ -77,6 +67,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">NotificationEvent not found</response>
         [HttpGet]
         [Route("/api/notificationevents/{id}")]
+        [RequiresPermission(Permissions.SchoolBusRead, Permissions.OwnerRead)]
         public virtual IActionResult NotificationeventsIdGet([FromRoute]int id)
         {
             return this._service.NotificationeventsIdGetAsync(id);
@@ -91,6 +82,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">NotificationEvent not found</response>
         [HttpPut]
         [Route("/api/notificationevents/{id}")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotificationeventsIdPut([FromRoute]int id, [FromBody]NotificationEvent item)
         {
             return this._service.NotificationeventsIdPutAsync(id, item);
@@ -103,6 +95,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">NotificationEvent created</response>
         [HttpPost]
         [Route("/api/notificationevents")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotificationeventsPost([FromBody]NotificationEvent item)
         {
             return this._service.NotificationeventsPostAsync(item);

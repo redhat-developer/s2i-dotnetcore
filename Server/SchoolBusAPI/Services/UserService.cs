@@ -203,6 +203,8 @@ namespace SchoolBusAPI.Services
         /// <param name="includeInactive">True if Inactive users will be returned</param>
         /// <response code="200">OK</response>
         IActionResult UsersSearchGetAsync(int?[] districts, string surname, bool? includeInactive);
+
+        IActionResult UserInspectorsGet(bool? includeInactive);
     }
 
     /// <summary>
@@ -1086,6 +1088,22 @@ namespace SchoolBusAPI.Services
             }
 
             // now convert the results to the view model.
+            var result = Mapper.Map<List<UserViewModel>>(data);
+
+            return new ObjectResult(result);
+        }
+
+        public IActionResult UserInspectorsGet(bool? includeInactive = false)
+        {
+            var data = _context.UserRoles.AsNoTracking()
+                .Where(ur => ur.Role.Name == Roles.Inspector)
+                .Select(ur => ur.User);
+
+            if (includeInactive == null || includeInactive == false)
+            {
+                data = data.Where(u => u.Active == true);
+            }                
+
             var result = Mapper.Map<List<UserViewModel>>(data);
 
             return new ObjectResult(result);

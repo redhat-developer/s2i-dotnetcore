@@ -15,6 +15,7 @@ using SchoolBusAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using SchoolBusAPI.Authorization;
 
 namespace SchoolBusAPI.Services
 {
@@ -33,17 +34,10 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        IActionResult InspectionsGetAsync();
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of Inspection to delete</param>
-        /// <param name="isAdmin">is current has permission of ADMIN</param>
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
-        IActionResult InspectionsIdDeletePostAsync(int id, bool isAdmin);
+        IActionResult InspectionsIdDeletePostAsync(int id);
 
         /// <summary>
         /// 
@@ -88,10 +82,8 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-
         /// <param name="items"></param>
         /// <response code="201">Inspections created</response>
-
         public virtual IActionResult InspectionsBulkPostAsync(Inspection[] items)
         {
             if (items == null)
@@ -146,84 +138,48 @@ namespace SchoolBusAPI.Services
             _context.SaveChanges();
             return new NoContentResult();
         }
+
         /// <summary>
         /// 
         /// </summary>
-
-        /// <response code="200">OK</response>
-
-        public virtual IActionResult InspectionsGetAsync()
-        {
-            var result = _context.Inspections
-                    .Include(x => x.Inspector)
-                    .Include(x => x.SchoolBus)
-                    .Include(x => x.SchoolBus.Attachments)
-                    .Include(x => x.SchoolBus.HomeTerminalCity)
-                    .Include(x => x.SchoolBus.SchoolDistrict)
-                    .Include(x => x.SchoolBus.SchoolBusOwner.PrimaryContact)
-                    .Include(x => x.SchoolBus.District.Region)
-                    .Include(x => x.SchoolBus.History)
-                    .Include(x => x.SchoolBus.Attachments)
-                    .Include(x => x.SchoolBus.Notes)
-                    .Include(x => x.SchoolBus.Inspector)
-                .ToList();
-            return new ObjectResult(result);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-
         /// <param name="id">id of Inspection to delete</param>
-        /// <param name="isAdmin">is current user has permission of ADMIN</param>
-        /// 
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>
-
-        public virtual IActionResult InspectionsIdDeletePostAsync(int id, bool isAdmin)
+        public virtual IActionResult InspectionsIdDeletePostAsync(int id)
         {
-            var exists = _context.Inspections.Any(a => a.Id == id);
-            if (exists)
-            {
-                var item = _context.Inspections.Include(x => x.SchoolBus).First(a => a.Id == id);
-                // Delete Inspection has special behavior.
-                // By design, an Inspector is only able to delete an Inspection 24 hours after it has been entered.
-                // Also, the related Schoolbus will be updated with the value of the PreviousNextInspectionDate and PreviousNextInspectionType fields.
+            // Delete Inspection has special behavior.
+            // By design, an Inspector is only able to delete an Inspection 24 hours after it has been entered.
+            // Admin user still can delete it any time.
+            // Also, the related Schoolbus will be updated with the value of the PreviousNextInspectionDate and PreviousNextInspectionType fields.
 
-                // first check to see if we are allowed to delete.
-                if (item.CreatedDate > DateTime.UtcNow.AddDays(-1) || isAdmin)
-                {
-                    // update the Schoolbus record.
-                    if (item.SchoolBus != null)
-                    {
-                        int schoolbusId = item.SchoolBus.Id;
-
-                        bool schoolbus_exists = _context.SchoolBuss.Any(x => x.Id == schoolbusId);
-                        if (schoolbus_exists)
-                        {
-                            SchoolBus schoolbus = _context.SchoolBuss.First(x => x.Id == schoolbusId);
-                            schoolbus.NextInspectionDate = item.PreviousNextInspectionDate;
-                            schoolbus.NextInspectionTypeCode = item.PreviousNextInspectionTypeCode;
-                            _context.Update(schoolbus);
-                        }
-                    }
-
-                    _context.Inspections.Remove(item);
-
-                    // Save the changes
-                    _context.SaveChanges();
-                    return new ObjectResult(item);
-                }
-                else
-                {
-                    // forbidden
-                    return new StatusCodeResult(403);
-                }
-            }
-            else
-            {
-                // record not found
+            if (!_context.Inspections.Any(a => a.Id == id))
                 return new StatusCodeResult(404);
+
+            var item = _context.Inspections.Include(x => x.SchoolBus).First(a => a.Id == id);
+
+            if (item.CreatedDate <= DateTime.UtcNow.AddDays(-1) && !User.IsSystemAdmin())
+                return new StatusCodeResult(403);
+
+            // update the Schoolbus record.
+            if (item.SchoolBus != null)
+            {
+                int schoolbusId = item.SchoolBus.Id;
+
+                bool schoolbus_exists = _context.SchoolBuss.Any(x => x.Id == schoolbusId);
+                if (schoolbus_exists)
+                {
+                    SchoolBus schoolbus = _context.SchoolBuss.First(x => x.Id == schoolbusId);
+                    schoolbus.NextInspectionDate = item.PreviousNextInspectionDate;
+                    schoolbus.NextInspectionTypeCode = item.PreviousNextInspectionTypeCode;
+                    _context.Update(schoolbus);
+                }
             }
+
+            _context.Inspections.Remove(item);
+
+            // Save the changes
+            _context.SaveChanges();
+            return new ObjectResult(item);
         }
         /// <summary>
         /// 

@@ -51,6 +51,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/serviceareas")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult ServiceareasGet()
         {
             return this._service.ServiceareasGetAsync();
@@ -64,6 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">ServiceArea not found</response>
         [HttpPost]
         [Route("/api/serviceareas/{id}/delete")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult ServiceareasIdDeletePost([FromRoute]int id)
         {
             return this._service.ServiceareasIdDeletePostAsync(id);
@@ -77,6 +79,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">ServiceArea not found</response>
         [HttpGet]
         [Route("/api/serviceareas/{id}")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult ServiceareasIdGet([FromRoute]int id)
         {
             return this._service.ServiceareasIdGetAsync(id);
@@ -91,6 +94,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">ServiceArea not found</response>
         [HttpPut]
         [Route("/api/serviceareas/{id}")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult ServiceareasIdPut([FromRoute]int id, [FromBody]ServiceArea item)
         {
             return this._service.ServiceareasIdPutAsync(id, item);
@@ -103,6 +107,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">ServiceArea created</response>
         [HttpPost]
         [Route("/api/serviceareas")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult ServiceareasPost([FromBody]ServiceArea item)
         {
             return this._service.ServiceareasPostAsync(item);

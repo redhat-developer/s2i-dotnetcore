@@ -64,6 +64,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">City not found</response>
         [HttpPost]
         [Route("/api/cities/{id}/delete")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult CitiesIdDeletePost([FromRoute]int id)
         {
             return this._service.CitiesIdDeletePostAsync(id);
@@ -77,6 +78,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">City not found</response>
         [HttpGet]
         [Route("/api/cities/{id}")]
+        [RequiresPermission(Permissions.CodeRead)]
         public virtual IActionResult CitiesIdGet([FromRoute]int id)
         {
             return this._service.CitiesIdGetAsync(id);
@@ -91,6 +93,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">City not found</response>
         [HttpPut]
         [Route("/api/cities/{id}")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult CitiesIdPut([FromRoute]int id, [FromBody]City item)
         {
             return this._service.CitiesIdPutAsync(id, item);
@@ -103,6 +106,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">City created</response>
         [HttpPost]
         [Route("/api/cities")]
+        [RequiresPermission(Permissions.CodeWrite)]
         public virtual IActionResult CitiesPost([FromBody]City item)
         {
             return this._service.CitiesPostAsync(item);

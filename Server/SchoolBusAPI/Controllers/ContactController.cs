@@ -51,6 +51,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/contacts")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult ContactsGet()
         {
             return this._service.ContactsGetAsync();
@@ -64,6 +65,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Contact not found</response>
         [HttpPost]
         [Route("/api/contacts/{id}/delete")]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult ContactsIdDeletePost([FromRoute]int id)
         {
             return this._service.ContactsIdDeletePostAsync(id);
@@ -77,6 +79,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Contact not found</response>
         [HttpGet]
         [Route("/api/contacts/{id}")]
+        [RequiresPermission(Permissions.OwnerRead)]
         public virtual IActionResult ContactsIdGet([FromRoute]int id)
         {
             return this._service.ContactsIdGetAsync(id);
@@ -91,6 +94,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Contact not found</response>
         [HttpPut]
         [Route("/api/contacts/{id}")]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult ContactsIdPut([FromRoute]int id, [FromBody]Contact item)
         {
             return this._service.ContactsIdPutAsync(id, item);
@@ -103,6 +107,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Contact created</response>
         [HttpPost]
         [Route("/api/contacts")]
+        [RequiresPermission(Permissions.OwnerWrite)]
         public virtual IActionResult ContactsPost([FromBody]Contact item)
         {
             return this._service.ContactsPostAsync(item);

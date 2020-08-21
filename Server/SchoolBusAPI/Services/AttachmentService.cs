@@ -29,12 +29,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        IActionResult AttachmentsGetAsync();
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of Attachment to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Attachment not found</response>
@@ -89,10 +83,8 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-
         /// <param name="items"></param>
         /// <response code="201">Attachments created</response>
-
         public virtual IActionResult AttachmentsBulkPostAsync(Attachment[] items)
         {
             if (items == null)
@@ -108,25 +100,13 @@ namespace SchoolBusAPI.Services
 
             return new NoContentResult();
         }
+
         /// <summary>
         /// 
         /// </summary>
-
-        /// <response code="200">OK</response>
-
-        public virtual IActionResult AttachmentsGetAsync()
-        {
-            var result = _context.Attachments.ToList();
-            return new ObjectResult(result);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-
         /// <param name="id">id of Attachment to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Attachment not found</response>
-
         public virtual IActionResult AttachmentsIdDeletePostAsync(int id)
         {
             var exists = _context.Attachments.Any(a => a.Id == id);
@@ -173,11 +153,9 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-
         /// <param name="id">id of Attachment to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">Attachment not found</response>
-
         public virtual IActionResult AttachmentsIdGetAsync(int id)
         {
             var exists = _context.Attachments.Any(a => a.Id == id);
@@ -191,15 +169,14 @@ namespace SchoolBusAPI.Services
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
-
         /// <param name="id">id of Attachment</param>
         /// <param name="body">body of Attachment</param>
         /// <response code="200">OK</response>
         /// <response code="404">Attachment not found</response>
-
         public virtual IActionResult AttachmentsIdPutAsync(int id, Attachment body)
         {
             var exists = _context.Attachments.Any(a => a.Id == id);
@@ -215,13 +192,12 @@ namespace SchoolBusAPI.Services
                 return new StatusCodeResult(404);
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
-
         /// <param name="body"></param>
         /// <response code="201">Attachment created</response>
-
         public virtual IActionResult AttachmentsPostAsync(Attachment body)
         {
             _context.Attachments.Add(body);

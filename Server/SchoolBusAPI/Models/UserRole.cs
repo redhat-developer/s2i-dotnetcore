@@ -81,7 +81,7 @@ namespace SchoolBusAPI.Models
         /// <value>A foreign key reference to the system-generated unique identifier for a Role</value>
         [MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a Role")]
         public Role Role { get; set; }
-        
+
         /// <summary>
         /// Foreign key for Role 
         /// </summary>   
@@ -89,7 +89,19 @@ namespace SchoolBusAPI.Models
 		[JsonIgnore]
 		[MetaDataExtension (Description = "A foreign key reference to the system-generated unique identifier for a Role")]
         public int? RoleId { get; set; }
-        
+
+        /// <summary>
+        /// A foreign key reference to the system-generated unique identifier for a User
+        /// </summary>
+        /// <value>A foreign key reference to the system-generated unique identifier for a User</value>       
+        [MetaDataExtension(Description = "A foreign key reference to the system-generated unique identifier for a User")]
+        public User User { get; set; }
+
+        [ForeignKey("User")]
+        [JsonIgnore]
+        [MetaDataExtension(Description = "A foreign key reference to the system-generated unique identifier for a User")]
+        public int? UserId { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

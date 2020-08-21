@@ -17,6 +17,7 @@ using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using SchoolBusAPI.Authorization;
 
 namespace SchoolBusAPI.Services
 {
@@ -97,24 +98,6 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
         IActionResult RolesIdPutAsync(int id, RoleViewModel item);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Gets all the users for a role</remarks>
-        /// <param name="id">id of Role to fetch</param>
-        /// <response code="200">OK</response>
-        IActionResult RolesIdUsersGetAsync(int id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Updates the users for a role</remarks>
-        /// <param name="id">id of Role to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>
-        IActionResult RolesIdUsersPutAsync(int id, UserRoleViewModel[] items);
 
         /// <summary>
         /// 
@@ -231,7 +214,33 @@ namespace SchoolBusAPI.Services
                 .AsNoTracking()
                 .Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Now);
 
-            return new ObjectResult(Mapper.Map<List<RoleViewModel>>(data));
+            var roles = Mapper.Map<List<RoleViewModel>>(data);
+            if (User.IsSystemAdmin())
+                return new ObjectResult(roles);
+
+            var count = roles.Count() - 1;
+            for (var i = count; i >= 0; i--)
+            {
+                var role = roles[i];
+                if (!CurrentUserHasAllThePermissions(role.Id)) //return only the roles that the user has access.
+                {
+                    roles.Remove(role);
+                    continue;
+                }
+            }
+
+            return new ObjectResult(roles);
+        }
+
+        private bool CurrentUserHasAllThePermissions(int roleId)
+        {
+            var permissions = _context.RolePermissions
+                .AsNoTracking()
+                .Where(rp => rp.RoleId == roleId)
+                .Select(rp => rp.Permission.Code)
+                .ToArray();
+
+            return User.HasPermissions(permissions);
         }
 
         /// <summary>
@@ -247,6 +256,11 @@ namespace SchoolBusAPI.Services
             {
                 // Not Found
                 return new StatusCodeResult(404);
+            }
+
+            if (role.Name == Roles.SystemAdmininstrator)
+            {
+                return new StatusCodeResult(403); 
             }
 
             role.ExpiryDate = DateTime.Today;
@@ -484,131 +498,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Gets all the users for a role</remarks>
-        /// <param name="id">id of Role to fetch</param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult RolesIdUsersGetAsync(int id)
-        {
-            // and the users with those UserRoles
-            List<User> result = new List<User>();
-
-            List<User> users = _context.Users
-                    .Include(x => x.UserRoles)
-                    .ThenInclude(y => y.Role)
-                    .ToList();
-
-            foreach (User user in users)
-            {
-                bool found = false;
-
-                if (user.UserRoles != null)
-                {
-                    // ef core does not support lazy loading, so we need to explicitly get data here.
-                    foreach (UserRole userRole in user.UserRoles)
-                    {
-                        if (userRole.Role != null && userRole.Role.Id == id && userRole.EffectiveDate <= DateTime.UtcNow && (userRole.ExpiryDate == null || userRole.ExpiryDate > DateTime.UtcNow))
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (found && !result.Contains(user))
-                {
-                    result.Add(user);
-                }
-            }
-
-            return new ObjectResult(result);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Updates the users for a role</remarks>
-        /// <param name="id">id of Role to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdUsersPutAsync(int id, UserRoleViewModel[] items)
-        {
-            bool role_exists = _context.Roles.Any(x => x.Id == id);
-            bool data_changed = false;
-            if (role_exists)
-            {
-                Role role = _context.Roles.First(x => x.Id == id);
-
-                // scan through users
-
-                var users = _context.Users
-                        .Include(x => x.UserRoles)
-                        .ThenInclude(y => y.Role);
-
-                foreach (User user in users)
-                {
-                    // first see if it is one of our matches.                    
-                    UserRoleViewModel foundItem = null;
-                    foreach (var item in items)
-                    {
-                        if (item.UserId == user.Id)
-                        {
-                            foundItem = item;
-                            break;
-                        }
-                    }
-
-                    if (foundItem == null) // delete the user role if it exists.
-                    {
-                        foreach (UserRole userRole in user.UserRoles)
-                        {
-                            if (userRole.Role.Id == id)
-                            {
-                                user.UserRoles.Remove(userRole);
-                                _context.Users.Update(user);
-                                data_changed = true;
-                            }
-                        }
-                    }
-                    else // add the user role if it does not exist.
-                    {
-                        bool found = false;
-                        foreach (UserRole userRole in user.UserRoles)
-                        {
-                            if (userRole.Role.Id == id)
-                            {
-                                found = true;
-                            }
-                        }
-                        if (found == false)
-                        {
-                            UserRole newUserRole = new UserRole();
-                            newUserRole.EffectiveDate = DateTime.UtcNow;
-                            newUserRole.Role = role;
-
-                            user.UserRoles.Add(newUserRole);
-                            _context.Users.Update(user);
-                            data_changed = true;
-                        }
-                    }
-                }
-                if (data_changed)
-                {
-                    _context.SaveChanges();
-                }
-
-                return new StatusCodeResult(200);
-            }
-            else
-            {
-                return new StatusCodeResult(404);
-            }
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="item"></param>
         /// <response code="201">Role created</response>
         public virtual IActionResult RolesPostAsync(RoleViewModel item)
@@ -621,5 +510,133 @@ namespace SchoolBusAPI.Services
 
             return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
+
+        #region old code. not being used and not tested
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <remarks>Gets all the users for a role</remarks>
+        ///// <param name="id">id of Role to fetch</param>
+        ///// <response code="200">OK</response>
+        //public virtual IActionResult RolesIdUsersGetAsync(int id)
+        //{
+        //    // and the users with those UserRoles
+        //    List<User> result = new List<User>();
+
+        //    List<User> users = _context.Users
+        //            .Include(x => x.UserRoles)
+        //            .ThenInclude(y => y.Role)
+        //            .ToList();
+
+        //    foreach (User user in users)
+        //    {
+        //        bool found = false;
+
+        //        if (user.UserRoles != null)
+        //        {
+        //            // ef core does not support lazy loading, so we need to explicitly get data here.
+        //            foreach (UserRole userRole in user.UserRoles)
+        //            {
+        //                if (userRole.Role != null && userRole.Role.Id == id && userRole.EffectiveDate <= DateTime.UtcNow && (userRole.ExpiryDate == null || userRole.ExpiryDate > DateTime.UtcNow))
+        //                {
+        //                    found = true;
+        //                    break;
+        //                }
+        //            }
+        //        }
+
+        //        if (found && !result.Contains(user))
+        //        {
+        //            result.Add(user);
+        //        }
+        //    }
+
+        //    return new ObjectResult(result);
+        //}
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <remarks>Updates the users for a role</remarks>
+        ///// <param name="id">id of Role to update</param>
+        ///// <param name="items"></param>
+        ///// <response code="200">OK</response>
+        ///// <response code="404">Role not found</response>
+        //public virtual IActionResult RolesIdUsersPutAsync(int id, UserRoleViewModel[] items)
+        //{
+        //    bool role_exists = _context.Roles.Any(x => x.Id == id);
+        //    bool data_changed = false;
+        //    if (role_exists)
+        //    {
+        //        Role role = _context.Roles.First(x => x.Id == id);
+
+        //        // scan through users
+
+        //        var users = _context.Users
+        //                .Include(x => x.UserRoles)
+        //                .ThenInclude(y => y.Role);
+
+        //        foreach (User user in users)
+        //        {
+        //            // first see if it is one of our matches.                    
+        //            UserRoleViewModel foundItem = null;
+        //            foreach (var item in items)
+        //            {
+        //                if (item.UserId == user.Id)
+        //                {
+        //                    foundItem = item;
+        //                    break;
+        //                }
+        //            }
+
+        //            if (foundItem == null) // delete the user role if it exists.
+        //            {
+        //                foreach (UserRole userRole in user.UserRoles)
+        //                {
+        //                    if (userRole.Role.Id == id)
+        //                    {
+        //                        user.UserRoles.Remove(userRole);
+        //                        _context.Users.Update(user);
+        //                        data_changed = true;
+        //                    }
+        //                }
+        //            }
+        //            else // add the user role if it does not exist.
+        //            {
+        //                bool found = false;
+        //                foreach (UserRole userRole in user.UserRoles)
+        //                {
+        //                    if (userRole.Role.Id == id)
+        //                    {
+        //                        found = true;
+        //                    }
+        //                }
+        //                if (found == false)
+        //                {
+        //                    UserRole newUserRole = new UserRole();
+        //                    newUserRole.EffectiveDate = DateTime.UtcNow;
+        //                    newUserRole.Role = role;
+
+        //                    user.UserRoles.Add(newUserRole);
+        //                    _context.Users.Update(user);
+        //                    data_changed = true;
+        //                }
+        //            }
+        //        }
+        //        if (data_changed)
+        //        {
+        //            _context.SaveChanges();
+        //        }
+
+        //        return new StatusCodeResult(200);
+        //    }
+        //    else
+        //    {
+        //        return new StatusCodeResult(404);
+        //    }
+
+        //}
+        #endregion
     }
 }

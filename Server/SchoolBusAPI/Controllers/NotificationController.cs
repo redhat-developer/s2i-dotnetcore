@@ -48,22 +48,12 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/notifications")]
-        public virtual IActionResult NotificationsGet()
-        {
-            return this._service.NotificationsGetAsync();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of Notification to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Notification not found</response>
         [HttpPost]
         [Route("/api/notifications/{id}/delete")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotificationsIdDeletePost([FromRoute]int id)
         {
             return this._service.NotificationsIdDeletePostAsync(id);
@@ -77,6 +67,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Notification not found</response>
         [HttpGet]
         [Route("/api/notifications/{id}")]
+        [RequiresPermission(Permissions.SchoolBusRead, Permissions.OwnerRead)]
         public virtual IActionResult NotificationsIdGet([FromRoute]int id)
         {
             return this._service.NotificationsIdGetAsync(id);
@@ -91,6 +82,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="404">Notification not found</response>
         [HttpPut]
         [Route("/api/notifications/{id}")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotificationsIdPut([FromRoute]int id, [FromBody]Notification item)
         {
             return this._service.NotificationsIdPutAsync(id, item);
@@ -103,6 +95,7 @@ namespace SchoolBusAPI.Controllers
         /// <response code="201">Notification created</response>
         [HttpPost]
         [Route("/api/notifications")]
+        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
         public virtual IActionResult NotificationsPost([FromBody]Notification item)
         {
             return this._service.NotificationsPostAsync(item);

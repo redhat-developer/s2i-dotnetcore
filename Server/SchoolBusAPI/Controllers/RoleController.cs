@@ -163,36 +163,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Gets all the users for a role</remarks>
-        /// <param name="id">id of Role to fetch</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/roles/{id}/users")]
-        [RequiresPermission(Permissions.UserRead)]
-        public virtual IActionResult RolesIdUsersGet([FromRoute]int id)
-        {
-            return this._service.RolesIdUsersGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Updates the users for a role</remarks>
-        /// <param name="id">id of Role to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>
-        [HttpPut]
-        [Route("/api/roles/{id}/users")]
-        [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult RolesIdUsersPut([FromRoute]int id, [FromBody]UserRoleViewModel[] items)
-        {
-            return this._service.RolesIdUsersPutAsync(id, items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="item"></param>
         /// <response code="201">Role created</response>
         [HttpPost]
