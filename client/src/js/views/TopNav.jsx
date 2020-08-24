@@ -9,6 +9,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import * as Constant from '../constants';
 
+import Authorize from '../components/Authorize';
 import Spinner from '../components/Spinner.jsx';
 import bcLogo from '../../images/gov/gov3_bc_logo.png';
 
@@ -20,12 +21,7 @@ class TopNav extends React.Component {
     version: PropTypes.object,
   };
 
-  getIsCurrentUserAdmin = () => {
-    return this.props.currentUser.isSystemAdmin;
-  };
-
   render() {
-    let isCurrentUserAdmin = this.getIsCurrentUserAdmin();
     var requestError = this.props.requestError;
     var html;
 
@@ -71,16 +67,20 @@ class TopNav extends React.Component {
               <LinkContainer to={{ pathname: `/${Constant.NOTIFICATIONS_PATHNAME}` }}>
                 <NavItem eventKey={4}>Notifications</NavItem>
               </LinkContainer>
-              {isCurrentUserAdmin && (
+              <Authorize permissions={[Constant.PERMISSION_USER_R, Constant.PERMISSION_ROLE_R]} matchAll={false}>
                 <NavDropdown id="admin-dropdown" title="Administration">
-                  <LinkContainer to={{ pathname: `/${Constant.USERS_PATHNAME}` }}>
-                    <MenuItem eventKey={5}>User Management</MenuItem>
-                  </LinkContainer>
-                  <LinkContainer to={{ pathname: `/${Constant.ROLES_PATHNAME}` }}>
-                    <MenuItem eventKey={6}>Roles and Permissions</MenuItem>
-                  </LinkContainer>
+                  <Authorize permissions={Constant.PERMISSION_USER_R}>
+                    <LinkContainer to={{ pathname: `/${Constant.USERS_PATHNAME}` }}>
+                      <MenuItem eventKey={5}>User Management</MenuItem>
+                    </LinkContainer>
+                  </Authorize>
+                  <Authorize permissions={Constant.PERMISSION_ROLE_R}>
+                    <LinkContainer to={{ pathname: `/${Constant.ROLES_PATHNAME}` }}>
+                      <MenuItem eventKey={6}>Roles and Permissions</MenuItem>
+                    </LinkContainer>
+                  </Authorize>
                 </NavDropdown>
-              )}
+              </Authorize>
             </Nav>
             <Nav id="navbar-current-user" pullRight>
               <NavItem>

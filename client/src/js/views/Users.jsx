@@ -1,35 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { PageHeader, Well, Alert, Row, Col } from "react-bootstrap";
-import {
-  ButtonToolbar,
-  Button,
-  ButtonGroup,
-  Glyphicon,
-  InputGroup,
-} from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { PageHeader, Well, Alert, Row, Col } from 'react-bootstrap';
+import { ButtonToolbar, Button, ButtonGroup, Glyphicon, InputGroup } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-import _ from "lodash";
-import Promise from "bluebird";
+import _ from 'lodash';
+import Promise from 'bluebird';
 
-import * as Action from "../actionTypes";
-import * as Api from "../api";
-import * as Constant from "../constants";
-import store from "../store";
+import * as Action from '../actionTypes';
+import * as Api from '../api';
+import * as Constant from '../constants';
+import store from '../store';
 
-import CheckboxControl from "../components/CheckboxControl.jsx";
-import DeleteButton from "../components/DeleteButton.jsx";
-import EditButton from "../components/EditButton.jsx";
-import Favourites from "../components/Favourites.jsx";
-import FormInputControl from "../components/FormInputControl.jsx";
-import MultiDropdown from "../components/MultiDropdown.jsx";
-import SortTable from "../components/SortTable.jsx";
-import Spinner from "../components/Spinner.jsx";
-import Unimplemented from "../components/Unimplemented.jsx";
+import CheckboxControl from '../components/CheckboxControl.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
+import Favourites from '../components/Favourites.jsx';
+import FormInputControl from '../components/FormInputControl.jsx';
+import MultiDropdown from '../components/MultiDropdown.jsx';
+import SortTable from '../components/SortTable.jsx';
+import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
+import Authorize from '../components/Authorize';
 
 class UserManagement extends React.Component {
   static propTypes = {
@@ -47,12 +42,12 @@ class UserManagement extends React.Component {
 
     search: {
       selectedDistrictsIds: this.props.search.selectedDistrictsIds || [],
-      surname: this.props.search.surname || "",
+      surname: this.props.search.surname || '',
       hideInactive: this.props.search.hideInactive !== false,
     },
 
     ui: {
-      sortField: this.props.ui.sortField || "surname",
+      sortField: this.props.ui.sortField || 'surname',
       sortDesc: this.props.ui.sortDesc === true,
     },
   };
@@ -65,8 +60,7 @@ class UserManagement extends React.Component {
 
     if (
       this.state.search.selectedDistrictsIds.length > 0 &&
-      this.state.search.selectedDistrictsIds.length !==
-        _.size(this.props.districts)
+      this.state.search.selectedDistrictsIds.length !== _.size(this.props.districts)
     ) {
       searchParams.districts = this.state.search.selectedDistrictsIds;
     }
@@ -77,7 +71,7 @@ class UserManagement extends React.Component {
   componentDidMount() {
     this.setState({ loading: true });
 
-    var favouritesPromise = Api.getFavourites("user");
+    var favouritesPromise = Api.getFavourites('user');
 
     Promise.all([favouritesPromise])
       .then(() => {
@@ -106,18 +100,15 @@ class UserManagement extends React.Component {
   };
 
   updateSearchState = (state, callback) => {
-    this.setState(
-      { search: { ...this.state.search, ...state, ...{ loaded: true } } },
-      () => {
-        store.dispatch({
-          type: Action.UPDATE_USERS_SEARCH,
-          users: this.state.search,
-        });
-        if (callback) {
-          callback();
-        }
+    this.setState({ search: { ...this.state.search, ...state, ...{ loaded: true } } }, () => {
+      store.dispatch({
+        type: Action.UPDATE_USERS_SEARCH,
+        users: this.state.search,
+      });
+      if (callback) {
+        callback();
       }
-    );
+    });
   };
 
   updateUIState = (state, callback) => {
@@ -143,11 +134,9 @@ class UserManagement extends React.Component {
   print = () => {};
 
   render() {
-    var districts = _.sortBy(this.props.districts, "name");
+    var districts = _.sortBy(this.props.districts, 'name');
 
-    var numUsers = this.state.loading
-      ? "..."
-      : Object.keys(this.props.users).length;
+    var numUsers = this.state.loading ? '...' : Object.keys(this.props.users).length;
 
     return (
       <div id="users-list">
@@ -196,11 +185,7 @@ class UserManagement extends React.Component {
                   >
                     Hide Inactive
                   </CheckboxControl>
-                  <Button
-                    id="search-button"
-                    bsStyle="primary"
-                    onClick={this.fetch}
-                  >
+                  <Button id="search-button" bsStyle="primary" onClick={this.fetch}>
                     Search
                   </Button>
                 </ButtonToolbar>
@@ -223,19 +208,21 @@ class UserManagement extends React.Component {
           {(() => {
             if (this.state.loading) {
               return (
-                <div style={{ textAlign: "center" }}>
+                <div style={{ textAlign: 'center' }}>
                   <Spinner />
                 </div>
               );
             }
 
             var addUserButton = (
-              <LinkContainer to={{ pathname: `${Constant.USERS_PATHNAME}/0` }}>
-                <Button title="Add User" bsSize="xsmall">
-                  <Glyphicon glyph="plus" />
-                  &nbsp;<strong>Add User</strong>
-                </Button>
-              </LinkContainer>
+              <Authorize permissions={Constant.PERMISSION_USER_W}>
+                <LinkContainer to={{ pathname: `${Constant.USERS_PATHNAME}/0` }}>
+                  <Button title="Add User" bsSize="xsmall">
+                    <Glyphicon glyph="plus" />
+                    &nbsp;<strong>Add User</strong>
+                  </Button>
+                </LinkContainer>
+              </Authorize>
             );
             if (Object.keys(this.props.users).length === 0) {
               return <Alert bsStyle="success">No users {addUserButton}</Alert>;
@@ -252,38 +239,31 @@ class UserManagement extends React.Component {
                 sortDesc={this.state.ui.sortDesc}
                 onSort={this.updateUIState}
                 headers={[
-                  { field: "surname", title: "Surname" },
-                  { field: "givenName", title: "First Name" },
-                  { field: "smUserId", title: "User ID" },
-                  { field: "districtName", title: "District" },
+                  { field: 'surname', title: 'Surname' },
+                  { field: 'givenName', title: 'First Name' },
+                  { field: 'smUserId', title: 'User ID' },
+                  { field: 'districtName', title: 'District' },
                   {
-                    field: "addUser",
-                    title: "Add User",
-                    style: { textAlign: "right" },
+                    field: 'addUser',
+                    title: 'Add User',
+                    style: { textAlign: 'right' },
                     node: addUserButton,
                   },
                 ]}
               >
                 {_.map(users, (user) => {
                   return (
-                    <tr key={user.id} className={user.active ? null : "info"}>
+                    <tr key={user.id} className={user.active ? null : 'info'}>
                       <td>{user.surname}</td>
                       <td>{user.givenName}</td>
                       <td>{user.smUserId}</td>
                       <td>{user.districtName}</td>
-                      <td style={{ textAlign: "right" }}>
+                      <td style={{ textAlign: 'right' }}>
                         <ButtonGroup>
-                          <DeleteButton
-                            name="User"
-                            hide={!user.canDelete}
-                            onConfirm={this.delete.bind(this, user)}
-                          />
-                          <EditButton
-                            name="User"
-                            hide={!user.canEdit}
-                            view
-                            pathname={user.path}
-                          />
+                          <Authorize permissions={Constant.PERMISSION_USER_W}>
+                            <DeleteButton name="User" hide={!user.canDelete} onConfirm={this.delete.bind(this, user)} />
+                          </Authorize>
+                          <EditButton name="User" hide={!user.canEdit} view pathname={user.path} />
                         </ButtonGroup>
                       </td>
                     </tr>

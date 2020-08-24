@@ -1,39 +1,34 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { Well, Row, Col } from "react-bootstrap";
-import { Alert, Label, Button, Glyphicon, Popover } from "react-bootstrap";
-import { Form, FormGroup, HelpBlock } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Well, Row, Col } from 'react-bootstrap';
+import { Alert, Label, Button, Glyphicon, Popover } from 'react-bootstrap';
+import { Form, FormGroup, HelpBlock } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-import _ from "lodash";
+import _ from 'lodash';
 
-import UserRoleAddDialog from "./dialogs/UserRoleAddDialog.jsx";
-import UsersEditDialog from "./dialogs/UsersEditDialog.jsx";
+import UserRoleAddDialog from './dialogs/UserRoleAddDialog.jsx';
+import UsersEditDialog from './dialogs/UsersEditDialog.jsx';
 
-import * as Action from "../actionTypes";
-import * as Api from "../api";
-import * as Constant from "../constants";
-import store from "../store";
+import * as Action from '../actionTypes';
+import * as Api from '../api';
+import * as Constant from '../constants';
+import store from '../store';
 
-import CheckboxControl from "../components/CheckboxControl.jsx";
-import ColDisplay from "../components/ColDisplay.jsx";
-import DateControl from "../components/DateControl.jsx";
-import OverlayTrigger from "../components/OverlayTrigger.jsx";
-import SortTable from "../components/SortTable.jsx";
-import Spinner from "../components/Spinner.jsx";
-import Unimplemented from "../components/Unimplemented.jsx";
+import CheckboxControl from '../components/CheckboxControl.jsx';
+import ColDisplay from '../components/ColDisplay.jsx';
+import DateControl from '../components/DateControl.jsx';
+import OverlayTrigger from '../components/OverlayTrigger.jsx';
+import SortTable from '../components/SortTable.jsx';
+import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
+import Authorize from '../components/Authorize';
 
-import {
-  daysFromToday,
-  formatDateTime,
-  today,
-  isValidDate,
-  toZuluTime,
-} from "../utils/date";
-import { isBlank, notBlank } from "../utils/string";
+import { daysFromToday, formatDateTime, today, isValidDate, toZuluTime } from '../utils/date';
+import { isBlank, notBlank } from '../utils/string';
 
 class UsersDetail extends React.Component {
   static propTypes = {
@@ -50,11 +45,11 @@ class UsersDetail extends React.Component {
     showEditDialog: false,
     showUserRoleDialog: false,
 
-    isNew: this.props.params.userId === "0",
+    isNew: this.props.params.userId === '0',
 
     ui: {
       // User roles
-      sortField: this.props.ui.sortField || "roleName",
+      sortField: this.props.ui.sortField || 'roleName',
       sortDesc: this.props.ui.sortDesc !== false, // defaults to true
       showExpiredOnly: false,
     },
@@ -70,7 +65,7 @@ class UsersDetail extends React.Component {
         user: {
           id: 0,
           active: true,
-          district: { id: 0, name: "" },
+          district: { id: 0, name: '' },
           groupIds: [],
         },
       });
@@ -176,9 +171,7 @@ class UsersDetail extends React.Component {
         <div>
           <Row id="users-top">
             <Col md={10}>
-              <Label bsStyle={user.active ? "success" : "danger"}>
-                {user.active ? "Verified Active" : "Inactive"}
-              </Label>
+              <Label bsStyle={user.active ? 'success' : 'danger'}>{user.active ? 'Verified Active' : 'Inactive'}</Label>
             </Col>
             <Col md={2}>
               <div className="pull-right">
@@ -199,7 +192,7 @@ class UsersDetail extends React.Component {
           {(() => {
             if (this.state.loading) {
               return (
-                <div style={{ textAlign: "center" }}>
+                <div style={{ textAlign: 'center' }}>
                   <Spinner />
                 </div>
               );
@@ -221,21 +214,19 @@ class UsersDetail extends React.Component {
             <Col md={12}>
               <Well>
                 <h3>
-                  General{" "}
+                  General{' '}
                   <span className="pull-right">
-                    <Button
-                      title="Edit User"
-                      bsSize="small"
-                      onClick={this.openEditDialog}
-                    >
-                      <Glyphicon glyph="pencil" />
-                    </Button>
+                    <Authorize permissions={Constant.PERMISSION_USER_W}>
+                      <Button title="Edit User" bsSize="small" onClick={this.openEditDialog}>
+                        <Glyphicon glyph="pencil" />
+                      </Button>
+                    </Authorize>
                   </span>
                 </h3>
                 {(() => {
                   if (this.state.loading) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
@@ -288,39 +279,30 @@ class UsersDetail extends React.Component {
                 {(() => {
                   if (this.state.loading) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
                   }
 
                   var addUserRoleButton = (
-                    <Button
-                      title="Add User Role"
-                      onClick={this.openUserRoleDialog}
-                      bsSize="xsmall"
-                    >
-                      <Glyphicon glyph="plus" />
-                      &nbsp;<strong>Add Role</strong>
-                    </Button>
+                    <Authorize permissions={Constant.PERMISSION_USER_W}>
+                      <Button title="Add User Role" onClick={this.openUserRoleDialog} bsSize="xsmall">
+                        <Glyphicon glyph="plus" />
+                        &nbsp;<strong>Add Role</strong>
+                      </Button>
+                    </Authorize>
                   );
 
                   var userRoles = _.filter(user.userRoles, (userRole) => {
                     var include = notBlank(userRole.roleName);
                     if (this.state.ui.showExpiredOnly) {
-                      include =
-                        include &&
-                        userRole.expiryDate &&
-                        daysFromToday(userRole.expiryDate) < 0;
+                      include = include && userRole.expiryDate && daysFromToday(userRole.expiryDate) < 0;
                     }
                     return include;
                   });
                   if (userRoles.length === 0) {
-                    return (
-                      <Alert bsStyle="success">
-                        No roles {addUserRoleButton}
-                      </Alert>
-                    );
+                    return <Alert bsStyle="success">No roles {addUserRoleButton}</Alert>;
                   }
 
                   userRoles = _.sortBy(userRoles, this.state.ui.sortField);
@@ -329,13 +311,13 @@ class UsersDetail extends React.Component {
                   }
 
                   var headers = [
-                    { field: "roleName", title: "Role" },
-                    { field: "effectiveDateSort", title: "Effective Date" },
-                    { field: "expiryDateSort", title: "Expiry Date" },
+                    { field: 'roleName', title: 'Role' },
+                    { field: 'effectiveDateSort', title: 'Effective Date' },
+                    { field: 'expiryDateSort', title: 'Expiry Date' },
                     {
-                      field: "addUserRole",
-                      title: "Add User Role",
-                      style: { textAlign: "right" },
+                      field: 'addUserRole',
+                      title: 'Add User Role',
+                      style: { textAlign: 'right' },
                       node: addUserRoleButton,
                     },
                   ];
@@ -352,46 +334,28 @@ class UsersDetail extends React.Component {
                         return (
                           <tr key={userRole.id}>
                             <td>{userRole.roleName}</td>
+                            <td>{formatDateTime(userRole.effectiveDate, Constant.DATE_FULL_MONTH_DAY_YEAR)}</td>
                             <td>
-                              {formatDateTime(
-                                userRole.effectiveDate,
-                                Constant.DATE_FULL_MONTH_DAY_YEAR
-                              )}
-                            </td>
-                            <td>
-                              {formatDateTime(
-                                userRole.expiryDate,
-                                Constant.DATE_FULL_MONTH_DAY_YEAR
-                              )}
+                              {formatDateTime(userRole.expiryDate, Constant.DATE_FULL_MONTH_DAY_YEAR)}
                               &nbsp;
-                              {daysFromToday(userRole.expiryDate) < 0 ? (
-                                <Glyphicon glyph="asterisk" />
-                              ) : (
-                                ""
-                              )}
+                              {daysFromToday(userRole.expiryDate) < 0 ? <Glyphicon glyph="asterisk" /> : ''}
                             </td>
-                            <td style={{ textAlign: "right" }}>
-                              {userRole.expiryDate ? null : (
-                                <OverlayTrigger
-                                  trigger="click"
-                                  placement="left"
-                                  rootClose
-                                  overlay={
-                                    <ExpireOverlay
-                                      userRole={userRole}
-                                      onSave={this.updateUserRole}
-                                    />
-                                  }
-                                >
-                                  <Button
-                                    title="Expire User Role"
-                                    bsSize="xsmall"
+                            <td style={{ textAlign: 'right' }}>
+                              <Authorize permissions={Constant.PERMISSION_USER_W}>
+                                {userRole.expiryDate ? null : (
+                                  <OverlayTrigger
+                                    trigger="click"
+                                    placement="left"
+                                    rootClose
+                                    overlay={<ExpireOverlay userRole={userRole} onSave={this.updateUserRole} />}
                                   >
-                                    <Glyphicon glyph="pencil" />
-                                    &nbsp;Expire
-                                  </Button>
-                                </OverlayTrigger>
-                              )}
+                                    <Button title="Expire User Role" bsSize="xsmall">
+                                      <Glyphicon glyph="pencil" />
+                                      &nbsp;Expire
+                                    </Button>
+                                  </OverlayTrigger>
+                                )}
+                              </Authorize>
                             </td>
                           </tr>
                         );
@@ -403,13 +367,13 @@ class UsersDetail extends React.Component {
             </Col>
           </Row>
         </div>
+
         {this.state.showEditDialog && (
-          <UsersEditDialog
-            show={this.state.showEditDialog}
-            onSave={this.onSaveEdit}
-            onClose={this.onCloseEdit}
-          />
+          <Authorize permissions={Constant.PERMISSION_USER_W}>
+            <UsersEditDialog show={this.state.showEditDialog} onSave={this.onSaveEdit} onClose={this.onCloseEdit} />
+          </Authorize>
         )}
+
         {this.state.showUserRoleDialog && (
           <UserRoleAddDialog
             show={this.state.showUserRoleDialog}
@@ -431,7 +395,7 @@ class ExpireOverlay extends React.Component {
 
   state = {
     expiryDate: today(),
-    expiryDateError: "",
+    expiryDateError: '',
   };
 
   updateState = (state, callback) => {
@@ -442,9 +406,9 @@ class ExpireOverlay extends React.Component {
     this.setState({ expiryDateError: false });
 
     if (isBlank(this.state.expiryDate)) {
-      this.setState({ expiryDateError: "Expiry date is required" });
+      this.setState({ expiryDateError: 'Expiry date is required' });
     } else if (!isValidDate(this.state.expiryDate)) {
-      this.setState({ expiryDateError: "Expiry date not valid" });
+      this.setState({ expiryDateError: 'Expiry date not valid' });
     } else {
       this.props.onSave({
         ...this.props.userRole,
@@ -458,14 +422,11 @@ class ExpireOverlay extends React.Component {
   };
 
   render() {
-    var props = _.omit(this.props, "onSave", "hide", "userRole");
+    var props = _.omit(this.props, 'onSave', 'hide', 'userRole');
     return (
       <Popover id="users-role-popover" title="Set Expiry Date" {...props}>
         <Form inline>
-          <FormGroup
-            controlId="expiryDate"
-            validationState={this.state.expiryDateError ? "error" : null}
-          >
+          <FormGroup controlId="expiryDate" validationState={this.state.expiryDateError ? 'error' : null}>
             <DateControl
               id="expiryDate"
               date={this.state.expiryDate}
@@ -475,11 +436,7 @@ class ExpireOverlay extends React.Component {
             />
             <HelpBlock>{this.state.expiryDateError}</HelpBlock>
           </FormGroup>
-          <Button
-            bsStyle="primary"
-            onClick={this.saveUserRole}
-            className="pull-right"
-          >
+          <Button bsStyle="primary" onClick={this.saveUserRole} className="pull-right">
             Save
           </Button>
         </Form>

@@ -8,6 +8,7 @@ import store from './store';
 
 import * as Api from './api';
 import { ApiError } from './utils/http';
+import { hasAllPermissions } from './utils/permissions';
 
 import Main from './views/Main.jsx';
 import Home from './views/Home.jsx';
@@ -22,10 +23,6 @@ import Roles from './views/Roles.jsx';
 import RolesDetail from './views/RolesDetail.jsx';
 import Version from './views/Version.jsx';
 import FourOhFour from './views/404.jsx';
-
-const isSystemAdmin = () => {
-  return store.getState().user.isSystemAdmin;
-};
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -138,15 +135,19 @@ const App = () => {
             component={OwnersDetail}
           />
           <Route path={Constant.NOTIFICATIONS_PATHNAME} component={Notifications} />
-          {isSystemAdmin() && (
+          {hasAllPermissions(store.getState().user.permissions, Constant.PERMISSION_USER_R) && (
             <>
               <Route path={Constant.USERS_PATHNAME} component={Users} />
               <Route path={`${Constant.USERS_PATHNAME}/:userId`} component={UsersDetail} />
-
+            </>
+          )}
+          {hasAllPermissions(store.getState().user.permissions, Constant.PERMISSION_ROLE_R) && (
+            <>
               <Route path={Constant.ROLES_PATHNAME} component={Roles} />
               <Route path={`${Constant.ROLES_PATHNAME}/:roleId`} component={RolesDetail} />
             </>
           )}
+
           <Route path={Constant.VERSION_PATHNAME} component={Version} />
           <Route path="*" component={FourOhFour} />
         </Route>
