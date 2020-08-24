@@ -52,7 +52,6 @@ namespace SchoolBusAPI.Controllers
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/permissions")]
-        [RequiresPermission(Permissions.RoleRead)]
         public virtual IActionResult PermissionsGet()
         {
             return this._service.PermissionsGetAsync();
