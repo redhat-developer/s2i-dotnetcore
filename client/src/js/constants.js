@@ -57,3 +57,16 @@ export const CONTACT_ROLE_ASSISTANT = 'Assistant';
 export const CONTACT_ROLE_MECHANIC = 'Mechanic';
 export const CONTACT_ROLE_OWNER = 'Owner';
 export const CONTACT_ROLE_SUPERVISOR = 'Supervisor';
+
+// Permission Codes
+export const PERMISSION_HOME = 'HOME';
+export const PERMISSION_OWNER_R = 'OWNER-R';
+export const PERMISSION_OWNER_W = 'OWNER-W';
+export const PERMISSION_SB_R = 'SB-R';
+export const PERMISSION_SB_W = 'SB-W';
+export const PERMISSION_USER_R = 'USER-R';
+export const PERMISSION_USER_W = 'USER-W';
+export const PERMISSION_ROLE_R = 'ROLE-R';
+export const PERMISSION_ROLE_W = 'ROLE-W';
+export const PERMISSION_CODE_R = 'CODE-R';
+export const PERMISSION_CODE_W = 'CODE-W';
