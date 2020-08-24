@@ -1,42 +1,36 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { Well, Row, Col } from "react-bootstrap";
-import {
-  Alert,
-  Label,
-  Button,
-  ButtonGroup,
-  Glyphicon,
-  Badge,
-} from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Well, Row, Col } from 'react-bootstrap';
+import { Alert, Label, Button, ButtonGroup, Glyphicon, Badge } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-import _ from "lodash";
+import _ from 'lodash';
 
-import HistoryListDialog from "./dialogs/HistoryListDialog.jsx";
-import OwnersEditDialog from "./dialogs/OwnersEditDialog.jsx";
-import SchoolBusesAddDialog from "./dialogs/SchoolBusesAddDialog.jsx";
-import ContactEditDialog from "./dialogs/ContactEditDialog.jsx";
+import HistoryListDialog from './dialogs/HistoryListDialog.jsx';
+import OwnersEditDialog from './dialogs/OwnersEditDialog.jsx';
+import SchoolBusesAddDialog from './dialogs/SchoolBusesAddDialog.jsx';
+import ContactEditDialog from './dialogs/ContactEditDialog.jsx';
 
-import * as Action from "../actionTypes";
-import * as Api from "../api";
-import * as Constant from "../constants";
-import * as History from "../history";
-import store from "../store";
+import * as Action from '../actionTypes';
+import * as Api from '../api';
+import * as Constant from '../constants';
+import * as History from '../history';
+import store from '../store';
 
-import BadgeLabel from "../components/BadgeLabel.jsx";
-import ColDisplay from "../components/ColDisplay.jsx";
-import DeleteButton from "../components/DeleteButton.jsx";
-import EditButton from "../components/EditButton.jsx";
-import SortTable from "../components/SortTable.jsx";
-import Spinner from "../components/Spinner.jsx";
-import Unimplemented from "../components/Unimplemented.jsx";
+import BadgeLabel from '../components/BadgeLabel.jsx';
+import ColDisplay from '../components/ColDisplay.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
+import SortTable from '../components/SortTable.jsx';
+import Spinner from '../components/Spinner.jsx';
+import Unimplemented from '../components/Unimplemented.jsx';
+import Authorize from '../components/Authorize';
 
-import { formatDateTime } from "../utils/date";
-import { plural } from "../utils/string";
+import { formatDateTime } from '../utils/date';
+import { plural } from '../utils/string';
 
 class OwnersDetail extends React.Component {
   static propTypes = {
@@ -60,11 +54,11 @@ class OwnersDetail extends React.Component {
     contact: {},
     owner: this.props.owner,
 
-    isNew: this.props.params.ownerId === "0",
+    isNew: this.props.params.ownerId === '0',
 
     ui: {
       // Contacts
-      sortField: this.props.ui.sortField || "name",
+      sortField: this.props.ui.sortField || 'name',
       sortDesc: this.props.ui.sortDesc !== false, // defaults to true
     },
   };
@@ -90,7 +84,7 @@ class OwnersDetail extends React.Component {
   openContact = (props) => {
     var contact = null;
 
-    if (props.params.contactId === "0") {
+    if (props.params.contactId === '0') {
       //New
       contact = {
         id: 0,
@@ -202,22 +196,16 @@ class OwnersDetail extends React.Component {
 
   saveContact = (contact, owner) => {
     var isNew = contact && contact.id === 0;
-    var oldPrimary = this.props.owner.primaryContact
-      ? this.props.owner.primaryContact
-      : null;
+    var oldPrimary = this.props.owner.primaryContact ? this.props.owner.primaryContact : null;
     var newPrimary = owner.primaryContact ? owner.primaryContact : null;
     var updatePrimary = false;
     var deselectPrimary = false;
     //create new contact also set it as primary
-    var isNewPrimaryContact =
-      newPrimary != null && newPrimary.id === 0 && isNew;
+    var isNewPrimaryContact = newPrimary != null && newPrimary.id === 0 && isNew;
 
     if (
       (oldPrimary == null && newPrimary != null && !isNew) ||
-      (!isNew &&
-        oldPrimary != null &&
-        newPrimary != null &&
-        oldPrimary.id !== newPrimary.id)
+      (!isNew && oldPrimary != null && newPrimary != null && oldPrimary.id !== newPrimary.id)
     ) {
       updatePrimary = true;
     }
@@ -245,16 +233,10 @@ class OwnersDetail extends React.Component {
           History.logModifiedContact(this.props.owner, this.props.contact);
         }
         if (deselectPrimary) {
-          History.logDeselectedPrimaryContact(
-            this.props.owner,
-            this.props.contact
-          );
+          History.logDeselectedPrimaryContact(this.props.owner, this.props.contact);
         }
         if (updatePrimary) {
-          History.logModifiedPrimaryContact(
-            this.props.owner,
-            this.props.contact
-          );
+          History.logModifiedPrimaryContact(this.props.owner, this.props.contact);
         }
         if (isNewPrimaryContact && response != null) {
           //adding new contact also set it as primary
@@ -287,9 +269,7 @@ class OwnersDetail extends React.Component {
 
   render() {
     var owner = this.props.owner;
-    var primaryContactId = owner.primaryContact
-      ? owner.primaryContact.id
-      : null;
+    var primaryContactId = owner.primaryContact ? owner.primaryContact.id : null;
 
     var daysToInspection = owner.daysToInspection;
     if (owner.isOverdue) {
@@ -297,30 +277,27 @@ class OwnersDetail extends React.Component {
     }
 
     var inspectionNotice =
-      (owner.isReinspection ? "&reg; " : "") +
-      (owner.isOverdue ? "Overdue &ndash; " : "") +
+      (owner.isReinspection ? '&reg; ' : '') +
+      (owner.isOverdue ? 'Overdue &ndash; ' : '') +
       daysToInspection +
-      " " +
-      plural(daysToInspection, "day", "days") +
-      " &ndash; " +
-      formatDateTime(
-        owner.nextInspectionDate,
-        Constant.DATE_FULL_MONTH_DAY_YEAR
-      );
+      ' ' +
+      plural(daysToInspection, 'day', 'days') +
+      ' &ndash; ' +
+      formatDateTime(owner.nextInspectionDate, Constant.DATE_FULL_MONTH_DAY_YEAR);
 
     var inspectionStyle = owner.isOverdue
-      ? "danger"
+      ? 'danger'
       : daysToInspection <= Constant.INSPECTION_DAYS_DUE_WARNING
-      ? "warning"
-      : "success";
+      ? 'warning'
+      : 'success';
 
     return (
       <div id="owners-detail">
         <div>
           <Row id="owners-top">
             <Col md={10}>
-              <Label bsStyle={owner.isActive ? "success" : "danger"}>
-                {owner.isActive ? "Verified Active" : owner.status}
+              <Label bsStyle={owner.isActive ? 'success' : 'danger'}>
+                {owner.isActive ? 'Verified Active' : owner.status}
               </Label>
               {owner.nextInspectionDate && (
                 <span
@@ -350,7 +327,7 @@ class OwnersDetail extends React.Component {
           {(() => {
             if (this.state.loading) {
               return (
-                <div style={{ textAlign: "center" }}>
+                <div style={{ textAlign: 'center' }}>
                   <Spinner />
                 </div>
               );
@@ -362,13 +339,11 @@ class OwnersDetail extends React.Component {
                   <Col md={12}>
                     <h1>
                       School Bus Owner: <small>{owner.name}</small>
-                      <Button
-                        title="Edit Owner"
-                        bsSize="small"
-                        onClick={this.openEditDialog}
-                      >
-                        <Glyphicon glyph="pencil" />
-                      </Button>
+                      <Authorize permissions={Constant.PERMISSION_OWNER_W}>
+                        <Button title="Edit Owner" bsSize="small" onClick={this.openEditDialog}>
+                          <Glyphicon glyph="pencil" />
+                        </Button>
+                      </Authorize>
                     </h1>
                   </Col>
                 </Row>
@@ -380,21 +355,19 @@ class OwnersDetail extends React.Component {
             <Col md={6}>
               <Well>
                 <h3>
-                  School Bus Data{" "}
+                  School Bus Data{' '}
                   <span className="pull-right">
-                    <Button
-                      title="Add Bus"
-                      bsSize="small"
-                      onClick={this.openSchoolBusDialog}
-                    >
-                      <Glyphicon glyph="plus" /> Add School Bus
-                    </Button>
+                    <Authorize permissions={Constant.PERMISSION_SB_W}>
+                      <Button title="Add Bus" bsSize="small" onClick={this.openSchoolBusDialog}>
+                        <Glyphicon glyph="plus" /> Add School Bus
+                      </Button>
+                    </Authorize>
                   </span>
                 </h3>
                 {(() => {
                   if (this.state.loading) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
@@ -409,24 +382,14 @@ class OwnersDetail extends React.Component {
                       </Row>
                       <Row>
                         <ColDisplay md={12} label="Owner Added On">
-                          {formatDateTime(
-                            owner.dateCreated,
-                            Constant.DATE_SHORT_MONTH_DAY_YEAR
-                          )}
+                          {formatDateTime(owner.dateCreated, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
                       </Row>
                       <Row>
                         <ColDisplay md={12} label="Next Inspection">
-                          {formatDateTime(
-                            owner.nextInspectionDate,
-                            Constant.DATE_SHORT_MONTH_DAY_YEAR
-                          )}
-                          {owner.isReinspection ? (
-                            <BadgeLabel bsStyle="info">R</BadgeLabel>
-                          ) : null}
-                          {owner.isOverdue ? (
-                            <BadgeLabel bsStyle="danger">!</BadgeLabel>
-                          ) : null}
+                          {formatDateTime(owner.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
+                          {owner.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null}
+                          {owner.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null}
                         </ColDisplay>
                       </Row>
                       <Row>
@@ -445,7 +408,7 @@ class OwnersDetail extends React.Component {
                 {(() => {
                   if (this.state.loading) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
@@ -468,45 +431,27 @@ class OwnersDetail extends React.Component {
                 {(() => {
                   if (this.state.loadingContacts) {
                     return (
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         <Spinner />
                       </div>
                     );
                   }
 
                   var addContactButton = (
-                    <Button
-                      title="Add Contact"
-                      onClick={this.addContact}
-                      bsSize="xsmall"
-                    >
-                      <Glyphicon glyph="plus" />
-                      &nbsp;<strong>Add</strong>
-                    </Button>
+                    <Authorize permissions={Constant.PERMISSION_OWNER_W}>
+                      <Button title="Add Contact" onClick={this.addContact} bsSize="xsmall">
+                        <Glyphicon glyph="plus" />
+                        &nbsp;<strong>Add</strong>
+                      </Button>
+                    </Authorize>
                   );
-                  var primary = (
-                    <Badge
-                      style={{ backgroundColor: "#5cb85c", marginLeft: "10px" }}
-                    >
-                      Primary
-                    </Badge>
-                  );
+                  var primary = <Badge style={{ backgroundColor: '#5cb85c', marginLeft: '10px' }}>Primary</Badge>;
 
-                  if (
-                    this.props.ownerContacts === null ||
-                    Object.keys(this.props.ownerContacts).length === 0
-                  ) {
-                    return (
-                      <Alert bsStyle="success">
-                        No contacts {addContactButton}
-                      </Alert>
-                    );
+                  if (this.props.ownerContacts === null || Object.keys(this.props.ownerContacts).length === 0) {
+                    return <Alert bsStyle="success">No contacts {addContactButton}</Alert>;
                   }
 
-                  var contacts = _.sortBy(
-                    this.props.ownerContacts,
-                    this.state.ui.sortField
-                  );
+                  var contacts = _.sortBy(this.props.ownerContacts, this.state.ui.sortField);
                   if (this.state.ui.sortDesc) {
                     _.reverse(contacts);
                   }
@@ -519,14 +464,14 @@ class OwnersDetail extends React.Component {
                   }
 
                   var headers = [
-                    { field: "primary", title: " " },
-                    { field: "name", title: "Name" },
-                    { field: "workPhoneNumber", title: "Phone" },
-                    { field: "address1", title: "Address" },
+                    { field: 'primary', title: ' ' },
+                    { field: 'name', title: 'Name' },
+                    { field: 'workPhoneNumber', title: 'Phone' },
+                    { field: 'address1', title: 'Address' },
                     {
-                      field: "addContact",
-                      title: "Add Contact",
-                      style: { testAlign: "right" },
+                      field: 'addContact',
+                      title: 'Add Contact',
+                      style: { testAlign: 'right' },
                       node: addContactButton,
                     },
                   ];
@@ -549,28 +494,19 @@ class OwnersDetail extends React.Component {
                                 return <td></td>;
                               }
                             })()}
-                            <td>
-                              {(contact.givenName ? contact.givenName : "") +
-                                " " +
-                                contact.surname}
-                            </td>
+                            <td>{(contact.givenName ? contact.givenName : '') + ' ' + contact.surname}</td>
                             <td>{contact.workPhoneNumber}</td>
                             <td>{contact.address1}</td>
                             <td>
                               <ButtonGroup>
-                                <DeleteButton
-                                  name="Contact"
-                                  hide={!contact.canDelete}
-                                  onConfirm={this.deleteContact.bind(
-                                    this,
-                                    contact
-                                  )}
-                                />
-                                <EditButton
-                                  name="Contact"
-                                  view={!contact.canEdit}
-                                  pathname={contact.path}
-                                />
+                                <Authorize permissions={Constant.PERMISSION_OWNER_W}>
+                                  <DeleteButton
+                                    name="Contact"
+                                    hide={!contact.canDelete}
+                                    onConfirm={this.deleteContact.bind(this, contact)}
+                                  />
+                                </Authorize>
+                                <EditButton name="Contact" view={!contact.canEdit} pathname={contact.path} />
                               </ButtonGroup>
                             </td>
                           </tr>
@@ -584,11 +520,7 @@ class OwnersDetail extends React.Component {
           </Row>
         </div>
         {this.state.showEditDialog && (
-          <OwnersEditDialog
-            show={this.state.showEditDialog}
-            onSave={this.saveEdit}
-            onClose={this.closeEditDialog}
-          />
+          <OwnersEditDialog show={this.state.showEditDialog} onSave={this.saveEdit} onClose={this.closeEditDialog} />
         )}
         {this.state.showHistoryDialog && (
           <HistoryListDialog
