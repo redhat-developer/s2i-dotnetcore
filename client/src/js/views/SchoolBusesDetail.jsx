@@ -29,6 +29,7 @@ import SchoolBusBodyDescription from '../components/SchoolBusBodyDescription.jsx
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
+import Authorize from '../components/Authorize';
 
 import { formatDateTime } from '../utils/date';
 import { concat, plural } from '../utils/string';
@@ -478,9 +479,11 @@ class SchoolBusesDetail extends React.Component {
                 <h3>
                   School Bus Data{' '}
                   <span className="pull-right">
-                    <Button title="Edit Bus" bsSize="small" onClick={this.openEditDialog}>
-                      <Glyphicon glyph="pencil" />
-                    </Button>
+                    <Authorize permissions={Constant.PERMISSION_SB_W}>
+                      <Button title="Edit Bus" bsSize="small" onClick={this.openEditDialog}>
+                        <Glyphicon glyph="pencil" />
+                      </Button>
+                    </Authorize>
                   </span>
                 </h3>
                 {(() => {
@@ -593,10 +596,12 @@ class SchoolBusesDetail extends React.Component {
                   }
 
                   var addInspectionButton = (
-                    <Button title="Add Inspection" onClick={this.addInspection} bsSize="xsmall">
-                      <Glyphicon glyph="plus" />
-                      &nbsp;<strong>Add</strong>
-                    </Button>
+                    <Authorize permissions={Constant.PERMISSION_SB_W}>
+                      <Button title="Add Inspection" onClick={this.addInspection} bsSize="xsmall">
+                        <Glyphicon glyph="plus" />
+                        &nbsp;<strong>Add</strong>
+                      </Button>
+                    </Authorize>
                   );
 
                   if (Object.keys(this.props.schoolBusInspections).length === 0) {
