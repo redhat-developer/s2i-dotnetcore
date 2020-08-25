@@ -3852,69 +3852,6 @@
             <param name="item"></param>
             <response code="201">District created</response>
         </member>
-        <member name="T:SchoolBusAPI.Controllers.GroupController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.GroupController.#ctor(SchoolBusAPI.Services.IGroupService)">
-            <summary>
-            Create a controller and set the service
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.GroupController.GroupsBulkPost(SchoolBusAPI.Models.Group[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Group created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.GroupController.GroupsGet">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.GroupController.GroupsIdDeletePost(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Group to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Group not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.GroupController.GroupsIdGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Group to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Group not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.GroupController.GroupsIdPut(System.Int32,SchoolBusAPI.Models.Group)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Group to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Group not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.GroupController.GroupsIdUsersGet(System.Int32)">
-            <summary>
-            returns users in a given Group
-            </summary>
-            <remarks>Used to get users in a given Group</remarks>
-            <param name="id">id of Group to fetch Users for</param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.GroupController.GroupsPost(SchoolBusAPI.Models.Group)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Group created</response>
-        </member>
         <member name="T:SchoolBusAPI.Controllers.HistoryController">
             <summary>
             
@@ -4842,35 +4779,6 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdGroupsGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns all groups that a user is a member of</remarks>
-            <param name="id">id of User to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdGroupsPost(System.Int32,SchoolBusAPI.ViewModels.GroupMembershipViewModel)">
-            <summary>
-            
-            </summary>
-            <remarks>Add to the active set of groups for a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdGroupsPut(System.Int32,SchoolBusAPI.ViewModels.GroupMembershipViewModel[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the active set of groups for a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdNotificationsGet(System.Int32)">
             <summary>
             
@@ -5192,26 +5100,6 @@
             <summary>
             This class automattically loades all seeder classes defined in this assembly,
             and provides a simple interface for seeding the application and database with data.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Seeders.UserSeeder.GetDefaultUsers(SchoolBusAPI.Models.DbAppContext)">
-            <summary>
-            Returns a list of users to be populated in all environments.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Seeders.UserSeeder.GetDevUsers(SchoolBusAPI.Models.DbAppContext)">
-            <summary>
-            Returns a list of users to be populated in the Development environment.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Seeders.UserSeeder.GetTestUsers(SchoolBusAPI.Models.DbAppContext)">
-            <summary>
-            Returns a list of users to be populated in the Test environment.
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Seeders.UserSeeder.GetProdUsers(SchoolBusAPI.Models.DbAppContext)">
-            <summary>
-            Returns a list of users to be populated in the Production environment.
             </summary>
         </member>
         <member name="M:SchoolBusAPI.Services.IAttachmentService.AttachmentsBulkPostAsync(SchoolBusAPI.Models.Attachment[])">
@@ -5909,129 +5797,6 @@
             </summary>
             <param name="email">email object get from front-end</param>
             <returns></returns>
-        </member>
-        <member name="T:SchoolBusAPI.Services.IGroupService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IGroupService.GroupsBulkPostAsync(SchoolBusAPI.Models.Group[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Group created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IGroupService.GroupsGetAsync">
-            <summary>
-            
-            </summary>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IGroupService.GroupsIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Group to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Group not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IGroupService.GroupsIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Group to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Group not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IGroupService.GroupsIdPutAsync(System.Int32,SchoolBusAPI.Models.Group)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Group to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Group not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IGroupService.GroupsIdUsersGetAsync(System.Int32)">
-            <summary>
-            returns users in a given Group
-            </summary>
-            <remarks>Used to get users in a given Group</remarks>
-            <param name="id">id of Group to fetch Users for</param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IGroupService.GroupsPostAsync(SchoolBusAPI.Models.Group)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Group created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Services.GroupService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.GroupService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
-            <summary>
-            Create a service and set the database context
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.GroupService.GroupsIdUsersGetAsync(System.Int32)">
-            <summary>
-            returns users in a given Group
-            </summary>
-            <remarks>Used to get users in a given Group</remarks>
-            <param name="id">id of Group to fetch Users for</param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.GroupService.GroupsBulkPostAsync(SchoolBusAPI.Models.Group[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Groups created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.GroupService.GroupsGetAsync">
-            <summary>
-            
-            </summary>
-            <remarks>Returns a collection of groups</remarks>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.GroupService.GroupsIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Group to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Group not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.GroupService.GroupsIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns a Group</remarks>
-            <param name="id">id of Group to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Group not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.GroupService.GroupsIdPutAsync(System.Int32,SchoolBusAPI.Models.Group)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Group to update</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Group not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.GroupService.GroupsPostAsync(SchoolBusAPI.Models.Group)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Group created</response>
         </member>
         <member name="T:SchoolBusAPI.Services.IHistoryService">
             <summary>
@@ -7735,35 +7500,6 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdGroupsGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns all groups that a user is a member of</remarks>
-            <param name="id">id of User to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdGroupsPostAsync(System.Int32,SchoolBusAPI.ViewModels.GroupMembershipViewModel)">
-            <summary>
-            
-            </summary>
-            <remarks>Add to the active set of groups for a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdGroupsPutAsync(System.Int32,SchoolBusAPI.ViewModels.GroupMembershipViewModel[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the active set of groups for a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.IUserService.UsersIdNotificationsGetAsync(System.Int32)">
             <summary>
             
@@ -7923,35 +7659,6 @@
             </summary>
             <remarks>Returns data for a particular user</remarks>
             <param name="id">id of User to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdGroupsGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns all groups that a user is a member of</remarks>
-            <param name="id">id of User to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdGroupsPutAsync(System.Int32,SchoolBusAPI.ViewModels.GroupMembershipViewModel[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the active set of groups for a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdGroupsPostAsync(System.Int32,SchoolBusAPI.ViewModels.GroupMembershipViewModel)">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a user to groups</remarks>
-            <param name="id">id of User to update</param>
-            <param name="item"></param>
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
@@ -8182,11 +7889,6 @@
             Gets or Sets SmAuthorizationDirectory
             </summary>
         </member>
-        <member name="P:SchoolBusAPI.ViewModels.CurrentUserViewModel.GroupMemberships">
-            <summary>
-            Gets or Sets GroupMemberships
-            </summary>
-        </member>
         <member name="P:SchoolBusAPI.ViewModels.CurrentUserViewModel.District">
             <summary>
             The District to which this User is affliated.
@@ -8254,174 +7956,6 @@
             <returns></returns>
         </member>
         <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.op_Inequality(SchoolBusAPI.ViewModels.CurrentUserViewModel,SchoolBusAPI.ViewModels.CurrentUserViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="T:SchoolBusAPI.ViewModels.GroupMembershipViewModel">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupMembershipViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupMembershipViewModel.#ctor(System.Boolean,System.Int32,System.Int32,System.Nullable{System.Int32})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.GroupMembershipViewModel" /> class.
-            </summary>
-            <param name="Active">Active (required).</param>
-            <param name="GroupId">GroupId (required).</param>
-            <param name="UserId">UserId (required).</param>
-            <param name="Id">Id.</param>
-        </member>
-        <member name="P:SchoolBusAPI.ViewModels.GroupMembershipViewModel.Active">
-            <summary>
-            Gets or Sets Active
-            </summary>
-        </member>
-        <member name="P:SchoolBusAPI.ViewModels.GroupMembershipViewModel.GroupId">
-            <summary>
-            Gets or Sets GroupId
-            </summary>
-        </member>
-        <member name="P:SchoolBusAPI.ViewModels.GroupMembershipViewModel.UserId">
-            <summary>
-            Gets or Sets UserId
-            </summary>
-        </member>
-        <member name="P:SchoolBusAPI.ViewModels.GroupMembershipViewModel.Id">
-            <summary>
-            Gets or Sets Id
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupMembershipViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupMembershipViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupMembershipViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupMembershipViewModel.Equals(SchoolBusAPI.ViewModels.GroupMembershipViewModel)">
-            <summary>
-            Returns true if GroupMembershipViewModel instances are equal
-            </summary>
-            <param name="other">Instance of GroupMembershipViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupMembershipViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupMembershipViewModel.op_Equality(SchoolBusAPI.ViewModels.GroupMembershipViewModel,SchoolBusAPI.ViewModels.GroupMembershipViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupMembershipViewModel.op_Inequality(SchoolBusAPI.ViewModels.GroupMembershipViewModel,SchoolBusAPI.ViewModels.GroupMembershipViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="T:SchoolBusAPI.ViewModels.GroupViewModel">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupViewModel.#ctor(System.String,System.String,System.Nullable{System.Int32})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.GroupViewModel" /> class.
-            </summary>
-            <param name="Name">Name (required).</param>
-            <param name="Description">Description (required).</param>
-            <param name="Id">Id.</param>
-        </member>
-        <member name="P:SchoolBusAPI.ViewModels.GroupViewModel.Name">
-            <summary>
-            Gets or Sets Name
-            </summary>
-        </member>
-        <member name="P:SchoolBusAPI.ViewModels.GroupViewModel.Description">
-            <summary>
-            Gets or Sets Description
-            </summary>
-        </member>
-        <member name="P:SchoolBusAPI.ViewModels.GroupViewModel.Id">
-            <summary>
-            Gets or Sets Id
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupViewModel.Equals(SchoolBusAPI.ViewModels.GroupViewModel)">
-            <summary>
-            Returns true if GroupViewModel instances are equal
-            </summary>
-            <param name="other">Instance of GroupViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupViewModel.op_Equality(SchoolBusAPI.ViewModels.GroupViewModel,SchoolBusAPI.ViewModels.GroupViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.GroupViewModel.op_Inequality(SchoolBusAPI.ViewModels.GroupViewModel,SchoolBusAPI.ViewModels.GroupViewModel)">
             <summary>
             Not Equals
             </summary>
@@ -9576,11 +9110,6 @@
         <member name="P:SchoolBusAPI.ViewModels.UserViewModel.UserRoles">
             <summary>
             Gets or Sets UserRoles
-            </summary>
-        </member>
-        <member name="P:SchoolBusAPI.ViewModels.UserViewModel.GroupMemberships">
-            <summary>
-            Gets or Sets GroupMemberships
             </summary>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.UserViewModel.District">

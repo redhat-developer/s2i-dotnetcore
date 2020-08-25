@@ -60,11 +60,6 @@ namespace SchoolBusAPI.Extensions
             return role;
         }
 
-        public static Group GetGroup(this IDbAppContext context, string name)
-        {
-            return context.Groups.FirstOrDefault(x => x.Name == name);
-        }
-
         public static User GetUserByGuid(this IDbAppContext context, string guid)
         {
             User user = context.Users.Where(x => x.Guid != null && x.Guid == guid)
@@ -260,24 +255,6 @@ namespace SchoolBusAPI.Extensions
                         {
                             EffectiveDate = DateTime.UtcNow,
                             Role = role
-                        });
-                }
-            }
-
-            string[] userGroups = initialUser.GroupMemberships.Select(x => x.Group.Name).ToArray();
-            if (user.GroupMemberships == null)
-                user.GroupMemberships = new List<GroupMembership>();
-
-            foreach (string userGroup in userGroups)
-            {
-                Group group = context.GetGroup(userGroup);
-                if (group != null)
-                {
-                    user.GroupMemberships.Add(
-                        new GroupMembership
-                        {
-                            Active = true,
-                            Group = group
                         });
                 }
             }
@@ -534,55 +511,6 @@ namespace SchoolBusAPI.Extensions
                 serviceArea.Name = serviceAreaInfo.Name;
                 serviceArea.StartDate = serviceAreaInfo.StartDate;
                 serviceArea.District = serviceAreaInfo.District;
-            }
-        }
-
-        public static void UpdateSeedUserInfo(this DbAppContext context, User userInfo)
-        {
-            User user = context.GetUserByGuid(userInfo.Guid);            
-            if (user == null)
-            {
-                context.Users.Add(userInfo);
-            }
-            else
-            {
-                user.Active = userInfo.Active;
-                user.Email = userInfo.Email;
-                user.GivenName = userInfo.GivenName;
-                // user.Guid = userInfo.Guid;
-                user.Initials = userInfo.Initials;
-                user.SmAuthorizationDirectory = userInfo.SmAuthorizationDirectory;
-                user.SmUserId = userInfo.SmUserId;
-                user.Surname = userInfo.Surname;
-                user.District = userInfo.District;
-
-                // Sync Roles
-                if (user.UserRoles != null)
-                {
-                    foreach (UserRole item in user.UserRoles)
-                    {
-                        context.Entry(item).State = EntityState.Deleted;
-                    }
-
-                    foreach (UserRole item in userInfo.UserRoles)
-                    {
-                        user.UserRoles.Add(item);
-                    }
-                }
-
-                // Sync Groups
-                if (user.GroupMemberships != null)
-                {
-                    foreach (GroupMembership item in user.GroupMemberships)
-                    {
-                        context.Entry(item).State = EntityState.Deleted;
-                    }
-
-                    foreach (GroupMembership item in userInfo.GroupMemberships)
-                    {
-                        user.GroupMemberships.Add(item);
-                    }
-                }
             }
         }
     }

@@ -22,9 +22,6 @@ namespace SchoolBusAPI.Mappings
             
             CreateMap<Permission, PermissionViewModel>();
 
-            CreateMap<GroupMembership, GroupMembershipViewModel>(); //to be removed
-            CreateMap<Group, GroupViewModel>(); //to be removed
-
             CreateMap<History, HistoryViewModel>(); //AffectedEntityId must be manually assigned
             
             CreateMap<UserFavourite, UserFavouriteViewModel>();

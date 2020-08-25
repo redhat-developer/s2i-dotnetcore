@@ -86,11 +86,6 @@ namespace SchoolBusAPI.ViewModels
                 return UserRoles.Any(r => r.Role.Name == Roles.SystemAdmininstrator);
             }
         }
-        /// <summary>
-        /// Gets or Sets GroupMemberships
-        /// </summary>
-        [DataMember(Name="groupMemberships")]
-        public List<GroupMembershipViewModel> GroupMemberships { get; set; }
 
         /// <summary>
         /// The District to which this User is affliated.
@@ -130,24 +125,7 @@ namespace SchoolBusAPI.ViewModels
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("class CurrentUserViewModel {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  GivenName: ").Append(GivenName).Append("\n");
-            sb.Append("  Surname: ").Append(Surname).Append("\n");
-            sb.Append("  Email: ").Append(Email).Append("\n");
-            sb.Append("  Active: ").Append(Active).Append("\n");
-            sb.Append("  UserRoles: ").Append(UserRoles).Append("\n");
-            sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
-            sb.Append("  SmAuthorizationDirectory: ").Append(SmAuthorizationDirectory).Append("\n");
-            sb.Append("  GroupMemberships: ").Append(GroupMemberships).Append("\n");
-            sb.Append("  District: ").Append(District).Append("\n");
-            sb.Append("  OverdueInspections: ").Append(OverdueInspections).Append("\n");
-            sb.Append("  ScheduledInspections: ").Append(ScheduledInspections).Append("\n");
-            sb.Append("  DueNextMonthInspections: ").Append(DueNextMonthInspections).Append("\n");
-            sb.Append("  ReInspections: ").Append(ReInspections).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
+            return ToJson();
         }
 
         /// <summary>
@@ -223,11 +201,6 @@ namespace SchoolBusAPI.ViewModels
                     this.SmAuthorizationDirectory == other.SmAuthorizationDirectory ||
                     this.SmAuthorizationDirectory != null &&
                     this.SmAuthorizationDirectory.Equals(other.SmAuthorizationDirectory)
-                ) && 
-                (
-                    this.GroupMemberships == other.GroupMemberships ||
-                    this.GroupMemberships != null &&
-                    this.GroupMemberships.SequenceEqual(other.GroupMemberships)
                 ) &&                 
                 (
                     this.District == other.District ||
@@ -300,10 +273,6 @@ namespace SchoolBusAPI.ViewModels
                     hash = hash * 59 + this.SmAuthorizationDirectory.GetHashCode();
                 }                
                                    
-                if (this.GroupMemberships != null)
-                {
-                    hash = hash * 59 + this.GroupMemberships.GetHashCode();
-                }                   
                 if (this.District != null)
                 {
                     hash = hash * 59 + this.District.GetHashCode();
