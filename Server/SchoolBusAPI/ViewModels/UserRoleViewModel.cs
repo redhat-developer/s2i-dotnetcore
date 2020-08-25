@@ -86,15 +86,7 @@ namespace SchoolBusAPI.ViewModels
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("class UserRoleViewModel {\n");
-            sb.Append("  EffectiveDate: ").Append(EffectiveDate).Append("\n");
-            sb.Append("  RoleId: ").Append(RoleId).Append("\n");
-            sb.Append("  UserId: ").Append(UserId).Append("\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  ExpiryDate: ").Append(ExpiryDate).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
+            return ToJson();
         }
 
         /// <summary>

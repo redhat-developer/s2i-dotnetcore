@@ -64,7 +64,6 @@ namespace SchoolBusAPI.Extensions
         {
             User user = context.Users.Where(x => x.Guid != null && x.Guid == guid)
                     .Include(u => u.UserRoles).ThenInclude(r => r.Role).ThenInclude(rp => rp.RolePermissions).ThenInclude(p => p.Permission)
-                    .Include(u => u.GroupMemberships).ThenInclude(gm => gm.Group)
                     .FirstOrDefault();
             return user;
         }
@@ -73,7 +72,6 @@ namespace SchoolBusAPI.Extensions
         {
             User user = context.Users.Where(x => x.SmUserId != null && x.SmUserId == smUserId)
                     .Include(u => u.UserRoles).ThenInclude(r => r.Role).ThenInclude(rp => rp.RolePermissions).ThenInclude(p => p.Permission)
-                    .Include(u => u.GroupMemberships).ThenInclude(gm => gm.Group)
                     .FirstOrDefault();
             return user;
         }

@@ -51,16 +51,13 @@ namespace SchoolBusAPI.Models
         /// <param name="Guid">The GUID unique to the user as provided by the authentication system. In this case, authentication is done by Siteminder and the GUID uniquely identifies the user within the user directories managed by Siteminder - e.g. IDIR and BCeID. The GUID is equivalent to the IDIR Id, but is guaranteed unique to a person, while the IDIR ID is not - IDIR IDs can be recycled..</param>
         /// <param name="SmAuthorizationDirectory">The user directory service used by Siteminder to authenticate the user - usually IDIR or BCeID..</param>
         /// <param name="UserRoles">UserRoles.</param>
-        /// <param name="GroupMemberships">GroupMemberships.</param>
         /// <param name="District">The District that the User belongs to.</param>
-        public User(int Id, string GivenName, string Surname, bool Active, string Initials = null, string Email = null, string SmUserId = null, string Guid = null, string SmAuthorizationDirectory = null, List<UserRole> UserRoles = null, List<GroupMembership> GroupMemberships = null, District District = null)
+        public User(int Id, string GivenName, string Surname, bool Active, string Initials = null, string Email = null, string SmUserId = null, string Guid = null, string SmAuthorizationDirectory = null, List<UserRole> UserRoles = null, District District = null)
         {   
             this.Id = Id;
             this.GivenName = GivenName;
             this.Surname = Surname;
             this.Active = Active;
-
-
 
             this.Initials = Initials;
             this.Email = Email;
@@ -68,7 +65,6 @@ namespace SchoolBusAPI.Models
             this.Guid = Guid;
             this.SmAuthorizationDirectory = SmAuthorizationDirectory;
             this.UserRoles = UserRoles;
-            this.GroupMemberships = GroupMemberships;
             this.District = District;
         }
 
@@ -155,11 +151,6 @@ namespace SchoolBusAPI.Models
         public List<UserRole> UserRoles { get; set; }
         
         /// <summary>
-        /// Gets or Sets GroupMemberships
-        /// </summary>
-        public List<GroupMembership> GroupMemberships { get; set; }
-        
-        /// <summary>
         /// The District that the User belongs to
         /// </summary>
         /// <value>The District that the User belongs to</value>
@@ -180,22 +171,7 @@ namespace SchoolBusAPI.Models
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("class User {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  GivenName: ").Append(GivenName).Append("\n");
-            sb.Append("  Surname: ").Append(Surname).Append("\n");
-            sb.Append("  Active: ").Append(Active).Append("\n");
-            sb.Append("  Initials: ").Append(Initials).Append("\n");
-            sb.Append("  Email: ").Append(Email).Append("\n");
-            sb.Append("  SmUserId: ").Append(SmUserId).Append("\n");
-            sb.Append("  Guid: ").Append(Guid).Append("\n");
-            sb.Append("  SmAuthorizationDirectory: ").Append(SmAuthorizationDirectory).Append("\n");
-            sb.Append("  UserRoles: ").Append(UserRoles).Append("\n");
-            sb.Append("  GroupMemberships: ").Append(GroupMemberships).Append("\n");
-            sb.Append("  District: ").Append(District).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
+            return ToJson();
         }
 
         /// <summary>
@@ -281,11 +257,6 @@ namespace SchoolBusAPI.Models
                     this.UserRoles.SequenceEqual(other.UserRoles)
                 ) && 
                 (
-                    this.GroupMemberships == other.GroupMemberships ||
-                    this.GroupMemberships != null &&
-                    this.GroupMemberships.SequenceEqual(other.GroupMemberships)
-                ) &&                 
-                (
                     this.District == other.District ||
                     this.District != null &&
                     this.District.Equals(other.District)
@@ -304,7 +275,9 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                if (this.GivenName != null)
+                hash = hash * 59 + this.Id.GetHashCode();                
+                
+                if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();
                 }                
@@ -338,10 +311,6 @@ namespace SchoolBusAPI.Models
                 if (this.UserRoles != null)
                 {
                     hash = hash * 59 + this.UserRoles.GetHashCode();
-                }                   
-                if (this.GroupMemberships != null)
-                {
-                    hash = hash * 59 + this.GroupMemberships.GetHashCode();
                 }                   
                 if (this.District != null)
                 {

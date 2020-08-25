@@ -45,7 +45,8 @@ namespace SchoolBusAPI.ViewModels
         /// <param name="IsDefault">IsDefault.</param>
         /// <param name="Type">Type of favourite.</param>
         public UserFavouriteViewModel(int? Id = null, string Name = null, string Value = null, bool? IsDefault = null, string Type = null)
-        {               this.Id = Id;
+        {               
+            this.Id = Id;
             this.Name = Name;
             this.Value = Value;
             this.IsDefault = IsDefault;

@@ -9,24 +9,16 @@
  */
 
 using System;
-using System.Linq;
-using System.IO;
 using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
     /// <summary>
     /// The users associated with a given group that has been defined in the application.
     /// </summary>
-        [MetaDataExtension (Description = "The users associated with a given group that has been defined in the application.")]
+    [MetaDataExtension (Description = "The users associated with a given group that has been defined in the application.")]
 
     public partial class GroupMembership : AuditableEntity, IEquatable<GroupMembership>
     {

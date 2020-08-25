@@ -31,13 +31,6 @@ namespace SchoolBusAPI.Services
         /// </summary>
         /// <param name="items"></param>
         /// <response code="201">User created</response>
-        IActionResult UsergroupsBulkPostAsync(GroupMembership[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">User created</response>
         IActionResult UserrolesBulkPostAsync(UserRole[] items);
 
         /// <summary>
@@ -209,42 +202,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Adds a number of user groups</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult UsergroupsBulkPostAsync(GroupMembership[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (GroupMembership item in items)
-            {
-                // adjust the user
-                if (item.User != null)
-                {
-                    int user_id = item.User.Id;
-                    bool user_exists = _context.Users.Any(a => a.Id == user_id);
-                    if (user_exists)
-                    {
-                        User user = _context.Users.First(a => a.Id == user_id);
-                        item.User = user;
-                    }
-                    else
-                    {
-                        item.User = null;
-                    }
-                }
-            }
-
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Adds a number of user roles</remarks>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
@@ -326,8 +283,6 @@ namespace SchoolBusAPI.Services
         {
             var users = _context.Users
                 .Include(x => x.District)
-                .Include(x => x.GroupMemberships)
-                .ThenInclude(y => y.Group)
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
                 .ThenInclude(z => z.RolePermissions)
@@ -347,7 +302,6 @@ namespace SchoolBusAPI.Services
         {
             var user = _context.Users
                 .Include(x => x.UserRoles)
-                .Include(x => x.GroupMemberships)
                 .FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
@@ -359,14 +313,6 @@ namespace SchoolBusAPI.Services
                 foreach (var item in user.UserRoles)
                 {
                     _context.UserRoles.Remove(item);
-                }
-            }
-
-            if (user.GroupMemberships != null)
-            {
-                foreach (var item in user.GroupMemberships)
-                {
-                    _context.GroupMemberships.Remove(item);
                 }
             }
 
@@ -537,8 +483,6 @@ namespace SchoolBusAPI.Services
         {
             var user = _context.Users
                 .Include(x => x.District)
-                .Include(x => x.GroupMemberships)
-                .ThenInclude(y => y.Group)
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
                 .ThenInclude(z => z.RolePermissions)
@@ -611,8 +555,6 @@ namespace SchoolBusAPI.Services
         {
             var user = _context.Users
                 .Include(x => x.District)
-                .Include(x => x.GroupMemberships)
-                .ThenInclude(y => y.Group)
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
                 .ThenInclude(z => z.RolePermissions)
@@ -692,8 +634,6 @@ namespace SchoolBusAPI.Services
                 {
                     User user = _context.Users
                         .Include(x => x.District)
-                        .Include(x => x.GroupMemberships)
-                        .ThenInclude(y => y.Group)
                         .Include(x => x.UserRoles)
                         .ThenInclude(y => y.Role)
                         .ThenInclude(z => z.RolePermissions)
@@ -746,8 +686,6 @@ namespace SchoolBusAPI.Services
             {
                 User user = _context.Users
                     .Include(x => x.District)
-                    .Include(x => x.GroupMemberships)
-                    .ThenInclude(y => y.Group)
                     .Include(x => x.UserRoles)
                     .ThenInclude(y => y.Role)
                     .ThenInclude(z => z.RolePermissions)
@@ -840,8 +778,6 @@ namespace SchoolBusAPI.Services
             // Eager loading of related data
             var data = _context.Users
                 .Include(x => x.District)
-                .Include(x => x.GroupMemberships)
-                .ThenInclude(y => y.Group)
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
                 .ThenInclude(z => z.RolePermissions)

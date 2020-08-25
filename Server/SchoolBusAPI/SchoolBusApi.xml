@@ -49,7 +49,7 @@
             Default constructor, required by entity framework
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Models.User.#ctor(System.Int32,System.String,System.String,System.Boolean,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List{SchoolBusAPI.Models.UserRole},System.Collections.Generic.List{SchoolBusAPI.Models.GroupMembership},SchoolBusAPI.Models.District)">
+        <member name="M:SchoolBusAPI.Models.User.#ctor(System.Int32,System.String,System.String,System.Boolean,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List{SchoolBusAPI.Models.UserRole},SchoolBusAPI.Models.District)">
             <summary>
             Initializes a new instance of the <see cref="T:SchoolBusAPI.Models.User" /> class.
             </summary>
@@ -63,7 +63,6 @@
             <param name="Guid">The GUID unique to the user as provided by the authentication system. In this case, authentication is done by Siteminder and the GUID uniquely identifies the user within the user directories managed by Siteminder - e.g. IDIR and BCeID. The GUID is equivalent to the IDIR Id, but is guaranteed unique to a person, while the IDIR ID is not - IDIR IDs can be recycled..</param>
             <param name="SmAuthorizationDirectory">The user directory service used by Siteminder to authenticate the user - usually IDIR or BCeID..</param>
             <param name="UserRoles">UserRoles.</param>
-            <param name="GroupMemberships">GroupMemberships.</param>
             <param name="District">The District that the User belongs to.</param>
         </member>
         <member name="P:SchoolBusAPI.Models.User.Id">
@@ -123,11 +122,6 @@
         <member name="P:SchoolBusAPI.Models.User.UserRoles">
             <summary>
             Gets or Sets UserRoles
-            </summary>
-        </member>
-        <member name="P:SchoolBusAPI.Models.User.GroupMemberships">
-            <summary>
-            Gets or Sets GroupMemberships
             </summary>
         </member>
         <member name="P:SchoolBusAPI.Models.User.District">
@@ -4703,13 +4697,6 @@
             Create a controller and set the service
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsergroupsBulkPost(SchoolBusAPI.Models.GroupMembership[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">User created</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.UserController.UserrolesBulkPost(SchoolBusAPI.Models.UserRole[])">
             <summary>
             
@@ -7424,13 +7411,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsergroupsBulkPostAsync(SchoolBusAPI.Models.GroupMembership[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">User created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.IUserService.UserrolesBulkPostAsync(SchoolBusAPI.Models.UserRole[])">
             <summary>
             
@@ -7582,14 +7562,6 @@
             <summary>
             Create a service and set the database context
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsergroupsBulkPostAsync(SchoolBusAPI.Models.GroupMembership[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of user groups</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.UserService.UserrolesBulkPostAsync(SchoolBusAPI.Models.UserRole[])">
             <summary>
