@@ -54,12 +54,6 @@ namespace SchoolBusAPI.ViewModels
         [DataMember(Name="active")]
         public bool? Active { get; set; }
 
-        /// <summary>
-        /// Gets or Sets UserRoles
-        /// </summary>
-        [DataMember(Name = "userRoles")]
-        public List<UserRoleViewModel> UserRoles { get; set; }
-
         [DataMember(Name ="permissions")]
         public List<string> Permissions { get; set; }
 
@@ -74,18 +68,6 @@ namespace SchoolBusAPI.ViewModels
         /// </summary>
         [DataMember(Name="smAuthorizationDirectory")]
         public string SmAuthorizationDirectory { get; set; }
-
-        [DataMember(Name = "isSystemAdmin")]
-        public bool IsSystemAdmin 
-        { 
-            get
-            {
-                if (UserRoles == null)
-                    return false;
-
-                return UserRoles.Any(r => r.Role.Name == Roles.SystemAdmininstrator);
-            }
-        }
 
         /// <summary>
         /// The District to which this User is affliated.
@@ -186,11 +168,6 @@ namespace SchoolBusAPI.ViewModels
                     this.Active == other.Active ||
                     this.Active != null &&
                     this.Active.Equals(other.Active)
-                ) && 
-                (
-                    this.UserRoles == other.UserRoles ||
-                    this.UserRoles != null &&
-                    this.UserRoles.SequenceEqual(other.UserRoles)
                 ) &&                 
                 (
                     this.SmUserId == other.SmUserId ||
@@ -243,56 +220,54 @@ namespace SchoolBusAPI.ViewModels
                 if (this.Id != null)
                 {
                     hash = hash * 59 + this.Id.GetHashCode();
-                }                
-                                if (this.GivenName != null)
+                }
+                if (this.GivenName != null)
                 {
                     hash = hash * 59 + this.GivenName.GetHashCode();
-                }                
-                                if (this.Surname != null)
+                }
+                if (this.Surname != null)
                 {
                     hash = hash * 59 + this.Surname.GetHashCode();
-                }                
-                                if (this.Email != null)
+                }
+                if (this.Email != null)
                 {
                     hash = hash * 59 + this.Email.GetHashCode();
-                }                
-                                if (this.Active != null)
+                }
+                if (this.Active != null)
                 {
                     hash = hash * 59 + this.Active.GetHashCode();
-                }                
-                                   
-                if (this.UserRoles != null)
-                {
-                    hash = hash * 59 + this.UserRoles.GetHashCode();
-                }                if (this.SmUserId != null)
+                }
+
+                if (this.SmUserId != null)
                 {
                     hash = hash * 59 + this.SmUserId.GetHashCode();
-                }                
-                                if (this.SmAuthorizationDirectory != null)
+                }
+                if (this.SmAuthorizationDirectory != null)
                 {
                     hash = hash * 59 + this.SmAuthorizationDirectory.GetHashCode();
-                }                
-                                   
+                }
+
                 if (this.District != null)
                 {
                     hash = hash * 59 + this.District.GetHashCode();
-                }                if (this.OverdueInspections != null)
+                }
+                if (this.OverdueInspections != null)
                 {
                     hash = hash * 59 + this.OverdueInspections.GetHashCode();
-                }                
-                                if (this.ScheduledInspections != null)
+                }
+                if (this.ScheduledInspections != null)
                 {
                     hash = hash * 59 + this.ScheduledInspections.GetHashCode();
-                }                
-                                if (this.DueNextMonthInspections != null)
+                }
+                if (this.DueNextMonthInspections != null)
                 {
                     hash = hash * 59 + this.DueNextMonthInspections.GetHashCode();
-                }                
-                                if (this.ReInspections != null)
+                }
+                if (this.ReInspections != null)
                 {
                     hash = hash * 59 + this.ReInspections.GetHashCode();
-                }                
-                
+                }
+
                 return hash;
             }
         }

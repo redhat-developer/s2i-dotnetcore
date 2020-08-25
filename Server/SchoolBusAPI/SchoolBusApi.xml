@@ -7846,11 +7846,6 @@
             Gets or Sets Active
             </summary>
         </member>
-        <member name="P:SchoolBusAPI.ViewModels.CurrentUserViewModel.UserRoles">
-            <summary>
-            Gets or Sets UserRoles
-            </summary>
-        </member>
         <member name="P:SchoolBusAPI.ViewModels.CurrentUserViewModel.SmUserId">
             <summary>
             Gets or Sets SmUserId
