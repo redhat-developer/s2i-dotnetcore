@@ -35,7 +35,6 @@ namespace SchoolBusAPI.Extensions
             services.AddScoped<ICCWDataService, CCWDataService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IDistrictService, DistrictService>();
-            services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IInspectionService, InspectionService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<INotificationEventService, NotificationEventService>();

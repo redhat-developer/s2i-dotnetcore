@@ -52,16 +52,6 @@ namespace SchoolBusAPI.Models
                     claims.AddRange(roles);
             }
 
-            var groupSelect = user.GetActiveGroups().Select(g => new Claim(ClaimTypes.GroupSid, g.Name));
-            if (groupSelect != null)
-            {
-                var groups = groupSelect.ToList();
-                if (groups.Any())
-                {
-                    claims.AddRange(groups);
-                }                    
-            }
-
             return claims;
         }
 
@@ -100,21 +90,6 @@ namespace SchoolBusAPI.Models
                 .Select(x => x.Role).ToList();
 
             return roles;
-        }
-
-
-        private static List<Group> GetActiveGroups(this User user)
-        {
-            List<Group> groups = new List<Group>();
-
-            if (user.GroupMemberships == null)
-                return groups;
-
-            groups = user.GroupMemberships
-                .Where(x => x.Active)
-                .Select(x => x.Group).ToList();
-
-            return groups;
         }
     }
 }

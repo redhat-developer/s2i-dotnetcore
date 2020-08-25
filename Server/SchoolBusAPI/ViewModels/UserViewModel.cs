@@ -74,12 +74,6 @@ namespace SchoolBusAPI.ViewModels
         public List<UserRoleViewModel> UserRoles { get; set; }
 
         /// <summary>
-        /// Gets or Sets GroupMemberships
-        /// </summary>
-        [DataMember(Name="groupMemberships")]
-        public List<GroupMembershipViewModel> GroupMemberships { get; set; }
-
-        /// <summary>
         /// The District to which this User is affliated.
         /// </summary>
         /// <value>The District to which this User is affliated.</value>
@@ -162,11 +156,6 @@ namespace SchoolBusAPI.ViewModels
                     this.UserRoles == other.UserRoles ||
                     this.UserRoles != null &&
                     this.UserRoles.SequenceEqual(other.UserRoles)
-                ) && 
-                (
-                    this.GroupMemberships == other.GroupMemberships ||
-                    this.GroupMemberships != null &&
-                    this.GroupMemberships.SequenceEqual(other.GroupMemberships)
                 ) &&                 
                 (
                     this.District == other.District ||
@@ -209,10 +198,6 @@ namespace SchoolBusAPI.ViewModels
                 if (this.UserRoles != null)
                 {
                     hash = hash * 59 + this.UserRoles.GetHashCode();
-                }                   
-                if (this.GroupMemberships != null)
-                {
-                    hash = hash * 59 + this.GroupMemberships.GetHashCode();
                 }                   
                 if (this.District != null)
                 {
