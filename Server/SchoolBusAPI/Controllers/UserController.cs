@@ -166,53 +166,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns all groups that a user is a member of</remarks>
-        /// <param name="id">id of User to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        [HttpGet]
-        [Route("/api/users/{id}/groups")]
-        [RequiresPermission(Permissions.UserRead)]
-        public virtual IActionResult UsersIdGroupsGet([FromRoute]int id)
-        {
-            return this._service.UsersIdGroupsGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Add to the active set of groups for a user</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="item"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        [HttpPost]
-        [Route("/api/users/{id}/groups")]
-        [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersIdGroupsPost([FromRoute]int id, [FromBody]GroupMembershipViewModel item)
-        {
-            return this._service.UsersIdGroupsPostAsync(id, item);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Updates the active set of groups for a user</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        [HttpPut]
-        [Route("/api/users/{id}/groups")]
-        [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersIdGroupsPut([FromRoute]int id, [FromBody]GroupMembershipViewModel[] items)
-        {
-            return this._service.UsersIdGroupsPutAsync(id, items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Returns a user&#39;s notifications</remarks>
         /// <param name="id">id of User to fetch notifications for</param>
         /// <response code="200">OK</response>
