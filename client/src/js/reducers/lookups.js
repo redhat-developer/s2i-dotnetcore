@@ -1,4 +1,4 @@
-import * as Action from "../actionTypes";
+import * as Action from '../actionTypes';
 
 const DEFAULT_LOOKUPS = {
   cities: {},
@@ -6,7 +6,6 @@ const DEFAULT_LOOKUPS = {
   regions: {},
   schoolDistricts: {},
   serviceAreas: {},
-  groups: {},
   permissions: {},
 
   owners: {},
@@ -33,9 +32,6 @@ export default function lookupsReducer(state = DEFAULT_LOOKUPS, action) {
 
     case Action.UPDATE_SERVICE_AREAS_LOOKUP:
       return { ...state, serviceAreas: action.serviceAreas };
-
-    case Action.UPDATE_GROUPS_LOOKUP:
-      return { ...state, groups: action.groups };
 
     case Action.UPDATE_PERMISSIONS_LOOKUP:
       return { ...state, permissions: action.permissions };

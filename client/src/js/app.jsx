@@ -30,33 +30,29 @@ const App = () => {
   const [loadProgress, setLoadProgress] = useState(5);
 
   useEffect(() => {
-    Api.getGroups()
+    Api.getCurrentUser()
       .then(() => {
-        setLoadProgress(25);
-        // Load current user next.
-        return Api.getCurrentUser().then(() => {
-          setLoadProgress(50);
-          // Check permissions?
+        setLoadProgress(50);
+        // Check permissions?
 
-          // Get lookups.
-          var citiesPromise = Api.getCities();
-          var districtsPromise = Api.getDistricts();
-          var regionsPromise = Api.getRegions();
-          var schoolDistrictsPromise = Api.getSchoolDistricts();
-          var serviceAreasPromise = Api.getServiceAreas();
-          var permissionsPromise = Api.getPermissions();
+        // Get lookups.
+        var citiesPromise = Api.getCities();
+        var districtsPromise = Api.getDistricts();
+        var regionsPromise = Api.getRegions();
+        var schoolDistrictsPromise = Api.getSchoolDistricts();
+        var serviceAreasPromise = Api.getServiceAreas();
+        var permissionsPromise = Api.getPermissions();
 
-          return Promise.all([
-            citiesPromise,
-            districtsPromise,
-            regionsPromise,
-            schoolDistrictsPromise,
-            serviceAreasPromise,
-            permissionsPromise,
-          ]).then(() => {
-            setLoadProgress(75);
-            setLoading(false);
-          });
+        return Promise.all([
+          citiesPromise,
+          districtsPromise,
+          regionsPromise,
+          schoolDistrictsPromise,
+          serviceAreasPromise,
+          permissionsPromise,
+        ]).then(() => {
+          setLoadProgress(75);
+          setLoading(false);
         });
       })
       .catch((err) => {

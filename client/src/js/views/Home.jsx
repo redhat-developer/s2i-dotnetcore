@@ -1,14 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { PageHeader, Row, Col } from "react-bootstrap";
+import { PageHeader, Row, Col } from 'react-bootstrap';
 
-import * as Constant from "../constants";
-import * as Api from "../api.js";
-import Spinner from "../components/Spinner.jsx";
-import logoImage from "../../images/logo.png";
+import * as Constant from '../constants';
+import * as Api from '../api.js';
+import Spinner from '../components/Spinner.jsx';
+import Authorize from '../components/Authorize';
+import logoImage from '../../images/logo.png';
 
 class Home extends React.Component {
   static propTypes = {
@@ -46,44 +47,38 @@ class Home extends React.Component {
             {(() => {
               if (this.state.loading) {
                 return (
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: 'center' }}>
                     <Spinner />
                   </div>
                 );
               } else {
-                if (this.props.currentUser.isInspector) {
-                  return (
+                return (
+                  <Authorize permissions={Constant.PERMISSION_HOME}>
                     <Row id="home-summary">
                       <h2>
-                        You have{" "}
-                        <a
-                          href={`#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_OVERDUE_QUERY}=true`}
-                        >
+                        You have{' '}
+                        <a href={`#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_OVERDUE_QUERY}=true`}>
                           {this.props.currentUser.overdueInspections}
-                        </a>{" "}
+                        </a>{' '}
                         overdue inspections
                       </h2>
                       <h2>
-                        You have{" "}
-                        <a
-                          href={`#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_REINSPECTIONS_QUERY}=true`}
-                        >
+                        You have{' '}
+                        <a href={`#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_REINSPECTIONS_QUERY}=true`}>
                           {this.props.currentUser.reInspections}
-                        </a>{" "}
+                        </a>{' '}
                         re-inspections scheduled
                       </h2>
                       <h2>
-                        You have{" "}
-                        <a
-                          href={`#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_NEXT_MONTH_QUERY}=true`}
-                        >
+                        You have{' '}
+                        <a href={`#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_NEXT_MONTH_QUERY}=true`}>
                           {this.props.currentUser.dueNextMonthInspections}
-                        </a>{" "}
+                        </a>{' '}
                         inspections coming due in the next month
                       </h2>
                     </Row>
-                  );
-                }
+                  </Authorize>
+                );
               }
             })()}
           </Col>

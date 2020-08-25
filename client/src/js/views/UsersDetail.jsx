@@ -33,7 +33,6 @@ import { isBlank, notBlank } from '../utils/string';
 class UsersDetail extends React.Component {
   static propTypes = {
     user: PropTypes.object,
-    groups: PropTypes.object,
     ui: PropTypes.object,
     params: PropTypes.object,
     router: PropTypes.object,
@@ -66,7 +65,6 @@ class UsersDetail extends React.Component {
           id: 0,
           active: true,
           district: { id: 0, name: '' },
-          groupIds: [],
         },
       });
       // Open editor to add new user
@@ -110,16 +108,6 @@ class UsersDetail extends React.Component {
         // Make sure we get the new user's ID
         user.id = this.props.user.id;
       }
-      // Update the user's groups next. This call will
-      // update the user state after completion.
-      Api.updateUserGroups(user).then(() => {
-        if (this.state.isNew) {
-          // Reload the screen using new user id
-          this.props.router.push({
-            pathname: user.path,
-          });
-        }
-      });
     });
     this.closeEditDialog();
   };
@@ -251,9 +239,6 @@ class UsersDetail extends React.Component {
                         </ColDisplay>
                         <ColDisplay md={3} label="District">
                           {user.districtName}
-                        </ColDisplay>
-                        <ColDisplay md={6} label="Groups">
-                          {user.groupNames}
                         </ColDisplay>
                       </Row>
                     </div>
@@ -448,7 +433,6 @@ class ExpireOverlay extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.models.user,
-    groups: state.lookups.groups,
     ui: state.ui.userRoles,
   };
 }

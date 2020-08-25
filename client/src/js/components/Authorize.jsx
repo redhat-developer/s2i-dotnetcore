@@ -16,6 +16,7 @@ const Authorize = ({ children, userPermissions, permissions, matchAll }) => {
 
 Authorize.propTypes = {
   children: PropTypes.element.isRequired,
+  // required permissions can be passed in as a single string or array of strings
   permissions: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
   matchAll: PropTypes.bool,
 };

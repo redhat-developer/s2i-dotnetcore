@@ -21,9 +21,6 @@ function parseUser(user) {
   if (!user.userRoles) {
     user.userRoles = [];
   }
-  if (!user.groupMemberships) {
-    user.groupMemberships = [];
-  }
 
   user.name = lastFirstName(user.surname, user.givenName);
   user.fullName = firstLastName(user.givenName, user.surname);
@@ -32,27 +29,6 @@ function parseUser(user) {
   user.path = `${Constant.USERS_PATHNAME}/${user.id}`;
   user.url = `#/${user.path}`;
   user.historyEntity = History.makeHistoryEntity(History.USER, user);
-
-  user.groupNames = _.chain(user.groupMemberships)
-    .filter((membership) => {
-      return membership.group && membership.group.name;
-    })
-    .map((membership) => {
-      return membership.group.name;
-    })
-    .sortBy((name) => {
-      return name;
-    })
-    .join(', ')
-    .value();
-
-  // This field is formatted to be used in updateUserGroups(), which expects
-  // [ { groupId: 1 }, { groupId: 2 }, ... ]
-  user.groupIds = _.filter(user.groupMemberships, (membership) => {
-    return membership.group && membership.group.id;
-  }).map((membership) => {
-    return { groupId: membership.group.id };
-  });
 
   _.each(user.userRoles, (userRole) => {
     userRole.roleId = userRole.role && userRole.role.id ? userRole.role.id : 0;
@@ -63,12 +39,6 @@ function parseUser(user) {
 
   user.canEdit = true;
   user.canDelete = true;
-
-  var inspectorGroupId = getInspectorGroupId();
-  var isInspector = _.find(user.groupMemberships, (membership) => {
-    return membership.group && membership.group.id === inspectorGroupId;
-  });
-  user.isInspector = isInspector !== undefined;
 }
 
 export function getCurrentUser() {
@@ -174,13 +144,6 @@ export function getUserHistory(userId, params) {
     });
 
     store.dispatch({ type: Action.UPDATE_HISTORY, history: history });
-  });
-}
-
-export function updateUserGroups(user) {
-  return new ApiRequest(`/users/${user.id}/groups`).put(user.groupIds).then(() => {
-    // After updating the user's group, refresh the user state.
-    return getUser(user.id);
   });
 }
 
@@ -891,24 +854,14 @@ export function getServiceAreas() {
   });
 }
 
-export function getGroups() {
-  return new ApiRequest('/groups').get().then((response) => {
-    // Normalize the response
-    var groups = _.fromPairs(response.map((group) => [group.id, group]));
-
-    store.dispatch({ type: Action.UPDATE_GROUPS_LOOKUP, groups: groups });
-  });
-}
-
 export function getInspectors() {
-  var inspectorGroupId = getInspectorGroupId();
-
-  return new ApiRequest(`/groups/${inspectorGroupId}/users`).get().then((response) => {
+  return new ApiRequest(`/users/inspectors`).get().then((response) => {
     // Normalize the response
     var users = _.fromPairs(response.map((user) => [user.id, user]));
 
     // Add display fields
     _.map(users, (user) => {
+      user.isInspector = true;
       parseUser(user);
     });
 
@@ -1016,17 +969,6 @@ export function getVersion() {
   return new ApiRequest('/version').get().then((response) => {
     store.dispatch({ type: Action.UPDATE_VERSION, version: response });
   });
-}
-
-////////////////////
-// Utilities
-////////////////////
-
-function getInspectorGroupId() {
-  var inspectorGroup = _.find(store.getState().lookups.groups, {
-    name: 'Inspector',
-  });
-  return inspectorGroup ? inspectorGroup.id : 0;
 }
 
 ////////////////////
