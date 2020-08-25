@@ -241,8 +241,6 @@ namespace SchoolBusAPI.Services
                 User currentUser = _context.Users
                                         .AsNoTracking()
                                         .Include(x => x.District)
-                                        .Include(x => x.GroupMemberships)
-                                        .ThenInclude(y => y.Group)
                                         .Include(x => x.UserRoles)
                                         .ThenInclude(y => y.Role)
                                         .ThenInclude(z => z.RolePermissions)

@@ -39,19 +39,6 @@ namespace SchoolBusAPI.Controllers
         /// <param name="items"></param>
         /// <response code="201">User created</response>
         [HttpPost]
-        [Route("/api/usergroups/bulk")]
-        [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsergroupsBulkPost([FromBody]GroupMembership[] items)
-        {
-            return this._service.UsergroupsBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">User created</response>
-        [HttpPost]
         [Route("/api/userroles/bulk")]
         [RequiresPermission(Permissions.UserWrite)]
         public virtual IActionResult UserrolesBulkPost([FromBody]UserRole[] items)
