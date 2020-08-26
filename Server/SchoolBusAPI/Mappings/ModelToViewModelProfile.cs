@@ -13,6 +13,7 @@ namespace SchoolBusAPI.Mappings
             CreateMap<User, UserViewModel>();
             CreateMap<User, CurrentUserViewModel>();
             CreateMap<User, InspectorViewModel>();
+            CreateMap<User, UserListViewModel>();
 
             CreateMap<UserRole, UserRoleViewModel>();
 

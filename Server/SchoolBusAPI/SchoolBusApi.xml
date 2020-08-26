@@ -8941,6 +8941,37 @@
             <param name="right"></param>
             <returns></returns>
         </member>
+        <member name="P:SchoolBusAPI.ViewModels.UserListViewModel.Active">
+            <summary>
+            Gets or Sets Active
+            </summary>
+        </member>
+        <member name="P:SchoolBusAPI.ViewModels.UserListViewModel.GivenName">
+            <summary>
+            Gets or Sets GivenName
+            </summary>
+        </member>
+        <member name="P:SchoolBusAPI.ViewModels.UserListViewModel.Surname">
+            <summary>
+            Gets or Sets Surname
+            </summary>
+        </member>
+        <member name="P:SchoolBusAPI.ViewModels.UserListViewModel.Email">
+            <summary>
+            Gets or Sets Email
+            </summary>
+        </member>
+        <member name="P:SchoolBusAPI.ViewModels.UserListViewModel.SmUserId">
+            <summary>
+            Gets or Sets SmUserId
+            </summary>
+        </member>
+        <member name="P:SchoolBusAPI.ViewModels.UserListViewModel.District">
+            <summary>
+            The District to which this User is affliated.
+            </summary>
+            <value>The District to which this User is affliated.</value>
+        </member>
         <member name="T:SchoolBusAPI.ViewModels.UserRoleViewModel">
             <summary>
             
