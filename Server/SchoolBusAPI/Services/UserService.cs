@@ -808,7 +808,7 @@ namespace SchoolBusAPI.Services
             }
 
             // now convert the results to the view model.
-            var result = Mapper.Map<List<UserViewModel>>(data);
+            var result = Mapper.Map<List<UserListViewModel>>(data);
 
             return new ObjectResult(result);
         }
