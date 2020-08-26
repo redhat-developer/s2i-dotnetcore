@@ -1,47 +1,47 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { PageHeader, Well, Alert, Row, Col } from "react-bootstrap";
-import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from "react-bootstrap";
+import { PageHeader, Well, Alert, Row, Col } from 'react-bootstrap';
+import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 
-import _ from "lodash";
-import Moment from "moment";
-import Promise from "bluebird";
+import _ from 'lodash';
+import Moment from 'moment';
+import Promise from 'bluebird';
 
-import * as Action from "../actionTypes";
-import * as Api from "../api";
-import * as Constant from "../constants";
-import store from "../store";
+import * as Action from '../actionTypes';
+import * as Api from '../api';
+import * as Constant from '../constants';
+import store from '../store';
 
-import BadgeLabel from "../components/BadgeLabel.jsx";
-import CheckboxControl from "../components/CheckboxControl.jsx";
-import DateControl from "../components/DateControl.jsx";
-import DeleteButton from "../components/DeleteButton.jsx";
-import DropdownControl from "../components/DropdownControl.jsx";
-import EditButton from "../components/EditButton.jsx";
-import Favourites from "../components/Favourites.jsx";
-import FilterDropdown from "../components/FilterDropdown.jsx";
-import KeySearchControl from "../components/KeySearchControl.jsx";
-import MultiDropdown from "../components/MultiDropdown.jsx";
-import SortTable from "../components/SortTable.jsx";
-import Spinner from "../components/Spinner.jsx";
-import SchoolBusesEmailDialog from "../views/dialogs/SchoolBusesEmailDialog.jsx";
-import EmailSendSuccessDialog from "../views/dialogs/EmailSendSuccessDialog.jsx";
-import EmailSendFailDialog from "../views/dialogs/EmailSendFailDialog.jsx";
-import { formatDateTime, toZuluTime } from "../utils/date";
+import BadgeLabel from '../components/BadgeLabel.jsx';
+import CheckboxControl from '../components/CheckboxControl.jsx';
+import DateControl from '../components/DateControl.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import DropdownControl from '../components/DropdownControl.jsx';
+import EditButton from '../components/EditButton.jsx';
+import Favourites from '../components/Favourites.jsx';
+import FilterDropdown from '../components/FilterDropdown.jsx';
+import KeySearchControl from '../components/KeySearchControl.jsx';
+import MultiDropdown from '../components/MultiDropdown.jsx';
+import SortTable from '../components/SortTable.jsx';
+import Spinner from '../components/Spinner.jsx';
+import SchoolBusesEmailDialog from '../views/dialogs/SchoolBusesEmailDialog.jsx';
+import EmailSendSuccessDialog from '../views/dialogs/EmailSendSuccessDialog.jsx';
+import EmailSendFailDialog from '../views/dialogs/EmailSendFailDialog.jsx';
+import { formatDateTime, toZuluTime } from '../utils/date';
 
-const BEFORE_TODAY = "Before Today";
-const BEFORE_END_OF_MONTH = "Before End of Month";
-const BEFORE_END_OF_QUARTER = "Before End of Quarter";
-const TODAY = "Today";
-const WITHIN_30_DAYS = "Within 30 Days";
-const THIS_MONTH = "This Month";
-const NEXT_MONTH = "Next Month";
-const THIS_QUARTER = "This Quarter";
-const CUSTOM = "Custom";
-const ALL = "All";
+const BEFORE_TODAY = 'Before Today';
+const BEFORE_END_OF_MONTH = 'Before End of Month';
+const BEFORE_END_OF_QUARTER = 'Before End of Quarter';
+const TODAY = 'Today';
+const WITHIN_30_DAYS = 'Within 30 Days';
+const THIS_MONTH = 'This Month';
+const NEXT_MONTH = 'Next Month';
+const THIS_QUARTER = 'This Quarter';
+const CUSTOM = 'Custom';
+const ALL = 'All';
 
 class SchoolBuses extends React.Component {
   static propTypes = {
@@ -60,13 +60,9 @@ class SchoolBuses extends React.Component {
 
   constructor(props) {
     super(props);
-    var defaultSelectedInspectors = props.currentUser.isInspector
-      ? [props.currentUser.id]
-      : [];
+    var defaultSelectedInspectors = props.currentUser.isInspector ? [props.currentUser.id] : [];
     var defaultSelectedDistricts =
-      props.currentUser.isInspector || !props.currentUser.district.id
-        ? []
-        : [props.currentUser.district.id];
+      props.currentUser.isInspector || !props.currentUser.district.id ? [] : [props.currentUser.district.id];
 
     this.state = {
       loading: true,
@@ -74,32 +70,29 @@ class SchoolBuses extends React.Component {
       showEmailSendConfirmDialog: false,
       showEmailSendFailDialog: false,
       email: {},
-      emailSendErrorMessage: "",
+      emailSendErrorMessage: '',
 
-      rightNow: Moment().format("MMMM Do YYYY, h:mm a"),
+      rightNow: Moment().format('MMMM Do YYYY, h:mm a'),
       search: {
-        selectedDistrictsIds:
-          props.search.selectedDistrictsIds || defaultSelectedDistricts,
-        selectedInspectorsIds:
-          props.search.selectedInspectorsIds || defaultSelectedInspectors,
+        selectedDistrictsIds: props.search.selectedDistrictsIds || defaultSelectedDistricts,
+        selectedInspectorsIds: props.search.selectedInspectorsIds || defaultSelectedInspectors,
         selectedCitiesIds: props.search.selectedCitiesIds || [],
-        selectedSchoolDistrictsIds:
-          props.search.selectedSchoolDistrictsIds || [],
+        selectedSchoolDistrictsIds: props.search.selectedSchoolDistrictsIds || [],
         ownerId: props.search.ownerId || 0,
-        ownerName: props.search.ownerName || "Owner",
+        ownerName: props.search.ownerName || 'Owner',
         keySearchField: props.search.keySearchField,
         keySearchText: props.search.keySearchText,
         keySearchParams: props.search.keySearchParams,
         nextInspection: props.search.nextInspection || WITHIN_30_DAYS,
-        startDate: props.search.startDate || "",
-        endDate: props.search.endDate || "",
+        startDate: props.search.startDate || '',
+        endDate: props.search.endDate || '',
         hideInactive: props.search.hideInactive !== false,
         justReInspections: props.search.justReInspections === true,
         loaded: props.search.loaded === true,
       },
 
       ui: {
-        sortField: props.ui.sortField || "ownerName",
+        sortField: props.ui.sortField || 'ownerName',
         sortDesc: props.ui.sortDesc === true,
       },
     };
@@ -114,20 +107,18 @@ class SchoolBuses extends React.Component {
     var searchParams = {
       includeInactive: !this.state.search.hideInactive,
       onlyReInspections: this.state.search.justReInspections,
-      owner: this.state.search.ownerId || "",
+      owner: this.state.search.ownerId || '',
     };
 
     if (
       this.state.search.selectedDistrictsIds.length > 0 &&
-      this.state.search.selectedDistrictsIds.length !==
-        _.size(this.props.districts)
+      this.state.search.selectedDistrictsIds.length !== _.size(this.props.districts)
     ) {
       searchParams.districts = this.state.search.selectedDistrictsIds;
     }
     if (
       this.state.search.selectedInspectorsIds.length > 0 &&
-      this.state.search.selectedInspectorsIds.length !==
-        _.size(this.props.inspectors)
+      this.state.search.selectedInspectorsIds.length !== _.size(this.props.inspectors)
     ) {
       searchParams.inspectors = this.state.search.selectedInspectorsIds;
     }
@@ -139,8 +130,7 @@ class SchoolBuses extends React.Component {
     }
     if (
       this.state.search.selectedSchoolDistrictsIds.length > 0 &&
-      this.state.search.selectedSchoolDistrictsIds.length !==
-        _.size(this.props.schoolDistricts)
+      this.state.search.selectedSchoolDistrictsIds.length !== _.size(this.props.schoolDistricts)
     ) {
       searchParams.schooldistricts = this.state.search.selectedSchoolDistrictsIds;
     }
@@ -151,32 +141,33 @@ class SchoolBuses extends React.Component {
 
     switch (this.state.search.nextInspection) {
       case BEFORE_TODAY:
-        endDate = today.subtract(1, "day");
+        endDate = today.subtract(1, 'day');
         break;
       case BEFORE_END_OF_MONTH:
-        endDate = today.endOf("month");
+        endDate = today.endOf('month');
         break;
       case BEFORE_END_OF_QUARTER:
-        endDate = today.endOf("quarter");
+        endDate = today.endOf('quarter');
         break;
       case TODAY:
         startDate = today;
         endDate = today;
         break;
       case WITHIN_30_DAYS:
-        endDate = today.add(30, "day");
+        startDate = today;
+        endDate = Moment().add(30, 'day');
         break;
       case THIS_MONTH:
-        startDate = today.startOf("month");
-        endDate = Moment(startDate).endOf("month");
+        startDate = today.startOf('month');
+        endDate = Moment(startDate).endOf('month');
         break;
       case NEXT_MONTH:
-        startDate = today.add(1, "month").startOf("month");
-        endDate = Moment(startDate).endOf("month");
+        startDate = today.add(1, 'month').startOf('month');
+        endDate = Moment(startDate).endOf('month');
         break;
       case THIS_QUARTER:
-        startDate = today.startOf("quarter");
-        endDate = Moment(startDate).endOf("quarter");
+        startDate = today.startOf('quarter');
+        endDate = Moment(startDate).endOf('quarter');
         break;
       case CUSTOM:
         startDate = Moment(this.state.search.startDate);
@@ -188,10 +179,10 @@ class SchoolBuses extends React.Component {
     }
 
     if (startDate && startDate.isValid()) {
-      searchParams.startDate = toZuluTime(startDate.startOf("day"));
+      searchParams.startDate = toZuluTime(startDate.startOf('day'));
     }
     if (endDate && endDate.isValid()) {
-      searchParams.endDate = toZuluTime(endDate.startOf("day"));
+      searchParams.endDate = toZuluTime(endDate.endOf('day'));
     }
 
     return searchParams;
@@ -202,7 +193,7 @@ class SchoolBuses extends React.Component {
 
     var inspectorsPromise = Api.getInspectors();
     var ownersPromise = Api.getOwners();
-    var favouritesPromise = Api.getFavourites("schoolBus");
+    var favouritesPromise = Api.getFavourites('schoolBus');
 
     Promise.all([inspectorsPromise, ownersPromise, favouritesPromise])
       .then(() => {
@@ -210,46 +201,34 @@ class SchoolBuses extends React.Component {
           // Check for specific school bus query
           var state = {
             selectedDistrictsIds: [],
-            selectedInspectorsIds: this.props.currentUser.isInspector
-              ? [this.props.currentUser.id]
-              : [],
+            selectedInspectorsIds: this.props.currentUser.isInspector ? [this.props.currentUser.id] : [],
             selectedCitiesIds: [],
             selectedSchoolDistrictsIds: [],
             ownerId: 0,
-            ownerName: "Owner",
+            ownerName: 'Owner',
             keySearchField: this.props.search.keySearchField,
-            keySearchText: "",
+            keySearchText: '',
             keySearchParams: null,
             nextInspection: WITHIN_30_DAYS,
-            startDate: "",
-            endDate: "",
+            startDate: '',
+            endDate: '',
             hideInactive: true,
             justReInspections: false,
           };
 
           if (this.props.location.query[Constant.SCHOOL_BUS_OWNER_QUERY]) {
-            var ownerId = this.props.location.query[
-              Constant.SCHOOL_BUS_OWNER_QUERY
-            ];
+            var ownerId = this.props.location.query[Constant.SCHOOL_BUS_OWNER_QUERY];
             state.ownerId = parseInt(ownerId, 10);
-            state.ownerName = this.props.owners[ownerId]
-              ? this.props.owners[ownerId].name
-              : "";
+            state.ownerName = this.props.owners[ownerId] ? this.props.owners[ownerId].name : '';
             state.nextInspection = ALL;
             state.selectedInspectorsIds = [];
-          } else if (
-            this.props.location.query[Constant.SCHOOL_BUS_OVERDUE_QUERY]
-          ) {
+          } else if (this.props.location.query[Constant.SCHOOL_BUS_OVERDUE_QUERY]) {
             state.nextInspection = BEFORE_TODAY;
-          } else if (
-            this.props.location.query[Constant.SCHOOL_BUS_REINSPECTIONS_QUERY]
-          ) {
+          } else if (this.props.location.query[Constant.SCHOOL_BUS_REINSPECTIONS_QUERY]) {
             state.nextInspection = ALL;
             state.justReInspections = true;
-          } else if (
-            this.props.location.query[Constant.SCHOOL_BUS_NEXT_MONTH_QUERY]
-          ) {
-            state.nextInspection = NEXT_MONTH;
+          } else if (this.props.location.query[Constant.SCHOOL_BUS_WITHIN_30_DAYS_QUERY]) {
+            state.nextInspection = WITHIN_30_DAYS;
           }
 
           this.updateSearchState(state, this.fetch);
@@ -282,18 +261,15 @@ class SchoolBuses extends React.Component {
     // Initializing the KeySearchControl causes a state change which we want to catch here by checking
     // state.keySearchOnMount; otherwise this will flag the search state as loaded before it actually is.
     var loaded = state.keySearchOnMount ? {} : { loaded: true };
-    this.setState(
-      { search: { ...this.state.search, ...state, ...loaded } },
-      () => {
-        store.dispatch({
-          type: Action.UPDATE_BUSES_SEARCH,
-          schoolBuses: this.state.search,
-        });
-        if (callback) {
-          callback();
-        }
+    this.setState({ search: { ...this.state.search, ...state, ...loaded } }, () => {
+      store.dispatch({
+        type: Action.UPDATE_BUSES_SEARCH,
+        schoolBuses: this.state.search,
+      });
+      if (callback) {
+        callback();
       }
-    );
+    });
   };
 
   updateUIState = (state, callback) => {
@@ -367,24 +343,18 @@ class SchoolBuses extends React.Component {
   };
 
   openEmailSendFail = (email, response) => {
-    if (
-      response === undefined ||
-      response === null ||
-      response.mailSent === undefined ||
-      response.mailSent === null
-    ) {
+    if (response === undefined || response === null || response.mailSent === undefined || response.mailSent === null) {
       this.setState({
         //if not getting response from server, customize the error message
         email: email,
-        emailSendErrorMessage:
-          "An error occurred sending email. Server response timeout. Please try again later.",
+        emailSendErrorMessage: 'An error occurred sending email. Server response timeout. Please try again later.',
         showEmailSendFailDialog: true,
       });
     } else {
       //get error message from server, use its error message
       this.setState({
         email: email,
-        emailSendErrorMessage: response.errorInfo + " Please try again later.",
+        emailSendErrorMessage: response.errorInfo + ' Please try again later.',
         showEmailSendFailDialog: true,
       });
     }
@@ -404,41 +374,37 @@ class SchoolBuses extends React.Component {
         }
       }
     }
-    print = print.join(", ");
+    print = print.join(', ');
     return print.toString();
   };
 
   printSelectedOwner = (allOwners, ownerId) => {
-    var owner = "";
+    var owner = '';
     if (ownerId !== null) {
-      var index = _.findIndex(allOwners, ["id", ownerId]);
+      var index = _.findIndex(allOwners, ['id', ownerId]);
       owner = allOwners[index].name;
     }
     return owner;
   };
 
   print = () => {
-    this.setState({ rightNow: Moment().format("MMMM Do YYYY, h:mm a") }, () => {
+    this.setState({ rightNow: Moment().format('MMMM Do YYYY, h:mm a') }, () => {
       window.print();
     });
   };
 
   render() {
-    var districts = _.sortBy(this.props.districts, "name");
-    var inspectors = _.sortBy(this.props.inspectors, "name");
-    var cities = _.sortBy(this.props.cities, "name");
-    var schoolDistricts = _.sortBy(this.props.schoolDistricts, "name");
-    var owners = _.sortBy(this.props.owners, "name");
+    var districts = _.sortBy(this.props.districts, 'name');
+    var inspectors = _.sortBy(this.props.inspectors, 'name');
+    var cities = _.sortBy(this.props.cities, 'name');
+    var schoolDistricts = _.sortBy(this.props.schoolDistricts, 'name');
+    var owners = _.sortBy(this.props.owners, 'name');
 
-    var numBuses = this.state.loading
-      ? "..."
-      : Object.keys(this.props.schoolBuses).length;
+    var numBuses = this.state.loading ? '...' : Object.keys(this.props.schoolBuses).length;
 
     return (
       <div id="school-buses-list">
-        <PageHeader id="pageHeader-print">
-          School Bus Inspection Report: {this.state.rightNow}
-        </PageHeader>
+        <PageHeader id="pageHeader-print">School Bus Inspection Report: {this.state.rightNow}</PageHeader>
         <PageHeader id="subPageHeader-print">
           School Buses ({numBuses})
           <ButtonGroup id="email-print-buttonGroup">
@@ -577,11 +543,7 @@ class SchoolBuses extends React.Component {
                 />
               </Row>
               <Row id="school-buses-search">
-                <Button
-                  id="search-button"
-                  bsStyle="primary"
-                  onClick={this.fetch}
-                >
+                <Button id="search-button" bsStyle="primary" onClick={this.fetch}>
                   Search
                 </Button>
               </Row>
@@ -599,26 +561,18 @@ class SchoolBuses extends React.Component {
             </Col>
             {(() => {
               if (this.state.search.selectedDistrictsIds.length !== 0) {
-                if (
-                  this.state.search.selectedDistrictsIds.length ===
-                  districts.length
-                ) {
+                if (this.state.search.selectedDistrictsIds.length === districts.length) {
                   return (
                     <Col xs={6}>
-                      <span style={{ fontWeight: "bold" }}>Districts: </span>
+                      <span style={{ fontWeight: 'bold' }}>Districts: </span>
                       <span>(All districts) </span>
                     </Col>
                   );
                 } else {
                   return (
                     <Col xs={6}>
-                      <span style={{ fontWeight: "bold" }}>Districts: </span>
-                      <span>
-                        {this.printSelectedDropdownItems(
-                          districts,
-                          this.state.search.selectedDistrictsIds
-                        )}
-                      </span>
+                      <span style={{ fontWeight: 'bold' }}>Districts: </span>
+                      <span>{this.printSelectedDropdownItems(districts, this.state.search.selectedDistrictsIds)}</span>
                     </Col>
                   );
                 }
@@ -626,29 +580,19 @@ class SchoolBuses extends React.Component {
             })()}
             {(() => {
               if (this.state.search.selectedSchoolDistrictsIds.length !== 0) {
-                if (
-                  this.state.search.selectedSchoolDistrictsIds.length ===
-                  schoolDistricts.length
-                ) {
+                if (this.state.search.selectedSchoolDistrictsIds.length === schoolDistricts.length) {
                   return (
                     <Col xs={6}>
-                      <span style={{ fontWeight: "bold" }}>
-                        School Districts:{" "}
-                      </span>
+                      <span style={{ fontWeight: 'bold' }}>School Districts: </span>
                       <span>(All school districts) </span>
                     </Col>
                   );
                 } else {
                   return (
                     <Col xs={6}>
-                      <span style={{ fontWeight: "bold" }}>
-                        School Districts:{" "}
-                      </span>
+                      <span style={{ fontWeight: 'bold' }}>School Districts: </span>
                       <span>
-                        {this.printSelectedDropdownItems(
-                          schoolDistricts,
-                          this.state.search.selectedSchoolDistrictsIds
-                        )}
+                        {this.printSelectedDropdownItems(schoolDistricts, this.state.search.selectedSchoolDistrictsIds)}
                       </span>
                     </Col>
                   );
@@ -657,25 +601,18 @@ class SchoolBuses extends React.Component {
             })()}
             {(() => {
               if (this.state.search.selectedCitiesIds.length !== 0) {
-                if (
-                  this.state.search.selectedCitiesIds.length === cities.length
-                ) {
+                if (this.state.search.selectedCitiesIds.length === cities.length) {
                   return (
                     <Col xs={6}>
-                      <span style={{ fontWeight: "bold" }}>Cities: </span>
+                      <span style={{ fontWeight: 'bold' }}>Cities: </span>
                       <span>(All cities) </span>
                     </Col>
                   );
                 } else {
                   return (
                     <Col xs={6}>
-                      <span style={{ fontWeight: "bold" }}>Cities: </span>
-                      <span>
-                        {this.printSelectedDropdownItems(
-                          cities,
-                          this.state.search.selectedCitiesIds
-                        )}{" "}
-                      </span>
+                      <span style={{ fontWeight: 'bold' }}>Cities: </span>
+                      <span>{this.printSelectedDropdownItems(cities, this.state.search.selectedCitiesIds)} </span>
                     </Col>
                   );
                 }
@@ -685,19 +622,14 @@ class SchoolBuses extends React.Component {
               if (this.state.search.ownerId !== 0) {
                 return (
                   <Col xs={6}>
-                    <span style={{ fontWeight: "bold" }}>Owners: </span>
-                    <span>
-                      {this.printSelectedOwner(
-                        owners,
-                        this.state.search.ownerId
-                      )}{" "}
-                    </span>
+                    <span style={{ fontWeight: 'bold' }}>Owners: </span>
+                    <span>{this.printSelectedOwner(owners, this.state.search.ownerId)} </span>
                   </Col>
                 );
               } else {
                 return (
                   <Col xs={6}>
-                    <span style={{ fontWeight: "bold" }}>Owners: </span>
+                    <span style={{ fontWeight: 'bold' }}>Owners: </span>
                     <span>(All owners) </span>
                   </Col>
                 );
@@ -705,25 +637,19 @@ class SchoolBuses extends React.Component {
             })()}
             {(() => {
               if (this.state.search.selectedInspectorsIds.length !== 0) {
-                if (
-                  this.state.search.selectedInspectorsIds.length ===
-                  inspectors.length
-                ) {
+                if (this.state.search.selectedInspectorsIds.length === inspectors.length) {
                   return (
                     <Col xs={6}>
-                      <span style={{ fontWeight: "bold" }}>Inspectors: </span>
+                      <span style={{ fontWeight: 'bold' }}>Inspectors: </span>
                       <span>(All inspectors) </span>
                     </Col>
                   );
                 } else {
                   return (
                     <Col xs={6}>
-                      <span style={{ fontWeight: "bold" }}>Inspectors: </span>
+                      <span style={{ fontWeight: 'bold' }}>Inspectors: </span>
                       <span>
-                        {this.printSelectedDropdownItems(
-                          inspectors,
-                          this.state.search.selectedInspectorsIds
-                        )}{" "}
+                        {this.printSelectedDropdownItems(inspectors, this.state.search.selectedInspectorsIds)}{' '}
                       </span>
                     </Col>
                   );
@@ -731,12 +657,10 @@ class SchoolBuses extends React.Component {
               }
             })()}
             {(() => {
-              if (this.state.search.keySearchText !== "") {
+              if (this.state.search.keySearchText !== '') {
                 return (
                   <Col xs={6}>
-                    <span style={{ fontWeight: "bold" }}>
-                      {this.state.search.keySearchField}:{" "}
-                    </span>
+                    <span style={{ fontWeight: 'bold' }}>{this.state.search.keySearchField}: </span>
                     <span>{this.state.search.keySearchText} </span>
                   </Col>
                 );
@@ -745,23 +669,17 @@ class SchoolBuses extends React.Component {
             <Col xs={12}>
               {this.state.search.nextInspection === CUSTOM ? (
                 <span>
-                  <span style={{ fontWeight: "bold" }}>From: </span>
-                  {this.state.search.startDate}{" "}
-                  <span style={{ fontWeight: "bold" }}>To: </span>
-                  {this.state.search.endDate}{" "}
+                  <span style={{ fontWeight: 'bold' }}>From: </span>
+                  {this.state.search.startDate} <span style={{ fontWeight: 'bold' }}>To: </span>
+                  {this.state.search.endDate}{' '}
                 </span>
               ) : (
-                <span style={{ fontWeight: "bold" }}>
-                  {this.state.search.nextInspection}{" "}
-                </span>
+                <span style={{ fontWeight: 'bold' }}>{this.state.search.nextInspection} </span>
               )}
               <CheckboxControl inline checked={this.state.search.hideInactive}>
                 Hide Inactive
               </CheckboxControl>
-              <CheckboxControl
-                inline
-                checked={this.state.search.justReInspections}
-              >
+              <CheckboxControl inline checked={this.state.search.justReInspections}>
                 Re-Inspections
               </CheckboxControl>
             </Col>
@@ -771,7 +689,7 @@ class SchoolBuses extends React.Component {
         {(() => {
           if (this.state.loading) {
             return (
-              <div style={{ textAlign: "center" }}>
+              <div style={{ textAlign: 'center' }}>
                 <Spinner />
               </div>
             );
@@ -780,10 +698,7 @@ class SchoolBuses extends React.Component {
             return <Alert bsStyle="success">No school buses</Alert>;
           }
 
-          var schoolBuses = _.sortBy(
-            this.props.schoolBuses,
-            this.state.ui.sortField
-          );
+          var schoolBuses = _.sortBy(this.props.schoolBuses, this.state.ui.sortField);
           if (this.state.ui.sortDesc) {
             _.reverse(schoolBuses);
           }
@@ -794,64 +709,44 @@ class SchoolBuses extends React.Component {
               sortDesc={this.state.ui.sortDesc}
               onSort={this.updateUIState}
               headers={[
-                { field: "ownerName", title: "Owner" },
-                { field: "districtName", title: "District" },
-                { field: "homeTerminalCityPostal", title: "Home Terminal" },
-                { field: "icbcRegistrationNumber", title: "Registration" },
-                { field: "unitNumber", title: "Unit Number" },
-                { field: "permitNumber", title: "Permit" },
-                { field: "nextInspectionDateSort", title: "Next Inspection" },
-                { field: "inspectorName", title: "Inspector" },
-                { field: "details", noSort: true, title: "Details" },
+                { field: 'ownerName', title: 'Owner' },
+                { field: 'districtName', title: 'District' },
+                { field: 'homeTerminalCityPostal', title: 'Home Terminal' },
+                { field: 'icbcRegistrationNumber', title: 'Registration' },
+                { field: 'unitNumber', title: 'Unit Number' },
+                { field: 'permitNumber', title: 'Permit' },
+                { field: 'nextInspectionDateSort', title: 'Next Inspection' },
+                { field: 'inspectorName', title: 'Inspector' },
+                { field: 'details', noSort: true, title: 'Details' },
               ]}
             >
               {_.map(schoolBuses, (bus) => {
                 return (
-                  <tr key={bus.id} className={bus.isActive ? null : "info"}>
+                  <tr key={bus.id} className={bus.isActive ? null : 'info'}>
                     <td>
                       <a href={bus.ownerURL}>{bus.ownerName}</a>
                     </td>
                     <td>{bus.districtName}</td>
                     <td>{bus.homeTerminalCityPostal}</td>
                     <td>
-                      {bus.canView ? (
-                        <a href={bus.url}>{bus.icbcRegistrationNumber}</a>
-                      ) : (
-                        bus.icbcRegistrationNumber
-                      )}
+                      {bus.canView ? <a href={bus.url}>{bus.icbcRegistrationNumber}</a> : bus.icbcRegistrationNumber}
                     </td>
                     <td>{bus.unitNumber}</td>
                     <td>{bus.permitNumber}</td>
                     <td>
                       <span id="tdNextInspection">
-                        {formatDateTime(
-                          bus.nextInspectionDate,
-                          Constant.DATE_SHORT_MONTH_DAY_YEAR
-                        )}
+                        {formatDateTime(bus.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                       </span>
                       <span id="tdBadgeLabels">
-                        {bus.isReinspection ? (
-                          <BadgeLabel bsStyle="info">R</BadgeLabel>
-                        ) : null}
-                        {bus.isOverdue ? (
-                          <BadgeLabel bsStyle="danger">!</BadgeLabel>
-                        ) : null}
+                        {bus.isReinspection ? <BadgeLabel bsStyle="info">R</BadgeLabel> : null}
+                        {bus.isOverdue ? <BadgeLabel bsStyle="danger">!</BadgeLabel> : null}
                       </span>
                     </td>
                     <td>{bus.inspectorName}</td>
-                    <td style={{ textAlign: "right" }}>
+                    <td style={{ textAlign: 'right' }}>
                       <ButtonGroup id="view-edit-buttonGroup">
-                        <DeleteButton
-                          name="Bus"
-                          hide={!bus.canDelete}
-                          onConfirm={this.delete.bind(this, bus)}
-                        />
-                        <EditButton
-                          name="Bus"
-                          hide={!bus.canView}
-                          view
-                          pathname={bus.path}
-                        />
+                        <DeleteButton name="Bus" hide={!bus.canDelete} onConfirm={this.delete.bind(this, bus)} />
+                        <EditButton name="Bus" hide={!bus.canView} view pathname={bus.path} />
                       </ButtonGroup>
                     </td>
                   </tr>
@@ -870,10 +765,7 @@ class SchoolBuses extends React.Component {
           />
         )}
         {this.state.showEmailSendConfirmDialog && (
-          <EmailSendSuccessDialog
-            show={this.state.showEmailSendConfirmDialog}
-            onConfirm={this.closeEmailSendConfirm}
-          />
+          <EmailSendSuccessDialog show={this.state.showEmailSendConfirmDialog} onConfirm={this.closeEmailSendConfirm} />
         )}
         {this.state.showEmailSendFailDialog && (
           <EmailSendFailDialog

@@ -71,10 +71,10 @@ class Home extends React.Component {
                       </h2>
                       <h2>
                         You have{' '}
-                        <a href={`#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_NEXT_MONTH_QUERY}=true`}>
-                          {this.props.currentUser.dueNextMonthInspections}
+                        <a href={`#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_WITHIN_30_DAYS_QUERY}=true`}>
+                          {this.props.currentUser.dueWithin30DaysInspections}
                         </a>{' '}
-                        inspections coming due in the next month
+                        inspections coming due within 30 days
                       </h2>
                     </Row>
                   </Authorize>

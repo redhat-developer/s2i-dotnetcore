@@ -15,7 +15,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SchoolBusAPI.Mappings;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 
@@ -253,39 +252,25 @@ namespace SchoolBusAPI.Services
                 result.GivenName = User.FindFirst(ClaimTypes.GivenName).Value;
                 result.Surname = User.FindFirst(ClaimTypes.Surname).Value;
 
+                DateTime today = DateTime.UtcNow.Date;
+                DateTime dateTo = today.AddDays(31).AddSeconds(-1);
+
                 int overdue = _context.SchoolBuss
+                    .Count(x => x.Inspector.Id == id && x.NextInspectionDate < today && x.Status.ToLower() == "active");
 
-                .Where(x => x.Inspector.Id == id && x.NextInspectionDate < DateTime.Today && x.Status.ToLower() == "active")
-                .Select(x => x)
-                .Count();
-
-                DateTime nextmonth = DateTime.UtcNow.AddMonths(1);//nextMonth
-                DateTime dayOne = new DateTime(nextmonth.Year, nextmonth.Month, 1);//first day of next month
-                DateTime lastDay = dayOne.AddMonths(1).AddSeconds(-1);//last day of next month
-                int nextMonth = _context.SchoolBuss
-                    .Where(x => x.Inspector.Id == id && x.NextInspectionDate >= dayOne && x.NextInspectionDate <= lastDay && x.Status.ToLower() == "active")
-                    .Select(x => x)
-                    .Count();
+                int within30days = _context.SchoolBuss
+                    .Count(x => x.Inspector.Id == id && x.NextInspectionDate >= today && x.NextInspectionDate <= dateTo && x.Status.ToLower() == "active");
 
                 int scheduledInspections = _context.SchoolBuss
-                    .Where(x => x.Inspector.Id == id && x.NextInspectionDate >= DateTime.UtcNow && x.Status.ToLower() == "active")
-                    .Select(x => x)
-                    .Count();
+                    .Count(x => x.Inspector.Id == id && x.NextInspectionDate >= today && x.Status.ToLower() == "active");
 
                 int reInspections = _context.SchoolBuss
-                    .Where(x => x.Inspector.Id == id)
-                    .Where(x => x.NextInspectionTypeCode == "Re-Inspection" && x.Status.ToLower() == "active")
-                    .Select(x => x)
-                    .Count();
+                    .Count(x => x.Inspector.Id == id && x.NextInspectionTypeCode.ToLower() == "re-inspection" && x.Status.ToLower() == "active");
 
                 result.OverdueInspections = overdue;
-                result.DueNextMonthInspections = nextMonth;
+                result.DueWithin30DaysInspections = within30days;
                 result.ScheduledInspections = scheduledInspections;
                 result.ReInspections = reInspections;
-
-                //Added By Simon Di to screen out all the ineffective roles (expired)
-                var thisUserRoles = result.UserRoles.Where(x => (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
-                result.UserRoles = thisUserRoles.ToList();
 
                 result.Permissions =
                     currentUser
