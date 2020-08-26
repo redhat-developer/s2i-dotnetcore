@@ -980,14 +980,15 @@ namespace SchoolBusAPI.Services
 
                 if (startDate != null)
                 {
-                    data = data.Where(x => x.NextInspectionDate >= startDate);
+                    var dateFrom = ((DateTime)startDate).Date;
+                    data = data.Where(x => x.NextInspectionDate >= dateFrom);
                 }
 
                 if (endDate != null)
                 {
-                    data = data.Where(x => x.NextInspectionDate <= endDate);
+                    var dateTo = ((DateTime)endDate).Date.AddDays(1).AddSeconds(-1);
+                    data = data.Where(x => x.NextInspectionDate <= dateTo);
                 }
-
             }
 
             var result = data.ToList();

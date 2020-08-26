@@ -92,8 +92,8 @@ namespace SchoolBusAPI.ViewModels
         /// <summary>
         /// Gets or Sets DueNextMonthInspections
         /// </summary>
-        [DataMember(Name="dueNextMonthInspections")]
-        public int? DueNextMonthInspections { get; set; }
+        [DataMember(Name="dueWithin30DaysInspections")]
+        public int? DueWithin30DaysInspections { get; set; }
 
         /// <summary>
         /// Gets or Sets ReInspections
@@ -195,9 +195,9 @@ namespace SchoolBusAPI.ViewModels
                     this.ScheduledInspections.Equals(other.ScheduledInspections)
                 ) &&                 
                 (
-                    this.DueNextMonthInspections == other.DueNextMonthInspections ||
-                    this.DueNextMonthInspections != null &&
-                    this.DueNextMonthInspections.Equals(other.DueNextMonthInspections)
+                    this.DueWithin30DaysInspections == other.DueWithin30DaysInspections ||
+                    this.DueWithin30DaysInspections != null &&
+                    this.DueWithin30DaysInspections.Equals(other.DueWithin30DaysInspections)
                 ) &&                 
                 (
                     this.ReInspections == other.ReInspections ||
@@ -259,9 +259,9 @@ namespace SchoolBusAPI.ViewModels
                 {
                     hash = hash * 59 + this.ScheduledInspections.GetHashCode();
                 }
-                if (this.DueNextMonthInspections != null)
+                if (this.DueWithin30DaysInspections != null)
                 {
-                    hash = hash * 59 + this.DueNextMonthInspections.GetHashCode();
+                    hash = hash * 59 + this.DueWithin30DaysInspections.GetHashCode();
                 }
                 if (this.ReInspections != null)
                 {

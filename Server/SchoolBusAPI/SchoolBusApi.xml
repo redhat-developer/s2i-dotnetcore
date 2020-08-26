@@ -7872,7 +7872,7 @@
             Gets or Sets ScheduledInspections
             </summary>
         </member>
-        <member name="P:SchoolBusAPI.ViewModels.CurrentUserViewModel.DueNextMonthInspections">
+        <member name="P:SchoolBusAPI.ViewModels.CurrentUserViewModel.DueWithin30DaysInspections">
             <summary>
             Gets or Sets DueNextMonthInspections
             </summary>
