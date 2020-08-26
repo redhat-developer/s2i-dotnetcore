@@ -1,3 +1,4 @@
 #!/usr/bin/sh
 
-scl enable ${ENABLED_COLLECTIONS} -- dotnet "$@"
+source ${CONTAINER_SCRIPTS_PATH}/etc/scl_enable
+exec dotnet "$@"
