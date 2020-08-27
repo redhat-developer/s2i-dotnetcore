@@ -17,11 +17,13 @@ import * as Constant from '../constants';
 import store from '../store';
 
 import FormInputControl from '../components/FormInputControl.jsx';
+import DateControl from '../components/DateControl.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 
 import { isBlank } from '../utils/string';
+import { formatDateTime } from '../utils/date';
 import { hasAllPermissions } from '../utils/permissions';
 
 class RolesDetail extends React.Component {
@@ -39,9 +41,11 @@ class RolesDetail extends React.Component {
 
     name: '',
     description: '',
+    expiryDate: '',
 
     nameError: '',
     descriptionError: '',
+    expiryDateError: '',
 
     selectedPermissionIds: [],
 
@@ -72,9 +76,11 @@ class RolesDetail extends React.Component {
         var selectedPermissionIds = _.map(this.props.rolePermissions, (permission) => {
           return permission.id;
         });
+
         this.setState({
           name: this.props.role.name,
           description: this.props.role.description,
+          expiryDate: formatDateTime(this.props.role.expiryDate),
           selectedPermissionIds: selectedPermissionIds,
         });
       })
@@ -123,6 +129,9 @@ class RolesDetail extends React.Component {
       return true;
     }
     if (this.state.description !== this.props.role.description) {
+      return true;
+    }
+    if (this.state.expiryDate !== this.props.role.expiryDate) {
       return true;
     }
 
@@ -177,6 +186,7 @@ class RolesDetail extends React.Component {
             ...{
               name: this.state.name,
               description: this.state.description,
+              expiryDate: this.state.expiryDate,
             },
           }).then(() => {
             this.savePermissions();
@@ -263,7 +273,7 @@ class RolesDetail extends React.Component {
                             <HelpBlock>{this.state.nameError}</HelpBlock>
                           </FormGroup>
                         </Col>
-                        <Col md={9}>
+                        <Col md={6}>
                           <FormGroup
                             controlId="description"
                             validationState={this.state.descriptionError ? 'error' : null}
@@ -278,6 +288,23 @@ class RolesDetail extends React.Component {
                               readOnly={readOnly}
                             />
                             <HelpBlock>{this.state.descriptionError}</HelpBlock>
+                          </FormGroup>
+                        </Col>
+                        <Col md={3}>
+                          <FormGroup
+                            controlId="expiryDate"
+                            validationState={this.state.expiryDateError ? 'error' : null}
+                          >
+                            <ControlLabel>Expiry Date</ControlLabel>
+                            <DateControl
+                              id="expiryDate"
+                              date={this.state.expiryDate}
+                              updateState={this.updateState}
+                              placeholder="mm/dd/yyyy"
+                              title="Expiry Date"
+                              showClear={true}
+                            />
+                            <HelpBlock>{this.state.expiryDateError}</HelpBlock>
                           </FormGroup>
                         </Col>
                       </Row>

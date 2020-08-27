@@ -327,19 +327,16 @@ class UsersDetail extends React.Component {
                             </td>
                             <td style={{ textAlign: 'right' }}>
                               <Authorize permissions={Constant.PERMISSION_USER_W}>
-                                {userRole.expiryDate ? null : (
-                                  <OverlayTrigger
-                                    trigger="click"
-                                    placement="left"
-                                    rootClose
-                                    overlay={<ExpireOverlay userRole={userRole} onSave={this.updateUserRole} />}
-                                  >
-                                    <Button title="Expire User Role" bsSize="xsmall">
-                                      <Glyphicon glyph="pencil" />
-                                      &nbsp;Expire
-                                    </Button>
-                                  </OverlayTrigger>
-                                )}
+                                <OverlayTrigger
+                                  trigger="click"
+                                  placement="left"
+                                  rootClose
+                                  overlay={<ExpireOverlay userRole={userRole} onSave={this.updateUserRole} />}
+                                >
+                                  <Button title="Expire User Role" bsSize="xsmall">
+                                    <Glyphicon glyph="pencil" /> Edit
+                                  </Button>
+                                </OverlayTrigger>
                               </Authorize>
                             </td>
                           </tr>
@@ -383,6 +380,14 @@ class ExpireOverlay extends React.Component {
     expiryDateError: '',
   };
 
+  componentDidMount() {
+    const userRole = this.props.userRole;
+
+    if (userRole.expiryDate !== null) {
+      this.setState({ expiryDate: formatDateTime(userRole.expiryDate) });
+    }
+  }
+
   updateState = (state, callback) => {
     this.setState(state, callback);
   };
@@ -390,9 +395,9 @@ class ExpireOverlay extends React.Component {
   saveUserRole = () => {
     this.setState({ expiryDateError: false });
 
-    if (isBlank(this.state.expiryDate)) {
+    if (this.props.userRole.expiryDate === null && isBlank(this.state.expiryDate)) {
       this.setState({ expiryDateError: 'Expiry date is required' });
-    } else if (!isValidDate(this.state.expiryDate)) {
+    } else if (this.props.userRole.expiryDate === null && !isValidDate(this.state.expiryDate)) {
       this.setState({ expiryDateError: 'Expiry date not valid' });
     } else {
       this.props.onSave({
@@ -418,6 +423,7 @@ class ExpireOverlay extends React.Component {
               updateState={this.updateState}
               placeholder="mm/dd/yyyy"
               title="Expiry Date"
+              showClear={true}
             />
             <HelpBlock>{this.state.expiryDateError}</HelpBlock>
           </FormGroup>

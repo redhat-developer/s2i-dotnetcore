@@ -100,13 +100,15 @@
 }
 
 #users-role-popover {
+  max-width: unset;
+
   .date-control {
     margin-right: 10px;
   }
 }
 
 #users-edit {
-  [class*='col-'] {
+  [class*="col-"] {
     padding-left: 7px;
     padding-right: 7px;
   }
