@@ -211,8 +211,7 @@ namespace SchoolBusAPI.Services
         public virtual IActionResult RolesGetAsync()
         {
             var data = _context.Roles
-                .AsNoTracking()
-                .Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Now);
+                .AsNoTracking();
 
             var roles = Mapper.Map<List<RoleViewModel>>(data);
             if (User.IsSystemAdmin())
