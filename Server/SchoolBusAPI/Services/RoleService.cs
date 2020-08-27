@@ -44,7 +44,7 @@ namespace SchoolBusAPI.Services
         /// 
         /// </summary>
         /// <response code="200">OK</response>
-        IActionResult RolesGetAsync();
+        IActionResult RolesGetAsync(bool includeExpired = false);
 
         /// <summary>
         /// 
@@ -208,10 +208,15 @@ namespace SchoolBusAPI.Services
         /// </summary>
         /// <remarks>Returns a collection of active roles</remarks>
         /// <response code="200">OK</response>
-        public virtual IActionResult RolesGetAsync()
+        public virtual IActionResult RolesGetAsync(bool includeExpired = false)
         {
             var data = _context.Roles
                 .AsNoTracking();
+
+            if (!includeExpired)
+            {
+                data = data.Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Today);
+            }
 
             var roles = Mapper.Map<List<RoleViewModel>>(data);
             if (User.IsSystemAdmin())

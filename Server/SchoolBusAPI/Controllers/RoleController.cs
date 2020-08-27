@@ -66,9 +66,9 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/roles")]
         [RequiresPermission(Permissions.RoleRead)]
-        public virtual IActionResult RolesGet()
+        public virtual IActionResult RolesGet(bool? includeExpired = false)
         {
-            return this._service.RolesGetAsync();
+            return this._service.RolesGetAsync(includeExpired ?? false);
         }
 
         /// <summary>
