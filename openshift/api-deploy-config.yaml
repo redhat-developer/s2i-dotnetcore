@@ -133,7 +133,7 @@ objects:
                       name: "${CCW_NAME}-${ENV}"
                       key: CCW_BATCH_APP_ID
                 - name: ASPNETCORE_ENVIRONMENT
-                  value: Development
+                  value: ${ASPNETCORE_ENVIRONMENT}
               volumeMounts:
                 - name: server-docs
                   mountPath: "/uploads"
