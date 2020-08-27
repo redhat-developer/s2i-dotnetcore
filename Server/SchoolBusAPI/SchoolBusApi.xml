@@ -4233,7 +4233,7 @@
             <param name="items"></param>
             <response code="201">Role created</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesGet">
+        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesGet(System.Nullable{System.Boolean})">
             <summary>
             
             </summary>
@@ -6502,7 +6502,7 @@
             <param name="items"></param>
             <response code="201">Role created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesGetAsync">
+        <member name="M:SchoolBusAPI.Services.IRoleService.RolesGetAsync(System.Boolean)">
             <summary>
             
             </summary>
@@ -6593,7 +6593,7 @@
             <param name="items"></param>
             <response code="201">Permissions created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesGetAsync">
+        <member name="M:SchoolBusAPI.Services.RoleService.RolesGetAsync(System.Boolean)">
             <summary>
             
             </summary>
