@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import { PageHeader, Well, Alert, Row, Col } from 'react-bootstrap';
+import { PageHeader, Well, Alert, Row, Col, Label } from 'react-bootstrap';
 import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -12,8 +12,10 @@ import _ from 'lodash';
 import * as Action from '../actionTypes';
 import * as Api from '../api';
 import * as Constant from '../constants';
+import { dateIsBeforeToday } from '../utils/date';
 import store from '../store';
 
+import CheckboxControl from '../components/CheckboxControl.jsx';
 import DeleteButton from '../components/DeleteButton.jsx';
 import EditButton from '../components/EditButton.jsx';
 import SearchControl from '../components/SearchControl.jsx';
@@ -37,6 +39,7 @@ class Roles extends React.Component {
       key: this.props.search.key || 'name',
       text: this.props.search.text || '',
       params: this.props.search.params || null,
+      hideInactive: this.props.search.hideInactive !== false,
     },
 
     ui: {
@@ -51,9 +54,17 @@ class Roles extends React.Component {
 
   fetch = () => {
     this.setState({ loading: true });
-    Api.searchRoles().finally(() => {
+    Api.searchRoles(this.buildSearchParams()).finally(() => {
       this.setState({ loading: false });
     });
+  };
+
+  buildSearchParams = () => {
+    var searchParams = {
+      includeExpired: !this.state.search.hideInactive,
+    };
+
+    return searchParams;
   };
 
   updateSearchState = (state, callback) => {
@@ -120,6 +131,17 @@ class Roles extends React.Component {
                       { id: 'description', name: 'Description' },
                     ]}
                   />
+                  <CheckboxControl
+                    inline
+                    id="hideInactive"
+                    checked={this.state.search.hideInactive}
+                    updateState={this.updateSearchState}
+                  >
+                    Hide Inactive
+                  </CheckboxControl>
+                  <Button id="search-button" bsStyle="primary" onClick={this.fetch}>
+                    Search
+                  </Button>
                 </ButtonToolbar>
               </Col>
             </Row>
@@ -173,6 +195,7 @@ class Roles extends React.Component {
                 headers={[
                   { field: 'name', title: 'Name' },
                   { field: 'description', title: 'Description' },
+                  { field: 'expiry', title: '' },
                   {
                     field: 'addRole',
                     title: 'Add Role',
@@ -186,6 +209,12 @@ class Roles extends React.Component {
                     <tr key={role.id}>
                       <td>{role.name}</td>
                       <td>{role.description}</td>
+                      <td>
+                        {(() => {
+                          if (dateIsBeforeToday(role.expiryDate)) return <Label bsStyle="danger">Expired</Label>;
+                          else return <Label bsStyle="success">Active</Label>;
+                        })()}
+                      </td>
                       <td style={{ textAlign: 'right' }}>
                         <ButtonGroup>
                           <DeleteButton name="Role" hide={!role.canDelete} onConfirm={this.delete.bind(this, role)} />
