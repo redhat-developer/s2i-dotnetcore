@@ -36,39 +36,13 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">Role created</response>
-        [HttpPost]
-        [Route("/api/rolepermissions/bulk")]
-        [RequiresPermission(Permissions.RoleWrite)]
-        public virtual IActionResult RolepermissionsBulkPost([FromBody]RolePermission[] items)
-        {
-            return this._service.RolepermissionsBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">Role created</response>
-        [HttpPost]
-        [Route("/api/roles/bulk")]
-        [RequiresPermission(Permissions.RoleWrite)]
-        public virtual IActionResult RolesBulkPost([FromBody]Role[] items)
-        {
-            return this._service.RolesBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/roles")]
         [RequiresPermission(Permissions.RoleRead)]
-        public virtual IActionResult RolesGet(bool? includeExpired = false)
+        public virtual IActionResult GetRoles(bool? includeExpired = false)
         {
-            return this._service.RolesGetAsync(includeExpired ?? false);
+            return this._service.GetRoles(includeExpired ?? false);
         }
 
         /// <summary>
@@ -80,9 +54,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/roles/{id}/delete")]
         [RequiresPermission(Permissions.RoleWrite)]
-        public virtual IActionResult RolesIdDeletePost([FromRoute]int id)
+        public virtual IActionResult DeleteRole([FromRoute]int id)
         {
-            return this._service.RolesIdDeletePostAsync(id);
+            return this._service.DeleteRole(id);
         }
 
         /// <summary>
@@ -94,9 +68,9 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/roles/{id}")]
         [RequiresPermission(Permissions.RoleRead)]
-        public virtual IActionResult RolesIdGet([FromRoute]int id)
+        public virtual IActionResult GetRole([FromRoute]int id)
         {
-            return this._service.RolesIdGetAsync(id);
+            return this._service.GetRole(id);
         }
 
         /// <summary>
@@ -108,25 +82,9 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/roles/{id}/permissions")]
         [RequiresPermission(Permissions.RoleRead)]
-        public virtual IActionResult RolesIdPermissionsGet([FromRoute]int id)
+        public virtual IActionResult GetRolePermissions([FromRoute]int id)
         {
-            return this._service.RolesIdPermissionsGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a permissions to a role</remarks>
-        /// <param name="id">id of Role to update</param>
-        /// <param name="item"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>
-        [HttpPost]
-        [Route("/api/roles/{id}/permissions")]
-        [RequiresPermission(Permissions.RoleWrite)]
-        public virtual IActionResult RolesIdPermissionsPost([FromRoute]int id, [FromBody]PermissionViewModel item)
-        {
-            return this._service.RolesIdPermissionsPostAsync(id, item);
+            return this._service.GetRolePermissions(id);
         }
 
         /// <summary>
@@ -140,9 +98,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPut]
         [Route("/api/roles/{id}/permissions")]
         [RequiresPermission(Permissions.RoleWrite)]
-        public virtual IActionResult RolesIdPermissionsPut([FromRoute]int id, [FromBody]PermissionViewModel[] items)
+        public virtual IActionResult UpdateRolePermissions([FromRoute]int id, [FromBody]PermissionViewModel[] items)
         {
-            return this._service.RolesIdPermissionsPutAsync(id, items);
+            return this._service.UpdateRolePermissions(id, items);
         }
 
         /// <summary>
@@ -155,9 +113,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPut]
         [Route("/api/roles/{id}")]
         [RequiresPermission(Permissions.RoleWrite)]
-        public virtual IActionResult RolesIdPut([FromRoute]int id, [FromBody]RoleViewModel item)
+        public virtual IActionResult UpdateRole([FromRoute]int id, [FromBody]RoleViewModel item)
         {
-            return this._service.RolesIdPutAsync(id, item);
+            return this._service.UpdateRole(id, item);
         }
 
         /// <summary>
@@ -168,9 +126,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/roles")]
         [RequiresPermission(Permissions.RoleWrite)]
-        public virtual IActionResult RolesPost([FromBody]RoleViewModel item)
+        public virtual IActionResult CreateRole([FromBody]RoleViewModel item)
         {
-            return this._service.RolesPostAsync(item);
+            return this._service.CreateRole(item);
         }
     }
 }

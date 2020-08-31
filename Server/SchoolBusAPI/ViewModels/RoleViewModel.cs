@@ -71,9 +71,6 @@ namespace SchoolBusAPI.ViewModels
         [DataMember(Name="expiryDate")]
         public DateTime? ExpiryDate { get; set; }
 
-        [DataMember(Name="rolePermissions")]
-        public List<RolePermissionViewModel> RolePermissions { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

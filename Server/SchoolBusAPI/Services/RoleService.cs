@@ -18,6 +18,7 @@ using SchoolBusAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using SchoolBusAPI.Authorization;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace SchoolBusAPI.Services
 {
@@ -29,22 +30,8 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">Role created</response>
-        IActionResult RolepermissionsBulkPostAsync(RolePermission[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">Role created</response>
-        IActionResult RolesBulkPostAsync(Role[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
-        IActionResult RolesGetAsync(bool includeExpired = false);
+        IActionResult GetRoles(bool includeExpired = false);
 
         /// <summary>
         /// 
@@ -52,7 +39,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of Role to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        IActionResult RolesIdDeletePostAsync(int id);
+        IActionResult DeleteRole(int id);
 
         /// <summary>
         /// 
@@ -60,7 +47,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of Role to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        IActionResult RolesIdGetAsync(int id);
+        IActionResult GetRole(int id);
 
         /// <summary>
         /// 
@@ -68,17 +55,7 @@ namespace SchoolBusAPI.Services
         /// <remarks>Get all the permissions for a role</remarks>
         /// <param name="id">id of Role to fetch</param>
         /// <response code="200">OK</response>
-        IActionResult RolesIdPermissionsGetAsync(int id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a permissions to a role</remarks>
-        /// <param name="id">id of Role to update</param>
-        /// <param name="item"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>
-        IActionResult RolesIdPermissionsPostAsync(int id, PermissionViewModel item);
+        IActionResult GetRolePermissions(int id);
 
         /// <summary>
         /// 
@@ -88,7 +65,7 @@ namespace SchoolBusAPI.Services
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        IActionResult RolesIdPermissionsPutAsync(int id, PermissionViewModel[] items);
+        IActionResult UpdateRolePermissions(int id, PermissionViewModel[] items);
 
         /// <summary>
         /// 
@@ -97,14 +74,14 @@ namespace SchoolBusAPI.Services
         /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        IActionResult RolesIdPutAsync(int id, RoleViewModel item);
+        IActionResult UpdateRole(int id, RoleViewModel item);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="item"></param>
         /// <response code="201">Role created</response>
-        IActionResult RolesPostAsync(RoleViewModel item);
+        IActionResult CreateRole(RoleViewModel item);
     }
 
     /// <summary>
@@ -125,90 +102,9 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Bulk load of role permissions</remarks>
-        /// <param name="items"></param>
-        /// <response code="201">Roles created</response>
-        public IActionResult RolepermissionsBulkPostAsync(RolePermission[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (RolePermission item in items)
-            {
-                // adjust the role
-                if (item.Role != null)
-                {
-                    int role_id = item.Role.Id;
-                    bool role_exists = _context.Roles.Any(a => a.Id == role_id);
-                    if (role_exists)
-                    {
-                        Role role = _context.Roles.First(a => a.Id == role_id);
-                        item.Role = role;
-                    }
-                }
-
-                // adjust the permission
-                if (item.Permission != null)
-                {
-                    int permission_id = item.Permission.Id;
-                    bool permission_exists = _context.Permissions.Any(a => a.Id == permission_id);
-                    if (permission_exists)
-                    {
-                        Permission permission = _context.Permissions.First(a => a.Id == permission_id);
-                        item.Permission = permission;
-                    }
-                }
-
-                var exists = _context.RolePermissions.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.RolePermissions.Update(item);
-                }
-                else
-                {
-                    _context.RolePermissions.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">Permissions created</response>
-        public IActionResult RolesBulkPostAsync(Role[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (Role item in items)
-            {
-                var exists = _context.Roles.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.Roles.Update(item);
-                }
-                else
-                {
-                    _context.Roles.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Returns a collection of active roles</remarks>
         /// <response code="200">OK</response>
-        public virtual IActionResult RolesGetAsync(bool includeExpired = false)
+        public virtual IActionResult GetRoles(bool includeExpired = false)
         {
             var data = _context.Roles
                 .AsNoTracking();
@@ -253,7 +149,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of Role to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdDeletePostAsync(int id)
+        public virtual IActionResult DeleteRole(int id)
         {
             var role = _context.Roles.FirstOrDefault(x => x.Id == id);
             if (role == null)
@@ -280,9 +176,9 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of Role to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdGetAsync(int id)
+        public virtual IActionResult GetRole(int id)
         {
-            var role = _context.Roles.FirstOrDefault(x => x.Id == id);
+            var role = _context.Roles.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
             if (role == null)
             {
@@ -299,7 +195,7 @@ namespace SchoolBusAPI.Services
         /// <remarks>Get all the permissions for a role</remarks>
         /// <param name="id">id of Role to fetch</param>
         /// <response code="200">OK</response>
-        public virtual IActionResult RolesIdPermissionsGetAsync(int id)
+        public virtual IActionResult GetRolePermissions(int id)
         {
             // Eager loading of related data
             var role = _context.Roles.AsNoTracking()
@@ -331,149 +227,51 @@ namespace SchoolBusAPI.Services
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdPermissionsPutAsync(int id, PermissionViewModel[] items)
+        public virtual IActionResult UpdateRolePermissions(int id, PermissionViewModel[] items)
         {
-            using (var txn = _context.BeginTransaction())
+            // Eager loading of related data
+            var role = _context.Roles
+                .Where(x => x.Id == id)
+                .Include(x => x.RolePermissions)
+                .ThenInclude(rolePerm => rolePerm.Permission)
+                .FirstOrDefault();
+
+            if (role == null)
             {
-                // Eager loading of related data
-                var role = _context.Roles
-                    .Where(x => x.Id == id)
-                    .Include(x => x.RolePermissions)
-                    .ThenInclude(rolePerm => rolePerm.Permission)
-                    .FirstOrDefault();
-
-                if (role == null)
-                {
-                    // Not Found
-                    return new StatusCodeResult(404);
-                }
-
-                var allPermissions = _context.Permissions.ToList();
-                var permissionIds = items.Select(x => x.Id).ToList();
-                var existingPermissionIds = role.RolePermissions.Select(x => x.Permission.Id).ToList();
-                var permissionIdsToAdd = permissionIds.Where(x => !existingPermissionIds.Contains((int)x)).ToList();
-
-                // Permissions to add
-                foreach (var permissionId in permissionIdsToAdd)
-                {
-                    var permToAdd = allPermissions.FirstOrDefault(x => x.Id == permissionId);
-                    if (permToAdd == null)
-                    {
-                        // TODO throw new BusinessLayerException(string.Format("Invalid Permission Code {0}", code));
-                    }
-                    role.AddPermission(permToAdd);
-                }
-
-                // Permissions to remove
-                List<RolePermission> permissionsToRemove = role.RolePermissions.Where(x => !permissionIds.Contains(x.Permission.Id)).ToList();
-                foreach (RolePermission perm in permissionsToRemove)
-                {
-                    role.RemovePermission(perm.Permission);
-                    _context.RolePermissions.Remove(perm);
-                }
-
-                _context.Roles.Update(role);
-                _context.SaveChanges();
-                txn.Commit();
-
-                var result = Mapper.Map<List<RolePermissionViewModel>>(role.RolePermissions);
-
-                return new ObjectResult(result);
+                // Not Found
+                return new StatusCodeResult(404);
             }
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds permissions to a role</remarks>
-        /// <param name="id">id of Role to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdPermissionsPostAsync(int id, Permission[] items)
-        {
-            using (var txn = _context.BeginTransaction())
+            var allPermissions = _context.Permissions.ToList();
+            var permissionIds = items.Select(x => x.Id).ToList();
+            var existingPermissionIds = role.RolePermissions.Select(x => x.Permission.Id).ToList();
+            var permissionIdsToAdd = permissionIds.Where(x => !existingPermissionIds.Contains((int)x)).ToList();
+
+            // Permissions to add
+            foreach (var permissionId in permissionIdsToAdd)
             {
-                // Eager loading of related data
-                var role = _context.Roles
-                    .Where(x => x.Id == id)
-                    .Include(x => x.RolePermissions)
-                    .ThenInclude(rolePerm => rolePerm.Permission)
-                    .FirstOrDefault();
-
-                if (role == null)
+                var permToAdd = allPermissions.FirstOrDefault(x => x.Id == permissionId);
+                if (permToAdd == null)
                 {
-                    // Not Found
-                    return new StatusCodeResult(404);
+                    // TODO throw new BusinessLayerException(string.Format("Invalid Permission Code {0}", code));
                 }
-
-                var allPermissions = _context.Permissions.ToList();
-                var permissionIds = items.Select(x => x.Id).ToList();
-                var existingPermissionIds = role.RolePermissions.Select(x => x.Permission.Id).ToList();
-                var permissionIdsToAdd = permissionIds.Where(x => !existingPermissionIds.Contains((int)x)).ToList();
-
-                // Permissions to add
-                foreach (var permissionId in permissionIdsToAdd)
-                {
-                    var permToAdd = allPermissions.FirstOrDefault(x => x.Id == permissionId);
-                    if (permToAdd == null)
-                    {
-                        // TODO throw new BusinessLayerException(string.Format("Invalid Permission Code {0}", code));
-                    }
-                    role.AddPermission(permToAdd);
-                }
-
-                _context.Roles.Update(role);
-                _context.SaveChanges();
-                txn.Commit();
-
-                return new ObjectResult(Mapper.Map<List<RolePermissionViewModel>>(role.RolePermissions));
+                role.AddPermission(permToAdd);
             }
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds permissions to a role</remarks>
-        /// <param name="id">id of Role to update</param>
-        /// <param name="item"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdPermissionsPostAsync(int id, PermissionViewModel item)
-        {
-            using (var txn = _context.BeginTransaction())
+            // Permissions to remove
+            List<RolePermission> permissionsToRemove = role.RolePermissions.Where(x => !permissionIds.Contains(x.Permission.Id)).ToList();
+            foreach (RolePermission perm in permissionsToRemove)
             {
-                // Eager loading of related data
-                var role = _context.Roles
-                    .Where(x => x.Id == id)
-                    .Include(x => x.RolePermissions)
-                    .ThenInclude(rolePerm => rolePerm.Permission)
-                    .FirstOrDefault();
-
-                if (role == null)
-                {
-                    // Not Found
-                    return new StatusCodeResult(404);
-                }
-
-                var allPermissions = _context.Permissions.ToList();
-                var existingPermissionCodes = role.RolePermissions.Select(x => x.Permission.Code).ToList();
-                if (!existingPermissionCodes.Contains(item.Code))
-                {
-                    var permToAdd = allPermissions.FirstOrDefault(x => x.Code == item.Code);
-                    if (permToAdd == null)
-                    {
-                        // TODO throw new BusinessLayerException(string.Format("Invalid Permission Code {0}", code));
-                    }
-                    role.AddPermission(permToAdd);
-                }
-
-                _context.Roles.Update(role);
-                _context.SaveChanges();
-                txn.Commit();
-
-                return new ObjectResult(Mapper.Map<List<RolePermissionViewModel>>(role.RolePermissions));
+                role.RemovePermission(perm.Permission);
+                _context.RolePermissions.Remove(perm);
             }
+
+            _context.Roles.Update(role);
+            _context.SaveChanges();
+
+            var result = Mapper.Map<List<RolePermissionViewModel>>(role.RolePermissions);
+
+            return new ObjectResult(result);
         }
 
         /// <summary>
@@ -483,13 +281,23 @@ namespace SchoolBusAPI.Services
         /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">Role not found</response>
-        public virtual IActionResult RolesIdPutAsync(int id, RoleViewModel item)
+        public virtual IActionResult UpdateRole(int id, RoleViewModel item)
         {
+            if (id != item.Id)
+            {
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 203, $"Id [{id}] mismatches [{item.Id}]."));
+            }
+
             var role = _context.Roles.FirstOrDefault(x => x.Id == id);
             if (role == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
+            }
+
+            if (_context.Roles.AsNoTracking().Any(r => r.Id != item.Id && r.Name.ToUpper() == item.Name.ToUpperInvariant()))
+            {
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 202, $"Role [{item.Name}] already exists."));
             }
 
             Mapper.Map(item, role);
@@ -504,8 +312,13 @@ namespace SchoolBusAPI.Services
         /// </summary>
         /// <param name="item"></param>
         /// <response code="201">Role created</response>
-        public virtual IActionResult RolesPostAsync(RoleViewModel item)
+        public virtual IActionResult CreateRole(RoleViewModel item)
         {
+            if (_context.Roles.AsNoTracking().Any(r => r.Name.ToUpper() == item.Name.ToUpperInvariant()))
+            {
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 201, $"Role [{item.Name}] already exists."));
+            }
+
             var role = new Role();
 
             Mapper.Map(item, role);
@@ -514,133 +327,5 @@ namespace SchoolBusAPI.Services
 
             return new ObjectResult(Mapper.Map<RoleViewModel>(role));
         }
-
-        #region old code. not being used and not tested
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <remarks>Gets all the users for a role</remarks>
-        ///// <param name="id">id of Role to fetch</param>
-        ///// <response code="200">OK</response>
-        //public virtual IActionResult RolesIdUsersGetAsync(int id)
-        //{
-        //    // and the users with those UserRoles
-        //    List<User> result = new List<User>();
-
-        //    List<User> users = _context.Users
-        //            .Include(x => x.UserRoles)
-        //            .ThenInclude(y => y.Role)
-        //            .ToList();
-
-        //    foreach (User user in users)
-        //    {
-        //        bool found = false;
-
-        //        if (user.UserRoles != null)
-        //        {
-        //            // ef core does not support lazy loading, so we need to explicitly get data here.
-        //            foreach (UserRole userRole in user.UserRoles)
-        //            {
-        //                if (userRole.Role != null && userRole.Role.Id == id && userRole.EffectiveDate <= DateTime.UtcNow && (userRole.ExpiryDate == null || userRole.ExpiryDate > DateTime.UtcNow))
-        //                {
-        //                    found = true;
-        //                    break;
-        //                }
-        //            }
-        //        }
-
-        //        if (found && !result.Contains(user))
-        //        {
-        //            result.Add(user);
-        //        }
-        //    }
-
-        //    return new ObjectResult(result);
-        //}
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <remarks>Updates the users for a role</remarks>
-        ///// <param name="id">id of Role to update</param>
-        ///// <param name="items"></param>
-        ///// <response code="200">OK</response>
-        ///// <response code="404">Role not found</response>
-        //public virtual IActionResult RolesIdUsersPutAsync(int id, UserRoleViewModel[] items)
-        //{
-        //    bool role_exists = _context.Roles.Any(x => x.Id == id);
-        //    bool data_changed = false;
-        //    if (role_exists)
-        //    {
-        //        Role role = _context.Roles.First(x => x.Id == id);
-
-        //        // scan through users
-
-        //        var users = _context.Users
-        //                .Include(x => x.UserRoles)
-        //                .ThenInclude(y => y.Role);
-
-        //        foreach (User user in users)
-        //        {
-        //            // first see if it is one of our matches.                    
-        //            UserRoleViewModel foundItem = null;
-        //            foreach (var item in items)
-        //            {
-        //                if (item.UserId == user.Id)
-        //                {
-        //                    foundItem = item;
-        //                    break;
-        //                }
-        //            }
-
-        //            if (foundItem == null) // delete the user role if it exists.
-        //            {
-        //                foreach (UserRole userRole in user.UserRoles)
-        //                {
-        //                    if (userRole.Role.Id == id)
-        //                    {
-        //                        user.UserRoles.Remove(userRole);
-        //                        _context.Users.Update(user);
-        //                        data_changed = true;
-        //                    }
-        //                }
-        //            }
-        //            else // add the user role if it does not exist.
-        //            {
-        //                bool found = false;
-        //                foreach (UserRole userRole in user.UserRoles)
-        //                {
-        //                    if (userRole.Role.Id == id)
-        //                    {
-        //                        found = true;
-        //                    }
-        //                }
-        //                if (found == false)
-        //                {
-        //                    UserRole newUserRole = new UserRole();
-        //                    newUserRole.EffectiveDate = DateTime.UtcNow;
-        //                    newUserRole.Role = role;
-
-        //                    user.UserRoles.Add(newUserRole);
-        //                    _context.Users.Update(user);
-        //                    data_changed = true;
-        //                }
-        //            }
-        //        }
-        //        if (data_changed)
-        //        {
-        //            _context.SaveChanges();
-        //        }
-
-        //        return new StatusCodeResult(200);
-        //    }
-        //    else
-        //    {
-        //        return new StatusCodeResult(404);
-        //    }
-
-        //}
-        #endregion
     }
 }
