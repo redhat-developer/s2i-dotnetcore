@@ -18,6 +18,7 @@ using SchoolBusAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using SchoolBusAPI.Authorization;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace SchoolBusAPI.Services
 {
@@ -177,7 +178,7 @@ namespace SchoolBusAPI.Services
         /// <response code="404">Role not found</response>
         public virtual IActionResult GetRole(int id)
         {
-            var role = _context.Roles.FirstOrDefault(x => x.Id == id);
+            var role = _context.Roles.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
             if (role == null)
             {
@@ -282,11 +283,21 @@ namespace SchoolBusAPI.Services
         /// <response code="404">Role not found</response>
         public virtual IActionResult UpdateRole(int id, RoleViewModel item)
         {
+            if (id != item.Id)
+            {
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 203, $"Id [{id}] mismatches [{item.Id}]."));
+            }
+
             var role = _context.Roles.FirstOrDefault(x => x.Id == id);
             if (role == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
+            }
+
+            if (_context.Roles.AsNoTracking().Any(r => r.Id != item.Id && r.Name.ToUpper() == item.Name.ToUpperInvariant()))
+            {
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 202, $"Role [{item.Name}] already exists."));
             }
 
             Mapper.Map(item, role);
@@ -303,6 +314,11 @@ namespace SchoolBusAPI.Services
         /// <response code="201">Role created</response>
         public virtual IActionResult CreateRole(RoleViewModel item)
         {
+            if (_context.Roles.AsNoTracking().Any(r => r.Name.ToUpper() == item.Name.ToUpperInvariant()))
+            {
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 201, $"Role [{item.Name}] already exists."));
+            }
+
             var role = new Role();
 
             Mapper.Map(item, role);
