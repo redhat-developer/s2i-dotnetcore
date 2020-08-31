@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
-using SchoolBusAPI.Mappings;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using System;
@@ -29,25 +28,10 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">User created</response>
-        IActionResult UserrolesBulkPostAsync(UserRole[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of users</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        IActionResult UsersBulkPostAsync(User[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Returns all users</remarks>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersGetAsync();
+        IActionResult GetUsers();
 
         /// <summary>
         /// 
@@ -56,35 +40,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdDeletePostAsync(int id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns the favourites for a user</remarks>
-        /// <param name="id">id of User to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        IActionResult UsersIdFavouritesGetAsync(int id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds favourites to a user</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="item"></param>
-        /// <response code="200">Favourites added to user</response>
-        IActionResult UsersIdFavouritesPostAsync(int id, UserFavourite[] item);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Updates the favourites for a user</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        IActionResult UsersIdFavouritesPutAsync(int id, UserFavourite[] items);
+        IActionResult DeleteUser(int id);
 
         /// <summary>
         /// 
@@ -93,24 +49,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdGetAsync(int id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns a user&#39;s notifications</remarks>
-        /// <param name="id">id of User to fetch notifications for</param>
-        /// <response code="200">OK</response>
-        IActionResult UsersIdNotificationsGetAsync(int id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns the set of permissions for a user</remarks>
-        /// <param name="id">id of User to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        IActionResult UsersIdPermissionsGetAsync(int id);
+        IActionResult GetUser(int id);
 
         /// <summary>
         /// 
@@ -120,7 +59,7 @@ namespace SchoolBusAPI.Services
         /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdPutAsync(int id, UserViewModel item);
+        IActionResult UpdateUser(int id, UserViewModel item);
 
         /// <summary>
         /// 
@@ -129,7 +68,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdRolesGetAsync(int id);
+        IActionResult GetUserRoles(int id);
 
         /// <summary>
         /// 
@@ -138,7 +77,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to update</param>
         /// <param name="item"></param>
         /// <response code="201">Role created for user</response>
-        IActionResult UsersIdRolesPostAsync(int id, UserRoleViewModel item);
+        IActionResult CreateUserRole(int id, UserRoleViewModel item);
 
         /// <summary>
         /// 
@@ -148,7 +87,7 @@ namespace SchoolBusAPI.Services
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UsersIdRolesPutAsync(int id, UserRoleViewModel[] items);
+        IActionResult UpdateUserRoles(int id, UserRoleViewModel[] items);
 
         /// <summary>
         /// 
@@ -156,7 +95,7 @@ namespace SchoolBusAPI.Services
         /// <remarks>Create new user</remarks>
         /// <param name="item"></param>
         /// <response code="201">User created</response>
-        IActionResult UsersPostAsync(User item);
+        IActionResult CreateUser(User item);
 
         /// <summary>
         /// Searches Users
@@ -166,9 +105,9 @@ namespace SchoolBusAPI.Services
         /// <param name="surname"></param>
         /// <param name="includeInactive">True if Inactive users will be returned</param>
         /// <response code="200">OK</response>
-        IActionResult UsersSearchGetAsync(int?[] districts, string surname, bool? includeInactive);
+        IActionResult SearchUsers(int?[] districts, string surname, bool? includeInactive);
 
-        IActionResult UserInspectorsGet(bool? includeInactive);
+        IActionResult GetInspectors(bool? includeInactive);
     }
 
     /// <summary>
@@ -202,86 +141,13 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Adds a number of user roles</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult UserrolesBulkPostAsync(UserRole[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (UserRole item in items)
-            {
-                // adjust the role
-                if (item.Role != null)
-                {
-                    int role_id = item.Role.Id;
-                    bool user_exists = _context.Roles.Any(a => a.Id == role_id);
-                    if (user_exists)
-                    {
-                        Role role = _context.Roles.First(a => a.Id == role_id);
-                        item.Role = role;
-                    }
-                }
-
-                var exists = _context.UserRoles.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.UserRoles.Update(item);
-                }
-                else
-                {
-                    _context.UserRoles.Add(item);
-                }
-            }
-
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of users</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult UsersBulkPostAsync(User[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-
-            foreach (User item in items)
-            {
-                AdjustUser(item);
-                var exists = _context.Users.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.Users.Update(item);
-                }
-                else
-                {
-                    _context.Users.Add(item);
-                }
-            }
-
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Returns all users</remarks>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersGetAsync()
+        public virtual IActionResult GetUsers()
         {
             var users = _context.Users
+                .AsNoTracking()
                 .Include(x => x.District)
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
@@ -298,7 +164,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdDeletePostAsync(int id)
+        public virtual IActionResult DeleteUser(int id)
         {
             var user = _context.Users
                 .Include(x => x.UserRoles)
@@ -325,163 +191,14 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a user&#39;s favourites of a given context type</remarks>
-        /// <param name="id">id of User to fetch favorites for</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdFavouritesGetAsync(int id)
-        {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
-            if (user == null)
-            {
-                // Not Found
-                return new StatusCodeResult(404);
-            }
-            // TODO adjust UserFavourites model such that we can query to find a user's favourites.
-
-            var data = _context.UserFavourites
-                .Where(x => x.User.Id == user.Id)
-                .ToList();
-            return new ObjectResult(data);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Updates the active set of groups for a user</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdFavouritesPutAsync(int id, UserFavourite[] items)
-        {
-            bool exists = _context.Users.Any(a => a.Id == id);
-            if (exists)
-            {
-                // update the given user's group membership.
-
-                User user = _context.Users.First(a => a.Id == id);
-                var data = _context.UserFavourites
-                    .Where(x => x.User.Id == user.Id);
-                foreach (UserFavourite item in data)
-                {
-                    bool found = false;
-                    foreach (UserFavourite parameterItem in items)
-                    {
-                        if (parameterItem == item)
-                        {
-                            found = true;
-                        }
-                    }
-                    if (found == false)
-                    {
-                        _context.UserFavourites.Remove(item);
-                    }
-                }
-
-                // add new items.
-                foreach (UserFavourite parameterItem in items)
-                {
-                    bool found = false;
-                    foreach (UserFavourite item in data)
-                    {
-                        if (parameterItem == item)
-                        {
-                            found = true;
-                        }
-                    }
-                    if (found == false)
-                    {
-                        // adjust user  
-                        parameterItem.User = user;
-                        _context.UserFavourites.Add(parameterItem);
-                    }
-                }
-
-                _context.SaveChanges();
-                return new NoContentResult();
-            }
-            else
-            {
-                // record not found
-                return new StatusCodeResult(404);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a user to groups</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdFavouritesPostAsync(int id, UserFavourite[] items)
-        {
-            bool exists = _context.Users.Any(a => a.Id == id);
-            if (exists)
-            {
-                // update the given user's group membership.
-
-                User user = _context.Users.First(a => a.Id == id);
-                var data = _context.UserFavourites
-                    .Where(x => x.User.Id == user.Id);
-                foreach (UserFavourite item in data)
-                {
-                    bool found = false;
-                    foreach (UserFavourite parameterItem in items)
-                    {
-                        if (parameterItem == item)
-                        {
-                            found = true;
-                        }
-                    }
-                    if (found == false)
-                    {
-                        _context.UserFavourites.Remove(item);
-                    }
-                }
-
-                // add new items.
-                foreach (UserFavourite parameterItem in items)
-                {
-                    bool found = false;
-                    foreach (UserFavourite item in data)
-                    {
-                        if (parameterItem == item)
-                        {
-                            found = true;
-                        }
-                    }
-                    if (found == false)
-                    {
-                        // adjust user and group. 
-                        parameterItem.User = user;
-
-                        _context.UserFavourites.Add(parameterItem);
-                    }
-                }
-
-                _context.SaveChanges();
-                return new NoContentResult();
-            }
-            else
-            {
-                // record not found
-                return new StatusCodeResult(404);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Returns data for a particular user</remarks>
         /// <param name="id">id of User to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdGetAsync(int id)
+        public virtual IActionResult GetUser(int id)
         {
             var user = _context.Users
+                .AsNoTracking()
                 .Include(x => x.District)
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
@@ -499,59 +216,12 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Returns a user&#39;s notifications</remarks>
-        /// <param name="id">id of User to fetch notifications for</param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult UsersIdNotificationsGetAsync(int id)
-        {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
-            if (user == null)
-            {
-                // Not Found
-                return new StatusCodeResult(404);
-            }
-
-            var data = _context.Notifications
-                .Where(x => x.User.Id == user.Id)
-                .ToList();
-
-            return new ObjectResult(data);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns the set of permissions for a user</remarks>
-        /// <param name="id">id of User to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdPermissionsGetAsync(int id)
-        {
-            var permissions =
-                _context.Users
-                .FirstOrDefault(u => u.Id == id)
-                .UserRoles
-                .Where(ur => (ur.EffectiveDate == DateTime.MinValue || ur.EffectiveDate <= DateTime.Now) && (!ur.ExpiryDate.HasValue || ur.ExpiryDate == DateTime.MinValue || ur.ExpiryDate > DateTime.Now))
-                .Select(ur => ur.Role)
-                .Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Now) //active roles
-                .SelectMany(r => r.RolePermissions.Select(rp => rp.Permission))
-                .Where(p => !p.ExpiryDate.HasValue || p.ExpiryDate == DateTime.MinValue || p.ExpiryDate > DateTime.Now) //active permissions
-                .ToLookup(p => p.Code)
-                .Select(p => p.First())
-                .ToList();
-
-            return new ObjectResult(permissions);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Updates a user</remarks>
         /// <param name="id">id of User to update</param>
         /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdPutAsync(int id, UserViewModel item)
+        public virtual IActionResult UpdateUser(int id, UserViewModel item)
         {
             var user = _context.Users
                 .Include(x => x.District)
@@ -560,6 +230,7 @@ namespace SchoolBusAPI.Services
                 .ThenInclude(z => z.RolePermissions)
                 .ThenInclude(z => z.Permission)
                 .FirstOrDefault(x => x.Id == id);
+
             if (user == null)
             {
                 // Not Found
@@ -597,9 +268,10 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to fetch</param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdRolesGetAsync(int id)
+        public virtual IActionResult GetUserRoles(int id)
         {
             var user = _context.Users
+                .AsNoTracking()
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
                 .First(x => x.Id == id);
@@ -622,7 +294,7 @@ namespace SchoolBusAPI.Services
         /// <param name="id">id of User to update</param>
         /// <param name="item"></param>
         /// <response code="201">Role created for user</response>
-        public virtual IActionResult UsersIdRolesPostAsync(int id, UserRoleViewModel item)
+        public virtual IActionResult CreateUserRole(int id, UserRoleViewModel item)
         {
             bool exists = _context.Users.Any(x => x.Id == id);
             bool success = false;
@@ -679,7 +351,7 @@ namespace SchoolBusAPI.Services
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        public virtual IActionResult UsersIdRolesPutAsync(int id, UserRoleViewModel[] items)
+        public virtual IActionResult UpdateUserRoles(int id, UserRoleViewModel[] items)
         {
             bool exists = _context.Users.Any(x => x.Id == id);
             if (exists && items != null)
@@ -747,7 +419,7 @@ namespace SchoolBusAPI.Services
         /// <remarks>Create new user</remarks>
         /// <param name="item"></param>
         /// <response code="201">User created</response>
-        public virtual IActionResult UsersPostAsync(User item)
+        public virtual IActionResult CreateUser(User item)
         {
             AdjustUser(item);
             bool exists = _context.Users.Any(x => x.Id == item.Id);
@@ -773,10 +445,11 @@ namespace SchoolBusAPI.Services
         /// <param name="surname"></param>
         /// <param name="includeInactive">True if Inactive users will be returned</param>
         /// <response code="200">OK</response>
-        public virtual IActionResult UsersSearchGetAsync(int?[] districts, string surname, bool? includeInactive)
+        public virtual IActionResult SearchUsers(int?[] districts, string surname, bool? includeInactive)
         {
             // Eager loading of related data
             var data = _context.Users
+                .AsNoTracking()
                 .Include(x => x.District)
                 .Include(x => x.UserRoles)
                 .ThenInclude(y => y.Role)
@@ -813,9 +486,10 @@ namespace SchoolBusAPI.Services
             return new ObjectResult(result);
         }
 
-        public IActionResult UserInspectorsGet(bool? includeInactive = false)
+        public IActionResult GetInspectors(bool? includeInactive = false)
         {
-            var data = _context.UserRoles.AsNoTracking()
+            var data = _context.UserRoles
+                .AsNoTracking()
                 .Where(ur => ur.Role.Name == Roles.Inspector)
                 .Select(ur => ur.User);
 
