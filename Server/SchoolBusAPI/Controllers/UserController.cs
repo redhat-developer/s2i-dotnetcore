@@ -36,42 +36,15 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">User created</response>
-        [HttpPost]
-        [Route("/api/userroles/bulk")]
-        [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UserrolesBulkPost([FromBody]UserRole[] items)
-        {
-            return this._service.UserrolesBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of users</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        [HttpPost]
-        [Route("/api/users/bulk")]
-        [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersBulkPost([FromBody]User[] items)
-        {
-            return this._service.UsersBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <remarks>Returns all users</remarks>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
         [HttpGet]
         [Route("/api/users")]
         [RequiresPermission(Permissions.UserRead)]
-        public IActionResult UsersGet()
+        public IActionResult GetUsers()
         {
-            return this._service.UsersGetAsync();
+            return this._service.GetUsers();
         }
 
         /// <summary>
@@ -84,55 +57,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/users/{id}/delete")]
         [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersIdDeletePost([FromRoute]int id)
+        public virtual IActionResult DeleteUser([FromRoute]int id)
         {
-            return this._service.UsersIdDeletePostAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns the favourites for a user</remarks>
-        /// <param name="id">id of User to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        [HttpGet]
-        [Route("/api/users/{id}/favourites")]
-        [RequiresPermission(Permissions.UserRead)]
-        public virtual IActionResult UsersIdFavouritesGet([FromRoute]int id)
-        {
-            return this._service.UsersIdFavouritesGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds favourites to a user</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="item"></param>
-        /// <response code="200">Favourites added to user</response>
-        [HttpPost]
-        [Route("/api/users/{id}/favourites")]
-        [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersIdFavouritesPost([FromRoute]int id, [FromBody]UserFavourite[] item)
-        {
-            return this._service.UsersIdFavouritesPostAsync(id, item);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Updates the favourites for a user</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        [HttpPut]
-        [Route("/api/users/{id}/favourites")]
-        [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersIdFavouritesPut([FromRoute]int id, [FromBody]UserFavourite[] items)
-        {
-            return this._service.UsersIdFavouritesPutAsync(id, items);
+            return this._service.DeleteUser(id);
         }
 
         /// <summary>
@@ -145,38 +72,9 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/users/{id}")]
         [RequiresPermission(Permissions.UserRead)]
-        public virtual IActionResult UsersIdGet([FromRoute]int id)
+        public virtual IActionResult GetUser([FromRoute]int id)
         {
-            return this._service.UsersIdGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns a user&#39;s notifications</remarks>
-        /// <param name="id">id of User to fetch notifications for</param>
-        /// <response code="200">OK</response>
-        [HttpGet]
-        [Route("/api/users/{id}/notifications")]
-        [RequiresPermission(Permissions.UserRead)]
-        public virtual IActionResult UsersIdNotificationsGet([FromRoute]int id)
-        {
-            return this._service.UsersIdNotificationsGetAsync(id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Returns the set of permissions for a user</remarks>
-        /// <param name="id">id of User to fetch</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        [HttpGet]
-        [Route("/api/users/{id}/permissions")]
-        [RequiresPermission(Permissions.UserRead)]
-        public virtual IActionResult UsersIdPermissionsGet([FromRoute]int id)
-        {
-            return this._service.UsersIdPermissionsGetAsync(id);
+            return this._service.GetUser(id);
         }
 
         /// <summary>
@@ -190,9 +88,23 @@ namespace SchoolBusAPI.Controllers
         [HttpPut]
         [Route("/api/users/{id}")]
         [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersIdPut([FromRoute]int id, [FromBody]UserViewModel item)
+        public virtual IActionResult UpdateUser([FromRoute]int id, [FromBody]UserViewModel item)
         {
-            return this._service.UsersIdPutAsync(id, item);
+            return this._service.UpdateUser(id, item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Create new user</remarks>
+        /// <param name="item"></param>
+        /// <response code="201">User created</response>
+        [HttpPost]
+        [Route("/api/users")]
+        [RequiresPermission(Permissions.UserWrite)]
+        public virtual IActionResult CreateUser([FromBody] User item)
+        {
+            return this._service.CreateUser(item);
         }
 
         /// <summary>
@@ -205,9 +117,9 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/users/{id}/roles")]
         [RequiresPermission(Permissions.UserRead)]
-        public virtual IActionResult UsersIdRolesGet([FromRoute]int id)
+        public virtual IActionResult GetUserRoles([FromRoute]int id)
         {
-            return this._service.UsersIdRolesGetAsync(id);
+            return this._service.GetUserRoles(id);
         }
 
         /// <summary>
@@ -220,9 +132,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/users/{id}/roles")]
         [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersIdRolesPost([FromRoute]int id, [FromBody]UserRoleViewModel item)
+        public virtual IActionResult CreateUserRole([FromRoute]int id, [FromBody]UserRoleViewModel item)
         {
-            return this._service.UsersIdRolesPostAsync(id, item);
+            return this._service.CreateUserRole(id, item);
         }
 
         /// <summary>
@@ -236,23 +148,9 @@ namespace SchoolBusAPI.Controllers
         [HttpPut]
         [Route("/api/users/{id}/roles")]
         [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersIdRolesPut([FromRoute]int id, [FromBody]UserRoleViewModel[] items)
+        public virtual IActionResult UpdateUserRoles([FromRoute]int id, [FromBody]UserRoleViewModel[] items)
         {
-            return this._service.UsersIdRolesPutAsync(id, items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Create new user</remarks>
-        /// <param name="item"></param>
-        /// <response code="201">User created</response>
-        [HttpPost]
-        [Route("/api/users")]
-        [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UsersPost([FromBody]User item)
-        {
-            return this._service.UsersPostAsync(item);
+            return this._service.UpdateUserRoles(id, items);
         }
 
         /// <summary>
@@ -266,17 +164,17 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/users/search")]
         [RequiresPermission(Permissions.UserRead)]
-        public virtual IActionResult UsersSearchGet([FromQuery]int?[] districts, [FromQuery]string surname, [FromQuery]bool? includeInactive)
+        public virtual IActionResult SearchUsers([FromQuery]int?[] districts, [FromQuery]string surname, [FromQuery]bool? includeInactive)
         {
-            return this._service.UsersSearchGetAsync(districts, surname, includeInactive);
+            return this._service.SearchUsers(districts, surname, includeInactive);
         }
 
         [HttpGet]
         [Route("/api/users/inspectors")]
         [RequiresPermission(Permissions.CodeRead)]
-        public virtual IActionResult UserInspectorsGet([FromQuery] bool? includeInactive)
+        public virtual IActionResult GetInspectors([FromQuery] bool? includeInactive)
         {
-            return this._service.UserInspectorsGet(includeInactive);
+            return this._service.GetInspectors(includeInactive);
         }
 
     }

@@ -4673,22 +4673,7 @@
             Create a controller and set the service
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UserrolesBulkPost(SchoolBusAPI.Models.UserRole[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">User created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersBulkPost(SchoolBusAPI.Models.User[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of users</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersGet">
+        <member name="M:SchoolBusAPI.Controllers.UserController.GetUsers">
             <summary>
             
             </summary>
@@ -4696,7 +4681,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdDeletePost(System.Int32)">
+        <member name="M:SchoolBusAPI.Controllers.UserController.DeleteUser(System.Int32)">
             <summary>
             
             </summary>
@@ -4705,35 +4690,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdFavouritesGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns the favourites for a user</remarks>
-            <param name="id">id of User to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdFavouritesPost(System.Int32,SchoolBusAPI.Models.UserFavourite[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds favourites to a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="item"></param>
-            <response code="200">Favourites added to user</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdFavouritesPut(System.Int32,SchoolBusAPI.Models.UserFavourite[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the favourites for a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdGet(System.Int32)">
+        <member name="M:SchoolBusAPI.Controllers.UserController.GetUser(System.Int32)">
             <summary>
             
             </summary>
@@ -4742,24 +4699,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdNotificationsGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns a user&#39;s notifications</remarks>
-            <param name="id">id of User to fetch notifications for</param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdPermissionsGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns the set of permissions for a user</remarks>
-            <param name="id">id of User to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdPut(System.Int32,SchoolBusAPI.ViewModels.UserViewModel)">
+        <member name="M:SchoolBusAPI.Controllers.UserController.UpdateUser(System.Int32,SchoolBusAPI.ViewModels.UserViewModel)">
             <summary>
             
             </summary>
@@ -4769,7 +4709,15 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdRolesGet(System.Int32)">
+        <member name="M:SchoolBusAPI.Controllers.UserController.CreateUser(SchoolBusAPI.Models.User)">
+            <summary>
+            
+            </summary>
+            <remarks>Create new user</remarks>
+            <param name="item"></param>
+            <response code="201">User created</response>
+        </member>
+        <member name="M:SchoolBusAPI.Controllers.UserController.GetUserRoles(System.Int32)">
             <summary>
             
             </summary>
@@ -4778,7 +4726,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdRolesPost(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel)">
+        <member name="M:SchoolBusAPI.Controllers.UserController.CreateUserRole(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel)">
             <summary>
             
             </summary>
@@ -4787,7 +4735,7 @@
             <param name="item"></param>
             <response code="201">Role created for user</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersIdRolesPut(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
+        <member name="M:SchoolBusAPI.Controllers.UserController.UpdateUserRoles(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
             <summary>
             
             </summary>
@@ -4797,15 +4745,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersPost(SchoolBusAPI.Models.User)">
-            <summary>
-            
-            </summary>
-            <remarks>Create new user</remarks>
-            <param name="item"></param>
-            <response code="201">User created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UsersSearchGet(System.Nullable{System.Int32}[],System.String,System.Nullable{System.Boolean})">
+        <member name="M:SchoolBusAPI.Controllers.UserController.SearchUsers(System.Nullable{System.Int32}[],System.String,System.Nullable{System.Boolean})">
             <summary>
             Searches Users
             </summary>
@@ -7328,22 +7268,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UserrolesBulkPostAsync(SchoolBusAPI.Models.UserRole[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">User created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersBulkPostAsync(SchoolBusAPI.Models.User[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of users</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersGetAsync">
+        <member name="M:SchoolBusAPI.Services.IUserService.GetUsers">
             <summary>
             
             </summary>
@@ -7351,7 +7276,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdDeletePostAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.IUserService.DeleteUser(System.Int32)">
             <summary>
             
             </summary>
@@ -7360,35 +7285,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdFavouritesGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns the favourites for a user</remarks>
-            <param name="id">id of User to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdFavouritesPostAsync(System.Int32,SchoolBusAPI.Models.UserFavourite[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds favourites to a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="item"></param>
-            <response code="200">Favourites added to user</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdFavouritesPutAsync(System.Int32,SchoolBusAPI.Models.UserFavourite[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the favourites for a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdGetAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.IUserService.GetUser(System.Int32)">
             <summary>
             
             </summary>
@@ -7397,24 +7294,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdNotificationsGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns a user&#39;s notifications</remarks>
-            <param name="id">id of User to fetch notifications for</param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdPermissionsGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns the set of permissions for a user</remarks>
-            <param name="id">id of User to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdPutAsync(System.Int32,SchoolBusAPI.ViewModels.UserViewModel)">
+        <member name="M:SchoolBusAPI.Services.IUserService.UpdateUser(System.Int32,SchoolBusAPI.ViewModels.UserViewModel)">
             <summary>
             
             </summary>
@@ -7424,7 +7304,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdRolesGetAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.IUserService.GetUserRoles(System.Int32)">
             <summary>
             
             </summary>
@@ -7433,7 +7313,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdRolesPostAsync(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel)">
+        <member name="M:SchoolBusAPI.Services.IUserService.CreateUserRole(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel)">
             <summary>
             
             </summary>
@@ -7442,7 +7322,7 @@
             <param name="item"></param>
             <response code="201">Role created for user</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersIdRolesPutAsync(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
+        <member name="M:SchoolBusAPI.Services.IUserService.UpdateUserRoles(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
             <summary>
             
             </summary>
@@ -7452,7 +7332,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersPostAsync(SchoolBusAPI.Models.User)">
+        <member name="M:SchoolBusAPI.Services.IUserService.CreateUser(SchoolBusAPI.Models.User)">
             <summary>
             
             </summary>
@@ -7460,7 +7340,7 @@
             <param name="item"></param>
             <response code="201">User created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UsersSearchGetAsync(System.Nullable{System.Int32}[],System.String,System.Nullable{System.Boolean})">
+        <member name="M:SchoolBusAPI.Services.IUserService.SearchUsers(System.Nullable{System.Int32}[],System.String,System.Nullable{System.Boolean})">
             <summary>
             Searches Users
             </summary>
@@ -7480,23 +7360,7 @@
             Create a service and set the database context
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UserrolesBulkPostAsync(SchoolBusAPI.Models.UserRole[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of user roles</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersBulkPostAsync(SchoolBusAPI.Models.User[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of users</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersGetAsync">
+        <member name="M:SchoolBusAPI.Services.UserService.GetUsers">
             <summary>
             
             </summary>
@@ -7504,7 +7368,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdDeletePostAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.UserService.DeleteUser(System.Int32)">
             <summary>
             
             </summary>
@@ -7513,36 +7377,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdFavouritesGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns a user&#39;s favourites of a given context type</remarks>
-            <param name="id">id of User to fetch favorites for</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdFavouritesPutAsync(System.Int32,SchoolBusAPI.Models.UserFavourite[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the active set of groups for a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdFavouritesPostAsync(System.Int32,SchoolBusAPI.Models.UserFavourite[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a user to groups</remarks>
-            <param name="id">id of User to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdGetAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.UserService.GetUser(System.Int32)">
             <summary>
             
             </summary>
@@ -7551,24 +7386,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdNotificationsGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns a user&#39;s notifications</remarks>
-            <param name="id">id of User to fetch notifications for</param>
-            <response code="200">OK</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdPermissionsGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Returns the set of permissions for a user</remarks>
-            <param name="id">id of User to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdPutAsync(System.Int32,SchoolBusAPI.ViewModels.UserViewModel)">
+        <member name="M:SchoolBusAPI.Services.UserService.UpdateUser(System.Int32,SchoolBusAPI.ViewModels.UserViewModel)">
             <summary>
             
             </summary>
@@ -7578,7 +7396,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdRolesGetAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.UserService.GetUserRoles(System.Int32)">
             <summary>
             
             </summary>
@@ -7587,7 +7405,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdRolesPostAsync(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel)">
+        <member name="M:SchoolBusAPI.Services.UserService.CreateUserRole(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel)">
             <summary>
             
             </summary>
@@ -7596,7 +7414,7 @@
             <param name="item"></param>
             <response code="201">Role created for user</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersIdRolesPutAsync(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
+        <member name="M:SchoolBusAPI.Services.UserService.UpdateUserRoles(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
             <summary>
             
             </summary>
@@ -7606,7 +7424,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersPostAsync(SchoolBusAPI.Models.User)">
+        <member name="M:SchoolBusAPI.Services.UserService.CreateUser(SchoolBusAPI.Models.User)">
             <summary>
             
             </summary>
@@ -7614,7 +7432,7 @@
             <param name="item"></param>
             <response code="201">User created</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UsersSearchGetAsync(System.Nullable{System.Int32}[],System.String,System.Nullable{System.Boolean})">
+        <member name="M:SchoolBusAPI.Services.UserService.SearchUsers(System.Nullable{System.Int32}[],System.String,System.Nullable{System.Boolean})">
             <summary>
             Searches Users
             </summary>
