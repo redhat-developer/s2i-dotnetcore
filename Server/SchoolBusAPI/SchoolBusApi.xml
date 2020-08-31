@@ -4219,27 +4219,13 @@
             Create a controller and set the service
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolepermissionsBulkPost(SchoolBusAPI.Models.RolePermission[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Role created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesBulkPost(SchoolBusAPI.Models.Role[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Role created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesGet(System.Nullable{System.Boolean})">
+        <member name="M:SchoolBusAPI.Controllers.RoleController.GetRoles(System.Nullable{System.Boolean})">
             <summary>
             
             </summary>
             <response code="200">OK</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesIdDeletePost(System.Int32)">
+        <member name="M:SchoolBusAPI.Controllers.RoleController.DeleteRole(System.Int32)">
             <summary>
             
             </summary>
@@ -4247,7 +4233,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesIdGet(System.Int32)">
+        <member name="M:SchoolBusAPI.Controllers.RoleController.GetRole(System.Int32)">
             <summary>
             
             </summary>
@@ -4255,7 +4241,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesIdPermissionsGet(System.Int32)">
+        <member name="M:SchoolBusAPI.Controllers.RoleController.GetRolePermissions(System.Int32)">
             <summary>
             
             </summary>
@@ -4263,17 +4249,7 @@
             <param name="id">id of Role to fetch</param>
             <response code="200">OK</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesIdPermissionsPost(System.Int32,SchoolBusAPI.ViewModels.PermissionViewModel)">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a permissions to a role</remarks>
-            <param name="id">id of Role to update</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Role not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesIdPermissionsPut(System.Int32,SchoolBusAPI.ViewModels.PermissionViewModel[])">
+        <member name="M:SchoolBusAPI.Controllers.RoleController.UpdateRolePermissions(System.Int32,SchoolBusAPI.ViewModels.PermissionViewModel[])">
             <summary>
             
             </summary>
@@ -4283,7 +4259,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesIdPut(System.Int32,SchoolBusAPI.ViewModels.RoleViewModel)">
+        <member name="M:SchoolBusAPI.Controllers.RoleController.UpdateRole(System.Int32,SchoolBusAPI.ViewModels.RoleViewModel)">
             <summary>
             
             </summary>
@@ -4292,7 +4268,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.RoleController.RolesPost(SchoolBusAPI.ViewModels.RoleViewModel)">
+        <member name="M:SchoolBusAPI.Controllers.RoleController.CreateRole(SchoolBusAPI.ViewModels.RoleViewModel)">
             <summary>
             
             </summary>
@@ -6488,27 +6464,13 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolepermissionsBulkPostAsync(SchoolBusAPI.Models.RolePermission[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Role created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesBulkPostAsync(SchoolBusAPI.Models.Role[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Role created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesGetAsync(System.Boolean)">
+        <member name="M:SchoolBusAPI.Services.IRoleService.GetRoles(System.Boolean)">
             <summary>
             
             </summary>
             <response code="200">OK</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesIdDeletePostAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.IRoleService.DeleteRole(System.Int32)">
             <summary>
             
             </summary>
@@ -6516,7 +6478,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesIdGetAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.IRoleService.GetRole(System.Int32)">
             <summary>
             
             </summary>
@@ -6524,7 +6486,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesIdPermissionsGetAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.IRoleService.GetRolePermissions(System.Int32)">
             <summary>
             
             </summary>
@@ -6532,17 +6494,7 @@
             <param name="id">id of Role to fetch</param>
             <response code="200">OK</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesIdPermissionsPostAsync(System.Int32,SchoolBusAPI.ViewModels.PermissionViewModel)">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a permissions to a role</remarks>
-            <param name="id">id of Role to update</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Role not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesIdPermissionsPutAsync(System.Int32,SchoolBusAPI.ViewModels.PermissionViewModel[])">
+        <member name="M:SchoolBusAPI.Services.IRoleService.UpdateRolePermissions(System.Int32,SchoolBusAPI.ViewModels.PermissionViewModel[])">
             <summary>
             
             </summary>
@@ -6552,7 +6504,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesIdPutAsync(System.Int32,SchoolBusAPI.ViewModels.RoleViewModel)">
+        <member name="M:SchoolBusAPI.Services.IRoleService.UpdateRole(System.Int32,SchoolBusAPI.ViewModels.RoleViewModel)">
             <summary>
             
             </summary>
@@ -6561,7 +6513,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRoleService.RolesPostAsync(SchoolBusAPI.ViewModels.RoleViewModel)">
+        <member name="M:SchoolBusAPI.Services.IRoleService.CreateRole(SchoolBusAPI.ViewModels.RoleViewModel)">
             <summary>
             
             </summary>
@@ -6578,29 +6530,14 @@
             Create a service and set the database context
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolepermissionsBulkPostAsync(SchoolBusAPI.Models.RolePermission[])">
-            <summary>
-            
-            </summary>
-            <remarks>Bulk load of role permissions</remarks>
-            <param name="items"></param>
-            <response code="201">Roles created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesBulkPostAsync(SchoolBusAPI.Models.Role[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Permissions created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesGetAsync(System.Boolean)">
+        <member name="M:SchoolBusAPI.Services.RoleService.GetRoles(System.Boolean)">
             <summary>
             
             </summary>
             <remarks>Returns a collection of active roles</remarks>
             <response code="200">OK</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesIdDeletePostAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.RoleService.DeleteRole(System.Int32)">
             <summary>
             
             </summary>
@@ -6608,7 +6545,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesIdGetAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.RoleService.GetRole(System.Int32)">
             <summary>
             
             </summary>
@@ -6616,7 +6553,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesIdPermissionsGetAsync(System.Int32)">
+        <member name="M:SchoolBusAPI.Services.RoleService.GetRolePermissions(System.Int32)">
             <summary>
             
             </summary>
@@ -6624,7 +6561,7 @@
             <param name="id">id of Role to fetch</param>
             <response code="200">OK</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesIdPermissionsPutAsync(System.Int32,SchoolBusAPI.ViewModels.PermissionViewModel[])">
+        <member name="M:SchoolBusAPI.Services.RoleService.UpdateRolePermissions(System.Int32,SchoolBusAPI.ViewModels.PermissionViewModel[])">
             <summary>
             
             </summary>
@@ -6634,27 +6571,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesIdPermissionsPostAsync(System.Int32,SchoolBusAPI.Models.Permission[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds permissions to a role</remarks>
-            <param name="id">id of Role to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">Role not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesIdPermissionsPostAsync(System.Int32,SchoolBusAPI.ViewModels.PermissionViewModel)">
-            <summary>
-            
-            </summary>
-            <remarks>Adds permissions to a role</remarks>
-            <param name="id">id of Role to update</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Role not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesIdPutAsync(System.Int32,SchoolBusAPI.ViewModels.RoleViewModel)">
+        <member name="M:SchoolBusAPI.Services.RoleService.UpdateRole(System.Int32,SchoolBusAPI.ViewModels.RoleViewModel)">
             <summary>
             
             </summary>
@@ -6663,7 +6580,7 @@
             <response code="200">OK</response>
             <response code="404">Role not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.RoleService.RolesPostAsync(SchoolBusAPI.ViewModels.RoleViewModel)">
+        <member name="M:SchoolBusAPI.Services.RoleService.CreateRole(SchoolBusAPI.ViewModels.RoleViewModel)">
             <summary>
             
             </summary>
