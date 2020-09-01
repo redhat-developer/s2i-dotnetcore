@@ -111,7 +111,7 @@ namespace SchoolBusAPI.Services
 
             if (!includeExpired)
             {
-                data = data.Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Today);
+                data = data.Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Now);
             }
 
             var roles = Mapper.Map<List<RoleViewModel>>(data);
