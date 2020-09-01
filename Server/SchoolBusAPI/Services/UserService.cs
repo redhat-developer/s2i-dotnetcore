@@ -16,6 +16,7 @@ using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using System;
 
 namespace SchoolBusAPI.Services
 {
@@ -137,7 +138,8 @@ namespace SchoolBusAPI.Services
                 .AsNoTracking()
                 .Include(x => x.District)
                 .Include(x => x.UserRoles)
-                    .ThenInclude(y => y.Role);
+                    .ThenInclude(y => y.Role)
+                .ToList();
 
             return new ObjectResult(Mapper.Map<List<UserViewModel>>(users));
         }
@@ -157,11 +159,16 @@ namespace SchoolBusAPI.Services
                 .Include(x => x.UserRoles)
                     .ThenInclude(y => y.Role)
                 .FirstOrDefault(x => x.Id == id);
+
             if (user == null)
             {
-                // Not Found
                 return new StatusCodeResult(404);
             }
+
+            user.UserRoles = user.UserRoles
+                                .ToList()
+                                .Where(r => r.Role.ExpiryDate == null || r.Role.ExpiryDate > DateTime.UtcNow)
+                                .ToList();
 
             var userView = Mapper.Map<UserViewModel>(user);
 
@@ -234,6 +241,12 @@ namespace SchoolBusAPI.Services
 
             _context.SaveChanges();
 
+
+            user.UserRoles = user.UserRoles
+                    .ToList()
+                    .Where(r => r.Role.ExpiryDate == null || r.Role.ExpiryDate > DateTime.UtcNow)
+                    .ToList();
+
             return new ObjectResult(Mapper.Map<UserViewModel>(user));
         }
 
@@ -251,6 +264,7 @@ namespace SchoolBusAPI.Services
                 .Include(x => x.UserRoles)
                     .ThenInclude(y => y.Role)
                 .FirstOrDefault(x => x.Id == id);
+
             if (user == null)
             {
                 // Not Found
@@ -259,6 +273,11 @@ namespace SchoolBusAPI.Services
 
             user.Active = false;
             _context.SaveChanges();
+
+            user.UserRoles = user.UserRoles
+                .ToList()
+                .Where(r => r.Role.ExpiryDate == null || r.Role.ExpiryDate > DateTime.UtcNow)
+                .ToList();
 
             return new ObjectResult(Mapper.Map<UserViewModel>(user));
         }
@@ -272,19 +291,12 @@ namespace SchoolBusAPI.Services
         /// <response code="404">User not found</response>
         public virtual IActionResult GetUserRoles(int id)
         {
-            var user = _context.Users
-                .AsNoTracking()
-                .Include(x => x.UserRoles)
-                .ThenInclude(y => y.Role)
-                .First(x => x.Id == id);
+            var userRoles = _context.UserRoles
+                        .AsNoTracking()
+                        .Include(x => x.Role)
+                        .Where(x => x.UserId == id && (x.Role.ExpiryDate == null || x.Role.ExpiryDate > DateTime.UtcNow));
 
-            if (user == null)
-            {
-                // Not Found
-                return new StatusCodeResult(404);
-            }
-
-            var result = Mapper.Map<List<UserRoleViewModel>>(user.UserRoles);
+            var result = Mapper.Map<List<UserRoleViewModel>>(userRoles);
 
             return new ObjectResult(result);
         }
@@ -377,8 +389,6 @@ namespace SchoolBusAPI.Services
             var data = _context.Users
                 .AsNoTracking()
                 .Include(x => x.District)
-                .Include(x => x.UserRoles)
-                    .ThenInclude(y => y.Role)
                 .Select(x => x);
 
             // Note that Districts searches SchoolBus Districts, not SchoolBusOwner Districts
