@@ -154,8 +154,8 @@ export function addUserRole(userId, userRole) {
   });
 }
 
-export function updateUserRoles(userId, userRoleArray) {
-  return new ApiRequest(`/users/${userId}/roles`).put(userRoleArray).then(() => {
+export function updateUserRole(userId, userRole) {
+  return new ApiRequest(`/users/${userId}/roles/${userRole.id}`).put(userRole).then(() => {
     // After updating the user's role, refresh the user state.
     return getUser(userId);
   });
