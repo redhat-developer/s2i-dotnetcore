@@ -27,7 +27,7 @@ import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 
-import { daysFromToday, formatDateTime, today, isValidDate, toZuluTime } from '../utils/date';
+import { formatDateTime, today, isValidDate, toZuluTime, dateIsBeforeToday } from '../utils/date';
 import { isBlank, notBlank } from '../utils/string';
 
 class UsersDetail extends React.Component {
@@ -136,18 +136,7 @@ class UsersDetail extends React.Component {
   };
 
   updateUserRole = (userRole) => {
-    // The API call updates all of the user's user roles so we have to
-    // include them all in this call, modifying the one that has just
-    // been expired.
-    var userRoles = this.props.user.userRoles.map((ur) => {
-      return {
-        roleId: ur.roleId,
-        effectiveDate: ur.effectiveDate,
-        expiryDate: userRole.id === ur.id ? userRole.expiryDate : ur.expiryDate,
-      };
-    });
-
-    Api.updateUserRoles(this.props.user.id, userRoles);
+    Api.updateUserRole(this.props.user.id, userRole);
     this.closeUserRoleDialog();
   };
 
@@ -282,7 +271,7 @@ class UsersDetail extends React.Component {
                   var userRoles = _.filter(user.userRoles, (userRole) => {
                     var include = notBlank(userRole.roleName);
                     if (this.state.ui.showExpiredOnly) {
-                      include = include && userRole.expiryDate && daysFromToday(userRole.expiryDate) < 0;
+                      include = include && dateIsBeforeToday(userRole.expiryDate);
                     }
                     return include;
                   });
@@ -323,7 +312,7 @@ class UsersDetail extends React.Component {
                             <td>
                               {formatDateTime(userRole.expiryDate, Constant.DATE_FULL_MONTH_DAY_YEAR)}
                               &nbsp;
-                              {daysFromToday(userRole.expiryDate) < 0 ? <Glyphicon glyph="asterisk" /> : ''}
+                              {dateIsBeforeToday(userRole.expiryDate) ? <Glyphicon glyph="asterisk" /> : ''}
                             </td>
                             <td style={{ textAlign: 'right' }}>
                               <Authorize permissions={Constant.PERMISSION_USER_W}>
