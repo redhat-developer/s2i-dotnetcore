@@ -62,7 +62,7 @@ namespace SchoolBusAPI.Extensions
 
         public static User GetUserByGuid(this IDbAppContext context, string guid)
         {
-            User user = context.Users.Where(x => x.Guid != null && x.Guid == guid)
+            User user = context.Users.Where(x => x.Guid != null && x.Guid == guid && x.Active)
                     .Include(u => u.UserRoles).ThenInclude(r => r.Role).ThenInclude(rp => rp.RolePermissions).ThenInclude(p => p.Permission)
                     .FirstOrDefault();
             return user;
@@ -70,7 +70,7 @@ namespace SchoolBusAPI.Extensions
 
         public static User GetUserBySmUserId(this IDbAppContext context, string smUserId)
         {
-            User user = context.Users.Where(x => x.SmUserId != null && x.SmUserId == smUserId)
+            User user = context.Users.Where(x => x.SmUserId != null && x.SmUserId == smUserId && x.Active)
                     .Include(u => u.UserRoles).ThenInclude(r => r.Role).ThenInclude(rp => rp.RolePermissions).ThenInclude(p => p.Permission)
                     .FirstOrDefault();
             return user;
