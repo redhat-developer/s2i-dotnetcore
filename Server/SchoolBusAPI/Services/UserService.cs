@@ -190,7 +190,7 @@ namespace SchoolBusAPI.Services
 
             _context.SaveChanges();
 
-            return new ObjectResult(item);
+            return new ObjectResult(Mapper.Map<UserViewModel>(user));
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace SchoolBusAPI.Services
             {
                 if (_context.Users.Any(x => x.SmUserId.ToUpper() == user.SmUserId.ToUpper()))
                 {
-                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 302, $"User ID [{user.SmUserId}] already exists.")));
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 302, $"An active/expired user with ID [{user.SmUserId}] already exists. Please check current user, or re-instate the expired user.")));
                 }
             }
 
