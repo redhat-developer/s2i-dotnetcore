@@ -108,11 +108,12 @@ class UsersDetail extends React.Component {
         // Make sure we get the new user's ID
         user.id = this.props.user.id;
       }
+
+      this.props.router.push({
+        pathname: `${Constant.USERS_PATHNAME}/${this.props.user.id}`,
+      });
     });
     this.closeEditDialog();
-    this.props.router.push({
-      pathname: `${Constant.USERS_PATHNAME}/${this.props.user.id}`,
-    });
   };
 
   onCloseEdit = () => {
