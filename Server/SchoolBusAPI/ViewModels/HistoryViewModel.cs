@@ -9,16 +9,9 @@
  */
 
 using System;
-using System.Linq;
-using System.IO;
 using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
@@ -27,7 +20,7 @@ namespace SchoolBusAPI.ViewModels
     /// 
     /// </summary>
     [DataContract]
-    public partial class HistoryViewModel : IEquatable<HistoryViewModel>
+    public partial class HistoryViewModel
     {
         /// <summary>
         /// Default constructor, required by entity framework
@@ -93,140 +86,5 @@ namespace SchoolBusAPI.ViewModels
         [MetaDataExtension (Description = "The primary key of the affected record")]
         public int? AffectedEntityId { get; set; }
 
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("class HistoryViewModel {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  HistoryText: ").Append(HistoryText).Append("\n");
-            sb.Append("  LastUpdateUserid: ").Append(LastUpdateUserid).Append("\n");
-            sb.Append("  LastUpdateTimestamp: ").Append(LastUpdateTimestamp).Append("\n");
-            sb.Append("  AffectedEntityId: ").Append(AffectedEntityId).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="obj">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) { return false; }
-            if (ReferenceEquals(this, obj)) { return true; }
-            if (obj.GetType() != GetType()) { return false; }
-            return Equals((HistoryViewModel)obj);
-        }
-
-        /// <summary>
-        /// Returns true if HistoryViewModel instances are equal
-        /// </summary>
-        /// <param name="other">Instance of HistoryViewModel to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(HistoryViewModel other)
-        {
-
-            if (ReferenceEquals(null, other)) { return false; }
-            if (ReferenceEquals(this, other)) { return true; }
-
-            return                 
-                (
-                    this.Id == other.Id ||
-                    this.Id.Equals(other.Id)
-                ) &&                 
-                (
-                    this.HistoryText == other.HistoryText ||
-                    this.HistoryText != null &&
-                    this.HistoryText.Equals(other.HistoryText)
-                ) &&                 
-                (
-                    this.LastUpdateUserid == other.LastUpdateUserid ||
-                    this.LastUpdateUserid != null &&
-                    this.LastUpdateUserid.Equals(other.LastUpdateUserid)
-                ) &&                 
-                (
-                    this.LastUpdateTimestamp == other.LastUpdateTimestamp ||
-                    this.LastUpdateTimestamp != null &&
-                    this.LastUpdateTimestamp.Equals(other.LastUpdateTimestamp)
-                ) &&                 
-                (
-                    this.AffectedEntityId == other.AffectedEntityId ||
-                    this.AffectedEntityId != null &&
-                    this.AffectedEntityId.Equals(other.AffectedEntityId)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            // credit: http://stackoverflow.com/a/263416/677735
-            unchecked // Overflow is fine, just wrap
-            {
-                int hash = 41;
-                // Suitable nullity checks
-                                   
-                hash = hash * 59 + this.Id.GetHashCode();                if (this.HistoryText != null)
-                {
-                    hash = hash * 59 + this.HistoryText.GetHashCode();
-                }                
-                                if (this.LastUpdateUserid != null)
-                {
-                    hash = hash * 59 + this.LastUpdateUserid.GetHashCode();
-                }                
-                                if (this.LastUpdateTimestamp != null)
-                {
-                    hash = hash * 59 + this.LastUpdateTimestamp.GetHashCode();
-                }                
-                                if (this.AffectedEntityId != null)
-                {
-                    hash = hash * 59 + this.AffectedEntityId.GetHashCode();
-                }                
-                
-                return hash;
-            }
-        }
-
-        #region Operators
-        
-        /// <summary>
-        /// Equals
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        public static bool operator ==(HistoryViewModel left, HistoryViewModel right)
-        {
-            return Equals(left, right);
-        }
-
-        /// <summary>
-        /// Not Equals
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        public static bool operator !=(HistoryViewModel left, HistoryViewModel right)
-        {
-            return !Equals(left, right);
-        }
-
-        #endregion Operators
     }
 }
