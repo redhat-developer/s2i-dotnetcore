@@ -16,7 +16,6 @@ using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
-using System;
 
 namespace SchoolBusAPI.Services
 {
@@ -84,10 +83,11 @@ namespace SchoolBusAPI.Services
         /// </summary>
         /// <remarks>Updates the roles for a user</remarks>
         /// <param name="id">id of User to update</param>
-        /// <param name="items"></param>
+        /// <param name="userRoleId">id of User Role to update</param>
+        /// <param name="item"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
-        IActionResult UpdateUserRoles(int id, UserRoleViewModel[] items);
+        IActionResult UpdateUserRole(int id, int userRoleId, UserRoleViewModel item);
 
         /// <summary>
         /// 
@@ -95,7 +95,7 @@ namespace SchoolBusAPI.Services
         /// <remarks>Create new user</remarks>
         /// <param name="item"></param>
         /// <response code="201">User created</response>
-        IActionResult CreateUser(User item);
+        IActionResult CreateUser(UserViewModel item);
 
         /// <summary>
         /// Searches Users
@@ -125,19 +125,6 @@ namespace SchoolBusAPI.Services
             _context = context;
         }
 
-        private void AdjustUser(SchoolBusAPI.Models.User item)
-        {
-            if (item.District != null)
-            {
-                bool district_exists = _context.Districts.Any(x => x.Id == item.District.Id);
-                if (district_exists)
-                {
-                    District district = _context.Districts.First(x => x.Id == item.District.Id);
-                    item.District = district;
-                }
-            }
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -150,42 +137,9 @@ namespace SchoolBusAPI.Services
                 .AsNoTracking()
                 .Include(x => x.District)
                 .Include(x => x.UserRoles)
-                .ThenInclude(y => y.Role)
-                .ThenInclude(z => z.RolePermissions)
-                .ThenInclude(z => z.Permission);
+                    .ThenInclude(y => y.Role);
 
             return new ObjectResult(Mapper.Map<List<UserViewModel>>(users));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Deletes a user</remarks>
-        /// <param name="id">id of User to delete</param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        public virtual IActionResult DeleteUser(int id)
-        {
-            var user = _context.Users
-                .Include(x => x.UserRoles)
-                .FirstOrDefault(x => x.Id == id);
-            if (user == null)
-            {
-                // Not Found
-                return new StatusCodeResult(404);
-            }
-            if (user.UserRoles != null)
-            {
-                foreach (var item in user.UserRoles)
-                {
-                    _context.UserRoles.Remove(item);
-                }
-            }
-
-            _context.Users.Remove(user);
-            _context.SaveChanges();
-
-            return new ObjectResult(Mapper.Map<UserViewModel>(user));
         }
 
         /// <summary>
@@ -201,16 +155,46 @@ namespace SchoolBusAPI.Services
                 .AsNoTracking()
                 .Include(x => x.District)
                 .Include(x => x.UserRoles)
-                .ThenInclude(y => y.Role)
-                .ThenInclude(z => z.RolePermissions)
-                .ThenInclude(z => z.Permission)
+                    .ThenInclude(y => y.Role)
                 .FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
             }
-            return new ObjectResult(Mapper.Map<UserViewModel>(user));
+
+            var userView = Mapper.Map<UserViewModel>(user);
+
+            return new ObjectResult(userView);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Create new user</remarks>
+        /// <param name="item"></param>
+        /// <response code="201">User created</response>
+        public virtual IActionResult CreateUser(UserViewModel item)
+        {
+            var (userValid, smUserError) = ValidateSmUserId(item);
+            if (!userValid)
+            {
+                return smUserError;
+            }
+
+            var (districtValid, districtError) = ValidateDistrict(item);
+            if (!districtValid)
+            {
+                return districtError;
+            }
+
+            var user = Mapper.Map<User>(item);
+
+            _context.Users.Add(user);
+
+            _context.SaveChanges();
+
+            return new ObjectResult(item);
         }
 
         /// <summary>
@@ -223,41 +207,67 @@ namespace SchoolBusAPI.Services
         /// <response code="404">User not found</response>
         public virtual IActionResult UpdateUser(int id, UserViewModel item)
         {
+            if (id != item.Id)
+            {
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 100, $"Id [{id}] mismatches [{item.Id}]."));
+            }
+
             var user = _context.Users
                 .Include(x => x.District)
                 .Include(x => x.UserRoles)
-                .ThenInclude(y => y.Role)
-                .ThenInclude(z => z.RolePermissions)
-                .ThenInclude(z => z.Permission)
+                    .ThenInclude(y => y.Role)
                 .FirstOrDefault(x => x.Id == id);
 
+            if (user == null)
+            {
+                return new StatusCodeResult(404);
+            }
+
+            var (userValid, smUserError) = ValidateSmUserId(item);
+            if (!userValid)
+            {
+                return smUserError;
+            }
+
+            var (districtValid, districtError) = ValidateDistrict(item);
+            if (!districtValid)
+            {
+                return districtError;
+            }
+
+            user = Mapper.Map(item, user);
+
+            user.District = _context.Districts
+                        .First(x => x.Id == item.District.Id);
+
+            _context.SaveChanges();
+
+            return new ObjectResult(Mapper.Map<UserViewModel>(user));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Deletes a user</remarks>
+        /// <param name="id">id of User to delete</param>
+        /// <response code="200">OK</response>
+        /// <response code="404">User not found</response>
+        public virtual IActionResult DeleteUser(int id)
+        {
+            var user = _context.Users
+                .Include(x => x.District)
+                .Include(x => x.UserRoles)
+                    .ThenInclude(y => y.Role)
+                .FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
                 // Not Found
                 return new StatusCodeResult(404);
             }
 
-            user.Active = item.Active;
-            user.Email = item.Email;
-            user.GivenName = item.GivenName;
-            user.Surname = item.Surname;
-            user.SmUserId = item.SmUserId;
-
-            if (item.District != null)
-            {
-                bool district_exists = _context.Districts.Any(x => x.Id == item.District.Id);
-                if (district_exists)
-                {
-                    District district = _context.Districts
-                        .Include(x => x.Region)
-                        .First(x => x.Id == item.District.Id);
-                    user.District = district;
-                }
-            }
-
-            // Save changes
-            _context.Users.Update(user);
+            user.Active = false;
             _context.SaveChanges();
+
             return new ObjectResult(Mapper.Map<UserViewModel>(user));
         }
 
@@ -287,13 +297,6 @@ namespace SchoolBusAPI.Services
             return new ObjectResult(result);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a role to a user</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="item"></param>
-        /// <response code="201">Role created for user</response>
         public virtual IActionResult CreateUserRole(int id, UserRoleViewModel item)
         {
             bool exists = _context.Users.Any(x => x.Id == id);
@@ -343,98 +346,28 @@ namespace SchoolBusAPI.Services
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Updates the roles for a user</remarks>
-        /// <param name="id">id of User to update</param>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        /// <response code="404">User not found</response>
-        public virtual IActionResult UpdateUserRoles(int id, UserRoleViewModel[] items)
+        public virtual IActionResult UpdateUserRole(int userId, int userRoleId, UserRoleViewModel item)
         {
-            bool exists = _context.Users.Any(x => x.Id == id);
-            if (exists && items != null)
-            {
-                User user = _context.Users
-                    .Include(x => x.District)
-                    .Include(x => x.UserRoles)
-                    .ThenInclude(y => y.Role)
-                    .ThenInclude(z => z.RolePermissions)
-                    .ThenInclude(z => z.Permission)
-                    .First(x => x.Id == id);
-                if (user.UserRoles == null)
-                {
-                    user.UserRoles = new List<UserRole>();
-                }
-                else
-                {
-                    // existing data, clear it.
-                    foreach (var userRole in user.UserRoles)
-                    {
-                        if (_context.UserRoles.Any(x => x.Id == userRole.Id))
-                        {
-                            UserRole delete = _context.UserRoles.First(x => x.Id == userRole.Id);
-                            _context.Remove(delete);
-                        }
-                    }
-                    user.UserRoles.Clear();
-                }
+            bool exists = _context.Users.Any(x => x.Id == userId);
 
-
-                foreach (var item in items)
-                {
-                    // check the role id
-                    bool role_exists = _context.Roles.Any(x => x.Id == item.RoleId);
-                    if (role_exists)
-                    {
-                        // create a new UserRole based on the view model.
-                        UserRole userRole = new UserRole();
-                        Role role = _context.Roles.First(x => x.Id == item.RoleId);
-                        userRole.Role = role;
-                        userRole.EffectiveDate = item.EffectiveDate;
-                        userRole.ExpiryDate = item.ExpiryDate;
-
-                        _context.Add(userRole);
-
-                        if (!user.UserRoles.Contains(userRole))
-                        {
-                            user.UserRoles.Add(userRole);
-                        }
-                    }
-                }
-                _context.Update(user);
-                _context.SaveChanges();
-                return new StatusCodeResult(201);
-            }
-            else
-            {
+            if (!_context.Users.Any(x => x.Id == userId) || item == null)
                 return new StatusCodeResult(400);
-            }
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Create new user</remarks>
-        /// <param name="item"></param>
-        /// <response code="201">User created</response>
-        public virtual IActionResult CreateUser(User item)
-        {
-            AdjustUser(item);
-            bool exists = _context.Users.Any(x => x.Id == item.Id);
-            if (exists)
+            if (userRoleId != item.Id)
             {
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 100, $"Id [{userId}] mismatches [{item.Id}]."));
+            }
 
-                _context.Users.Update(item);
-            }
-            else
-            {
-                _context.Users.Add(item);
-            }
+            if (!_context.UserRoles.Any(x => x.Id == userRoleId && x.UserId == userId))
+                return new StatusCodeResult(400);
+
+            var userRole = _context.UserRoles.First(x => x.Id == item.Id);
+
+            userRole.ExpiryDate = item.ExpiryDate;
 
             _context.SaveChanges();
-            return new ObjectResult(item);
+            return new StatusCodeResult(201);
+
         }
 
         /// <summary>
@@ -452,9 +385,7 @@ namespace SchoolBusAPI.Services
                 .AsNoTracking()
                 .Include(x => x.District)
                 .Include(x => x.UserRoles)
-                .ThenInclude(y => y.Role)
-                .ThenInclude(z => z.RolePermissions)
-                .ThenInclude(z => z.Permission)
+                    .ThenInclude(y => y.Role)
                 .Select(x => x);
 
             // Note that Districts searches SchoolBus Districts, not SchoolBusOwner Districts
@@ -501,6 +432,41 @@ namespace SchoolBusAPI.Services
             var result = Mapper.Map<List<InspectorViewModel>>(data);
 
             return new ObjectResult(result);
+        }
+
+        private (bool success, UnprocessableEntityObjectResult errorResult) ValidateDistrict(UserViewModel user)
+        {
+            if (user.District == null)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 303, $"District is mandatory.")));
+            }
+
+            if (!_context.Districts.Any(x => x.Id == user.District.Id))
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 304, $"District ID [{user.District.Id}] does not exist.")));
+            }
+
+            return (true, null);
+        }
+
+        private (bool success, UnprocessableEntityObjectResult errorResult) ValidateSmUserId(UserViewModel user)
+        {
+            if (user.Id > 0)
+            {
+                if (_context.Users.Any(x => x.Id != user.Id && x.SmUserId.ToUpper() == user.SmUserId.ToUpper()))
+                {
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 301, $"User ID [{user.SmUserId}] already exists.")));
+                }
+            }
+            else
+            {
+                if (_context.Users.Any(x => x.SmUserId.ToUpper() == user.SmUserId.ToUpper()))
+                {
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 302, $"User ID [{user.SmUserId}] already exists.")));
+                }
+            }
+
+            return (true, null);
         }
     }
 }

@@ -102,7 +102,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/users")]
         [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult CreateUser([FromBody] User item)
+        public virtual IActionResult CreateUser([FromBody] UserViewModel item)
         {
             return this._service.CreateUser(item);
         }
@@ -140,17 +140,18 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <remarks>Updates the roles for a user</remarks>
+        /// <remarks>Updates the role for a user</remarks>
         /// <param name="id">id of User to update</param>
+        /// <param name="userRoleId">id of User Role to update</param>
         /// <param name="items"></param>
         /// <response code="200">OK</response>
         /// <response code="404">User not found</response>
         [HttpPut]
-        [Route("/api/users/{id}/roles")]
+        [Route("/api/users/{id}/roles/{userRoleId}")]
         [RequiresPermission(Permissions.UserWrite)]
-        public virtual IActionResult UpdateUserRoles([FromRoute]int id, [FromBody]UserRoleViewModel[] items)
+        public virtual IActionResult UpdateUserRole([FromRoute]int id, [FromRoute]int userRoleId, [FromBody]UserRoleViewModel items)
         {
-            return this._service.UpdateUserRoles(id, items);
+            return this._service.UpdateUserRole(id, userRoleId, items);
         }
 
         /// <summary>

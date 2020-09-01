@@ -4709,7 +4709,7 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.CreateUser(SchoolBusAPI.Models.User)">
+        <member name="M:SchoolBusAPI.Controllers.UserController.CreateUser(SchoolBusAPI.ViewModels.UserViewModel)">
             <summary>
             
             </summary>
@@ -4735,12 +4735,13 @@
             <param name="item"></param>
             <response code="201">Role created for user</response>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.UserController.UpdateUserRoles(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
+        <member name="M:SchoolBusAPI.Controllers.UserController.UpdateUserRole(System.Int32,System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel)">
             <summary>
             
             </summary>
-            <remarks>Updates the roles for a user</remarks>
+            <remarks>Updates the role for a user</remarks>
             <param name="id">id of User to update</param>
+            <param name="userRoleId">id of User Role to update</param>
             <param name="items"></param>
             <response code="200">OK</response>
             <response code="404">User not found</response>
@@ -7322,17 +7323,18 @@
             <param name="item"></param>
             <response code="201">Role created for user</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.UpdateUserRoles(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
+        <member name="M:SchoolBusAPI.Services.IUserService.UpdateUserRole(System.Int32,System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel)">
             <summary>
             
             </summary>
             <remarks>Updates the roles for a user</remarks>
             <param name="id">id of User to update</param>
-            <param name="items"></param>
+            <param name="userRoleId">id of User Role to update</param>
+            <param name="item"></param>
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.IUserService.CreateUser(SchoolBusAPI.Models.User)">
+        <member name="M:SchoolBusAPI.Services.IUserService.CreateUser(SchoolBusAPI.ViewModels.UserViewModel)">
             <summary>
             
             </summary>
@@ -7368,15 +7370,6 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.UserService.DeleteUser(System.Int32)">
-            <summary>
-            
-            </summary>
-            <remarks>Deletes a user</remarks>
-            <param name="id">id of User to delete</param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.UserService.GetUser(System.Int32)">
             <summary>
             
@@ -7385,6 +7378,14 @@
             <param name="id">id of User to fetch</param>
             <response code="200">OK</response>
             <response code="404">User not found</response>
+        </member>
+        <member name="M:SchoolBusAPI.Services.UserService.CreateUser(SchoolBusAPI.ViewModels.UserViewModel)">
+            <summary>
+            
+            </summary>
+            <remarks>Create new user</remarks>
+            <param name="item"></param>
+            <response code="201">User created</response>
         </member>
         <member name="M:SchoolBusAPI.Services.UserService.UpdateUser(System.Int32,SchoolBusAPI.ViewModels.UserViewModel)">
             <summary>
@@ -7396,6 +7397,15 @@
             <response code="200">OK</response>
             <response code="404">User not found</response>
         </member>
+        <member name="M:SchoolBusAPI.Services.UserService.DeleteUser(System.Int32)">
+            <summary>
+            
+            </summary>
+            <remarks>Deletes a user</remarks>
+            <param name="id">id of User to delete</param>
+            <response code="200">OK</response>
+            <response code="404">User not found</response>
+        </member>
         <member name="M:SchoolBusAPI.Services.UserService.GetUserRoles(System.Int32)">
             <summary>
             
@@ -7404,33 +7414,6 @@
             <param name="id">id of User to fetch</param>
             <response code="200">OK</response>
             <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.CreateUserRole(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel)">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a role to a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="item"></param>
-            <response code="201">Role created for user</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.UpdateUserRoles(System.Int32,SchoolBusAPI.ViewModels.UserRoleViewModel[])">
-            <summary>
-            
-            </summary>
-            <remarks>Updates the roles for a user</remarks>
-            <param name="id">id of User to update</param>
-            <param name="items"></param>
-            <response code="200">OK</response>
-            <response code="404">User not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.UserService.CreateUser(SchoolBusAPI.Models.User)">
-            <summary>
-            
-            </summary>
-            <remarks>Create new user</remarks>
-            <param name="item"></param>
-            <response code="201">User created</response>
         </member>
         <member name="M:SchoolBusAPI.Services.UserService.SearchUsers(System.Nullable{System.Int32}[],System.String,System.Nullable{System.Boolean})">
             <summary>
@@ -7465,20 +7448,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.AttachmentViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.AttachmentViewModel.#ctor(System.Int32,System.String,System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.AttachmentViewModel" /> class.
-            </summary>
-            <param name="Id">Primary Key (required).</param>
-            <param name="FileName">Filename as passed by the user uploading the file.</param>
-            <param name="Description">A note about the attachment,  optionally maintained by the user..</param>
-            <param name="Type">Type of attachment.</param>
-        </member>
         <member name="P:SchoolBusAPI.ViewModels.AttachmentViewModel.Id">
             <summary>
             Primary Key
@@ -7502,54 +7471,6 @@
             Type of attachment
             </summary>
             <value>Type of attachment</value>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.AttachmentViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.AttachmentViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.AttachmentViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.AttachmentViewModel.Equals(SchoolBusAPI.ViewModels.AttachmentViewModel)">
-            <summary>
-            Returns true if AttachmentViewModel instances are equal
-            </summary>
-            <param name="other">Instance of AttachmentViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.AttachmentViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.AttachmentViewModel.op_Equality(SchoolBusAPI.ViewModels.AttachmentViewModel,SchoolBusAPI.ViewModels.AttachmentViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.AttachmentViewModel.op_Inequality(SchoolBusAPI.ViewModels.AttachmentViewModel,SchoolBusAPI.ViewModels.AttachmentViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
         </member>
         <member name="T:SchoolBusAPI.ViewModels.CurrentUserViewModel">
             <summary>
@@ -7617,54 +7538,6 @@
             Gets or Sets ReInspections
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.Equals(SchoolBusAPI.ViewModels.CurrentUserViewModel)">
-            <summary>
-            Returns true if CurrentUserViewModel instances are equal
-            </summary>
-            <param name="other">Instance of CurrentUserViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.op_Equality(SchoolBusAPI.ViewModels.CurrentUserViewModel,SchoolBusAPI.ViewModels.CurrentUserViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.CurrentUserViewModel.op_Inequality(SchoolBusAPI.ViewModels.CurrentUserViewModel,SchoolBusAPI.ViewModels.CurrentUserViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.HistoryViewModel">
             <summary>
             
@@ -7715,77 +7588,10 @@
             </summary>
             <value>The primary key of the affected record</value>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.HistoryViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.HistoryViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.HistoryViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.HistoryViewModel.Equals(SchoolBusAPI.ViewModels.HistoryViewModel)">
-            <summary>
-            Returns true if HistoryViewModel instances are equal
-            </summary>
-            <param name="other">Instance of HistoryViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.HistoryViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.HistoryViewModel.op_Equality(SchoolBusAPI.ViewModels.HistoryViewModel,SchoolBusAPI.ViewModels.HistoryViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.HistoryViewModel.op_Inequality(SchoolBusAPI.ViewModels.HistoryViewModel,SchoolBusAPI.ViewModels.HistoryViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.NotificationViewModel">
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.NotificationViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.NotificationViewModel.#ctor(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.NotificationViewModel" /> class.
-            </summary>
-            <param name="Id">Id.</param>
-            <param name="EventId">EventId.</param>
-            <param name="Event2Id">Event2Id.</param>
-            <param name="HasBeenViewed">HasBeenViewed.</param>
-            <param name="IsWatchNotification">IsWatchNotification.</param>
-            <param name="IsExpired">IsExpired.</param>
-            <param name="IsAllDay">IsAllDay.</param>
-            <param name="PriorityCode">PriorityCode.</param>
-            <param name="UserId">UserId.</param>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.NotificationViewModel.Id">
             <summary>
@@ -7832,72 +7638,10 @@
             Gets or Sets UserId
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.NotificationViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.NotificationViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.NotificationViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.NotificationViewModel.Equals(SchoolBusAPI.ViewModels.NotificationViewModel)">
-            <summary>
-            Returns true if NotificationViewModel instances are equal
-            </summary>
-            <param name="other">Instance of NotificationViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.NotificationViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.NotificationViewModel.op_Equality(SchoolBusAPI.ViewModels.NotificationViewModel,SchoolBusAPI.ViewModels.NotificationViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.NotificationViewModel.op_Inequality(SchoolBusAPI.ViewModels.NotificationViewModel,SchoolBusAPI.ViewModels.NotificationViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.PermissionViewModel">
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.#ctor(System.String,System.String,System.String,System.Nullable{System.Int32})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.PermissionViewModel" /> class.
-            </summary>
-            <param name="Code">Code (required).</param>
-            <param name="Name">Name (required).</param>
-            <param name="Description">Description (required).</param>
-            <param name="Id">Id.</param>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.PermissionViewModel.Code">
             <summary>
@@ -7924,87 +7668,10 @@
             Gets or Sets ExpiryDate
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.Equals(SchoolBusAPI.ViewModels.PermissionViewModel)">
-            <summary>
-            Returns true if PermissionViewModel instances are equal
-            </summary>
-            <param name="other">Instance of PermissionViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.op_Equality(SchoolBusAPI.ViewModels.PermissionViewModel,SchoolBusAPI.ViewModels.PermissionViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermissionViewModel.op_Inequality(SchoolBusAPI.ViewModels.PermissionViewModel,SchoolBusAPI.ViewModels.PermissionViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.PermitViewModel">
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermitViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermitViewModel.#ctor(System.Nullable{System.Int32},System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Nullable{System.Int32},System.String,System.String,System.String,System.Nullable{System.Int32},System.String,System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.PermitViewModel" /> class.
-            </summary>
-            <param name="PermitNumber">PermitNumber.</param>
-            <param name="PermitIssueDate">PermitIssueDate.</param>
-            <param name="SchoolBusOwnerName">SchoolBusOwnerName.</param>
-            <param name="SchoolBusOwnerAddressLine1">SchoolBusOwnerAddressLine1.</param>
-            <param name="SchoolBusOwnerAddressLine2">SchoolBusOwnerAddressLine2.</param>
-            <param name="SchoolBusMobilityAidCapacity">SchoolBusMobilityAidCapacity.</param>
-            <param name="SchoolBusOwnerCity">SchoolBusOwnerCity.</param>
-            <param name="SchoolBusOwnerProvince">SchoolBusOwnerProvince.</param>
-            <param name="SchoolBusOwnerPostalCode">SchoolBusOwnerPostalCode.</param>
-            <param name="IcbcRegistrationNumber">IcbcRegistrationNumber.</param>
-            <param name="VehicleIdentificationNumber">VehicleIdentificationNumber.</param>
-            <param name="IcbcModelYear">IcbcModelYear.</param>
-            <param name="IcbcMake">IcbcMake.</param>
-            <param name="RestrictionsText">RestrictionsText.</param>
-            <param name="SchoolDistrictshortName">SchoolDistrictshortName.</param>
-            <param name="SchoolBusSeatingCapacity">SchoolBusSeatingCapacity.</param>
-            <param name="UnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
-            <param name="PermitClassCode">The enumerated class of School Bus from drop down.</param>
-            <param name="BodyTypeCode">The enumerated body type of the School Bus from drop down.</param>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.PermitViewModel.PermitNumber">
             <summary>
@@ -8104,71 +7771,10 @@
             </summary>
             <value>The enumerated body type of the School Bus from drop down</value>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermitViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermitViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermitViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermitViewModel.Equals(SchoolBusAPI.ViewModels.PermitViewModel)">
-            <summary>
-            Returns true if PermitViewModel instances are equal
-            </summary>
-            <param name="other">Instance of PermitViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermitViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermitViewModel.op_Equality(SchoolBusAPI.ViewModels.PermitViewModel,SchoolBusAPI.ViewModels.PermitViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.PermitViewModel.op_Inequality(SchoolBusAPI.ViewModels.PermitViewModel,SchoolBusAPI.ViewModels.PermitViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.RolePermissionViewModel">
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.#ctor(System.Int32,System.Int32,System.Nullable{System.Int32})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.RolePermissionViewModel" /> class.
-            </summary>
-            <param name="RoleId">RoleId (required).</param>
-            <param name="PermissionId">PermissionId (required).</param>
-            <param name="Id">Id.</param>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.RolePermissionViewModel.RoleId">
             <summary>
@@ -8190,67 +7796,9 @@
             Gets or Sets ExpiryDate
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.Equals(SchoolBusAPI.ViewModels.RolePermissionViewModel)">
-            <summary>
-            Returns true if RolePermissionViewModel instances are equal
-            </summary>
-            <param name="other">Instance of RolePermissionViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.op_Equality(SchoolBusAPI.ViewModels.RolePermissionViewModel,SchoolBusAPI.ViewModels.RolePermissionViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RolePermissionViewModel.op_Inequality(SchoolBusAPI.ViewModels.RolePermissionViewModel,SchoolBusAPI.ViewModels.RolePermissionViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.RoleViewModel">
             <summary>
             
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.#ctor(System.Int32,System.String,System.String,System.Nullable{System.DateTime})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.RoleViewModel" /> class.
             </summary>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.RoleViewModel.Id">
@@ -8273,81 +7821,10 @@
             Gets or Sets ExpiryDate
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.Equals(SchoolBusAPI.ViewModels.RoleViewModel)">
-            <summary>
-            Returns true if RoleViewModel instances are equal
-            </summary>
-            <param name="other">Instance of RoleViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.op_Equality(SchoolBusAPI.ViewModels.RoleViewModel,SchoolBusAPI.ViewModels.RoleViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.RoleViewModel.op_Inequality(SchoolBusAPI.ViewModels.RoleViewModel,SchoolBusAPI.ViewModels.RoleViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel">
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.#ctor(System.Int32,System.String,System.String,System.Nullable{System.DateTime},SchoolBusAPI.Models.Contact,SchoolBusAPI.Models.District,System.Collections.Generic.List{SchoolBusAPI.Models.Contact},System.Collections.Generic.List{SchoolBusAPI.Models.Note},System.Collections.Generic.List{SchoolBusAPI.Models.Attachment},System.Collections.Generic.List{SchoolBusAPI.Models.History},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel" /> class.
-            </summary>
-            <param name="Id">Primary Key (required).</param>
-            <param name="Name">The name of the School Bus owner as defined by the user&amp;#x2F;Inspector. Not tied to the ICBC or NSC names,  but whatever is most useful for the Inspectors..</param>
-            <param name="Status">Status of the School Bus owner - enumerated value Active,  Archived.</param>
-            <param name="DateCreated">The date-time of the creation of the record from the audit fields. Since this might be surfaced in the API,  adding it to the definition..</param>
-            <param name="PrimaryContact">Link to the designated Primary Contact for the Inspector to the School Bus Owner organization..</param>
-            <param name="District">The District to which this School Bus is affliated..</param>
-            <param name="Contacts">The set of contacts related to the School Bus Owner..</param>
-            <param name="Notes">The set of notes about the school bus owner entered by users..</param>
-            <param name="Attachments">The set of attachments about the school bus owner uploaded by the users..</param>
-            <param name="History">The history of updates made to the School Bus Owner data..</param>
-            <param name="NextInspectionDate">The next inspection date associated with this owner.</param>
-            <param name="NumberOfBuses">The number of buses for which this owner is associated with.</param>
-            <param name="NextInspectionTypeCode">Type Code for the Next InspectionType.  Null if there are no next inspections..</param>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.Id">
             <summary>
@@ -8427,75 +7904,10 @@
             </summary>
             <value>Type Code for the Next InspectionType.  Null if there are no next inspections.</value>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.Equals(SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel)">
-            <summary>
-            Returns true if SchoolBusOwnerViewModel instances are equal
-            </summary>
-            <param name="other">Instance of SchoolBusOwnerViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.op_Equality(SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel,SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel.op_Inequality(SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel,SchoolBusAPI.ViewModels.SchoolBusOwnerViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.UserDetailsViewModel">
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserDetailsViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserDetailsViewModel.#ctor(System.Int32,System.Boolean,System.String,System.String,System.String,System.String,System.Collections.Generic.List{SchoolBusAPI.ViewModels.PermissionViewModel})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.UserDetailsViewModel" /> class.
-            </summary>
-            <param name="Id">Id (required).</param>
-            <param name="Active">Active (required).</param>
-            <param name="GivenName">GivenName.</param>
-            <param name="Surname">Surname.</param>
-            <param name="Initials">Initials.</param>
-            <param name="Email">Email.</param>
-            <param name="Permissions">Permissions.</param>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.UserDetailsViewModel.Id">
             <summary>
@@ -8532,73 +7944,10 @@
             Gets or Sets Permissions
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserDetailsViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserDetailsViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserDetailsViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserDetailsViewModel.Equals(SchoolBusAPI.ViewModels.UserDetailsViewModel)">
-            <summary>
-            Returns true if UserDetailsViewModel instances are equal
-            </summary>
-            <param name="other">Instance of UserDetailsViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserDetailsViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserDetailsViewModel.op_Equality(SchoolBusAPI.ViewModels.UserDetailsViewModel,SchoolBusAPI.ViewModels.UserDetailsViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserDetailsViewModel.op_Inequality(SchoolBusAPI.ViewModels.UserDetailsViewModel,SchoolBusAPI.ViewModels.UserDetailsViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.UserFavouriteViewModel">
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserFavouriteViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserFavouriteViewModel.#ctor(System.Nullable{System.Int32},System.String,System.String,System.Nullable{System.Boolean},System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.UserFavouriteViewModel" /> class.
-            </summary>
-            <param name="Id">Id.</param>
-            <param name="Name">Context Name.</param>
-            <param name="Value">Saved search.</param>
-            <param name="IsDefault">IsDefault.</param>
-            <param name="Type">Type of favourite.</param>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.UserFavouriteViewModel.Id">
             <summary>
@@ -8627,54 +7976,6 @@
             Type of favourite
             </summary>
             <value>Type of favourite</value>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserFavouriteViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserFavouriteViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserFavouriteViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserFavouriteViewModel.Equals(SchoolBusAPI.ViewModels.UserFavouriteViewModel)">
-            <summary>
-            Returns true if UserFavouriteViewModel instances are equal
-            </summary>
-            <param name="other">Instance of UserFavouriteViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserFavouriteViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserFavouriteViewModel.op_Equality(SchoolBusAPI.ViewModels.UserFavouriteViewModel,SchoolBusAPI.ViewModels.UserFavouriteViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserFavouriteViewModel.op_Inequality(SchoolBusAPI.ViewModels.UserFavouriteViewModel,SchoolBusAPI.ViewModels.UserFavouriteViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.UserListViewModel.Active">
             <summary>
@@ -8712,21 +8013,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserRoleViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserRoleViewModel.#ctor(System.DateTime,System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.DateTime})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.ViewModels.UserRoleViewModel" /> class.
-            </summary>
-            <param name="EffectiveDate">EffectiveDate (required).</param>
-            <param name="RoleId">RoleId (required).</param>
-            <param name="UserId">UserId (required).</param>
-            <param name="Id">Id.</param>
-            <param name="ExpiryDate">ExpiryDate.</param>
-        </member>
         <member name="P:SchoolBusAPI.ViewModels.UserRoleViewModel.EffectiveDate">
             <summary>
             Gets or Sets EffectiveDate
@@ -8752,62 +8038,9 @@
             Gets or Sets ExpiryDate
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserRoleViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserRoleViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserRoleViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserRoleViewModel.Equals(SchoolBusAPI.ViewModels.UserRoleViewModel)">
-            <summary>
-            Returns true if UserRoleViewModel instances are equal
-            </summary>
-            <param name="other">Instance of UserRoleViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserRoleViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserRoleViewModel.op_Equality(SchoolBusAPI.ViewModels.UserRoleViewModel,SchoolBusAPI.ViewModels.UserRoleViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserRoleViewModel.op_Inequality(SchoolBusAPI.ViewModels.UserRoleViewModel,SchoolBusAPI.ViewModels.UserRoleViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.ViewModels.UserViewModel">
             <summary>
             
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserViewModel.#ctor">
-            <summary>
-            Default constructor, required by entity framework
             </summary>
         </member>
         <member name="P:SchoolBusAPI.ViewModels.UserViewModel.Id">
@@ -8850,54 +8083,6 @@
             The District to which this User is affliated.
             </summary>
             <value>The District to which this User is affliated.</value>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserViewModel.ToString">
-            <summary>
-            Returns the string presentation of the object
-            </summary>
-            <returns>String presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserViewModel.ToJson">
-            <summary>
-            Returns the JSON string presentation of the object
-            </summary>
-            <returns>JSON string presentation of the object</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserViewModel.Equals(System.Object)">
-            <summary>
-            Returns true if objects are equal
-            </summary>
-            <param name="obj">Object to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserViewModel.Equals(SchoolBusAPI.ViewModels.UserViewModel)">
-            <summary>
-            Returns true if UserViewModel instances are equal
-            </summary>
-            <param name="other">Instance of UserViewModel to be compared</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserViewModel.GetHashCode">
-            <summary>
-            Gets the hash code
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserViewModel.op_Equality(SchoolBusAPI.ViewModels.UserViewModel,SchoolBusAPI.ViewModels.UserViewModel)">
-            <summary>
-            Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.ViewModels.UserViewModel.op_Inequality(SchoolBusAPI.ViewModels.UserViewModel,SchoolBusAPI.ViewModels.UserViewModel)">
-            <summary>
-            Not Equals
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
         </member>
     </members>
 </doc>

@@ -15,6 +15,8 @@ namespace SchoolBusAPI.Mappings
             CreateMap<User, InspectorViewModel>();
             CreateMap<User, UserListViewModel>();
 
+            CreateMap<District, DistrictViewModel>();
+
             CreateMap<UserRole, UserRoleViewModel>();
 
             CreateMap<Role, RoleViewModel>();

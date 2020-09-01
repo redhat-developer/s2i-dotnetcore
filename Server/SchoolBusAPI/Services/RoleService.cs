@@ -285,7 +285,7 @@ namespace SchoolBusAPI.Services
         {
             if (id != item.Id)
             {
-                return new UnprocessableEntityObjectResult(new Error("Validation Error", 203, $"Id [{id}] mismatches [{item.Id}]."));
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 100, $"Id [{id}] mismatches [{item.Id}]."));
             }
 
             var role = _context.Roles.FirstOrDefault(x => x.Id == id);
@@ -295,13 +295,13 @@ namespace SchoolBusAPI.Services
                 return new StatusCodeResult(404);
             }
 
-            if (_context.Roles.AsNoTracking().Any(r => r.Id != item.Id && r.Name.ToUpper() == item.Name.ToUpperInvariant()))
+            var (roleValid, roleNameError) = ValidateRoleName(item);
+            if (!roleValid)
             {
-                return new UnprocessableEntityObjectResult(new Error("Validation Error", 202, $"Role [{item.Name}] already exists."));
+                return roleNameError;
             }
 
             Mapper.Map(item, role);
-            _context.Roles.Update(role);
             _context.SaveChanges();
 
             return new ObjectResult(Mapper.Map<RoleViewModel>(role));
@@ -314,9 +314,10 @@ namespace SchoolBusAPI.Services
         /// <response code="201">Role created</response>
         public virtual IActionResult CreateRole(RoleViewModel item)
         {
-            if (_context.Roles.AsNoTracking().Any(r => r.Name.ToUpper() == item.Name.ToUpperInvariant()))
+            var (roleValid, roleNameError) = ValidateRoleName(item);
+            if (!roleValid)
             {
-                return new UnprocessableEntityObjectResult(new Error("Validation Error", 201, $"Role [{item.Name}] already exists."));
+                return roleNameError;
             }
 
             var role = new Role();
@@ -326,6 +327,26 @@ namespace SchoolBusAPI.Services
             _context.SaveChanges();
 
             return new ObjectResult(Mapper.Map<RoleViewModel>(role));
+        }
+
+        private (bool success, UnprocessableEntityObjectResult errorResult) ValidateRoleName(RoleViewModel role)
+        {
+            if (role.Id > 0)
+            {
+                if (_context.Roles.Any(x => x.Id != role.Id && x.Name.ToUpper() == role.Name.ToUpper()))
+                {
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 201, $"User ID [{role.Name}] already exists.")));
+                }
+            }
+            else
+            {
+                if (_context.Roles.Any(x => x.Name.ToUpper() == role.Name.ToUpper()))
+                {
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 202, $"User ID [{role.Name}] already exists.")));
+                }
+            }
+
+            return (true, null);
         }
     }
 }

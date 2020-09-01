@@ -9,17 +9,7 @@
  */
 
 using System;
-using System.Linq;
-using System.IO;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.ViewModels
 {
@@ -27,26 +17,8 @@ namespace SchoolBusAPI.ViewModels
     /// 
     /// </summary>
     [DataContract]
-    public partial class RoleViewModel : IEquatable<RoleViewModel>
+    public partial class RoleViewModel 
     {
-        /// <summary>
-        /// Default constructor, required by entity framework
-        /// </summary>
-        public RoleViewModel()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RoleViewModel" /> class.
-        /// </summary>
-        public RoleViewModel(int Id, string Name, string Description, DateTime? expiryDate)
-        {   
-            this.Id = Id;
-            this.Name = Name;
-            this.Description = Description;
-            this.ExpiryDate = expiryDate;
-        }
-
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
@@ -70,115 +42,5 @@ namespace SchoolBusAPI.ViewModels
         /// </summary>
         [DataMember(Name="expiryDate")]
         public DateTime? ExpiryDate { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            return ToJson();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="obj">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) { return false; }
-            if (ReferenceEquals(this, obj)) { return true; }
-            if (obj.GetType() != GetType()) { return false; }
-            return Equals((RoleViewModel)obj);
-        }
-
-        /// <summary>
-        /// Returns true if RoleViewModel instances are equal
-        /// </summary>
-        /// <param name="other">Instance of RoleViewModel to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RoleViewModel other)
-        {
-
-            if (ReferenceEquals(null, other)) { return false; }
-            if (ReferenceEquals(this, other)) { return true; }
-
-            return                 
-                (
-                    this.Id == other.Id ||
-                    this.Id.Equals(other.Id)
-                ) &&                 
-                (
-                    this.Name == other.Name ||
-                    this.Name != null &&
-                    this.Name.Equals(other.Name)
-                ) &&                 
-                (
-                    this.Description == other.Description ||
-                    this.Description != null &&
-                    this.Description.Equals(other.Description)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            // credit: http://stackoverflow.com/a/263416/677735
-            unchecked // Overflow is fine, just wrap
-            {
-                int hash = 41;
-                // Suitable nullity checks
-                                   
-                hash = hash * 59 + this.Id.GetHashCode();                if (this.Name != null)
-                {
-                    hash = hash * 59 + this.Name.GetHashCode();
-                }                
-                                if (this.Description != null)
-                {
-                    hash = hash * 59 + this.Description.GetHashCode();
-                }                
-                
-                return hash;
-            }
-        }
-
-        #region Operators
-        
-        /// <summary>
-        /// Equals
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        public static bool operator ==(RoleViewModel left, RoleViewModel right)
-        {
-            return Equals(left, right);
-        }
-
-        /// <summary>
-        /// Not Equals
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        public static bool operator !=(RoleViewModel left, RoleViewModel right)
-        {
-            return !Equals(left, right);
-        }
-
-        #endregion Operators
     }
 }
