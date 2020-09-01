@@ -335,14 +335,14 @@ namespace SchoolBusAPI.Services
             {
                 if (_context.Roles.Any(x => x.Id != role.Id && x.Name.ToUpper() == role.Name.ToUpper()))
                 {
-                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 201, $"User ID [{role.Name}] already exists.")));
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 201, $"Role [{role.Name}] already exists.")));
                 }
             }
             else
             {
                 if (_context.Roles.Any(x => x.Name.ToUpper() == role.Name.ToUpper()))
                 {
-                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 202, $"User ID [{role.Name}] already exists.")));
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 202, $"Role [{role.Name}] already exists.")));
                 }
             }
 
