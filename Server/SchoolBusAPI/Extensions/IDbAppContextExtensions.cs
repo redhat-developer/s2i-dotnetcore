@@ -251,7 +251,7 @@ namespace SchoolBusAPI.Extensions
                     user.UserRoles.Add(
                         new UserRole
                         {
-                            EffectiveDate = DateTime.UtcNow,
+                            EffectiveDate = DateTime.UtcNow.Date,
                             Role = role
                         });
                 }
