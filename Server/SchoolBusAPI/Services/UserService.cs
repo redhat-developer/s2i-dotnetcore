@@ -190,7 +190,7 @@ namespace SchoolBusAPI.Services
 
             _context.SaveChanges();
 
-            return new ObjectResult(item);
+            return new ObjectResult(Mapper.Map<UserViewModel>(user));
         }
 
         /// <summary>

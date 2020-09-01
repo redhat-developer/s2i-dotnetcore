@@ -110,6 +110,9 @@ class UsersDetail extends React.Component {
       }
     });
     this.closeEditDialog();
+    this.props.router.push({
+      pathname: `${Constant.USERS_PATHNAME}/${this.props.user.id}`,
+    });
   };
 
   onCloseEdit = () => {
