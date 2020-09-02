@@ -63,7 +63,7 @@ class TopNav extends React.Component {
                   <NavItem eventKey={2}>School Buses</NavItem>
                 </LinkContainer>
               </Authorize>
-              <Authorize permissions={Constant.PERMISSION_SB_R}>
+              <Authorize permissions={Constant.PERMISSION_OWNER_R}>
                 <LinkContainer to={{ pathname: `/${Constant.OWNERS_PATHNAME}` }}>
                   <NavItem eventKey={3}>Owners</NavItem>
                 </LinkContainer>
