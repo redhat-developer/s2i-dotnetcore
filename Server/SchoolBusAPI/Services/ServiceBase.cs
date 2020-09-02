@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Models;
 using System;
+using System.Linq;
 using System.Security.Claims;
 
 namespace SchoolBusAPI.Services
@@ -74,6 +77,18 @@ namespace SchoolBusAPI.Services
         protected OkObjectResult Ok(object value)
         {
             return new OkObjectResult(value);
+        }
+
+
+        protected bool CurrentUserHasAllThePermissions(int roleId)
+        {
+            var permissions = DbContext.RolePermissions
+                .AsNoTracking()
+                .Where(rp => rp.RoleId == roleId)
+                .Select(rp => rp.Permission.Code)
+                .ToArray();
+
+            return User.HasPermissions(permissions);
         }
     }
 }

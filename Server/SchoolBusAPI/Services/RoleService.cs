@@ -132,17 +132,6 @@ namespace SchoolBusAPI.Services
             return new ObjectResult(roles);
         }
 
-        private bool CurrentUserHasAllThePermissions(int roleId)
-        {
-            var permissions = _context.RolePermissions
-                .AsNoTracking()
-                .Where(rp => rp.RoleId == roleId)
-                .Select(rp => rp.Permission.Code)
-                .ToArray();
-
-            return User.HasPermissions(permissions);
-        }
-
         /// <summary>
         /// 
         /// </summary>
