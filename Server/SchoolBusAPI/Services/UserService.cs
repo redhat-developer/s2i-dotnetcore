@@ -464,13 +464,15 @@ namespace SchoolBusAPI.Services
 
             var userRoleExists = _context.UserRoles.Any(x => x.UserId == userId && x.RoleId == userRole.RoleId);
 
-            if (userRole.Id == 0 && userRoleExists)
+            if (userRole.Id == null || userRole.Id == 0) //new user role
             {
-                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 307, $"The role is already assigned to the user.")));
+                if (userRoleExists)
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 307, $"The role is already assigned to the user.")));
             }
-            else if (userRole.Id != 0 && !userRoleExists)
+            else
             {
-                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 308, $"The user must have the role to update the user role.")));
+                if (!userRoleExists)
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 308, $"The user must have the role to update the user role.")));
             }
 
             var role = _context.Roles.First(x => x.Id == userRole.RoleId);
