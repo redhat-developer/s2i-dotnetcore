@@ -58,12 +58,16 @@ class TopNav extends React.Component {
               <LinkContainer to={{ pathname: `/${Constant.HOME_PATHNAME}` }}>
                 <NavItem eventKey={1}>Home</NavItem>
               </LinkContainer>
-              <LinkContainer to={{ pathname: `/${Constant.BUSES_PATHNAME}` }}>
-                <NavItem eventKey={2}>School Buses</NavItem>
-              </LinkContainer>
-              <LinkContainer to={{ pathname: `/${Constant.OWNERS_PATHNAME}` }}>
-                <NavItem eventKey={3}>Owners</NavItem>
-              </LinkContainer>
+              <Authorize permissions={Constant.PERMISSION_SB_R}>
+                <LinkContainer to={{ pathname: `/${Constant.BUSES_PATHNAME}` }}>
+                  <NavItem eventKey={2}>School Buses</NavItem>
+                </LinkContainer>
+              </Authorize>
+              <Authorize permissions={Constant.PERMISSION_SB_R}>
+                <LinkContainer to={{ pathname: `/${Constant.OWNERS_PATHNAME}` }}>
+                  <NavItem eventKey={3}>Owners</NavItem>
+                </LinkContainer>
+              </Authorize>
               <LinkContainer to={{ pathname: `/${Constant.NOTIFICATIONS_PATHNAME}` }}>
                 <NavItem eventKey={4}>Notifications</NavItem>
               </LinkContainer>
