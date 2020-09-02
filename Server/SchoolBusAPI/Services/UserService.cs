@@ -331,42 +331,20 @@ namespace SchoolBusAPI.Services
             return new StatusCodeResult(201);
         }
 
-        private (bool success, UnprocessableEntityObjectResult errorResult) ValidateUserRole(int userId, UserRoleViewModel userRole)
-        {
-            if (!_context.Users.Any(x => x.Id == userId))
-            {
-                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 305, $"User does not exist.")));
-            }
-
-            if (!_context.Roles.Any(x => x.Id == userRole.RoleId))
-            {
-                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 306, $"Role does not exist.")));
-            }
-
-            if (_context.UserRoles.Any(x => x.UserId == userId && x.RoleId == userRole.RoleId))
-            {
-                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 307, $"The role is already assigned to the user.")));
-            }
-
-            return (true, null);
-        }
-
         public virtual IActionResult UpdateUserRole(int userId, int userRoleId, UserRoleViewModel item)
         {
-            bool exists = _context.Users.Any(x => x.Id == userId);
-
-            if (!_context.Users.Any(x => x.Id == userId) || item == null)
-                return new StatusCodeResult(400);
-
-            if (userRoleId != item.Id)
+            if (userRoleId != item.Id || userRoleId == 0)
             {
                 return new UnprocessableEntityObjectResult(new Error("Validation Error", 100, $"Id [{userId}] mismatches [{item.Id}]."));
             }
 
-            if (!_context.UserRoles.Any(x => x.Id == userRoleId && x.UserId == userId))
-                return new StatusCodeResult(400);
+            var (userRoleValid, userRoleError) = ValidateUserRole(userId, item);
+            if (!userRoleValid)
+                return userRoleError;
 
-            var userRole = _context.UserRoles.First(x => x.Id == item.Id);
+            var userRole = _context.UserRoles
+                .Include(x => x.Role)
+                .First(x => x.Id == item.Id);                
 
             userRole.ExpiryDate = item.ExpiryDate;
 
@@ -437,21 +415,6 @@ namespace SchoolBusAPI.Services
             return new ObjectResult(result);
         }
 
-        private (bool success, UnprocessableEntityObjectResult errorResult) ValidateDistrict(UserViewModel user)
-        {
-            if (user.District == null)
-            {
-                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 303, $"District is mandatory.")));
-            }
-
-            if (!_context.Districts.Any(x => x.Id == user.District.Id))
-            {
-                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 304, $"District ID [{user.District.Id}] does not exist.")));
-            }
-
-            return (true, null);
-        }
-
         private (bool success, UnprocessableEntityObjectResult errorResult) ValidateSmUserId(UserViewModel user)
         {
             if (user.Id > 0)
@@ -467,6 +430,54 @@ namespace SchoolBusAPI.Services
                 {
                     return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 302, $"An active/expired user with ID [{user.SmUserId}] already exists. Please check current user, or re-instate the expired user.")));
                 }
+            }
+
+            return (true, null);
+        }
+
+        private (bool success, UnprocessableEntityObjectResult errorResult) ValidateDistrict(UserViewModel user)
+        {
+            if (user.District == null)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 303, $"District is mandatory.")));
+            }
+
+            if (!_context.Districts.Any(x => x.Id == user.District.Id))
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 304, $"District ID [{user.District.Id}] does not exist.")));
+            }
+
+            return (true, null);
+        }
+
+        private (bool success, UnprocessableEntityObjectResult errorResult) ValidateUserRole(int userId, UserRoleViewModel userRole)
+        {
+            if (!_context.Users.Any(x => x.Id == userId))
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 305, $"User does not exist.")));
+            }
+
+            if (!_context.Roles.Any(x => x.Id == userRole.RoleId))
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 306, $"Role does not exist.")));
+            }
+
+            var userRoleExists = _context.UserRoles.Any(x => x.UserId == userId && x.RoleId == userRole.RoleId);
+
+            if (userRole.Id == 0 && userRoleExists)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 307, $"The role is already assigned to the user.")));
+            }
+            else if (userRole.Id != 0 && !userRoleExists)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 308, $"The user must have the role to update the user role.")));
+            }
+
+            var role = _context.Roles.First(x => x.Id == userRole.RoleId);
+
+            if (!CurrentUserHasAllThePermissions(userRole.RoleId))
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Authorization Error", 309, $"You don't have enough permissions to handle the role [{role.Name}]")));
             }
 
             return (true, null);
