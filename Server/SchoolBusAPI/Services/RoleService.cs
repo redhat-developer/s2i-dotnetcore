@@ -147,9 +147,9 @@ namespace SchoolBusAPI.Services
                 return new StatusCodeResult(404);
             }
 
-            if (role.Name == Roles.SystemAdmininstrator)
+            if (role.Name.ToUpperInvariant() == Roles.SystemAdmininstrator.ToUpperInvariant())
             {
-                return new StatusCodeResult(403); 
+                return new UnprocessableEntityObjectResult(new Error("Validation Error", 201, $"Role [{role.Name}] cannot be created or updated."));
             }
 
             role.ExpiryDate = DateTime.Today;
@@ -291,6 +291,7 @@ namespace SchoolBusAPI.Services
             }
 
             Mapper.Map(item, role);
+
             _context.SaveChanges();
 
             return new ObjectResult(Mapper.Map<RoleViewModel>(role));
@@ -320,18 +321,23 @@ namespace SchoolBusAPI.Services
 
         private (bool success, UnprocessableEntityObjectResult errorResult) ValidateRoleName(RoleViewModel role)
         {
+            if (role.Name.ToUpperInvariant() == Roles.SystemAdmininstrator.ToUpperInvariant())
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 201, $"Role [{role.Name}] cannot be created or updated.")));
+            }
+
             if (role.Id > 0)
             {
                 if (_context.Roles.Any(x => x.Id != role.Id && x.Name.ToUpper() == role.Name.ToUpper()))
                 {
-                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 201, $"Role [{role.Name}] already exists.")));
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 202, $"Role [{role.Name}] already exists.")));
                 }
             }
             else
             {
                 if (_context.Roles.Any(x => x.Name.ToUpper() == role.Name.ToUpper()))
                 {
-                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 202, $"Role [{role.Name}] already exists.")));
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 203, $"Role [{role.Name}] already exists.")));
                 }
             }
 
