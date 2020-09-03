@@ -476,10 +476,10 @@ namespace SchoolBusAPI.Services
                     return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 308, $"The user does not have the role to update.")));
             }
 
-            var role = _context.Roles.First(x => x.Id == userRole.RoleId);
-
             if (User.IsSystemAdmin())
                 return (true, null);
+
+            var role = _context.Roles.First(x => x.Id == userRole.RoleId);
 
             if (!CurrentUserHasAllThePermissions(userRole.RoleId))
             {
