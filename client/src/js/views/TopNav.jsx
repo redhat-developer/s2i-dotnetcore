@@ -8,6 +8,7 @@ import { Popover, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import * as Constant from '../constants';
+import { hasAllPermissions } from '../utils/permissions';
 
 import Authorize from '../components/Authorize';
 import Spinner from '../components/Spinner.jsx';
@@ -22,6 +23,7 @@ class TopNav extends React.Component {
   };
 
   render() {
+    const userPermissions = this.props.currentUser.permissions;
     var requestError = this.props.requestError;
     var html;
 
@@ -73,16 +75,17 @@ class TopNav extends React.Component {
               </LinkContainer>
               <Authorize permissions={[Constant.PERMISSION_USER_R, Constant.PERMISSION_ROLE_R]} matchAll={false}>
                 <NavDropdown id="admin-dropdown" title="Administration">
-                  <Authorize permissions={Constant.PERMISSION_USER_R}>
+                  {/* Can't use <Authorize> on MenuItems because it breaks the click event */}
+                  {hasAllPermissions(userPermissions, Constant.PERMISSION_USER_R) && (
                     <LinkContainer to={{ pathname: `/${Constant.USERS_PATHNAME}` }}>
                       <MenuItem eventKey={5}>User Management</MenuItem>
                     </LinkContainer>
-                  </Authorize>
-                  <Authorize permissions={Constant.PERMISSION_ROLE_R}>
+                  )}
+                  {hasAllPermissions(userPermissions, Constant.PERMISSION_ROLE_R) && (
                     <LinkContainer to={{ pathname: `/${Constant.ROLES_PATHNAME}` }}>
                       <MenuItem eventKey={6}>Roles and Permissions</MenuItem>
                     </LinkContainer>
-                  </Authorize>
+                  )}
                 </NavDropdown>
               </Authorize>
             </Nav>
