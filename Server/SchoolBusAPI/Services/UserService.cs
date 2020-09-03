@@ -17,6 +17,7 @@ using SchoolBusAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using System;
+using SchoolBusAPI.Authorization;
 
 namespace SchoolBusAPI.Services
 {
@@ -472,10 +473,13 @@ namespace SchoolBusAPI.Services
             else
             {
                 if (!userRoleExists)
-                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 308, $"The user must have the role to update the user role.")));
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 308, $"The user does not have the role to update.")));
             }
 
             var role = _context.Roles.First(x => x.Id == userRole.RoleId);
+
+            if (User.IsSystemAdmin())
+                return (true, null);
 
             if (!CurrentUserHasAllThePermissions(userRole.RoleId))
             {
