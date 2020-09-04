@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+
+source ${CONTAINER_SCRIPTS_PATH}/etc/scl_enable
+exec dotnet "$@"
