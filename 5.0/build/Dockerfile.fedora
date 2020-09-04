@@ -1,17 +1,17 @@
-FROM fedora/dotnet-31-runtime
-# This image provides a .NET Core 3.1 environment you can use to run your .NET
+FROM fedora/dotnet-50-runtime
+# This image provides a .NET Core 5.0 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:/opt/app-root/.dotnet/tools/:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
-LABEL io.k8s.description="Platform for building and running .NET Core 3.1 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-31"
+LABEL io.k8s.description="Platform for building and running .NET Core 5.0 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-50"
 
 # Labels consumed by Red Hat build service
-LABEL name="fedora/dotnet-31" \
-      com.redhat.component="dotnet-31-container" \
-      version="3.1" \
+LABEL name="fedora/dotnet-50" \
+      com.redhat.component="dotnet-50-container" \
+      version="5.0" \
       release="1" \
       architecture="x86_64"
 
@@ -25,6 +25,7 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
+# TODO: Change 3.1 to 5.0
 RUN INSTALL_PKGS="npm dotnet-sdk-3.1 rsync procps-ng findutils" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
@@ -36,8 +37,10 @@ RUN INSTALL_PKGS="npm dotnet-sdk-3.1 rsync procps-ng findutils" && \
 RUN mkdir /opt/app-root/src
 WORKDIR /opt/app-root/src
 
+# TODO: Get rid of the path
 # Trigger first time actions.
-RUN dotnet help
+#RUN dotnet help
+RUN ~/dotnet-preview/dotnet help
 
 # Since $HOME is set to /opt/app-root, the yum install may have created config
 # directories (such as ~/.pki/nssdb) there. These will be owned by root and can

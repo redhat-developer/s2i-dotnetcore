@@ -1,17 +1,17 @@
-FROM dotnet/dotnet-31-runtime-centos7
-# This image provides a .NET Core 3.1 environment you can use to run your .NET
+FROM dotnet/dotnet-50-runtime-centos7
+# This image provides a .NET Core 5.0 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
-LABEL io.k8s.description="Platform for building and running .NET Core 3.1 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet31"
+LABEL io.k8s.description="Platform for building and running .NET Core 5.0 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet50"
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-31-centos7" \
-      com.redhat.component="rh-dotnet31-container" \
-      version="3.1" \
+LABEL name="dotnet/dotnet-50-centos7" \
+      com.redhat.component="rh-dotnet50-container" \
+      version="5.0" \
       release="1" \
       architecture="x86_64"
 
@@ -25,6 +25,7 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
+# TODO: Change 3.1 to 5.0
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
     INSTALL_PKGS="rh-nodejs10-npm rh-nodejs10-nodejs-nodemon rh-dotnet31-dotnet-sdk-3.1 rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
@@ -37,8 +38,10 @@ RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
 RUN mkdir /opt/app-root/src
 WORKDIR /opt/app-root/src
 
+# TODO: get the scl correct
 # Trigger first time actions.
-RUN scl enable rh-dotnet31 'dotnet help'
+#RUN scl enable rh-dotnet50 'dotnet help'
+RUN ~/dotnet-preview/dotnet help
 
 # Since $HOME is set to /opt/app-root, the yum install may have created config
 # directories (such as ~/.pki/nssdb) there. These will be owned by root and can

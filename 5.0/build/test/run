@@ -29,39 +29,39 @@ IMAGE_OS=${IMAGE_OS:-RHEL7}
 
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-31-centos7}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-31-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-50-centos7}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-50-runtime-centos7}
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-31}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-ubi8/dotnet-31-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-50}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-ubi8/dotnet-50-runtime}
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-31-rhel7}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-31-runtime-rhel7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-50-rhel7}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-50-runtime-rhel7}
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-31-rhel7}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-fedora/dotnet-31-runtime-rhel7}
+  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-50}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-fedora/dotnet-50-runtime}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-npm_version=6.9.0
+npm_version=6.14.4
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
-sdk_version=3.1.100
+sdk_version=5.0.100-preview.4.20258.7
 npm_version=6.13.4
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=3.1.101
+sdk_version=5.0.100-preview.4.20258.7
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=3.1.101
+sdk_version=5.0.100-preview.4.20258.7
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=3.1.103
-npm_version=6.14.4
+sdk_version=5.0.100-preview.4.20258.7
+npm_version=6.14.6
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -325,7 +325,7 @@ test_config_1() {
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
   # DOTNET_ASSEMBLY_NAME=SampleApp
-  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/netcoreapp3.1/SampleApp.dll"
+  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/netcoreapp5.0/SampleApp.dll"
   # DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
   assert_contains "${s2i_build}" "Restore completed" # Includes S2iDotNetCoreDummy from myget.org.
   # DOTNET_PACK=true
@@ -462,12 +462,12 @@ test_imagestream_sample() {
   # test the sample app defined with the imagestreams:
   # "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git",
   # "sampleContextDir": "app",
-  # "sampleRef": "dotnetcore-3.1"
+  # "sampleRef": "dotnet-5.0"
 
   # build image
   local image=$(s2i_image_tag sample)
   docker_rmi ${tag}
-  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnetcore-3.1 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
+  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnet-5.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})

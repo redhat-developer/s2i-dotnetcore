@@ -39,16 +39,16 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version_series="3.1"
+dotnet_version_series="5.0"
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-dotnet_version="3.1.0"
+dotnet_version="5.0.0-preview.4.20251.6"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="3.1.1"
+dotnet_version="5.0.0-preview.4.20251.6"
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-dotnet_version="3.1.1"
+dotnet_version="5.0.0-preview.4.20251.6"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="3.1.3"
+dotnet_version="5.0.0-preview.4.20251.6"
 fi
 
 test_dotnet() {
