@@ -177,7 +177,10 @@ EOF
 test_run_dotnet_in_dockerfile() {
   test_start
 
-  pushd ${test_dir}/dockerfile-run-dotnet >/dev/null
+  local build_dir="${test_dir}/dockerfile-run-dotnet"
+  rm -rf "$build_dir"
+  mkdir "$build_dir"
+  pushd "$build_dir" > /dev/null
 
   # build image from Dockerfile that uses the 'dotnet' command on a RUN instruction.
   cat >Dockerfile <<EOF
