@@ -10,7 +10,7 @@ ENV HOME=/opt/app-root \
     DOTNET_DATA_PATH=/opt/app-root/data \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
     DOTNET_CORE_VERSION=5.0 \
-    DOTNET_FRAMEWORK=netcoreapp5.0 \
+    DOTNET_FRAMEWORK=net5.0 \
 # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir

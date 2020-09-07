@@ -24,14 +24,14 @@ $ dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App
 
 To create an image using `s2i`:
 ```
-$ s2i build bin/Release/netcoreapp5.0/publish dotnet/dotnet-50-runtime-rhel7 s2i-dotnetcore-ex
+$ s2i build bin/Release/net5.0/publish dotnet/dotnet-50-runtime-rhel7 s2i-dotnetcore-ex
 ```
 
 To create an image using `docker`/`podman`:
 ```
 $ cat > Dockerfile <<EOF
 FROM dotnet/dotnet-50-runtime-rhel7
-ADD bin/Release/netcoreapp5.0/publish/. .
+ADD bin/Release/net5.0/publish/. .
 CMD [ "dotnet", "app.dll" ]
 EOF
 $ docker build -t s2i-dotnetcore-ex .
@@ -100,7 +100,7 @@ They must not to be overridden.
 
 * **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
 
-    These variables contain the framework (`netcoreapp5.0`) and .NET Core version (`5.0`) respectively.
+    These variables contain the framework (`net5.0`) and .NET Core version (`5.0`) respectively.
 
 * **DOTNET_RUNNING_IN_CONTAINER**
 
