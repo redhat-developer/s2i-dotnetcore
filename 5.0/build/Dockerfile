@@ -27,7 +27,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 
 # TODO: Change 3.1 to 5.0
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
-    INSTALL_PKGS="rh-nodejs10-npm rh-nodejs10-nodejs-nodemon rh-dotnet31-dotnet-sdk-3.1 rsync" && \
+    INSTALL_PKGS="rh-nodejs14-npm rh-nodejs14-nodejs-nodemon rh-dotnet31-dotnet-sdk-3.1 rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
@@ -49,7 +49,7 @@ RUN ~/dotnet-preview/dotnet help
 # the permissions on those too.
 RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
 
-ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs10" \
+ENV ENABLED_COLLECTIONS="$ENABLED_COLLECTIONS rh-nodejs14" \
 # Needed for the `dotnet watch` to detect changes in a container.
     DOTNET_USE_POLLING_FILE_WATCHER=true
 
