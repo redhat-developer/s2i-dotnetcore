@@ -1,11 +1,11 @@
 FROM dotnet/dotnet-50-runtime-centos7
-# This image provides a .NET Core 5.0 environment you can use to run your .NET
+# This image provides a .NET 5.0 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
-LABEL io.k8s.description="Platform for building and running .NET 5.0 applications" \
+LABEL io.k8s.description="Platform for building and running .NET 5 applications" \
       io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet50"
 
 # Labels consumed by Red Hat build service

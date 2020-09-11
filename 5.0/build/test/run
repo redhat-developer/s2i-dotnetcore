@@ -152,7 +152,7 @@ test_multiframework() {
   test_start
 
   # hw_framework_config targets both: net451 and netcoreapp
-  # this test verifies we are building and able to run the .NET Core target.
+  # this test verifies we are building and able to run the .NET target.
 
   # application returns expected output
   assert_contains "$(s2i_build_and_run hw_framework_config)" "Hello World!"

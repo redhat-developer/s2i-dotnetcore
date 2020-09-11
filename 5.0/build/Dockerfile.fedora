@@ -1,11 +1,11 @@
 FROM fedora/dotnet-50-runtime
-# This image provides a .NET Core 5.0 environment you can use to run your .NET
+# This image provides a .NET 5.0 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:/opt/app-root/.dotnet/tools/:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
-LABEL io.k8s.description="Platform for building and running .NET Core 5.0 applications" \
+LABEL io.k8s.description="Platform for building and running .NET 5 applications" \
       io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-50"
 
 # Labels consumed by Red Hat build service

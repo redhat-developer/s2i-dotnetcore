@@ -1,8 +1,8 @@
-.NET Core Runtime image
+.NET Runtime image
 =================
 
 This repository contains the source for building a container image that
-can be used as a base in which to run already built .NET Core applications.
+can be used as a base in which to run already built .NET applications.
 
 The container image can be used as a base image using [docker](http://docker.io)/[podman](https://podman.io/).
 Or you can build an application image using [s2i](https://github.com/openshift/source-to-image/releases).
@@ -95,7 +95,7 @@ They must not to be overridden.
 
 * **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
 
-    These variables contain the framework (`net5.0`) and .NET Core version (`5.0`) respectively.
+    These variables contain the framework (`net5.0`) and .NET version (`5.0`) respectively.
 
 * **DOTNET_RUNNING_IN_CONTAINER**
 

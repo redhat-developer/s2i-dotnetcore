@@ -1,5 +1,5 @@
 FROM fedora
-# This image provides a .NET Core 5.0 environment you can use to run your .NET
+# This image provides a .NET 5.0 environment you can use to run your .NET
 # applications.
 
 EXPOSE 8080
@@ -15,8 +15,8 @@ ENV HOME=/opt/app-root \
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir
 
-LABEL io.k8s.description="Platform for running .NET Core 5.0 applications" \
-      io.k8s.display-name=".NET Core 5.0" \
+LABEL io.k8s.description="Platform for running .NET 5 applications" \
+      io.k8s.display-name=".NET 5.0" \
       io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet31-runtime" \
       io.openshift.expose-services="8080:http" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \

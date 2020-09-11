@@ -76,7 +76,7 @@ test_envvars() {
   assert_equal $(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0"                      bash -c 'echo $http_proxy') "proxy0"
   assert_equal $(docker_run_withargs $IMAGE_NAME "-e HTTP_PROXY=proxy0 -e http_proxy=proxy1" bash -c 'echo $http_proxy') "proxy1"
 
-  # .NET Core determines culture based on LANG. It must be empty/unset to use the 'Invariant' culture
+  # .NET determines culture based on LANG. It must be empty/unset to use the 'Invariant' culture
   assert_equal $(docker_get_env $IMAGE_NAME LANG) ""
 
   # Like Microsoft images, we set this to 'true'
@@ -86,7 +86,7 @@ test_envvars() {
 test_debuggable() {
   test_start
 
-  # VSDBG (the .NET Core command line debugger) install script needs unzip
+  # VSDBG (the .NET command line debugger) install script needs unzip
   #   curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg
   assert_equal "$(docker_commandpath $IMAGE_NAME unzip)" "/usr/bin/unzip"
 }
@@ -94,7 +94,7 @@ test_debuggable() {
 test_default_cmd() {
   test_start
 
-  assert_contains $(docker_run $IMAGE_NAME) "This is a runtime image for .NET Core"
+  assert_contains $(docker_run $IMAGE_NAME) "This is a runtime image for .NET"
 }
 
 test_data_folder() {
@@ -191,7 +191,7 @@ EOF
   docker_rmi ${image}
 
   # verify the image build produced a working image
-  assert_contains "$output" "This is a runtime image for .NET Core"
+  assert_contains "$output" "This is a runtime image for .NET"
 
   popd >/dev/null
 }

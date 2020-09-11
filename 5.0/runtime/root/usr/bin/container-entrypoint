@@ -8,7 +8,7 @@ source /opt/app-root/etc/generate_container_user
 export PATH=~/dotnet-preview:$PATH
 export DOTNET_ROOT=~/dotnet-preview
 
-# .NET Core uses libcurl for HTTP handling. libcurl doesn't use 'HTTP_PROXY', but uses 'http_proxy'.
+# .NET uses libcurl for HTTP handling. libcurl doesn't use 'HTTP_PROXY', but uses 'http_proxy'.
 # libcurl is not using the upper-case to avoid exploiting httpoxy in CGI-like environments (https://httpoxy.org/).
 # CGI-like environments must be fixed for this exploit (https://access.redhat.com/security/vulnerabilities/httpoxy).
 # In an OpenShift context, it is common to use the upper-case 'HTTP_PROXY'.

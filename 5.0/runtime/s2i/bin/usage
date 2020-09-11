@@ -4,7 +4,7 @@ DISTRO=`cat /etc/*-release | grep ^ID= | grep -Po '".*?"' | tr -d '"'`
 NAMESPACE=dotnet
 
 cat <<EOF
-This is a S2I .Net core ${DISTRO} image for pre-compiled applications:
+This is a S2I .Net ${DISTRO} image for pre-compiled applications:
 To use it, install S2I: https://github.com/openshift/source-to-image
 
 To build an image from a published application at 'bin/Release/net5.0/publish':

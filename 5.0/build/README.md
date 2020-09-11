@@ -1,7 +1,7 @@
-.NET Core SDK image
+.NET SDK image
 =================
 
-This repository contains the source for building .NET Core applications
+This repository contains the source for building .NET applications
 as a reproducible container image using
 [source-to-image](https://github.com/openshift/source-to-image).
 The resulting image can be run using [docker](http://docker.io)/[podman](https://podman.io/).
@@ -81,11 +81,11 @@ Repository organization
 
   * **`helloworld/`**
 
-    .Net Core "Hello World" used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
+    .Net "Hello World" used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
 
   * **`qotd/`**
 
-    .Net Core Quote of the Day example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
+    .Net Quote of the Day example app used for testing purposes by the [S2I](https://github.com/openshift/source-to-image) test framework.
 
   * **`asp-net-hello-world/`**
 
