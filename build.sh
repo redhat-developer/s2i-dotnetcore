@@ -122,7 +122,7 @@ elif [ "$IMAGE_OS" = "FEDORA" ]; then
   image_prefix="fedora"
   docker_filename="Dockerfile.fedora"
 else
-  VERSIONS="${VERSIONS:-2.1 3.1 5.0}"
+  VERSIONS="${VERSIONS:-2.1 3.1}"
   image_postfix="-rhel7"
   image_prefix="dotnet"
   docker_filename="Dockerfile.rhel7"

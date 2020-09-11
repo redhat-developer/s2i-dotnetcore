@@ -25,7 +25,7 @@
 
 STOP_ON_ERROR=${STOP_ON_ERROR:-true}
 
-IMAGE_OS=${IMAGE_OS:-RHEL7}
+IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
@@ -34,9 +34,6 @@ if [ "$IMAGE_OS" = "CENTOS" ]; then
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
   IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-50}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-ubi8/dotnet-50-runtime}
-elif [ "$IMAGE_OS" = "RHEL7" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-50-rhel7}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-50-runtime-rhel7}
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
   IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-50}
   RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-fedora/dotnet-50-runtime}
@@ -54,9 +51,6 @@ sdk_version=5.0.100-preview.4.20258.7
 npm_version=6.13.4
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=5.0.100-preview.4.20258.7
-elif [ "$IMAGE_OS" = "RHEL7" ]; then
-# sdk version supported on RHEL7
 sdk_version=5.0.100-preview.4.20258.7
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora

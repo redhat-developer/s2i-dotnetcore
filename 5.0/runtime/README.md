@@ -24,13 +24,13 @@ $ dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App
 
 To create an image using `s2i`:
 ```
-$ s2i build bin/Release/net5.0/publish dotnet/dotnet-50-runtime-rhel7 s2i-dotnetcore-ex
+$ s2i build bin/Release/net5.0/publish ubi8/dotnet-50-runtime s2i-dotnetcore-ex
 ```
 
 To create an image using `docker`/`podman`:
 ```
 $ cat > Dockerfile <<EOF
-FROM dotnet/dotnet-50-runtime-rhel7
+FROM ubi8/dotnet-50-runtime
 ADD bin/Release/net5.0/publish/. .
 CMD [ "dotnet", "app.dll" ]
 EOF
@@ -46,11 +46,6 @@ Visit the web application that is running in the container with a browser at [ht
 
 Repository organization
 ------------------------
-
-* **Dockerfile.rhel7**
-
-  RHEL 7 based Dockerfile. In order to perform build or test actions on this
-  Dockerfile you need to run the action on a properly subscribed RHEL machine.
 
 * **Dockerfile.rhel8**
 

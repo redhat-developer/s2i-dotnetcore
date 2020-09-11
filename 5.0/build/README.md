@@ -14,7 +14,7 @@ using standalone [S2I](https://github.com/openshift/source-to-image) and then ru
 resulting image with `docker`/`podman` execute:
 
     ```
-    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=5.0/build/test/asp-net-hello-world dotnet/dotnet-50-rhel7 dotnet-sample-app
+    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=5.0/build/test/asp-net-hello-world ubi8/dotnet-50 dotnet-sample-app
     $ sudo docker run -p 8080:8080 dotnet-sample-app
     ```
 
@@ -35,11 +35,6 @@ will be re-used. To keep NuGet packages so they can be reused, you must set
 
 Repository organization
 ------------------------
-
-* **Dockerfile.rhel7**
-
-  RHEL 7 based Dockerfile. In order to perform build or test actions on this
-  Dockerfile you need to run the action on a properly subscribed RHEL machine.
 
 * **Dockerfile.rhel8**
 
