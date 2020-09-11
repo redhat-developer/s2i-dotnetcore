@@ -320,7 +320,7 @@
                             "from": {
                                 "kind": "ImageStreamTag",
                                 "namespace": "openshift",
-                                "name": "postgresql:9.5"
+                                "name": "postgresql:9.6"
                             }
                         }
                     },

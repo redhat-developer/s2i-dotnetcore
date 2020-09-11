@@ -50,7 +50,7 @@ For example, to install the `rhel7` based images and add a secret for authentica
 ```sh
 $ wget https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.sh
 $ chmod +x install-imagestreams.sh
-$ ./install-imagestreams.sh --os rhel7 -u <subscription_username> -p <subscription_password>
+$ ./install-imagestreams.sh --os rhel -u <subscription_username> -p <subscription_password>
 ```
 
 You can run `./install-imagestreams.sh --help` for more information.
@@ -59,11 +59,11 @@ You can run `./install-imagestreams.sh --help` for more information.
 
 script: https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.ps1
 
-For example, to install the `rhel7` based images and add a secret for authenticating against the `registry.redhat.io` registry:
+For example, to install the `rhel` based images and add a secret for authenticating against the `registry.redhat.io` registry:
 
 ```sh
 PS > Invoke-WebRequest https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.ps1 -UseBasicParsing -OutFile install-imagestreams.ps1
-PS > .\install-imagestreams.ps1 -OS rhel7 -User <subscription_username> -Password <subscription_password>
+PS > .\install-imagestreams.ps1 -OS rhel -User <subscription_username> -Password <subscription_password>
 ```
 
 Running scripts may be prohibited by the `ExecutionPolicy`, you can relax the policy by running: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force`
