@@ -26,11 +26,11 @@ IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-31-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-50-runtime-centos7}
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-31-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-50-runtime}
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-31-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-50-runtime}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 

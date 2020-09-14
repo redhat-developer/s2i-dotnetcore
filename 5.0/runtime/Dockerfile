@@ -16,15 +16,15 @@ ENV HOME=/opt/app-root \
     DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir
 
 LABEL io.k8s.description="Platform for running .NET 5 applications" \
-      io.k8s.display-name=".NET 5.0" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet31-runtime" \
+      io.k8s.display-name=".NET 5" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet50-runtime" \
       io.openshift.expose-services="8080:http" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
       io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-31-runtime-centos7" \
-      com.redhat.component="rh-dotnet31-runtime-container" \
+LABEL name="dotnet/dotnet-50-runtime-centos7" \
+      com.redhat.component="rh-dotnet50-runtime-container" \
       version="5.0" \
       release="1" \
       architecture="x86_64"
