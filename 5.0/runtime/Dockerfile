@@ -48,13 +48,8 @@ COPY ./root/usr/bin /usr/bin
 # Make dotnet command available even when scl is not enabled.
 RUN ln -s /opt/app-root/etc/scl_enable_dotnet /usr/bin/dotnet
 
-# TODO: remove Microsoft binaries
-RUN curl https://download.visualstudio.microsoft.com/download/pr/473651e3-55d5-4e7c-b255-2cbe11358eea/6b6f33d86ee00720b36a7c34200f4d0c/dotnet-sdk-5.0.100-preview.4.20258.7-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
-    mkdir ~/dotnet-preview && \
-    tar xf /tmp/dotnet-sdk.tar.gz -C ~/dotnet-preview
-
 RUN yum install -y centos-release-dotnet && \
-    INSTALL_PKGS="rh-dotnet31-aspnetcore-runtime-3.1 nss_wrapper tar unzip" && \
+    INSTALL_PKGS="rh-dotnet31-aspnetcore-runtime-5.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
@@ -63,7 +58,7 @@ RUN yum install -y centos-release-dotnet && \
 
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
-    ENABLED_COLLECTIONS="rh-dotnet31"
+    ENABLED_COLLECTIONS="rh-dotnet50"
 
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable

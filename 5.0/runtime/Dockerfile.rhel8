@@ -46,12 +46,7 @@ COPY ./root/usr/bin /usr/bin
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-# TODO: remove Microsoft binaries
-RUN curl https://download.visualstudio.microsoft.com/download/pr/473651e3-55d5-4e7c-b255-2cbe11358eea/6b6f33d86ee00720b36a7c34200f4d0c/dotnet-sdk-5.0.100-preview.4.20258.7-linux-x64.tar.gz -o /tmp/dotnet-sdk.tar.gz && \
-    mkdir ~/dotnet-preview && \
-    tar xf /tmp/dotnet-sdk.tar.gz -C ~/dotnet-preview
-
-RUN INSTALL_PKGS="aspnetcore-runtime-3.1 nss_wrapper tar unzip" && \
+RUN INSTALL_PKGS="aspnetcore-runtime-5.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \

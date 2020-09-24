@@ -25,8 +25,7 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-# TODO: Change 3.1 to 5.0
-RUN INSTALL_PKGS="npm nodejs-nodemon dotnet-sdk-3.1 rsync procps-ng findutils" && \
+RUN INSTALL_PKGS="npm nodejs-nodemon dotnet-sdk-5.0 rsync procps-ng findutils" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
@@ -37,10 +36,8 @@ RUN INSTALL_PKGS="npm nodejs-nodemon dotnet-sdk-3.1 rsync procps-ng findutils" &
 RUN mkdir /opt/app-root/src
 WORKDIR /opt/app-root/src
 
-# TODO: get rid of path
 # Trigger first time actions.
-#RUN dotnet help
-RUN ~/dotnet-preview/dotnet help
+RUN dotnet help
 
 # Since $HOME is set to /opt/app-root, the yum install may have created config
 # directories (such as ~/.pki/nssdb) there. These will be owned by root and can

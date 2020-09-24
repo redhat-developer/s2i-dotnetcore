@@ -25,9 +25,8 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-# TODO: Change 3.1 to 5.0
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
-    INSTALL_PKGS="rh-nodejs14-npm rh-nodejs14-nodejs-nodemon rh-dotnet31-dotnet-sdk-3.1 rsync" && \
+    INSTALL_PKGS="rh-nodejs14-npm rh-nodejs14-nodejs-nodemon rh-dotnet50-dotnet-sdk-5.0 rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
@@ -38,10 +37,8 @@ RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
 RUN mkdir /opt/app-root/src
 WORKDIR /opt/app-root/src
 
-# TODO: get the scl correct
 # Trigger first time actions.
-#RUN scl enable rh-dotnet50 'dotnet help'
-RUN ~/dotnet-preview/dotnet help
+RUN dotnet help
 
 # Since $HOME is set to /opt/app-root, the yum install may have created config
 # directories (such as ~/.pki/nssdb) there. These will be owned by root and can
