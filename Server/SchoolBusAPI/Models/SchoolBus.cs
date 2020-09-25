@@ -43,83 +43,6 @@ namespace SchoolBusAPI.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SchoolBus" /> class.
-        /// </summary>
-        /// <param name="Id">A system-generated unique identifier for a SchoolBus (required).</param>
-        /// <param name="Status">Status of the school bus record - current values are Inactive, Active, Archived (required).</param>
-        /// <param name="PermitClassCode">The enumerated class of School Bus from drop down (required).</param>
-        /// <param name="BodyTypeCode">The enumerated body type of the School Bus from drop down (required).</param>
-        /// <param name="SchoolBusSeatingCapacity">The maximum number of passengers in the bus based on the specific use of the bus including the driver. For example,  the same 2-per seat &amp;#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat. (required).</param>
-        /// <param name="ICBCRegistrationNumber">The registration number of the vehicle as entered by the user and confirmed by the CCW Web Services.</param>
-        /// <param name="LicencePlateNumber">The License Plate Number for the vehicle.</param>
-        /// <param name="VehicleIdentificationNumber">A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number..</param>
-        /// <param name="SchoolBusOwner">A foreign key reference to the system-generated unique identifier for School Bus Owner.</param>
-        /// <param name="PermitNumber">The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format..</param>
-        /// <param name="PermitIssueDate">The date a permit number was established for this School Bus..</param>
-        /// <param name="IsOutOfProvince">True if the School Bus is registered outside of BC..</param>
-        /// <param name="CCWJurisdiction">The Jurisdication of an Out Of Province Bus. Needed for querying CCW..</param>
-        /// <param name="District">A foreign key reference to the system-generated unique identifier for a.</param>
-        /// <param name="HomeTerminalAddress1">Address Line 1 of physical location of the School Bus..</param>
-        /// <param name="HomeTerminalAddress2">Address Line 2 of physical location of the School Bus..</param>
-        /// <param name="HomeTerminalCity">City of physical location of the School Bus..</param>
-        /// <param name="HomeTerminalProvince">Province of physical location of the School Bus - free form..</param>
-        /// <param name="HomeTerminalPostalCode">Postal Code of physical location of the School Bus..</param>
-        /// <param name="HomeTerminalComment">A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection..</param>
-        /// <param name="RestrictionsText">Text of any restrictions to be printed on the school bus permit. Standard comments are associated with the Permit Class but the inspector can enter free form text..</param>
-        /// <param name="NextInspectionDate">The next inspection date for this School Bus which is set when inspection results are saved.</param>
-        /// <param name="NextInspectionTypeCode">Annual or Re-inspection based on the Pass&amp;#x2F;Fail status of the most recent inspection - An enumerated type (by the UI) to indicate the type of the next inspection.</param>
-        /// <param name="SchoolDistrict">The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless..</param>
-        /// <param name="IsIndependentSchool">True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field..</param>
-        /// <param name="IndependentSchoolName">The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false..</param>
-        /// <param name="UnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
-        /// <param name="MobilityAidCapacity">The number of mobility aid passenger seats in the bus..</param>
-        /// <param name="Inspector">The inspector assigned to this schoolbus.</param>
-        /// <param name="Notes">The set of notes about the school bus entered by users..</param>
-        /// <param name="Attachments">The set of attachments about the school bus uploaded by the users..</param>
-        /// <param name="History">The history of updates made to the School Bus..</param>
-        /// <param name="CCWData">CCWData for this School Bus.</param>
-        public SchoolBus(int Id, string Status, string PermitClassCode, string BodyTypeCode, int SchoolBusSeatingCapacity, string ICBCRegistrationNumber = null, string LicencePlateNumber = null, string VehicleIdentificationNumber = null, SchoolBusOwner SchoolBusOwner = null, int? PermitNumber = null, DateTime? PermitIssueDate = null, bool? IsOutOfProvince = null, CCWJurisdiction CCWJurisdiction = null, District District = null, string HomeTerminalAddress1 = null, string HomeTerminalAddress2 = null, City HomeTerminalCity = null, string HomeTerminalProvince = null, string HomeTerminalPostalCode = null, string HomeTerminalComment = null, string RestrictionsText = null, DateTime? NextInspectionDate = null, string NextInspectionTypeCode = null, SchoolDistrict SchoolDistrict = null, bool? IsIndependentSchool = null, string IndependentSchoolName = null, string UnitNumber = null, int? MobilityAidCapacity = null, User Inspector = null, List<Note> Notes = null, List<Attachment> Attachments = null, List<History> History = null, CCWData CCWData = null)
-        {   
-            this.Id = Id;
-            this.Status = Status;
-            this.PermitClassCode = PermitClassCode;
-            this.BodyTypeCode = BodyTypeCode;
-            this.SchoolBusSeatingCapacity = SchoolBusSeatingCapacity;
-
-
-
-
-            this.ICBCRegistrationNumber = ICBCRegistrationNumber;
-            this.LicencePlateNumber = LicencePlateNumber;
-            this.VehicleIdentificationNumber = VehicleIdentificationNumber;
-            this.SchoolBusOwner = SchoolBusOwner;
-            this.PermitNumber = PermitNumber;
-            this.PermitIssueDate = PermitIssueDate;
-            this.IsOutOfProvince = IsOutOfProvince;
-            this.CCWJurisdiction = CCWJurisdiction;
-            this.District = District;
-            this.HomeTerminalAddress1 = HomeTerminalAddress1;
-            this.HomeTerminalAddress2 = HomeTerminalAddress2;
-            this.HomeTerminalCity = HomeTerminalCity;
-            this.HomeTerminalProvince = HomeTerminalProvince;
-            this.HomeTerminalPostalCode = HomeTerminalPostalCode;
-            this.HomeTerminalComment = HomeTerminalComment;
-            this.RestrictionsText = RestrictionsText;
-            this.NextInspectionDate = NextInspectionDate;
-            this.NextInspectionTypeCode = NextInspectionTypeCode;
-            this.SchoolDistrict = SchoolDistrict;
-            this.IsIndependentSchool = IsIndependentSchool;
-            this.IndependentSchoolName = IndependentSchoolName;
-            this.UnitNumber = UnitNumber;
-            this.MobilityAidCapacity = MobilityAidCapacity;
-            this.Inspector = Inspector;
-            this.Notes = Notes;
-            this.Attachments = Attachments;
-            this.History = History;
-            this.CCWData = CCWData;
-        }
-
-        /// <summary>
         /// A system-generated unique identifier for a SchoolBus
         /// </summary>
         /// <value>A system-generated unique identifier for a SchoolBus</value>
@@ -489,7 +412,14 @@ namespace SchoolBusAPI.Models
 		[JsonIgnore]
 		[MetaDataExtension (Description = "CCWData for this School Bus")]
         public int? CCWDataId { get; set; }
-        
+
+        /// <summary>
+        /// CCW change notifications made to the School Bus.
+        /// </summary>
+        /// <value>CCW change notifications made to the School Bus.</value>
+        [MetaDataExtension(Description = "CCW change notifications made to the School Bus.")]
+        public List<CCWNotification> CCWNotifications { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

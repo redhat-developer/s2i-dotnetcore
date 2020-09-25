@@ -68,6 +68,7 @@ namespace SchoolBusAPI.Models
         DbSet<User> Users { get; set; }
         DbSet<UserFavourite> UserFavourites { get; set; }        
         DbSet<UserRole> UserRoles { get; set; }
+        DbSet<CCWNotification> CCWNotifications { get; set; }
 
         /// <summary>
         /// Starts a new transaction.
@@ -131,7 +132,8 @@ namespace SchoolBusAPI.Models
         public virtual DbSet<ServiceArea> ServiceAreas { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserFavourite> UserFavourites { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }        
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<CCWNotification> CCWNotifications { get; set; }
 
         /// <summary>
         /// Starts a new transaction.

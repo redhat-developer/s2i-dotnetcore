@@ -362,44 +362,6 @@
             Default constructor, required by entity framework
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Models.SchoolBus.#ctor(System.Int32,System.String,System.String,System.String,System.Int32,System.String,System.String,System.String,SchoolBusAPI.Models.SchoolBusOwner,System.Nullable{System.Int32},System.Nullable{System.DateTime},System.Nullable{System.Boolean},SchoolBusAPI.Models.CCWJurisdiction,SchoolBusAPI.Models.District,System.String,System.String,SchoolBusAPI.Models.City,System.String,System.String,System.String,System.String,System.Nullable{System.DateTime},System.String,SchoolBusAPI.Models.SchoolDistrict,System.Nullable{System.Boolean},System.String,System.String,System.Nullable{System.Int32},SchoolBusAPI.Models.User,System.Collections.Generic.List{SchoolBusAPI.Models.Note},System.Collections.Generic.List{SchoolBusAPI.Models.Attachment},System.Collections.Generic.List{SchoolBusAPI.Models.History},SchoolBusAPI.Models.CCWData)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SchoolBusAPI.Models.SchoolBus" /> class.
-            </summary>
-            <param name="Id">A system-generated unique identifier for a SchoolBus (required).</param>
-            <param name="Status">Status of the school bus record - current values are Inactive, Active, Archived (required).</param>
-            <param name="PermitClassCode">The enumerated class of School Bus from drop down (required).</param>
-            <param name="BodyTypeCode">The enumerated body type of the School Bus from drop down (required).</param>
-            <param name="SchoolBusSeatingCapacity">The maximum number of passengers in the bus based on the specific use of the bus including the driver. For example,  the same 2-per seat &amp;#x2F; 24-passenger model might have a seating capacity of 36 if the specific bus is to be used for small children,  3 per seat. (required).</param>
-            <param name="ICBCRegistrationNumber">The registration number of the vehicle as entered by the user and confirmed by the CCW Web Services.</param>
-            <param name="LicencePlateNumber">The License Plate Number for the vehicle.</param>
-            <param name="VehicleIdentificationNumber">A code used by the automotive industry to uniquely identify individual motor vehicles. A vehicle identification number is frequently referred to using the acronym VIN and it is occasionally referred to as a chassis number..</param>
-            <param name="SchoolBusOwner">A foreign key reference to the system-generated unique identifier for School Bus Owner.</param>
-            <param name="PermitNumber">The (generated) permit number for the School Bus. The number is set by the system when the inspector generates a permit based on a business rule permit number format..</param>
-            <param name="PermitIssueDate">The date a permit number was established for this School Bus..</param>
-            <param name="IsOutOfProvince">True if the School Bus is registered outside of BC..</param>
-            <param name="CCWJurisdiction">The Jurisdication of an Out Of Province Bus. Needed for querying CCW..</param>
-            <param name="District">A foreign key reference to the system-generated unique identifier for a.</param>
-            <param name="HomeTerminalAddress1">Address Line 1 of physical location of the School Bus..</param>
-            <param name="HomeTerminalAddress2">Address Line 2 of physical location of the School Bus..</param>
-            <param name="HomeTerminalCity">City of physical location of the School Bus..</param>
-            <param name="HomeTerminalProvince">Province of physical location of the School Bus - free form..</param>
-            <param name="HomeTerminalPostalCode">Postal Code of physical location of the School Bus..</param>
-            <param name="HomeTerminalComment">A comment about the physical location of the bus so that the Inspector can more easily find it for an inspection..</param>
-            <param name="RestrictionsText">Text of any restrictions to be printed on the school bus permit. Standard comments are associated with the Permit Class but the inspector can enter free form text..</param>
-            <param name="NextInspectionDate">The next inspection date for this School Bus which is set when inspection results are saved.</param>
-            <param name="NextInspectionTypeCode">Annual or Re-inspection based on the Pass&amp;#x2F;Fail status of the most recent inspection - An enumerated type (by the UI) to indicate the type of the next inspection.</param>
-            <param name="SchoolDistrict">The School District in which the School Bus operates. The school bus may or may not be associated with the School District itself - we just track where it is regardless..</param>
-            <param name="IsIndependentSchool">True if the School Bus is associated with an Independent School. If true,  the name of the Independent School should be in the companion field..</param>
-            <param name="IndependentSchoolName">The name of the Independent School to which the School Bus is associated. Should be null if the companion isIndependentSchool is false..</param>
-            <param name="UnitNumber">The unit number of the Bus as defined by the School Bus owner - freeform text..</param>
-            <param name="MobilityAidCapacity">The number of mobility aid passenger seats in the bus..</param>
-            <param name="Inspector">The inspector assigned to this schoolbus.</param>
-            <param name="Notes">The set of notes about the school bus entered by users..</param>
-            <param name="Attachments">The set of attachments about the school bus uploaded by the users..</param>
-            <param name="History">The history of updates made to the School Bus..</param>
-            <param name="CCWData">CCWData for this School Bus.</param>
-        </member>
         <member name="P:SchoolBusAPI.Models.SchoolBus.Id">
             <summary>
             A system-generated unique identifier for a SchoolBus
@@ -632,6 +594,12 @@
             <summary>
             Foreign key for CCWData 
             </summary>   
+        </member>
+        <member name="P:SchoolBusAPI.Models.SchoolBus.CCWNotifications">
+            <summary>
+            CCW change notifications made to the School Bus.
+            </summary>
+            <value>CCW change notifications made to the School Bus.</value>
         </member>
         <member name="M:SchoolBusAPI.Models.SchoolBus.ToString">
             <summary>
@@ -1558,6 +1526,29 @@
             <param name="left"></param>
             <param name="right"></param>
             <returns></returns>
+        </member>
+        <member name="P:SchoolBusAPI.Models.CCWNotification.Notes">
+            <summary>
+            An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.
+            </summary>
+            <value>An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.</value>
+        </member>
+        <member name="P:SchoolBusAPI.Models.CCWNotification.HasBeenViewed">
+            <summary>
+            True if the user linked to the bus has read the notification
+            </summary>
+            <value>True if the user linked to the inspection has read the notification</value>
+        </member>
+        <member name="P:SchoolBusAPI.Models.CCWNotification.SchoolBus">
+            <summary>
+            A foreign key reference to the system-generated unique identifier for a School Bus
+            </summary>
+            <value>A foreign key reference to the system-generated unique identifier for a School Bus</value>
+        </member>
+        <member name="P:SchoolBusAPI.Models.CCWNotification.SchoolBusId">
+            <summary>
+            Foreign key for SchoolBus 
+            </summary>   
         </member>
         <member name="T:SchoolBusAPI.Models.City">
             <summary>
