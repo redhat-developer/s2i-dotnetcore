@@ -39,7 +39,10 @@ namespace SchoolBusAPI.Models
         /// </summary>
         public SchoolBus()
         {
-            this.Id = 0;
+            Notes = new List<Note>();
+            Attachments = new List<Attachment>();
+            CCWNotifications = new List<CCWNotification>();
+            History = new List<History>();
         }
 
         /// <summary>

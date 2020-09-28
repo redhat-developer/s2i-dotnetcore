@@ -6,6 +6,11 @@ namespace SchoolBusAPI.Models
 {
     public class CCWNotification : AuditableEntity
     {
+        public CCWNotification()
+        {
+            CCWNotificationDetails = new List<CCWNotificationDetail>();
+        }
+        
         [MetaDataExtension(Description = "A system-generated unique identifier for a CCW Notification")]
         public int Id { get; set; }
 

@@ -329,10 +329,30 @@ namespace SchoolBusAPI.Services
 
             if (ccwdata.Id > 0)
             {
-                var changes = _context.GetChanges(ccwdata);
+                var bus = _context.SchoolBuss.FirstOrDefault(x => x.CCWDataId == ccwdata.Id);
 
-                if (changes.IsNotEmpty())
-                    _logger.LogInformation($"Changes {ccwdata.Id}: {_context.GetChanges(ccwdata)}");
+                var changes = _context.GetChanges(ccwdata, "DateFetched");
+
+                if (bus != null && changes.Count > 0)
+                {
+                    var ccwNotification = (new CCWNotification
+                    {
+                        HasBeenViewed = false,
+                    });
+
+                    bus.CCWNotifications.Add(ccwNotification);
+
+                    foreach (var change in changes)
+                    {
+                        ccwNotification.CCWNotificationDetails.Add(new CCWNotificationDetail
+                        {
+                            ColName = change.ColName,
+                            ColDescription = change.ColDescription,
+                            ValueFrom = change.ValueFrom,
+                            ValueTo = change.ValueTo
+                        });
+                    }
+                }
             }
             else
             {

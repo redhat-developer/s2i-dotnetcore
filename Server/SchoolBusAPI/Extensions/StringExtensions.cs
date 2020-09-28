@@ -61,5 +61,13 @@ namespace SchoolBusAPI.Extensions
         {
             return numeric.IsMatch(str);
         }
+
+        public static string WordToWords(this string str)
+        {
+            str = Regex.Replace(str, "[a-z][A-Z]", x => $"{x.Value[0]} {char.ToUpper(x.Value[1])}");
+            str = Regex.Replace(str, "[A-Z][A-Z][a-z]", x => $"{x.Value[0]} {x.Value[1]}{x.Value[2]}");
+
+            return str;
+        }
     }
 }

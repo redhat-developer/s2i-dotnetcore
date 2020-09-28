@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
+using SchoolBusAPI.Extensions;
+using SchoolBusAPI.ViewModels;
 using SchoolBusCommon;
 using System;
 using System.Collections.Generic;
@@ -353,9 +355,9 @@ namespace SchoolBusAPI.Models
             return result;
         }
 
-        public string GetChanges<T>(T entity, params string[] fieldsToSkip)
+        public List<ChangeViewModel> GetChanges<T>(T entity, params string[] fieldsToSkip)
         {
-            var changes = new StringBuilder();
+            var changes = new List<ChangeViewModel>();
 
             var entry = Entry(entity);
 
@@ -371,11 +373,18 @@ namespace SchoolBusAPI.Models
 
                 if (entry.Property(property.Name).IsModified)
                 {
-                    changes.AppendLine($"{property.Name}: {entry.OriginalValues[property.Name]} => {entry.CurrentValues[property.Name]}");
+                    changes.Add(new ChangeViewModel
+                    {
+                        ColName = property.Name,
+                        ColDescription = property.Name.WordToWords(),
+                        ValueFrom = entry.OriginalValues[property.Name].ToString(),
+                        ValueTo = entry.CurrentValues[property.Name].ToString()
+                    });
+
                 }
             }
 
-            return changes.ToString();
+            return changes;
         }
     }
 }
