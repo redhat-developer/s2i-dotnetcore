@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -10,13 +10,11 @@ namespace SchoolBusAPI.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.
+        /// CCW change details - original and modified values
         /// </summary>
-        /// <value>An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.</value>
-        [MetaDataExtension(Description = "An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.")]
-        [MaxLength(2048)]
-
-        public string Notes { get; set; }
+        /// <value>CCW change details - original and modified values</value>
+        [MetaDataExtension(Description = "CCW change details - original and modified values.")]
+        public List<CCWNotificationDetail> CCWNotificationDetails { get; set; }
 
         /// <summary>
         /// True if the user linked to the bus has read the notification

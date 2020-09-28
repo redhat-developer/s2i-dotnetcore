@@ -1527,11 +1527,11 @@
             <param name="right"></param>
             <returns></returns>
         </member>
-        <member name="P:SchoolBusAPI.Models.CCWNotification.Notes">
+        <member name="P:SchoolBusAPI.Models.CCWNotification.CCWNotificationDetails">
             <summary>
-            An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.
+            CCW change details - original and modified values
             </summary>
-            <value>An assembled text string about the event that triggered the notification. Includes both static text and data about the notification. User Interface code will be used (based on the eventTypeCode - category) to assemble a dynamic string of information about the event - potentially including links to other relevant data - such as link to the School Bus detail screen.</value>
+            <value>CCW change details - original and modified values</value>
         </member>
         <member name="P:SchoolBusAPI.Models.CCWNotification.HasBeenViewed">
             <summary>

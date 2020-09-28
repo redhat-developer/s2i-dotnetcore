@@ -69,6 +69,7 @@ namespace SchoolBusAPI.Services
             }
 
             var notifications = data.SelectMany(x => x.CCWNotifications)
+                .Include(x => x.CCWNotificationDetails)
                 .Include(x => x.SchoolBus)
                     .ThenInclude(x => x.SchoolBusOwner)
                 .Where(x => x.CreateTimestamp.Date >= dateFrom && x.CreateTimestamp.Date <= dateTo);
