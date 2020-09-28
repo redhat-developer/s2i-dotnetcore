@@ -165,7 +165,7 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         IActionResult SchoolbusesSearchGetAsync(int?[] districts, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate);
 
-        InspectionSummaryViewModel GetInspectionSummary(int?[] districts, int?[] inspectors);
+        InspectionSummaryViewModel GetInspectionCounts(int?[] districts, int?[] inspectors);
     }
 
     /// <summary>
@@ -997,7 +997,7 @@ namespace SchoolBusAPI.Services
             return new ObjectResult(result);
         }
 
-        public InspectionSummaryViewModel GetInspectionSummary(int?[] districts, int?[] inspectors)
+        public InspectionSummaryViewModel GetInspectionCounts(int?[] districts, int?[] inspectors)
         {
             DateTime today = DateTime.UtcNow.Date;
             DateTime dateTo = today.AddDays(31).AddSeconds(-1);

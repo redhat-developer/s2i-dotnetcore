@@ -329,7 +329,7 @@ namespace SchoolBusAPI.Services
 
             if (ccwdata.Id > 0)
             {
-                _context.Update(ccwdata);
+                _logger.LogInformation($"Changes {ccwdata.Id}: {_context.GetChanges(ccwdata)}");
             }
             else
             {

@@ -274,11 +274,11 @@ namespace SchoolBusAPI.Controllers
         }
 
         [HttpGet]
-        [Route("/api/schoolbuses/inspectionsummary")]
+        [Route("/api/schoolbuses/inspectioncounts")]
         [RequiresPermission(Permissions.SchoolBusRead)]
-        public ActionResult<InspectionSummaryViewModel> GetInspectionSummary([ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] districts, [ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] inspectors)
+        public ActionResult<InspectionSummaryViewModel> GetInspectionCounts([ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] districts, [ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] inspectors)
         {
-            return Ok(_service.GetInspectionSummary(districts, inspectors));
+            return Ok(_service.GetInspectionCounts(districts, inspectors));
         }
     }
 }
