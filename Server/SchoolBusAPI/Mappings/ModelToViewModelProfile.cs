@@ -38,6 +38,8 @@ namespace SchoolBusAPI.Mappings
                 .ForMember(x => x.SchoolBusRegNum, opt => opt.MapFrom(x => x.SchoolBus.ICBCRegistrationNumber))
                 .ForMember(x => x.SchoolBusOwnerName, opt => opt.MapFrom(x => x.SchoolBus.SchoolBusOwner.Name))
                 .ForMember(x => x.SchoolBusOwnerId, opt => opt.MapFrom(x => x.SchoolBus.SchoolBusOwner.Id));
+
+            CreateMap<CCWNotificationDetail, CCWNotificationDetailViewModel>();
         }
     }
 }
