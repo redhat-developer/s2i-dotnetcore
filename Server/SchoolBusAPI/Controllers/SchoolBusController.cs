@@ -14,6 +14,7 @@ using SchoolBusAPI.Models;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Helpers;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -270,6 +271,14 @@ namespace SchoolBusAPI.Controllers
             // TODO: Return 400 Bad Request status code when query is malformed
             // TODO: Integrate ModelBinder with SimpleModelBinderProvider
             return this._service.SchoolbusesSearchGetAsync(districts, inspectors, cities, schooldistricts, owner, regi, vin, plate, includeInactive, onlyReInspections, startDate, endDate);
+        }
+
+        [HttpGet]
+        [Route("/api/schoolbuses/inspectioncounts")]
+        [RequiresPermission(Permissions.SchoolBusRead)]
+        public ActionResult<InspectionSummaryViewModel> GetInspectionCounts([ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] districts, [ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] inspectors)
+        {
+            return Ok(_service.GetInspectionCounts(districts, inspectors));
         }
     }
 }

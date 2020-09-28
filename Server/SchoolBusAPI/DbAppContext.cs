@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 
 namespace SchoolBusAPI.Models
 {    
@@ -68,6 +69,7 @@ namespace SchoolBusAPI.Models
         DbSet<User> Users { get; set; }
         DbSet<UserFavourite> UserFavourites { get; set; }        
         DbSet<UserRole> UserRoles { get; set; }
+        DbSet<CCWNotification> CCWNotifications { get; set; }
 
         /// <summary>
         /// Starts a new transaction.
@@ -131,7 +133,8 @@ namespace SchoolBusAPI.Models
         public virtual DbSet<ServiceArea> ServiceAreas { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserFavourite> UserFavourites { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }        
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<CCWNotification> CCWNotifications { get; set; }
 
         /// <summary>
         /// Starts a new transaction.
@@ -348,6 +351,31 @@ namespace SchoolBusAPI.Models
             }
 
             return result;
+        }
+
+        public string GetChanges<T>(T entity, params string[] fieldsToSkip)
+        {
+            var changes = new StringBuilder();
+
+            var entry = Entry(entity);
+
+            var auditProperties = typeof(AuditableEntity).GetProperties();
+
+            foreach (var property in typeof(T).GetProperties())
+            {
+                if (fieldsToSkip.Any(x => x == property.Name))
+                    continue;
+
+                if (auditProperties.Any(x => x.Name == property.Name))
+                    continue;
+
+                if (entry.Property(property.Name).IsModified)
+                {
+                    changes.AppendLine($"{property.Name}: {entry.OriginalValues[property.Name]} => {entry.CurrentValues[property.Name]}");
+                }
+            }
+
+            return changes.ToString();
         }
     }
 }

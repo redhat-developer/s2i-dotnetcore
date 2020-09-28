@@ -55,6 +55,7 @@ namespace SchoolBusAPI.Extensions
             services.AddScoped<IUserService, UserService>();            
             services.AddScoped<IAttachmentUploadService,AttachmentUploadService>();
             services.AddScoped<ICcwJobService, CcwJobService>();
+            services.AddScoped<ICCWNotificationService, CCWNotificationService>();
 
             var mappingConfig = new MapperConfiguration(cfg =>
             {

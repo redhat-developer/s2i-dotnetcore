@@ -32,6 +32,12 @@ namespace SchoolBusAPI.Mappings
             CreateMap<Notification, NotificationViewModel>();
             
             CreateMap<SchoolBusOwner, SchoolBusOwnerViewModel>();
+
+            CreateMap<CCWNotification, CCWNotificationViewModel>()
+                .ForMember(x => x.DateDetected, opt => opt.MapFrom(x => x.CreateTimestamp))
+                .ForMember(x => x.SchoolBusRegNum, opt => opt.MapFrom(x => x.SchoolBus.ICBCRegistrationNumber))
+                .ForMember(x => x.SchoolBusOwnerName, opt => opt.MapFrom(x => x.SchoolBus.SchoolBusOwner.Name))
+                .ForMember(x => x.SchoolBusOwnerId, opt => opt.MapFrom(x => x.SchoolBus.SchoolBusOwner.Id));
         }
     }
 }
