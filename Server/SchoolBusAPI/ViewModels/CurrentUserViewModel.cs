@@ -96,5 +96,17 @@ namespace SchoolBusAPI.ViewModels
         /// </summary>
         [DataMember(Name="reInspections")]
         public int? ReInspections { get; set; }
+
+        [DataMember(Name="isSysAdmin")]
+        public bool IsSysAdmin { get; set; }
+
+        [DataMember(Name="isManager")]
+        public bool IsManager { get; set; }
+
+        [DataMember(Name="isInspector")]
+        public bool IsInspector { get; set; }
+
+        [DataMember(Name="districtId")]
+        public int? DistrictId { get; set; }
     }
 }

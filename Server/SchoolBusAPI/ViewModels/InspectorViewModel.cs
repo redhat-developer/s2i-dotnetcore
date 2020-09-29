@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SchoolBusAPI.ViewModels
+﻿namespace SchoolBusAPI.ViewModels
 {
     public class InspectorViewModel
     {
@@ -11,5 +6,6 @@ namespace SchoolBusAPI.ViewModels
         public bool Active { get; set; }
         public string GivenName { get; set; }
         public string Surname { get; set; }
+        public int? DistrictId { get; set; }
     }
 }
