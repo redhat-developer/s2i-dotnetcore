@@ -19,5 +19,6 @@
     {
         public const string SystemAdmininstrator = "System Administrator";
         public const string Inspector = "Inspector";
+        public const string Manager = "Manager";
     }
 }

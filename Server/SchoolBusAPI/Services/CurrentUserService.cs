@@ -241,9 +241,9 @@ namespace SchoolBusAPI.Services
                                         .AsNoTracking()
                                         .Include(x => x.District)
                                         .Include(x => x.UserRoles)
-                                        .ThenInclude(y => y.Role)
-                                        .ThenInclude(z => z.RolePermissions)
-                                        .ThenInclude(z => z.Permission)
+                                            .ThenInclude(y => y.Role)
+                                                .ThenInclude(z => z.RolePermissions)
+                                                    .ThenInclude(z => z.Permission)
                                         .First(x => x.Id == id);
 
                 var result = Mapper.Map<CurrentUserViewModel>(currentUser);
@@ -283,7 +283,16 @@ namespace SchoolBusAPI.Services
                     .ToLookup(p => p.Code)
                     .Select(p => p.First())
                     .Select(p => p.Code)
-                    .ToList();                
+                    .ToList();
+
+                result.IsSysAdmin = currentUser.UserRoles.Any(x => x.Role.Name == Roles.SystemAdmininstrator 
+                        && (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
+                
+                result.IsInspector = currentUser.UserRoles.Any(x => x.Role.Name == Roles.Inspector
+                        && (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
+
+                result.IsManager = currentUser.UserRoles.Any(x => x.Role.Name == Roles.Manager
+                        && (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
 
                 return new ObjectResult(result);
             }

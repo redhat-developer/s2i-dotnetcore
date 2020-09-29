@@ -62,7 +62,7 @@ class SchoolBuses extends React.Component {
     super(props);
     var defaultSelectedInspectors = props.currentUser.isInspector ? [props.currentUser.id] : [];
     var defaultSelectedDistricts =
-      props.currentUser.isInspector || !props.currentUser.district.id ? [] : [props.currentUser.district.id];
+      props.currentUser.isInspector || !props.currentUser.districtId ? [] : [props.currentUser.districtId];
 
     this.state = {
       loading: true,
