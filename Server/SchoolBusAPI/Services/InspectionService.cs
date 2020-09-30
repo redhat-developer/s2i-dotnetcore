@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using SchoolBusAPI.Authorization;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
 {
@@ -62,6 +63,8 @@ namespace SchoolBusAPI.Services
         /// <param name="item"></param>
         /// <response code="201">Inspection created</response>
         IActionResult InspectionsPostAsync(Inspection item);
+
+        InspectionCountsViewModel GetInspectionCounts(int?[] districts, int?[] inspectors);
     }
 
     /// <summary>
@@ -343,6 +346,39 @@ namespace SchoolBusAPI.Services
                 // no data
                 return new StatusCodeResult(404);
             }
+        }
+
+
+        public InspectionCountsViewModel GetInspectionCounts(int?[] districts, int?[] inspectors)
+        {
+            DateTime today = DateTime.UtcNow.Date;
+            DateTime dateTo = today.AddDays(31).AddSeconds(-1);
+
+            var data = DbContext.SchoolBuss.AsNoTracking();
+
+            if (districts != null)
+            {
+                data = data.Where(x => districts.Contains(x.DistrictId));
+            }
+
+            if (inspectors != null)
+            {
+                data = data.Where(x => inspectors.Contains(x.InspectorId));
+            }
+
+            int overdue = data
+                .Count(x => x.NextInspectionDate < today && x.Status.ToLower() == "active");
+
+            int within30days = _context.SchoolBuss
+                .Count(x => x.NextInspectionDate >= today && x.NextInspectionDate <= dateTo && x.Status.ToLower() == "active");
+
+            int scheduledInspections = _context.SchoolBuss
+                .Count(x => x.NextInspectionDate >= today && x.Status.ToLower() == "active");
+
+            int reInspections = _context.SchoolBuss
+                .Count(x => x.NextInspectionTypeCode.ToLower() == "re-inspection" && x.Status.ToLower() == "active");
+
+            return new InspectionCountsViewModel(overdue, within30days, scheduledInspections, reInspections);
         }
     }
 }

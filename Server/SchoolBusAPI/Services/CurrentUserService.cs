@@ -285,7 +285,7 @@ namespace SchoolBusAPI.Services
                     .Select(p => p.Code)
                     .ToList();
 
-                result.IsSysAdmin = currentUser.UserRoles.Any(x => x.Role.Name == Roles.SystemAdmininstrator 
+                result.IsSystemAdmin = currentUser.UserRoles.Any(x => x.Role.Name == Roles.SystemAdmininstrator 
                         && (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
                 
                 result.IsInspector = currentUser.UserRoles.Any(x => x.Role.Name == Roles.Inspector

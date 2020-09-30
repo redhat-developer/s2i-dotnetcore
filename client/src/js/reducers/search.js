@@ -1,4 +1,4 @@
-import * as Action from "../actionTypes";
+import * as Action from '../actionTypes';
 
 const DEFAULT_SEARCHES = {
   schoolBuses: {},
@@ -6,6 +6,7 @@ const DEFAULT_SEARCHES = {
   owners: {},
   users: {},
   roles: {},
+  ccwnotifications: {},
 };
 
 export default function searchReducer(state = DEFAULT_SEARCHES, action) {
@@ -24,6 +25,9 @@ export default function searchReducer(state = DEFAULT_SEARCHES, action) {
 
     case Action.UPDATE_ROLES_SEARCH:
       return { ...state, roles: action.roles };
+
+    case Action.UPDATE_CCWNOTIFICATIONS_SEARCH:
+      return { ...state, ccwnotifications: action.ccwnotifications };
 
     default:
       return state;
