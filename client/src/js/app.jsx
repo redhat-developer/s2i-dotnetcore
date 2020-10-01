@@ -16,7 +16,7 @@ import SchoolBuses from './views/SchoolBuses.jsx';
 import SchoolBusesDetail from './views/SchoolBusesDetail.jsx';
 import Owners from './views/Owners.jsx';
 import OwnersDetail from './views/OwnersDetail.jsx';
-import Notifications from './views/Notifications.jsx';
+import CCWNotifications from './views/CCWNotifications.jsx';
 import Users from './views/Users.jsx';
 import UsersDetail from './views/UsersDetail.jsx';
 import Roles from './views/Roles.jsx';
@@ -130,7 +130,7 @@ const App = () => {
             path={`${Constant.OWNERS_PATHNAME}/:ownerId/${Constant.CONTACT_PATHNAME}/:contactId`}
             component={OwnersDetail}
           />
-          <Route path={Constant.NOTIFICATIONS_PATHNAME} component={Notifications} />
+          <Route path={Constant.CCWNOTIFICATIONS_PATHNAME} component={CCWNotifications} />
           {hasAllPermissions(store.getState().user.permissions, Constant.PERMISSION_USER_R) && (
             <>
               <Route path={Constant.USERS_PATHNAME} component={Users} />
