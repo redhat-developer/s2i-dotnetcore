@@ -34,6 +34,9 @@ export const SCHOOL_BUS_OVERDUE_QUERY = 'overdue';
 export const SCHOOL_BUS_REINSPECTIONS_QUERY = 'reinspections';
 export const SCHOOL_BUS_WITHIN_30_DAYS_QUERY = 'within30days';
 
+// CCW Notification Queries
+export const CCWNOTIRICATION_INSPECTORS_QUERY = 'inspectors';
+
 // Date Formats
 export const DATE_FULL_MONTH_DAY_YEAR = 'MMMM D, YYYY';
 export const DATE_SHORT_MONTH_DAY_YEAR = 'MMM D, YYYY';

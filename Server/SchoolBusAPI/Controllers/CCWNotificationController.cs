@@ -24,14 +24,14 @@ namespace SchoolBusAPI.Controllers
         [RequiresPermission(Permissions.SchoolBusRead)]
         public virtual ActionResult<CCWNotificationViewModel> GetCcwNotifications(DateTime? dateFrom, DateTime? dateTo, 
             [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] districts, [ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] inspectors, 
-            int? owner, string regi, string vin, string plate)
+            int? owner, string regi, string vin, string plate, bool hideRead = true)
         {
             if (dateFrom == null || dateTo == null)
             {
                 return BadRequest(new Error("Invalid query", 401, "Date range is mandatory"));
             }
 
-            return Ok(_ccwNotificationSvc.GetNotifications((DateTime)dateFrom, (DateTime)dateTo, districts, inspectors, owner, regi, vin, plate));
+            return Ok(_ccwNotificationSvc.GetNotifications((DateTime)dateFrom, (DateTime)dateTo, districts, inspectors, owner, regi, vin, plate, hideRead));
         }
     }
 }

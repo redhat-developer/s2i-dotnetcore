@@ -76,6 +76,15 @@ class Home extends React.Component {
                         </a>{' '}
                         inspections coming due within 30 days
                       </h2>
+                      <h2>
+                        You have{' '}
+                        <a
+                          href={`#/${Constant.CCWNOTIFICATIONS_PATHNAME}?${Constant.CCWNOTIRICATION_INSPECTORS_QUERY}=true`}
+                        >
+                          {this.props.currentUser.ccwnotifications}
+                        </a>{' '}
+                        unread CCW notifications
+                      </h2>{' '}
                     </Row>
                   </Authorize>
                 );

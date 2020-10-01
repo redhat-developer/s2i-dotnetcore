@@ -1,0 +1,57 @@
+#ccwnotifications {
+  #ccwnotifications-search {
+    margin-top: -10px;
+
+    > div {
+      margin-top: 10px;
+    }
+
+    > label {
+      margin-top: 7px;
+      margin-left: 10px;
+    }
+
+    > button {
+      margin-top: 7px;
+      margin-left: 7px;
+    }
+  }
+
+  #ccwnotifications-key-search {
+    margin-left: 5px;
+
+    .dropdown-menu {
+      min-width: 70px;
+    }
+
+    .btn {
+      min-width: 70px;
+    }
+
+    input {
+      min-width: 175px;
+    }
+  }
+
+  #ccwnotifications-buttons {
+    float: right;
+
+    .btn {
+      width: 40px;
+    }
+  }
+
+  #ccwnotifications-faves {
+    float: right;
+  }
+
+  #search-button {
+    float: right;
+    width: 105px;
+    margin-top: 10px;
+  }
+
+  .alert .btn {
+    float: right;
+  }
+}

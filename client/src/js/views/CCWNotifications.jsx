@@ -22,6 +22,7 @@ import CheckboxControl from '../components/CheckboxControl.jsx';
 //import EditButton from '../components/EditButton.jsx';
 import Favourites from '../components/Favourites.jsx';
 //import FilterDropdown from '../components/FilterDropdown.jsx';
+import KeySearchControl from '../components/KeySearchControl.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Markdown from 'react-markdown';
@@ -61,8 +62,8 @@ class CCWNotifications extends React.Component {
         keySearchField: props.search.keySearchField,
         keySearchText: props.search.keySearchText,
         keySearchParams: props.search.keySearchParams,
-        hideRead: props.search.hideRead !== false,
-        loaded: props.search.loaded === false,
+        hideRead: props.search.hideRead === true,
+        loaded: props.search.loaded === true,
       },
 
       ui: {
@@ -79,7 +80,7 @@ class CCWNotifications extends React.Component {
     }
 
     var searchParams = {
-      includeRead: !this.state.search.hideRead,
+      hideRead: this.state.search.hideRead,
     };
 
     if (
@@ -105,21 +106,41 @@ class CCWNotifications extends React.Component {
   componentDidMount() {
     this.setState({ loading: true });
 
+    var inspectorsPromise = Api.getInspectors();
     var favouritesPromise = Api.getFavourites('ccwnotification');
 
-    Promise.all([favouritesPromise])
+    Promise.all([inspectorsPromise, favouritesPromise])
       .then(() => {
-        // If this is the first load, then look for a default favourite
-        if (!this.props.search.loaded) {
-          var favourite = _.find(this.props.favourites, (favourite) => {
-            return favourite.isDefault;
-          });
-          if (favourite) {
-            this.loadFavourite(favourite);
-            return;
+        if (this.props.location.search) {
+          // Check for specific school bus query
+          var state = {
+            selectedDistrictsIds: [],
+            selectedInspectorsIds: this.props.currentUser.isInspector ? [this.props.currentUser.id] : [],
+            keySearchField: this.props.search.keySearchField,
+            keySearchText: '',
+            keySearchParams: null,
+            startDate: '',
+            endDate: '',
+            hideRead: true,
+          };
+
+          if (this.props.location.query[Constant.CCWNOTIRICATION_INSPECTORS_QUERY]) {
+            state.selectedInspectorsIds = [this.props.currentUser.id];
           }
+
+          this.updateSearchState(state, this.fetch);
+        } else {
+          if (!this.props.search.loaded) {
+            // This is the first load so look for a default favourite
+            var favourite = _.find(this.props.favourites, (favourite) => {
+              return favourite.isDefault;
+            });
+            if (favourite) {
+              this.loadFavourite(favourite);
+            }
+          }
+          return this.fetch();
         }
-        return this.fetch();
       })
       .finally(() => {
         this.setState({ loading: false });
@@ -194,35 +215,42 @@ class CCWNotifications extends React.Component {
           <Well id="ccwnotifications-bar" bsSize="small" className="clearfix">
             <Row>
               <Col md={10}>
-                <ButtonToolbar id="ccwnotifications-search">
-                  <MultiDropdown
-                    id="selectedDistrictsIds"
-                    placeholder="Districts"
-                    items={districts}
-                    selectedIds={this.state.search.selectedDistrictsIds}
-                    updateState={this.updateSearchState}
-                    showMaxItems={2}
-                  />
-                  <MultiDropdown
-                    id="selectedInspectorsIds"
-                    placeholder="Inspectors"
-                    items={inspectors}
-                    selectedIds={this.state.search.selectedInspectorsIds}
-                    updateState={this.updateSearchState}
-                    showMaxItems={2}
-                  />
-                  <CheckboxControl
-                    inline
-                    id="hideRead"
-                    checked={this.state.search.hideRead}
-                    updateState={this.updateSearchState}
-                  >
-                    Hide Read
-                  </CheckboxControl>
-                  <Button id="search-button" bsStyle="primary" onClick={this.fetch}>
-                    Search
-                  </Button>
-                </ButtonToolbar>
+                <Row>
+                  <ButtonToolbar id="ccwnotifications-search">
+                    <MultiDropdown
+                      id="selectedDistrictsIds"
+                      placeholder="Districts"
+                      items={districts}
+                      selectedIds={this.state.search.selectedDistrictsIds}
+                      updateState={this.updateSearchState}
+                      showMaxItems={2}
+                    />
+                    <MultiDropdown
+                      id="selectedInspectorsIds"
+                      placeholder="Inspectors"
+                      items={inspectors}
+                      selectedIds={this.state.search.selectedInspectorsIds}
+                      updateState={this.updateSearchState}
+                      showMaxItems={2}
+                    />
+                    <KeySearchControl
+                      id="ccwnotifications-key-search"
+                      search={this.state.search}
+                      updateState={this.updateSearchState}
+                    />
+                    <CheckboxControl
+                      inline
+                      id="hideRead"
+                      checked={this.state.search.hideRead}
+                      updateState={this.updateSearchState}
+                    >
+                      Hide Read
+                    </CheckboxControl>
+                  </ButtonToolbar>
+                </Row>
+                <Row>
+                  <ButtonToolbar id="ccwnotifications-search"></ButtonToolbar>
+                </Row>
               </Col>
               <Col md={2}>
                 <Row id="ccwnotifications-faves">
@@ -234,6 +262,11 @@ class CCWNotifications extends React.Component {
                     onSelect={this.loadFavourite}
                     pullRight
                   />
+                </Row>
+                <Row id="ccwnotifications-search">
+                  <Button id="search-button" bsStyle="primary" onClick={this.fetch}>
+                    Search
+                  </Button>
                 </Row>
               </Col>
             </Row>
