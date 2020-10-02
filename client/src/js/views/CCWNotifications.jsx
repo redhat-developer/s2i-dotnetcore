@@ -75,14 +75,24 @@ class CCWNotifications extends React.Component {
   }
 
   buildSearchParams = () => {
-    if (this.state.search.keySearchParams) {
-      // Use key search control params if there
-      return this.state.search.keySearchParams;
-    }
-
     var searchParams = {
       hideRead: this.state.search.hideRead,
     };
+
+    var dateFrom = Moment(this.state.search.dateFrom);
+    if (dateFrom && dateFrom.isValid()) {
+      searchParams.dateFrom = toZuluTime(dateFrom.startOf('day'));
+    }
+
+    var dateTo = Moment(this.state.search.dateTo);
+    if (dateTo && dateTo.isValid()) {
+      searchParams.dateTo = toZuluTime(dateTo.startOf('day'));
+    }
+
+    if (this.state.search.keySearchParams) {
+      // Use key search control params if there
+      return { ...this.state.search.keySearchParams, ...searchParams };
+    }
 
     if (
       this.state.search.selectedDistrictsIds.length > 0 &&
@@ -96,16 +106,6 @@ class CCWNotifications extends React.Component {
       this.state.search.selectedInspectorsIds.length !== _.size(this.props.inspectors)
     ) {
       searchParams.inspectors = this.state.search.selectedInspectorsIds;
-    }
-
-    var dateFrom = Moment(this.state.search.dateFrom);
-    if (dateFrom && dateFrom.isValid()) {
-      searchParams.dateFrom = toZuluTime(dateFrom.startOf('day'));
-    }
-
-    var dateTo = Moment(this.state.search.dateTo);
-    if (dateTo && dateTo.isValid()) {
-      searchParams.dateTo = toZuluTime(dateTo.startOf('day'));
     }
 
     return searchParams;
