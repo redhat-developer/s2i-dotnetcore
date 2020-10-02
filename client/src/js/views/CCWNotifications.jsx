@@ -16,19 +16,17 @@ import * as Api from '../api';
 import * as Constant from '../constants';
 import store from '../store';
 
-//import BadgeLabel from '../components/BadgeLabel.jsx';
 import CheckboxControl from '../components/CheckboxControl.jsx';
-//import DeleteButton from '../components/DeleteButton.jsx';
-//import EditButton from '../components/EditButton.jsx';
+import DateControl from '../components/DateControl.jsx';
 import Favourites from '../components/Favourites.jsx';
-//import FilterDropdown from '../components/FilterDropdown.jsx';
 import KeySearchControl from '../components/KeySearchControl.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Markdown from 'react-markdown';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
-//import Authorize from '../components/Authorize';
+import Authorize from '../components/Authorize';
+import UpdateButton from '../components/UpdateButton.jsx';
 
 class CCWNotifications extends React.Component {
   static propTypes = {
@@ -50,11 +48,12 @@ class CCWNotifications extends React.Component {
 
     var defaultSelectedDistricts = [];
     var defaultSelectedInspectors = [];
+    var defaultDateFrom = toZuluTime(new Date('2020-09-01'));
+    var defaultDateTo = toZuluTime(Moment());
 
     this.state = {
       loading: true,
-
-      showAddDialog: false,
+      selectAll: false,
 
       search: {
         selectedDistrictsIds: props.search.selectedDistrictsIds || defaultSelectedDistricts,
@@ -62,8 +61,10 @@ class CCWNotifications extends React.Component {
         keySearchField: props.search.keySearchField,
         keySearchText: props.search.keySearchText,
         keySearchParams: props.search.keySearchParams,
-        hideRead: props.search.hideRead === true,
-        loaded: props.search.loaded === true,
+        hideRead: props.search.hideRead || true,
+        dateFrom: props.search.dateFrom || defaultDateFrom,
+        dateTo: props.search.dateTo || defaultDateTo,
+        loaded: props.search.loaded || true,
       },
 
       ui: {
@@ -97,8 +98,15 @@ class CCWNotifications extends React.Component {
       searchParams.inspectors = this.state.search.selectedInspectorsIds;
     }
 
-    searchParams.dateFrom = toZuluTime(new Date('2020-09-01'));
-    searchParams.dateTo = toZuluTime(Moment());
+    var dateFrom = Moment(this.state.search.dateFrom);
+    if (dateFrom && dateFrom.isValid()) {
+      searchParams.dateFrom = toZuluTime(dateFrom.startOf('day'));
+    }
+
+    var dateTo = Moment(this.state.search.dateTo);
+    if (dateTo && dateTo.isValid()) {
+      searchParams.dateTo = toZuluTime(dateTo.startOf('day'));
+    }
 
     return searchParams;
   };
@@ -122,6 +130,7 @@ class CCWNotifications extends React.Component {
             startDate: '',
             endDate: '',
             hideRead: true,
+            selectAll: false,
           };
 
           if (this.props.location.query[Constant.CCWNOTIRICATION_INSPECTORS_QUERY]) {
@@ -179,11 +188,30 @@ class CCWNotifications extends React.Component {
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   };
 
-  // delete = (owner) => {
-  //   Api.deleteOwner(owner).then(() => {
-  //     this.fetch();
-  //   });
-  // };
+  updateCCWNotifications = (ccwnotifications) => {
+    Api.updateCCWNotifications(ccwnotifications).then(() => {
+      this.fetch();
+    });
+  };
+
+  togleHasBeenViewedAll = (toggle) => {
+    var ccwnotifications = { ...this.props.ccwnotifications };
+
+    Object.keys(ccwnotifications).forEach((key) => {
+      ccwnotifications[key].hasBeenViewed = toggle.selectAll;
+    });
+
+    store.dispatch({ type: Action.UPDATE_CCWNOTIFICATIONS, ccwnotifications: ccwnotifications });
+  };
+
+  togleHasBeenViewed = (toggle, ccwnotification) => {
+    var notification = { ...ccwnotification };
+    notification.hasBeenViewed = toggle.hasBeenViewed;
+
+    var ccwnotifications = { ...this.props.ccwnotifications, [notification.id]: notification };
+
+    store.dispatch({ type: Action.UPDATE_CCWNOTIFICATIONS, ccwnotifications: ccwnotifications });
+  };
 
   email = () => {};
   print = () => {};
@@ -238,6 +266,20 @@ class CCWNotifications extends React.Component {
                       search={this.state.search}
                       updateState={this.updateSearchState}
                     />
+                    <DateControl
+                      id="dateFrom"
+                      date={this.state.search.dateFrom}
+                      updateState={this.updateSearchState}
+                      label="From:"
+                      title="From"
+                    />
+                    <DateControl
+                      id="dateTo"
+                      date={this.state.search.dateTo}
+                      updateState={this.updateSearchState}
+                      label="To:"
+                      title="To"
+                    />
                     <CheckboxControl
                       inline
                       id="hideRead"
@@ -248,9 +290,7 @@ class CCWNotifications extends React.Component {
                     </CheckboxControl>
                   </ButtonToolbar>
                 </Row>
-                <Row>
-                  <ButtonToolbar id="ccwnotifications-search"></ButtonToolbar>
-                </Row>
+                <Row></Row>
               </Col>
               <Col md={2}>
                 <Row id="ccwnotifications-faves">
@@ -281,14 +321,19 @@ class CCWNotifications extends React.Component {
               );
             }
 
-            // var markReadButton = (
-            //   <Authorize permissions={Constant.PERMISSION_SB_W}>
-            //     <Button title="Mark as Read" bsSize="xsmall" onClick={this.delete}>
-            //       <Glyphicon glyph="plus" />
-            //       &nbsp;<strong>Mark as Read</strong>
-            //     </Button>
-            //   </Authorize>
-            // );
+            var togleHasBeenViewedButton = (
+              <Authorize permissions={Constant.PERMISSION_SB_W}>
+                <CheckboxControl
+                  inline
+                  id="selectAll"
+                  checked={this.state.selectAlls}
+                  updateState={this.togleHasBeenViewedAll}
+                >
+                  &nbsp;
+                </CheckboxControl>
+              </Authorize>
+            );
+
             if (Object.keys(this.props.ccwnotifications).length === 0) {
               return <Alert bsStyle="success">No CCW notifications</Alert>;
             }
@@ -299,34 +344,68 @@ class CCWNotifications extends React.Component {
             }
 
             return (
-              <SortTable
-                sortField={this.state.ui.sortField}
-                sortDesc={this.state.ui.sortDesc}
-                onSort={this.updateUIState}
-                headers={[
-                  { field: 'dateDetected', title: 'Date Detected' },
-                  { field: 'schoolBusRegNum', title: 'School Bus Reg#' },
-                  { field: 'schoolBusOwnerName', title: 'Current Owner' },
-                  { field: 'summary', title: 'Summary' },
-                ]}
-              >
-                {_.map(ccwnotifications, (ccwnotification) => {
-                  return (
-                    <tr key={ccwnotification.id}>
-                      <td>{formatDateTime(ccwnotification.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}</td>
-                      <td>
-                        <a href={ccwnotification.schoolBusUrl}>{ccwnotification.schoolBusRegNum}</a>
-                      </td>
-                      <td>
-                        <a href={ccwnotification.ownerURL}>{ccwnotification.schoolBusOwnerName}</a>
-                      </td>
-                      <td>
-                        <Markdown source={ccwnotification.text}></Markdown>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </SortTable>
+              <React.Fragment>
+                <Row>
+                  <Col>
+                    <UpdateButton
+                      name="Mark as Read/Unread"
+                      className="float-right"
+                      hide={false}
+                      bsStyle="primary"
+                      onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications)}
+                    />
+                  </Col>
+                </Row>
+                <SortTable
+                  sortField={this.state.ui.sortField}
+                  sortDesc={this.state.ui.sortDesc}
+                  onSort={this.updateUIState}
+                  headers={[
+                    { field: 'dateDetected', title: 'Date Detected' },
+                    { field: 'schoolBusRegNum', title: 'School Bus Reg#' },
+                    { field: 'schoolBusOwnerName', title: 'Current Owner' },
+                    { field: 'summary', title: 'Summary' },
+                    {
+                      field: 'togleHasBeenViewed',
+                      title: 'Mark as Read/Unread',
+                      style: { textAlign: 'right' },
+                      node: togleHasBeenViewedButton,
+                    },
+                  ]}
+                >
+                  {_.map(ccwnotifications, (ccwnotification) => {
+                    return (
+                      <tr key={ccwnotification.id}>
+                        <td>{formatDateTime(ccwnotification.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}</td>
+                        <td>
+                          <a href={ccwnotification.schoolBusUrl}>{ccwnotification.schoolBusRegNum}</a>
+                        </td>
+                        <td>
+                          <a href={ccwnotification.ownerURL}>{ccwnotification.schoolBusOwnerName}</a>
+                        </td>
+                        <td>
+                          <Markdown source={ccwnotification.text}></Markdown>
+                        </td>
+                        <td>
+                          <Authorize permissions={Constant.PERMISSION_SB_W}>
+                            <CheckboxControl
+                              className="float-right"
+                              inline
+                              id="hasBeenViewed"
+                              checked={ccwnotification.hasBeenViewed}
+                              updateState={(e) => {
+                                this.togleHasBeenViewed(e, ccwnotification);
+                              }}
+                            >
+                              &nbsp;
+                            </CheckboxControl>
+                          </Authorize>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </SortTable>
+              </React.Fragment>
             );
           })()}
         </div>

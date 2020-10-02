@@ -5,6 +5,7 @@ using SchoolBusAPI.Models;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.ViewModels;
 using System;
+using System.Collections.Generic;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -22,7 +23,7 @@ namespace SchoolBusAPI.Controllers
         [HttpGet]
         [Route("/api/ccwnotifications")]
         [RequiresPermission(Permissions.SchoolBusRead)]
-        public virtual ActionResult<CCWNotificationViewModel> GetCcwNotifications(DateTime? dateFrom, DateTime? dateTo, 
+        public virtual ActionResult<List<CCWNotificationViewModel>> GetCcwNotifications(DateTime? dateFrom, DateTime? dateTo, 
             [ModelBinder(BinderType = typeof(CsvArrayBinder))]int?[] districts, [ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] inspectors, 
             int? owner, string regi, string vin, string plate, bool hideRead = true)
         {
@@ -33,5 +34,16 @@ namespace SchoolBusAPI.Controllers
 
             return Ok(_ccwNotificationSvc.GetNotifications((DateTime)dateFrom, (DateTime)dateTo, districts, inspectors, owner, regi, vin, plate, hideRead));
         }
+
+        [HttpPost]
+        [Route("/api/ccwnotifications")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
+        public virtual IActionResult UpdateCcwNotifications([FromBody]List<CCWNotificationUpdateViewModel> ccwNotifications)
+        {
+            var (success, error) = _ccwNotificationSvc.UpdateNotifications(ccwNotifications);
+
+            return success ? NoContent() : error;
+        }
+
     }
 }

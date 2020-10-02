@@ -968,3 +968,13 @@ function parseCCWNotification(ccwnotification) {
     .map((detail) => `${detail.colDescription} - **New**: ${detail.valueTo} **Old**: ${detail.valueFrom}`)
     .join('\n\n');
 }
+
+export function updateCCWNotifications(ccwnotifications) {
+  var notifications = Object.values(ccwnotifications).map((x) => {
+    return { id: x.id, hasBeenViewed: x.hasBeenViewed };
+  });
+
+  return new ApiRequest('/ccwnotifications').post(Object.values(notifications)).then((response) => {
+    return response;
+  });
+}
