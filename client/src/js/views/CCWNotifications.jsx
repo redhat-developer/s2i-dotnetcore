@@ -42,12 +42,10 @@ class CCWNotifications extends React.Component {
 
   constructor(props) {
     super(props);
-    // var defaultSelectedInspectors = props.currentUser.isInspector ? [props.currentUser.id] : [];
-    // var defaultSelectedDistricts =
-    //   props.currentUser.isInspector || !props.currentUser.districtId ? [] : [props.currentUser.districtId];
+    var defaultSelectedInspectors = props.currentUser.isInspector ? [props.currentUser.id] : [];
+    var defaultSelectedDistricts =
+      props.currentUser.isInspector || !props.currentUser.districtId ? [] : [props.currentUser.districtId];
 
-    var defaultSelectedDistricts = [];
-    var defaultSelectedInspectors = [];
     var defaultDateFrom = toZuluTime(new Date('2020-09-01'));
     var defaultDateTo = toZuluTime(Moment());
 
