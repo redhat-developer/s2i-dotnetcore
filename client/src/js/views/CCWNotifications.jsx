@@ -25,6 +25,7 @@ import SortTable from '../components/SortTable.jsx';
 import Markdown from 'react-markdown';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
+import Tooltips from '../components/Tooltips.jsx';
 import Authorize from '../components/Authorize';
 import UpdateButton from '../components/UpdateButton.jsx';
 import DeleteButton from '../components/DeleteButton.jsx';
@@ -312,17 +313,25 @@ class CCWNotifications extends React.Component {
                       label="To:"
                       title="To"
                     />
-                    <CheckboxControl
-                      inline
-                      id="hideRead"
-                      checked={this.state.search.hideRead}
-                      updateState={this.updateSearchState}
+                    <Tooltips
+                      placement="top"
+                      tooltips="The date range filters notifications based on the day these changes were detected, it may not be the same as when these changes occurred."
                     >
-                      Hide Read
-                    </CheckboxControl>
+                      <Glyphicon glyph="question-sign" style={{ 'margin-left': '7px', 'margin-top': '3px' }} />
+                    </Tooltips>
                   </ButtonToolbar>
                 </Row>
-                <Row></Row>
+                <Row>
+                  <CheckboxControl
+                    inline
+                    id="hideRead"
+                    checked={this.state.search.hideRead}
+                    updateState={this.updateSearchState}
+                    style={{ 'margin-left': '5px', 'margin-top': '8px' }}
+                  >
+                    Hide Read
+                  </CheckboxControl>
+                </Row>
               </Col>
               <Col md={2}>
                 <Row id="ccwnotifications-faves">
