@@ -451,25 +451,23 @@ class CCWNotifications extends React.Component {
                           <Markdown source={ccwnotification.text}></Markdown>
                         </td>
                         <td>
-                          <Authorize permissions={Constant.PERMISSION_SB_W}>
-                            <CheckboxControl
-                              className="float-right"
-                              inline
-                              id="hasBeenViewed"
-                              checked={ccwnotification.hasBeenViewed}
-                              disabled={
-                                !(
-                                  this.props.currentUser.isSystemAdmin ||
-                                  ccwnotification.inspectorId === this.props.currentUser.id
-                                )
-                              }
-                              updateState={(e) => {
-                                this.togleHasBeenViewed(e, ccwnotification);
-                              }}
-                            >
-                              &nbsp;
-                            </CheckboxControl>
-                          </Authorize>
+                          <CheckboxControl
+                            className="float-right"
+                            inline
+                            id="hasBeenViewed"
+                            checked={ccwnotification.hasBeenViewed}
+                            disabled={
+                              !(
+                                this.props.currentUser.isSystemAdmin ||
+                                ccwnotification.inspectorId === this.props.currentUser.id
+                              )
+                            }
+                            updateState={(e) => {
+                              this.togleHasBeenViewed(e, ccwnotification);
+                            }}
+                          >
+                            &nbsp;
+                          </CheckboxControl>
                         </td>
                       </tr>
                     );
