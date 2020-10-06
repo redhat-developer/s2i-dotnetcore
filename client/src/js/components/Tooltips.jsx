@@ -14,7 +14,7 @@ class Tooltips extends React.Component {
         trigger={['hover', 'click']}
         placement={this.props.placement}
         rootClose
-        overlay={<Tooltip>{this.props.tooltips}</Tooltip>}
+        overlay={<Tooltip id="tooltips">{this.props.tooltips}</Tooltip>}
       >
         {this.props.children}
       </OverlayTrigger>

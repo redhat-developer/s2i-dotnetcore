@@ -45,6 +45,7 @@ class CCWNotifications extends React.Component {
   constructor(props) {
     super(props);
     var defaultSelectedInspectors = props.currentUser.isInspector ? [props.currentUser.id] : [];
+
     var defaultSelectedDistricts =
       props.currentUser.isInspector || !props.currentUser.districtId ? [] : [props.currentUser.districtId];
 
@@ -54,6 +55,7 @@ class CCWNotifications extends React.Component {
     this.state = {
       loading: true,
       selectAll: false,
+      searched: false,
 
       search: {
         selectedDistrictsIds: props.search.selectedDistrictsIds || defaultSelectedDistricts,
@@ -134,10 +136,10 @@ class CCWNotifications extends React.Component {
           };
 
           if (this.props.location.query[Constant.CCWNOTIRICATION_INSPECTORS_QUERY]) {
-            state.selectedInspectorsIds = [this.props.currentUser.id];
+            state.selectedInspectorsIds = this.props.currentUser.isInspector ? [this.props.currentUser.id] : [];
           }
 
-          this.updateSearchState(state, this.fetch);
+          this.updateSearchState(state, this.initialFetch);
         } else {
           if (!this.props.search.loaded) {
             // This is the first load so look for a default favourite
@@ -148,7 +150,7 @@ class CCWNotifications extends React.Component {
               this.loadFavourite(favourite);
             }
           }
-          return this.fetch();
+          return this.initialFetch();
         }
       })
       .finally(() => {
@@ -156,10 +158,15 @@ class CCWNotifications extends React.Component {
       });
   }
 
+  initialFetch = () => {
+    if (!this.props.currentUser.isInspector) return { loading: false };
+    return this.fetch();
+  };
+
   fetch = () => {
     this.setState({ loading: true });
     return Api.getCCWNotifications(this.buildSearchParams()).finally(() => {
-      this.setState({ loading: false });
+      this.setState({ loading: false, searched: true });
     });
   };
 
@@ -317,7 +324,7 @@ class CCWNotifications extends React.Component {
                       placement="top"
                       tooltips="The date range filters notifications based on the day these changes were detected, it may not be the same as when these changes occurred."
                     >
-                      <Glyphicon glyph="question-sign" style={{ 'margin-left': '7px', 'margin-top': '3px' }} />
+                      <Glyphicon glyph="question-sign" style={{ marginLeft: '7px', marginTop: '3px' }} />
                     </Tooltips>
                   </ButtonToolbar>
                 </Row>
@@ -327,7 +334,7 @@ class CCWNotifications extends React.Component {
                     id="hideRead"
                     checked={this.state.search.hideRead}
                     updateState={this.updateSearchState}
-                    style={{ 'margin-left': '5px', 'margin-top': '8px' }}
+                    style={{ marginLeft: '5px', marginTop: '8px' }}
                   >
                     Hide Read
                   </CheckboxControl>
@@ -377,7 +384,11 @@ class CCWNotifications extends React.Component {
             );
 
             if (Object.keys(this.props.ccwnotifications).length === 0) {
-              return <Alert bsStyle="success">No CCW notifications</Alert>;
+              if (this.state.searched) {
+                return <Alert bsStyle="success">No CCW notifications</Alert>;
+              } else {
+                return <Alert bsStyle="success">Click serach button to retrieve CCW notifications</Alert>;
+              }
             }
 
             var ccwnotifications = _.sortBy(this.props.ccwnotifications, this.state.ui.sortField);
