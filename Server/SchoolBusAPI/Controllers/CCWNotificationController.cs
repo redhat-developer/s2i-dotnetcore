@@ -45,5 +45,15 @@ namespace SchoolBusAPI.Controllers
             return success ? NoContent() : error;
         }
 
+        [HttpDelete]
+        [Route("/api/ccwnotifications")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
+        public virtual IActionResult DeleteCcwNotifications([FromBody] List<CCWNotificationUpdateViewModel> ccwNotifications)
+        {
+            var (success, error) = _ccwNotificationSvc.DeleteNotifications(ccwNotifications);
+
+            return success ? NoContent() : error;
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Glyphicon } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 import _ from 'lodash';
 
@@ -27,8 +27,7 @@ class UpdateButton extends React.Component {
           className={this.props.hide ? 'hidden' : ''}
           {...props}
         >
-          {this.props.name}&nbsp;&nbsp;
-          <Glyphicon glyph="floppy-disk" />
+          {this.props.name}
         </Button>
       </OverlayTrigger>
     );

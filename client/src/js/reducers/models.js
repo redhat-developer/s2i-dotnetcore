@@ -161,10 +161,7 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
     case Action.UPDATE_CCWNOTIFICATIONS:
       return { ...state, ccwnotifications: action.ccwnotifications };
 
-    case Action.UPDATE_HAS_BEEN_READ_ALL:
-      return { ...state, ccwnotifications: action.ccwnotifications };
-
-    case Action.UPDATE_HAS_BEEN_READ:
+    case Action.DELETE_CCWNOTIFICATIONS:
       return { ...state, ccwnotifications: action.ccwnotifications };
 
     default:

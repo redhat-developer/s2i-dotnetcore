@@ -970,11 +970,13 @@ function parseCCWNotification(ccwnotification) {
 }
 
 export function updateCCWNotifications(ccwnotifications) {
-  var notifications = Object.values(ccwnotifications).map((x) => {
-    return { id: x.id, hasBeenViewed: x.hasBeenViewed };
+  return new ApiRequest('/ccwnotifications').post(ccwnotifications).then((response) => {
+    return response;
   });
+}
 
-  return new ApiRequest('/ccwnotifications').post(Object.values(notifications)).then((response) => {
+export function deleteCCWNotifications(ccwnotifications) {
+  return new ApiRequest('/ccwnotifications').delete(ccwnotifications).then((response) => {
     return response;
   });
 }

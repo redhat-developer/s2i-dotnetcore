@@ -13,5 +13,6 @@ namespace SchoolBusAPI.ViewModels
         public string SchoolBusOwnerName { get; set; }
         public int SchoolBusOwnerId { get; set; }
         public DateTime DateDetected { get; set; }
+        public int InspectorId { get; set; }
     }
 }

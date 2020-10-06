@@ -27,6 +27,7 @@ import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 import UpdateButton from '../components/UpdateButton.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
 
 class CCWNotifications extends React.Component {
   static propTypes = {
@@ -187,7 +188,34 @@ class CCWNotifications extends React.Component {
   };
 
   updateCCWNotifications = (ccwnotifications) => {
-    Api.updateCCWNotifications(ccwnotifications).then(() => {
+    const notifications = _.pickBy(
+      ccwnotifications,
+      (ccwnotification) =>
+        this.props.currentUser.isSystemAdmin || ccwnotification.inspectorId === this.props.currentUser.id
+    );
+
+    const notificationArray = Object.values(notifications);
+
+    if (notificationArray.length === 0) return;
+
+    Api.updateCCWNotifications(notificationArray).then(() => {
+      this.fetch();
+    });
+  };
+
+  deleteCCWNotifications = (ccwnotifications) => {
+    const notifications = _.pickBy(
+      ccwnotifications,
+      (ccwnotification) =>
+        this.props.currentUser.isSystemAdmin ||
+        (ccwnotification.inspectorId === this.props.currentUser.id && ccwnotification.hasBeenViewed)
+    );
+
+    const notificationArray = Object.values(notifications);
+
+    if (notificationArray.length === 0) return;
+
+    Api.deleteCCWNotifications(notificationArray).then(() => {
       this.fetch();
     });
   };
@@ -195,10 +223,11 @@ class CCWNotifications extends React.Component {
   togleHasBeenViewedAll = (toggle) => {
     var ccwnotifications = { ...this.props.ccwnotifications };
 
-    Object.keys(ccwnotifications).forEach((key) => {
-      ccwnotifications[key].hasBeenViewed = toggle.selectAll;
+    _.values(ccwnotifications).forEach((ccwnotification) => {
+      if (this.props.currentUser.isSystemAdmin || ccwnotification.inspectorId === this.props.currentUser.id) {
+        ccwnotification.hasBeenViewed = toggle.selectAll;
+      }
     });
-
     store.dispatch({ type: Action.UPDATE_CCWNOTIFICATIONS, ccwnotifications: ccwnotifications });
   };
 
@@ -217,8 +246,13 @@ class CCWNotifications extends React.Component {
   render() {
     var districts = _.sortBy(this.props.districts, 'name');
     var inspectors = _.sortBy(this.props.inspectors, 'name');
+    var ccwnotificationArray = _.values(this.props.ccwnotifications);
 
-    var numCCWNotifications = this.state.loading ? '...' : Object.keys(this.props.ccwnotifications).length;
+    var isEditable =
+      this.props.currentUser.isSystemAdmin ||
+      ccwnotificationArray.filter((x) => x.inspectorId === this.props.currentUser.id).length > 0;
+
+    var numCCWNotifications = this.state.loading ? '...' : ccwnotificationArray.length;
 
     return (
       <div id="ccwnotifications">
@@ -325,6 +359,7 @@ class CCWNotifications extends React.Component {
                   inline
                   id="selectAll"
                   checked={this.state.selectAlls}
+                  disabled={!isEditable}
                   updateState={this.togleHasBeenViewedAll}
                 >
                   &nbsp;
@@ -343,17 +378,28 @@ class CCWNotifications extends React.Component {
 
             return (
               <React.Fragment>
-                <Row>
-                  <Col>
-                    <UpdateButton
-                      name="Mark as Read/Unread"
-                      className="float-right"
-                      hide={false}
-                      bsStyle="primary"
-                      onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications)}
-                    />
-                  </Col>
-                </Row>
+                <Authorize permissions={Constant.PERMISSION_OWNER_W}>
+                  <Row>
+                    <Col>
+                      <DeleteButton
+                        name="Delete"
+                        id="delete-button"
+                        hide={false}
+                        disabled={!isEditable}
+                        onConfirm={this.deleteCCWNotifications.bind(this, this.props.ccwnotifications)}
+                      />
+                    </Col>
+                    <Col>
+                      <UpdateButton
+                        name="Mark as Read/Unread"
+                        className="float-right"
+                        hide={false}
+                        disabled={!isEditable}
+                        onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications)}
+                      />
+                    </Col>
+                  </Row>
+                </Authorize>
                 <SortTable
                   sortField={this.state.ui.sortField}
                   sortDesc={this.state.ui.sortDesc}
@@ -391,6 +437,12 @@ class CCWNotifications extends React.Component {
                               inline
                               id="hasBeenViewed"
                               checked={ccwnotification.hasBeenViewed}
+                              disabled={
+                                !(
+                                  this.props.currentUser.isSystemAdmin ||
+                                  ccwnotification.inspectorId === this.props.currentUser.id
+                                )
+                              }
                               updateState={(e) => {
                                 this.togleHasBeenViewed(e, ccwnotification);
                               }}
