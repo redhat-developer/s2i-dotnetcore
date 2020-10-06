@@ -248,8 +248,7 @@ class CCWNotifications extends React.Component {
     store.dispatch({ type: Action.UPDATE_CCWNOTIFICATIONS, ccwnotifications: ccwnotifications });
   };
 
-  email = () => {};
-  print = () => {};
+  export = () => {};
 
   render() {
     var districts = _.sortBy(this.props.districts, 'name');
@@ -268,13 +267,8 @@ class CCWNotifications extends React.Component {
           CCW Notifications ({numCCWNotifications})
           <ButtonGroup id="ccwnotifications-buttons">
             <Unimplemented>
-              <Button onClick={this.email}>
-                <Glyphicon glyph="envelope" title="E-mail" />
-              </Button>
-            </Unimplemented>
-            <Unimplemented>
               <Button onClick={this.print}>
-                <Glyphicon glyph="print" title="Print" />
+                <Glyphicon glyph="download-alt" title="Export" />
               </Button>
             </Unimplemented>
           </ButtonGroup>
