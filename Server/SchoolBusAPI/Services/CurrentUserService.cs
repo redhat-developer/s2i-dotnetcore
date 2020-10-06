@@ -255,22 +255,28 @@ namespace SchoolBusAPI.Services
                 DateTime today = DateTime.UtcNow.Date;
                 DateTime dateTo = today.AddDays(31).AddSeconds(-1);
 
-                int overdue = _context.SchoolBuss
+                int overdue = _context.SchoolBuss.AsNoTracking()
                     .Count(x => x.Inspector.Id == id && x.NextInspectionDate < today && x.Status.ToLower() == "active");
 
-                int within30days = _context.SchoolBuss
+                int within30days = _context.SchoolBuss.AsNoTracking()
                     .Count(x => x.Inspector.Id == id && x.NextInspectionDate >= today && x.NextInspectionDate <= dateTo && x.Status.ToLower() == "active");
 
-                int scheduledInspections = _context.SchoolBuss
+                int scheduledInspections = _context.SchoolBuss.AsNoTracking()
                     .Count(x => x.Inspector.Id == id && x.NextInspectionDate >= today && x.Status.ToLower() == "active");
 
-                int reInspections = _context.SchoolBuss
+                int reInspections = _context.SchoolBuss.AsNoTracking()
                     .Count(x => x.Inspector.Id == id && x.NextInspectionTypeCode.ToLower() == "re-inspection" && x.Status.ToLower() == "active");
+
+                int ccwNotifications = _context.SchoolBuss.AsNoTracking()
+                    .Where(x => x.Inspector.Id == id)
+                    .SelectMany(x => x.CCWNotifications)
+                    .Count(x => !x.HasBeenViewed);
 
                 result.OverdueInspections = overdue;
                 result.DueWithin30DaysInspections = within30days;
                 result.ScheduledInspections = scheduledInspections;
                 result.ReInspections = reInspections;
+                result.CCWNotifications = ccwNotifications;
 
                 result.Permissions =
                     currentUser
@@ -285,7 +291,7 @@ namespace SchoolBusAPI.Services
                     .Select(p => p.Code)
                     .ToList();
 
-                result.IsSysAdmin = currentUser.UserRoles.Any(x => x.Role.Name == Roles.SystemAdmininstrator 
+                result.IsSystemAdmin = currentUser.UserRoles.Any(x => x.Role.Name == Roles.SystemAdmininstrator 
                         && (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
                 
                 result.IsInspector = currentUser.UserRoles.Any(x => x.Role.Name == Roles.Inspector

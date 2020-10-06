@@ -331,7 +331,7 @@ namespace SchoolBusAPI.Services
             {
                 var bus = _context.SchoolBuss.FirstOrDefault(x => x.CCWDataId == ccwdata.Id);
 
-                var changes = _context.GetChanges(ccwdata, "DateFetched");
+                var changes = _context.GetChanges(ccwdata, "NSCPolicyNumber", "ICBCRegOwnerName", "ICBCRegOwnerStatus", "NSCClientNum");
 
                 if (bus != null && changes.Count > 0)
                 {

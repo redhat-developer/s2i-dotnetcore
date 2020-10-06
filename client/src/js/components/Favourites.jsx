@@ -1,21 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Alert, Dropdown, ButtonToolbar, Button } from "react-bootstrap";
-import { Form, FormGroup, HelpBlock, ControlLabel } from "react-bootstrap";
-import { Col, Glyphicon } from "react-bootstrap";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Alert, Dropdown, ButtonToolbar, Button } from 'react-bootstrap';
+import { Form, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
+import { Col, Glyphicon } from 'react-bootstrap';
 
-import _ from "lodash";
+import _ from 'lodash';
 
-import * as Api from "../api";
+import * as Api from '../api';
 
-import CheckboxControl from "../components/CheckboxControl.jsx";
-import DeleteButton from "../components/DeleteButton.jsx";
-import EditButton from "../components/EditButton.jsx";
-import EditDialog from "../components/EditDialog.jsx";
-import FormInputControl from "../components/FormInputControl.jsx";
-import RootCloseMenu from "./RootCloseMenu.jsx";
+import CheckboxControl from '../components/CheckboxControl.jsx';
+import DeleteButton from '../components/DeleteButton.jsx';
+import EditButton from '../components/EditButton.jsx';
+import EditDialog from '../components/EditDialog.jsx';
+import FormInputControl from '../components/FormInputControl.jsx';
+import RootCloseMenu from './RootCloseMenu.jsx';
 
-import { isBlank } from "../utils/string";
+import { isBlank } from '../utils/string';
 
 class EditFavouritesDialog extends React.Component {
   static propTypes = {
@@ -26,9 +26,9 @@ class EditFavouritesDialog extends React.Component {
   };
 
   state = {
-    name: this.props.favourite.name || "",
+    name: this.props.favourite.name || '',
     isDefault: this.props.favourite.isDefault || false,
-    nameError: "",
+    nameError: '',
   };
 
   componentDidMount() {
@@ -52,7 +52,7 @@ class EditFavouritesDialog extends React.Component {
 
   isValid = () => {
     if (isBlank(this.state.name)) {
-      this.setState({ nameError: "Name is required" });
+      this.setState({ nameError: 'Name is required' });
       return false;
     }
     return true;
@@ -81,10 +81,7 @@ class EditFavouritesDialog extends React.Component {
         title={<strong>Favourite</strong>}
       >
         <Form>
-          <FormGroup
-            controlId="name"
-            validationState={this.state.nameError ? "error" : null}
-          >
+          <FormGroup controlId="name" validationState={this.state.nameError ? 'error' : null}>
             <ControlLabel>
               Name <sup>*</sup>
             </ControlLabel>
@@ -98,11 +95,7 @@ class EditFavouritesDialog extends React.Component {
             />
             <HelpBlock>{this.state.nameError}</HelpBlock>
           </FormGroup>
-          <CheckboxControl
-            id="isDefault"
-            checked={this.state.isDefault}
-            updateState={this.updateState}
-          >
+          <CheckboxControl id="isDefault" checked={this.state.isDefault} updateState={this.updateState}>
             Default
           </CheckboxControl>
         </Form>
@@ -139,8 +132,8 @@ class Favourites extends React.Component {
   addFavourite = () => {
     this.editFavourite({
       type: this.props.type,
-      name: "",
-      value: "",
+      name: '',
+      value: '',
       isDefault: false,
     });
   };
@@ -194,11 +187,11 @@ class Favourites extends React.Component {
   };
 
   render() {
-    var title = this.props.title || "Favourites";
+    var title = this.props.title || 'Favourites';
     return (
       <Dropdown
         id={this.props.id}
-        className={`favourites ${this.props.className || ""}`}
+        className={`favourites ${this.props.className || ''}`}
         title={title}
         pullRight={this.props.pullRight}
         open={this.state.open}
@@ -207,9 +200,7 @@ class Favourites extends React.Component {
         <Dropdown.Toggle>{title}</Dropdown.Toggle>
         <RootCloseMenu bsRole="menu">
           <div className="favourites-button-bar">
-            <Button onClick={this.addFavourite}>
-              Favourite Current Selection
-            </Button>
+            <Button onClick={this.addFavourite}>Favourite Current Selection</Button>
           </div>
           {(() => {
             if (Object.keys(this.state.favourites).length === 0) {
@@ -225,30 +216,16 @@ class Favourites extends React.Component {
                 {_.map(this.state.favourites, (favourite) => {
                   return (
                     <li key={favourite.id}>
-                      <Col md={1}>
-                        {favourite.isDefault ? <Glyphicon glyph="star" /> : ""}
-                      </Col>
+                      <Col md={1}>{favourite.isDefault ? <Glyphicon glyph="star" /> : ''}</Col>
                       <Col md={8}>
-                        <a
-                          href="/#"
-                          onClick={this.selectFavourite.bind(this, favourite)}
-                        >
+                        <a href={() => false} onClick={this.selectFavourite.bind(this, favourite)}>
                           {favourite.name}
                         </a>
                       </Col>
                       <Col md={3}>
                         <ButtonToolbar>
-                          <DeleteButton
-                            name="Favourite"
-                            onConfirm={this.deleteFavourite.bind(
-                              this,
-                              favourite
-                            )}
-                          />
-                          <EditButton
-                            name="Favourite"
-                            onClick={this.editFavourite.bind(this, favourite)}
-                          />
+                          <DeleteButton name="Favourite" onConfirm={this.deleteFavourite.bind(this, favourite)} />
+                          <EditButton name="Favourite" onClick={this.editFavourite.bind(this, favourite)} />
                         </ButtonToolbar>
                       </Col>
                     </li>

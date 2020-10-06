@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
@@ -12,7 +14,9 @@ namespace SchoolBusAPI.Services
 {
     public interface ICCWNotificationService
     {
-        List<CCWNotificationViewModel> GetNotifications(DateTime dateFrom, DateTime dateTo, int?[] districts, int?[] inspectors, int? owner, string regi, string vin, string plate);
+        List<CCWNotificationViewModel> GetNotifications(DateTime dateFrom, DateTime dateTo, int?[] districts, int?[] inspectors, int? owner, string regi, string vin, string plate, bool hideRead);
+        (bool valid, IActionResult error) UpdateNotifications(List<CCWNotificationUpdateViewModel> ccwNotifications);
+        (bool valid, IActionResult error) DeleteNotifications(List<CCWNotificationUpdateViewModel> ccwNotifications);
     }
 
     public class CCWNotificationService : ServiceBase, ICCWNotificationService
@@ -21,7 +25,7 @@ namespace SchoolBusAPI.Services
         {
         }
 
-        public List<CCWNotificationViewModel> GetNotifications(DateTime dateFrom, DateTime dateTo, int?[] districts, int?[] inspectors, int? owner, string regi, string vin, string plate)
+        public List<CCWNotificationViewModel> GetNotifications(DateTime dateFrom, DateTime dateTo, int?[] districts, int?[] inspectors, int? owner, string regi, string vin, string plate, bool hideRead)
         {
             var data = DbContext.SchoolBuss.AsNoTracking();
             var keySearch = false;
@@ -72,9 +76,77 @@ namespace SchoolBusAPI.Services
                 .Include(x => x.CCWNotificationDetails)
                 .Include(x => x.SchoolBus)
                     .ThenInclude(x => x.SchoolBusOwner)
+                .Include(x => x.SchoolBus)
+                    .ThenInclude(x => x.Inspector)
                 .Where(x => x.CreateTimestamp.Date >= dateFrom && x.CreateTimestamp.Date <= dateTo);
 
+            if (hideRead)
+            {
+                notifications = notifications.Where(x => !x.HasBeenViewed);
+            }
+
             return Mapper.Map<List<CCWNotificationViewModel>>(notifications);
+        }
+
+        public (bool valid, IActionResult error) UpdateNotifications(List<CCWNotificationUpdateViewModel> ccwNotifications)
+        {
+            var currentUserId = GetCurrentUserId();
+
+            foreach (var ccwNotification in ccwNotifications)
+            {
+                var entity = DbContext.CCWNotifications
+                    .Include(x => x.SchoolBus)
+                    .Include(x => x.CCWNotificationDetails)
+                    .FirstOrDefault(x => x.Id == ccwNotification.Id);
+
+                if (entity == null)
+                {
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 501, $"The CCW Notification [{ccwNotification.Id}] does not exist.")));
+                }
+
+                if (!User.IsSystemAdmin() && entity.SchoolBus.InspectorId != currentUserId)
+                {
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 502, $"The CCW Notification [{ccwNotification.Id}] does not belong to the user[{GetCurrentSmUserId()}].")));
+                }
+
+                if (ccwNotification.HasBeenViewed == entity.HasBeenViewed)
+                    continue;
+
+                entity.HasBeenViewed = !entity.HasBeenViewed;
+            }
+
+            DbContext.SaveChanges();
+
+            return (true, null);
+        }
+
+        public (bool valid, IActionResult error) DeleteNotifications(List<CCWNotificationUpdateViewModel> ccwNotifications)
+        {
+            var currentUserId = GetCurrentUserId();
+
+            foreach (var ccwNotification in ccwNotifications)
+            {
+                var entity = DbContext.CCWNotifications
+                    .Include(x => x.SchoolBus)
+                    .Include(x => x.CCWNotificationDetails)
+                    .FirstOrDefault(x => x.Id == ccwNotification.Id);
+
+                if (entity == null)
+                {
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 501, $"The CCW Notification [{ccwNotification.Id}] does not exist.")));
+                }
+
+                if (!User.IsSystemAdmin() && entity.SchoolBus.InspectorId != currentUserId)
+                {
+                    return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 502, $"The CCW Notification [{ccwNotification.Id}] does not belong to the user[{GetCurrentSmUserId()}].")));
+                }
+
+                DbContext.CCWNotifications.Remove(entity);
+            }
+
+            DbContext.SaveChanges();
+
+            return (true, null);
         }
     }
 }

@@ -526,59 +526,6 @@ export function getSchoolBusPermitURL(schoolBusId) {
 ////////////////////
 
 export function searchCCW(params) {
-  /*
-  // For devenv testing
-
-  var ccwResponse = {
-    'id': 0,
-    'icbcRegistrationNumber': '09281972',
-    'icbcLicencePlateNumber': 'KHS 774',
-    'icbcVehicleIdentificationNumber': '4UZABRCS48CY61422',
-    'icbcModelYear': 1982,
-    'icbcVehicleType': '2',
-    'icbcRateClass': '671',
-    'icbccvipDecal': 'DK66448',
-    'icbcFleetUnitNo': 6001,
-    'icbcGrossVehicleWeight': 12000,
-    'icbcMake': 'THOMAS',
-    'icbcBody': 'SCBUS',
-    'icbcRebuiltStatus': '',
-    'icbccvipExpiry': '2014-01-31T08:00:00Z',
-    'icbcNetWt': 6420,
-    'icbcModel': '',
-    'icbcFuel': 'D',
-    'icbcSeatingCapacity': 24,
-    'icbcColour': 'PLE',
-    'icbcNotesAndOrders': null,
-    'icbcOrderedOn': null,
-    'icbcRegOwnerName': 'JUNE EXPIRY',
-    'icbcRegOwnerAddr1': '1219 CAROL PL',
-    'icbcRegOwnerAddr2': 'GIBSONS                BC',
-    'icbcRegOwnerCity': '',
-    'icbcRegOwnerProv': '',
-    'icbcRegOwnerPostalCode': 'V0N1V4',
-    'icbcRegOwnerStatus': '',
-    'icbcRegOwnerRODL': '',
-    'icbcRegOwnerPODL': '',
-    'nscClientNum': null,
-    'nscCarrierName': null,
-    'nscCarrierConditions': null,
-    'nscCarrierSafetyRating': null,
-    'nscPolicyNumber': null,
-    'nscPolicyEffectiveDate': null,
-    'nscPolicyStatusDate': null,
-    'nscPolicyExpiryDate': null,
-    'nscPolicyStatus': null,
-    'nscPlateDecal': null,
-  };
-
-  return new ApiRequest('/version').get(params).then(response => {
-    var ccw = response || {};
-
-    store.dispatch({ type: Action.UPDATE_BUS_CCW, schoolBusCCW: ccwResponse });
-  });
-*/
-
   return new ApiRequest('/ccwdata/fetch').get(params).then((response) => {
     var ccw = response || {};
 
@@ -660,6 +607,18 @@ export function deleteInspection(inspection) {
     store.dispatch({
       type: Action.DELETE_INSPECTION,
       inspection: inspection,
+    });
+  });
+}
+
+export function getInspectionCounts(params) {
+  return new ApiRequest('/inspections/counts').get(params).then((response) => {
+    // Normalize the response
+    var inspectionCounts = response;
+
+    store.dispatch({
+      type: Action.UPDATE_INSPECTION_COUNTS,
+      inspectionCounts: inspectionCounts,
     });
   });
 }
@@ -976,6 +935,48 @@ export function getVersion() {
 ////////////////////
 export function sendEmail(email) {
   return new ApiRequest('schoolbuses/email').post(email).then((response) => {
+    return response;
+  });
+}
+
+////////////////////
+// CCW Notification
+////////////////////
+export function getCCWNotifications(params) {
+  return new ApiRequest('/ccwnotifications').get(params).then((response) => {
+    var ccwnotifications = _.fromPairs(response.map((ccwnotification) => [ccwnotification.id, ccwnotification]));
+
+    // Add display fields
+    _.map(ccwnotifications, (ccwnotification) => {
+      parseCCWNotification(ccwnotification);
+    });
+
+    store.dispatch({ type: Action.UPDATE_CCWNOTIFICATIONS, ccwnotifications: ccwnotifications });
+  });
+}
+
+function parseCCWNotification(ccwnotification) {
+  ccwnotification.ownerURL = ccwnotification.schoolBusOwnerId
+    ? `#/${Constant.OWNERS_PATHNAME}/${ccwnotification.schoolBusOwnerId}`
+    : '';
+  ccwnotification.schoolBusUrl = `#/${Constant.BUSES_PATHNAME}/${ccwnotification.schoolBusId}`;
+  ccwnotification.canView = true;
+  ccwnotification.canEdit = true;
+  ccwnotification.canDelete = false;
+
+  ccwnotification.text = ccwnotification.ccwNotificationDetails
+    .map((detail) => `${detail.colDescription} - **New**: ${detail.valueTo} **Old**: ${detail.valueFrom}`)
+    .join('\n\n');
+}
+
+export function updateCCWNotifications(ccwnotifications) {
+  return new ApiRequest('/ccwnotifications').post(ccwnotifications).then((response) => {
+    return response;
+  });
+}
+
+export function deleteCCWNotifications(ccwnotifications) {
+  return new ApiRequest('/ccwnotifications').delete(ccwnotifications).then((response) => {
     return response;
   });
 }

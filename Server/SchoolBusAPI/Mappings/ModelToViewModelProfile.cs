@@ -37,7 +37,8 @@ namespace SchoolBusAPI.Mappings
                 .ForMember(x => x.DateDetected, opt => opt.MapFrom(x => x.CreateTimestamp))
                 .ForMember(x => x.SchoolBusRegNum, opt => opt.MapFrom(x => x.SchoolBus.ICBCRegistrationNumber))
                 .ForMember(x => x.SchoolBusOwnerName, opt => opt.MapFrom(x => x.SchoolBus.SchoolBusOwner.Name))
-                .ForMember(x => x.SchoolBusOwnerId, opt => opt.MapFrom(x => x.SchoolBus.SchoolBusOwner.Id));
+                .ForMember(x => x.SchoolBusOwnerId, opt => opt.MapFrom(x => x.SchoolBus.SchoolBusOwner.Id))
+                .ForMember(x => x.InspectorId, opt => opt.MapFrom(x => x.SchoolBus.Inspector.Id));
 
             CreateMap<CCWNotificationDetail, CCWNotificationDetailViewModel>();
         }

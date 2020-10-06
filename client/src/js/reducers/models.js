@@ -1,6 +1,6 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-import * as Action from "../actionTypes";
+import * as Action from '../actionTypes';
 
 const DEFAULT_MODELS = {
   favourites: {},
@@ -16,6 +16,7 @@ const DEFAULT_MODELS = {
   schoolBusNotes: {},
 
   inspection: {},
+  inspectionCounts: {},
 
   ownerContacts: {},
   contact: {},
@@ -28,6 +29,8 @@ const DEFAULT_MODELS = {
   rolePermissions: {},
 
   history: {},
+
+  ccwnotifications: {},
 };
 
 export default function modelsReducer(state = DEFAULT_MODELS, action) {
@@ -105,6 +108,9 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
     case Action.DELETE_INSPECTION:
       return { ...state, inspection: action.inspection };
 
+    case Action.UPDATE_INSPECTION_COUNTS:
+      return { ...state, inspectionCounts: action.inspectionCounts };
+
     //Contacts
     case Action.ADD_CONTACT:
       return { ...state, contact: action.contact };
@@ -150,6 +156,14 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
     // History
     case Action.UPDATE_HISTORY:
       return { ...state, history: action.history };
+
+    // CCW Notifications
+    case Action.UPDATE_CCWNOTIFICATIONS:
+      return { ...state, ccwnotifications: action.ccwnotifications };
+
+    case Action.DELETE_CCWNOTIFICATIONS:
+      return { ...state, ccwnotifications: action.ccwnotifications };
+
     default:
       return state;
   }

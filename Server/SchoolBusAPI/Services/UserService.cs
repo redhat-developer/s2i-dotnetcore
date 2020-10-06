@@ -403,15 +403,18 @@ namespace SchoolBusAPI.Services
         {
             var data = _context.UserRoles
                 .AsNoTracking()
-                .Where(ur => ur.Role.Name == Roles.Inspector)
-                .Select(ur => ur.User);
+                .Where(ur => ur.Role.Name == Roles.Inspector);
 
             if (includeInactive == null || includeInactive == false)
             {
-                data = data.Where(u => u.Active == true);
-            }                
+                data = data.Where(ur => !ur.ExpiryDate.HasValue || ur.ExpiryDate == DateTime.MinValue || ur.ExpiryDate > DateTime.Now);
+            }
 
-            var result = Mapper.Map<List<InspectorViewModel>>(data);
+            var inspectors = data
+                .Select(ur => ur.User)
+                .Where(u => u.Active == true);
+
+            var result = Mapper.Map<List<InspectorViewModel>>(inspectors);
 
             return new ObjectResult(result);
         }

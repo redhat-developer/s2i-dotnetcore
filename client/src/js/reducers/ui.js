@@ -1,4 +1,4 @@
-import * as Action from "../actionTypes";
+import * as Action from '../actionTypes';
 
 const DEFAULT_STATE = {
   requests: {
@@ -14,6 +14,7 @@ const DEFAULT_STATE = {
   roles: {},
   userRoles: {},
   history: {},
+  ccwnotifications: {},
 };
 
 export default function uiReducer(state = DEFAULT_STATE, action) {
@@ -45,6 +46,9 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
       return { ...state, requests: { waiting: false, error: {} } };
 
     // Screens
+
+    case Action.UPDATE_CCWNOTIFICATION_UI:
+      return { ...state, ccwnotifications: action.ccwnotifications };
 
     case Action.UPDATE_BUSES_UI:
       return { ...state, schoolBuses: action.schoolBuses };

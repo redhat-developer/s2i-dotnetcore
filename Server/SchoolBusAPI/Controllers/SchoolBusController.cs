@@ -272,13 +272,5 @@ namespace SchoolBusAPI.Controllers
             // TODO: Integrate ModelBinder with SimpleModelBinderProvider
             return this._service.SchoolbusesSearchGetAsync(districts, inspectors, cities, schooldistricts, owner, regi, vin, plate, includeInactive, onlyReInspections, startDate, endDate);
         }
-
-        [HttpGet]
-        [Route("/api/schoolbuses/inspectioncounts")]
-        [RequiresPermission(Permissions.SchoolBusRead)]
-        public ActionResult<InspectionSummaryViewModel> GetInspectionCounts([ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] districts, [ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] inspectors)
-        {
-            return Ok(_service.GetInspectionCounts(districts, inspectors));
-        }
     }
 }

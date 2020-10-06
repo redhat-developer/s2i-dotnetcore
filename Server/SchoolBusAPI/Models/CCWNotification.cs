@@ -26,7 +26,7 @@ namespace SchoolBusAPI.Models
         /// </summary>
         /// <value>True if the user linked to the inspection has read the notification</value>
         [MetaDataExtension(Description = "True if the user linked to the bus has read the notification")]
-        public bool? HasBeenViewed { get; set; }
+        public bool HasBeenViewed { get; set; }
 
         /// <summary>
         /// A foreign key reference to the system-generated unique identifier for a School Bus

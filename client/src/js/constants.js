@@ -2,7 +2,7 @@
 export const HOME_PATHNAME = 'home';
 export const BUSES_PATHNAME = 'school-buses';
 export const OWNERS_PATHNAME = 'owners';
-export const NOTIFICATIONS_PATHNAME = 'notifications';
+export const CCWNOTIFICATIONS_PATHNAME = 'ccwnotifications';
 export const USERS_PATHNAME = 'users';
 export const ROLES_PATHNAME = 'roles';
 export const VERSION_PATHNAME = 'version';
@@ -33,6 +33,9 @@ export const SCHOOL_BUS_OWNER_QUERY = 'ownerId';
 export const SCHOOL_BUS_OVERDUE_QUERY = 'overdue';
 export const SCHOOL_BUS_REINSPECTIONS_QUERY = 'reinspections';
 export const SCHOOL_BUS_WITHIN_30_DAYS_QUERY = 'within30days';
+
+// CCW Notification Queries
+export const CCWNOTIRICATION_INSPECTORS_QUERY = 'inspectors';
 
 // Date Formats
 export const DATE_FULL_MONTH_DAY_YEAR = 'MMMM D, YYYY';

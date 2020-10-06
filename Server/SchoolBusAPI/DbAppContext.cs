@@ -355,7 +355,7 @@ namespace SchoolBusAPI.Models
             return result;
         }
 
-        public List<ChangeViewModel> GetChanges<T>(T entity, params string[] fieldsToSkip)
+        public List<ChangeViewModel> GetAllChanges<T>(T entity, params string[] fieldsToSkip)
         {
             var changes = new List<ChangeViewModel>();
 
@@ -373,14 +373,51 @@ namespace SchoolBusAPI.Models
 
                 if (entry.Property(property.Name).IsModified)
                 {
+                    var valueFrom = entry.OriginalValues[property.Name]?.GetType() == typeof(DateTime) ? 
+                        ((DateTime?)entry.OriginalValues[property.Name])?.ToString("yyyy-MM-dd") : entry.OriginalValues[property.Name]?.ToString();
+
+                    var valueTo = entry.CurrentValues[property.Name]?.GetType() == typeof(DateTime) ?
+                        ((DateTime?)entry.CurrentValues[property.Name])?.ToString("yyyy-MM-dd") : entry.CurrentValues[property.Name]?.ToString();
+
                     changes.Add(new ChangeViewModel
                     {
                         ColName = property.Name,
                         ColDescription = property.Name.WordToWords(),
-                        ValueFrom = entry.OriginalValues[property.Name].ToString(),
-                        ValueTo = entry.CurrentValues[property.Name].ToString()
+                        ValueFrom = valueFrom ?? "",
+                        ValueTo = valueTo ?? ""
                     });
+                }
+            }
 
+            return changes;
+        }
+
+        public List<ChangeViewModel> GetChanges<T>(T entity, params string[] fields)
+        {
+            var changes = new List<ChangeViewModel>();
+
+            var entry = Entry(entity);
+
+            foreach (var property in typeof(T).GetProperties())
+            {
+                if (!fields.Any(x => x == property.Name))
+                    continue;
+
+                if (entry.Property(property.Name).IsModified)
+                {
+                    var valueFrom = entry.OriginalValues[property.Name]?.GetType() == typeof(DateTime) ?
+                        ((DateTime?)entry.OriginalValues[property.Name])?.ToString("yyyy-MM-dd") : entry.OriginalValues[property.Name]?.ToString();
+
+                    var valueTo = entry.CurrentValues[property.Name]?.GetType() == typeof(DateTime) ?
+                        ((DateTime?)entry.CurrentValues[property.Name])?.ToString("yyyy-MM-dd") : entry.CurrentValues[property.Name]?.ToString();
+
+                    changes.Add(new ChangeViewModel
+                    {
+                        ColName = property.Name,
+                        ColDescription = property.Name.WordToWords(),
+                        ValueFrom = valueFrom ?? "",
+                        ValueTo = valueTo ?? ""
+                    });
                 }
             }
 

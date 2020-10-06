@@ -70,8 +70,8 @@ class TopNav extends React.Component {
                   <NavItem eventKey={3}>Owners</NavItem>
                 </LinkContainer>
               </Authorize>
-              <LinkContainer to={{ pathname: `/${Constant.NOTIFICATIONS_PATHNAME}` }}>
-                <NavItem eventKey={4}>Notifications</NavItem>
+              <LinkContainer to={{ pathname: `/${Constant.CCWNOTIFICATIONS_PATHNAME}` }}>
+                <NavItem eventKey={4}>CCW Notifications</NavItem>
               </LinkContainer>
               <Authorize permissions={[Constant.PERMISSION_USER_R, Constant.PERMISSION_ROLE_R]} matchAll={false}>
                 <NavDropdown id="admin-dropdown" title="Administration">

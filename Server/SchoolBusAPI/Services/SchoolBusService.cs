@@ -164,8 +164,6 @@ namespace SchoolBusAPI.Services
         /// <param name="endDate">Inspection end date</param>
         /// <response code="200">OK</response>
         IActionResult SchoolbusesSearchGetAsync(int?[] districts, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate);
-
-        InspectionSummaryViewModel GetInspectionCounts(int?[] districts, int?[] inspectors);
     }
 
     /// <summary>
@@ -997,36 +995,5 @@ namespace SchoolBusAPI.Services
             return new ObjectResult(result);
         }
 
-        public InspectionSummaryViewModel GetInspectionCounts(int?[] districts, int?[] inspectors)
-        {
-            DateTime today = DateTime.UtcNow.Date;
-            DateTime dateTo = today.AddDays(31).AddSeconds(-1);
-
-            var data = DbContext.SchoolBuss.AsNoTracking();
-
-            if (districts != null)
-            {
-                data = data.Where(x => districts.Contains(x.DistrictId));
-            }
-
-            if (inspectors != null)
-            {
-                data = data.Where(x => inspectors.Contains(x.InspectorId));
-            }
-
-            int overdue = data
-                .Count(x => x.NextInspectionDate < today && x.Status.ToLower() == "active");
-
-            int within30days = _context.SchoolBuss
-                .Count(x => x.NextInspectionDate >= today && x.NextInspectionDate <= dateTo && x.Status.ToLower() == "active");
-
-            int scheduledInspections = _context.SchoolBuss
-                .Count(x => x.NextInspectionDate >= today && x.Status.ToLower() == "active");
-
-            int reInspections = _context.SchoolBuss
-                .Count(x => x.NextInspectionTypeCode.ToLower() == "re-inspection" && x.Status.ToLower() == "active");
-
-            return new InspectionSummaryViewModel(overdue, within30days, scheduledInspections, reInspections);
-        }
     }
 }

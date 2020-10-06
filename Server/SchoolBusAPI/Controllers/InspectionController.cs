@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
+using SchoolBusAPI.ViewModels;
+using SchoolBusAPI.Helpers;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -99,6 +101,14 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult InspectionsPost([FromBody]Inspection item)
         {
             return this._service.InspectionsPostAsync(item);
+        }
+
+        [HttpGet]
+        [Route("/api/inspections/counts")]
+        [RequiresPermission(Permissions.SchoolBusRead)]
+        public ActionResult<InspectionCountsViewModel> GetInspectionCounts([ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] districts, [ModelBinder(BinderType = typeof(CsvArrayBinder))] int?[] inspectors)
+        {
+            return Ok(_service.GetInspectionCounts(districts, inspectors));
         }
     }
 }
