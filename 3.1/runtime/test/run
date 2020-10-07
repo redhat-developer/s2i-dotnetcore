@@ -15,7 +15,9 @@
 #
 # STOP_ON_ERROR determines if the tests should exit on encountering
 # the first error, or keep going and list all failed tests at the end.
-# Defaults to 'true', can be set to 'false'
+# Defaults to 'true', can be set to 'false'.
+#
+# SKIP_VERSION_CHECK environment variable, if 'Y', versions are not checked.
 #
 # Example usage: $ sudo ./test/run
 
@@ -58,7 +60,9 @@ test_dotnet() {
   assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Host"
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
   # Check version
-  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version: ${dotnet_version}$"
+  if [ "$SKIP_VERSION_CHECK" != "Y" ]; then
+    assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version: ${dotnet_version}$"
+  fi
 }
 
 test_envvars() {

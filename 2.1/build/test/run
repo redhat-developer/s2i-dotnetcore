@@ -18,7 +18,9 @@
 #
 # STOP_ON_ERROR determines if the tests should exit on encountering
 # the first error, or keep going and list all failed tests at the end.
-# Defaults to 'true', can be set to 'false'
+# Defaults to 'true', can be set to 'false'.
+#
+# SKIP_VERSION_CHECK environment variable, if 'Y', versions are not checked.
 #
 # Example usage: $ sudo ./test/run
 
@@ -106,7 +108,9 @@ test_s2i_sdk_version()
   docker_rmi ${image}
 
   # verify sdk version
-  assert_contains "${s2i_build}" "SDK Version: ${expected_version}"
+  if [ "$SKIP_VERSION_CHECK" != "Y" ]; then
+    assert_contains "${s2i_build}" "SDK Version: ${expected_version}"
+  fi
 }
 
 test_s2i_usage() {
@@ -136,7 +140,9 @@ test_image() {
 
   # verify dotnet is available
   local image_dotnet_version=$(docker_run ${IMAGE_NAME} 'dotnet --version')
-  assert_equal "${image_dotnet_version}" "${sdk_version}"
+  if [ "$SKIP_VERSION_CHECK" != "Y" ]; then
+    assert_equal "${image_dotnet_version}" "${sdk_version}"
+  fi
 
   # Verify $HOME != $CWD. See https://github.com/redhat-developer/s2i-dotnetcore/issues/28
   local working_dir=$(docker_run ${IMAGE_NAME} pwd)
@@ -149,7 +155,10 @@ test_image() {
 
   # verify npm is available
   local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
-  assert_equal "${image_npm_version}" "${npm_version}"
+
+  if [ "$SKIP_VERSION_CHECK" != "Y" ]; then
+    assert_equal "${image_npm_version}" "${npm_version}"
+  fi
 }
 
 test_consoleapp() {
