@@ -8,7 +8,7 @@ import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 
 import _ from 'lodash';
 import Moment from 'moment';
-import { formatDateTime, toZuluTime } from '../utils/date';
+import { formatDateTime, toZuluTime, today } from '../utils/date';
 import Promise from 'bluebird';
 
 import * as Action from '../actionTypes';
@@ -50,7 +50,7 @@ class CCWNotifications extends React.Component {
       props.currentUser.isInspector || !props.currentUser.districtId ? [] : [props.currentUser.districtId];
 
     var defaultDateFrom = toZuluTime(new Date('2020-09-01'));
-    var defaultDateTo = toZuluTime(Moment());
+    var defaultDateTo = today();
 
     this.state = {
       loading: true,

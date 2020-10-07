@@ -378,7 +378,7 @@ namespace SchoolBusAPI.Services
             {
                 if (addressCols.Contains(change.ColName))                    
                 {
-                    var addressChange = formatted.FirstOrDefault(x => x.ColName == "Address");
+                    var addressChange = formatted.FirstOrDefault(x => x.ColName == "ICBCRegOwnerAddr");
 
                     if (addressChange == null)
                     {
@@ -393,6 +393,7 @@ namespace SchoolBusAPI.Services
                     else
                     {
                         addressChange.ValueFrom += $" {change.ValueFrom.Trim()}";
+                        addressChange.ValueTo += $" {change.ValueTo.Trim()}";
                     }
                 }
                 else
