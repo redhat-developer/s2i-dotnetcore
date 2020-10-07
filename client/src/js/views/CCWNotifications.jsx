@@ -117,7 +117,7 @@ class CCWNotifications extends React.Component {
     this.setState({ loading: true });
 
     var inspectorsPromise = Api.getInspectors();
-    var favouritesPromise = Api.getFavourites('ccwnotification');
+    var favouritesPromise = Api.getFavourites('ccwnotifications');
 
     Promise.all([inspectorsPromise, favouritesPromise])
       .then(() => {
