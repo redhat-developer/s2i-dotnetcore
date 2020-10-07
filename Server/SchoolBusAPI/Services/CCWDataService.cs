@@ -335,8 +335,6 @@ namespace SchoolBusAPI.Services
 
                 var changes = _context.GetChanges(ccwdata, "NSCPolicyNumber", "ICBCRegOwnerName", "NSCClientNum", "ICBCRegOwnerAddr1", "ICBCRegOwnerAddr2", "ICBCRegOwnerCity", "ICBCRegOwnerProv", "ICBCRegOwnerPostalCode");
 
-
-
                 if (bus != null && changes.Count > 0)
                 {
                     var formattedChanges = GetFormatChanges(changes);
@@ -386,8 +384,8 @@ namespace SchoolBusAPI.Services
                     {
                         formatted.Add(new ChangeViewModel
                         {
-                            ColName = "Address",
-                            ColDescription = "Address",
+                            ColName = "ICBCRegOwnerAddr",
+                            ColDescription = "ICBC Reg Owner Address",
                             ValueFrom = change.ValueFrom.Trim(),
                             ValueTo = change.ValueTo.Trim()
                         });
