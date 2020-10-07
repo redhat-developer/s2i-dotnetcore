@@ -71,7 +71,7 @@ class CCWNotifications extends React.Component {
 
       ui: {
         sortField: props.ui.sortField || 'dateDetected',
-        sortDesc: props.ui.sortDesc === true,
+        sortDesc: true,
       },
     };
   }
