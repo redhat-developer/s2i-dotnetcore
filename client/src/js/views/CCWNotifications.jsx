@@ -405,7 +405,7 @@ class CCWNotifications extends React.Component {
                     </Col>
                     <Col>
                       <UpdateButton
-                        name="Mark as Read/Unread"
+                        name="Mark selected as Read and unselected as Unread"
                         className="float-right"
                         hide={false}
                         disabled={!isEditable}
