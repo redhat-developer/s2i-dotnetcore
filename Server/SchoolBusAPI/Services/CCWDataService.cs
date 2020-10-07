@@ -19,6 +19,8 @@ using SchoolBusCcw;
 using System;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
+using System.Collections.Generic;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Services
 {
@@ -331,10 +333,14 @@ namespace SchoolBusAPI.Services
             {
                 var bus = _context.SchoolBuss.FirstOrDefault(x => x.CCWDataId == ccwdata.Id);
 
-                var changes = _context.GetChanges(ccwdata, "NSCPolicyNumber", "ICBCRegOwnerName", "ICBCRegOwnerStatus", "NSCClientNum");
+                var changes = _context.GetChanges(ccwdata, "NSCPolicyNumber", "ICBCRegOwnerName", "NSCClientNum", "ICBCRegOwnerAddr1", "ICBCRegOwnerAddr2", "ICBCRegOwnerCity", "ICBCRegOwnerProv", "ICBCRegOwnerPostalCode");
+
+
 
                 if (bus != null && changes.Count > 0)
                 {
+                    var formattedChanges = GetFormatChanges(changes);
+
                     var ccwNotification = (new CCWNotification
                     {
                         HasBeenViewed = false,
@@ -342,7 +348,7 @@ namespace SchoolBusAPI.Services
 
                     bus.CCWNotifications.Add(ccwNotification);
 
-                    foreach (var change in changes)
+                    foreach (var change in formattedChanges)
                     {
                         ccwNotification.CCWNotificationDetails.Add(new CCWNotificationDetail
                         {
@@ -363,6 +369,41 @@ namespace SchoolBusAPI.Services
             _context.SaveChanges();
 
             return ccwdata;
+        }
+
+        private List<ChangeViewModel> GetFormatChanges(List<ChangeViewModel> changes)
+        {
+            var formatted = new List<ChangeViewModel>();
+            var addressCols = new string [] { "ICBCRegOwnerAddr1", "ICBCRegOwnerAddr2", "ICBCRegOwnerCity", "ICBCRegOwnerProv" };
+
+            foreach(var change in changes.OrderBy(x => x.ColName))
+            {
+                if (addressCols.Contains(change.ColName))                    
+                {
+                    var addressChange = formatted.FirstOrDefault(x => x.ColName == "Address");
+
+                    if (addressChange == null)
+                    {
+                        formatted.Add(new ChangeViewModel
+                        {
+                            ColName = "Address",
+                            ColDescription = "Address",
+                            ValueFrom = change.ValueFrom.Trim(),
+                            ValueTo = change.ValueTo.Trim()
+                        });
+                    }
+                    else
+                    {
+                        addressChange.ValueFrom += $" {change.ValueFrom.Trim()}";
+                    }
+                }
+                else
+                {
+                    formatted.Add(change);
+                }
+            }
+
+            return formatted;
         }
 
         /// <summary>
