@@ -333,7 +333,7 @@ namespace SchoolBusAPI.Services
             {
                 var bus = _context.SchoolBuss.FirstOrDefault(x => x.CCWDataId == ccwdata.Id);
 
-                var changes = _context.GetChanges(ccwdata, "NSCPolicyNumber", "ICBCRegOwnerName", "NSCClientNum", "ICBCRegOwnerAddr1", "ICBCRegOwnerAddr2", "ICBCRegOwnerCity", "ICBCRegOwnerProv", "ICBCRegOwnerPostalCode");
+                var changes = _context.GetChanges(ccwdata, "NSCPolicyNumber", "ICBCRegOwnerName", "NSCClientNum", "ICBCRegOwnerAddr1", "ICBCRegOwnerAddr2", "ICBCRegOwnerCity");
 
                 if (bus != null && changes.Count > 0)
                 {
@@ -372,7 +372,7 @@ namespace SchoolBusAPI.Services
         private List<ChangeViewModel> GetFormatChanges(List<ChangeViewModel> changes)
         {
             var formatted = new List<ChangeViewModel>();
-            var addressCols = new string [] { "ICBCRegOwnerAddr1", "ICBCRegOwnerAddr2", "ICBCRegOwnerCity", "ICBCRegOwnerProv" };
+            var addressCols = new string [] { "ICBCRegOwnerAddr1", "ICBCRegOwnerAddr2", "ICBCRegOwnerCity" };
 
             foreach(var change in changes.OrderBy(x => x.ColName))
             {
