@@ -396,7 +396,7 @@ class CCWNotifications extends React.Component {
                   <Row>
                     <Col>
                       <DeleteButton
-                        name="selected notifications"
+                        name="selected"
                         id="delete-button"
                         hide={false}
                         disabled={!isEditable}
@@ -405,7 +405,8 @@ class CCWNotifications extends React.Component {
                     </Col>
                     <Col>
                       <UpdateButton
-                        name="Mark selected as Read and unselected as Unread"
+                        name="Mark as Read/Unread"
+                        description="Mark selected as Read and unselected as Unread"
                         className="float-right"
                         hide={false}
                         disabled={!isEditable}
