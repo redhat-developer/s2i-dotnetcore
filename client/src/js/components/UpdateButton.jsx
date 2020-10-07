@@ -1,37 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Button } from 'react-bootstrap';
-
-import _ from 'lodash';
-
 import Confirm from '../components/Confirm.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 
-class UpdateButton extends React.Component {
-  static propTypes = {
-    onConfirm: PropTypes.func.isRequired,
-    name: PropTypes.string,
-    hide: PropTypes.bool,
-  };
+const UpdateButton = (props) => {
+  const { onConfirm, name, hide, ...rest } = props;
+  return (
+    <OverlayTrigger trigger="click" placement="top" rootClose overlay={<Confirm onConfirm={onConfirm} />}>
+      <Button title={`${name}`} size="sm" color="primary" className={hide ? 'hidden' : ''} {...rest}>
+        {name}
+      </Button>
+    </OverlayTrigger>
+  );
+};
 
-  render() {
-    var props = _.omit(this.props, 'onConfirm', 'hide', 'name');
-
-    return (
-      <OverlayTrigger trigger="click" placement="top" rootClose overlay={<Confirm onConfirm={this.props.onConfirm} />}>
-        <Button
-          title={`${this.props.name}`}
-          size="sm"
-          color="primary"
-          className={this.props.hide ? 'hidden' : ''}
-          {...props}
-        >
-          {this.props.name}
-        </Button>
-      </OverlayTrigger>
-    );
-  }
-}
+UpdateButton.propTypes = {
+  onConfirm: PropTypes.func.isRequired,
+  name: PropTypes.string,
+  hide: PropTypes.bool,
+};
 
 export default UpdateButton;
