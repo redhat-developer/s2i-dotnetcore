@@ -396,7 +396,7 @@ class CCWNotifications extends React.Component {
                   <Row>
                     <Col>
                       <DeleteButton
-                        name="Delete"
+                        name="selected notifications"
                         id="delete-button"
                         hide={false}
                         disabled={!isEditable}
