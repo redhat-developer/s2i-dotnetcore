@@ -72,6 +72,9 @@ namespace SchoolBusAPI.Services
                 }
             }
 
+            dateFrom = dateFrom.Date;
+            dateTo = dateTo.AddDays(1).Date.AddSeconds(-1);
+
             var notifications = data.SelectMany(x => x.CCWNotifications)
                 .Include(x => x.CCWNotificationDetails)
                 .Include(x => x.SchoolBus)
