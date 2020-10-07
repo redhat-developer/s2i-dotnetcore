@@ -316,7 +316,7 @@ class CCWNotifications extends React.Component {
                     />
                     <Tooltips
                       placement="top"
-                      tooltips="The date range filters notifications based on the day these changes were detected, it may not be the same as when these changes occurred."
+                      text="The date range filters notifications based on the day these changes were detected, it may not be the same as when these changes occurred."
                     >
                       <Glyphicon glyph="question-sign" style={{ marginLeft: '7px', marginTop: '3px' }} />
                     </Tooltips>
