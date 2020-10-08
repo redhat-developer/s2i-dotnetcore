@@ -92,7 +92,7 @@ test_images() {
   check_result_msg $? "Tests FAILED!"
 }
 
-if [ -z ${IMAGE_OS+x} ]; then
+if [ -z "${IMAGE_OS}" ]; then
   # Default to CentOS when not on RHEL.
   if [[ `grep "Red Hat Enterprise Linux Server release 7" /etc/redhat-release` ]]; then
     export IMAGE_OS="RHEL7"
