@@ -17,7 +17,7 @@
 # the first error, or keep going and list all failed tests at the end.
 # Defaults to 'true', can be set to 'false'.
 #
-# SKIP_VERSION_CHECK environment variable, if 'Y', versions are not checked.
+# SKIP_VERSION_CHECK environment variable, if 'true', versions are not checked.
 #
 # Example usage: $ sudo ./test/run
 
@@ -60,7 +60,7 @@ test_dotnet() {
   assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Host"
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
   # Check version
-  if [ "$SKIP_VERSION_CHECK" != "Y" ]; then
+  if [ "$SKIP_VERSION_CHECK" != "true" ]; then
     assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version: ${dotnet_version}$"
   fi
 }

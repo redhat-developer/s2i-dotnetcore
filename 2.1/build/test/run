@@ -20,7 +20,7 @@
 # the first error, or keep going and list all failed tests at the end.
 # Defaults to 'true', can be set to 'false'.
 #
-# SKIP_VERSION_CHECK environment variable, if 'Y', versions are not checked.
+# SKIP_VERSION_CHECK environment variable, if 'true', versions are not checked.
 #
 # Example usage: $ sudo ./test/run
 
@@ -108,7 +108,7 @@ test_s2i_sdk_version()
   docker_rmi ${image}
 
   # verify sdk version
-  if [ "$SKIP_VERSION_CHECK" != "Y" ]; then
+  if [ "$SKIP_VERSION_CHECK" != "true" ]; then
     assert_contains "${s2i_build}" "SDK Version: ${expected_version}"
   fi
 }
@@ -140,7 +140,7 @@ test_image() {
 
   # verify dotnet is available
   local image_dotnet_version=$(docker_run ${IMAGE_NAME} 'dotnet --version')
-  if [ "$SKIP_VERSION_CHECK" != "Y" ]; then
+  if [ "$SKIP_VERSION_CHECK" != "true" ]; then
     assert_equal "${image_dotnet_version}" "${sdk_version}"
   fi
 
@@ -156,7 +156,7 @@ test_image() {
   # verify npm is available
   local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
 
-  if [ "$SKIP_VERSION_CHECK" != "Y" ]; then
+  if [ "$SKIP_VERSION_CHECK" != "true" ]; then
     assert_equal "${image_npm_version}" "${npm_version}"
   fi
 }
