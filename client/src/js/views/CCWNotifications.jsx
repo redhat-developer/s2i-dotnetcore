@@ -264,7 +264,7 @@ class CCWNotifications extends React.Component {
     return (
       <div id="ccwnotifications">
         <PageHeader>
-          CCW Notifications ({numCCWNotifications})
+          ICBC Notifications ({numCCWNotifications})
           <ButtonGroup id="ccwnotifications-buttons">
             <Unimplemented>
               <Button onClick={this.print}>
