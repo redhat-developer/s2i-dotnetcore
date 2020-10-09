@@ -321,6 +321,10 @@ class CCWNotifications extends React.Component {
                     >
                       Hide Read
                     </CheckboxControl>
+                  </ButtonToolbar>
+                </Row>
+                <Row>
+                  <ButtonToolbar>
                     <KeySearchControl
                       id="ccwnotifications-key-search"
                       search={this.state.search}
