@@ -24,11 +24,11 @@ import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Markdown from 'react-markdown';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 import Tooltips from '../components/Tooltips.jsx';
 import Authorize from '../components/Authorize';
 import UpdateButton from '../components/UpdateButton.jsx';
 import DeleteButton from '../components/DeleteButton.jsx';
+import ExportButton from '../components/ExportButton.jsx';
 
 class CCWNotifications extends React.Component {
   static propTypes = {
@@ -265,20 +265,16 @@ class CCWNotifications extends React.Component {
       <div id="ccwnotifications">
         <PageHeader>
           ICBC Notifications ({numCCWNotifications})
-          <ButtonGroup id="ccwnotifications-buttons">
-            <Unimplemented>
-              <Button onClick={this.print}>
-                <Glyphicon glyph="download-alt" title="Export" />
-              </Button>
-            </Unimplemented>
+          <ButtonGroup id="header-button-group">
+            <ExportButton disabled={true && ccwnotificationArray.length === 0} onClick={this.export} />
           </ButtonGroup>
         </PageHeader>
         <div>
-          <Well id="ccwnotifications-bar" bsSize="small" className="clearfix">
+          <Well bsSize="small" className="search-bar clearfix">
             <Row>
-              <Col md={10}>
+              <Col xs={9} sm={10} id="filters">
                 <Row>
-                  <ButtonToolbar id="ccwnotifications-search-1">
+                  <ButtonToolbar>
                     <MultiDropdown
                       id="selectedDistrictsIds"
                       placeholder="Districts"
@@ -313,42 +309,38 @@ class CCWNotifications extends React.Component {
                       placement="top"
                       text="The date range filters notifications based on the day these changes were detected, it may not be the same as when these changes occurred."
                     >
-                      <Glyphicon glyph="question-sign" style={{ marginLeft: '7px', marginTop: '3px' }} />
+                      <Glyphicon glyph="question-sign" style={{ marginLeft: '5px', marginTop: '5px' }} pullRight />
                     </Tooltips>
-                  </ButtonToolbar>
-                </Row>
-                <Row>
-                  <ButtonToolbar id="ccwnotifications-search-2">
-                    <KeySearchControl
-                      id="ccwnotifications-key-search"
-                      search={this.state.search}
-                      updateState={this.updateSearchState}
-                    />
                     <CheckboxControl
                       inline
                       id="hideRead"
                       checked={this.state.search.hideRead}
                       updateState={this.updateSearchState}
-                      style={{ marginLeft: '8px', marginTop: '5px' }}
+                      style={{ marginLeft: '20px', marginTop: '12px' }}
                     >
                       Hide Read
                     </CheckboxControl>
+                    <KeySearchControl
+                      id="ccwnotifications-key-search"
+                      search={this.state.search}
+                      updateState={this.updateSearchState}
+                    />
                   </ButtonToolbar>
                 </Row>
               </Col>
-              <Col md={2}>
-                <Row id="ccwnotifications-faves">
+              <Col xs={3} sm={2} id="search-buttons">
+                <Row>
                   <Favourites
                     id="ccwnotifications-faves-dropdown"
                     type="ccwnotifications"
                     favourites={this.props.favourites}
                     data={this.state.search}
                     onSelect={this.loadFavourite}
-                    pullRight
+                    className="pull-right"
                   />
                 </Row>
-                <Row id="ccwnotifications-search">
-                  <Button id="search-button" bsStyle="primary" onClick={this.fetch}>
+                <Row>
+                  <Button id="search-button" className="pull-right" bsStyle="primary" onClick={this.fetch}>
                     Search
                   </Button>
                 </Row>
