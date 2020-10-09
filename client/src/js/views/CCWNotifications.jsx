@@ -278,7 +278,7 @@ class CCWNotifications extends React.Component {
             <Row>
               <Col md={10}>
                 <Row>
-                  <ButtonToolbar id="ccwnotifications-search">
+                  <ButtonToolbar id="ccwnotifications-search-1">
                     <MultiDropdown
                       id="selectedDistrictsIds"
                       placeholder="Districts"
@@ -294,11 +294,6 @@ class CCWNotifications extends React.Component {
                       selectedIds={this.state.search.selectedInspectorsIds}
                       updateState={this.updateSearchState}
                       showMaxItems={2}
-                    />
-                    <KeySearchControl
-                      id="ccwnotifications-key-search"
-                      search={this.state.search}
-                      updateState={this.updateSearchState}
                     />
                     <DateControl
                       id="dateFrom"
@@ -323,15 +318,22 @@ class CCWNotifications extends React.Component {
                   </ButtonToolbar>
                 </Row>
                 <Row>
-                  <CheckboxControl
-                    inline
-                    id="hideRead"
-                    checked={this.state.search.hideRead}
-                    updateState={this.updateSearchState}
-                    style={{ marginLeft: '5px', marginTop: '8px' }}
-                  >
-                    Hide Read
-                  </CheckboxControl>
+                  <ButtonToolbar id="ccwnotifications-search-2">
+                    <KeySearchControl
+                      id="ccwnotifications-key-search"
+                      search={this.state.search}
+                      updateState={this.updateSearchState}
+                    />
+                    <CheckboxControl
+                      inline
+                      id="hideRead"
+                      checked={this.state.search.hideRead}
+                      updateState={this.updateSearchState}
+                      style={{ marginLeft: '8px', marginTop: '5px' }}
+                    >
+                      Hide Read
+                    </CheckboxControl>
+                  </ButtonToolbar>
                 </Row>
               </Col>
               <Col md={2}>
