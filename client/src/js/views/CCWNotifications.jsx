@@ -266,7 +266,8 @@ class CCWNotifications extends React.Component {
         <PageHeader>
           ICBC Notifications ({numCCWNotifications})
           <ButtonGroup id="header-button-group">
-            <ExportButton disabled={true && ccwnotificationArray.length === 0} onClick={this.export} />
+            {/* disabled until fully implemented */}
+            <ExportButton disabled={true || ccwnotificationArray.length === 0} onClick={this.export} />
           </ButtonGroup>
         </PageHeader>
         <div>
