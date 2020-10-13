@@ -36,11 +36,21 @@ namespace SchoolBusAPI.Controllers
         }
 
         [HttpPost]
-        [Route("/api/ccwnotifications")]
+        [Route("/api/ccwnotifications/read")]
         [RequiresPermission(Permissions.SchoolBusWrite)]
-        public virtual IActionResult UpdateCcwNotifications([FromBody]List<CCWNotificationUpdateViewModel> ccwNotifications)
+        public virtual IActionResult UpdateHasBeenReadAsRead([FromBody]List<CCWNotificationUpdateViewModel> ccwNotifications)
         {
-            var (success, error) = _ccwNotificationSvc.UpdateNotifications(ccwNotifications);
+            var (success, error) = _ccwNotificationSvc.UpdateHasBeenRead(ccwNotifications, true);
+
+            return success ? NoContent() : error;
+        }
+
+        [HttpPost]
+        [Route("/api/ccwnotifications/unread")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
+        public virtual IActionResult UpdateHasBeenReadAsUnread([FromBody] List<CCWNotificationUpdateViewModel> ccwNotifications)
+        {
+            var (success, error) = _ccwNotificationSvc.UpdateHasBeenRead(ccwNotifications, false);
 
             return success ? NoContent() : error;
         }

@@ -969,8 +969,14 @@ function parseCCWNotification(ccwnotification) {
     .join('\n\n');
 }
 
-export function updateCCWNotifications(ccwnotifications) {
-  return new ApiRequest('/ccwnotifications').post(ccwnotifications).then((response) => {
+export function updateHasBeenReadAsRead(ccwnotifications) {
+  return new ApiRequest('/ccwnotifications/read').post(ccwnotifications).then((response) => {
+    return response;
+  });
+}
+
+export function updateHasBeenReadAsUnread(ccwnotifications) {
+  return new ApiRequest('/ccwnotifications/unread').post(ccwnotifications).then((response) => {
     return response;
   });
 }

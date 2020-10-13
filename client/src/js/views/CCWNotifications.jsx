@@ -195,20 +195,27 @@ class CCWNotifications extends React.Component {
     this.updateSearchState(JSON.parse(favourite.value), this.fetch);
   };
 
-  updateCCWNotifications = (ccwnotifications) => {
+  updateCCWNotifications = (ccwnotifications, read) => {
     const notifications = _.pickBy(
       ccwnotifications,
       (ccwnotification) =>
-        this.props.currentUser.isSystemAdmin || ccwnotification.inspectorId === this.props.currentUser.id
+        (this.props.currentUser.isSystemAdmin || ccwnotification.inspectorId === this.props.currentUser.id) &&
+        ccwnotification.selected
     );
 
     const notificationArray = Object.values(notifications);
 
     if (notificationArray.length === 0) return;
 
-    Api.updateCCWNotifications(notificationArray).then(() => {
-      this.fetch();
-    });
+    if (read) {
+      Api.updateHasBeenReadAsRead(notificationArray).then(() => {
+        this.fetch();
+      });
+    } else {
+      Api.updateHasBeenReadAsUnread(notificationArray).then(() => {
+        this.fetch();
+      });
+    }
   };
 
   deleteCCWNotifications = (ccwnotifications) => {
@@ -216,7 +223,7 @@ class CCWNotifications extends React.Component {
       ccwnotifications,
       (ccwnotification) =>
         this.props.currentUser.isSystemAdmin ||
-        (ccwnotification.inspectorId === this.props.currentUser.id && ccwnotification.hasBeenViewed)
+        (ccwnotification.inspectorId === this.props.currentUser.id && ccwnotification.selected)
     );
 
     const notificationArray = Object.values(notifications);
@@ -228,20 +235,20 @@ class CCWNotifications extends React.Component {
     });
   };
 
-  togleHasBeenViewedAll = (toggle) => {
+  selectAll = (toggle) => {
     var ccwnotifications = { ...this.props.ccwnotifications };
 
     _.values(ccwnotifications).forEach((ccwnotification) => {
       if (this.props.currentUser.isSystemAdmin || ccwnotification.inspectorId === this.props.currentUser.id) {
-        ccwnotification.hasBeenViewed = toggle.selectAll;
+        ccwnotification.selected = toggle.selectAll;
       }
     });
     store.dispatch({ type: Action.UPDATE_CCWNOTIFICATIONS, ccwnotifications: ccwnotifications });
   };
 
-  togleHasBeenViewed = (toggle, ccwnotification) => {
+  togleSelected = (toggle, ccwnotification) => {
     var notification = { ...ccwnotification };
-    notification.hasBeenViewed = toggle.hasBeenViewed;
+    notification.selected = toggle.selected;
 
     var ccwnotifications = { ...this.props.ccwnotifications, [notification.id]: notification };
 
@@ -362,14 +369,14 @@ class CCWNotifications extends React.Component {
               );
             }
 
-            var togleHasBeenViewedButton = (
+            var togleSelectAllButton = (
               <Authorize permissions={Constant.PERMISSION_SB_W}>
                 <CheckboxControl
                   inline
                   id="selectAll"
                   checked={this.state.selectAlls}
                   disabled={!isEditable}
-                  updateState={this.togleHasBeenViewedAll}
+                  updateState={this.selectAll}
                 >
                   &nbsp;
                 </CheckboxControl>
@@ -404,12 +411,22 @@ class CCWNotifications extends React.Component {
                     </Col>
                     <Col>
                       <UpdateButton
-                        name="Mark as Read/Unread"
-                        description="Mark selected as Read and unselected as Unread"
+                        name="Mark as Unead"
+                        description="Mark selected as Unead"
                         className="float-right"
                         hide={false}
                         disabled={!isEditable}
-                        onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications)}
+                        onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, false)}
+                      />
+                    </Col>
+                    <Col>
+                      <UpdateButton
+                        name="Mark as Read"
+                        description="Mark selected as Read"
+                        className="float-right"
+                        hide={false}
+                        disabled={!isEditable}
+                        onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, true)}
                       />
                     </Col>
                   </Row>
@@ -427,13 +444,13 @@ class CCWNotifications extends React.Component {
                       field: 'togleHasBeenViewed',
                       title: 'Mark as Read/Unread',
                       style: { textAlign: 'right' },
-                      node: togleHasBeenViewedButton,
+                      node: togleSelectAllButton,
                     },
                   ]}
                 >
                   {_.map(ccwnotifications, (ccwnotification) => {
                     return (
-                      <tr key={ccwnotification.id}>
+                      <tr key={ccwnotification.id} className={ccwnotification.hasBeenViewed ? 'info' : null}>
                         <td>{formatDateTime(ccwnotification.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}</td>
                         <td>
                           <a href={ccwnotification.schoolBusUrl}>{ccwnotification.schoolBusRegNum}</a>
@@ -448,8 +465,8 @@ class CCWNotifications extends React.Component {
                           <CheckboxControl
                             className="float-right"
                             inline
-                            id="hasBeenViewed"
-                            checked={ccwnotification.hasBeenViewed}
+                            id="selected"
+                            checked={ccwnotification.selected}
                             disabled={
                               !(
                                 this.props.currentUser.isSystemAdmin ||
@@ -457,7 +474,7 @@ class CCWNotifications extends React.Component {
                               )
                             }
                             updateState={(e) => {
-                              this.togleHasBeenViewed(e, ccwnotification);
+                              this.togleSelected(e, ccwnotification);
                             }}
                           >
                             &nbsp;

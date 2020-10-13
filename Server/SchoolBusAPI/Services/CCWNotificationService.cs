@@ -15,7 +15,7 @@ namespace SchoolBusAPI.Services
     public interface ICCWNotificationService
     {
         List<CCWNotificationViewModel> GetNotifications(DateTime dateFrom, DateTime dateTo, int?[] districts, int?[] inspectors, int? owner, string regi, string vin, string plate, bool hideRead);
-        (bool valid, IActionResult error) UpdateNotifications(List<CCWNotificationUpdateViewModel> ccwNotifications);
+        (bool valid, IActionResult error) UpdateHasBeenRead(List<CCWNotificationUpdateViewModel> ccwNotifications, bool read);
         (bool valid, IActionResult error) DeleteNotifications(List<CCWNotificationUpdateViewModel> ccwNotifications);
     }
 
@@ -91,7 +91,7 @@ namespace SchoolBusAPI.Services
             return Mapper.Map<List<CCWNotificationViewModel>>(notifications);
         }
 
-        public (bool valid, IActionResult error) UpdateNotifications(List<CCWNotificationUpdateViewModel> ccwNotifications)
+        public (bool valid, IActionResult error) UpdateHasBeenRead(List<CCWNotificationUpdateViewModel> ccwNotifications, bool read)
         {
             var currentUserId = GetCurrentUserId();
 
@@ -112,10 +112,7 @@ namespace SchoolBusAPI.Services
                     return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 502, $"The CCW Notification [{ccwNotification.Id}] does not belong to the user[{GetCurrentSmUserId()}].")));
                 }
 
-                if (ccwNotification.HasBeenViewed == entity.HasBeenViewed)
-                    continue;
-
-                entity.HasBeenViewed = !entity.HasBeenViewed;
+                entity.HasBeenViewed = read;
             }
 
             DbContext.SaveChanges();
