@@ -378,9 +378,9 @@ class CCWNotifications extends React.Component {
 
             if (Object.keys(this.props.ccwnotifications).length === 0) {
               if (this.state.searched) {
-                return <Alert bsStyle="success">No CCW notifications</Alert>;
+                return <Alert bsStyle="success">No ICBC notifications</Alert>;
               } else {
-                return <Alert bsStyle="success">Click serach button to retrieve CCW notifications</Alert>;
+                return <Alert bsStyle="success">Click serach button to retrieve ICBC notifications</Alert>;
               }
             }
 
