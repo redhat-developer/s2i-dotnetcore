@@ -83,7 +83,7 @@ class Home extends React.Component {
                         >
                           {this.props.currentUser.ccwnotifications}
                         </a>{' '}
-                        unread CCW notifications
+                        unread notifications
                       </h2>{' '}
                     </Row>
                   </Authorize>
