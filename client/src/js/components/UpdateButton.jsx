@@ -5,11 +5,11 @@ import Confirm from '../components/Confirm.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 
 const UpdateButton = (props) => {
-  const { onConfirm, description, name, hide, ...rest } = props;
+  const { onConfirm, description, hide, children, ...rest } = props;
   return (
     <OverlayTrigger trigger="click" placement="top" rootClose overlay={<Confirm onConfirm={onConfirm} />}>
-      <Button title={`${description}`} size="sm" color="primary" className={hide ? 'hidden' : ''} {...rest}>
-        {name}
+      <Button title={`${description}`} size="sm" color="primary" className={hide ? 'hidden update-button' : 'update-button'} {...rest}>
+        {children}
       </Button>
     </OverlayTrigger>
   );
@@ -17,7 +17,7 @@ const UpdateButton = (props) => {
 
 UpdateButton.propTypes = {
   onConfirm: PropTypes.func.isRequired,
-  name: PropTypes.string,
+  description: PropTypes.string,
   hide: PropTypes.bool,
 };
 

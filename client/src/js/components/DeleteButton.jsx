@@ -1,12 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Button, Glyphicon } from "react-bootstrap";
+import { Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import _ from "lodash";
+import _ from 'lodash';
 
-import Confirm from "../components/Confirm.jsx";
-import OverlayTrigger from "../components/OverlayTrigger.jsx";
+import Confirm from '../components/Confirm.jsx';
+import OverlayTrigger from '../components/OverlayTrigger.jsx';
 
 class DeleteButton extends React.Component {
   static propTypes = {
@@ -16,22 +17,17 @@ class DeleteButton extends React.Component {
   };
 
   render() {
-    var props = _.omit(this.props, "onConfirm", "hide", "name");
+    var props = _.omit(this.props, 'onConfirm', 'hide', 'name');
 
     return (
-      <OverlayTrigger
-        trigger="click"
-        placement="top"
-        rootClose
-        overlay={<Confirm onConfirm={this.props.onConfirm} />}
-      >
+      <OverlayTrigger trigger="click" placement="top" rootClose overlay={<Confirm onConfirm={this.props.onConfirm} />}>
         <Button
           title={`Delete ${this.props.name}`}
           bsSize="xsmall"
-          className={this.props.hide ? "hidden" : ""}
+          className={this.props.hide ? 'hidden' : ''}
           {...props}
         >
-          <Glyphicon glyph="trash" />
+          <FontAwesomeIcon icon="trash-alt" />
         </Button>
       </OverlayTrigger>
     );

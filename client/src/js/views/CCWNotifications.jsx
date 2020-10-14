@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import { PageHeader, Well, Alert, Row, Col } from 'react-bootstrap';
 import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import _ from 'lodash';
 import Moment from 'moment';
@@ -27,8 +28,8 @@ import Spinner from '../components/Spinner.jsx';
 import Tooltips from '../components/Tooltips.jsx';
 import Authorize from '../components/Authorize';
 import UpdateButton from '../components/UpdateButton.jsx';
-import DeleteButton from '../components/DeleteButton.jsx';
 import ExportButton from '../components/ExportButton.jsx';
+import FilterDropdown from '../components/FilterDropdown.jsx';
 
 class CCWNotifications extends React.Component {
   static propTypes = {
@@ -40,6 +41,7 @@ class CCWNotifications extends React.Component {
     search: PropTypes.object,
     ui: PropTypes.object,
     router: PropTypes.object,
+    owners: PropTypes.object,
   };
 
   constructor(props) {
@@ -67,6 +69,8 @@ class CCWNotifications extends React.Component {
         dateFrom: props.search.dateFrom || defaultDateFrom,
         dateTo: props.search.dateTo || defaultDateTo,
         loaded: props.search.loaded || true,
+        ownerId: props.search.ownerId || 0,
+        ownerName: props.search.ownerName || 'Owner',
       },
 
       ui: {
@@ -79,7 +83,7 @@ class CCWNotifications extends React.Component {
   buildSearchParams = () => {
     var searchParams = {
       hideRead: this.state.search.hideRead,
-    };
+   };
 
     var dateFrom = Moment(this.state.search.dateFrom);
     if (dateFrom && dateFrom.isValid()) {
@@ -110,6 +114,8 @@ class CCWNotifications extends React.Component {
       searchParams.inspectors = this.state.search.selectedInspectorsIds;
     }
 
+    searchParams.owner = this.state.search.ownerId || '';
+
     return searchParams;
   };
 
@@ -118,8 +124,9 @@ class CCWNotifications extends React.Component {
 
     var inspectorsPromise = Api.getInspectors();
     var favouritesPromise = Api.getFavourites('ccwnotifications');
+    var ownersPromise = Api.getOwners();
 
-    Promise.all([inspectorsPromise, favouritesPromise])
+    Promise.all([inspectorsPromise, favouritesPromise, ownersPromise])
       .then(() => {
         if (this.props.location.search) {
           // Check for specific school bus query
@@ -133,6 +140,8 @@ class CCWNotifications extends React.Component {
             endDate: '',
             hideRead: true,
             selectAll: false,
+            ownerId: 0,
+            ownerName: 'Owner',
           };
 
           if (this.props.location.query[Constant.CCWNOTIRICATION_INSPECTORS_QUERY]) {
@@ -222,8 +231,8 @@ class CCWNotifications extends React.Component {
     const notifications = _.pickBy(
       ccwnotifications,
       (ccwnotification) =>
-        this.props.currentUser.isSystemAdmin ||
-        (ccwnotification.inspectorId === this.props.currentUser.id && ccwnotification.selected)
+      (this.props.currentUser.isSystemAdmin || ccwnotification.inspectorId === this.props.currentUser.id) &&
+      ccwnotification.selected
     );
 
     const notificationArray = Object.values(notifications);
@@ -260,7 +269,13 @@ class CCWNotifications extends React.Component {
   render() {
     var districts = _.sortBy(this.props.districts, 'name');
     var inspectors = _.sortBy(this.props.inspectors, 'name');
+    var owners = _.sortBy(this.props.owners, 'name');
+
     var ccwnotificationArray = _.values(this.props.ccwnotifications);
+    var selectedNofications = ccwnotificationArray.filter(x => x.selected);
+    var anySelected =selectedNofications.length > 0;
+    var readSelected = selectedNofications.filter(x => x.hasBeenViewed).length > 0;
+    var unreadSelected = selectedNofications.filter(x => !x.hasBeenViewed).length > 0;
 
     var isEditable =
       this.props.currentUser.isSystemAdmin ||
@@ -332,11 +347,20 @@ class CCWNotifications extends React.Component {
                 </Row>
                 <Row>
                   <ButtonToolbar>
+                    <FilterDropdown
+                      id="ownerId"
+                      placeholder="Owner"
+                      blankLine="(All)"
+                      items={owners}
+                      selectedId={this.state.search.ownerId}
+                      updateState={this.updateSearchState}
+                    />
                     <KeySearchControl
                       id="ccwnotifications-key-search"
                       search={this.state.search}
                       updateState={this.updateSearchState}
                     />
+
                   </ButtonToolbar>
                 </Row>
               </Col>
@@ -401,33 +425,35 @@ class CCWNotifications extends React.Component {
                 <Authorize permissions={Constant.PERMISSION_OWNER_W}>
                   <Row>
                     <Col>
-                      <DeleteButton
-                        name="selected"
-                        id="delete-button"
+                      <UpdateButton
+                        description="Delete selected"
                         hide={false}
-                        disabled={!isEditable}
+                        disabled={!anySelected}
                         onConfirm={this.deleteCCWNotifications.bind(this, this.props.ccwnotifications)}
-                      />
+                        >
+                        <FontAwesomeIcon icon="trash-alt" />
+                      </UpdateButton>
                     </Col>
                     <Col>
                       <UpdateButton
-                        name="Mark as Unead"
                         description="Mark selected as Unead"
-                        className="float-right"
                         hide={false}
-                        disabled={!isEditable}
+                        disabled={!readSelected}
                         onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, false)}
-                      />
+                      >
+                        <FontAwesomeIcon icon="envelope" />
+                      </UpdateButton>
                     </Col>
                     <Col>
                       <UpdateButton
                         name="Mark as Read"
                         description="Mark selected as Read"
-                        className="float-right"
                         hide={false}
-                        disabled={!isEditable}
+                        disabled={!unreadSelected}
                         onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, true)}
-                      />
+                        >
+                        <FontAwesomeIcon icon="envelope-open" />
+                      </UpdateButton>
                     </Col>
                   </Row>
                 </Authorize>
@@ -502,6 +528,7 @@ function mapStateToProps(state) {
     favourites: state.models.favourites,
     search: state.search.ccwnotifications,
     ui: state.ui.ccwnotifications,
+    owners: state.lookups.owners,
   };
 }
 
