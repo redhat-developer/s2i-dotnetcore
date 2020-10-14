@@ -426,7 +426,7 @@ class CCWNotifications extends React.Component {
                   <Row>
                     <Col>
                       <UpdateButton
-                        description="Delete selected"
+                        description={anySelected ? "Delete selected": "Select notifications first"}
                         hide={false}
                         disabled={!anySelected}
                         onConfirm={this.deleteCCWNotifications.bind(this, this.props.ccwnotifications)}
@@ -436,7 +436,7 @@ class CCWNotifications extends React.Component {
                     </Col>
                     <Col>
                       <UpdateButton
-                        description="Mark selected as Unead"
+                        description={readSelected ? "Mark selected as Unead": "Select read notifications first"}
                         hide={false}
                         disabled={!readSelected}
                         onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, false)}
@@ -447,7 +447,7 @@ class CCWNotifications extends React.Component {
                     <Col>
                       <UpdateButton
                         name="Mark as Read"
-                        description="Mark selected as Read"
+                        description={unreadSelected ? "Mark selected as Read" : "Select unread notifications first"}
                         hide={false}
                         disabled={!unreadSelected}
                         onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, true)}
