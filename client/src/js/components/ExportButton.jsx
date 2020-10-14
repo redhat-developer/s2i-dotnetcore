@@ -37,7 +37,7 @@ ExportButton.propTypes = {
 };
 
 ExportButton.defaultProps = {
-  disabledTooltip: 'Please perform a search to Export',
+  disabledTooltip: 'No data to export. Please search first.',
 };
 
 export default ExportButton;
