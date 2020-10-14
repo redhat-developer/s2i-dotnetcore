@@ -24,11 +24,15 @@ import RolesDetail from './views/RolesDetail.jsx';
 import Version from './views/Version.jsx';
 import FourOhFour from './views/404.jsx';
 
+import addIconsToLibrary from './fontAwesome';
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState(null);
   const [loadProgress, setLoadProgress] = useState(5);
 
+  addIconsToLibrary();
+  
   useEffect(() => {
     Api.getCurrentUser()
       .then(() => {
