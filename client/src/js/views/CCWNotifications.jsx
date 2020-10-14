@@ -264,7 +264,15 @@ class CCWNotifications extends React.Component {
     store.dispatch({ type: Action.UPDATE_CCWNOTIFICATIONS, ccwnotifications: ccwnotifications });
   };
 
-  export = () => {};
+  createExportData = (notificationArray) => {
+    var header = "Date Detected, School Bus Reg #, Current Owner, Summary, Read?\n";
+    
+    var rows = notificationArray.map(x =>
+      `"${formatDateTime(x.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}","${x.schoolBusRegNum}","${x.schoolBusOwnerName}","${x.summary}","${x.hasBeenViewed}"\n`
+    );
+
+    return [header, ...rows];
+  }
 
   render() {
     var districts = _.sortBy(this.props.districts, 'name');
@@ -288,8 +296,7 @@ class CCWNotifications extends React.Component {
         <PageHeader>
           ICBC Notifications ({numCCWNotifications})
           <ButtonGroup id="header-button-group">
-            {/* disabled until fully implemented */}
-            <ExportButton disabled={true || ccwnotificationArray.length === 0} onClick={this.export} />
+            <ExportButton disabled={ccwnotificationArray.length === 0} data={this.createExportData(ccwnotificationArray)} filename="icbcnotification" />
           </ButtonGroup>
         </PageHeader>
         <div>
