@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import { Glyphicon } from 'react-bootstrap';
 import FileSaver from 'file-saver';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import TooltipButton from './TooltipButton.jsx';
 
@@ -15,7 +15,7 @@ const ExportButton = ({ id, data, filename, className, disabled, disabledTooltip
       disabled={disabled}
       disabledTooltip={disabledTooltip}
     >
-      <Glyphicon glyph="download-alt" title="Export" />
+      <FontAwesomeIcon icon="download" />
       <span>{children}</span>
     </TooltipButton>
   );
