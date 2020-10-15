@@ -55,7 +55,6 @@ class InspectionEditDialog extends React.Component {
       inspectionDateError: false,
       inspectorIdError: false,
       inspectionResultCodeError: false,
-      nextInspectionDateError: false,
       showConfirmation: false,
     };
   }
@@ -190,43 +189,66 @@ class InspectionEditDialog extends React.Component {
         nextInspectionDateError: 'Next inspection date not valid',
       });
       valid = false;
-    } else if (isValidDate(this.state.inspectionDate)) {
-      // Remove time elements from dates so day/month/year math works.
-      var inspectionDate = Moment(this.state.inspectionDate).startOf('d');
-      var nextInspectionDate = Moment(this.state.nextInspectionDate).startOf('d');
-      if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION) {
-        var diff = nextInspectionDate.diff(inspectionDate, 'd');
-        if (diff <= 0) {
-          // Cannot be before or on the date of the inspection.
-          this.setState({
-            nextInspectionDateError: 'Re-inspection must be after inspection',
-          });
-          valid = false;
-        } else if (diff > 30) {
-          // Cannot be more than 30 days from the date of the inspection.
-          this.setState({
-            nextInspectionDateError: 'Re-inspection must be within 30 days of inspection',
-          });
-          valid = false;
-        }
-      } else if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_ANNUAL) {
-        if (nextInspectionDate.diff(inspectionDate, 'M') < 9) {
-          // Cannot be less than 9 months from the date of the inspection,
-          this.setState({
-            nextInspectionDateError: 'Annual inspection must be at least 9 months after inspection',
-          });
-          valid = false;
-        } else if (nextInspectionDate.subtract(1, 'd').diff(inspectionDate, 'y') > 0) {
-          // Cannot be more than the one year from the Date of the Inspection.
-          this.setState({
-            nextInspectionDateError: 'Annual inspection must be within a year of inspection',
-          });
-          valid = false;
-        }
-      }
     }
 
     return valid;
+  };
+
+  needConfirmation = () => {
+    var needConfirm = false;
+
+    // Remove time elements from dates so day/month/year math works.
+    var inspectionDate = Moment(this.state.inspectionDate).startOf('d');
+    var nextInspectionDate = Moment(this.state.nextInspectionDate).startOf('d');
+
+    if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION) {
+      var diff = nextInspectionDate.diff(inspectionDate, 'd');
+      if (diff <= 0 || diff > 30) {
+        // Cannot be before or on the date of the inspection.
+        needConfirm = true;
+      } else if (diff > 30) {
+        // Cannot be more than 30 days from the date of the inspection.
+        needConfirm = true;
+      }
+    } else if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_ANNUAL) {
+      if (nextInspectionDate.diff(inspectionDate, 'M') < 9) {
+        // Cannot be less than 9 months from the date of the inspection,
+        needConfirm = true;
+      } else if (nextInspectionDate.subtract(1, 'd').diff(inspectionDate, 'y') > 0) {
+        // Cannot be more than the one year from the Date of the Inspection.
+        needConfirm = true;
+      }
+    }
+
+    if (needConfirm) {
+      this.setState({ showConfirmation: true });
+    }
+
+    return needConfirm;
+  };
+
+  getConfirmationMessage = () => {
+    if (this.state.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION) {
+      return (
+        <Fragment>
+          <h4>
+            It is recommended that the re-inspection should occur in the next 30 days. Are you sure you want to use the
+            selected date instead?
+          </h4>
+          <h4>Clicking Yes would keep the new date and clicking No would revert the date to the default value.</h4>
+        </Fragment>
+      );
+    } else {
+      return (
+        <Fragment>
+          <h4>
+            Ideally the next inspection date for a successful inspection should be one year from the latest inspection.
+            Are you sure you want to use the selected date instead?
+          </h4>
+          <h4>Clicking Yes would keep the new date and clicking No would revert the date to the default value.</h4>
+        </Fragment>
+      );
+    }
   };
 
   onSave = () => {
@@ -250,7 +272,7 @@ class InspectionEditDialog extends React.Component {
       {
         showConfirmation: false,
       },
-      null
+      this.updateNextInspectionDate
     );
   };
 
@@ -259,7 +281,7 @@ class InspectionEditDialog extends React.Component {
       {
         showConfirmation: false,
       },
-      null
+      this.onSave
     );
   };
 
@@ -279,6 +301,7 @@ class InspectionEditDialog extends React.Component {
           onSave={this.onSave}
           didChange={this.didChange}
           isValid={this.isValid}
+          needConfirmation={this.needConfirmation}
           title={<strong>Inspection</strong>}
         >
           {(() => {
@@ -316,7 +339,7 @@ class InspectionEditDialog extends React.Component {
                           Inspector <sup>*</sup>
                         </ControlLabel>
                         <FilterDropdown
-                          id="inspectorId"
+                          id="inspectorId2"
                           placeholder="None"
                           blankLine
                           disabled={isReadOnly}
@@ -402,11 +425,7 @@ class InspectionEditDialog extends React.Component {
             onConfirm={this.onConfirm}
             title="Next inspection date"
           >
-            <h4>
-              It is recommended that the re-inspection should occur in the next 30 days. Are you sure you want to use
-              the selected date instead?
-            </h4>
-            <h4>Clicking Yes would keep the new date and clicking No would revert the date to the default value.</h4>
+            {this.getConfirmationMessage()}
           </ConfirmationDialog>
         }
       </Fragment>
