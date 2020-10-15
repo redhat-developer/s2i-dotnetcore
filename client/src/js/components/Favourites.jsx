@@ -218,9 +218,9 @@ class Favourites extends React.Component {
                     <li key={favourite.id}>
                       <Col md={1}>{favourite.isDefault ? <Glyphicon glyph="star" /> : ''}</Col>
                       <Col md={8}>
-                        <a href={() => false} onClick={this.selectFavourite.bind(this, favourite)}>
+                        <button className="link-button" onClick={this.selectFavourite.bind(this, favourite)}>
                           {favourite.name}
-                        </a>
+                        </button>
                       </Col>
                       <Col md={3}>
                         <ButtonToolbar>
