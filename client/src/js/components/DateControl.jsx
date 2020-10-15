@@ -80,14 +80,14 @@ class DateControl extends React.Component {
               placeholder: placeholder,
               disabled: disabled,
             }}
-            renderInput={this.rendorInput.bind(this)}
+            renderInput={this.renderInput.bind(this)}
           />
         </InputGroup>
       </div>
     );
   }
 
-  rendorInput(props, openCalendar) {
+  renderInput(props, openCalendar) {
     const clear = () => props.onChange({ target: { value: '' } });
 
     return (
