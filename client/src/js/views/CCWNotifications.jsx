@@ -83,7 +83,7 @@ class CCWNotifications extends React.Component {
   buildSearchParams = () => {
     var searchParams = {
       hideRead: this.state.search.hideRead,
-   };
+    };
 
     var dateFrom = Moment(this.state.search.dateFrom);
     if (dateFrom && dateFrom.isValid()) {
@@ -231,8 +231,8 @@ class CCWNotifications extends React.Component {
     const notifications = _.pickBy(
       ccwnotifications,
       (ccwnotification) =>
-      (this.props.currentUser.isSystemAdmin || ccwnotification.inspectorId === this.props.currentUser.id) &&
-      ccwnotification.selected
+        (this.props.currentUser.isSystemAdmin || ccwnotification.inspectorId === this.props.currentUser.id) &&
+        ccwnotification.selected
     );
 
     const notificationArray = Object.values(notifications);
@@ -265,14 +265,17 @@ class CCWNotifications extends React.Component {
   };
 
   createExportData = (notificationArray) => {
-    var header = "Date Detected, School Bus Reg #, Current Owner, Summary, Read?\n";
-    
-    var rows = notificationArray.map(x =>
-      `"${formatDateTime(x.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}","${x.schoolBusRegNum}","${x.schoolBusOwnerName}","${x.summary}","${x.hasBeenViewed}"\n`
+    var header = 'Date Detected, School Bus Reg #, Current Owner, Summary, Read?\n';
+
+    var rows = notificationArray.map(
+      (x) =>
+        `"${formatDateTime(x.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}","${x.schoolBusRegNum}","${
+          x.schoolBusOwnerName
+        }","${x.summary}","${x.hasBeenViewed}"\n`
     );
 
     return [header, ...rows];
-  }
+  };
 
   render() {
     var districts = _.sortBy(this.props.districts, 'name');
@@ -280,10 +283,10 @@ class CCWNotifications extends React.Component {
     var owners = _.sortBy(this.props.owners, 'name');
 
     var ccwnotificationArray = _.values(this.props.ccwnotifications);
-    var selectedNofications = ccwnotificationArray.filter(x => x.selected);
-    var anySelected =selectedNofications.length > 0;
-    var readSelected = selectedNofications.filter(x => x.hasBeenViewed).length > 0;
-    var unreadSelected = selectedNofications.filter(x => !x.hasBeenViewed).length > 0;
+    var selectedNofications = ccwnotificationArray.filter((x) => x.selected);
+    var anySelected = selectedNofications.length > 0;
+    var readSelected = selectedNofications.filter((x) => x.hasBeenViewed).length > 0;
+    var unreadSelected = selectedNofications.filter((x) => !x.hasBeenViewed).length > 0;
 
     var isEditable =
       this.props.currentUser.isSystemAdmin ||
@@ -296,7 +299,11 @@ class CCWNotifications extends React.Component {
         <PageHeader>
           ICBC Notifications ({numCCWNotifications})
           <ButtonGroup id="header-button-group">
-            <ExportButton disabled={ccwnotificationArray.length === 0} data={this.createExportData(ccwnotificationArray)} filename="icbcnotification" />
+            <ExportButton
+              disabled={ccwnotificationArray.length === 0}
+              data={this.createExportData(ccwnotificationArray)}
+              filename="icbcnotification"
+            />
           </ButtonGroup>
         </PageHeader>
         <div>
@@ -339,7 +346,7 @@ class CCWNotifications extends React.Component {
                       placement="top"
                       text="The date range filters notifications based on the day these changes were detected, it may not be the same as when these changes occurred."
                     >
-                      <Glyphicon glyph="question-sign" style={{ marginLeft: '5px', marginTop: '5px' }} pullRight />
+                      <Glyphicon glyph="question-sign" style={{ marginLeft: '5px', marginTop: '5px' }} />
                     </Tooltips>
                     <CheckboxControl
                       inline
@@ -367,7 +374,6 @@ class CCWNotifications extends React.Component {
                       search={this.state.search}
                       updateState={this.updateSearchState}
                     />
-
                   </ButtonToolbar>
                 </Row>
               </Col>
@@ -433,17 +439,17 @@ class CCWNotifications extends React.Component {
                   <Row>
                     <Col>
                       <UpdateButton
-                        description={anySelected ? "Delete selected": "Select notifications first"}
+                        description={anySelected ? 'Delete selected' : 'Select notifications first'}
                         hide={false}
                         disabled={!anySelected}
                         onConfirm={this.deleteCCWNotifications.bind(this, this.props.ccwnotifications)}
-                        >
+                      >
                         <FontAwesomeIcon icon="trash-alt" />
                       </UpdateButton>
                     </Col>
                     <Col>
                       <UpdateButton
-                        description={readSelected ? "Mark selected as Unead": "Select read notifications first"}
+                        description={readSelected ? 'Mark selected as Unead' : 'Select read notifications first'}
                         hide={false}
                         disabled={!readSelected}
                         onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, false)}
@@ -454,11 +460,11 @@ class CCWNotifications extends React.Component {
                     <Col>
                       <UpdateButton
                         name="Mark as Read"
-                        description={unreadSelected ? "Mark selected as Read" : "Select unread notifications first"}
+                        description={unreadSelected ? 'Mark selected as Read' : 'Select unread notifications first'}
                         hide={false}
                         disabled={!unreadSelected}
                         onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, true)}
-                        >
+                      >
                         <FontAwesomeIcon icon="envelope-open" />
                       </UpdateButton>
                     </Col>
