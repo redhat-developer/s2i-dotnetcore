@@ -293,8 +293,6 @@ class SchoolBusesDetail extends React.Component {
           History.logModifiedInspection(this.props.schoolBus, this.props.inspection);
         }
 
-        // Refresh the inspections table
-        this.getInspections();
         // Save next inspection data to this school bus record
         return Api.updateSchoolBus({
           ...this.props.schoolBus,
@@ -302,6 +300,9 @@ class SchoolBusesDetail extends React.Component {
             nextInspectionDate: inspection.nextInspectionDate,
             nextInspectionTypeCode: inspection.nextInspectionTypeCode,
           },
+        }).then(() => {
+          // Refresh the inspections table
+          this.getInspections();
         });
       })
       .finally(() => {

@@ -967,6 +967,10 @@ function parseCCWNotification(ccwnotification) {
   ccwnotification.text = ccwnotification.ccwNotificationDetails
     .map((detail) => `${detail.colDescription} - **New**: ${detail.valueTo} **Old**: ${detail.valueFrom}`)
     .join('\n\n');
+  
+  ccwnotification.summary = ccwnotification.ccwNotificationDetails
+  .map((detail) => `${detail.colDescription} - New: ${detail.valueTo} Old: ${detail.valueFrom}`)
+  .join('\n');
 }
 
 export function updateHasBeenReadAsRead(ccwnotifications) {

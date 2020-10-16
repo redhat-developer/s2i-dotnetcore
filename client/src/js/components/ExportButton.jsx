@@ -1,27 +1,34 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import { Glyphicon } from 'react-bootstrap';
+import FileSaver from 'file-saver';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import TooltipButton from './TooltipButton.jsx';
 
-const ExportButton = ({ id, className, disabled, disabledTooltip, children, onClick }) => {
+const ExportButton = ({ id, data, filename, className, disabled, disabledTooltip, children }) => {
   return (
     <TooltipButton
       id={id}
       className={classNames('export-button', 'hidden-export', className)}
-      onClick={onClick}
+      onClick={() => saveData(data, filename)}
       disabled={disabled}
       disabledTooltip={disabledTooltip}
     >
-      <Glyphicon glyph="download-alt" title="Export" />
+      <FontAwesomeIcon icon="download" />
       <span>{children}</span>
     </TooltipButton>
   );
 };
 
+const saveData = (data, filename) => {
+  FileSaver.saveAs(new Blob(data), filename + '.csv');
+};
+
 ExportButton.propTypes = {
   id: PropTypes.string,
+  data: PropTypes.array,
+  filename: PropTypes.string,
   className: PropTypes.string,
   title: PropTypes.string,
   disabled: PropTypes.bool,
@@ -30,8 +37,7 @@ ExportButton.propTypes = {
 };
 
 ExportButton.defaultProps = {
-  //disabledTooltip: 'Please perform a search to Export',
-  disabledTooltip: 'This feature has not been released yet.',
+  disabledTooltip: 'No data to export. Please search first.',
 };
 
 export default ExportButton;

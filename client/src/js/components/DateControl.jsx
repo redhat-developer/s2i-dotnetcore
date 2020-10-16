@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { ControlLabel, InputGroup, Button, Glyphicon } from 'react-bootstrap';
 
@@ -20,23 +20,19 @@ class DateControl extends React.Component {
     showClear: PropTypes.bool,
   };
 
-  static defaultProps = {
-    showClear: false,
-  };
-
-  clicked = () => {
-    if (!this.props.disabled) {
-      this.input.focus();
+  dateToString = (date) => {
+    if (date === null) {
+      return '';
     }
-  };
 
-  clearClicked = () => {
-    this.dateChanged('');
+    var moment = Moment(date);
+    var dateString = moment && moment.isValid() ? moment.format(this.props.format || 'YYYY-MM-DD') : date;
+
+    return dateString;
   };
 
   dateChanged = (date) => {
-    var moment = Moment(date);
-    var dateString = moment && moment.isValid() ? moment.format(this.props.format || 'YYYY-MM-DD') : date;
+    var dateString = this.dateToString(date);
 
     // On change listener
     if (this.props.onChange) {
@@ -51,12 +47,15 @@ class DateControl extends React.Component {
     }
   };
 
-  render() {
+  getInitialDate = () => {
     var date = Moment(this.props.date);
     if (!date || !date.isValid()) {
       date = '';
     }
+    return date;
+  };
 
+  render() {
     var format = this.props.format || 'YYYY-MM-DD';
 
     var placeholder = this.props.placeholder;
@@ -72,7 +71,7 @@ class DateControl extends React.Component {
         })()}
         <InputGroup>
           <DateTime
-            value={date}
+            value={this.dateToString(this.props.date)}
             dateFormat={format}
             timeFormat={false}
             closeOnSelect={true}
@@ -80,23 +79,31 @@ class DateControl extends React.Component {
             inputProps={{
               placeholder: placeholder,
               disabled: disabled,
-              ref: (input) => {
-                this.input = input;
-              },
             }}
+            renderInput={this.renderInput.bind(this)}
           />
-          <InputGroup.Button>
-            {this.props.showClear && date !== '' && (
-              <Button onClick={this.clearClicked}>
-                <Glyphicon glyph="ban-circle" title="Clear" />
-              </Button>
-            )}
-            <Button onClick={this.clicked}>
-              <Glyphicon glyph="calendar" title={this.props.title} />
-            </Button>
-          </InputGroup.Button>
         </InputGroup>
       </div>
+    );
+  }
+
+  renderInput(props, openCalendar) {
+    const clear = () => props.onChange({ target: { value: '' } });
+
+    return (
+      <Fragment>
+        <input {...props} />
+        <InputGroup.Button>
+          {this.props.showClear && this.props.date !== '' && (
+            <Button onClick={clear}>
+              <Glyphicon glyph="ban-circle" title="Clear" />
+            </Button>
+          )}
+          <Button onClick={openCalendar}>
+            <Glyphicon glyph="calendar" title={this.props.title} />
+          </Button>
+        </InputGroup.Button>
+      </Fragment>
     );
   }
 }
