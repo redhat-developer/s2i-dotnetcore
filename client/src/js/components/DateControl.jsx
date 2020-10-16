@@ -20,17 +20,19 @@ class DateControl extends React.Component {
     showClear: PropTypes.bool,
   };
 
-  constructor(props) {
-    super(props);
+  dateToString = (date) => {
+    if (date === null) {
+      return '';
+    }
 
-    this.state = {
-      date: this.getInitialDate(),
-    };
-  }
-
-  dateChanged = (date) => {
     var moment = Moment(date);
     var dateString = moment && moment.isValid() ? moment.format(this.props.format || 'YYYY-MM-DD') : date;
+
+    return dateString;
+  };
+
+  dateChanged = (date) => {
+    var dateString = this.dateToString(date);
 
     // On change listener
     if (this.props.onChange) {
@@ -43,8 +45,6 @@ class DateControl extends React.Component {
         [this.props.id]: dateString,
       });
     }
-
-    this.setState({ date });
   };
 
   getInitialDate = () => {
@@ -71,7 +71,7 @@ class DateControl extends React.Component {
         })()}
         <InputGroup>
           <DateTime
-            value={this.state.date}
+            value={this.dateToString(this.props.date)}
             dateFormat={format}
             timeFormat={false}
             closeOnSelect={true}
@@ -94,7 +94,7 @@ class DateControl extends React.Component {
       <Fragment>
         <input {...props} />
         <InputGroup.Button>
-          {this.props.showClear && this.state.date !== '' && (
+          {this.props.showClear && this.props.date !== '' && (
             <Button onClick={clear}>
               <Glyphicon glyph="ban-circle" title="Clear" />
             </Button>
