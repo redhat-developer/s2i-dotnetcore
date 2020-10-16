@@ -21,7 +21,6 @@ The application is being developed as an open source solution.
 Repository Map
 --------------
 - **ApiSpec**: The API Specification, in OpenAPI (Swagger) format.  This folder also includes a system to create the OpenAPI files from Excel format input, as well as test data.
-- **CCW**: A microservice that provides a SOAP client to ICBC CCW data
 - **client**: The javascript source for the user interface
 - **Common**: A library of common methods used by various components
 - **FrontEnd**: The Front End server that hosts static content and proxies the API
