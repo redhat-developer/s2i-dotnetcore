@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Models;
 using SchoolBusCommon;
 using System.Reflection;
@@ -48,7 +49,7 @@ namespace SchoolBusAPI.Controllers
         {
             get
             {
-                return _configuration[_dotnetEnvKey].ToLowerInvariant();
+                return _configuration.GetEnvironment();
             }
         }
 
