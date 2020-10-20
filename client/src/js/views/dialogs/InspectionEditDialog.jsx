@@ -339,7 +339,7 @@ class InspectionEditDialog extends React.Component {
                           Inspector <sup>*</sup>
                         </ControlLabel>
                         <FilterDropdown
-                          id="inspectorId2"
+                          id="inspectorId"
                           placeholder="None"
                           blankLine
                           disabled={isReadOnly}
