@@ -21,4 +21,20 @@
         public const string Inspector = "Inspector";
         public const string Manager = "Manager";
     }
+
+    public static class SbiEnvironments
+    {
+        public const string Dev = "dev";
+        public const string Test = "test";
+        public const string Prod = "prd";
+        public const string Unknown = "unknown";
+    }
+
+    public static class DotNetEnvironments
+    {
+        public const string Dev = "DEVELOPMENT";
+        public const string Test = "STAGING";
+        public const string Prod = "PRODUCTION";
+        public const string Unknown = "UNKNOWN";
+    }
 }

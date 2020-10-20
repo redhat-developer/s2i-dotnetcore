@@ -1,5 +1,6 @@
 $nav-color: #38598a;
 $nav-dev-color: #448a38;
+
 $nav-tst-color: #f9a825;
 $nav-active-color: #5475a7;
 $nav-dev-active-color: lighten($nav-dev-color, 10%);
@@ -58,7 +59,11 @@ $nav-tst-active-color: lighten($nav-tst-color, 10%);
   }
 }
 
-#top-nav.env-development {
+#top-nav.env-dev {
+  background-color: $nav-dev-color;
+}
+
+#top-nav.env-unknown {
   background-color: $nav-dev-color;
 }
 
@@ -130,7 +135,11 @@ $nav-tst-active-color: lighten($nav-tst-color, 10%);
   @include nav-link-active-color($nav-color, $nav-active-color);
 }
 
-.navbar-default.env-development .navbar-nav {
+.navbar-default.env-dev .navbar-nav {
+  @include nav-link-active-color($nav-dev-color, $nav-dev-active-color);
+}
+
+.navbar-default.env-unknown .navbar-nav {
   @include nav-link-active-color($nav-dev-color, $nav-dev-active-color);
 }
 
