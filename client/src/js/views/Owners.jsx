@@ -27,6 +27,7 @@ import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
 import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
+import ExportButton from '../components/ExportButton.jsx';
 
 import { formatDateTime } from '../utils/date';
 
@@ -175,12 +176,26 @@ class Owners extends React.Component {
   };
 
   email = () => {};
-  print = () => {};
+
+  createExportData = (ownerListArray) => {
+    var header =
+      'Name, Primary Contact, Primary Contact Number, Primary Contact Email, SchoolBuses, Next Inspection, Re-inspection, Inpection Overdue, Active\n';
+    var rows = ownerListArray.map((x) => {
+      return `"${x.name}","${x.primaryContactName}","${x.primaryContactNumber}","${x.primaryContactEmail}",${
+        x.numberOfBuses
+      },"${formatDateTime(x.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}",${x.isReinspection ? 'Y' : 'N'},${
+        x.isOverdue ? 'Y' : 'N'
+      },${x.isActive ? 'Y' : 'N'}\n`;
+    });
+
+    return [header, ...rows];
+  };
 
   render() {
     var districts = _.sortBy(this.props.districts, 'name');
     var inspectors = _.sortBy(this.props.inspectors, 'name');
     var owners = _.sortBy(this.props.owners, 'name');
+    var ownerListArray = _.values(this.props.ownerList);
 
     var numOwners = this.state.loading ? '...' : Object.keys(this.props.ownerList).length;
 
@@ -194,11 +209,11 @@ class Owners extends React.Component {
                 <Glyphicon glyph="envelope" title="E-mail" />
               </Button>
             </Unimplemented>
-            <Unimplemented>
-              <Button onClick={this.print}>
-                <Glyphicon glyph="print" title="Print" />
-              </Button>
-            </Unimplemented>
+            <ExportButton
+              disabled={ownerListArray.length === 0}
+              data={this.createExportData(ownerListArray)}
+              filename="owners"
+            />
           </ButtonGroup>
         </PageHeader>
         <div>
