@@ -388,11 +388,12 @@ class SchoolBuses extends React.Component {
     return owner;
   };
 
-  createExportData = (schoolBusArray) => {
-    var header =
+  getExportData = () => {
+    const schoolBusArray = _.values(this.props.schoolBuses);
+    const header =
       'Owner, District, School District, Home Terminal, Registration, Unit Number, Permit, Permit Class, Body Description, Next Inspection, Inspector, Re-inspection, Inpection Overdue, Active\n';
 
-    var rows = schoolBusArray.map((x) => {
+    const rows = schoolBusArray.map((x) => {
       return `"${x.ownerName}","${x.districtName}","${x.schoolDistrictName}","${x.homeTerminalCityPostal}","${
         x.icbcRegistrationNumber
       }","${x.unitNumber}","${x.permitNumber}","${x.permitClassCode}","${x.bodyTypeCode}","${formatDateTime(
@@ -425,7 +426,7 @@ class SchoolBuses extends React.Component {
             </Button>
             <ExportButton
               disabled={schoolBusArray.length === 0}
-              data={this.createExportData(schoolBusArray)}
+              getExportData={this.getExportData}
               filename="schoolbuses"
             />
           </ButtonGroup>

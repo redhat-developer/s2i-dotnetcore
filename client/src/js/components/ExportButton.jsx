@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import TooltipButton from './TooltipButton.jsx';
 
-const ExportButton = ({ id, data, filename, className, disabled, disabledTooltip, children }) => {
+const ExportButton = ({ id, getExportData, filename, className, disabled, disabledTooltip, children }) => {
   return (
     <TooltipButton
       id={id}
       className={classNames('export-button', 'hidden-export', className)}
-      onClick={() => saveData(data, filename)}
+      onClick={() => saveData(getExportData, filename)}
       disabled={disabled}
       disabledTooltip={disabledTooltip}
     >
@@ -21,13 +21,14 @@ const ExportButton = ({ id, data, filename, className, disabled, disabledTooltip
   );
 };
 
-const saveData = (data, filename) => {
+const saveData = (getExportData, filename) => {
+  const data = getExportData();
   FileSaver.saveAs(new Blob(data), filename + '.csv');
 };
 
 ExportButton.propTypes = {
   id: PropTypes.string,
-  data: PropTypes.array,
+  getExportData: PropTypes.func,
   filename: PropTypes.string,
   className: PropTypes.string,
   title: PropTypes.string,

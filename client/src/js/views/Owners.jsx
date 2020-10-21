@@ -177,10 +177,11 @@ class Owners extends React.Component {
 
   email = () => {};
 
-  createExportData = (ownerListArray) => {
-    var header =
+  getExportData = () => {
+    const ownerListArray = _.values(this.props.ownerList);
+    const header =
       'Name, Primary Contact, Primary Contact Number, Primary Contact Email, SchoolBuses, Next Inspection, Re-inspection, Inpection Overdue, Active\n';
-    var rows = ownerListArray.map((x) => {
+    const rows = ownerListArray.map((x) => {
       return `"${x.name}","${x.primaryContactName}","${x.primaryContactNumber}","${x.primaryContactEmail}",${
         x.numberOfBuses
       },"${formatDateTime(x.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}",${x.isReinspection ? 'Y' : 'N'},${
@@ -209,11 +210,7 @@ class Owners extends React.Component {
                 <Glyphicon glyph="envelope" title="E-mail" />
               </Button>
             </Unimplemented>
-            <ExportButton
-              disabled={ownerListArray.length === 0}
-              data={this.createExportData(ownerListArray)}
-              filename="owners"
-            />
+            <ExportButton disabled={ownerListArray.length === 0} getExportData={this.getExportData} filename="owners" />
           </ButtonGroup>
         </PageHeader>
         <div>
