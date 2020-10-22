@@ -31,6 +31,7 @@ import SchoolBusesEmailDialog from '../views/dialogs/SchoolBusesEmailDialog.jsx'
 import EmailSendSuccessDialog from '../views/dialogs/EmailSendSuccessDialog.jsx';
 import EmailSendFailDialog from '../views/dialogs/EmailSendFailDialog.jsx';
 import { formatDateTime, toZuluTime } from '../utils/date';
+import ExportButton from '../components/ExportButton.jsx';
 
 const BEFORE_TODAY = 'Before Today';
 const BEFORE_END_OF_MONTH = 'Before End of Month';
@@ -387,10 +388,21 @@ class SchoolBuses extends React.Component {
     return owner;
   };
 
-  print = () => {
-    this.setState({ rightNow: Moment().format('MMMM Do YYYY, h:mm a') }, () => {
-      window.print();
+  getExportData = () => {
+    const schoolBusArray = _.values(this.props.schoolBuses);
+    const header =
+      'Owner, District, School District, Home Terminal, Registration, Unit Number, Permit, Permit Class, Body Description, Next Inspection, Inspector, Re-inspection, Inpection Overdue, Active\n';
+
+    const rows = schoolBusArray.map((x) => {
+      return `"${x.ownerName}","${x.districtName}","${x.schoolDistrictName}","${x.homeTerminalCityPostal}","${
+        x.icbcRegistrationNumber
+      }","${x.unitNumber}","${x.permitNumber}","${x.permitClassCode}","${x.bodyTypeCode}","${formatDateTime(
+        x.nextInspectionDate,
+        Constant.DATE_SHORT_MONTH_DAY_YEAR
+      )}","${x.inspectorName}",${x.isReinspection ? 'Y' : 'N'},${x.isOverdue ? 'Y' : 'N'},${x.isActive ? 'Y' : 'N'}\n`;
     });
+
+    return [header, ...rows];
   };
 
   render() {
@@ -401,6 +413,7 @@ class SchoolBuses extends React.Component {
     var owners = _.sortBy(this.props.owners, 'name');
 
     var numBuses = this.state.loading ? '...' : Object.keys(this.props.schoolBuses).length;
+    var schoolBusArray = _.values(this.props.schoolBuses);
 
     return (
       <div id="school-buses-list">
@@ -411,9 +424,11 @@ class SchoolBuses extends React.Component {
             <Button onClick={this.openEmailDialog}>
               <Glyphicon glyph="envelope" title="E-mail" />
             </Button>
-            <Button onClick={this.print}>
-              <Glyphicon glyph="print" title="Print" />
-            </Button>
+            <ExportButton
+              disabled={schoolBusArray.length === 0}
+              getExportData={this.getExportData}
+              filename="schoolbuses"
+            />
           </ButtonGroup>
         </PageHeader>
         <Well id="school-buses-bar" bsSize="small" className="clearfix">

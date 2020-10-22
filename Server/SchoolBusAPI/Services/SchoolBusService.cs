@@ -902,7 +902,9 @@ namespace SchoolBusAPI.Services
                 .Include(x => x.HomeTerminalCity)
                 .Include(x => x.SchoolBusOwner)
                 .Include(x => x.District)
+                .Include(x => x.SchoolDistrict)
                 .Include(x => x.Inspector)
+                .Include(x => x.SchoolDistrict)
                 .Select(x => x);
 
             bool keySearch = false;

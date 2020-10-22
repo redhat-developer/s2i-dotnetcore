@@ -630,9 +630,19 @@ export function getInspectionCounts(params) {
 function parseOwner(owner) {
   owner.isActive = owner.status === Constant.STATUS_ACTIVE;
   owner.busesURL = `#/${Constant.BUSES_PATHNAME}?${Constant.SCHOOL_BUS_OWNER_QUERY}=${owner.id}`;
-  owner.primaryContactName = owner.primaryContact
-    ? firstLastName(owner.primaryContact.givenName, owner.primaryContact.surname)
+
+  var primaryContact = owner.primaryContact;
+
+  owner.primaryContactName = primaryContact
+    ? firstLastName(primaryContact.givenName, primaryContact.surname)
     : '';
+  owner.primaryContactNumber = primaryContact
+    ? primaryContact.workPhoneNumber ?? ''
+    : '';
+  owner.primaryContactEmail = primaryContact
+  ? primaryContact.emailAddress ?? ''
+  : '';
+
   owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
   owner.isOverdue = owner.daysToInspection < 0;
   owner.isReinspection = owner.nextInspectionTypeCode === Constant.INSPECTION_TYPE_REINSPECTION;
@@ -967,10 +977,6 @@ function parseCCWNotification(ccwnotification) {
   ccwnotification.text = ccwnotification.ccwNotificationDetails
     .map((detail) => `${detail.colDescription} - **New**: ${detail.valueTo} **Old**: ${detail.valueFrom}`)
     .join('\n\n');
-  
-  ccwnotification.summary = ccwnotification.ccwNotificationDetails
-  .map((detail) => `${detail.colDescription} - New: ${detail.valueTo} Old: ${detail.valueFrom}`)
-  .join('\n');
 }
 
 export function updateHasBeenReadAsRead(ccwnotifications) {
