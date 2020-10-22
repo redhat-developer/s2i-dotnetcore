@@ -394,12 +394,13 @@ class SchoolBuses extends React.Component {
       'Owner, District, School District, Home Terminal, Registration, Unit Number, Permit, Permit Class, Body Description, Next Inspection, Inspector, Re-inspection, Inpection Overdue, Active\n';
 
     const rows = schoolBusArray.map((x) => {
-      return `"${x.ownerName}","${x.districtName}","${x.schoolDistrictName}","${x.homeTerminalCityPostal}","${
-        x.icbcRegistrationNumber
-      }","${x.unitNumber}","${x.permitNumber}","${x.permitClassCode}","${x.bodyTypeCode}","${formatDateTime(
-        x.nextInspectionDate,
-        Constant.DATE_SHORT_MONTH_DAY_YEAR
-      )}","${x.inspectorName}",${x.isReinspection ? 'Y' : 'N'},${x.isOverdue ? 'Y' : 'N'},${x.isActive ? 'Y' : 'N'}\n`;
+      return `"${x.ownerName}","${x.districtName ?? ''}","${x.schoolDistrictName ?? ''}","${
+        x.homeTerminalCityPostal ?? ''
+      }","${x.icbcRegistrationNumber ?? ''}","${x.unitNumber ?? ''}","${x.permitNumber ?? ''}","${
+        x.permitClassCode ?? ''
+      }","${x.bodyTypeCode ?? ''}","${formatDateTime(x.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}","${
+        x.inspectorName
+      }",${x.isReinspection ? 'Y' : 'N'},${x.isOverdue ? 'Y' : 'N'},${x.isActive ? 'Y' : 'N'}\n`;
     });
 
     return [header, ...rows];

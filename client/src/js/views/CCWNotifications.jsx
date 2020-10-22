@@ -273,8 +273,8 @@ class CCWNotifications extends React.Component {
         .map((detail) => `${detail.colDescription} - New: ${detail.valueTo} Old: ${detail.valueFrom}`)
         .join('\n');
 
-      return `"${formatDateTime(x.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}","${x.schoolBusRegNum}","${
-        x.schoolBusOwnerName
+      return `"${formatDateTime(x.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}","${x.schoolBusRegNum ?? ''}","${
+        x.schoolBusOwnerName ?? ''
       }","${summary}","${x.hasBeenViewed}"\n`;
     });
 
