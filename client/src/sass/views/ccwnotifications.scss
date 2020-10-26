@@ -1,4 +1,4 @@
-@import "./mixins";
+@import './mixins';
 
 #ccwnotifications {
   #header-button-group {
@@ -12,12 +12,6 @@
   .multi-dropdown .btn {
     min-width: 200px;
   }
-
-  // #delete-button {
-  //   float: right;
-  //   margin-left: 7px;
-  //   padding: 6px;
-  // }
 
   .alert .btn {
     float: right;

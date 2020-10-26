@@ -25,7 +25,6 @@ import FilterDropdown from '../components/FilterDropdown.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 import ExportButton from '../components/ExportButton.jsx';
 
@@ -205,11 +204,6 @@ class Owners extends React.Component {
         <PageHeader>
           Owners ({numOwners})
           <ButtonGroup id="owners-buttons">
-            <Unimplemented>
-              <Button onClick={this.email}>
-                <Glyphicon glyph="envelope" title="E-mail" />
-              </Button>
-            </Unimplemented>
             <ExportButton disabled={ownerListArray.length === 0} getExportData={this.getExportData} filename="owners" />
           </ButtonGroup>
         </PageHeader>
