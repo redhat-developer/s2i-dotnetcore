@@ -22,7 +22,8 @@ class NotesDialog extends React.Component {
     // Api call to get notes for particular entity
     getNotes: PropTypes.func.isRequired,
     // Api function to call on save
-    saveNote: PropTypes.func.isRequired,
+    addNote: PropTypes.func.isRequired,
+    updateNote: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
   };
 
@@ -54,7 +55,7 @@ class NotesDialog extends React.Component {
 
   onNoteAdded = (note) => {
     this.setState({ notes: this.state.notes.concat([note]) });
-    this.props.saveNote(this.props.id, note).then(() => {
+    this.props.addNote(this.props.id, note).then(() => {
       this.props.getNotes(this.props.id);
     });
     this.closeNotesAddDialog();
@@ -67,7 +68,7 @@ class NotesDialog extends React.Component {
     });
 
     this.setState({ notes: updatedNotes });
-    Api.updateNote(note).then(() => {
+    this.props.updateNote(this.props.id, note).then(() => {
       this.props.getNotes(this.props.id);
     });
     this.closeNotesAddDialog();
@@ -134,8 +135,9 @@ class NotesDialog extends React.Component {
         {this.state.showNotesAddDialog && (
           <NotesAddDialog
             show={this.state.showNotesAddDialog}
+            id={this.props.id}
             note={this.state.note}
-            onSave={this.onNoteAdded}
+            onAdd={this.onNoteAdded}
             onUpdate={this.onNoteUpdated}
             onClose={this.closeNotesAddDialog}
           />

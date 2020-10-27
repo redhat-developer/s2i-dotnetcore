@@ -12,10 +12,11 @@ import { isBlank } from '../../utils/string';
 
 class NotesAddDialog extends React.Component {
   static propTypes = {
-    onSave: PropTypes.func.isRequired,
+    onAdd: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     show: PropTypes.bool,
+    id: PropTypes.number.isRequired,
     note: PropTypes.object,
   };
 
@@ -24,7 +25,7 @@ class NotesAddDialog extends React.Component {
 
     this.state = {
       noteId: props.note.id || 0,
-      note: props.note.text || '',
+      noteText: props.note.noteText || '',
       noteError: '',
       isNoLongerRelevant: false,
     };
@@ -35,7 +36,7 @@ class NotesAddDialog extends React.Component {
   };
 
   didChange = () => {
-    if (this.props.note.text !== this.state.note) {
+    if (this.props.note.noteText !== this.state.noteText) {
       return true;
     }
 
@@ -49,7 +50,7 @@ class NotesAddDialog extends React.Component {
 
     var valid = true;
 
-    if (isBlank(this.state.note)) {
+    if (isBlank(this.state.noteText)) {
       this.setState({ noteError: 'Note is required' });
       valid = false;
     }
@@ -62,16 +63,18 @@ class NotesAddDialog extends React.Component {
       if (this.didChange()) {
         // If note id === 0 then you are adding a new note, otherwise you are updating an existing note
         if (this.state.noteId === 0) {
-          this.props.onSave({
+          this.props.onAdd({
             id: 0,
-            noteText: this.state.note,
+            schoolBusId: this.props.id,
+            noteText: this.state.noteText,
             isNoLongerRelevant: false,
-            createDate: new Date().toISOString(),
           });
         } else {
+          console.log(this.props.id);
           this.props.onUpdate({
             id: this.state.noteId,
-            noteText: this.state.note,
+            schoolBusId: this.props.id,
+            noteText: this.state.noteText,
             isNoLongerRelevant: false,
           });
         }
@@ -93,10 +96,10 @@ class NotesAddDialog extends React.Component {
         onClose={this.props.onClose}
         onSubmit={this.onFormSubmitted}
       >
-        <FormGroup controlId="note" validationState={this.state.noteError ? 'error' : null}>
+        <FormGroup controlId="noteText" validationState={this.state.noteError ? 'error' : null}>
           <ControlLabel>Note</ControlLabel>
           <FormInputControl
-            value={this.state.note}
+            value={this.state.noteText}
             componentClass="textarea"
             updateState={this.updateState}
             maxLength={maxLength}

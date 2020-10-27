@@ -962,7 +962,8 @@ class SchoolBusesDetail extends React.Component {
             id={bus.id}
             notes={notes}
             getNotes={Api.getSchoolBusNotes}
-            saveNote={Api.addSchoolBusNotes}
+            addNote={Api.addSchoolBusNotes}
+            updateNote={Api.updateSchoolBusNotes}
             onClose={this.closeNotesDialog}
           />
         )}

@@ -507,6 +507,12 @@ export function addSchoolBusNotes(schoolBusId, note) {
   });
 }
 
+export function updateSchoolBusNotes(schoolBusId, note) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/notes/${note.id}`).put(note).then((response) => {
+    return response;
+  });
+}
+
 export function deleteNote(id) {
   store.dispatch({ type: Action.DELETE_NOTE, noteId: id });
   return new ApiRequest(`/notes/${id}/delete`).post().then((response) => {
