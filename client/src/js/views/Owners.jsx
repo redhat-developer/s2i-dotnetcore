@@ -25,7 +25,6 @@ import FilterDropdown from '../components/FilterDropdown.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 import ExportButton from '../components/ExportButton.jsx';
 
@@ -182,11 +181,11 @@ class Owners extends React.Component {
     const header =
       'Name, Primary Contact, Primary Contact Number, Primary Contact Email, SchoolBuses, Next Inspection, Re-inspection, Inpection Overdue, Active\n';
     const rows = ownerListArray.map((x) => {
-      return `"${x.name}","${x.primaryContactName}","${x.primaryContactNumber}","${x.primaryContactEmail}",${
-        x.numberOfBuses
-      },"${formatDateTime(x.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}",${x.isReinspection ? 'Y' : 'N'},${
-        x.isOverdue ? 'Y' : 'N'
-      },${x.isActive ? 'Y' : 'N'}\n`;
+      return `"${x.name}","${x.primaryContactName ?? ''}","${x.primaryContactNumber ?? ''}","${
+        x.primaryContactEmail ?? ''
+      }",${x.numberOfBuses},"${formatDateTime(x.nextInspectionDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}",${
+        x.isReinspection ? 'Y' : 'N'
+      },${x.isOverdue ? 'Y' : 'N'},${x.isActive ? 'Y' : 'N'}\n`;
     });
 
     return [header, ...rows];
@@ -205,11 +204,6 @@ class Owners extends React.Component {
         <PageHeader>
           Owners ({numOwners})
           <ButtonGroup id="owners-buttons">
-            <Unimplemented>
-              <Button onClick={this.email}>
-                <Glyphicon glyph="envelope" title="E-mail" />
-              </Button>
-            </Unimplemented>
             <ExportButton disabled={ownerListArray.length === 0} getExportData={this.getExportData} filename="owners" />
           </ButtonGroup>
         </PageHeader>

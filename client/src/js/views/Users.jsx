@@ -23,7 +23,6 @@ import FormInputControl from '../components/FormInputControl.jsx';
 import MultiDropdown from '../components/MultiDropdown.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 
 class UserManagement extends React.Component {
@@ -130,9 +129,6 @@ class UserManagement extends React.Component {
     });
   };
 
-  email = () => {};
-  print = () => {};
-
   render() {
     var districts = _.sortBy(this.props.districts, 'name');
 
@@ -140,21 +136,7 @@ class UserManagement extends React.Component {
 
     return (
       <div id="users-list">
-        <PageHeader>
-          Users ({numUsers})
-          <ButtonGroup id="users-buttons">
-            <Unimplemented>
-              <Button onClick={this.email}>
-                <Glyphicon glyph="envelope" title="E-mail" />
-              </Button>
-            </Unimplemented>
-            <Unimplemented>
-              <Button onClick={this.print}>
-                <Glyphicon glyph="print" title="Print" />
-              </Button>
-            </Unimplemented>
-          </ButtonGroup>
-        </PageHeader>
+        <PageHeader>Users ({numUsers})</PageHeader>
         <div>
           <Well id="users-bar" bsSize="small" className="clearfix">
             <Row>

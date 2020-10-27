@@ -273,8 +273,8 @@ class CCWNotifications extends React.Component {
         .map((detail) => `${detail.colDescription} - New: ${detail.valueTo} Old: ${detail.valueFrom}`)
         .join('\n');
 
-      return `"${formatDateTime(x.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}","${x.schoolBusRegNum}","${
-        x.schoolBusOwnerName
+      return `"${formatDateTime(x.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}","${x.schoolBusRegNum ?? ''}","${
+        x.schoolBusOwnerName ?? ''
       }","${summary}","${x.hasBeenViewed}"\n`;
     });
 
@@ -428,7 +428,7 @@ class CCWNotifications extends React.Component {
               if (this.state.searched) {
                 return <Alert bsStyle="success">No ICBC notifications</Alert>;
               } else {
-                return <Alert bsStyle="success">Click serach button to retrieve ICBC notifications</Alert>;
+                return <Alert bsStyle="success">Click search button to retrieve ICBC notifications</Alert>;
               }
             }
 
@@ -453,7 +453,7 @@ class CCWNotifications extends React.Component {
                     </Col>
                     <Col>
                       <UpdateButton
-                        description={readSelected ? 'Mark selected as Unead' : 'Select read notifications first'}
+                        description={readSelected ? 'Mark selected as Unread' : 'Select read notifications first'}
                         hide={false}
                         disabled={!readSelected}
                         onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, false)}

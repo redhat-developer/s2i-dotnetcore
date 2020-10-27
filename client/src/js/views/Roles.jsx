@@ -21,7 +21,6 @@ import EditButton from '../components/EditButton.jsx';
 import SearchControl from '../components/SearchControl.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 
 class Roles extends React.Component {
@@ -94,29 +93,12 @@ class Roles extends React.Component {
     });
   };
 
-  email = () => {};
-  print = () => {};
-
   render() {
     var numRoles = this.state.loading ? '...' : Object.keys(this.props.roles).length;
 
     return (
       <div id="roles-list">
-        <PageHeader>
-          Roles ({numRoles})
-          <ButtonGroup id="roles-buttons">
-            <Unimplemented>
-              <Button onClick={this.email}>
-                <Glyphicon glyph="envelope" title="E-mail" />
-              </Button>
-            </Unimplemented>
-            <Unimplemented>
-              <Button onClick={this.print}>
-                <Glyphicon glyph="print" title="Print" />
-              </Button>
-            </Unimplemented>
-          </ButtonGroup>
-        </PageHeader>
+        <PageHeader>Roles ({numRoles})</PageHeader>
         <div>
           <Well id="roles-bar" bsSize="small" className="clearfix">
             <Row>

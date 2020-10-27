@@ -1,19 +1,26 @@
-import "react-app-polyfill/ie11";
-import "react-app-polyfill/stable";
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { lazy, Suspense } from 'react';
+import ReactDOM from 'react-dom';
 
-import * as serviceWorker from "./serviceWorker";
+import * as serviceWorker from './serviceWorker';
 
-import App from "./js/app";
-import * as Keycloak from "./js/Keycloak";
+/* eslint-disable import/first */
+const App = lazy(() => import('./js/app'));
 
-import "bootstrap/dist/css/bootstrap.css";
-import "./sass/main.scss";
+import * as Keycloak from './js/Keycloak';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import './sass/main.scss';
 
 Keycloak.init(() => {
-  ReactDOM.render(<App />, document.getElementById("root"));
+  ReactDOM.render(
+    <Suspense fallback={<div></div>}>
+      <App />
+    </Suspense>,
+    document.getElementById('root')
+  );
 });
 
 // If you want your app to work offline and load faster, you can change
