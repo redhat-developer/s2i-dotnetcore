@@ -70,7 +70,6 @@ class NotesAddDialog extends React.Component {
             isNoLongerRelevant: false,
           });
         } else {
-          console.log(this.props.id);
           this.props.onUpdate({
             id: this.state.noteId,
             schoolBusId: this.props.id,
