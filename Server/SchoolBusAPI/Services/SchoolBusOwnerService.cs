@@ -132,6 +132,9 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         /// <response code="404">school bus owner not found</response>
         IActionResult SchoolbuseownersIdContactsGetAsync(int id);
+
+        (bool valid, IActionResult error) CreateSchoolBusOwnerNote(int sbId, NoteViewModel note);
+        (bool valid, IActionResult error) UpdateSchoolBusOwnerNote(int sbId, int noteId, NoteViewModel note);
     }
 
     /// <summary>
@@ -696,6 +699,73 @@ namespace SchoolBusAPI.Services
                 // record not found
                 return new StatusCodeResult(404);
             }
+        }
+
+        public (bool valid, IActionResult error) CreateSchoolBusOwnerNote(int ownerId, NoteViewModel note)
+        {
+            var ownerEntity = _context.SchoolBusOwners
+                .Include(x => x.Notes)
+                .FirstOrDefault(x => x.Id == ownerId);
+
+            if (ownerEntity == null)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 601, $"The school bus owner [{ownerId}] does not exist.")));
+            }
+
+            if (note.NoteText.Length > 2048)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 605, $"The note text must have less than 2,048 characters.")));
+            }
+
+            note.SchoolBusId = null;
+
+            ownerEntity.Notes.Add(Mapper.Map<Note>(note));
+
+            _context.SaveChanges();
+
+            return (true, null);
+        }
+
+        public (bool valid, IActionResult error) UpdateSchoolBusOwnerNote(int ownerId, int noteId, NoteViewModel note)
+        {
+            var ownerEntity = _context.SchoolBusOwners
+                .Include(x => x.Notes)
+                .FirstOrDefault(x => x.Id == ownerId);
+
+            if (ownerEntity == null)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 601, $"The school bus owner [{ownerId}] does not exist.")));
+            }
+
+            var noteEntity = ownerEntity.Notes.FirstOrDefault(x => x.Id == noteId);
+
+            if (noteEntity == null)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 602, $"The note [{noteId}] does not exist.")));
+            }
+
+            if (note.Id != noteId)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 603, $"The note ID [{noteId}] does not match the note ID [{note.Id}] of the content.")));
+            }
+
+            if (note.SchoolBusOwnerId == null || note.SchoolBusOwnerId != ownerId)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 604, $"The school bus owner ID [{ownerId}] does not match the school bus owner ID [{note.SchoolBusOwnerId}] of the content.")));
+            }
+
+            if (note.NoteText.Length > 2048)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 605, $"The note text must have less than 2,048 characters.")));
+            }
+
+            note.SchoolBusId = null;
+
+            Mapper.Map(note, noteEntity);
+
+            _context.SaveChanges();
+
+            return (true, null);
         }
     }
 }
