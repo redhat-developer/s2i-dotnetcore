@@ -501,6 +501,25 @@ export function getSchoolBusNotes(schoolBusId) {
   });
 }
 
+export function addSchoolBusNotes(schoolBusId, note) {
+  return new ApiRequest(`/schoolbuses/${schoolBusId}/notes`).post(note).then((response) => {
+    return response;
+  });
+}
+
+export function deleteNote(id) {
+  store.dispatch({ type: Action.DELETE_NOTE, noteId: id });
+  return new ApiRequest(`/notes/${id}/delete`).post().then((response) => {
+    return response.data;
+  });
+}
+
+export function updateNote(note) {
+  return new ApiRequest(`/notes/${note.id}`).put(note).then((response) => {
+    return response.data;
+  });
+}
+
 export function newSchoolBusPermit(schoolBusId) {
   return new ApiRequest(`/schoolbuses/${schoolBusId}/newpermit`).put().then((response) => {
     var bus = response;
@@ -633,15 +652,9 @@ function parseOwner(owner) {
 
   var primaryContact = owner.primaryContact;
 
-  owner.primaryContactName = primaryContact
-    ? firstLastName(primaryContact.givenName, primaryContact.surname)
-    : '';
-  owner.primaryContactNumber = primaryContact
-    ? primaryContact.workPhoneNumber ?? ''
-    : '';
-  owner.primaryContactEmail = primaryContact
-  ? primaryContact.emailAddress ?? ''
-  : '';
+  owner.primaryContactName = primaryContact ? firstLastName(primaryContact.givenName, primaryContact.surname) : '';
+  owner.primaryContactNumber = primaryContact ? primaryContact.workPhoneNumber ?? '' : '';
+  owner.primaryContactEmail = primaryContact ? primaryContact.emailAddress ?? '' : '';
 
   owner.daysToInspection = daysFromToday(owner.nextInspectionDate);
   owner.isOverdue = owner.daysToInspection < 0;

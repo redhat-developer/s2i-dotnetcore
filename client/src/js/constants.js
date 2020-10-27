@@ -73,3 +73,6 @@ export const PERMISSION_ROLE_R = 'ROLE-R';
 export const PERMISSION_ROLE_W = 'ROLE-W';
 export const PERMISSION_CODE_R = 'CODE-R';
 export const PERMISSION_CODE_W = 'CODE-W';
+
+// Max Field Lenghts
+export const MAX_LENGTH_NOTE_TEXT = 2048;

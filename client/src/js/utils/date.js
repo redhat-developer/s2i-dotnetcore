@@ -104,3 +104,17 @@ export function toZuluTime(dateTime) {
   }
   return dt.utc().format(Constant.DATE_ZULU);
 }
+
+export function formatDateTimeUTCToLocal(dateTime, format) {
+  if (!dateTime) {
+    return '';
+  }
+  var dt = Moment.utc(dateTime).local();
+  if (!dt || !dt.isValid()) {
+    return '';
+  }
+  if (!format) {
+    format = Constant.DATE_TIME_ISO_8601;
+  }
+  return dt.format(format);
+}
