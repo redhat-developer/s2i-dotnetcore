@@ -58,6 +58,9 @@ namespace SchoolBusAPI.Models
         /// <value>A system-generated unique identifier for a Note</value>
         [MetaDataExtension (Description = "A system-generated unique identifier for a Note")]
         public int Id { get; set; }
+
+        public int? SchoolBusId { get; set; }
+        public int? SchoolBusOwnerId { get; set; }
         
         /// <summary>
         /// The contents of the note.

@@ -191,6 +191,24 @@ namespace SchoolBusAPI.Controllers
             return this._service.SchoolbusesIdNotesGetAsync(id);
         }
 
+        [HttpPut]
+        [Route("/api/schoolbuses/{sbId}/notes/{noteId}")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
+        public virtual IActionResult SchoolbusesIdNotesPut(int sbId, int noteId, [FromBody]NoteViewModel item)
+        {
+            var (success, error) = _service.UpdateSchoolBusNote(sbId, noteId, item);
+            return success ? NoContent() : error;
+        }
+
+        [HttpPost]
+        [Route("/api/schoolbuses/{sbId}/notes/")]
+        [RequiresPermission(Permissions.SchoolBusWrite)]
+        public virtual IActionResult SchoolbusesIdNotesPost(int sbId, [FromBody]NoteViewModel note)
+        {
+            var (success, error) = _service.CreateSchoolBusNote(sbId, note);
+            return success ? NoContent() : error;
+        }
+
         /// <summary>
         /// 
         /// </summary>

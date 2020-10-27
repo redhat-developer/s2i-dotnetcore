@@ -164,6 +164,9 @@ namespace SchoolBusAPI.Services
         /// <param name="endDate">Inspection end date</param>
         /// <response code="200">OK</response>
         IActionResult SchoolbusesSearchGetAsync(int?[] districts, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate);
+
+        (bool valid, IActionResult error) CreateSchoolBusNote(int sbId, NoteViewModel note);
+        (bool valid, IActionResult error) UpdateSchoolBusNote(int sbId, int noteId, NoteViewModel note);
     }
 
     /// <summary>
@@ -997,5 +1000,71 @@ namespace SchoolBusAPI.Services
             return new ObjectResult(result);
         }
 
+        public (bool valid, IActionResult error) CreateSchoolBusNote(int sbId, NoteViewModel note)
+        {
+            var sbEntity = _context.SchoolBuss
+                .Include(x => x.Notes)
+                .FirstOrDefault(x => x.Id == sbId);
+
+            if (sbEntity == null)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 601, $"The school bus [{sbId}] does not exist.")));
+            }
+
+            if (note.NoteText.Length > 2048)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 605, $"The note text must have less than 2,048 characters.")));
+            }
+
+            note.SchoolBusOwnerId = null;
+
+            sbEntity.Notes.Add(Mapper.Map<Note>(note));
+
+            _context.SaveChanges();
+
+            return (true, null);
+        }
+
+        public (bool valid, IActionResult error) UpdateSchoolBusNote(int sbId, int noteId, NoteViewModel note)
+        {
+            var sbEntity = _context.SchoolBuss
+                .Include(x => x.Notes)
+                .FirstOrDefault(x => x.Id == sbId);
+
+            if (sbEntity == null)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 601, $"The school bus [{sbId}] does not exist.")));
+            }
+
+            var noteEntity = sbEntity.Notes.FirstOrDefault(x => x.Id == noteId);
+
+            if (noteEntity == null)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 602, $"The note [{noteId}] does not exist.")));
+            }
+
+            if (note.Id != noteId)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 603, $"The note ID [{noteId}] does not match the note ID [{note.Id}] of the content.")));
+            }
+
+            if (note.SchoolBusId == null || note.SchoolBusId != sbId)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 604, $"The school bus ID [{sbId}] does not match the school bus ID [{note.SchoolBusId}] of the content.")));
+            }
+
+            if (note.NoteText.Length > 2048)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 605, $"The note text must have less than 2,048 characters.")));
+            }
+
+            note.SchoolBusOwnerId = null;
+
+            Mapper.Map(note, noteEntity);
+
+            _context.SaveChanges();
+
+            return (true, null);
+        }
     }
 }
