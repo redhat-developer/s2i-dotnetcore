@@ -13,6 +13,7 @@ import { saveAs } from 'file-saver';
 import HistoryListDialog from './dialogs/HistoryListDialog.jsx';
 import InspectionEditDialog from './dialogs/InspectionEditDialog.jsx';
 import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
+import NotesDialog from './dialogs/NotesDialog.jsx';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
@@ -42,6 +43,7 @@ class SchoolBusesDetail extends React.Component {
     schoolBusCCW: PropTypes.object,
     schoolBusInspections: PropTypes.object,
     inspection: PropTypes.object,
+    notes: PropTypes.object,
     ui: PropTypes.object,
     params: PropTypes.object,
     router: PropTypes.object,
@@ -56,6 +58,7 @@ class SchoolBusesDetail extends React.Component {
     showEditDialog: false,
     showHistoryDialog: false,
     showInspectionDialog: false,
+    showNotesDialog: false,
 
     inspection: {},
 
@@ -93,7 +96,7 @@ class SchoolBusesDetail extends React.Component {
       // Open editor to add new bus
       this.openEditDialog();
     } else {
-      this.fetch().then(() => {
+      Promise.all([this.fetch(), Api.getSchoolBusNotes(this.props.params.schoolBusId)]).then(() => {
         this.openInspection(this.props);
       });
     }
@@ -167,6 +170,7 @@ class SchoolBusesDetail extends React.Component {
       .finally(() => {
         this.setState({ loadingSchoolBus: false });
       });
+
     return Api.getSchoolBusInspections(id).finally(() => {
       this.setState({ loadingSchoolBusInspections: false });
     });
@@ -190,6 +194,14 @@ class SchoolBusesDetail extends React.Component {
 
   closeEditDialog = () => {
     this.setState({ showEditDialog: false });
+  };
+
+  openNotesDialog = () => {
+    this.setState({ showNotesDialog: true });
+  };
+
+  closeNotesDialog = () => {
+    this.setState({ showNotesDialog: false });
   };
 
   onSaveEdit = (schoolBus) => {
@@ -310,7 +322,6 @@ class SchoolBusesDetail extends React.Component {
       });
   };
 
-  showNotes = () => {};
   showAttachments = () => {};
 
   showHistoryDialog = () => {
@@ -347,6 +358,7 @@ class SchoolBusesDetail extends React.Component {
   render() {
     var bus = this.props.schoolBus;
     var ccw = this.props.schoolBus.ccwData || {};
+    var notes = Object.values(this.props.notes);
 
     var daysToInspection = bus.daysToInspection;
     if (bus.isOverdue) {
@@ -383,11 +395,12 @@ class SchoolBusesDetail extends React.Component {
                   dangerouslySetInnerHTML={{ __html: inspectionNotice }}
                 ></span>
               )}
-              <Unimplemented>
-                <Button title="Notes" onClick={this.showNotes}>
-                  Notes ({bus.notes ? bus.notes.length : 0})
-                </Button>
-              </Unimplemented>
+              {/* <Button title="Notes" onClick={this.openNotesDialog}>
+                Notes ({notes ? notes.length : 0})
+              </Button> */}
+              <Button title="Notes" onClick={() => {}}>
+                Notes: 0
+              </Button>
               <Unimplemented>
                 <Button title="Attachments" onClick={this.showAttachments}>
                   Attachments ({bus.attachments ? bus.attachments.length : 0})
@@ -946,6 +959,19 @@ class SchoolBusesDetail extends React.Component {
             onClose={this.closeInspectionDialog}
           />
         )}
+        {this.state.showNotesDialog && (
+          <NotesDialog
+            show={this.state.showNotesDialog}
+            id={bus.id}
+            notes={notes}
+            getNotes={Api.getSchoolBusNotes}
+            addNote={Api.addSchoolBusNotes}
+            updateNote={Api.updateSchoolBusNotes}
+            deleteNote={Api.deleteSchoolBusNotes}
+            onClose={this.closeNotesDialog}
+            permissions={Constant.PERMISSION_SB_W}
+          />
+        )}
       </div>
     );
   }
@@ -960,6 +986,7 @@ function mapStateToProps(state) {
     schoolBusInspections: state.models.schoolBusInspections,
     inspection: state.models.inspection,
     ui: state.ui.inspections,
+    notes: state.models.schoolBusNotes,
   };
 }
 

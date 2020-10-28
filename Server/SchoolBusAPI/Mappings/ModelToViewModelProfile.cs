@@ -41,6 +41,7 @@ namespace SchoolBusAPI.Mappings
                 .ForMember(x => x.InspectorId, opt => opt.MapFrom(x => x.SchoolBus.Inspector.Id));
 
             CreateMap<CCWNotificationDetail, CCWNotificationDetailViewModel>();
+            CreateMap<Note, NoteViewModel>();
         }
     }
 }

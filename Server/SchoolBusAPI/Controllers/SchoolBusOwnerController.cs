@@ -13,6 +13,7 @@ using SchoolBusAPI.Models;
 using SchoolBusAPI.Services;
 using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Helpers;
+using SchoolBusAPI.ViewModels;
 
 namespace SchoolBusAPI.Controllers
 {
@@ -143,6 +144,33 @@ namespace SchoolBusAPI.Controllers
         public virtual IActionResult SchoolbusownersIdNotesGet([FromRoute]int id)
         {
             return this._service.SchoolbusownersIdNotesGetAsync(id);
+        }
+
+        [HttpPut]
+        [Route("/api/schoolbusowners/{ownerId}/notes/{noteId}")]
+        [RequiresPermission(Permissions.OwnerWrite)]
+        public virtual IActionResult SchoolbusownersIdNotesPut(int ownerId, int noteId, [FromBody] NoteViewModel item)
+        {
+            var (success, error) = _service.UpdateSchoolBusOwnerNote(ownerId, noteId, item);
+            return success ? NoContent() : error;
+        }
+
+        [HttpPost]
+        [Route("/api/schoolbusowners/{ownerId}/notes/")]
+        [RequiresPermission(Permissions.OwnerWrite)]
+        public virtual IActionResult SchoolbusownersIdNotesPost(int ownerId, [FromBody] NoteViewModel note)
+        {
+            var (success, error) = _service.CreateSchoolBusOwnerNote(ownerId, note);
+            return success ? NoContent() : error;
+        }
+
+        [HttpDelete]
+        [Route("/api/schoolbusowners/{ownerId}/notes/{noteId}")]
+        [RequiresPermission(Permissions.OwnerWrite)]
+        public virtual IActionResult SchoolbusownersIdNotesDelete(int ownerId, int noteId)
+        {
+            var (success, error) = _service.DeleteSchoolBusOwnerNote(ownerId, noteId);
+            return success ? NoContent() : error;
         }
 
         /// <summary>

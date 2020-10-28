@@ -17,6 +17,7 @@ namespace SchoolBusAPI.Mappings
                 .ForMember(x => x.District, opt => opt.Ignore());
 
             CreateMap<DistrictViewModel, District>();
+            CreateMap<NoteViewModel, Note>();
         }
     }
 }
