@@ -53,7 +53,12 @@ const NotesDialog = (props) => {
     setShowNotesAddDialog(true);
   };
 
-  const headers = [{ field: 'date', title: 'Date' }, { field: 'note', title: 'Note' }, { field: 'blank' }];
+  const headers = [
+    { field: 'date', title: 'Date' },
+    { field: 'note', title: 'Note' },
+    { field: 'user', title: 'User' },
+    { field: 'blank' },
+  ];
   const showNoNotesMessage = !notes || notes.length === 0;
   const notesSorted = _.orderBy(notes, ['createTimestamp'], ['desc']);
 
@@ -67,6 +72,7 @@ const NotesDialog = (props) => {
                 {formatDateTimeUTCToLocal(note.createTimestamp, Constant.DATE_YEAR_SHORT_MONTH_DAY)}
               </td>
               <td width="100%">{note.noteText}</td>
+              <td>{note.createUserid}</td>
               <td style={{ textAlign: 'right', minWidth: '60px' }}>
                 <ButtonGroup>
                   <EditButton name="editNote" disabled={!note.id} onClick={editNote(note)} />
