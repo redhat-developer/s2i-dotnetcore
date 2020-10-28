@@ -165,8 +165,8 @@ namespace SchoolBusAPI.Services
         /// <response code="200">OK</response>
         IActionResult SchoolbusesSearchGetAsync(int?[] districts, int?[] inspectors, int?[] cities, int?[] schooldistricts, int? owner, string regi, string vin, string plate, bool? includeInactive, bool? onlyReInspections, DateTime? startDate, DateTime? endDate);
 
-        (bool valid, IActionResult error) CreateSchoolBusNote(int sbId, NoteViewModel note);
-        (bool valid, IActionResult error) UpdateSchoolBusNote(int sbId, int noteId, NoteViewModel note);
+        (bool valid, IActionResult error) CreateSchoolBusNote(int sbId, NoteSaveViewModel note);
+        (bool valid, IActionResult error) UpdateSchoolBusNote(int sbId, int noteId, NoteSaveViewModel note);
         (bool valid, IActionResult error) DeleteSchoolBusNote(int sbId, int noteId);
     }
 
@@ -1002,7 +1002,7 @@ namespace SchoolBusAPI.Services
             return new ObjectResult(result);
         }
 
-        public (bool valid, IActionResult error) CreateSchoolBusNote(int sbId, NoteViewModel note)
+        public (bool valid, IActionResult error) CreateSchoolBusNote(int sbId, NoteSaveViewModel note)
         {
             var sbEntity = _context.SchoolBuss
                 .Include(x => x.Notes)
@@ -1027,7 +1027,7 @@ namespace SchoolBusAPI.Services
             return (true, null);
         }
 
-        public (bool valid, IActionResult error) UpdateSchoolBusNote(int sbId, int noteId, NoteViewModel note)
+        public (bool valid, IActionResult error) UpdateSchoolBusNote(int sbId, int noteId, NoteSaveViewModel note)
         {
             var sbEntity = _context.SchoolBuss
                 .Include(x => x.Notes)

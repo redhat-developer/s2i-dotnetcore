@@ -149,7 +149,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPut]
         [Route("/api/schoolbusowners/{ownerId}/notes/{noteId}")]
         [RequiresPermission(Permissions.OwnerWrite)]
-        public virtual IActionResult SchoolbusownersIdNotesPut(int ownerId, int noteId, [FromBody] NoteViewModel item)
+        public virtual IActionResult SchoolbusownersIdNotesPut(int ownerId, int noteId, [FromBody] NoteSaveViewModel item)
         {
             var (success, error) = _service.UpdateSchoolBusOwnerNote(ownerId, noteId, item);
             return success ? NoContent() : error;
@@ -158,7 +158,7 @@ namespace SchoolBusAPI.Controllers
         [HttpPost]
         [Route("/api/schoolbusowners/{ownerId}/notes/")]
         [RequiresPermission(Permissions.OwnerWrite)]
-        public virtual IActionResult SchoolbusownersIdNotesPost(int ownerId, [FromBody] NoteViewModel note)
+        public virtual IActionResult SchoolbusownersIdNotesPost(int ownerId, [FromBody] NoteSaveViewModel note)
         {
             var (success, error) = _service.CreateSchoolBusOwnerNote(ownerId, note);
             return success ? NoContent() : error;

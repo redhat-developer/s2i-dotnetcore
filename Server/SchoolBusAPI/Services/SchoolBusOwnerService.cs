@@ -133,8 +133,8 @@ namespace SchoolBusAPI.Services
         /// <response code="404">school bus owner not found</response>
         IActionResult SchoolbuseownersIdContactsGetAsync(int id);
 
-        (bool valid, IActionResult error) CreateSchoolBusOwnerNote(int sbId, NoteViewModel note);
-        (bool valid, IActionResult error) UpdateSchoolBusOwnerNote(int sbId, int noteId, NoteViewModel note);
+        (bool valid, IActionResult error) CreateSchoolBusOwnerNote(int sbId, NoteSaveViewModel note);
+        (bool valid, IActionResult error) UpdateSchoolBusOwnerNote(int sbId, int noteId, NoteSaveViewModel note);
         (bool valid, IActionResult error) DeleteSchoolBusOwnerNote(int sbId, int noteId);
     }
 
@@ -703,7 +703,7 @@ namespace SchoolBusAPI.Services
             }
         }
 
-        public (bool valid, IActionResult error) CreateSchoolBusOwnerNote(int ownerId, NoteViewModel note)
+        public (bool valid, IActionResult error) CreateSchoolBusOwnerNote(int ownerId, NoteSaveViewModel note)
         {
             var ownerEntity = _context.SchoolBusOwners
                 .Include(x => x.Notes)
@@ -728,7 +728,7 @@ namespace SchoolBusAPI.Services
             return (true, null);
         }
 
-        public (bool valid, IActionResult error) UpdateSchoolBusOwnerNote(int ownerId, int noteId, NoteViewModel note)
+        public (bool valid, IActionResult error) UpdateSchoolBusOwnerNote(int ownerId, int noteId, NoteSaveViewModel note)
         {
             var ownerEntity = _context.SchoolBusOwners
                 .Include(x => x.Notes)
