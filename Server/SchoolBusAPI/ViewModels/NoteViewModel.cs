@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SchoolBusAPI.ViewModels
 {
@@ -17,5 +14,9 @@ namespace SchoolBusAPI.ViewModels
         public int? SchoolBusOwnerId { get; set; }
         public string NoteText { get; set; }
         public bool? IsNoLongerRelevant { get; set; }
+        public string CreateUserid { get; set; }
+        public DateTime CreateTimestamp { get; set; }
+        //public string LastUpdateUserid { get; set; }
+        //public DateTime LastUpdateTimestamp { get; set; }
     }
 }

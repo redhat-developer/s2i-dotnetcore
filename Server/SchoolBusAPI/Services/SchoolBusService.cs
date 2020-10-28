@@ -167,6 +167,7 @@ namespace SchoolBusAPI.Services
 
         (bool valid, IActionResult error) CreateSchoolBusNote(int sbId, NoteViewModel note);
         (bool valid, IActionResult error) UpdateSchoolBusNote(int sbId, int noteId, NoteViewModel note);
+        (bool valid, IActionResult error) DeleteSchoolBusNote(int sbId, int noteId);
     }
 
     /// <summary>
@@ -565,10 +566,11 @@ namespace SchoolBusAPI.Services
             if (exists)
             {
                 SchoolBus schoolBus = _context.SchoolBuss
+                    .AsNoTracking()
                     .Include(x => x.Notes)
                     .First(a => a.Id == id);
                 var result = schoolBus.Notes;
-                return new ObjectResult(result);
+                return new ObjectResult(Mapper.Map<List<NoteViewModel>>(result));
             }
             else
             {
@@ -1061,6 +1063,27 @@ namespace SchoolBusAPI.Services
             note.SchoolBusOwnerId = null;
 
             Mapper.Map(note, noteEntity);
+
+            _context.SaveChanges();
+
+            return (true, null);
+        }
+
+        public (bool valid, IActionResult error) DeleteSchoolBusNote(int sbId, int noteId)
+        {
+            if (!_context.SchoolBuss.Any(x => x.Id == sbId))
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 601, $"The school bus [{sbId}] does not exist.")));
+            }
+
+            var noteEntity = _context.Notes.FirstOrDefault(x => x.Id == noteId);
+
+            if (noteEntity == null)
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 602, $"The note [{noteId}] does not exist.")));
+            }
+
+            _context.Notes.Remove(noteEntity);
 
             _context.SaveChanges();
 

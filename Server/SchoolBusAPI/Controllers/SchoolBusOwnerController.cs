@@ -164,6 +164,15 @@ namespace SchoolBusAPI.Controllers
             return success ? NoContent() : error;
         }
 
+        [HttpDelete]
+        [Route("/api/schoolbusowners/{ownerId}/notes/{noteId}")]
+        [RequiresPermission(Permissions.OwnerWrite)]
+        public virtual IActionResult SchoolbusownersIdNotesDelete(int ownerId, int noteId)
+        {
+            var (success, error) = _service.DeleteSchoolBusOwnerNote(ownerId, noteId);
+            return success ? NoContent() : error;
+        }
+
         /// <summary>
         /// 
         /// </summary>
