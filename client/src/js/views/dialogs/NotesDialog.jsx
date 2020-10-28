@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { ButtonGroup, Button, Glyphicon, Alert } from 'react-bootstrap';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 
 import * as Constant from '../../constants';
 
@@ -10,11 +11,12 @@ import ModalDialog from '../../components/ModalDialog.jsx';
 import TableControl from '../../components/TableControl.jsx';
 import DeleteButton from '../../components/DeleteButton.jsx';
 import EditButton from '../../components/EditButton.jsx';
+import Authorize from '../../components/Authorize';
 
 import { formatDateTimeUTCToLocal } from '../../utils/date';
 
 const NotesDialog = (props) => {
-  const { id, notes, addNote, updateNote, deleteNote, getNotes, show, onClose } = props;
+  const { id, notes, addNote, updateNote, deleteNote, getNotes, show, onClose, permissions } = props;
 
   const [noteEditing, setNoteEditing] = useState({});
   const [showNotesAddDialog, setShowNotesAddDialog] = useState(false);
@@ -74,10 +76,12 @@ const NotesDialog = (props) => {
               <td width="100%">{note.noteText}</td>
               <td>{note.createUserid}</td>
               <td style={{ textAlign: 'right', minWidth: '60px' }}>
-                <ButtonGroup>
-                  <EditButton name="editNote" disabled={!note.id} onClick={editNote(note)} />
-                  <DeleteButton name="note" disabled={!note.id} onConfirm={onNoteDeleted(note)} />
-                </ButtonGroup>
+                <Authorize permissions={permissions}>
+                  <ButtonGroup>
+                    <EditButton name="editNote" disabled={!note.id} onClick={editNote(note)} />
+                    <DeleteButton name="note" disabled={!note.id} onConfirm={onNoteDeleted(note)} />
+                  </ButtonGroup>
+                </Authorize>
               </td>
             </tr>
           );
@@ -88,10 +92,13 @@ const NotesDialog = (props) => {
           No notes
         </Alert>
       )}
-      <Button title="Add Note" bsSize="small" onClick={openNotesAddDialog}>
-        <Glyphicon glyph="plus" />
-        &nbsp;<strong>Add Note</strong>
-      </Button>
+      <Authorize permissions={permissions}>
+        <Button title="Add Note" bsSize="small" onClick={openNotesAddDialog}>
+          <Glyphicon glyph="plus" />
+          &nbsp;<strong>Add Note</strong>
+        </Button>
+      </Authorize>
+
       {showNotesAddDialog && (
         <NotesAddDialog
           show={showNotesAddDialog}
@@ -115,6 +122,13 @@ NotesDialog.propTypes = {
   updateNote: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  permisssions: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
 };
 
-export default NotesDialog;
+function mapStateToProps(state) {
+  return {
+    currentUser: state.user,
+  };
+}
+
+export default connect(mapStateToProps)(NotesDialog);

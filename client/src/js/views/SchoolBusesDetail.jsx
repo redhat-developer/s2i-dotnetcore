@@ -966,6 +966,7 @@ class SchoolBusesDetail extends React.Component {
             updateNote={Api.updateSchoolBusNotes}
             deleteNote={Api.deleteSchoolBusNotes}
             onClose={this.closeNotesDialog}
+            permissions={Constant.PERMISSION_SB_W}
           />
         )}
       </div>
