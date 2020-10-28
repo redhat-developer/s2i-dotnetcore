@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
@@ -10,105 +10,83 @@ import * as Constant from '../../constants';
 
 import { isBlank } from '../../utils/string';
 
-class NotesAddDialog extends React.Component {
-  static propTypes = {
-    onAdd: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-    show: PropTypes.bool,
-    id: PropTypes.number.isRequired,
-    note: PropTypes.object,
-  };
+const NotesAddDialog = (props) => {
+  const { id, note, onAdd, onUpdate, show, onClose } = props;
+  const noteId = note.id || 0;
+  const [noteText, setNoteText] = useState(note.noteText || '');
+  const [noteError, setNoteError] = useState('');
+  const maxLength = Constant.MAX_LENGTH_NOTE_TEXT;
 
-  constructor(props) {
-    super(props);
+  const didChange = () => note.noteText !== noteText;
 
-    this.state = {
-      noteId: props.note.id || 0,
-      noteText: props.note.noteText || '',
-      noteError: '',
-      isNoLongerRelevant: false,
-    };
-  }
-
-  updateState = (state, callback) => {
-    this.setState(state, callback);
-  };
-
-  didChange = () => {
-    if (this.props.note.noteText !== this.state.noteText) {
-      return true;
-    }
-
-    return false;
-  };
-
-  isValid = () => {
-    this.setState({
-      noteError: '',
-    });
+  const isValid = () => {
+    setNoteError('');
 
     var valid = true;
 
-    if (isBlank(this.state.noteText)) {
-      this.setState({ noteError: 'Note is required' });
+    if (isBlank(noteText)) {
+      setNoteError('Note is required');
       valid = false;
     }
 
     return valid;
   };
 
-  onFormSubmitted = () => {
-    if (this.isValid()) {
-      if (this.didChange()) {
+  const onFormSubmitted = () => {
+    if (isValid()) {
+      if (didChange()) {
         // If note id === 0 then you are adding a new note, otherwise you are updating an existing note
-        if (this.state.noteId === 0) {
-          this.props.onAdd({
+        if (noteId === 0) {
+          onAdd({
             id: 0,
-            schoolBusId: this.props.id,
-            noteText: this.state.noteText,
+            schoolBusId: id,
+            noteText: noteText,
             isNoLongerRelevant: false,
           });
         } else {
-          this.props.onUpdate({
-            id: this.state.noteId,
-            schoolBusId: this.props.id,
-            noteText: this.state.noteText,
+          onUpdate({
+            id: noteId,
+            schoolBusId: id,
+            noteText: noteText,
             isNoLongerRelevant: false,
           });
         }
       } else {
-        this.props.onClose();
+        onClose();
       }
     }
   };
 
-  render() {
-    const { noteId } = this.state;
-    var maxLength = Constant.MAX_LENGTH_NOTE_TEXT;
+  return (
+    <FormDialog
+      id="notes"
+      title={noteId ? 'Edit Note' : 'Add Note'}
+      show={show}
+      onClose={onClose}
+      onSubmit={onFormSubmitted}
+    >
+      <FormGroup controlId="noteText" validationState={noteError ? 'error' : null}>
+        <ControlLabel>Note</ControlLabel>
+        <FormInputControl
+          value={noteText}
+          componentClass="textarea"
+          updateState={(e) => setNoteText(e.noteText)}
+          maxLength={maxLength}
+        />
+        <HelpBlock>{noteError}</HelpBlock>
+        <p>Maximum {maxLength} characters.</p>
+      </FormGroup>
+    </FormDialog>
+  );
+};
 
-    return (
-      <FormDialog
-        id="notes"
-        title={noteId ? 'Edit Note' : 'Add Note'}
-        show={this.props.show}
-        onClose={this.props.onClose}
-        onSubmit={this.onFormSubmitted}
-      >
-        <FormGroup controlId="noteText" validationState={this.state.noteError ? 'error' : null}>
-          <ControlLabel>Note</ControlLabel>
-          <FormInputControl
-            value={this.state.noteText}
-            componentClass="textarea"
-            updateState={this.updateState}
-            maxLength={maxLength}
-          />
-          <HelpBlock>{this.state.noteError}</HelpBlock>
-          <p>Maximum {maxLength} characters.</p>
-        </FormGroup>
-      </FormDialog>
-    );
-  }
-}
+NotesAddDialog.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  show: PropTypes.bool,
+  id: PropTypes.number.isRequired,
+  note: PropTypes.object,
+};
 
 export default NotesAddDialog;
