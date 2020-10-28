@@ -395,8 +395,11 @@ class SchoolBusesDetail extends React.Component {
                   dangerouslySetInnerHTML={{ __html: inspectionNotice }}
                 ></span>
               )}
-              <Button title="Notes" onClick={this.openNotesDialog}>
+              {/* <Button title="Notes" onClick={this.openNotesDialog}>
                 Notes ({notes ? notes.length : 0})
+              </Button> */}
+              <Button title="Notes" onClick={() => {}}>
+                Notes: 0
               </Button>
               <Unimplemented>
                 <Button title="Attachments" onClick={this.showAttachments}>
