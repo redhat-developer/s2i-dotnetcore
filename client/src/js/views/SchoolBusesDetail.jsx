@@ -981,7 +981,7 @@ class SchoolBusesDetail extends React.Component {
             deleteNote={Api.deleteSchoolBusNotes}
             onClose={this.closeNotesDialog}
             permissions={Constant.PERMISSION_SB_W}
-            isDialog={false}
+            isDialog={true}
             isLoading={this.state.loadingNotes}
           />
         )}
