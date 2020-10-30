@@ -5,13 +5,13 @@ import { Form as BootstrapForm } from 'react-bootstrap';
 const Form = (props) => {
   const { children, onSubmit, ...rest } = props;
 
-  function formSubmited(e) {
+  const formSubmited = (e) => {
     e.preventDefault();
 
     if (onSubmit) {
       onSubmit(e);
     }
-  }
+  };
 
   return (
     <BootstrapForm {...rest} data-react-form="true" onSubmit={formSubmited}>

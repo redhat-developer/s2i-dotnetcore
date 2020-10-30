@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { ButtonGroup, Button, Glyphicon, Alert } from 'react-bootstrap';
 import _ from 'lodash';
-import { connect } from 'react-redux';
 
 import * as Constant from '../../constants';
 
@@ -125,10 +124,4 @@ NotesDialog.propTypes = {
   permisssions: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    currentUser: state.user,
-  };
-}
-
-export default connect(mapStateToProps)(NotesDialog);
+export default NotesDialog;
