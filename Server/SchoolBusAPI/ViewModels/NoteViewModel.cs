@@ -14,9 +14,7 @@ namespace SchoolBusAPI.ViewModels
         public int? SchoolBusOwnerId { get; set; }
         public string NoteText { get; set; }
         public bool? IsNoLongerRelevant { get; set; }
-        public string CreateUserid { get; set; }
-        public DateTime CreateTimestamp { get; set; }
-        //public string LastUpdateUserid { get; set; }
-        //public DateTime LastUpdateTimestamp { get; set; }
+        public string UserId { get; set; }
+        public DateTime NoteDate { get; set; }
     }
 }
