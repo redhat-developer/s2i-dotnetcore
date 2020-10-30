@@ -11,11 +11,24 @@ import TableControl from '../components/TableControl.jsx';
 import DeleteButton from '../components/DeleteButton.jsx';
 import EditButton from '../components/EditButton.jsx';
 import Authorize from '../components/Authorize';
+import Spinner from '../components/Spinner.jsx';
 
 import { formatDateTimeUTCToLocal } from '../utils/date';
 
 const Notes = (props) => {
-  const { id, notes, addNote, updateNote, deleteNote, getNotes, show, onClose, permissions, isDialog } = props;
+  const {
+    id,
+    notes,
+    addNote,
+    updateNote,
+    deleteNote,
+    getNotes,
+    show,
+    onClose,
+    permissions,
+    isDialog,
+    isLoading,
+  } = props;
 
   const [noteEditing, setNoteEditing] = useState({});
   const [showNotesAddDialog, setShowNotesAddDialog] = useState(false);
@@ -74,6 +87,14 @@ const Notes = (props) => {
   const notesSorted = _.orderBy(notes, ['noteDate'], ['desc']);
 
   const NoteList = () => {
+    if (isLoading) {
+      return (
+        <div style={{ textAlign: 'center' }}>
+          <Spinner />
+        </div>
+      );
+    }
+
     return (
       <>
         <TableControl id="notes-list" headers={headers}>
@@ -146,6 +167,7 @@ Notes.propTypes = {
   onClose: PropTypes.func.isRequired,
   permisssions: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
   isDialog: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default Notes;

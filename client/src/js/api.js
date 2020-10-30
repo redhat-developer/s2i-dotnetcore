@@ -492,12 +492,7 @@ export function getSchoolBusInspections(schoolBusId) {
 export function getSchoolBusNotes(schoolBusId) {
   return new ApiRequest(`/schoolbuses/${schoolBusId}/notes`).get().then((response) => {
     // Normalize the response
-    var schoolBusNotes = _.fromPairs(response.map((note) => [note.id, note]));
-
-    store.dispatch({
-      type: Action.UPDATE_BUS_NOTES,
-      schoolBusNotes: schoolBusNotes,
-    });
+    return _.fromPairs(response.map((note) => [note.id, note]));
   });
 }
 
@@ -516,18 +511,6 @@ export function updateSchoolBusNotes(schoolBusId, note) {
 export function deleteSchoolBusNotes(schoolBusId, noteId) {
   return new ApiRequest(`/schoolbuses/${schoolBusId}/notes/${noteId}`).delete().then((response) => {
     return response;
-  });
-}
-export function deleteNote(id) {
-  store.dispatch({ type: Action.DELETE_NOTE, noteId: id });
-  return new ApiRequest(`/notes/${id}/delete`).post().then((response) => {
-    return response.data;
-  });
-}
-
-export function updateNote(note) {
-  return new ApiRequest(`/notes/${note.id}`).put(note).then((response) => {
-    return response.data;
   });
 }
 
