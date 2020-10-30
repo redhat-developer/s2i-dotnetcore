@@ -43,7 +43,6 @@ class SchoolBusesDetail extends React.Component {
     schoolBusCCW: PropTypes.object,
     schoolBusInspections: PropTypes.object,
     inspection: PropTypes.object,
-    notes: PropTypes.object,
     ui: PropTypes.object,
     params: PropTypes.object,
     router: PropTypes.object,
@@ -982,7 +981,7 @@ class SchoolBusesDetail extends React.Component {
             deleteNote={Api.deleteSchoolBusNotes}
             onClose={this.closeNotesDialog}
             permissions={Constant.PERMISSION_SB_W}
-            isDialog={true}
+            isDialog={false}
             isLoading={this.state.loadingNotes}
           />
         )}

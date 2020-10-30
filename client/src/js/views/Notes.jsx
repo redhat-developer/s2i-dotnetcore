@@ -67,21 +67,28 @@ const Notes = (props) => {
     setShowNotesAddDialog(true);
   };
 
-  var addNoteButton = (
+  const addNoteButton = (
     <Authorize permissions={permissions}>
-      <Button title="Add Note" bsSize="xsmall" onClick={openNotesAddDialog}>
+      <Button title="Add Note" bsSize={isDialog ? 'small' : 'xsmall'} onClick={openNotesAddDialog}>
         <Glyphicon glyph="plus" />
         &nbsp;<strong>Add</strong>
       </Button>
     </Authorize>
   );
 
-  const headers = [
-    { field: 'date', title: 'Date' },
-    { field: 'note', title: 'Note' },
-    { field: 'user', title: 'User' },
-    { node: addNoteButton },
-  ];
+  const headers = isDialog
+    ? [
+        { field: 'date', title: 'Date' },
+        { field: 'note', title: 'Note' },
+        { field: 'user', title: 'User' },
+        { field: 'blank' },
+      ]
+    : [
+        { field: 'date', title: 'Date' },
+        { field: 'note', title: 'Note' },
+        { field: 'user', title: 'User' },
+        { node: addNoteButton },
+      ];
 
   const showNoNotesMessage = !notes || notes.length === 0;
   const notesSorted = _.orderBy(notes, ['noteDate'], ['desc']);
@@ -123,6 +130,7 @@ const Notes = (props) => {
             No notes
           </Alert>
         )}
+        {isDialog && addNoteButton}
 
         {showNotesAddDialog && (
           <NotesAddDialog
