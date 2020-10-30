@@ -76,6 +76,8 @@ const Notes = (props) => {
     </Authorize>
   );
 
+  const showNoNotesMessage = !notes || notes.length === 0;
+
   const headers = isDialog
     ? [
         { field: 'date', title: 'Date' },
@@ -90,18 +92,8 @@ const Notes = (props) => {
         { node: addNoteButton },
       ];
 
-  const showNoNotesMessage = !notes || notes.length === 0;
-  const notesSorted = _.orderBy(notes, ['noteDate'], ['desc']);
-
-  const NoteList = () => {
-    if (isLoading) {
-      return (
-        <div style={{ textAlign: 'center' }}>
-          <Spinner />
-        </div>
-      );
-    }
-
+  const tableControl = () => {
+    const notesSorted = _.orderBy(notes, ['noteDate'], ['desc']);
     return (
       <>
         <TableControl id="notes-list" headers={headers}>
@@ -125,11 +117,29 @@ const Notes = (props) => {
             );
           })}
         </TableControl>
-        {showNoNotesMessage && (
+      </>
+    );
+  };
+
+  const NoteList = () => {
+    if (isLoading) {
+      return (
+        <div style={{ textAlign: 'center' }}>
+          <Spinner />
+        </div>
+      );
+    }
+
+    return (
+      <>
+        {showNoNotesMessage ? (
           <Alert bsStyle="success" style={{ marginTop: 10 }}>
-            No notes
+            No notes {!isDialog && addNoteButton}
           </Alert>
+        ) : (
+          tableControl()
         )}
+
         {isDialog && addNoteButton}
 
         {showNotesAddDialog && (
@@ -173,7 +183,7 @@ Notes.propTypes = {
   updateNote: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  permisssions: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
+  permisssions: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   isDialog: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };

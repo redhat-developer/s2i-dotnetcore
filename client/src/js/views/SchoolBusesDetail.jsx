@@ -80,6 +80,7 @@ class SchoolBusesDetail extends React.Component {
       this.setState({
         loadingSchoolBus: false,
         loadingSchoolBusInspections: false,
+        loadingNotes: false,
       });
       // Clear the school bus store, except for the fields
       // we have from the owner and ccw data.

@@ -13,6 +13,7 @@ import HistoryListDialog from './dialogs/HistoryListDialog.jsx';
 import OwnersEditDialog from './dialogs/OwnersEditDialog.jsx';
 import SchoolBusesAddDialog from './dialogs/SchoolBusesAddDialog.jsx';
 import ContactEditDialog from './dialogs/ContactEditDialog.jsx';
+import Notes from './Notes.jsx';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
@@ -26,7 +27,6 @@ import DeleteButton from '../components/DeleteButton.jsx';
 import EditButton from '../components/EditButton.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 
 import { formatDateTime } from '../utils/date';
@@ -45,6 +45,7 @@ class OwnersDetail extends React.Component {
   state = {
     loading: true,
     loadingContacts: true,
+    loadingNotes: true,
 
     showContactDialog: false,
     showEditDialog: false,
@@ -53,6 +54,7 @@ class OwnersDetail extends React.Component {
 
     contact: {},
     owner: this.props.owner,
+    notes: {},
 
     isNew: this.props.params.ownerId === '0',
 
@@ -67,6 +69,7 @@ class OwnersDetail extends React.Component {
     this.setState({
       loading: false,
       loadingContacts: false,
+      loadingNotes: false,
     });
     this.fetch().then(() => {
       this.openContact(this.props);
@@ -80,6 +83,17 @@ class OwnersDetail extends React.Component {
       }
     }
   }
+
+  getNotes = (id) => {
+    this.setState({ loadingNotes: true });
+    return Api.getOwnerNotes(id)
+      .then((notes) => {
+        this.setState({ notes });
+      })
+      .finally(() => {
+        this.setState({ loadingNotes: false });
+      });
+  };
 
   openContact = (props) => {
     var contact = null;
@@ -111,9 +125,11 @@ class OwnersDetail extends React.Component {
       this.setState({ loading: false });
     });
 
-    return Api.getOwnerContacts(id).finally(() => {
+    Api.getOwnerContacts(id).finally(() => {
       this.setState({ loadingContacts: false });
     });
+
+    return this.getNotes(id);
   };
 
   updateUIState = (state, callback) => {
@@ -265,11 +281,10 @@ class OwnersDetail extends React.Component {
     this.setState({ showHistoryDialog: false });
   };
 
-  print = () => {};
-
   render() {
     var owner = this.props.owner;
     var primaryContactId = owner.primaryContact ? owner.primaryContact.id : null;
+    const notes = Object.values(this.state.notes);
 
     var daysToInspection = owner.daysToInspection;
     if (owner.isOverdue) {
@@ -311,11 +326,6 @@ class OwnersDetail extends React.Component {
             </Col>
             <Col md={2}>
               <div className="pull-right">
-                <Unimplemented>
-                  <Button onClick={this.print}>
-                    <Glyphicon glyph="print" title="Print" />
-                  </Button>
-                </Unimplemented>
                 <LinkContainer to={{ pathname: Constant.OWNERS_PATHNAME }}>
                   <Button title="Return to List">
                     <Glyphicon glyph="arrow-left" /> Return to List
@@ -352,7 +362,7 @@ class OwnersDetail extends React.Component {
           })()}
 
           <Row>
-            <Col md={6}>
+            <Col>
               <Well>
                 <h3>
                   School Bus Data{' '}
@@ -402,30 +412,9 @@ class OwnersDetail extends React.Component {
                 })()}
               </Well>
             </Col>
-            <Col md={6}>
-              <Well>
-                <h3>Comment Log</h3>
-                {(() => {
-                  if (this.state.loading) {
-                    return (
-                      <div style={{ textAlign: 'center' }}>
-                        <Spinner />
-                      </div>
-                    );
-                  }
-                  if (!owner.notes || owner.notes.length === 0) {
-                    return (
-                      <Alert bsStyle="success" style={{ marginTop: 10 }}>
-                        No comments
-                      </Alert>
-                    );
-                  }
-                })()}
-              </Well>
-            </Col>
           </Row>
           <Row>
-            <Col md={6}>
+            <Col>
               <Well>
                 <h3>Contacts</h3>
                 {(() => {
@@ -516,6 +505,25 @@ class OwnersDetail extends React.Component {
                   );
                 })()}
               </Well>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {owner.id && (
+                <Notes
+                  show={true}
+                  id={owner.id}
+                  notes={notes}
+                  getNotes={this.getNotes}
+                  addNote={Api.addOwnerNotes}
+                  updateNote={Api.updateOwnerNotes}
+                  deleteNote={Api.deleteOwnerNotes}
+                  onClose={() => {}}
+                  permissions={Constant.PERMISSION_OWNER_W}
+                  isDialog={false}
+                  isLoading={this.state.loadingNotes}
+                />
+              )}
             </Col>
           </Row>
         </div>
