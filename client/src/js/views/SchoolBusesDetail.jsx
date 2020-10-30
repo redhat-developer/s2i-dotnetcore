@@ -13,7 +13,7 @@ import { saveAs } from 'file-saver';
 import HistoryListDialog from './dialogs/HistoryListDialog.jsx';
 import InspectionEditDialog from './dialogs/InspectionEditDialog.jsx';
 import SchoolBusesEditDialog from './dialogs/SchoolBusesEditDialog.jsx';
-import NotesDialog from './dialogs/NotesDialog.jsx';
+import Notes from './Notes.jsx';
 
 import * as Action from '../actionTypes';
 import * as Api from '../api';
@@ -957,7 +957,7 @@ class SchoolBusesDetail extends React.Component {
           />
         )}
         {this.state.showNotesDialog && (
-          <NotesDialog
+          <Notes
             show={this.state.showNotesDialog}
             id={bus.id}
             notes={notes}
@@ -967,6 +967,7 @@ class SchoolBusesDetail extends React.Component {
             deleteNote={Api.deleteSchoolBusNotes}
             onClose={this.closeNotesDialog}
             permissions={Constant.PERMISSION_SB_W}
+            isDialog={true}
           />
         )}
       </div>
