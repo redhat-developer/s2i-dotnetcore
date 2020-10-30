@@ -52,6 +52,7 @@ class SchoolBusesDetail extends React.Component {
   state = {
     loadingSchoolBus: true,
     loadingSchoolBusInspections: true,
+    loadingNotes: true,
 
     workingOnPermit: false,
 
@@ -60,6 +61,7 @@ class SchoolBusesDetail extends React.Component {
     showInspectionDialog: false,
     showNotesDialog: false,
 
+    notes: {},
     inspection: {},
 
     isNew: this.props.params.schoolBusId === '0',
@@ -96,7 +98,7 @@ class SchoolBusesDetail extends React.Component {
       // Open editor to add new bus
       this.openEditDialog();
     } else {
-      Promise.all([this.fetch(), Api.getSchoolBusNotes(this.props.params.schoolBusId)]).then(() => {
+      this.fetch().then(() => {
         this.openInspection(this.props);
       });
     }
@@ -109,6 +111,17 @@ class SchoolBusesDetail extends React.Component {
       }
     }
   }
+
+  getNotes = (id) => {
+    this.setState({ loadingNotes: true });
+    return Api.getSchoolBusNotes(id)
+      .then((notes) => {
+        this.setState({ notes });
+      })
+      .finally(() => {
+        this.setState({ loadingNotes: false });
+      });
+  };
 
   openInspection = (props) => {
     var inspection = null;
@@ -171,9 +184,11 @@ class SchoolBusesDetail extends React.Component {
         this.setState({ loadingSchoolBus: false });
       });
 
-    return Api.getSchoolBusInspections(id).finally(() => {
+    Api.getSchoolBusInspections(id).finally(() => {
       this.setState({ loadingSchoolBusInspections: false });
     });
+
+    return this.getNotes(id);
   };
 
   updateUIState = (state, callback) => {
@@ -358,7 +373,7 @@ class SchoolBusesDetail extends React.Component {
   render() {
     var bus = this.props.schoolBus;
     var ccw = this.props.schoolBus.ccwData || {};
-    var notes = Object.values(this.props.notes);
+    var notes = Object.values(this.state.notes);
 
     var daysToInspection = bus.daysToInspection;
     if (bus.isOverdue) {
@@ -961,13 +976,14 @@ class SchoolBusesDetail extends React.Component {
             show={this.state.showNotesDialog}
             id={bus.id}
             notes={notes}
-            getNotes={Api.getSchoolBusNotes}
+            getNotes={this.getNotes}
             addNote={Api.addSchoolBusNotes}
             updateNote={Api.updateSchoolBusNotes}
             deleteNote={Api.deleteSchoolBusNotes}
             onClose={this.closeNotesDialog}
             permissions={Constant.PERMISSION_SB_W}
             isDialog={true}
+            isLoading={this.state.loadingNotes}
           />
         )}
       </div>
@@ -984,7 +1000,6 @@ function mapStateToProps(state) {
     schoolBusInspections: state.models.schoolBusInspections,
     inspection: state.models.inspection,
     ui: state.ui.inspections,
-    notes: state.models.schoolBusNotes,
   };
 }
 

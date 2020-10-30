@@ -13,7 +13,6 @@ const DEFAULT_MODELS = {
   schoolBusAttachments: {},
   schoolBusCCW: {},
   schoolBusInspections: {},
-  schoolBusNotes: {},
 
   inspection: {},
   inspectionCounts: {},
@@ -94,9 +93,6 @@ export default function modelsReducer(state = DEFAULT_MODELS, action) {
 
     case Action.UPDATE_BUS_INSPECTIONS:
       return { ...state, schoolBusInspections: action.schoolBusInspections };
-
-    case Action.UPDATE_BUS_NOTES:
-      return { ...state, schoolBusNotes: action.schoolBusNotes };
 
     // Inspections
     case Action.ADD_INSPECTION:
