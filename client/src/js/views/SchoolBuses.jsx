@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PageHeader, Well, Alert, Row, Col } from 'react-bootstrap';
-import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, Button, ButtonGroup } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import _ from 'lodash';
 import Moment from 'moment';
@@ -32,6 +33,7 @@ import EmailSendSuccessDialog from '../views/dialogs/EmailSendSuccessDialog.jsx'
 import EmailSendFailDialog from '../views/dialogs/EmailSendFailDialog.jsx';
 import { formatDateTime, toZuluTime } from '../utils/date';
 import ExportButton from '../components/ExportButton.jsx';
+import TooltipButton from '../components/TooltipButton';
 
 const BEFORE_TODAY = 'Before Today';
 const BEFORE_END_OF_MONTH = 'Before End of Month';
@@ -389,7 +391,12 @@ class SchoolBuses extends React.Component {
   };
 
   getExportData = () => {
-    const schoolBusArray = _.values(this.props.schoolBuses);
+    const schoolBuses = _.sortBy(this.props.schoolBuses, this.state.ui.sortField);
+    if (this.state.ui.sortDesc) {
+      _.reverse(schoolBuses);
+    }
+    const schoolBusArray = _.values(schoolBuses);
+
     const header =
       'Owner, District, School District, Home Terminal, Registration, Unit Number, Permit, Permit Class, Body Description, Next Inspection, Inspector, Re-inspection, Inpection Overdue, Active\n';
 
@@ -422,9 +429,13 @@ class SchoolBuses extends React.Component {
         <PageHeader id="subPageHeader-print">
           School Buses ({numBuses})
           <ButtonGroup id="email-print-buttonGroup">
-            <Button onClick={this.openEmailDialog}>
-              <Glyphicon glyph="envelope" title="E-mail" />
-            </Button>
+            <TooltipButton
+              onClick={this.openEmailDialog}
+              className="tooltip-button hidden-export"
+              enabledTooltip="Email to school bus owner"
+            >
+              <FontAwesomeIcon icon="envelope" />
+            </TooltipButton>
             <ExportButton
               disabled={schoolBusArray.length === 0}
               getExportData={this.getExportData}
