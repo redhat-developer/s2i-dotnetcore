@@ -265,7 +265,12 @@ class CCWNotifications extends React.Component {
   };
 
   getExportData = () => {
-    const notificationArray = _.values(this.props.ccwnotifications);
+    const ccwnotifications = _.sortBy(this.props.ccwnotifications, this.state.ui.sortField);
+    if (this.state.ui.sortDesc) {
+      _.reverse(ccwnotifications);
+    }
+    const notificationArray = _.values(ccwnotifications);
+
     const header = 'Date Detected, School Bus Reg #, Current Owner, Summary, Read?\n';
 
     const rows = notificationArray.map((x) => {
@@ -275,7 +280,7 @@ class CCWNotifications extends React.Component {
 
       return `"${formatDateTime(x.dateDetected, Constant.DATE_SHORT_MONTH_DAY_YEAR)}","${x.schoolBusRegNum ?? ''}","${
         x.schoolBusOwnerName ?? ''
-      }","${summary}","${x.hasBeenViewed}"\n`;
+      }","${summary}","${x.hasBeenViewed ? 'Y' : 'N'}"\n`;
     });
 
     return [header, ...rows];

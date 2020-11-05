@@ -772,6 +772,31 @@ export function getOwnerContacts(ownerId) {
   });
 }
 
+export function getOwnerNotes(OwnerId) {
+  return new ApiRequest(`/schoolbusowners/${OwnerId}/notes`).get().then((response) => {
+    // Normalize the response
+    return _.fromPairs(response.map((note) => [note.id, note]));
+  });
+}
+
+export function addOwnerNotes(OwnerId, note) {
+  return new ApiRequest(`/schoolbusowners/${OwnerId}/notes`).post(note).then((response) => {
+    return response;
+  });
+}
+
+export function updateOwnerNotes(OwnerId, note) {
+  return new ApiRequest(`/schoolbusowners/${OwnerId}/notes/${note.id}`).put(note).then((response) => {
+    return response;
+  });
+}
+
+export function deleteOwnerNotes(OwnerId, noteId) {
+  return new ApiRequest(`/schoolbusowners/${OwnerId}/notes/${noteId}`).delete().then((response) => {
+    return response;
+  });
+}
+
 ////////////////////
 // Look-ups
 ////////////////////

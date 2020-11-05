@@ -177,7 +177,12 @@ class Owners extends React.Component {
   email = () => {};
 
   getExportData = () => {
-    const ownerListArray = _.values(this.props.ownerList);
+    const owners = _.sortBy(this.props.ownerList, this.state.ui.sortField);
+    if (this.state.ui.sortDesc) {
+      _.reverse(owners);
+    }
+    const ownerListArray = _.values(owners);
+
     const header =
       'Name, Primary Contact, Primary Contact Number, Primary Contact Email, SchoolBuses, Next Inspection, Re-inspection, Inpection Overdue, Active\n';
     const rows = ownerListArray.map((x) => {
