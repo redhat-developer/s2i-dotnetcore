@@ -18,6 +18,7 @@ import { formatDateTimeUTCToLocal } from '../utils/date';
 const Notes = (props) => {
   const {
     id,
+    parentIdColumn,
     notes,
     addNote,
     updateNote,
@@ -146,6 +147,7 @@ const Notes = (props) => {
           <NotesAddDialog
             show={showNotesAddDialog}
             id={id}
+            parentIdColumn={parentIdColumn}
             note={noteEditing}
             onAdd={onNoteAdded}
             onUpdate={onNoteUpdated}
@@ -176,6 +178,7 @@ const Notes = (props) => {
 
 Notes.propTypes = {
   id: PropTypes.number.isRequired,
+  parentIdColumn: PropTypes.number.isRequired,
   show: PropTypes.bool,
   notes: PropTypes.array,
   getNotes: PropTypes.func.isRequired,
