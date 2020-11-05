@@ -89,7 +89,7 @@ const Notes = (props) => {
         { field: 'date', title: 'Date' },
         { field: 'note', title: 'Note' },
         { field: 'user', title: 'User' },
-        { node: addNoteButton },
+        { field: 'addNoteButton', node: addNoteButton },
       ];
 
   const tableControl = () => {
