@@ -11,7 +11,7 @@ import * as Constant from '../../constants';
 import { isBlank } from '../../utils/string';
 
 const NotesAddDialog = (props) => {
-  const { id, note, onAdd, onUpdate, show, onClose } = props;
+  const { id, parentIdColumn, note, onAdd, onUpdate, show, onClose } = props;
   const noteId = note.id || 0;
   const [noteText, setNoteText] = useState(note.noteText || '');
   const [noteError, setNoteError] = useState('');
@@ -39,14 +39,14 @@ const NotesAddDialog = (props) => {
         if (noteId === 0) {
           onAdd({
             id: 0,
-            schoolBusId: id,
+            [parentIdColumn]: id,
             noteText: noteText,
             isNoLongerRelevant: false,
           });
         } else {
           onUpdate({
             id: noteId,
-            schoolBusId: id,
+            [parentIdColumn]: id,
             noteText: noteText,
             isNoLongerRelevant: false,
           });
@@ -86,6 +86,7 @@ NotesAddDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
   id: PropTypes.number.isRequired,
+  parentIdColumn: PropTypes.number.isRequired,
   note: PropTypes.object,
 };
 

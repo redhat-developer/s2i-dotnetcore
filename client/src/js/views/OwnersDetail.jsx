@@ -513,6 +513,7 @@ class OwnersDetail extends React.Component {
                 <Notes
                   show={true}
                   id={owner.id}
+                  parentIdColumn="schoolBusOwnerId"
                   notes={notes}
                   getNotes={this.getNotes}
                   addNote={Api.addOwnerNotes}

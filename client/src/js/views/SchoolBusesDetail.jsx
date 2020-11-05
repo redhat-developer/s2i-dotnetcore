@@ -975,6 +975,7 @@ class SchoolBusesDetail extends React.Component {
           <Notes
             show={this.state.showNotesDialog}
             id={bus.id}
+            parentIdColumn="schoolBusId"
             notes={notes}
             getNotes={this.getNotes}
             addNote={Api.addSchoolBusNotes}
