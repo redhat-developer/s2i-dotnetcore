@@ -1,6 +1,6 @@
 # OpenShift Deployment and Pipeline
 
-SBI makes use of BCDK and pipline-cli to manage OpenShift deployments. These tools enable a Github Pull Request (PR) based CI/CD pipeline. Once the Jenkins instance is configured and deployed, it will monitor Github repository for pull requests and start a new build based on that.
+SBI (School Bus Inspection Tracking System) makes use of BCDK and pipline-cli to manage OpenShift deployments. These tools enable a Github Pull Request (PR) based CI/CD pipeline. Once the Jenkins instance is configured and deployed, it will monitor Github repository for pull requests and start a new build based on that.
 
 This document will not go into the details of how to use BCDK and pipeline-cli. For documentation on those, you can refer to the following links
 
@@ -48,10 +48,10 @@ There are a few secret objects that must be created manually in the `dev`, `test
 You can use the following templates to create the secret objects. Make sure to replace the parameter variables with actual values encoded to base64.
 
 - [sso-secrets.yaml](secrets/sso-secrets.yaml)
-- [service-account-secrets.yaml](secrets/service-account-secrets.yaml)
-- [database-secrets.yaml](secrets/database-secrets.yaml)
-- [bceid-secrets.yaml](secrets/bceid-secrets.yaml)
-- [email-secrets.yaml](secrets/email-secrets.yaml)
+- [ccw-secrets.yaml](secrets/ccw-secrets.yaml)
+- [db-postgresql-secrets.yaml](secrets/db-postgresql-secrets.yaml)
+- [ftp-secrets.yaml](secrets/ftp-secrets.yaml)
+- [jenkins.yaml](secrets/jenkins.yaml)
 
 #### Optional Step
 
@@ -60,10 +60,10 @@ If you want to let the pipeline automatically update the Valid Redirect URIs for
 ```yaml
 apiVersion: v1
 data:
+  appClientId: <application-client-internal-id>
   clientId: <service-client-id>
   clientSecret: <service-client-secret>
-  SBIPublic: <application-client-internal-id>
-  host: <sso-dev.pathfinder.gov.bc.ca>
+  host: <dev.oidc.gov.bc.ca>
   realmId: <realm-id>
 kind: Secret
 metadata:
