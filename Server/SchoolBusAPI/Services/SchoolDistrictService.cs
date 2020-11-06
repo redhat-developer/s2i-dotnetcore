@@ -24,13 +24,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">SchoolDistrict created</response>
-        IActionResult SchooldistrictsBulkPostAsync(SchoolDistrict[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         IActionResult SchooldistrictsGetAsync();
 
@@ -92,35 +85,6 @@ namespace SchoolBusAPI.Services
         {
             var result = _context.SchoolDistricts.Where(a => a.Id == id);
             return new ObjectResult(result);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of school districts.</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult SchooldistrictsBulkPostAsync(SchoolDistrict[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (SchoolDistrict item in items)
-            {
-                var exists = _context.SchoolDistricts.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.SchoolDistricts.Update(item);
-                }
-                else
-                {
-                    _context.SchoolDistricts.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
         }
 
         /// <summary>

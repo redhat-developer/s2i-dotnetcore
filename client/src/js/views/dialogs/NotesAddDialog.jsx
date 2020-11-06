@@ -86,7 +86,7 @@ NotesAddDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
   id: PropTypes.number.isRequired,
-  parentIdColumn: PropTypes.number.isRequired,
+  parentIdColumn: PropTypes.string.isRequired,
   note: PropTypes.object,
 };
 

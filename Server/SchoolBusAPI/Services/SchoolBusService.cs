@@ -35,13 +35,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">SchoolBus created</response>
-        IActionResult SchoolbusesBulkPostAsync(SchoolBus[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         IActionResult SchoolbusesGetAsync();
 
@@ -300,37 +293,6 @@ namespace SchoolBusAPI.Services
             }
         }
 
-        /// <summary>
-        /// Creates several school buses. Used for bulk creation of schoolbus records.
-        /// </summary>
-        /// <param name="items"></param>
-        /// <returns></returns>
-        public virtual IActionResult SchoolbusesBulkPostAsync(SchoolBus[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (SchoolBus item in items)
-            {
-                // adjust school bus owner
-                AdjustSchoolBus(item);
-
-                var exists = _context.SchoolBuss.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.SchoolBuss.Update(item);
-                }
-                else
-                {
-                    _context.SchoolBuss.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-
-            return new NoContentResult();
-        }
         /// <summary>
         /// Returns a single school bus object
         /// </summary>

@@ -514,7 +514,7 @@ class CCWNotifications extends React.Component {
                             className="float-right"
                             inline
                             id="selected"
-                            checked={ccwnotification.selected}
+                            checked={ccwnotification.selected || false}
                             disabled={
                               !(
                                 this.props.currentUser.isSystemAdmin ||

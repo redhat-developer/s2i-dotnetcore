@@ -24,13 +24,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">History created</response>
-        IActionResult HistoriesBulkPostAsync(History[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of History to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">History not found</response>
@@ -74,29 +67,6 @@ namespace SchoolBusAPI.Services
         public HistoryService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-
-        /// <param name="items"></param>
-        /// <response code="201">SchoolBusOwnerHistories created</response>
-
-        public virtual IActionResult HistoriesBulkPostAsync(History[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (History item in items)
-            {
-                _context.Historys.Add(item);
-            }
-            // Save the changes
-            _context.SaveChanges();
-
-            return new NoContentResult();
         }
 
         /// <summary>

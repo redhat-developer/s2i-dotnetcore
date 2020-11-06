@@ -25,13 +25,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">City created</response>
-        IActionResult CitiesBulkPostAsync(City[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         IActionResult CitiesGetAsync();
 
@@ -81,35 +74,6 @@ namespace SchoolBusAPI.Services
         public CityService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of cities</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult CitiesBulkPostAsync(City[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (City item in items)
-            {
-                bool exists = _context.Cities.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.Cities.Update(item);
-                }
-                else
-                {
-                    _context.Cities.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
         }
 
         /// <summary>

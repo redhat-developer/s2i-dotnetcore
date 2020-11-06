@@ -33,19 +33,6 @@ namespace SchoolBusAPI.Controllers
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">CCWData created</response>
-        [HttpPost]
-        [Route("/api/ccwdata/bulk")]
-        [RequiresPermission(Permissions.SchoolBusWrite)]
-        public virtual IActionResult CcwdataBulkPost([FromBody]CCWData[] items)
-        {
-            return this._service.CcwdataBulkPostAsync(items);
-        }
-
-        /// <summary>
         /// fetches data from the ICBC CCW system, and constructs a CCWData object from that.  Note that it does not perform the insert of that data into the database, only provides JSON data suitable for insertion. If a CCWData record exists in the schoolbus database then the id field will match that record, however all other data will be from the ICBC CCW system.
         /// </summary>
         /// <param name="regi">Registration Number (also known as Serial)</param>

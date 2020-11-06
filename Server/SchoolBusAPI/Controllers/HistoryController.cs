@@ -35,19 +35,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">History created</response>
-        [HttpPost]
-        [Route("/api/histories/bulk")]
-        [RequiresPermission(Permissions.SchoolBusWrite, Permissions.OwnerWrite)]
-        public virtual IActionResult HistoriesBulkPost([FromBody]History[] items)
-        {
-            return this._service.HistoriesBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of History to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">History not found</response>

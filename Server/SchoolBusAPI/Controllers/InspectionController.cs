@@ -37,19 +37,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">Inspection created</response>
-        [HttpPost]
-        [Route("/api/inspections/bulk")]
-        [RequiresPermission(Permissions.SchoolBusWrite)]
-        public virtual IActionResult InspectionsBulkPost([FromBody]Inspection[] items)
-        {
-            return this._service.InspectionsBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="id">id of Inspection to delete</param>
         /// <response code="200">OK</response>
         /// <response code="404">Inspection not found</response>

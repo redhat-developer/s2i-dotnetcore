@@ -38,19 +38,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">SchoolBus created</response>
-        [HttpPost]
-        [Route("/api/schoolbuses/bulk")]
-        [RequiresPermission(Permissions.SchoolBusWrite)]
-        public virtual IActionResult SchoolbusesBulkPost([FromBody]SchoolBus[] items)
-        {
-            return this._service.SchoolbusesBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbuses")]
