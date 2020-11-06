@@ -24,7 +24,6 @@ import DateControl from '../components/DateControl.jsx';
 import OverlayTrigger from '../components/OverlayTrigger.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 
 import { formatDateTime, today, isValidDate, toZuluTime, dateIsBeforeToday } from '../utils/date';
@@ -156,11 +155,6 @@ class UsersDetail extends React.Component {
             </Col>
             <Col md={2}>
               <div className="pull-right">
-                <Unimplemented>
-                  <Button>
-                    <Glyphicon glyph="print" title="Print" />
-                  </Button>
-                </Unimplemented>
                 <LinkContainer to={{ pathname: Constant.USERS_PATHNAME }}>
                   <Button title="Return to List">
                     <Glyphicon glyph="arrow-left" /> Return to List

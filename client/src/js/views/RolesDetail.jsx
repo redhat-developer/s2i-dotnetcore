@@ -19,7 +19,6 @@ import store from '../store';
 import FormInputControl from '../components/FormInputControl.jsx';
 import DateControl from '../components/DateControl.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 
 import { isBlank } from '../utils/string';
@@ -208,11 +207,6 @@ class RolesDetail extends React.Component {
           <Col md={10}></Col>
           <Col md={2}>
             <div className="pull-right">
-              <Unimplemented>
-                <Button>
-                  <Glyphicon glyph="print" title="Print" />
-                </Button>
-              </Unimplemented>
               <LinkContainer to={{ pathname: Constant.ROLES_PATHNAME }}>
                 <Button title="Return to List">
                   <Glyphicon glyph="arrow-left" /> Return to List

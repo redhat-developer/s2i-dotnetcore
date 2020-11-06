@@ -445,38 +445,36 @@ class CCWNotifications extends React.Component {
             return (
               <React.Fragment>
                 <Authorize permissions={Constant.PERMISSION_OWNER_W}>
-                  <Row>
-                    <Col>
+                  <Row className="float-right">
+                    <ButtonGroup>
                       <UpdateButton
-                        description={anySelected ? 'Delete selected' : 'Select notifications first'}
-                        hide={false}
-                        disabled={!anySelected}
-                        onConfirm={this.deleteCCWNotifications.bind(this, this.props.ccwnotifications)}
-                      >
-                        <FontAwesomeIcon icon="trash-alt" />
-                      </UpdateButton>
-                    </Col>
-                    <Col>
-                      <UpdateButton
-                        description={readSelected ? 'Mark selected as Unread' : 'Select read notifications first'}
-                        hide={false}
-                        disabled={!readSelected}
-                        onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, false)}
-                      >
-                        <FontAwesomeIcon icon="envelope" />
-                      </UpdateButton>
-                    </Col>
-                    <Col>
-                      <UpdateButton
-                        name="Mark as Read"
-                        description={unreadSelected ? 'Mark selected as Read' : 'Select unread notifications first'}
+                        enabledTooltip="Mark selected as Read"
+                        disabledTooltip="Select unread notifications first"
                         hide={false}
                         disabled={!unreadSelected}
                         onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, true)}
                       >
                         <FontAwesomeIcon icon="envelope-open" />
                       </UpdateButton>
-                    </Col>
+                      <UpdateButton
+                        enabledTooltip="Mark selected as Unread"
+                        disabledTooltip="Select read notifications first"
+                        hide={false}
+                        disabled={!readSelected}
+                        onConfirm={this.updateCCWNotifications.bind(this, this.props.ccwnotifications, false)}
+                      >
+                        <FontAwesomeIcon icon="envelope" />
+                      </UpdateButton>
+                      <UpdateButton
+                        enabledTooltip="Delete selected"
+                        disabledTooltip="Select notifications first"
+                        hide={false}
+                        disabled={!anySelected}
+                        onConfirm={this.deleteCCWNotifications.bind(this, this.props.ccwnotifications)}
+                      >
+                        <FontAwesomeIcon icon="trash-alt" />
+                      </UpdateButton>
+                    </ButtonGroup>
                   </Row>
                 </Authorize>
                 <SortTable

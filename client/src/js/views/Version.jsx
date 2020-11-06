@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PageHeader, Well, Row, Col } from 'react-bootstrap';
-import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'react-bootstrap';
 
 import preval from 'preval.macro';
 
@@ -13,7 +13,6 @@ import * as Constant from '../constants';
 
 import ColDisplay from '../components/ColDisplay.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 
 import { formatDateTime } from '../utils/date';
 
@@ -47,9 +46,6 @@ class Version extends React.Component {
     }
   };
 
-  email = () => {};
-  print = () => {};
-
   render() {
     return (
       <div id="version">
@@ -58,18 +54,7 @@ class Version extends React.Component {
             <Col md={11}>Version</Col>
             <Col md={1}>
               <div id="version-buttons">
-                <ButtonGroup>
-                  <Unimplemented>
-                    <Button onClick={this.email}>
-                      <Glyphicon glyph="envelope" title="E-mail" />
-                    </Button>
-                  </Unimplemented>
-                  <Unimplemented>
-                    <Button onClick={this.print}>
-                      <Glyphicon glyph="print" title="Print" />
-                    </Button>
-                  </Unimplemented>
-                </ButtonGroup>
+                <ButtonGroup></ButtonGroup>
               </div>
             </Col>
           </Row>

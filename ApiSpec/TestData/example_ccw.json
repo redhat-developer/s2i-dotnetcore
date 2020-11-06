@@ -1,9 +1,0 @@
-{
-  "CCW_userId": "ccwuser",
-  "CCW_guid": "12345678",
-  "CCW_directory": "IDIR",
-  "CCW_endpointURL": "https://www.google.com",
-  "CCW_applicationIdentifier": "SBI",
-  "CCW_basicAuth_username": "sbi_user",
-  "CCW_basicAuth_password": "sbi_pass"
-}
