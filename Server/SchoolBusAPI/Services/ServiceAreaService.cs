@@ -25,13 +25,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">ServiceArea created</response>
-        IActionResult ServiceareasBulkPostAsync(ServiceArea[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         IActionResult ServiceareasGetAsync();
 
@@ -81,44 +74,6 @@ namespace SchoolBusAPI.Services
         public ServiceAreaService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of districts.</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult ServiceareasBulkPostAsync(ServiceArea[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (ServiceArea item in items)
-            {
-                // avoid inserting a District if possible.
-                int district_id = item.District.Id;
-                var exists = _context.Districts.Any(a => a.Id == district_id);
-                if (exists)
-                {
-                    District district = _context.Districts.First(a => a.Id == district_id);
-                    item.District = district;
-                }
-
-                exists = _context.ServiceAreas.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.ServiceAreas.Update(item);
-                }
-                else
-                {
-                    _context.ServiceAreas.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
         }
 
         /// <summary>

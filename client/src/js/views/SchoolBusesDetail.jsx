@@ -337,8 +337,6 @@ class SchoolBusesDetail extends React.Component {
       });
   };
 
-  showAttachments = () => {};
-
   showHistoryDialog = () => {
     this.setState({ showHistoryDialog: true });
   };
@@ -413,11 +411,6 @@ class SchoolBusesDetail extends React.Component {
               <Button title="Notes" onClick={this.openNotesDialog}>
                 Notes ({notes ? notes.length : 0})
               </Button>
-              <Unimplemented>
-                <Button title="Attachments" onClick={this.showAttachments}>
-                  Attachments ({bus.attachments ? bus.attachments.length : 0})
-                </Button>
-              </Unimplemented>
               <Button title="History" onClick={this.showHistoryDialog}>
                 History
               </Button>

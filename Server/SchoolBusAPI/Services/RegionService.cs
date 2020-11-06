@@ -25,13 +25,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">Region created</response>
-        IActionResult RegionsBulkPostAsync(Region[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         IActionResult RegionsGetAsync();
 
@@ -91,36 +84,6 @@ namespace SchoolBusAPI.Services
             _context = context;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of regions.</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-
-        public virtual IActionResult RegionsBulkPostAsync(Region[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (Region item in items)
-            {
-                var exists = _context.Regions.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.Regions.Update(item);
-                }
-                else
-                {
-                    _context.Regions.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-
-            return new NoContentResult();
-        }
         /// <summary>
         /// 
         /// </summary>

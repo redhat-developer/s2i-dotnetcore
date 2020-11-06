@@ -25,13 +25,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">Contact created</response>
-        IActionResult ContactsBulkPostAsync(Contact[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         IActionResult ContactsGetAsync();
 
@@ -84,51 +77,6 @@ namespace SchoolBusAPI.Services
             _context = context;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-
-        /// <param name="items"></param>
-        /// <response code="201">Contacts created</response>
-
-        public virtual IActionResult ContactsBulkPostAsync(Contact[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (Contact item in items)
-            {
-                //adjust the schoolbusowner
-                if (item.SchoolBusOwner != null)
-                {
-                    int owner_id = item.SchoolBusOwner.Id;
-                    bool owner_exists = _context.SchoolBusOwners.Any(a => a.Id == owner_id);
-                    if (owner_exists)
-                    {
-                        SchoolBusOwner schoolbusowner = _context.SchoolBusOwners.First(a => a.Id == owner_id);
-                        item.SchoolBusOwner = schoolbusowner;
-                    }
-                    else
-                    {
-                        item.SchoolBusOwner = null;
-                    }
-                }
-
-                var exists = _context.Contacts.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.Contacts.Update(item);
-                }
-                else
-                {
-                    _context.Contacts.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
-        }
         /// <summary>
         /// 
         /// </summary>

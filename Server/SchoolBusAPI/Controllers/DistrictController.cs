@@ -35,19 +35,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">District created</response>
-        [HttpPost]
-        [Route("/api/districts/bulk")]
-        [RequiresPermission(Permissions.CodeWrite)]
-        public virtual IActionResult DistrictsBulkPost([FromBody]District[] items)
-        {
-            return this._service.DistrictsBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/districts")]

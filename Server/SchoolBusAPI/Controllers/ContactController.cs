@@ -35,19 +35,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">Contact created</response>
-        [HttpPost]
-        [Route("/api/contacts/bulk")]
-        [RequiresPermission(Permissions.OwnerWrite)]
-        public virtual IActionResult ContactsBulkPost([FromBody]Contact[] items)
-        {
-            return this._service.ContactsBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/contacts")]

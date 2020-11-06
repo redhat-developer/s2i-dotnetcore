@@ -36,24 +36,17 @@ namespace SchoolBusAPI.Extensions
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IDistrictService, DistrictService>();
             services.AddScoped<IInspectionService, InspectionService>();
-            services.AddScoped<INotificationService, NotificationService>();
-            services.AddScoped<INotificationEventService, NotificationEventService>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ISchoolBusService, SchoolBusService>();
-            services.AddScoped<IAttachmentService, AttachmentService>();
             services.AddScoped<IHistoryService, HistoryService>();
-            services.AddScoped<INoteService, NoteService>();
             services.AddScoped<ISchoolBusOwnerService, SchoolBusOwnerService>();
-            services.AddScoped<IAttachmentService, AttachmentService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IHistoryService, HistoryService>();
-            services.AddScoped<INoteService, NoteService>();
             services.AddScoped<ISchoolDistrictService, SchoolDistrictService>();
             services.AddScoped<IServiceAreaService, ServiceAreaService>();
             services.AddScoped<IUserService, UserService>();            
-            services.AddScoped<IAttachmentUploadService,AttachmentUploadService>();
             services.AddScoped<ICcwJobService, CcwJobService>();
             services.AddScoped<ICCWNotificationService, CCWNotificationService>();
 

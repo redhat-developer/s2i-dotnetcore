@@ -3475,86 +3475,6 @@
             <param name="right"></param>
             <returns></returns>
         </member>
-        <member name="T:SchoolBusAPI.Controllers.AttachmentController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentController.#ctor(SchoolBusAPI.Services.IAttachmentService)">
-            <summary>
-            Create a controller and set the service
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentController.AttachmentsBulkPost(SchoolBusAPI.Models.Attachment[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Attachment created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentController.AttachmentsIdDeletePost(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Attachment to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentController.AttachmentsIdDownloadGet(System.Int32)">
-            <summary>
-            Returns the binary file component of an attachment
-            </summary>
-            <param name="id">Attachment Id</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found in CCW system</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentController.AttachmentsIdGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Attachment to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentController.AttachmentsIdPut(System.Int32,SchoolBusAPI.Models.Attachment)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Attachment to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentController.AttachmentsPost(SchoolBusAPI.Models.Attachment)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Attachment created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentUploadService.AddFilesToAttachments(System.Collections.Generic.List{SchoolBusAPI.Models.Attachment},System.Collections.Generic.IList{Microsoft.AspNetCore.Http.IFormFile})">
-            <summary>
-            Utility function used by the various attachment upload functions
-            </summary>
-            <param name="attachments">A list of attachments to add to</param>
-            <param name="files">The files to add to the attachments</param>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentUploadService.SchoolbusesIdAttachmentsPostAsync(System.Int32,System.Collections.Generic.IList{Microsoft.AspNetCore.Http.IFormFile})">
-            <summary>
-             Basic file receiver for .NET Core
-            </summary>
-            <param name="id">Schoolbus Id</param>
-            <param name="files">Files to add to attachments</param>
-            <returns></returns>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.AttachmentUploadService.SchoolbusownersIdAttachmentsPostAsync(System.Int32,System.Collections.Generic.IList{Microsoft.AspNetCore.Http.IFormFile})">
-            <summary>
-             Basic file receiver for .NET Core
-            </summary>
-            <param name="id">SchoolBus Owner Id</param>
-            <param name="files">Files to add to attachments</param>
-            <returns></returns>
-        </member>
         <member name="T:SchoolBusAPI.Controllers.CCWDataController">
             <summary>
             
@@ -3564,13 +3484,6 @@
             <summary>
             Create a controller and set the service
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.CCWDataController.CcwdataBulkPost(SchoolBusAPI.Models.CCWData[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">CCWData created</response>
         </member>
         <member name="M:SchoolBusAPI.Controllers.CCWDataController.CcwdataFetchGet(System.String,System.String,System.String)">
             <summary>
@@ -3624,13 +3537,6 @@
             Create a controller and set the service
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.CityController.CitiesBulkPost(SchoolBusAPI.Models.City[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">City created</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.CityController.CitiesGet">
             <summary>
             
@@ -3678,13 +3584,6 @@
             <summary>
             Create a controller and set the service
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.ContactController.ContactsBulkPost(SchoolBusAPI.Models.Contact[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Contact created</response>
         </member>
         <member name="M:SchoolBusAPI.Controllers.ContactController.ContactsGet">
             <summary>
@@ -3784,13 +3683,6 @@
             Create a controller and set the service
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.DistrictController.DistrictsBulkPost(SchoolBusAPI.Models.District[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">District created</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.DistrictController.DistrictsGet">
             <summary>
             
@@ -3847,13 +3739,6 @@
             Create a controller and set the service
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.HistoryController.HistoriesBulkPost(SchoolBusAPI.Models.History[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">History created</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.HistoryController.HistoriesIdDeletePost(System.Int32)">
             <summary>
             
@@ -3896,13 +3781,6 @@
             Create a controller and set the service
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.InspectionController.InspectionsBulkPost(SchoolBusAPI.Models.Inspection[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Inspection created</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.InspectionController.InspectionsIdDeletePost(System.Int32)">
             <summary>
             
@@ -3934,153 +3812,6 @@
             </summary>
             <param name="item"></param>
             <response code="201">Inspection created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Controllers.NoteController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NoteController.#ctor(SchoolBusAPI.Services.INoteService)">
-            <summary>
-            Create a controller and set the service
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NoteController.NotesBulkPost(SchoolBusAPI.Models.Note[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Note created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NoteController.NotesIdDeletePost(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Note to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Note not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NoteController.NotesIdGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Note to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Note not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NoteController.NotesIdPut(System.Int32,SchoolBusAPI.Models.Note)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Note to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Note not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NoteController.NotesPost(SchoolBusAPI.Models.Note)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Note created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Controllers.NotificationController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationController.#ctor(SchoolBusAPI.Services.INotificationService)">
-            <summary>
-            Create a controller and set the service
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationController.NotificationsBulkPost(SchoolBusAPI.Models.Notification[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Notification created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationController.NotificationsIdDeletePost(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Notification to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Notification not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationController.NotificationsIdGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Notification to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Notification not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationController.NotificationsIdPut(System.Int32,SchoolBusAPI.Models.Notification)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Notification to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Notification not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationController.NotificationsPost(SchoolBusAPI.Models.Notification)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Notification created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Controllers.NotificationEventController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationEventController.#ctor(SchoolBusAPI.Services.INotificationEventService)">
-            <summary>
-            Create a controller and set the service
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationEventController.NotificationeventsBulkPost(SchoolBusAPI.Models.NotificationEvent[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">NotificationEvent created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationEventController.NotificationeventsIdDeletePost(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of NotificationEvent to delete</param>
-            <response code="200">OK</response>
-            <response code="404">NotificationEvent not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationEventController.NotificationeventsIdGet(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of NotificationEvent to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">NotificationEvent not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationEventController.NotificationeventsIdPut(System.Int32,SchoolBusAPI.Models.NotificationEvent)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of NotificationEvent to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">NotificationEvent not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.NotificationEventController.NotificationeventsPost(SchoolBusAPI.Models.NotificationEvent)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">NotificationEvent created</response>
         </member>
         <member name="T:SchoolBusAPI.Controllers.PermissionController">
             <summary>
@@ -4146,13 +3877,6 @@
             <summary>
             Create a controller and set the service
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.RegionController.RegionsBulkPost(SchoolBusAPI.Models.Region[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Region created</response>
         </member>
         <member name="M:SchoolBusAPI.Controllers.RegionController.RegionsGet">
             <summary>
@@ -4275,13 +3999,6 @@
             <summary>
             Create a controller and set the service
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.SchoolBusController.SchoolbusesBulkPost(SchoolBusAPI.Models.SchoolBus[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">SchoolBus created</response>
         </member>
         <member name="M:SchoolBusAPI.Controllers.SchoolBusController.SchoolbusesGet">
             <summary>
@@ -4419,13 +4136,6 @@
             Create a controller and set the service
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.SchoolBusOwnerController.SchoolbusownersBulkPost(SchoolBusAPI.Models.SchoolBusOwner[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">SchoolBusOwner created</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.SchoolBusOwnerController.SchoolbusownersGet">
             <summary>
             
@@ -4536,13 +4246,6 @@
             Create a controller and set the service
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Controllers.SchoolDistrictController.SchooldistrictsBulkPost(SchoolBusAPI.Models.SchoolDistrict[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">SchoolDistrict created</response>
-        </member>
         <member name="M:SchoolBusAPI.Controllers.SchoolDistrictController.SchooldistrictsGet">
             <summary>
             
@@ -4608,13 +4311,6 @@
             <summary>
             Create a controller and set the service
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Controllers.ServiceAreaController.ServiceareasBulkPost(SchoolBusAPI.Models.ServiceArea[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">ServiceArea created</response>
         </member>
         <member name="M:SchoolBusAPI.Controllers.ServiceAreaController.ServiceareasGet">
             <summary>
@@ -4997,105 +4693,6 @@
             and provides a simple interface for seeding the application and database with data.
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.IAttachmentService.AttachmentsBulkPostAsync(SchoolBusAPI.Models.Attachment[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Attachment created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IAttachmentService.AttachmentsIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Attachment to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IAttachmentService.AttachmentsIdDownloadGetAsync(System.Int32)">
-            <summary>
-            Returns the binary file component of an attachment
-            </summary>
-            <param name="id">Attachment Id</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found in CCW system</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IAttachmentService.AttachmentsIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Attachment to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IAttachmentService.AttachmentsIdPutAsync(System.Int32,SchoolBusAPI.Models.Attachment)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Attachment to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IAttachmentService.AttachmentsPostAsync(SchoolBusAPI.Models.Attachment)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Attachment created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.AttachmentService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
-            <summary>
-            Create a service and set the database context
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.AttachmentService.AttachmentsBulkPostAsync(SchoolBusAPI.Models.Attachment[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Attachments created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.AttachmentService.AttachmentsIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Attachment to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.AttachmentService.AttachmentsIdDownloadGetAsync(System.Int32)">
-            <summary>
-            Returns the binary file component of an attachment
-            </summary>
-            <param name="id">Attachment Id</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found in system</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.AttachmentService.AttachmentsIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Attachment to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.AttachmentService.AttachmentsIdPutAsync(System.Int32,SchoolBusAPI.Models.Attachment)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Attachment</param>
-            <param name="body">body of Attachment</param>
-            <response code="200">OK</response>
-            <response code="404">Attachment not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.AttachmentService.AttachmentsPostAsync(SchoolBusAPI.Models.Attachment)">
-            <summary>
-            
-            </summary>
-            <param name="body"></param>
-            <response code="201">Attachment created</response>
-        </member>
         <member name="T:SchoolBusAPI.Services.ICCWDataService">
             <summary>
             
@@ -5233,13 +4830,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.ICityService.CitiesBulkPostAsync(SchoolBusAPI.Models.City[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">City created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.ICityService.CitiesGetAsync">
             <summary>
             
@@ -5288,14 +4878,6 @@
             Create a service and set the database context
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.CityService.CitiesBulkPostAsync(SchoolBusAPI.Models.City[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of cities</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.CityService.CitiesGetAsync">
             <summary>
             
@@ -5342,13 +4924,6 @@
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IContactService.ContactsBulkPostAsync(SchoolBusAPI.Models.Contact[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Contact created</response>
         </member>
         <member name="M:SchoolBusAPI.Services.IContactService.ContactsGetAsync">
             <summary>
@@ -5397,13 +4972,6 @@
             <summary>
             Create a service and set the database context
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ContactService.ContactsBulkPostAsync(SchoolBusAPI.Models.Contact[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Contacts created</response>
         </member>
         <member name="M:SchoolBusAPI.Services.ContactService.ContactsIdDeletePostAsync(System.Int32)">
             <summary>
@@ -5543,13 +5111,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.IDistrictService.DistrictsBulkPostAsync(SchoolBusAPI.Models.District[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">District created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.IDistrictService.DistrictsGetAsync">
             <summary>
             
@@ -5605,14 +5166,6 @@
             <summary>
             Create a service and set the database context
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.DistrictService.DistrictsBulkPostAsync(SchoolBusAPI.Models.District[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of districts.</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.DistrictService.DistrictsGetAsync">
             <summary>
@@ -5698,13 +5251,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.IHistoryService.HistoriesBulkPostAsync(SchoolBusAPI.Models.History[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">History created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.IHistoryService.HistoriesIdDeletePostAsync(System.Int32)">
             <summary>
             
@@ -5747,13 +5293,6 @@
             Create a service and set the database context
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.HistoryService.HistoriesBulkPostAsync(SchoolBusAPI.Models.History[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">SchoolBusOwnerHistories created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.HistoryService.HistoriesIdDeletePostAsync(System.Int32)">
             <summary>
             
@@ -5790,13 +5329,6 @@
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IInspectionService.InspectionsBulkPostAsync(SchoolBusAPI.Models.Inspection[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Inspection created</response>
         </member>
         <member name="M:SchoolBusAPI.Services.IInspectionService.InspectionsIdDeletePostAsync(System.Int32)">
             <summary>
@@ -5840,13 +5372,6 @@
             Create a service and set the database context
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.InspectionService.InspectionsBulkPostAsync(SchoolBusAPI.Models.Inspection[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Inspections created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.InspectionService.InspectionsIdDeletePostAsync(System.Int32)">
             <summary>
             
@@ -5878,285 +5403,6 @@
             </summary>
             <param name="item"></param>
             <response code="201">Inspection created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Services.INoteService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INoteService.NotesBulkPostAsync(SchoolBusAPI.Models.Note[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Note created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INoteService.NotesIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Note to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Note not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INoteService.NotesIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Note to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Note not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INoteService.NotesIdPutAsync(System.Int32,SchoolBusAPI.Models.Note)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Note to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Note not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INoteService.NotesPostAsync(SchoolBusAPI.Models.Note)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Note created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Services.NoteService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NoteService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
-            <summary>
-            Create a service and set the database context
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NoteService.NotesBulkPostAsync(SchoolBusAPI.Models.Note[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Notes created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NoteService.NotesIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Note to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Note not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NoteService.NotesIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Note to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Note not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NoteService.NotesIdPutAsync(System.Int32,SchoolBusAPI.Models.Note)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Note</param>
-            <param name="body">body of Note</param>
-            <response code="200">OK</response>
-            <response code="404">Note not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NoteService.NotesPostAsync(SchoolBusAPI.Models.Note)">
-            <summary>
-            
-            </summary>
-            <param name="body"></param>
-            <response code="201">Note created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Services.INotificationEventService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationEventService.NotificationeventsBulkPostAsync(SchoolBusAPI.Models.NotificationEvent[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">NotificationEvent created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationEventService.NotificationeventsIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of NotificationEvent to delete</param>
-            <response code="200">OK</response>
-            <response code="404">NotificationEvent not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationEventService.NotificationeventsIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of NotificationEvent to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">NotificationEvent not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationEventService.NotificationeventsIdPutAsync(System.Int32,SchoolBusAPI.Models.NotificationEvent)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of NotificationEvent to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">NotificationEvent not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationEventService.NotificationeventsPostAsync(SchoolBusAPI.Models.NotificationEvent)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">NotificationEvent created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Services.NotificationEventService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationEventService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
-            <summary>
-            Create a service and set the database context
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationEventService.NotificationeventsBulkPostAsync(SchoolBusAPI.Models.NotificationEvent[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">NotificationEvents created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationEventService.NotificationeventsIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of NotificationEvent to delete</param>
-            <response code="200">OK</response>
-            <response code="404">NotificationEvent not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationEventService.NotificationeventsIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of NotificationEvent to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">NotificationEvent not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationEventService.NotificationeventsIdPutAsync(System.Int32,SchoolBusAPI.Models.NotificationEvent)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of NotificationEvent</param>
-            <param name="body">body of NotificationEvent</param>
-            <response code="200">OK</response>
-            <response code="404">NotificationEvent not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationEventService.NotificationeventsPostAsync(SchoolBusAPI.Models.NotificationEvent)">
-            <summary>
-            
-            </summary>
-            <param name="body"></param>
-            <response code="201">NotificationEvent created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Services.INotificationService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationService.NotificationsBulkPostAsync(SchoolBusAPI.Models.Notification[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Notification created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationService.NotificationsIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Notification to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Notification not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationService.NotificationsIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Notification to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Notification not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationService.NotificationsIdPutAsync(System.Int32,SchoolBusAPI.Models.Notification)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Notification to fetch</param>
-            <param name="item"></param>
-            <response code="200">OK</response>
-            <response code="404">Notification not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.INotificationService.NotificationsPostAsync(SchoolBusAPI.Models.Notification)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Notification created</response>
-        </member>
-        <member name="T:SchoolBusAPI.Services.NotificationService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
-            <summary>
-            Create a service and set the database context
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationService.NotificationsBulkPostAsync(SchoolBusAPI.Models.Notification[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Notifications created</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationService.NotificationsIdDeletePostAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Notification to delete</param>
-            <response code="200">OK</response>
-            <response code="404">Notification not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationService.NotificationsIdGetAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Notification to fetch</param>
-            <response code="200">OK</response>
-            <response code="404">Notification not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationService.NotificationsIdPutAsync(System.Int32,SchoolBusAPI.Models.Notification)">
-            <summary>
-            
-            </summary>
-            <param name="id">id of Notification</param>
-            <param name="body">body of Notification</param>
-            <response code="200">OK</response>
-            <response code="404">Notification not found</response>
-        </member>
-        <member name="M:SchoolBusAPI.Services.NotificationService.NotificationsPostAsync(SchoolBusAPI.Models.Notification)">
-            <summary>
-            
-            </summary>
-            <param name="item"></param>
-            <response code="201">Notification created</response>
         </member>
         <member name="T:SchoolBusAPI.Services.IPermissionService">
             <summary>
@@ -6270,13 +5516,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.IRegionService.RegionsBulkPostAsync(SchoolBusAPI.Models.Region[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">Region created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.IRegionService.RegionsGetAsync">
             <summary>
             
@@ -6332,14 +5571,6 @@
             <summary>
             Create a service and set the database context
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.RegionService.RegionsBulkPostAsync(SchoolBusAPI.Models.Region[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of regions.</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.RegionService.RegionsGetAsync">
             <summary>
@@ -6524,13 +5755,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.ISchoolBusOwnerService.SchoolbusownersBulkPostAsync(SchoolBusAPI.Models.SchoolBusOwner[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">SchoolBusOwner created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.ISchoolBusOwnerService.SchoolbusownersGetAsync">
             <summary>
             
@@ -6641,13 +5865,6 @@
             Create a service and set the database context
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.SchoolBusOwnerService.SchoolbusownersBulkPostAsync(SchoolBusAPI.Models.SchoolBusOwner[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">SchoolBusOwners created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.SchoolBusOwnerService.SchoolbusownersGetAsync">
             <summary>
             
@@ -6744,13 +5961,6 @@
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ISchoolBusService.SchoolbusesBulkPostAsync(SchoolBusAPI.Models.SchoolBus[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">SchoolBus created</response>
         </member>
         <member name="M:SchoolBusAPI.Services.ISchoolBusService.SchoolbusesGetAsync">
             <summary>
@@ -6894,13 +6104,6 @@
             </summary>
             <param name="item"></param>
         </member>
-        <member name="M:SchoolBusAPI.Services.SchoolBusService.SchoolbusesBulkPostAsync(SchoolBusAPI.Models.SchoolBus[])">
-            <summary>
-            Creates several school buses. Used for bulk creation of schoolbus records.
-            </summary>
-            <param name="items"></param>
-            <returns></returns>
-        </member>
         <member name="M:SchoolBusAPI.Services.SchoolBusService.SchoolbusesIdGetAsync(System.Int32)">
             <summary>
             Returns a single school bus object
@@ -7028,13 +6231,6 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.ISchoolDistrictService.SchooldistrictsBulkPostAsync(SchoolBusAPI.Models.SchoolDistrict[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">SchoolDistrict created</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.ISchoolDistrictService.SchooldistrictsGetAsync">
             <summary>
             
@@ -7091,14 +6287,6 @@
             <param name="id">id of Region to fetch SchoolDistricts for</param>
             <response code="200">OK</response>
         </member>
-        <member name="M:SchoolBusAPI.Services.SchoolDistrictService.SchooldistrictsBulkPostAsync(SchoolBusAPI.Models.SchoolDistrict[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of school districts.</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
-        </member>
         <member name="M:SchoolBusAPI.Services.SchoolDistrictService.SchooldistrictsGetAsync">
             <summary>
             
@@ -7137,13 +6325,6 @@
             <summary>
             
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.IServiceAreaService.ServiceareasBulkPostAsync(SchoolBusAPI.Models.ServiceArea[])">
-            <summary>
-            
-            </summary>
-            <param name="items"></param>
-            <response code="201">ServiceArea created</response>
         </member>
         <member name="M:SchoolBusAPI.Services.IServiceAreaService.ServiceareasGetAsync">
             <summary>
@@ -7192,14 +6373,6 @@
             <summary>
             Create a service and set the database context
             </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Services.ServiceAreaService.ServiceareasBulkPostAsync(SchoolBusAPI.Models.ServiceArea[])">
-            <summary>
-            
-            </summary>
-            <remarks>Adds a number of districts.</remarks>
-            <param name="items"></param>
-            <response code="200">OK</response>
         </member>
         <member name="M:SchoolBusAPI.Services.ServiceAreaService.ServiceareasGetAsync">
             <summary>

@@ -110,22 +110,6 @@ namespace SchoolBusAPI.Services
                                 return false;
                             }
 
-                            //Console.WriteLine("SSL Policy errors detected, validating certificate chain");
-                            //foreach (var chainCertificate in chain.ChainElements)
-                            //{
-                            //    if (chainCertificate.Certificate == null)
-                            //    {
-                            //        Console.WriteLine($"No valid certificate found in current element: {chainCertificate.Information}");
-                            //        continue;
-                            //    }
-                            //    bool trustedCertificate = (chainCertificate.Certificate.Thumbprint == SMTP_SERVER_SSL_TRUSTED_THUMBPRINT);
-
-                            //    Console.WriteLine($"Certificate Thumbprint ({chainCertificate.Certificate.Thumbprint}) is {(trustedCertificate ? "" : "not")} trusted");
-                            //    if (trustedCertificate) return true;
-                            //}
-                            //Console.WriteLine("Unable to validate certificate chain.");
-                            //return false;
-
                             return true;
                         };
 

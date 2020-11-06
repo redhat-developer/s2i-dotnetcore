@@ -29,13 +29,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">SchoolBusOwner created</response>
-        IActionResult SchoolbusownersBulkPostAsync(SchoolBusOwner[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         IActionResult SchoolbusownersGetAsync();
 
@@ -212,38 +205,6 @@ namespace SchoolBusAPI.Services
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-
-        /// <param name="items"></param>
-        /// <response code="201">SchoolBusOwners created</response>
-
-        public virtual IActionResult SchoolbusownersBulkPostAsync(SchoolBusOwner[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (SchoolBusOwner item in items)
-            {
-                AdjustSchoolBusOwner(item);
-
-                var exists = _context.SchoolBusOwners.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.SchoolBusOwners.Update(item);
-                }
-                else
-                {
-                    _context.SchoolBusOwners.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-
-            return new NoContentResult();
-        }
         /// <summary>
         /// 
         /// </summary>

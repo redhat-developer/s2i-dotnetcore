@@ -25,13 +25,6 @@ namespace SchoolBusAPI.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">District created</response>
-        IActionResult DistrictsBulkPostAsync(District[] items);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         IActionResult DistrictsGetAsync();
 
@@ -89,44 +82,6 @@ namespace SchoolBusAPI.Services
         public DistrictService(DbAppContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>Adds a number of districts.</remarks>
-        /// <param name="items"></param>
-        /// <response code="200">OK</response>
-        public virtual IActionResult DistrictsBulkPostAsync(District[] items)
-        {
-            if (items == null)
-            {
-                return new BadRequestResult();
-            }
-            foreach (District item in items)
-            {
-                // avoid inserting a Region if possible.
-                int region_id = item.Region.Id;
-                var exists = _context.Regions.Any(a => a.Id == region_id);
-                if (exists)
-                {
-                    Region region = _context.Regions.First(a => a.Id == region_id);
-                    item.Region = region;
-                }
-
-                exists = _context.Districts.Any(a => a.Id == item.Id);
-                if (exists)
-                {
-                    _context.Districts.Update(item);
-                }
-                else
-                {
-                    _context.Districts.Add(item);
-                }
-            }
-            // Save the changes
-            _context.SaveChanges();
-            return new NoContentResult();
         }
 
         /// <summary>

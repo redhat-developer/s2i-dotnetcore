@@ -178,7 +178,7 @@ const Notes = (props) => {
 
 Notes.propTypes = {
   id: PropTypes.number.isRequired,
-  parentIdColumn: PropTypes.number.isRequired,
+  parentIdColumn: PropTypes.string.isRequired,
   show: PropTypes.bool,
   notes: PropTypes.array,
   getNotes: PropTypes.func.isRequired,

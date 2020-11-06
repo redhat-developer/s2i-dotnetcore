@@ -37,19 +37,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">SchoolBusOwner created</response>
-        [HttpPost]
-        [Route("/api/schoolbusowners/bulk")]
-        [RequiresPermission(Permissions.OwnerWrite)]
-        public virtual IActionResult SchoolbusownersBulkPost([FromBody]SchoolBusOwner[] items)
-        {
-            return this._service.SchoolbusownersBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/schoolbusowners")]

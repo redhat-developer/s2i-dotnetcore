@@ -35,19 +35,6 @@ namespace SchoolBusAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="items"></param>
-        /// <response code="201">ServiceArea created</response>
-        [HttpPost]
-        [Route("/api/serviceareas/bulk")]
-        [RequiresPermission(Permissions.CodeWrite)]
-        public virtual IActionResult ServiceareasBulkPost([FromBody]ServiceArea[] items)
-        {
-            return this._service.ServiceareasBulkPostAsync(items);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <response code="200">OK</response>
         [HttpGet]
         [Route("/api/serviceareas")]
