@@ -1,8 +1,0 @@
-.DS_Store
-node_modules
-dist
-*.bk
-api
-model
-api.yaml
-in/*.csv

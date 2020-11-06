@@ -29,7 +29,6 @@ import InfoButton from '../components/InfoButton.jsx';
 import SchoolBusBodyDescription from '../components/SchoolBusBodyDescription.jsx';
 import SortTable from '../components/SortTable.jsx';
 import Spinner from '../components/Spinner.jsx';
-import Unimplemented from '../components/Unimplemented.jsx';
 import Authorize from '../components/Authorize';
 
 import { formatDateTime } from '../utils/date';
@@ -345,8 +344,6 @@ class SchoolBusesDetail extends React.Component {
     this.setState({ showHistoryDialog: false });
   };
 
-  print = () => {};
-
   generatePermit = () => {
     // This API call will update the school bus state after generating a permit.
     this.setState({ workingOnPermit: true });
@@ -417,11 +414,6 @@ class SchoolBusesDetail extends React.Component {
             </Col>
             <Col md={2}>
               <div className="pull-right">
-                <Unimplemented>
-                  <Button onClick={this.print}>
-                    <Glyphicon glyph="print" title="Print" />
-                  </Button>
-                </Unimplemented>
                 <LinkContainer to={{ pathname: Constant.BUSES_PATHNAME }}>
                   <Button title="Return to List">
                     <Glyphicon glyph="arrow-left" /> Return to List
