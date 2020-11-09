@@ -55,7 +55,7 @@ You can use the following templates to create the secret objects. Make sure to r
 
 #### Optional Step
 
-If you want to let the pipeline automatically update the Valid Redirect URIs for PR based routes then you will need to create the following secret object in the `tools` namespace
+If you want to let the pipeline automatically update the Valid Redirect URIs (after a successful login to Keycloak) for PR based routes then you will need to create the following secret object in the `tools` namespace
 
 ```yaml
 apiVersion: v1
