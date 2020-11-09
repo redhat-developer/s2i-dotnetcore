@@ -272,6 +272,12 @@ namespace SchoolBusAPI.Services
                 return new StatusCodeResult(404);
             }
 
+            if (user.UserRoles.Any(x => x.Role.Name == Roles.Inspector) && !IsInspectorRoleRemovable(id))
+            {
+                return new UnprocessableEntityObjectResult(
+                    new Error("Validation Error", 310, $"There are buses assigned to the user. Please reassign the buses to other inspector(s), and then delete the user."));
+            }
+
             user.Active = false;
             _context.SaveChanges();
 
@@ -479,17 +485,28 @@ namespace SchoolBusAPI.Services
                     return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 308, $"The user does not have the role to update.")));
             }
 
-            if (User.IsSystemAdmin())
-                return (true, null);
+            var inspectorRole = _context.Roles
+                .AsNoTracking()
+                .FirstOrDefault(u => u.Name == Roles.Inspector);
+
+            if (userRole.RoleId == inspectorRole.Id && userRole.ExpiryDate != null && !IsInspectorRoleRemovable(userRole.UserId))
+            {
+                return (false, new UnprocessableEntityObjectResult(new Error("Validation Error", 309, $"There are buses assigned to the user. Please reassign the buses to other inspector(s), and then remove Inspector role from the user.")));
+            }
 
             var role = _context.Roles.First(x => x.Id == userRole.RoleId);
 
-            if (!CurrentUserHasAllThePermissions(userRole.RoleId))
+            if (!User.IsSystemAdmin() && !CurrentUserHasAllThePermissions(userRole.RoleId))
             {
-                return (false, new UnprocessableEntityObjectResult(new Error("Authorization Error", 309, $"You don't have enough permissions to handle the role [{role.Name}]")));
+                return (false, new UnprocessableEntityObjectResult(new Error("Authorization Error", 399, $"You don't have enough permissions to handle the role [{role.Name}]")));
             }
 
             return (true, null);
+        }
+
+        private bool IsInspectorRoleRemovable(int userId)
+        {
+            return !_context.SchoolBuss.Any(x => x.InspectorId == userId);
         }
     }
 }
