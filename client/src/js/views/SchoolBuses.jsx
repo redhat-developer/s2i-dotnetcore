@@ -398,7 +398,7 @@ class SchoolBuses extends React.Component {
     const schoolBusArray = _.values(schoolBuses);
 
     const header =
-      'Owner, District, School District, Home Terminal, Registration, Unit Number, Permit, Permit Class, Body Description, Next Inspection, Inspector, Re-inspection, Inpection Overdue, Active\n';
+      'Owner, District, School District, Home Terminal, Registration, Unit Number, Permit, Permit Class, Body Description, Next Inspection, Inspector, Re-inspection, Inspection Overdue, Active\n';
 
     const rows = schoolBusArray.map((x) => {
       return `"${x.ownerName}","${x.districtName ?? ''}","${x.schoolDistrictName ?? ''}","${

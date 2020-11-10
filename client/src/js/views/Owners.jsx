@@ -184,7 +184,7 @@ class Owners extends React.Component {
     const ownerListArray = _.values(owners);
 
     const header =
-      'Name, Primary Contact, Primary Contact Number, Primary Contact Email, SchoolBuses, Next Inspection, Re-inspection, Inpection Overdue, Active\n';
+      'Name, Primary Contact, Primary Contact Number, Primary Contact Email, SchoolBuses, Next Inspection, Re-inspection, Inspection Overdue, Active\n';
     const rows = ownerListArray.map((x) => {
       return `"${x.name}","${x.primaryContactName ?? ''}","${x.primaryContactNumber ?? ''}","${
         x.primaryContactEmail ?? ''
