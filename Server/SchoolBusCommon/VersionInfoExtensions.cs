@@ -14,28 +14,29 @@ namespace SchoolBusCommon
     {
         public static DatabaseVersionInfo GetDatabaseVersionInfo(this DatabaseFacade database)
         {
-            DatabaseVersionInfo info = null;
-            DbConnection connection = database.GetDbConnection();
+            using var connection = database.GetDbConnection();
+            connection.Open();
 
-            try
+            using var cmd = connection.CreateCommand();
+            
+            cmd.CommandText = "select pg_size_pretty(pg_database_size(current_database()))";
+            var databaseSize = cmd.ExecuteScalar().ToString();
+
+            cmd.CommandText = "select count(*) from sbilog where level in ( 'Fatal', 'Error' ) and DATE_PART('day', CURRENT_DATE - raise_date) < 1";
+            var appErrorCount = cmd.ExecuteScalar().ToString();
+
+            var info = new DatabaseVersionInfo()
             {
-                connection.Open();
-                info = new DatabaseVersionInfo()
-                {
-                    Name = connection.GetType().Name,
-                    Version = connection.ServerVersion,
-                    Server = connection.DataSource,
-                    Database = connection.Database,
-                    Migrations = database.GetMigrations(),
-                    AppliedMigrations = database.GetAppliedMigrations(),
-                    PendingMigrations = database.GetPendingMigrations()
-                };
-            }
-            catch { }
-            finally
-            {
-                connection.Close();
-            }
+                Name = connection.GetType().Name,
+                Version = $"PostgreSQL {connection.ServerVersion}",
+                Server = connection.DataSource,
+                Database = connection.Database,
+                Migrations = database.GetMigrations(),
+                AppliedMigrations = database.GetAppliedMigrations(),
+                PendingMigrations = database.GetPendingMigrations(),
+                DatabaseSize = databaseSize,
+                AppErrorCount = appErrorCount
+            };
 
             return info;
         }

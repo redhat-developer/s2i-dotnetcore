@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import { PageHeader, Well, Row, Col } from 'react-bootstrap';
 import { Button, ButtonGroup } from 'react-bootstrap';
 
-import preval from 'preval.macro';
-
 import * as Api from '../api';
 import * as Constant from '../constants';
 
@@ -85,38 +83,10 @@ class Version extends React.Component {
           return (
             <div id="version-details">
               <Well>
-                <h3>Client</h3>
-                <Row>
-                  <ColDisplay md={12} label="Name">
-                    CVSE School Bus Inspection Tracking System
-                  </ColDisplay>
-                </Row>
-                <Row>
-                  <ColDisplay md={12} label="Build Time">
-                    {formatDateTime(preval`module.exports = new Date();`, Constant.DATE_TIME_READABLE)}
-                  </ColDisplay>
-                </Row>
-                {/*
-            <Row>
-              <ColDisplay md={12} label="Version">{ this.state.version }</ColDisplay>
-            </Row>
-*/}
-                <Row>
-                  <ColDisplay md={12} label="Git Commit">
-                    {process.env.REACT_APP_GIT_SHA}
-                  </ColDisplay>
-                </Row>
-                <Row>
-                  <ColDisplay md={12} label="User Agent">
-                    {navigator.userAgent}
-                  </ColDisplay>
-                </Row>
-              </Well>
-              <Well>
                 <h3>Application</h3>
                 <Row>
                   <ColDisplay md={12} label="Name">
-                    {applicationVersion.title}
+                    CVSE School Bus Inspection Tracking System
                   </ColDisplay>
                 </Row>
                 <Row>
@@ -125,31 +95,54 @@ class Version extends React.Component {
                   </ColDisplay>
                 </Row>
                 <Row>
+                  <ColDisplay md={12} label="Git Commit">
+                    {applicationVersion.commit}
+                  </ColDisplay>
+                </Row>
+                <Row>
                   <ColDisplay md={12} label="Version">
                     {applicationVersion.informationalVersion}
                   </ColDisplay>
                 </Row>
                 <Row>
-                  <ColDisplay md={12} label="Git Commit">
-                    {applicationVersion.commit}
+                  <ColDisplay md={12} label="Framework">
+                    {applicationVersion.targetFramework}
                   </ColDisplay>
+                </Row>
+                <Row>
+                  <ColDisplay md={12} label="Runtime Version">
+                    {applicationVersion.imageRuntimeVersion}
+                  </ColDisplay>
+                </Row>
+                <Row>
+                  <ColDisplay md={12} label="Error Count">
+                    {databaseVersion.appErrorCount}
+                  </ColDisplay>
+                </Row>
+                <Row>
+                  <ColDisplay md={12} label="(Past 24 hours)"></ColDisplay>
                 </Row>
               </Well>
               <Well>
                 <h3>Database</h3>
+                <Row>
+                  <ColDisplay md={12} label="Server">
+                    {databaseVersion.version}
+                  </ColDisplay>
+                </Row>
                 <Row>
                   <ColDisplay md={12} label="Name">
                     {databaseVersion.database}
                   </ColDisplay>
                 </Row>
                 <Row>
-                  <ColDisplay md={12} label="Server">
-                    {databaseVersion.server}
+                  <ColDisplay md={12} label="Size">
+                    {databaseVersion.databaseSize}
                   </ColDisplay>
                 </Row>
                 <Row>
-                  <ColDisplay md={12} label="Version">
-                    {databaseVersion.version}
+                  <ColDisplay md={12} label="Host">
+                    {databaseVersion.server}
                   </ColDisplay>
                 </Row>
                 <Row>
