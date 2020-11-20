@@ -224,15 +224,15 @@ namespace SchoolBusAPI
             // enable Hangfire Dashboard
             app.UseHangfireDashboard(); // this enables the /hangfire action
 
-            // this should be set as an environment variable.  
             // Only enable when doing a new PROD deploy to populate CCW data and link it to the bus data.
-            if (!string.IsNullOrEmpty(Configuration["ENABLE_HANGFIRE_CREATE"]))
+            var enableCcwCreate = Configuration["ENABLE_HANGFIRE_CREATE"] ?? "N";
+            if (enableCcwCreate.ToUpperInvariant() == "Y")
             {
                 SetupHangfireCreateJob(logger);
             }
 
-            // this should be set as an environment variable
-            if (!string.IsNullOrEmpty(Configuration["ENABLE_HANGFIRE_UPDATE"]))
+            var enableCcwUpdate = Configuration["ENABLE_HANGFIRE_UPDATE"] ?? "N";
+            if (enableCcwUpdate.ToUpperInvariant() == "Y")
             {
                 SetupHangfireUpdateJob(logger);
             }
