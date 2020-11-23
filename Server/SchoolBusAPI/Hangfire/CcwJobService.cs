@@ -47,6 +47,10 @@ namespace SchoolBusAPI.Hangfire
         {
             await Task.CompletedTask;
 
+            var enableCcwCreate = (_configuration["ENABLE_HANGFIRE_CREATE"] ?? "N").ToUpperInvariant() == "Y";
+            if (!enableCcwCreate)
+                return;
+
             // sanity check
             if (_userId != null && _userGuid != null && _userDir != null)
             {
@@ -95,8 +99,12 @@ namespace SchoolBusAPI.Hangfire
         {
             await Task.CompletedTask;
 
-            // sanity check
-            if (_userId != null && _userGuid != null && _userDir != null)
+            var enableCcwUpdate = (_configuration["ENABLE_HANGFIRE_UPDATE"] ?? "N").ToUpperInvariant() == "Y";
+            if (!enableCcwUpdate)
+                return;
+
+                // sanity check
+                if (_userId != null && _userGuid != null && _userDir != null)
             {
                 int maxUpdateCount = _context.CCWDatas
                     .Count(x => x.LastUpdateTimestamp > DateTime.UtcNow.AddDays(-1));
