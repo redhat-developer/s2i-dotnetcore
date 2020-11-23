@@ -236,6 +236,8 @@ namespace SchoolBusAPI
             {
                 SetupHangfireUpdateJob(logger);
             }
+
+            logger.LogInformation($"CCW Population: {enableCcwCreate}, CCW Update: {enableCcwUpdate}");
         }
 
         // TODO:

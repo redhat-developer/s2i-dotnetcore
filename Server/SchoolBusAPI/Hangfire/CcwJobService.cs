@@ -103,8 +103,8 @@ namespace SchoolBusAPI.Hangfire
             if (!enableCcwUpdate)
                 return;
 
-                // sanity check
-                if (_userId != null && _userGuid != null && _userDir != null)
+            // sanity check
+            if (_userId != null && _userGuid != null && _userDir != null)
             {
                 int maxUpdateCount = _context.CCWDatas
                     .Count(x => x.LastUpdateTimestamp > DateTime.UtcNow.AddDays(-1));
