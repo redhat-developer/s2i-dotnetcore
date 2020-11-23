@@ -61,7 +61,6 @@ namespace SchoolBusAPI.Hangfire
 
                 if (data == null)
                 {
-                    _logger.LogInformation("[Hangfire] PopulateCCWJob - No bus with CCWDataId = null.");
                     return;
                 }
 
@@ -122,7 +121,6 @@ namespace SchoolBusAPI.Hangfire
 
                 if (data == null)
                 {
-                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - Skipping CCW call. All records up to {DateTime.UtcNow.AddDays(-1)} have already been updated.");
                     return;
                 }
 
