@@ -4,7 +4,7 @@
     "metadata": {
         "name": "dotnet-image-streams",
         "annotations": {
-            "description": "ImageStream definitions for .NET Core on CentOS"
+            "description": "ImageStream definitions for .NET Core on CentOS (Retired)"
         }
     },
     "items": [
