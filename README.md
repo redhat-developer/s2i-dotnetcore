@@ -18,13 +18,14 @@ Versions
 * [RETIRED] 2.2 (RHEL 7, CentOS 7)
 * [RETIRED] 3.0 (RHEL 7, RHEL 8)
 * 3.1 (RHEL 7, RHEL 8, CentOS 7, Fedora)
+* 5.0 (RHEL 8, CentOS 7, Fedora)
 
 Building
 ----------------
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ sudo VERSIONS=3.1 ./build.sh
+$ sudo VERSIONS=5.0 ./build.sh
 ```
 
 Note: to build RHEL 7 based images, you need to run the build on a
@@ -72,6 +73,10 @@ You can run `Get-Help .\install-imagestreams.ps1` for more information.
 
 Usage
 ---------------------------------
+
+For information about usage of Docker image for .NET Core 5.0,
+see [5.0 builder usage documentation](5.0/build/README.md) and
+[5.0 runtime usage documentation](5.0/runtime/README.md).
 
 For information about usage of Docker image for .NET Core 3.1,
 see [3.1 builder usage documentation](3.1/build/README.md) and
