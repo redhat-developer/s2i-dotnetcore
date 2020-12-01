@@ -9,7 +9,7 @@ objects:
   - apiVersion: v1
     kind: ImageStream
     metadata:
-      name: nodejs-14
+      name: nodejs-10-rhel7
       labels:
         shared: "true"
     spec:
@@ -19,8 +19,8 @@ objects:
         - annotations: null
           from:
             kind: DockerImage
-            name: registry.redhat.io/rhel8/nodejs-14
-          name: "0"
+            name: registry.redhat.io/rhscl/nodejs-10-rhel7
+          name: "1-47"
           referencePolicy:
             type: Local
   - apiVersion: v1
@@ -56,7 +56,7 @@ objects:
         sourceStrategy:
           from:
             kind: ImageStreamTag
-            name: "nodejs-14:0"
+            name: "nodejs-10-rhel7:1-47"
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
