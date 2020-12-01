@@ -42,8 +42,8 @@
                     {
                         "name": "5.0-ubi8",
                         "annotations": {
-                            "openshift.io/display-name": ".NET 5.0 (UBI 8)",
-                            "description": "Build and run .NET 5.0 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/5.0/build/README.md.",
+                            "openshift.io/display-name": ".NET 5 (UBI 8)",
+                            "description": "Build and run .NET 5 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/5.0/build/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "builder,.net,dotnet,dotnetcore,dotnet50",
                             "supports": "dotnet:5.0,dotnet",
@@ -63,8 +63,8 @@
                     {
                         "name": "5.0",
                         "annotations": {
-                            "openshift.io/display-name": ".NET 5.0 (UBI 8)",
-                            "description": "Build and run .NET 5.0 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/5.0/build/README.md.",
+                            "openshift.io/display-name": ".NET 5 (UBI 8)",
+                            "description": "Build and run .NET 5 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/5.0/build/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "builder,.net,dotnet,dotnetcore,rh-dotnet50,hidden",
                             "supports": "dotnet:5.0,dotnet",
@@ -227,7 +227,7 @@
                             "openshift.io/display-name": ".NET Runtime (Latest)",
                             "description": "Run .NET applications. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/5.0/runtime/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET Core Runtime available on OpenShift, including major versions updates.",
                             "iconClass": "icon-dotnet",
-                            "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime",
+                            "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime,hidden",
                             "supports": "dotnet-runtime"
                         },
                         "referencePolicy": {
@@ -241,8 +241,8 @@
                     {
                         "name": "5.0-ubi8",
                         "annotations": {
-                            "openshift.io/display-name": ".NET 5.0 Runtime (UBI 8)",
-                            "description": "Run .NET applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/5.0/runtime/README.md.",
+                            "openshift.io/display-name": ".NET 5 Runtime (UBI 8)",
+                            "description": "Run .NET 5 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/5.0/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime",
                             "supports": "dotnet-runtime",
@@ -259,8 +259,8 @@
                     {
                         "name": "5.0",
                         "annotations": {
-                            "openshift.io/display-name": ".NET 5.0 Runtime (UBI 8)",
-                            "description": "Run .NET applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/5.0/runtime/README.md.",
+                            "openshift.io/display-name": ".NET 5 Runtime (UBI 8)",
+                            "description": "Run .NET 5 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/5.0/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime,hidden",
                             "supports": "dotnet-runtime",
@@ -278,7 +278,7 @@
                         "name": "3.1-ubi8",
                         "annotations": {
                             "openshift.io/display-name": ".NET Core 3.1 Runtime (UBI 8)",
-                            "description": "Run .NET Core applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/3.1/runtime/README.md.",
+                            "description": "Run .NET Core 3.1 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/3.1/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime",
                             "supports": "dotnet-runtime",
@@ -296,7 +296,7 @@
                         "name": "3.1-el7",
                         "annotations": {
                             "openshift.io/display-name": ".NET Core 3.1 Runtime (RHEL 7)",
-                            "description": "Run .NET Core applications on RHEL 7. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/3.1/runtime/README.md.",
+                            "description": "Run .NET Core 3.1 applications on RHEL 7. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/3.1/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime",
                             "supports": "dotnet-runtime",
@@ -313,8 +313,8 @@
                     {
                         "name": "3.1",
                         "annotations": {
-                            "openshift.io/display-name": ".NET Core 3.1 Runtime",
-                            "description": "Run .NET Core applications on RHEL 7. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/3.1/runtime/README.md.",
+                            "openshift.io/display-name": ".NET Core 3.1 Runtime (RHEL 7)",
+                            "description": "Run .NET Core 3.1 applications on RHEL 7. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/3.1/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime,hidden",
                             "supports": "dotnet-runtime",
@@ -332,7 +332,7 @@
                         "name": "2.1-ubi8",
                         "annotations": {
                             "openshift.io/display-name": ".NET Core 2.1 Runtime (UBI 8)",
-                            "description": "Run .NET Core applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/2.1/runtime/README.md.",
+                            "description": "Run .NET Core 2.1 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/2.1/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime",
                             "supports": "dotnet-runtime",
@@ -350,7 +350,7 @@
                         "name": "2.1-el7",
                         "annotations": {
                             "openshift.io/display-name": ".NET Core 2.1 Runtime (RHEL 7)",
-                            "description": "Run .NET Core applications on RHEL 7. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/2.1/runtime/README.md.",
+                            "description": "Run .NET Core 2.1 applications on RHEL 7. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/2.1/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime",
                             "supports": "dotnet-runtime",
@@ -367,8 +367,8 @@
                     {
                         "name": "2.1",
                         "annotations": {
-                            "openshift.io/display-name": ".NET Core 2.1 Runtime",
-                            "description": "Run .NET Core applications on RHEL 7. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/2.1/runtime/README.md.",
+                            "openshift.io/display-name": ".NET Core 2.1 Runtime (RHEL 7)",
+                            "description": "Run .NET Core 2.1 applications on RHEL 7. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/2.1/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime,hidden",
                             "supports": "dotnet-runtime",
