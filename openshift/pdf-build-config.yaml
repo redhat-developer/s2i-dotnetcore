@@ -49,7 +49,7 @@ objects:
           from:
             kind: ImageStreamTag
             namespace: openshift
-            name: nodejs:8
+            name: nodejs:14
             noCache: true
 parameters:
   - description: Name of the project (SCHOOLBUS)

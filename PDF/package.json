@@ -9,14 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ychung-mot/pdf.git"
+    "url": "git@github.com:bcgov/schoolbus.git"
   },
-  "author": "Young-Jin Chung",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ychung-mot/pdf/issues"
-  },
-  "homepage": "https://github.com/ychung-mot/pdf#readme",
   "dependencies": {
     "express": "^4.16.4",
     "fs": "0.0.1-security",
