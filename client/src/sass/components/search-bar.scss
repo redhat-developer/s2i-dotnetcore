@@ -1,0 +1,43 @@
+.search-bar {
+  padding-bottom: 1px;
+  #filters {
+    margin-top: -5px;
+    .btn-group {
+      .btn {
+        text-align: left;
+      }
+    }
+
+    .btn-toolbar {
+      @include flex;
+      flex-wrap: wrap;
+    }
+
+    .btn-toolbar > div,
+    .btn-toolbar > button,
+    .btn-toolbar > span {
+      margin: 5px;
+    }
+
+    .btn-toolbar > label.checkbox-control {
+      margin: 12px 10px 5px 5px;
+    }
+
+    .btn-toolbar > input {
+      float: left;
+      min-width: 175px;
+      margin: 5px;
+      width: auto;
+    }
+
+    .btn-toolbar > div.date-control {
+      padding-left: 2px;
+    }
+  }
+
+  #search-buttons > .row > div,
+  #search-buttons > .row > button {
+    width: 105px;
+    margin: 5px 0;
+  }
+}

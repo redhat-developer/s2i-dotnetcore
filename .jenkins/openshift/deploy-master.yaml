@@ -1,0 +1,295 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: jenkins
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    creationTimestamp: null
+    labels:
+      shared: "true"
+    name: ${NAME}
+  spec:
+    lookupPolicy:
+      local: false
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    annotations:
+      as-copy-of: template.${NAME}-slave-user
+      as-copy-of/preserve: password
+    name: ${NAME}${SUFFIX}-slave-user
+  stringData:
+    metadata.name: ${NAME}${SUFFIX}-slave-user
+    password: ${SLAVE_USER_PASSWORD}
+    username: jenkins-slave
+  type: kubernetes.io/basic-auth
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    annotations:
+      as-copy-of: template.${NAME}-github
+    name: ${NAME}${SUFFIX}-github
+  stringData:
+    metadata.name: ${NAME}${SUFFIX}-github
+    password: ${GITHUB_TOKEN}
+    username: ${GITHUB_USERNAME}
+  type: kubernetes.io/basic-auth
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: ${NAME}${SUFFIX}
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    storageClassName: netapp-file-standard
+    resources:
+      requests:
+        storage: 1Gi
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"${NAME}${SUFFIX}"}}'
+    name: ${NAME}${SUFFIX}
+- apiVersion: v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    name: ${NAME}${SUFFIX}_edit
+  roleRef:
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: ${NAME}${SUFFIX}
+- apiVersion: v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    name: ${NAME}${SUFFIX}_admin
+  roleRef:
+    name: admin
+  subjects:
+  - kind: ServiceAccount
+    name: ${NAME}${SUFFIX}
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
+    creationTimestamp: null
+    name: ${NAME}${SUFFIX}
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      deploymentconfig: ${NAME}${SUFFIX}
+    strategy:
+      activeDeadlineSeconds: 21600
+      recreateParams:
+        timeoutSeconds: 600
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          deploymentconfig: ${NAME}${SUFFIX}
+      spec:
+        containers:
+        - command:
+          - /usr/local/bin/container-entrypoint
+          - /usr/local/bin/jenkins-run
+          env:
+          - name: USE_JAVA_DIAGNOSTICS
+            value: "true"
+          - name: JENKINS_URL
+            value: https://${ROUTE_HOST}${ROUTE_PATH}
+          - name: ENV_NAME
+            value: ${ENV_NAME}
+          - name: ENV_ID
+            value: ${ENV_ID}
+          image: ' '
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /login
+              port: 8080
+            initialDelaySeconds: 420
+            periodSeconds: 360
+            timeoutSeconds: 240
+          name: jenkins
+          ports:
+          - containerPort: 50000
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: 8080
+            initialDelaySeconds: 3
+            timeoutSeconds: 240
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: 300m
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/jenkins/jobs
+            name: jenkins-jobs
+            readOnly: false
+          - mountPath: /var/run/pod
+            name: pod-metadata
+          - mountPath: /run/secrets/jenkins-slave-user
+            name: jenkins-slave-user
+            readOnly: true
+          - mountPath: /run/secrets/github
+            name: github
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: ${NAME}${SUFFIX}
+        serviceAccountName: ${NAME}${SUFFIX}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: jenkins-jobs
+          persistentVolumeClaim:
+            claimName: ${NAME}${SUFFIX}
+        - downwardAPI:
+            items:
+            - fieldRef:
+                fieldPath: metadata.name
+              name: name
+              path: name
+            - fieldRef:
+                fieldPath: metadata.namespace
+              name: namespace
+              path: namespace
+            - fieldRef:
+                fieldPath: metadata.labels
+              name: labels
+              path: labels
+            - fieldRef:
+                fieldPath: metadata.annotations
+              name: annotations
+              path: annotations
+          name: pod-metadata
+        - name: jenkins-slave-user
+          secret:
+            defaultMode: 420
+            secretName: ${NAME}${SUFFIX}-slave-user
+        - name: github
+          secret:
+            defaultMode: 420
+            secretName: ${NAME}${SUFFIX}-github
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - jenkins
+        from:
+          kind: ImageStreamTag
+          name: ${NAME}:${VERSION}
+      type: ImageChange
+    - type: ConfigChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    name: ${NAME}${SUFFIX}
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 50000-tcp
+      port: 50000
+      protocol: TCP
+      targetPort: 50000
+    selector:
+      deploymentconfig: ${NAME}${SUFFIX}
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: Route
+  metadata:
+    creationTimestamp: null
+    name: ${NAME}${SUFFIX}
+  spec:
+    host: ${ROUTE_HOST}
+    path: ${ROUTE_PATH}
+    port:
+      targetPort: 8080-tcp
+    tls:
+      termination: edge
+    to:
+      kind: Service
+      name: ${NAME}${SUFFIX}
+      weight: 100
+    wildcardPolicy: None
+parameters:
+- description: A name used for all objects
+  displayName: Name
+  name: NAME
+  required: true
+- description: A name suffix used for all objects
+  displayName: Suffix
+  name: SUFFIX
+  required: false
+  value: ""
+- description: A version used for the image tags
+  displayName: version
+  name: VERSION
+  required: true
+  value: v1.0.0
+- description: GITHUB_USERNAME
+  displayName: GITHUB_USERNAME
+  name: GITHUB_USERNAME
+  required: true
+  value: cvarjao
+- description: ROUTE_HOST
+  displayName: ROUTE_HOST
+  name: ROUTE_HOST
+  required: true
+- description: ROUTE_PATH
+  displayName: ROUTE_PATH
+  name: ROUTE_PATH
+  required: true
+  value: /
+- description: Environment Name
+  displayName: ENV_NAME
+  name: ENV_NAME
+  required: true
+  value: prod
+- description: Environment ID
+  displayName: ENV_ID
+  name: ENV_ID
+  required: true
+  value: prod
+- description: SLAVE_USER_PASSWORD
+  displayName: SLAVE_USER_PASSWORD
+  from: '[a-zA-Z0-9]{16}'
+  generate: expression
+  name: SLAVE_USER_PASSWORD
+- description: GITHUB_USERNAME
+  displayName: GITHUB_USERNAME
+  name: GITHUB_USERNAME
+  required: false
+  value: ""
+- description: GitHub Personal Access Token
+  displayName: GITHUB_USERNAME
+  name: GITHUB_TOKEN
+  required: false
+  value: ""

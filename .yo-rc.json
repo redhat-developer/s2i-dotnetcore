@@ -1,0 +1,56 @@
+{
+  "@bcgov/generator-bcdk": {
+    "promptValues": {
+      "modules": {
+        "jenkins": {
+          "path": ".jenkins",
+          "name": "jenkins",
+          "namespace": "tran-schoolbus-tools",
+          "version": "1.0.0",
+          "environments": {
+            "build": {
+              "namespace": "tran-schoolbus-tools"
+            },
+            "dev": {
+              "namespace": "tran-schoolbus-tools"
+            },
+            "prod": {
+              "namespace": "tran-schoolbus-tools"
+            }
+          },
+          "jenkinsJobName": "_jenkins",
+          "github_owner": "bcgov",
+          "github_repo": "schoolbus",
+          "jenkinsFilePath": ".jenkins/Jenkinsfile",
+          "uuid": "34e1a65d-8afd-4cc9-8239-7f3f9ec92ba7"
+        },
+        "\".\"": {
+          "name": "schoolbus",
+          "version": "1.4.0",
+          "path": ".",
+          "environments": {
+            "build": {
+              "namespace": "tran-schoolbus-tools"
+            },
+            "dev": {
+              "namespace": "tran-schoolbus-dev"
+            },
+            "test": {
+              "namespace": "tran-schoolbus-test"
+            },
+            "prod": {
+              "namespace": "tran-schoolbus-prod"
+            }
+          }
+        },
+        ".": {
+          "jenkinsJobName": "sb",
+          "github_owner": "bcgov",
+          "github_repo": "schoolbus",
+          "jenkinsFilePath": "Jenkinsfile",
+          "uuid": "90775697-f0de-4236-9ad3-711741baf0c5"
+        }
+      }
+    }
+  }
+}

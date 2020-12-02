@@ -1,0 +1,31 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+objects:
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    annotations: null
+    name: template.${NAME}-slave-user
+  stringData:
+    metadata.name: template.${NAME}-slave-user
+    username: jenkins-slave
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    annotations: null
+    name: template.${NAME}-github
+  stringData:
+    metadata.name: template.${NAME}-github
+    username: ${GH_USERNAME}
+    password: ${GH_ACCESS_TOKEN}
+parameters:
+- description: A name used for all objects
+  displayName: Name
+  name: NAME
+  required: true
+  value: jenkins
+- name: GH_USERNAME
+  required: true
+- description: GitHub Personal Access Token
+  name: GH_ACCESS_TOKEN
+  required: true

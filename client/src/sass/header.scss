@@ -1,0 +1,148 @@
+$nav-color: #38598a;
+$nav-dev-color: #448a38;
+
+$nav-tst-color: #f9a825;
+$nav-active-color: #5475a7;
+$nav-dev-active-color: lighten($nav-dev-color, 10%);
+$nav-tst-active-color: lighten($nav-tst-color, 10%);
+
+#banner {
+  float: left;
+  margin-top: 20px;
+  margin-left: 35px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+#top-nav {
+  margin-bottom: 0px;
+  background-color: $nav-color;
+  border-radius: 0px;
+  border: 0;
+  border-top: 2px solid #fcba19;
+  -webkit-box-shadow: 0px 3px 3px 1px rgba(51, 51, 51, 0.5);
+  -moz-box-shadow: 0px 3px 3px 1px rgba(51, 51, 51, 0.5);
+  box-shadow: 0px 3px 3px 1px rgba(51, 51, 51, 0.5);
+
+  #working-indicator {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #2e6da4;
+    border-radius: 3px;
+    font-size: 13px;
+    color: white;
+    padding: 1px 6px;
+    white-space: nowrap;
+
+    .spinner {
+      border-color: white;
+      width: 11px;
+      height: 11px;
+    }
+  }
+
+  #error-indicator {
+    position: absolute;
+    top: 21px;
+    right: 22px;
+    background-color: #b72b2b;
+    font-size: 13px;
+    color: white;
+    margin-top: -8px;
+    z-index: 100;
+
+    span {
+      margin-left: 5px;
+    }
+  }
+}
+
+#top-nav.env-dev {
+  background-color: $nav-dev-color;
+}
+
+#top-nav.env-unknown {
+  background-color: $nav-dev-color;
+}
+
+#top-nav.env-test {
+  background-color: $nav-tst-color;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+}
+.navbar-default .navbar-nav > li > a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.navbar-default .navbar-nav > li > a:focus {
+  color: #fff;
+}
+
+@mixin nav-link-active-color($color, $active-color) {
+  .active {
+    a {
+      color: #fff;
+      background-color: $active-color;
+      text-decoration: underline;
+
+      &:hover,
+      &:focus {
+        background-color: $active-color;
+      }
+    }
+  }
+
+  li {
+    .dropdown-menu {
+      color: #fff;
+      background-color: $color;
+      font-size: 13px;
+
+      li {
+        a {
+          color: #fff;
+
+          &:hover,
+          &:focus {
+            background-color: $active-color;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .open {
+    a {
+      color: #fff;
+      background-color: $color;
+      text-decoration: underline;
+
+      &:hover,
+      &:focus {
+        color: #fff;
+        background-color: $color;
+      }
+    }
+  }
+}
+
+.navbar-default .navbar-nav {
+  @include nav-link-active-color($nav-color, $nav-active-color);
+}
+
+.navbar-default.env-dev .navbar-nav {
+  @include nav-link-active-color($nav-dev-color, $nav-dev-active-color);
+}
+
+.navbar-default.env-unknown .navbar-nav {
+  @include nav-link-active-color($nav-dev-color, $nav-dev-active-color);
+}
+
+.navbar-default.env-test .navbar-nav {
+  @include nav-link-active-color($nav-tst-color, $nav-tst-active-color);
+}

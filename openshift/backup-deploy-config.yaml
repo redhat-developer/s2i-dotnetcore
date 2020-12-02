@@ -1,0 +1,433 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: "${NAME}-deployment-template"
+objects:
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: ${CONFIG_MAP_NAME}-${ENV}
+    data:
+      "${CONFIG_FILE_NAME}": "${PROJECT_NAME}-${DB_NAME}-${ENV}/${DATABASE_NAME}\n0 23 * * * default ./backup.sh -s"
+  - kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: "${NAME}-${VERIFICATION_VOLUME_NAME}"
+      labels:
+        app: "${NAME}-persistent"
+        template: "${NAME}-persistent-template"
+    labels:
+      shared: "true"
+    spec:
+      storageClassName: "${VERIFICATION_VOLUME_CLASS}"
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: "${VERIFICATION_VOLUME_SIZE}"
+  - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: "${FTP_SECRET_KEY}"
+    type: Opaque
+    stringData:
+      ftp-url: "${FTP_URL}"
+      ftp-user: "${FTP_USER}"
+      ftp-password: "${FTP_PASSWORD}"
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: "${NAME}-${ENV}"
+      labels:
+        template: "${NAME}-${ENV}"
+      annotations:
+        description: Defines how to deploy the ${NAME}-${ENV}
+    spec:
+      strategy:
+        type: Recreate
+      replicas: 1
+      selector:
+        name: "${NAME}-${ENV}"
+      template:
+        metadata:
+          name: "${NAME}-${ENV}"
+          labels:
+            name: "${NAME}-${ENV}"
+        spec:
+          volumes:
+            - name: "${BACKUP_VOLUME_NAME}"
+              persistentVolumeClaim:
+                claimName: "${BACKUP_VOLUME_NAME}"
+            - name: "${NAME}-${VERIFICATION_VOLUME_NAME}"
+              persistentVolumeClaim:
+                claimName: "${NAME}-${VERIFICATION_VOLUME_NAME}"
+            - name: "${NAME}-config-volume"
+              configMap:
+                name: "${CONFIG_MAP_NAME}-${ENV}"
+                items:
+                  - key: "${CONFIG_FILE_NAME}"
+                    path: "${CONFIG_FILE_NAME}"
+          containers:
+            - name: "backup"
+              image: docker-registry.default.svc:5000/tran-schoolbus-tools/${NAME}:latest
+              ports: []
+              env:
+                - name: BACKUP_STRATEGY
+                  value: "${BACKUP_STRATEGY}"
+                - name: BACKUP_DIR
+                  value: "${BACKUP_DIR}"
+                - name: NUM_BACKUPS
+                  value: "${NUM_BACKUPS}"
+                - name: DAILY_BACKUPS
+                  value: "${DAILY_BACKUPS}"
+                - name: WEEKLY_BACKUPS
+                  value: "${WEEKLY_BACKUPS}"
+                - name: MONTHLY_BACKUPS
+                  value: "${MONTHLY_BACKUPS}"
+                - name: BACKUP_PERIOD
+                  value: "${BACKUP_PERIOD}"
+                - name: DATABASE_SERVICE_NAME
+                  value: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
+                - name: DATABASE_NAME
+                  value: "${DATABASE_NAME}"
+                - name: MONGODB_AUTHENTICATION_DATABASE
+                  value: "${MONGODB_AUTHENTICATION_DATABASE}"
+                - name: TABLE_SCHEMA
+                  value: "${TABLE_SCHEMA}"
+                - name: DATABASE_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
+                      key: "database-user"
+                - name: DATABASE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
+                      key: "database-password"
+                - name: FTP_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${FTP_SECRET_KEY}"
+                      key: ftp-url
+                - name: FTP_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${FTP_SECRET_KEY}"
+                      key: ftp-user
+                - name: FTP_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${FTP_SECRET_KEY}"
+                      key: ftp-password
+                - name: WEBHOOK_URL
+                  value: ""
+                - name: ENVIRONMENT_FRIENDLY_NAME
+                  value: "${ENVIRONMENT_FRIENDLY_NAME}"
+                - name: ENVIRONMENT_NAME
+                  value: "${ENVIRONMENT_NAME}"
+              resources:
+                requests:
+                  cpu: "${CPU_REQUEST}"
+                  memory: "${MEMORY_REQUEST}"
+                limits:
+                  cpu: "${CPU_LIMIT}"
+                  memory: "${MEMORY_LIMIT}"
+              volumeMounts:
+                - name: "${BACKUP_VOLUME_NAME}"
+                  mountPath: "${BACKUP_DIR}"
+                - name: "${NAME}-${VERIFICATION_VOLUME_NAME}"
+                  mountPath: "${VERIFICATION_VOLUME_MOUNT_PATH}"
+                - name: "${NAME}-config-volume"
+                  mountPath: "${CONFIG_MOUNT_PATH}${CONFIG_FILE_NAME}"
+                  subPath: "${CONFIG_FILE_NAME}"
+parameters:
+  - description: Name of the project (SCHOOLBUS)
+    displayName: PROJECT_NAME
+    name: PROJECT_NAME
+    required: true
+    value: "sbi"
+  - name: NAME
+    displayName: Name
+    description:
+      The name assigned to all of the resources.  Use 'backup-{database name}'
+      depending on your database provider
+    required: true
+    value: backup
+  - description: A name suffix used for all objects
+    displayName: Suffix
+    name: SUFFIX
+    required: false
+    value: "-dev"
+  - description: Environment short name (dev,test,uat,prod)
+    displayName: ENV
+    name: ENV
+    required: false
+    value: "dev"
+  - description: A version used for the image tags
+    displayName: version
+    name: VERSION
+    required: false
+    value: "1.4"
+  - name: SOURCE_IMAGE_NAME
+    displayName: Source Image Name
+    description:
+      The name of the image to use for this resource.  Use 'backup-{database
+      name}' depending on your database provider
+    required: true
+    value: backup-postgres
+  - name: IMAGE_NAMESPACE
+    displayName: Image Namespace
+    description:
+      The namespace of the OpenShift project containing the imagestream for
+      the application.
+    required: true
+    value: backup-container
+  - name: TAG_NAME
+    displayName: Environment TAG name
+    description: The TAG name for this environment, e.g., dev, test, prod
+    required: true
+    value: dev
+  - name: DATABASE_SERVICE_NAME
+    displayName: Database Service Name
+    description:
+      Used for backward compatibility only. Not needed when using the recommended
+      'backup.conf' configuration.  The name of the database service.
+    required: false
+    value: ""
+  - name: DB_NAME
+    displayName: DB Name
+    description: DB Name
+    required: true
+    value: db
+  - name: DATABASE_NAME
+    displayName: Database Name
+    description:
+      Used for backward compatibility only. Not needed when using the recommended
+      'backup.conf' configuration.  The name of the database.
+    required: false
+    value: "schoolbus"
+  - name: MONGODB_AUTHENTICATION_DATABASE
+    displayName: MongoDB Authentication Database
+    description:
+      This is only required if you are backing up mongo database with a separate
+      authentication database.
+    required: false
+    value: ""
+  - name: DATABASE_DEPLOYMENT_NAME
+    displayName: Database Deployment Name
+    description:
+      The name associated to the database deployment resources.  In particular,
+      this is used to wire up the credentials associated to the database.
+    required: true
+    value: postgresql
+  - name: DATABASE_USER_KEY_NAME
+    displayName: Database User Key Name
+    description:
+      The datbase user key name stoed in database deployment resources specified
+      by DATABASE_DEPLOYMENT_NAME.
+    required: true
+    value: database-user
+  - name: DATABASE_PASSWORD_KEY_NAME
+    displayName: Database Password Key Name
+    description:
+      The database password key name stored in database deployment resources
+      specified by DATABASE_DEPLOYMENT_NAME.
+    required: true
+    value: database-password
+  - name: MSSQL_SA_PASSWORD
+    displayName: MSSQL SA Password
+    description: The database password to use for the local backup database.
+    required: false
+  - name: TABLE_SCHEMA
+    displayName: Table Schema
+    description: The table schema for your database.  Used for Postgres backups.
+    required: true
+    value: public
+  - name: BACKUP_STRATEGY
+    displayName: Backup Strategy
+    description: The strategy to use for backups; for example daily, or rolling.
+    required: true
+    value: rolling
+  - name: FTP_SECRET_KEY
+    displayName: FTP Secret Key
+    description:
+      The FTP secret key is used to wire up the credentials associated to
+      the FTP.
+    required: false
+    value: ftp-secret
+  - name: FTP_URL
+    displayName: FTP Server URL
+    description: The URL of the backup FTP server
+    required: false
+    value: ""
+  - name: FTP_USER
+    displayName: FTP user name
+    description: FTP user name
+    required: false
+    value: ""
+  - name: FTP_PASSWORD
+    displayName: FTP password
+    description: FTP password
+    required: false
+    value: ""
+  - name: WEBHOOK_URL
+    displayName: Webhook URL
+    description:
+      The URL of the webhook to use for notifications.  If not specified,
+      the webhook integration feature is disabled.
+    required: false
+    value: ""
+  - name: ENVIRONMENT_FRIENDLY_NAME
+    displayName: Friendly Environment Name
+    description:
+      The human readable name of the environment.  This variable is used
+      by the webhook integration to identify the environment in which the backup notifications
+      originate.
+    required: false
+    value: ""
+  - name: ENVIRONMENT_NAME
+    displayName: Environment Name (Environment Id)
+    description:
+      The name or Id of the environment.  This variable is used by the webhook
+      integration to identify the environment in which the backup notifications originate.
+    required: false
+    value: ""
+  - name: BACKUP_DIR
+    displayName: The root backup directory
+    description:
+      The name of the root backup directory.  The backup volume will be mounted
+      to this directory.
+    required: true
+    value: "/backups/"
+  - name: NUM_BACKUPS
+    displayName: The number of backup files to be retained
+    description:
+      Used for backward compatibility only.  Ignored when using the recommended
+      `rolling` backup strategy.  The number of backup files to be retained.  Used for
+      the `daily` backup strategy.
+    required: false
+    value: ""
+  - name: DAILY_BACKUPS
+    displayName: Number of Daily Backups to Retain
+    description:
+      The number of daily backup files to be retained.  Used for the `rolling`
+      backup strategy.
+    required: false
+    value: ""
+  - name: WEEKLY_BACKUPS
+    displayName: Number of Weekly Backups to Retain
+    description:
+      The number of weekly backup files to be retained.  Used for the `rolling`
+      backup strategy.
+    required: false
+    value: ""
+  - name: MONTHLY_BACKUPS
+    displayName: Number of Monthly Backups to Retain
+    description:
+      The number of monthly backup files to be retained.  Used for the `rolling`
+      backup strategy.
+    required: false
+    value: ""
+  - name: BACKUP_PERIOD
+    displayName: Period (d,m,s) between backups in a format used by the sleep command
+    description:
+      Used for backward compatibility only.  Ignored when using the recommended
+      `backup.conf` and cron backup strategy.  Period (d,m,s) between backups in a format
+      used by the sleep command
+    required: false
+    value: ""
+  - name: CONFIG_FILE_NAME
+    displayName: Config File Name
+    description: The name of the configuration file.
+    required: true
+    value: backup.conf
+  - name: CONFIG_MAP_NAME
+    displayName: Config Map Name
+    description: The name of the configuration map.
+    required: true
+    value: backup-conf
+  - name: CONFIG_MOUNT_PATH
+    displayName: Config Mount Path
+    description: The path to use to mount the config file.
+    required: true
+    value: "/"
+  - name: BACKUP_VOLUME_NAME
+    displayName: Backup Volume Name
+    description:
+      The name of the persistent volume used to store the backups.  Please
+      note, when using the recommended nfs-backup storage class the name of the pvc
+      MUST be taken from the manually provisioned claim; nfs-backup storage MUST be
+      provisioned manually.
+    required: true
+    value: backup
+  - name: BACKUP_VOLUME_SIZE
+    displayName: Backup Volume Size
+    description:
+      The size of the persistent volume used to store the backups, e.g. 512Mi,
+      1Gi, 2Gi.  Ensure this is sized correctly.  Refer to the container documentation
+      for details.
+    required: true
+    value: 5Gi
+  - name: BACKUP_VOLUME_CLASS
+    displayName: Backup Volume Class
+    description:
+      The class of the persistent volume used to store the backups; netapp-block-standard,
+      netapp-file-standard, nfs-backup.  Please note, nfs-backup storage is the recommended
+      storage type for backups.  It MUST be provisioned manually through the OCP catalog
+      via the 'BC Gov NFS Storage' template.  nfs-backup storage CANNOT be automatically
+      provisioned by this template.
+    required: true
+    value: nfs-backup
+  - name: VERIFICATION_VOLUME_NAME
+    displayName: Verification Volume Name
+    description:
+      The name for the verification volume, used for restoring and verifying
+      backups.  When using the recommend nfs-backup storage class for backups, this
+      volume MUST be either netapp-file-standard or netapp-block-standard storage; netapp-block-standard
+      is recommended (it has far better performance).
+    required: false
+    value: verification
+  - name: VERIFICATION_VOLUME_SIZE
+    displayName: Backup Volume Size
+    description:
+      The size of the persistent volume used for restoring and verifying
+      backups, e.g. 512Mi, 1Gi, 2Gi.  Ensure this is sized correctly.  It should be
+      large enough to contain your largest database.
+    required: true
+    value: 1Gi
+  - name: VERIFICATION_VOLUME_CLASS
+    displayName: Backup Volume Class
+    description:
+      The class of the persistent volume used for restoring and verifying
+      backups; should be one of netapp-block-standard or netapp-file-standard.  netapp-block-standard
+      performs better.
+    required: true
+    value: netapp-file-standard
+  - name: VERIFICATION_VOLUME_MOUNT_PATH
+    displayName: Verification Volume Mount Path
+    description:
+      The path on which to mount the verification volume.  This is used by
+      the database server to contain the database configuration and data files. For
+      Mongo, please use /var/lib/mongodb/data . For MSSQL, please use /var/opt/mssql/data
+    required: true
+    value: "/var/lib/pgsql/data"
+  - name: CPU_REQUEST
+    displayName: Resources CPU Request
+    description: The resources CPU request (in cores) for this build.
+    required: true
+    value: "0"
+  - name: CPU_LIMIT
+    displayName: Resources CPU Limit
+    description: The resources CPU limit (in cores) for this build.
+    required: true
+    value: "0"
+  - name: MEMORY_REQUEST
+    displayName: Resources Memory Request
+    description: The resources Memory request (in Mi, Gi, etc) for this build.
+    required: true
+    value: 0Mi
+  - name: MEMORY_LIMIT
+    displayName: Resources Memory Limit
+    description: The resources Memory limit (in Mi, Gi, etc) for this build.
+    required: true
+    value: 0Mi

@@ -1,0 +1,247 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: ${PROJECT_NAME}
+labels:
+  template: api-deploy
+objects:
+  - apiVersion: v1 #is: api
+    kind: ImageStream
+    metadata:
+      creationTimestamp: null
+      labels:
+        shared: "true"
+      name: ${NAME}
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: v1 #pvc: api-docs-pvc
+    kind: PersistentVolumeClaim
+    metadata:
+      name: ${NAME}-${ENV}-docs-pvc
+      labels:
+        shared: "true"
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: "${DOCUMENT_VOLUME_CAPACITY}"
+  - apiVersion: v1 #dc: api
+    kind: DeploymentConfig
+    metadata:
+      creationTimestamp: null
+      name: ${NAME}${SUFFIX}
+    spec:
+      replicas: 1
+      selector:
+        deploymentconfig: ${NAME}${SUFFIX}
+      strategy:
+        activeDeadlineSeconds: 21600
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 1
+          maxUnavailable: 1
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            deploymentconfig: ${NAME}${SUFFIX}
+        spec:
+          containers:
+            - image: ${NAME}:${VERSION}
+              name: api
+              ports:
+                - containerPort: 8080
+                  protocol: TCP
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 512Mi
+                limits:
+                  cpu: 750m
+                  memory: 768Mi
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: 8080
+                initialDelaySeconds: 30
+                periodSeconds: 5
+              env:
+                - name: ConnectionStrings__Schoolbus
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${PROJECT_NAME}-${DB_NAME}-${ENV}"
+                      key: connection-string
+                - name: JWT__Authority
+                  valueFrom:
+                    secretKeyRef:
+                      name: sso-configs-${ENV}
+                      key: JWT_SSO_AUTHORITY
+                - name: JWT__Audience
+                  valueFrom:
+                    secretKeyRef:
+                      name: sso-configs-${ENV}
+                      key: JWT_SSO_AUDIENCE
+                - name: UserInitializationFile
+                  value: "/secrets/users.json"
+                - name: DistrictInitializationFile
+                  value: "/secrets/districts.json"
+                - name: RegionInitializationFile
+                  value: "/secrets/regions.json"
+                - name: CCWJurisdictionInitializationFile
+                  value: "/secrets/ccwjurisdictions.json"
+                - name: PDF_SERVICE_NAME
+                  value: "http://${PROJECT_NAME}-${PDF_NAME}${SUFFIX}:8080"
+                - name: CCW_USER_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_USER_ID
+                - name: CCW_USER_GUID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_USER_GUID
+                - name: CCW_USER_DIR
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_USER_DIR
+                - name: CCW_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_PASSWORD
+                - name: CCW_ENDPOINT_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_ENDPOINT_URL
+                - name: CCW_APP_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_APP_ID
+                - name: CCW_BATCH_APP_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "${CCW_NAME}-${ENV}"
+                      key: CCW_BATCH_APP_ID
+                - name: ASPNETCORE_ENVIRONMENT
+                  value: ${ASPNETCORE_ENVIRONMENT}
+              volumeMounts:
+                - name: server-docs
+                  mountPath: "/uploads"
+                - name: secret-volume
+                  mountPath: "/secrets"
+                  readOnly: true
+                - name: ${NAME}${SUFFIX}-config-volume
+                  mountPath: /opt/app-root/configmap
+                  readOnly: true
+          volumes:
+            - name: server-docs
+              persistentVolumeClaim:
+                claimName: ${NAME}-${ENV}-docs-pvc
+            - name: secret-volume
+              secret:
+                secretName: schoolbus-secret
+            - name: ${NAME}${SUFFIX}-config-volume
+              configMap:
+                defaultMode: 420
+                name: api-appsettings-${ENV}
+      test: false
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - api
+            from:
+              kind: ImageStreamTag
+              name: ${NAME}:${VERSION}
+          type: ImageChange
+        - type: ConfigChange
+  - apiVersion: v1 #service: api
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      name: ${NAME}${SUFFIX}
+    spec:
+      ports:
+        - name: web
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+      selector:
+        deploymentconfig: ${NAME}${SUFFIX}
+parameters:
+  - description: Name of the project (SCHOOLBUS)
+    displayName: PROJECT_NAME
+    name: PROJECT_NAME
+    required: true
+    value: "sb"
+  - description: A name used for all objects
+    displayName: Name
+    name: NAME
+    required: true
+    value: "api"
+  - description: A name suffix used for all objects
+    displayName: Suffix
+    name: SUFFIX
+    required: false
+    value: "-dev"
+  - description: Environment short name (dev,test,uat,prod)
+    displayName: ENV
+    name: ENV
+    required: false
+    value: "dev"
+  - description: A version used for the image tags
+    displayName: version
+    name: VERSION
+    required: true
+    value: "v1.0.0"
+  - description: The ASP Net Core deployment environment setting
+    displayName: AspNetCore Environment
+    name: ASPNETCORE_ENVIRONMENT
+    required: true
+    value: "Development"
+  - description: SOURCE_REPOSITORY_URL
+    displayName: SOURCE_REPOSITORY_URL
+    name: SOURCE_REPOSITORY_URL
+    required: false
+    value: ""
+  - description: SOURCE_REPOSITORY_REF
+    displayName: SOURCE_REPOSITORY_REF
+    name: SOURCE_REPOSITORY_REF
+    required: false
+    value: ""
+  - name: DB_NAME
+    displayName: DB Name
+    description:
+      The name assigned to all of the CCW microservice objects defined in
+      this template.
+    required: true
+    value: db
+  - name: PDF_NAME
+    displayName: PDF Name
+    description:
+      The name assigned to all of the PDF microservice objects defined in
+      this template.
+    required: true
+    value: pdf
+  - name: CCW_NAME
+    displayName: CCW Name
+    description:
+      The name assigned to all of the CCW microservice objects defined in
+      this template.
+    required: true
+    value: ccw
+  - name: DOCUMENT_VOLUME_CAPACITY
+    displayName: Document Volume Capacity
+    description: Volume space available for Document uploads, e.g. 512Mi, 2Gi.
+    value: 1Gi
+    required: true

@@ -56,7 +56,7 @@ namespace SchoolBusAPI.Test
 
             */
 
-            ContactService _service = new ContactService(dbAppContext.Object);
+            ContactService _service = new ContactService(null, dbAppContext.Object);
 			
                     _ContactApi = new ContactController (_service);
 

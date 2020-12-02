@@ -1,0 +1,23 @@
+@import './mixins';
+
+#ccwnotifications {
+  #header-button-group {
+    float: right;
+
+    > .btn {
+      width: 40px;
+    }
+  }
+
+  .multi-dropdown .btn {
+    min-width: 200px;
+  }
+
+  .alert .btn {
+    float: right;
+  }
+
+  .float-right {
+    float: right;
+  }
+}

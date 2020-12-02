@@ -3,12 +3,16 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Ignore Logging folder
+**/Logs
+
 # User-specific files
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
 *.vcxproj.filters
+.vs
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -276,3 +280,17 @@ __pycache__/
 
 # SonarQube
 *.sonarqube
+
+**/*.Local.json
+**/appsettings.Development.json
+
+*.DotSettings
+*.DotSettings.user
+
+# Ignore Serilog files
+log*.txt
+
+.env.local
+
+# Override .s2i/bin
+!.s2i/bin
