@@ -1,0 +1,11 @@
+name: compliance
+description: |
+  This document is used to track a projects PIA and STRA
+  compliance.
+spec:
+  - name: PIA
+    status: Completed - TRAN16045
+    last-updated: '2016-12-12T00:00:00.000Z'
+  - name: STRA
+    status: Completed - ISO27001 (RS3501)
+    last-updated: 'T00:00:00.000Z'
