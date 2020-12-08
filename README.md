@@ -46,7 +46,7 @@ This repo contains a script that helps install/upgrade/remove the imagestreams.
 
 script: https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.sh
 
-For example, to install the `rhel7` based images and add a secret for authenticating against the `registry.redhat.io` registry:
+For example, to install the `rhel` based images and add a secret for authenticating against the `registry.redhat.io` registry:
 
 ```sh
 $ wget https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/install-imagestreams.sh
