@@ -178,7 +178,7 @@ function HasSecretForRegistry()
     return $false
 }
 
-If ( $args.Count -eq 0 )
+If ( $PSBoundParameters.Values.Count -eq 0 )
 {
     Get-Help $PSCommandPath
     exit
