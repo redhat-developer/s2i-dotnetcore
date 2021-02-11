@@ -176,7 +176,11 @@ docker_get_env() {
 
 docker_get_exposedports() {
   local image="$1"
-  docker inspect -f '{{json .Config.ExposedPorts}}' ${image}
+  if [ "$USING_PODMAN" ]; then
+    podman inspect -f 'json' ${image} | jq -c '.[].Config.ExposedPorts'
+  else
+    docker inspect -f '{{json .Config.ExposedPorts}}' ${image}
+  fi
 }
 
 docker_build() {
