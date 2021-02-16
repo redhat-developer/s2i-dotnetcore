@@ -46,7 +46,7 @@ objects:
               "Schoolbus": "Host=localhost;Username=test1;Password=test1;Database=test1"
           },
           "JWT": {
-              "Authority": "https://sso-dev.pathfinder.gov.bc.ca/auth/realms/<realmid>",
+              "Authority": "https://dev.oidc.gov.bc.ca/auth/realms/<realmid>",
               "Audience": "<app-id>"
           },
           "CCW_USER_ID": "user",
