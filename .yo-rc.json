@@ -5,17 +5,17 @@
         "jenkins": {
           "path": ".jenkins",
           "name": "jenkins",
-          "namespace": "tran-schoolbus-tools",
+          "namespace": "e82e9a-tools",
           "version": "1.0.0",
           "environments": {
             "build": {
-              "namespace": "tran-schoolbus-tools"
+              "namespace": "e82e9a-tools"
             },
             "dev": {
-              "namespace": "tran-schoolbus-tools"
+              "namespace": "e82e9a-tools"
             },
             "prod": {
-              "namespace": "tran-schoolbus-tools"
+              "namespace": "e82e9a-tools"
             }
           },
           "jenkinsJobName": "_jenkins",
@@ -30,21 +30,21 @@
           "path": ".",
           "environments": {
             "build": {
-              "namespace": "tran-schoolbus-tools"
+              "namespace": "e82e9a-tools"
             },
             "dev": {
-              "namespace": "tran-schoolbus-dev"
+              "namespace": "e82e9a-dev"
             },
             "test": {
-              "namespace": "tran-schoolbus-test"
+              "namespace": "e82e9a-test"
             },
             "prod": {
-              "namespace": "tran-schoolbus-prod"
+              "namespace": "e82e9a-prod"
             }
           }
         },
         ".": {
-          "jenkinsJobName": "sb",
+          "jenkinsJobName": "sbi",
           "github_owner": "bcgov",
           "github_repo": "schoolbus",
           "jenkinsFilePath": "Jenkinsfile",

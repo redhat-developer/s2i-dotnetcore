@@ -143,7 +143,7 @@ objects:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
-          - mountPath: /var/lib/jenkins/jobs
+          - mountPath: /var/jenkins-data
             name: jenkins-jobs
             readOnly: false
           - mountPath: /var/run/pod

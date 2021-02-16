@@ -73,7 +73,7 @@ type: Opaque
 
 ### Configure Pipeline-cli
 
-The `.jenkins` and `.pipeline` directories contain the scripts genereated by the BCDK tool in order to use pipeline-cli against your OpenShift namespaces. The scripts in the `.jenkins` and `.pipeline` directories in this repository are configured to run against the official SBI OpenShift namespaces (`tran-schoolbus-`).
+The `.jenkins` and `.pipeline` directories contain the scripts genereated by the BCDK tool in order to use pipeline-cli against your OpenShift namespaces. The scripts in the `.jenkins` and `.pipeline` directories in this repository are configured to run against the official SBI OpenShift namespaces (`e82e9a-`).
 
 You will need to configure the scripts in the `.jenkins` and `.pipeline` directories to work with your OpenShift namespaces. There are two ways to do this:
 

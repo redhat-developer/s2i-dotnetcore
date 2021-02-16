@@ -26,7 +26,7 @@ objects:
             deploymentconfig: ${NAME}-${ENV}
         spec:
           containers:
-            - image: docker-registry.default.svc:5000/tran-schoolbus-tools/${IMAGE_STREAM_TAG}
+            - image: image-registry.openshift-image-registry.svc:5000/e82e9a-tools/${IMAGE_STREAM_TAG}
               imagePullPolicy: IfNotPresent
               name: ${NAME}-${ENV}
               env:
@@ -102,7 +102,7 @@ objects:
             from:
               kind: ImageStreamTag
               name: ${IMAGE_STREAM_TAG}
-              namespace: tran-schoolbus-tools
+              namespace: e82e9a-tools
           type: ImageChange
   - kind: PersistentVolumeClaim
     apiVersion: v1

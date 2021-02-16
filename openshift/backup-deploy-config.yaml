@@ -69,7 +69,7 @@ objects:
                     path: "${CONFIG_FILE_NAME}"
           containers:
             - name: "backup"
-              image: docker-registry.default.svc:5000/tran-schoolbus-tools/${NAME}:latest
+              image: image-registry.openshift-image-registry.svc:5000/e82e9a-tools/${NAME}:latest
               ports: []
               env:
                 - name: BACKUP_STRATEGY
