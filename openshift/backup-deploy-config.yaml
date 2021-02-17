@@ -12,6 +12,22 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
+      name: "${NAME}-${BACKUP_VOLUME_NAME}"
+      labels:
+        app: "${NAME}-persistent"
+        template: "${NAME}-persistent-template"
+    labels:
+      shared: "true"
+    spec:
+      storageClassName: "${BACKUP_VOLUME_CLASS}"
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: "${BACKUP_VOLUME_SIZE}"
+  - kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
       name: "${NAME}-${VERIFICATION_VOLUME_NAME}"
       labels:
         app: "${NAME}-persistent"
@@ -55,9 +71,9 @@ objects:
             name: "${NAME}-${ENV}"
         spec:
           volumes:
-            - name: "${BACKUP_VOLUME_NAME}"
+            - name: "${NAME}-${BACKUP_VOLUME_NAME}"
               persistentVolumeClaim:
-                claimName: "${BACKUP_VOLUME_NAME}"
+                claimName: "${NAME}-${BACKUP_VOLUME_NAME}"
             - name: "${NAME}-${VERIFICATION_VOLUME_NAME}"
               persistentVolumeClaim:
                 claimName: "${NAME}-${VERIFICATION_VOLUME_NAME}"
@@ -133,7 +149,7 @@ objects:
                   cpu: "${CPU_LIMIT}"
                   memory: "${MEMORY_LIMIT}"
               volumeMounts:
-                - name: "${BACKUP_VOLUME_NAME}"
+                - name: "${NAME}-${BACKUP_VOLUME_NAME}"
                   mountPath: "${BACKUP_DIR}"
                 - name: "${NAME}-${VERIFICATION_VOLUME_NAME}"
                   mountPath: "${VERIFICATION_VOLUME_MOUNT_PATH}"
@@ -359,7 +375,7 @@ parameters:
       MUST be taken from the manually provisioned claim; nfs-backup storage MUST be
       provisioned manually.
     required: true
-    value: backup
+    value: sbi-backup-schoolbus
   - name: BACKUP_VOLUME_SIZE
     displayName: Backup Volume Size
     description:
@@ -377,7 +393,7 @@ parameters:
       via the 'BC Gov NFS Storage' template.  nfs-backup storage CANNOT be automatically
       provisioned by this template.
     required: true
-    value: nfs-backup
+    value: netapp-file-backup
   - name: VERIFICATION_VOLUME_NAME
     displayName: Verification Volume Name
     description:

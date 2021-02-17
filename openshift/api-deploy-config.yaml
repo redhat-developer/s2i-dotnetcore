@@ -16,18 +16,6 @@ objects:
     spec:
       lookupPolicy:
         local: false
-  - apiVersion: v1 #pvc: api-docs-pvc
-    kind: PersistentVolumeClaim
-    metadata:
-      name: ${NAME}-${ENV}-docs-pvc
-      labels:
-        shared: "true"
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: "${DOCUMENT_VOLUME_CAPACITY}"
   - apiVersion: v1 #dc: api
     kind: DeploymentConfig
     metadata:
@@ -135,8 +123,6 @@ objects:
                 - name: ASPNETCORE_ENVIRONMENT
                   value: ${ASPNETCORE_ENVIRONMENT}
               volumeMounts:
-                - name: server-docs
-                  mountPath: "/uploads"
                 - name: secret-volume
                   mountPath: "/secrets"
                   readOnly: true
@@ -144,9 +130,6 @@ objects:
                   mountPath: /opt/app-root/configmap
                   readOnly: true
           volumes:
-            - name: server-docs
-              persistentVolumeClaim:
-                claimName: ${NAME}-${ENV}-docs-pvc
             - name: secret-volume
               secret:
                 secretName: schoolbus-secret
@@ -240,8 +223,3 @@ parameters:
       this template.
     required: true
     value: ccw
-  - name: DOCUMENT_VOLUME_CAPACITY
-    displayName: Document Volume Capacity
-    description: Volume space available for Document uploads, e.g. 512Mi, 2Gi.
-    value: 1Gi
-    required: true
