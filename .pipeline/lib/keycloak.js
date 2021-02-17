@@ -32,7 +32,7 @@ module.exports = class KeyCloakClient {
     const secret = util.getSecret(
       this.oc,
       this.phases.build.namespace,
-      "keycloak-service-client"
+      "keycloak-service-account"
     );
 
     this.clientId = Buffer.from(secret.clientId, "base64").toString();
