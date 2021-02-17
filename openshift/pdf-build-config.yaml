@@ -7,6 +7,33 @@ labels:
   template: pdf-build
 objects:
   - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      creationTimestamp: null
+      labels:
+        shared: "true"
+      name: ${NAME}
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: "v1"
+    kind: ImageStream
+    metadata:
+      name: nodejs-10-rhel7
+      labels:
+        shared: "true"
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: registry.redhat.io/rhscl/nodejs-10-rhel7
+          name: "1-47"
+          referencePolicy:
+            type: Local
+  - apiVersion: v1
     kind: BuildConfig
     metadata:
       creationTimestamp: null
@@ -39,10 +66,7 @@ objects:
         sourceStrategy:
           from:
             kind: ImageStreamTag
-            name: docker.io/node:13.7-alpine3.11
-          name: "1"
-          referencePolicy:
-            type: Local
+            name: "nodejs-10-rhel7:1-47"
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
