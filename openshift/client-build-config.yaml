@@ -68,11 +68,6 @@ objects:
           cpu: 1
           memory: 2Gi
       postCommit: {}
-      resources:
-        requests:
-          cpu: 1
-        limits:
-          cpu: 2
       source:
         git:
           uri: ${SOURCE_REPOSITORY_URL}
