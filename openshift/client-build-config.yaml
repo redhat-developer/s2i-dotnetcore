@@ -9,6 +9,21 @@ objects:
   - apiVersion: "v1"
     kind: ImageStream
     metadata:
+      name: node
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: docker.io/node:13.7-alpine3.11
+          name: "1"
+          referencePolicy:
+            type: Local
+  - apiVersion: "v1"
+    kind: ImageStream
+    metadata:
       name: nginx-116-rhel8
     spec:
       lookupPolicy:
