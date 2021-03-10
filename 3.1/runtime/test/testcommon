@@ -176,7 +176,7 @@ docker_get_env() {
 
 docker_get_exposedports() {
   local image="$1"
-  docker inspect -f '{{json .Config.ExposedPorts}}' ${image}
+  docker inspect ${image} | jq -c '.[].Config.ExposedPorts'
 }
 
 docker_build() {
