@@ -12,7 +12,7 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: "${NAME}-${BACKUP_VOLUME_NAME}"
+      name: "${NAME}-${BACKUP_VOLUME_NAME}-${ENV}"
       labels:
         app: "${NAME}-persistent"
         template: "${NAME}-persistent-template"
@@ -28,7 +28,7 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: "${NAME}-${VERIFICATION_VOLUME_NAME}"
+      name: "${NAME}-${VERIFICATION_VOLUME_NAME}-${ENV}"
       labels:
         app: "${NAME}-persistent"
         template: "${NAME}-persistent-template"
@@ -73,10 +73,10 @@ objects:
           volumes:
             - name: "${NAME}-${BACKUP_VOLUME_NAME}"
               persistentVolumeClaim:
-                claimName: "${NAME}-${BACKUP_VOLUME_NAME}"
+                claimName: "${NAME}-${BACKUP_VOLUME_NAME}-${ENV}"
             - name: "${NAME}-${VERIFICATION_VOLUME_NAME}"
               persistentVolumeClaim:
-                claimName: "${NAME}-${VERIFICATION_VOLUME_NAME}"
+                claimName: "${NAME}-${VERIFICATION_VOLUME_NAME}-${ENV}"
             - name: "${NAME}-config-volume"
               configMap:
                 name: "${CONFIG_MAP_NAME}-${ENV}"
