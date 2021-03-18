@@ -329,6 +329,15 @@ namespace SchoolBusAPI.Services
                 {
                     var viewModel = Mapper.Map<HistoryViewModel>(data[i]);
                     viewModel.AffectedEntityId = id;
+
+                    var user = _context.Users
+                        .FirstOrDefault(x => x.SmUserId == viewModel.LastUpdateUserid);
+
+                    if (user != null)
+                    {
+                        viewModel.UserName = $"{user.Surname}, {user.GivenName}";
+                    }
+
                     result.Add(viewModel);
                 }
 
