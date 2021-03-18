@@ -1,0 +1,48 @@
+#!/usr/bin/sh
+
+set -e
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+# command that builds the tool, used by the image build.
+if [ "$1" == "build-tool" ]; then
+  set -x
+
+  mkdir /tmp/container-tool
+  pushd /tmp/container-tool
+
+  # cs file
+  cp "$SCRIPT_DIR/ContainerTool.cs" .
+  # csproj
+  cat <<EOF >container-tool.csproj
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>${DOTNET_FRAMEWORK}</TargetFramework>
+  </PropertyGroup>
+
+</Project>
+EOF
+  # nuget.config
+  cat <<EOF >nuget.config
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+  </packageSources>
+</configuration>
+EOF
+
+  dotnet publish -c Release -o published
+  cp published/* "$SCRIPT_DIR"
+
+  popd
+
+  set +e
+  rm -rf /tmp/* /tmp/.*
+
+  exit 0
+fi
+
+exec dotnet "$SCRIPT_DIR/container-tool.dll" "$@"

@@ -53,11 +53,11 @@ sdk_version=5.0.100-preview.8.20417.9
 npm_version=6.13.4
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=5.0.100-preview.8.20417.9
+sdk_version=5.0.104
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=5.0.100-preview.8.20417.9
-npm_version=6.14.6
+sdk_version=5.0.103
+npm_version=6.14.11
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -314,6 +314,7 @@ test_config_1() {
   local url=$(container_url ${container})
   # request
   local response=$(curl_retry ${url}/)
+  local container_log=$(docker logs ${container})
   # cleanup
   docker_rm ${container}
   docker_rmi ${image}
@@ -340,6 +341,11 @@ test_config_1() {
   # The application folder contains a file and folder that starts with a '.', we verify that *all* files are removed.
   assert_contains "${s2i_build}" "Removing sources..."
   assert_not_contains "${src_folder_content}" "[^.]"
+  # DOTNET_INFO=true
+  assert_contains "${s2i_build}" ".NET information:"
+  assert_contains "${s2i_build}" "Heap Size:"
+  assert_contains "${container_log}" ".NET information:"
+  assert_contains "${container_log}" "Heap Size:"
 }
 
 test_config_2() {
@@ -370,6 +376,8 @@ test_config_2() {
   ## Environment
   assert_contains "${s2i_build}" "Environment:"
   assert_contains "${s2i_build}" "DOTNET_VERBOSITY=normal"
+  assert_contains "${s2i_build}" ".NET information:"
+  assert_contains "${s2i_build}" "Heap Size:"
   ## Test project restore
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/test/test1/test1.csproj" on node 1 \(Restore target\(s\)\).'
   ## Test project test
