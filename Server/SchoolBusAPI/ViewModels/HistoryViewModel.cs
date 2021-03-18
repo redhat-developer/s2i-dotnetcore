@@ -70,6 +70,9 @@ namespace SchoolBusAPI.ViewModels
         [MetaDataExtension (Description = "Audit information - SM User Id for the User who most recently updated the record.")]
         public string LastUpdateUserid { get; set; }
 
+        [DataMember(Name = "userName")]
+        public string UserName { get; set; }
+
         /// <summary>
         /// Audit information - Timestamp for record modification
         /// </summary>
