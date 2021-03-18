@@ -1,4 +1,6 @@
-# Schoolbus Inspection Tracking System 2.0
+![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)
+
+# Schoolbus Inspection Tracking System
 
 ## Introduction
 
