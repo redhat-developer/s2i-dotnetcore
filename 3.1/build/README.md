@@ -157,6 +157,11 @@ a `.s2i/environment` file inside your source code repository.
     of the build. This variable can be set to one of the msbuild verbosity values (`q[uiet]`, `m[inimal]`, `n[ormal]`,
     `d[etailed]`, and `diag[nostic]`). Defaults to ``.
 
+* **DOTNET_INFO**
+
+    Used to print information about the .NET environment at the start of the build, and before executing the application.
+    The variable can be set to any string to print the information. Defaults to ``.
+
 * **DOTNET_CONFIGURATION**
 
     Used to run the application in Debug or Release mode. This should be either

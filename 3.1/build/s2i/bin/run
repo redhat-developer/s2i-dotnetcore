@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+if [ -n "${DOTNET_INFO}" ]; then
+  /usr/libexec/s2i/container-tool info
+fi
+
 if [ "$DEV_MODE" == true ]; then
     # Ignore build folders ('bin', 'obj') and ASP.NET Core static files ('wwwroot').
     # Also ignore '.s2i' since we can't handle changes in there.
