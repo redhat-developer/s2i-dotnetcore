@@ -56,7 +56,7 @@ elif [ "$IMAGE_OS" = "RHEL8" ]; then
 sdk_version=5.0.104
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=5.0.103
+sdk_version=5.0.104
 npm_version=6.14.11
 fi
 
