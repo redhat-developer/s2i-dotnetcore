@@ -12,6 +12,10 @@ else
   VERBOSITY_OPTION=""
 fi
 
+if [ -n "${DOTNET_INFO}" -o -n "${DOTNET_VERBOSITY}" ]; then
+  /usr/libexec/s2i/container-tool info
+fi
+
 echo "---> Installing application source..."
 if [ -d /tmp/src ]; then
   mv /tmp/src/* ./

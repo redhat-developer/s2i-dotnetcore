@@ -41,6 +41,9 @@ WORKDIR /opt/app-root/src
 # Trigger first time actions.
 RUN scl enable rh-dotnet31 'dotnet help'
 
+# Build the container tool.
+RUN /usr/libexec/s2i/container-tool build-tool
+
 # Since $HOME is set to /opt/app-root, the yum install may have created config
 # directories (such as ~/.pki/nssdb) there. These will be owned by root and can
 # cause actions that work on all of /opt/app-root to fail. So we need to fix
