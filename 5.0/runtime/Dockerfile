@@ -49,7 +49,7 @@ COPY ./root/usr/bin /usr/bin
 RUN ln -s /opt/app-root/etc/scl_enable_dotnet /usr/bin/dotnet
 
 RUN yum install -y centos-release-dotnet && \
-    INSTALL_PKGS="rh-dotnet31-aspnetcore-runtime-5.0 nss_wrapper tar unzip" && \
+    INSTALL_PKGS="rh-dotnet50-aspnetcore-runtime-5.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
