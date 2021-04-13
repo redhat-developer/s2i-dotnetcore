@@ -70,10 +70,10 @@ parameters:
   value: v1.0.0
 - name: SOURCE_IMAGE_STREAM_NAMESPACE
   required: true
-  value: bcgov
+  value: e82e9a-tools
 - name: SOURCE_IMAGE_STREAM_TAG
   required: true
-  value: jenkins-basic:v2-latest
+  value: jenkins-basic:55
 - name: SOURCE_REPOSITORY_URL
   required: true
 - name: SOURCE_REPOSITORY_REF

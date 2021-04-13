@@ -9,6 +9,16 @@ objects:
   - apiVersion: v1
     kind: ImageStream
     metadata:
+      creationTimestamp: null
+      labels:
+        shared: "true"
+      name: ${NAME}
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: "v1"
+    kind: ImageStream
+    metadata:
       name: nodejs-10-rhel7
       labels:
         shared: "true"

@@ -62,7 +62,7 @@ Use the following steps to configure the local development environment
     # use port value from step 3
     REACT_APP_API_HOST=http://localhost:<api-port>
 
-    REACT_APP_SSO_HOST=https://sso-dev.pathfinder.gov.bc.ca/auth
+    REACT_APP_SSO_HOST=https://dev.oidc.gov.bc.ca/auth
     REACT_APP_SSO_CLIENT=<client-id>
     REACT_APP_SSO_REALM=<realm-id>
 
