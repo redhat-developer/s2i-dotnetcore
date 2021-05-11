@@ -151,7 +151,7 @@ do
             shift
             os=$(echo "$1" | tr '[:upper:]' '[:lower:]')
             case "$os" in
-            "centos*")
+            centos*)
                 imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_centos.json"
                 registry_requires_auth=false
                 ;;
@@ -159,7 +159,7 @@ do
                 imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_rhel8.json"
                 registry_requires_auth=false
                 ;;
-            "rhel*")
+            rhel*)
                 imagestreams_url="https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json"
                 registry_requires_auth=true
                 registry="registry.redhat.io"
