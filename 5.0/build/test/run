@@ -678,12 +678,19 @@ test_incremental_without_packages()
   docker_rmi ${image}
 }
 
+test_repos() {
+    test_start
+
+    local output=$(docker_run_as $IMAGE_NAME 0 yum install -y zlib-devel)
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
   test_image
   test_config
   test_usage
+  test_repos
   test_consoleapp
   test_multiframework
   test_fsharp
