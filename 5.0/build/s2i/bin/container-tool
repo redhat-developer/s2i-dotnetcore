@@ -3,15 +3,14 @@
 set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-TMP_DIR="/tmp/dotnet-tmp"
-BUILD_DIR="${TMP_DIR}/container-tool"
 
 # command that builds the tool, used by the image build.
 if [ "$1" == "build-tool" ]; then
   set -x
 
+  export TMPDIR="/tmp/dotnet-tmp"
+  BUILD_DIR="${TMPDIR}/container-tool"
   mkdir -p "$BUILD_DIR"
-  export TMPDIR="$TMP_DIR"
   pushd "$BUILD_DIR"
 
   # cs file
@@ -44,7 +43,7 @@ EOF
 
   # /tmp/.dotnet/shm is created even with the TMPDIR change,
   # so make sure to remove that as well.
-  rm -rf "$TMP_DIR" /tmp/.dotnet
+  rm -rf "$TMPDIR" /tmp/.dotnet
 
   exit 0
 fi
