@@ -232,7 +232,8 @@ test_s2i_build() {
 test_repos() {
     test_start
 
-    assert_contains "$(docker_run_as $IMAGE_NAME 0 yum install -y zlib-devel)" "Complete!"
+    local output=$(docker_run_as $IMAGE_NAME 0 yum install -y zlib-devel)
+    assert_contains "$output" "Complete!"
 }
 
 info "Testing ${IMAGE_NAME}"
