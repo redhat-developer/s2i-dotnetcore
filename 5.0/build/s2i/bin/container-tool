@@ -8,8 +8,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 if [ "$1" == "build-tool" ]; then
   set -x
 
-  mkdir /tmp/container-tool
-  pushd /tmp/container-tool
+  export TMPDIR="/tmp/dotnet-tmp"
+  BUILD_DIR="${TMPDIR}/container-tool"
+  mkdir -p "$BUILD_DIR"
+  pushd "$BUILD_DIR"
 
   # cs file
   cp "$SCRIPT_DIR/ContainerTool.cs" .
@@ -39,8 +41,9 @@ EOF
 
   popd
 
-  set +e
-  rm -rf /tmp/* /tmp/.*
+  # /tmp/.dotnet/shm is created even with the TMPDIR change,
+  # so make sure to remove that as well.
+  rm -rf "$TMPDIR" /tmp/.dotnet
 
   exit 0
 fi

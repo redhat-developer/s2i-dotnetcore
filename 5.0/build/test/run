@@ -45,19 +45,17 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-npm_version=6.14.4
+npm_version=6.14.11
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
-sdk_version=5.0.100-preview.8.20417.9
-npm_version=6.13.4
+sdk_version=5.0.203
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=5.0.104
+sdk_version=5.0.203
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=5.0.104
-npm_version=6.14.11
+sdk_version=5.0.203
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -678,12 +676,20 @@ test_incremental_without_packages()
   docker_rmi ${image}
 }
 
+test_repos() {
+    test_start
+
+    local output=$(docker_run_as $IMAGE_NAME 0 yum install -y zlib-devel)
+    assert_contains "$output" "Complete!"
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
   test_image
   test_config
   test_usage
+  test_repos
   test_consoleapp
   test_multiframework
   test_fsharp

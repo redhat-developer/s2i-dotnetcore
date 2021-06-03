@@ -44,13 +44,13 @@ source ${test_dir}/testcommon
 dotnet_version_series="3.1"
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-dotnet_version="3.1.0"
+dotnet_version="3.1.15"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="3.1.1"
+dotnet_version="3.1.15"
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-dotnet_version="3.1.1"
+dotnet_version="3.1.15"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="3.1.12"
+dotnet_version="3.1.15"
 fi
 
 test_dotnet() {
@@ -233,6 +233,13 @@ test_s2i_build() {
   verify_aspnet_image_works ${image}
 }
 
+test_repos() {
+    test_start
+
+    local output=$(docker_run_as $IMAGE_NAME 0 yum install -y zlib-devel)
+    assert_contains "$output" "Complete!"
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -247,6 +254,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_s2i_usage
   test_s2i_build
   test_run_dotnet_in_dockerfile
+  test_repos
 fi
 
 if [ "$STOP_ON_ERROR" != "true" ]; then
