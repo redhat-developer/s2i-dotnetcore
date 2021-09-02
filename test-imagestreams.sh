@@ -23,7 +23,7 @@ usage () {
   echo ""
   echo "-----------------------------------------------------"
   echo "VERSIONS            The list of expected versions."
-  echo "                    Defaults to all versions. i.e '2.1 3.1'."
+  echo "                    Defaults to all versions. i.e '3.1 5.0'."
   echo ""
   echo "IMAGE_OS            The base os image to use when building"
   echo "                    the containers."
@@ -85,7 +85,7 @@ IMAGE_OS=$(echo "$IMAGE_OS" | tr '[:upper:]' '[:lower:]')
 
 case "$IMAGE_OS" in
 "centos*")
-  VERSIONS="${VERSIONS:-2.1 3.1}"
+  VERSIONS="${VERSIONS:-3.1}"
   imagestreams_file_name=dotnet_imagestreams_centos.json
   ;;
 "fedora")
@@ -93,7 +93,7 @@ case "$IMAGE_OS" in
   imagestreams_file_name=dotnet_imagestreams_fedora.json
   ;;
 "rhel*")
-  VERSIONS="${VERSIONS:-2.1 3.1}"
+  VERSIONS="${VERSIONS:-3.1}"
   imagestreams_file_name=dotnet_imagestreams.json
   ;;
 *)
@@ -223,11 +223,7 @@ done
 echo "Test: Sample Applications"
 
 for version in ${VERSIONS}; do
-  if [[ $version == "2.1" ]]; then
-     sample_apps=("s2i-dotnetcore-ex")
-  else
-     sample_apps=("s2i-dotnetcore-ex" "s2i-dotnetcore-persistent-ex")
-  fi
+  sample_apps=("s2i-dotnetcore-ex" "s2i-dotnetcore-persistent-ex")
 
   for application in "${sample_apps[@]}"; do
     application_source="dotnet:${version}~https://github.com/redhat-developer/${application}#dotnetcore-${version}"
