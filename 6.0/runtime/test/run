@@ -28,25 +28,25 @@ IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-50-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-60-runtime-centos7}
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-50-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-60-runtime}
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-50-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-60-runtime}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version_series="5.0"
+dotnet_version_series="6.0"
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-dotnet_version="5.0.6"
+dotnet_version="6.0.6"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="5.0.6"
+dotnet_version="6.0.6"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="5.0.6"
+dotnet_version="6.0.6"
 fi
 
 test_dotnet() {

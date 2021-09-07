@@ -1,5 +1,5 @@
 FROM centos:7
-# This image provides a .NET 5.0 environment you can use to run your .NET
+# This image provides a .NET 6.0 environment you can use to run your .NET
 # applications.
 
 EXPOSE 8080
@@ -9,23 +9,23 @@ ENV HOME=/opt/app-root \
     DOTNET_APP_PATH=/opt/app-root/app \
     DOTNET_DATA_PATH=/opt/app-root/data \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
-    DOTNET_CORE_VERSION=5.0 \
-    DOTNET_FRAMEWORK=net5.0 \
+    DOTNET_CORE_VERSION=6.0 \
+    DOTNET_FRAMEWORK=net6.0 \
 # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir
 
-LABEL io.k8s.description="Platform for running .NET 5 applications" \
-      io.k8s.display-name=".NET 5" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet50-runtime" \
+LABEL io.k8s.description="Platform for running .NET 6 applications" \
+      io.k8s.display-name=".NET 6" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,rh-dotnet60-runtime" \
       io.openshift.expose-services="8080:http" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
       io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-50-runtime-centos7" \
-      com.redhat.component="rh-dotnet50-runtime-container" \
-      version="5.0" \
+LABEL name="dotnet/dotnet-60-runtime-centos7" \
+      com.redhat.component="rh-dotnet60-runtime-container" \
+      version="6.0" \
       release="1" \
       architecture="x86_64"
 
@@ -49,7 +49,7 @@ COPY ./root/usr/bin /usr/bin
 RUN ln -s /opt/app-root/etc/scl_enable_dotnet /usr/bin/dotnet
 
 RUN yum install -y centos-release-dotnet && \
-    INSTALL_PKGS="rh-dotnet50-aspnetcore-runtime-5.0 nss_wrapper tar unzip" && \
+    INSTALL_PKGS="rh-dotnet60-aspnetcore-runtime-6.0 nss_wrapper tar unzip" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
@@ -58,7 +58,7 @@ RUN yum install -y centos-release-dotnet && \
 
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/opt/app-root \
-    ENABLED_COLLECTIONS="rh-dotnet50"
+    ENABLED_COLLECTIONS="rh-dotnet60"
 
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable

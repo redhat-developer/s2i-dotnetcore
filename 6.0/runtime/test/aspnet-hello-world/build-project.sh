@@ -2,6 +2,6 @@
 
 rm -rf bin obj
 
-dotnet publish -f net5.0 -c Release
+dotnet publish -f net6.0 -c Release
 
-tar -czvf app.tar.gz -C bin/Release/net5.0/publish .
+tar -czvf app.tar.gz -C bin/Release/net6.0/publish .

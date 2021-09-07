@@ -1,17 +1,17 @@
-FROM ubi8/dotnet-50-runtime
-# This image provides a .NET 5.0 environment you can use to run your .NET
+FROM ubi8/dotnet-60-runtime
+# This image provides a .NET 6.0 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:/opt/app-root/.dotnet/tools/:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
-LABEL io.k8s.description="Platform for building and running .NET 5 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-50"
+LABEL io.k8s.description="Platform for building and running .NET 6 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-60"
 
 # Labels consumed by Red Hat build service
-LABEL name="ubi8/dotnet-50" \
-      com.redhat.component="dotnet-50-container" \
-      version="5.0" \
+LABEL name="ubi8/dotnet-60" \
+      com.redhat.component="dotnet-60-container" \
+      version="6.0" \
       release="1" \
       architecture="x86_64"
 
@@ -25,7 +25,7 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-RUN INSTALL_PKGS="npm nodejs-nodemon dotnet-sdk-5.0 rsync procps-ng findutils" && \
+RUN INSTALL_PKGS="npm nodejs-nodemon dotnet-sdk-6.0 rsync procps-ng findutils" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
