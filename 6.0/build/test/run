@@ -45,17 +45,14 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-npm_version=6.14.11
+npm_version=6.14.13
 
-if [ "$IMAGE_OS" = "CENTOS" ]; then
-# sdk version supported on CentOS
-sdk_version=6.0.203
-elif [ "$IMAGE_OS" = "RHEL8" ]; then
+if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=6.0.203
+sdk_version=6.0.100-preview.7.21379.14
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=6.0.203
+sdk_version=6.0.100-preview.7.21379.14
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -282,7 +279,7 @@ test_templates() {
 
   # mvc is a pure ASP.NET Core MVC web application
   # angular and reactredux include a front-end which is built using npm packages.
-  local templates=(mvc angular reactredux)
+  local templates=(mvc angular)
   for template in ${templates[@]}; do
     test_template $template
   done
@@ -385,7 +382,7 @@ test_config_2() {
   ## App project publish
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Publish target\(s\)\).'
   ## DOTNET_PUBLISH_READYTORUN=true
-  assert_contains "${s2i_build}" '_CreateR2RImages'
+  # assert_contains "${s2i_build}" '_CreateR2RImages' # TODO
 }
 
 test_config_3() {
