@@ -1,17 +1,17 @@
-FROM dotnet/dotnet-50-runtime-centos7
-# This image provides a .NET 5.0 environment you can use to run your .NET
+FROM dotnet/dotnet-60-runtime-centos7
+# This image provides a .NET 6.0 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i
 
-LABEL io.k8s.description="Platform for building and running .NET 5 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet50"
+LABEL io.k8s.description="Platform for building and running .NET 6 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,rh-dotnet60"
 
 # Labels consumed by Red Hat build service
-LABEL name="dotnet/dotnet-50-centos7" \
-      com.redhat.component="rh-dotnet50-container" \
-      version="5.0" \
+LABEL name="dotnet/dotnet-60-centos7" \
+      com.redhat.component="rh-dotnet60-container" \
+      version="6.0" \
       release="1" \
       architecture="x86_64"
 
@@ -26,7 +26,7 @@ USER 0
 COPY ./s2i/bin/ /usr/libexec/s2i
 
 RUN yum install -y centos-release-dotnet centos-release-scl-rh && \
-    INSTALL_PKGS="rh-nodejs14-npm rh-nodejs14-nodejs-nodemon rh-dotnet50-dotnet-sdk-5.0 rsync" && \
+    INSTALL_PKGS="rh-nodejs14-npm rh-nodejs14-nodejs-nodemon rh-dotnet60-dotnet-sdk-6.0 rsync" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \

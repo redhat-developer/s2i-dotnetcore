@@ -7,9 +7,9 @@ cat <<EOF
 This is a S2I .Net ${DISTRO} image for pre-compiled applications:
 To use it, install S2I: https://github.com/openshift/source-to-image
 
-To build an image from a published application at 'bin/Release/net5.0/publish':
+To build an image from a published application at 'bin/Release/net6.0/publish':
 
-sudo s2i build bin/Release/net5.0/publish ${NAMESPACE}/dotnet-50-runtime-${DISTRO}7 dotnet-sample-app
+sudo s2i build bin/Release/net6.0/publish ${NAMESPACE}/dotnet-60-runtime-${DISTRO}7 dotnet-sample-app
 
 You can then run the resulting image via:
 sudo docker run -p 8080:8080 dotnet-sample-app
