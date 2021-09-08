@@ -44,13 +44,13 @@ source ${test_dir}/testcommon
 dotnet_version_series="3.1"
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-dotnet_version="3.1.15"
+dotnet_version="3.1.16"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="3.1.15"
+dotnet_version="3.1.18"
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-dotnet_version="3.1.15"
+dotnet_version="3.1.18"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="3.1.15"
+dotnet_version="3.1.18"
 fi
 
 test_dotnet() {
