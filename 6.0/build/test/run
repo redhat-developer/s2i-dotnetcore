@@ -381,8 +381,8 @@ test_config_2() {
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Restore target\(s\)\).'
   ## App project publish
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Publish target\(s\)\).'
-  ## DOTNET_PUBLISH_READYTORUN=true
-  # assert_contains "${s2i_build}" '_CreateR2RImages' # TODO
+  # DOTNET_PUBLISH_READYTORUN=true
+  assert_contains "${s2i_build}" '_CreateR2RImages' # TODO
 }
 
 test_config_3() {
