@@ -214,7 +214,7 @@ if [ "$BUILD_TYPE" == "source" ]; then
   DOTNET_PUBLISH_OPTIONS="--self-contained false --no-restore"
   if [ "$DOTNET_PUBLISH_READYTORUN" = true ]; then
     # we need to restore with an rid to aquire crossgen
-    RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-x64"
+    RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-x64 /p:PublishReadyToRun=true"
     DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-x64 /p:PublishReadyToRun=true"
   fi
   echo "---> Restoring application dependencies..."

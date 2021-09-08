@@ -41,12 +41,10 @@ source ${test_dir}/testcommon
 
 dotnet_version_series="6.0"
 
-if [ "$IMAGE_OS" = "CENTOS" ]; then
-dotnet_version="6.0.6"
-elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="6.0.6"
+if [ "$IMAGE_OS" = "RHEL8" ]; then
+dotnet_version="6.0.0-preview.7.21377.19"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="6.0.6"
+dotnet_version="6.0.0-preview.7.21377.19"
 fi
 
 test_dotnet() {
