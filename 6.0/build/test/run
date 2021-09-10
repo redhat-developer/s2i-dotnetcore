@@ -138,6 +138,13 @@ test_image() {
   # verify no 'Welcome' message appears, due to running first time actions in build Dockerfile.
   local dotnet_help=$(docker_run ${IMAGE_NAME} 'dotnet help')
   assert_not_contains "${dotnet_help}" "Welcome"
+
+  # Certificate folders created by the 1001 user are not accepted by .NET
+  # when the image runs on OpenShift as another user.
+  # Ensure there are no certificate store folders.
+  # This also ensures the image doesn't include an ASP.NET Core developer certificate.
+  local certificate_stores=$(docker run --rm ${IMAGE_NAME} stat /opt/app-root/.dotnet/corefx/cryptography/x509stores 2>&1)
+  assert_contains "${certificate_stores}" "No such file or directory"
 }
 
 test_consoleapp() {
