@@ -1,4 +1,4 @@
-@import "../../node_modules/react-datetime/css/react-datetime";
+@import '../../../node_modules/react-datetime/css/react-datetime';
 
 .date-control {
   .rdt {
@@ -29,7 +29,7 @@
   .btn {
     color: #a94442;
     border-color: #a94442;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   }
 }
