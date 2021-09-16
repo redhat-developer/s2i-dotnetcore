@@ -5,6 +5,7 @@ const changeId = options.pr; //aka pull-request
 const version = "2.0.0";
 const name = "sbi"; //project name prefix
 
+Object.assign(options.git, { owner: "ychung-mot", repository: "schoolbus" });
 const phases = {
   build: {
     namespace: "e82e9a-tools",
