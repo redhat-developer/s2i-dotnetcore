@@ -3,7 +3,8 @@ FROM ubi8/dotnet-31-runtime
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:/opt/app-root/.dotnet/tools/:${PATH} \
-    STI_SCRIPTS_PATH=/usr/libexec/s2i
+    STI_SCRIPTS_PATH=/usr/libexec/s2i \
+    NODEJS_VERSION=14
 
 LABEL io.k8s.description="Platform for building and running .NET Core 3.1 applications" \
       io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-31"
@@ -26,6 +27,7 @@ USER 0
 COPY ./s2i/bin/ /usr/libexec/s2i
 
 RUN INSTALL_PKGS="npm nodejs-nodemon dotnet-sdk-3.1 rsync procps-ng findutils" && \
+    yum -y module enable nodejs:$NODEJS_VERSION && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
