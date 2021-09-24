@@ -315,6 +315,8 @@ test_config_1() {
   local serve_path=$(docker_run ${image} bash -c "command -v dotnet-serve")
   local packed_app=$(docker_run ${image} ls /opt/app-root/app.tar.gz)
   local src_folder_content=$(docker_run ${image} ls -a /opt/app-root/src)
+  # ;true is there because 'npm ls' can error, for some random reason
+  local npm_packages=$(docker_run ${image} bash -c "npm ls; true")
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -338,8 +340,8 @@ test_config_1() {
   assert_contains "${s2i_build}" "Packing application..."
   assert_equal "${packed_app}" "/opt/app-root/app.tar.gz"
   # DOTNET_NPM_TOOLS=bower gulp
-  assert_contains "${s2i_build}" "bower@"
-  assert_contains "${s2i_build}" "gulp@"
+  assert_contains "${npm_packages}" "bower@"
+  assert_contains "${npm_packages}" "gulp@"
   assert_equal "${bower_path}" "/opt/app-root/node_modules/.bin/bower"
   # DOTNET_TOOLS=dotnet-symbol@1.0.5 dotnet-serve
   assert_equal "${watch_path}" "/opt/app-root/.dotnet/tools/dotnet-symbol"
