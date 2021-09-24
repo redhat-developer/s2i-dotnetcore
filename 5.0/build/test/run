@@ -50,12 +50,13 @@ npm_version=6.14.13
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
 sdk_version=5.0.205
+npm_version=6.14.14
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=5.0.206
+sdk_version=5.0.207
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=5.0.206
+sdk_version=5.0.205
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
