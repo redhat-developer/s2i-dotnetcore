@@ -56,14 +56,13 @@ sdk_version=3.1.116
 npm_version=6.14.11
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=3.1.118
+sdk_version=3.1.119
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=3.1.118
-npm_version=6.14.11
+sdk_version=3.1.119
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=3.1.118
+sdk_version=3.1.119
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -313,9 +312,11 @@ test_config_1() {
   # find bower and packed all
   local bower_path=$(docker_run ${image} bash -c "command -v bower")
   local watch_path=$(docker_run ${image} bash -c "command -v dotnet-symbol")
-  local serve_path=$(docker_run ${image} bash -c "command -v dotnet-serve")
+  local dotnetrpm_path=$(docker_run ${image} bash -c "command -v dotnet-rpm")
   local packed_app=$(docker_run ${image} ls /opt/app-root/app.tar.gz)
   local src_folder_content=$(docker_run ${image} ls -a /opt/app-root/src)
+  # ;true is there because 'npm ls' can error, for some random reason
+  local npm_packages=$(docker_run ${image} bash -c "npm ls; true")
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -339,12 +340,12 @@ test_config_1() {
   assert_contains "${s2i_build}" "Packing application..."
   assert_equal "${packed_app}" "/opt/app-root/app.tar.gz"
   # DOTNET_NPM_TOOLS=bower gulp
-  assert_contains "${s2i_build}" "bower@"
-  assert_contains "${s2i_build}" "gulp@"
+  assert_contains "${npm_packages}" "bower@"
+  assert_contains "${npm_packages}" "gulp@"
   assert_equal "${bower_path}" "/opt/app-root/node_modules/.bin/bower"
   # DOTNET_TOOLS=dotnet-symbol@1.0.5 dotnet-serve
   assert_equal "${watch_path}" "/opt/app-root/.dotnet/tools/dotnet-symbol"
-  assert_equal "${serve_path}" "/opt/app-root/.dotnet/tools/dotnet-serve"
+  assert_equal "${dotnetrpm_path}" "/opt/app-root/.dotnet/tools/dotnet-rpm"
   assert_contains "${s2i_build}" "Tool 'dotnet-symbol' \(version '1.0.5'\) was successfully installed."
   # DOTNET_RM_SRC=true
   # The application folder contains a file and folder that starts with a '.', we verify that *all* files are removed.

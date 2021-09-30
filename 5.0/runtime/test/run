@@ -44,9 +44,9 @@ dotnet_version_series="5.0"
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 dotnet_version="5.0.8"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="5.0.9"
+dotnet_version="5.0.10"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="5.0.9"
+dotnet_version="5.0.8"
 fi
 
 test_dotnet() {
