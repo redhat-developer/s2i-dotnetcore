@@ -1,8 +1,0 @@
-# This file lists which yum repos are needed to update content in this image.
-# This is used by the Red Hat registry to determine the container status by
-# correlating these repos to known CVEs.
-#
----
-x86_64:
-- rhel-8-for-x86_64-baseos-rpms
-- rhel-8-for-x86_64-appstream-rpms
