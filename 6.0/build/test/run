@@ -48,11 +48,9 @@ source ${test_dir}/testcommon
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
 sdk_version=6.0.100-rc.1.21458.32
-npm_version=6.14.13
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
 sdk_version=6.0.100-rc.1.21458.32
-npm_version=6.14.15
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -128,12 +126,6 @@ test_image() {
 
   # Verify the `dotnet watch` command can detect file changes in the container.
   assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true$"
-
-  # verify npm is available
-  local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
-  if [ "$SKIP_VERSION_CHECK" != "true" ]; then
-    assert_equal "${image_npm_version}" "${npm_version}"
-  fi
 
   # verify no 'Welcome' message appears, due to running first time actions in build Dockerfile.
   local dotnet_help=$(docker_run ${IMAGE_NAME} 'dotnet help')
@@ -285,8 +277,7 @@ test_templates() {
   test_start
 
   # mvc is a pure ASP.NET Core MVC web application
-  # angular and reactredux include a front-end which is built using npm packages.
-  local templates=(mvc angular)
+  local templates=(mvc)
   for template in ${templates[@]}; do
     test_template $template
   done
@@ -333,8 +324,6 @@ test_config_1() {
   # DOTNET_PACK=true
   assert_contains "${s2i_build}" "Packing application..."
   assert_equal "${packed_app}" "/opt/app-root/app.tar.gz"
-  # DOTNET_NPM_TOOLS=gulp
-  assert_contains "${s2i_build}" "gulp@"
   # DOTNET_TOOLS=dotnet-symbol@1.0.5 dotnet-serve
   assert_equal "${watch_path}" "/opt/app-root/.dotnet/tools/dotnet-symbol"
   assert_equal "${serve_path}" "/opt/app-root/.dotnet/tools/dotnet-serve"
@@ -700,11 +689,6 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_vb
   test_published_files
   test_aspnetapp
-if [ "$IMAGE_OS" != "FEDORA" ]; then
-  # Fedora doesn't have a nodemon package.
-  # TODO: look into installing it with 'npm install' when DEV_MODE == true.
-  test_devmode
-fi
   test_split_build
   test_templates
   test_user
