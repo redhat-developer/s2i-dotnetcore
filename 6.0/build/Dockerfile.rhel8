@@ -13,8 +13,7 @@ LABEL io.k8s.description="Platform for building and running .NET 6 applications"
 LABEL name="ubi8/dotnet-60" \
       com.redhat.component="dotnet-60-container" \
       version="6.0" \
-      release="1" \
-      architecture="x86_64"
+      release="1"
 
 # Labels consumed by Eclipse JBoss OpenShift plugin
 LABEL com.redhat.dev-mode="DEV_MODE:false" \

@@ -27,8 +27,7 @@ LABEL io.k8s.description="Platform for running .NET 6 applications" \
 LABEL name="ubi8/dotnet-60-runtime" \
       com.redhat.component="dotnet-60-runtime-container" \
       version="6.0" \
-      release="1" \
-      architecture="x86_64"
+      release="1"
 
 # Don't download/extract docs for nuget packages
 ENV NUGET_XMLDOC_MODE=skip
