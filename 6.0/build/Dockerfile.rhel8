@@ -40,9 +40,6 @@ RUN yum -y module enable nodejs:14 && \
 RUN mkdir /opt/app-root/src
 WORKDIR /opt/app-root/src
 
-# Trigger first time actions.
-RUN dotnet help
-
 # Build the container tool.
 RUN /usr/libexec/s2i/container-tool build-tool
 
