@@ -5,7 +5,14 @@ if [ -n "${DOTNET_INFO}" ]; then
   /usr/libexec/s2i/container-tool info
 fi
 
-cd $DOTNET_APP_PATH
+if [ "$DEV_MODE" == true ]; then
+    # Monitor changes.
+    while true; do
+      pyinotify -r -a -e IN_CREATE,IN_DELETE,IN_MODIFY,IN_MOVED_TO -c "flock -n /tmp/devmode_lock /usr/libexec/s2i/_devmode_run" .
+    done
+else
+    cd $DOTNET_APP_PATH
 
-echo "---> Running application ..."
-exec "./$DOTNET_DEFAULT_CMD"
+    echo "---> Running application ..."
+    exec "./$DOTNET_DEFAULT_CMD"
+fi

@@ -33,7 +33,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 #     yum clean all -y && \
 # # yum cache files may still exist (and quite large in size)
 #     rm -rf /var/cache/yum/*
-RUN yum install -y rsync procps-ng findutils
+RUN yum install -y rsync procps-ng findutils python3-inotify
 
 # Directory with the sources is set as the working directory.
 RUN mkdir /opt/app-root/src

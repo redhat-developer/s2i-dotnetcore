@@ -689,6 +689,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_vb
   test_published_files
   test_aspnetapp
+  test_devmode
   test_split_build
   test_templates
   test_user
