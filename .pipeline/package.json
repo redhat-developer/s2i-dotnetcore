@@ -19,7 +19,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@bcgov/pipeline-cli": "^1.0.1-0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "lodash": "^4.17.21"
   }
 }
