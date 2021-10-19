@@ -97,8 +97,9 @@ objects:
       annotations:
         haproxy.router.openshift.io/timeout: 1h
       creationTimestamp: null
-      name: ${NAME}${SUFFIX}
+      name: ${NAME}-${ENV}
     spec:
+      host: ${HOST}
       path: "/"
       port:
         targetPort: web
