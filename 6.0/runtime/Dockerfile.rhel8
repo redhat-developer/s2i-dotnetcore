@@ -35,10 +35,6 @@ LABEL name="ubi8/dotnet-60-runtime" \
 # Don't download/extract docs for nuget packages
 ENV NUGET_XMLDOC_MODE=skip
 
-# For runtime, default to using json
-# See: https://github.com/dotnet/dotnet-docker/issues/2725
-ENV Logging__Console__FormatterName=Json
-
 ## By default, ASP.NET Core runs on port 5000. We configure it to match
 ## the container port.
 ENV ASPNETCORE_URLS=http://*:8080

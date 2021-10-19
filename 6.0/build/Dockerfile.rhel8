@@ -20,10 +20,6 @@ LABEL name="ubi8/dotnet-60" \
 LABEL com.redhat.dev-mode="DEV_MODE:false" \
       com.redhat.deployments-dir="/opt/app-root/src"
 
-# For sdk, stop using json as the default logger
-# See: https://github.com/dotnet/dotnet-docker/issues/2725
-ENV Logging__Console__FormatterName=
-
 # Switch to root for package installs
 USER 0
 
