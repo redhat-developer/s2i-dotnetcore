@@ -99,7 +99,6 @@ objects:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
     spec:
-      host: ${HOST}
       path: "/"
       port:
         targetPort: web
