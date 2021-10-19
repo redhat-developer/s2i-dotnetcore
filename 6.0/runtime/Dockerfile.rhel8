@@ -13,8 +13,6 @@ ENV HOME=/opt/app-root \
     DOTNET_FRAMEWORK=net6.0 \
 # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
-# This skips the first time running text
-    DOTNET_NOLOGO=true \
     DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir
 
 LABEL io.k8s.description="Platform for running .NET 6 applications" \
