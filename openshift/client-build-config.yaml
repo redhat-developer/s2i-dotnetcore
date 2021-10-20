@@ -36,6 +36,41 @@ objects:
           name: "1"
           referencePolicy:
             type: Local
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      creationTimestamp: null
+      labels:
+        shared: "true"
+      name: node-python
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: build.openshift.io/v1
+    kind: BuildConfig
+    metadata:
+      creationTimestamp: null
+      labels:
+        build: node-python
+      name: node-python
+    spec:
+      output:
+        to:
+          kind: ImageStreamTag
+          name: node-python:1
+      source:
+        type: Dockerfile
+        dockerfile: |
+          FROM image-registry.openshift-image-registry.svc:5000/e0cee6-tools/node:1 AS builder
+          LABEL maintainer="young-jin.chung@gov.bc.ca"
+          RUN apk add --no-cache --virtual .gyp \
+            python \
+            make \
+            g++
+      strategy:
+        dockerStrategy:
+          noCache: true
+        type: Docker
   - apiVersion: v1
     kind: ImageStream
     metadata:
