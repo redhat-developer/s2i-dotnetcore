@@ -50,4 +50,4 @@ cd "$DOTNET_STARTUP_PROJECT_DIR"
 echo "---> Restoring application dependencies..."
 dotnet restore "$DOTNET_STARTUP_PROJECT_NAME" $RESTORE_OPTIONS
 echo "---> Running application..."
-exec dotnet run -p "$DOTNET_STARTUP_PROJECT_NAME" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION"
+exec dotnet run --project "$DOTNET_STARTUP_PROJECT_NAME" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION"
