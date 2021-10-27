@@ -4,6 +4,17 @@ set -e
 # Include filenames beginning with a '.' when installing the application source code.
 shopt -s dotglob
 
+declare -A archmap
+archmap=(
+  ["aarch64"]="arm64"
+  ["amd64"]="x64"
+  ["armv8l"]="arm"
+  ["i686"]="x86"
+  ["i386"]="x86"
+  ["x86_64"]="x64"
+  ["s390x"]="s390x"
+)
+
 if [ -n "${DOTNET_VERBOSITY}" ]; then
   echo "---> Environment:"
   env | sort
@@ -214,8 +225,9 @@ if [ "$BUILD_TYPE" == "source" ]; then
   DOTNET_PUBLISH_OPTIONS="--self-contained false --no-restore"
   if [ "$DOTNET_PUBLISH_READYTORUN" = true ]; then
     # we need to restore with an rid to aquire crossgen
-    RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-x64 /p:PublishReadyToRun=true"
-    DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-x64 /p:PublishReadyToRun=true"
+    arch=${archmap["$(uname -m)"]}
+    RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-${arch} /p:PublishReadyToRun=true"
+    DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-${arch} /p:PublishReadyToRun=true"
   fi
   echo "---> Restoring application dependencies..."
   if dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION ; then
