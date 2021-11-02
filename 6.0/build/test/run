@@ -48,7 +48,7 @@ source ${test_dir}/testcommon
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
 sdk_version=6.0.100-rc.1.21458.32
-npm_version=6.14.13
+npm_version=6.14.14
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
 sdk_version=6.0.100-rc.1.21458.32
@@ -700,11 +700,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_vb
   test_published_files
   test_aspnetapp
-if [ "$IMAGE_OS" != "FEDORA" ]; then
-  # Fedora doesn't have a nodemon package.
-  # TODO: look into installing it with 'npm install' when DEV_MODE == true.
   test_devmode
-fi
   test_split_build
   test_templates
   test_user
