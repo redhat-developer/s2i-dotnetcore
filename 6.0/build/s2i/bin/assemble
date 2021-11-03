@@ -4,8 +4,8 @@ set -e
 # Include filenames beginning with a '.' when installing the application source code.
 shopt -s dotglob
 
-declare -A archmap
-archmap=(
+declare -A ARCHMAP
+ARCHMAP=(
   ["aarch64"]="arm64"
   ["amd64"]="x64"
   ["armv8l"]="arm"
@@ -224,10 +224,14 @@ if [ "$BUILD_TYPE" == "source" ]; then
   # publish application
   DOTNET_PUBLISH_OPTIONS="--self-contained false --no-restore"
   if [ "$DOTNET_PUBLISH_READYTORUN" = true ]; then
-    # we need to restore with an rid to aquire crossgen
-    arch=${archmap["$(uname -m)"]}
-    RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-${arch} /p:PublishReadyToRun=true"
-    DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-${arch} /p:PublishReadyToRun=true"
+    ARCH=${ARCHMAP["$(uname -m)"]}
+    if [ \( "${ARCH}" == "x64" \) -o \( "${ARCH}" == "arm64" \) ]; then
+      ## we need to restore with an rid to acquire crossgen
+      RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-${ARCH} /p:PublishReadyToRun=true"
+      DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-${ARCH} /p:PublishReadyToRun=true"
+    else
+      echo "---> DOTNET_PUBLISH_READYTORUN is not supported on your architecture. Proceeding without it."
+    fi
   fi
   echo "---> Restoring application dependencies..."
   if dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION ; then
