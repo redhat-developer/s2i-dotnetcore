@@ -702,11 +702,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_vb
   test_published_files
   test_aspnetapp
-if [ "$IMAGE_OS" != "FEDORA" ]; then
-  # Fedora doesn't have a nodemon package.
-  # TODO: look into installing it with 'npm install' when DEV_MODE == true.
   test_devmode
-fi
   test_split_build
   test_templates
   test_user

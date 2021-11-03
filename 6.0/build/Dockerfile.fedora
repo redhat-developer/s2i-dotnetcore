@@ -4,7 +4,9 @@ FROM fedora/dotnet-60-runtime
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:/opt/app-root/.dotnet/tools/:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i \
-    DOTNET_GENERATE_ASPNET_CERTIFICATE=false
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
+# This skips the first time running text
+    DOTNET_NOLOGO=true
 
 LABEL io.k8s.description="Platform for building and running .NET 6 applications" \
       io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-60"
@@ -26,21 +28,18 @@ USER 0
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-# TODO: use Fedora packages.
-# RUN INSTALL_PKGS="npm dotnet-sdk-6.0 rsync procps-ng findutils" && \
-#     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
-#     rpm -V $INSTALL_PKGS && \
-#     yum clean all -y && \
-# # yum cache files may still exist (and quite large in size)
-#     rm -rf /var/cache/yum/*
-RUN yum install -y npm nodejs-nodemon rsync procps-ng findutils
+# TODO: use .NET package (dotnet-sdk-6.0).
+RUN INSTALL_PKGS="npm nodejs-nodemon rsync procps-ng findutils" && \
+    yum -y module enable nodejs:14 && \
+    yum install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=False $INSTALL_PKGS && \
+    rpm -V $INSTALL_PKGS && \
+    yum clean all -y && \
+# yum cache files may still exist (and quite large in size)
+    rm -rf /var/cache/yum/*
 
 # Directory with the sources is set as the working directory.
 RUN mkdir /opt/app-root/src
 WORKDIR /opt/app-root/src
-
-# Trigger first time actions.
-RUN dotnet help
 
 # Build the container tool.
 RUN /usr/libexec/s2i/container-tool build-tool
