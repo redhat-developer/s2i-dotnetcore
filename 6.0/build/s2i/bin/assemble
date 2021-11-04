@@ -4,6 +4,17 @@ set -e
 # Include filenames beginning with a '.' when installing the application source code.
 shopt -s dotglob
 
+declare -A ARCHMAP
+ARCHMAP=(
+  ["aarch64"]="arm64"
+  ["amd64"]="x64"
+  ["armv8l"]="arm"
+  ["i686"]="x86"
+  ["i386"]="x86"
+  ["x86_64"]="x64"
+  ["s390x"]="s390x"
+)
+
 if [ -n "${DOTNET_VERBOSITY}" ]; then
   echo "---> Environment:"
   env | sort
@@ -202,9 +213,14 @@ if [ "$BUILD_TYPE" == "source" ]; then
   # publish application
   DOTNET_PUBLISH_OPTIONS="--self-contained false --no-restore"
   if [ "$DOTNET_PUBLISH_READYTORUN" = true ]; then
-    # we need to restore with an rid to aquire crossgen
-    RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-x64 /p:PublishReadyToRun=true"
-    DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-x64 /p:PublishReadyToRun=true"
+    ARCH=${ARCHMAP["$(uname -m)"]}
+    if [ \( "${ARCH}" == "x64" \) -o \( "${ARCH}" == "arm64" \) ]; then
+      ## we need to restore with an rid to acquire crossgen
+      RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-${ARCH} /p:PublishReadyToRun=true"
+      DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-${ARCH} /p:PublishReadyToRun=true"
+    else
+      echo "warn: DOTNET_PUBLISH_READYTORUN is not supported on $(uname -m). The option is ignored."
+    fi
   fi
   echo "---> Restoring application dependencies..."
   if dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION ; then

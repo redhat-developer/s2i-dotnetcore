@@ -47,8 +47,8 @@ source ${test_dir}/testcommon
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=6.0.100-rc.1.21458.32
-npm_version=6.14.14
+sdk_version=6.0.100
+npm_version=6.14.11
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
 sdk_version=6.0.100-rc.1.21458.32
@@ -308,9 +308,11 @@ test_config_1() {
   local s2i_build=$(s2i_build_output_log ${app} ${image})
   # find gulp and packed all
   local watch_path=$(docker_run ${image} bash -c "command -v dotnet-symbol")
-  local serve_path=$(docker_run ${image} bash -c "command -v dotnet-serve")
+  local dotnetrpm_path=$(docker_run ${image} bash -c "command -v dotnet-rpm")
   local packed_app=$(docker_run ${image} ls /opt/app-root/app.tar.gz)
   local src_folder_content=$(docker_run ${image} ls -a /opt/app-root/src)
+  # ;true is there because 'npm ls' can error, for some random reason
+  local npm_packages=$(docker_run ${image} bash -c "npm ls; true")
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -334,10 +336,10 @@ test_config_1() {
   assert_contains "${s2i_build}" "Packing application..."
   assert_equal "${packed_app}" "/opt/app-root/app.tar.gz"
   # DOTNET_NPM_TOOLS=gulp
-  assert_contains "${s2i_build}" "gulp@"
+  assert_contains "${npm_packages}" "gulp@"
   # DOTNET_TOOLS=dotnet-symbol@1.0.5 dotnet-serve
   assert_equal "${watch_path}" "/opt/app-root/.dotnet/tools/dotnet-symbol"
-  assert_equal "${serve_path}" "/opt/app-root/.dotnet/tools/dotnet-serve"
+  assert_equal "${dotnetrpm_path}" "/opt/app-root/.dotnet/tools/dotnet-rpm"
   assert_contains "${s2i_build}" "Tool 'dotnet-symbol' \(version '1.0.5'\) was successfully installed."
   # DOTNET_RM_SRC=true
   # The application folder contains a file and folder that starts with a '.', we verify that *all* files are removed.
@@ -389,7 +391,11 @@ test_config_2() {
   ## App project publish
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Publish target\(s\)\).'
   # DOTNET_PUBLISH_READYTORUN=true
-  assert_contains "${s2i_build}" '_CreateR2RImages'
+  if [ "$(uname -m)" == "s390x" ]; then
+    assert_contains "${s2i_build}" 'DOTNET_PUBLISH_READYTORUN is not supported on'
+  else
+    assert_contains "${s2i_build}" '_CreateR2RImages'
+  fi
 }
 
 test_config_3() {
