@@ -391,7 +391,7 @@ test_config_2() {
   ## App project publish
   assert_contains "${s2i_build}" 'Project "/opt/app-root/src/src/app/app.csproj" on node 1 \(Publish target\(s\)\).'
   # DOTNET_PUBLISH_READYTORUN=true
-  assert_contains "${s2i_build}" '_CreateR2RImages|DOTNET_PUBLISH_READYTORUN is not supported on your architecture.'
+  assert_contains "${s2i_build}" '_CreateR2RImages|DOTNET_PUBLISH_READYTORUN is not supported on'
 }
 
 test_config_3() {

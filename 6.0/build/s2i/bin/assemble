@@ -230,7 +230,7 @@ if [ "$BUILD_TYPE" == "source" ]; then
       RESTORE_OPTIONS="$RESTORE_OPTIONS -r linux-${ARCH} /p:PublishReadyToRun=true"
       DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-${ARCH} /p:PublishReadyToRun=true"
     else
-      echo "---> DOTNET_PUBLISH_READYTORUN is not supported on your architecture. Proceeding without it."
+      echo "warn: DOTNET_PUBLISH_READYTORUN is not supported on $(uname -m). The option is ignored."
     fi
   fi
   echo "---> Restoring application dependencies..."
