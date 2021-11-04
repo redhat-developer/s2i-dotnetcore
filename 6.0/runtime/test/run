@@ -165,7 +165,7 @@ test_aspnet() {
   # create image
   cat >Dockerfile <<EOF
 FROM ${IMAGE_NAME}
-ADD app.tar.gz .
+ADD app-$(uname -m).tar.gz .
 CMD [ "dotnet", "aspnet-hello-world.dll" ]
 EOF
   local image=$(docker_build .)
@@ -216,14 +216,14 @@ test_s2i_build() {
 
   # extract the pre-compiled application from the aspnet test
   rm -rf ${test_dir}/${app}
-  mkdir ${test_dir}/${app} && tar -C ${test_dir}/${app} -xf ${test_dir}/aspnet-hello-world/app.tar.gz
+  mkdir ${test_dir}/${app} && tar -C ${test_dir}/${app} -xf ${test_dir}/aspnet-hello-world/app-$(uname -m).tar.gz
   # Verify the entry point assembly is detected and ran
   local image=$(s2i_build $app)
   verify_aspnet_image_works ${image}
 
   # extract the pre-compiled application from the aspnet test in a nested folder
   rm -rf ${test_dir}/${app}
-  mkdir -p ${test_dir}/${app}/nested && tar -C ${test_dir}/${app}/nested -xf ${test_dir}/aspnet-hello-world/app.tar.gz
+  mkdir -p ${test_dir}/${app}/nested && tar -C ${test_dir}/${app}/nested -xf ${test_dir}/aspnet-hello-world/app-$(uname -m).tar.gz
   # Verify the entry point assembly is detected and ran using DOTNET_STARTUP_ASSEMBLY.
   image=$(s2i_build $app -e DOTNET_STARTUP_ASSEMBLY=nested/aspnet-hello-world.dll)
   verify_aspnet_image_works ${image}
