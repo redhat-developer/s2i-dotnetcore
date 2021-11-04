@@ -88,9 +88,11 @@ test_envvars() {
 test_debuggable() {
   test_start
 
-  # VSDBG (the .NET command line debugger) install script needs unzip
-  #   curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg
-  assert_equal "$(docker_commandpath $IMAGE_NAME unzip)" "/usr/bin/unzip"
+  # VSDBG (the .NET command line debugger) install script dependencies are met.
+  if [ "$(uname -m)" != "s390x" ]; then
+    local install_command="curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /tmp/vsdbg"
+    assert_contains "$(docker_run $IMAGE_NAME bash -c "$install_command")" "Successfully installed vsdbg at '/tmp/vsdbg'"
+  fi
 }
 
 test_default_cmd() {
