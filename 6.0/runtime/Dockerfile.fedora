@@ -46,13 +46,17 @@ COPY ./root/usr/bin /usr/bin
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-# TODO: use .NET package (aspnetcore-runtime-6.0).
+# TODO: use .NET package (add: aspnetcore-runtime-6.0, remove:libicu).
+# Install packages:
+# - aspnetcore-runtime-*: provides the .NET runtime and ASP.NET Core shared framework.
+# - findutils: provides 'find' which is used by the 'assemble' script.
+# - tar: provides 'tar' which is needed by the Microsoft debugger install script (https://aka.ms/getvsdbgsh).
 ENV DOTNET_ROOT=/opt/dotnet
 RUN curl https://download.visualstudio.microsoft.com/download/pr/4880c5a4-9c22-47a7-b298-651f1294a385/795f7828d8684059705e625b33027f89/dotnet-sdk-6.0.100-rc.1.21458.32-linux-x64.tar.gz -o /tmp/dotnet.tar.gz && \
     mkdir /opt/dotnet && \
     tar -xf /tmp/dotnet.tar.gz -C /opt/dotnet && \
     ln -s /opt/dotnet/dotnet /usr/bin/dotnet && \
-    INSTALL_PKGS="nss_wrapper tar unzip findutils libicu" && \
+    INSTALL_PKGS="nss_wrapper findutils libicu" && \
     yum install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=False $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
