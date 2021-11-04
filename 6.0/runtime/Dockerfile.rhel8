@@ -48,8 +48,8 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 
 # Install packages:
 # - aspnetcore-runtime-*: provides the .NET runtime and ASP.NET Core shared framework.
+# - nss_wrapper: used by the 'generate_container_user' script.
 # - findutils: provides 'find' which is used by the 'assemble' script.
-# - tar: provides 'tar' which is needed by the Microsoft debugger install script (https://aka.ms/getvsdbgsh).
 RUN INSTALL_PKGS="aspnetcore-runtime-6.0 nss_wrapper findutils" && \
     yum install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=False $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
