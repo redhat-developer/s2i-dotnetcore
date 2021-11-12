@@ -66,7 +66,7 @@
                             "openshift.io/display-name": ".NET 6 (UBI 8)",
                             "description": "Build and run .NET 6 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/6.0/build/README.md.",
                             "iconClass": "icon-dotnet",
-                            "tags": "builder,.net,dotnet,dotnetcore,rh-dotnet60,hidden",
+                            "tags": "builder,.net,dotnet,dotnetcore,dotnet60,hidden",
                             "supports": "dotnet:6.0,dotnet",
                             "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
                             "sampleContextDir": "app",
