@@ -1,6 +1,6 @@
 {
     "kind": "ImageStreamList",
-    "apiVersion": "v1",
+    "apiVersion": "image.openshift.io/v1",
     "metadata": {
         "name": "dotnet-image-streams",
         "annotations": {
@@ -10,7 +10,7 @@
     "items": [
         {
             "kind": "ImageStream",
-            "apiVersion": "v1",
+            "apiVersion": "image.openshift.io/v1",
             "metadata": {
                 "name": "dotnet",
                 "annotations": {
@@ -86,7 +86,7 @@
         },
         {
             "kind": "ImageStream",
-            "apiVersion": "v1",
+            "apiVersion": "image.openshift.io/v1",
             "metadata": {
                 "name": "dotnet-runtime",
                 "annotations": {
