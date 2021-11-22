@@ -98,7 +98,18 @@ test_debuggable() {
 test_default_cmd() {
   test_start
 
-  assert_contains $(docker_run $IMAGE_NAME) "This is a runtime image for .NET"
+  # verify the default command is bash.
+  local container=$(docker_run_withargs $IMAGE_NAME -td) # use '-t' to stop bash from exiting.
+  local processes=$(docker top $container)
+  # cleanup
+  docker_rm ${container}
+
+  # Ensure there is a single bash process.
+  #  The output of 'docker top' looks like
+  #      USER        PID         PPID        %CPU        ELAPSED           TTY         TIME        COMMAND
+  #      root        1           0           0.000       16m30.479579703s  pts/0       0s          /bin/bash
+  assert_equal $(echo "$processes" | wc -l) "2"
+  assert_contains_multiline "$processes" "/bin/bash"
 }
 
 test_data_folder() {
@@ -187,6 +198,7 @@ test_run_dotnet_in_dockerfile() {
   cat >Dockerfile <<EOF
 FROM ${IMAGE_NAME}
 RUN dotnet --info
+CMD ["/usr/bin/echo", "Hello world!"]
 EOF
   local image=$(docker_build .)
   local output=$(docker_run ${image})
@@ -195,7 +207,7 @@ EOF
   docker_rmi ${image}
 
   # verify the image build produced a working image
-  assert_contains "$output" "This is a runtime image for .NET"
+  assert_contains "$output" "Hello world!"
 
   popd >/dev/null
 }
