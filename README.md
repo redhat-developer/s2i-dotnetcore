@@ -21,8 +21,8 @@ The application is being developed as an open source solution.
 ## Prerequisites
 
 - .Net Core 3.1 SDK
-- Node.JS v10.0 or newer
-- Microsoft SQL Server 2017 or newer
+- Node.JS v13.7.0 or newer
+- PostgreSQL 10
 
 ## Dependencies
 
