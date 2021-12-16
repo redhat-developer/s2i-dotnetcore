@@ -9,7 +9,7 @@
     <Company>Ministry of Transportation and Infrastructure</Company>
     <Description>The API server for the schoolbus inspection application.</Description>
     <Copyright>Copyright© 2017, Province of British Columbia.</Copyright>
-    <Version>2.0.0</Version>
+    <Version>2.0.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,7 +33,7 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.10" />
     <PackageReference Include="HangFire.Core" Version="1.7.10" />
     <PackageReference Include="Hangfire.PostgreSql" Version="1.7.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.18" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />

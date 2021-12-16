@@ -73,7 +73,6 @@ namespace SchoolBusAPI
             {
                 options.Authority = Configuration.GetValue<string>("JWT:Authority");
                 options.Audience = Configuration.GetValue<string>("JWT:Audience");
-                options.RequireHttpsMetadata = false;
                 options.IncludeErrorDetails = true;
                 options.EventsType = typeof(SbJwtBearerEvents);
             });

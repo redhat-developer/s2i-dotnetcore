@@ -5,6 +5,7 @@ const changeId = options.pr; //aka pull-request
 const version = "2.0.0";
 const name = "sbi"; //project name prefix
 
+Object.assign(options.git, { owner: "ychung-mot", repository: "schoolbus" });
 const phases = {
   build: {
     namespace: "e82e9a-tools",
@@ -26,7 +27,7 @@ const phases = {
     instance: `${name}-dev-${changeId}`,
     version: `${version}-${changeId}`,
     tag: `dev-${version}-${changeId}`,
-    host: `sbi-${changeId}-e82e9a-dev.apps.silver.devops.gov.bc.ca`,
+    host: `sbi-e82e9a-dev.apps.silver.devops.gov.bc.ca`,
     dotnet_env: "Development",
     dbUser: "userUXN",
     dbSize: "5Gi",

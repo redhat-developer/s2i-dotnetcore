@@ -1,0 +1,96 @@
+name: sbi-build-deploy
+
+on:
+  pull_request:
+    branches:
+      - 'master'
+
+defaults:
+  run:
+    working-directory: .
+
+jobs:
+  cancel-previous-runs:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./.pipeline
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+      - name: Build
+        run: |
+          oc version
+          oc login --token=${{ secrets.OPENSHIFT_TOKEN}} --server=${{ secrets.OPENSHIFT_SERVER_URL }}
+          npm ci
+          DEBUG=* npm run build -- --pr=${{ github.event.pull_request.number }} --git.branch.name=${{github.head_ref}} --git.ref=${{github.head_ref}}
+
+  deploy-to-dev:
+    runs-on: ubuntu-latest
+    needs: [build]
+    defaults:
+      run:
+        working-directory: ./.pipeline
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+      - name: Deploy the image
+        run: |
+          oc version
+          oc login --token=${{ secrets.OPENSHIFT_TOKEN}} --server=${{ secrets.OPENSHIFT_SERVER_URL }}
+          npm ci
+          DEBUG=* npm run deploy -- --pr=${{ github.event.pull_request.number }} --env=dev --git.branch.name=${{github.head_ref}} --git.ref=${{github.head_ref}}
+
+  deploy-to-test:
+    needs: [build, deploy-to-dev]
+    environment:
+      name: test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./.pipeline
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+      - name: Deploy the image
+        run: |
+          oc version
+          oc login --token=${{ secrets.OPENSHIFT_TOKEN}} --server=${{ secrets.OPENSHIFT_SERVER_URL }}
+          npm ci
+          DEBUG=* npm run deploy -- --pr=${{ github.event.pull_request.number }} --env=test --git.branch.name=${{github.head_ref}} --git.ref=${{github.head_ref}}
+
+  deploy-to-prod:
+    needs: [build, deploy-to-test]
+    environment:
+      name: prod
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./.pipeline
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+      - name: Deploy the image
+        run: |
+          oc version
+          oc login --token=${{ secrets.OPENSHIFT_TOKEN}} --server=${{ secrets.OPENSHIFT_SERVER_URL }}
+          npm ci
+          DEBUG=* npm run deploy -- --pr=${{ github.event.pull_request.number }} --env=prod --git.branch.name=${{github.head_ref}} --git.ref=${{github.head_ref}}

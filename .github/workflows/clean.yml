@@ -1,0 +1,32 @@
+name: clean
+
+on:
+  pull_request:
+    branches:
+      - 'master'
+    types: ['closed']
+
+defaults:
+  run:
+    working-directory: ./.
+
+jobs:
+
+  clean-build-dev:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./.pipeline
+    steps:
+
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      - name: Clean the Build and Dev Namespace
+        run: |
+          oc version
+          oc login --token=${{ secrets.OPENSHIFT_TOKEN}} --server=${{ secrets.OPENSHIFT_SERVER_URL }}
+          npm ci
+          DEBUG=* npm run clean -- --pr=${{ github.event.pull_request.number }} --env=build --git.branch.name=${{github.head_ref}} --git.ref=${{github.head_ref}}
+          DEBUG=* npm run clean -- --pr=${{ github.event.pull_request.number }} --env=dev --git.branch.name=${{github.head_ref}} --git.ref=${{github.head_ref}}
