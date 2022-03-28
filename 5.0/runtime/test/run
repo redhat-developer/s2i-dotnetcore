@@ -46,7 +46,7 @@ dotnet_version="5.0.8"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 dotnet_version="5.0.10"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="5.0.8"
+dotnet_version="5.0.9"
 fi
 
 test_dotnet() {
