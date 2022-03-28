@@ -62,7 +62,8 @@ elif [ "$IMAGE_OS" = "RHEL7" ]; then
 sdk_version=3.1.119
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=3.1.119
+sdk_version=3.1.417
+npm_version=8.3.1
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
