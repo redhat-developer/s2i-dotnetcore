@@ -218,11 +218,7 @@ if [ "$BUILD_TYPE" == "source" ]; then
     DOTNET_PUBLISH_OPTIONS="$DOTNET_PUBLISH_OPTIONS -r linux-x64 /p:PublishReadyToRun=true"
   fi
   echo "---> Restoring application dependencies..."
-  if dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION ; then
-      echo "Restore completed successfully"
-  else
-      echo "Error during restore"
-  fi
+  dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
   echo "---> Publishing application..."
   dotnet publish "$DOTNET_STARTUP_PROJECT" -f "$DOTNET_FRAMEWORK" -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
          $DOTNET_PUBLISH_OPTIONS -o "$DOTNET_APP_PATH"

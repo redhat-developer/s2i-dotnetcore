@@ -336,7 +336,8 @@ test_config_1() {
   # DOTNET_ASSEMBLY_NAME=SampleApp
   assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/netcoreapp3.1/SampleApp.dll"
   # DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
-  assert_contains "${s2i_build}" "Restore completed" # Includes S2iDotNetCoreDummy from myget.org.
+  assert_contains "${s2i_build}" 'Restored /opt/app-root/src/src/app/app.csproj \(in [[:digit:]]+\.[[:digit:]]+ sec\)' # Includes S2iDotNetCoreDummy from myget.org.
+
   # DOTNET_PACK=true
   assert_contains "${s2i_build}" "Packing application..."
   assert_equal "${packed_app}" "/opt/app-root/app.tar.gz"
