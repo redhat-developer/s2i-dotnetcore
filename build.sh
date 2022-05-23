@@ -12,7 +12,7 @@
 #                 test application used in OpenShift
 #
 # VERSIONS        The list of versions to build/test.
-#                 Defaults to all versions. i.e "3.1 5.0".
+#                 Defaults to all versions. i.e "3.1 6.0".
 #
 # IMAGE_OS        The base os image to use when building
 #                 the containers.
@@ -109,16 +109,16 @@ if [ -z "${IMAGE_OS}" ]; then
 fi
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  VERSIONS="${VERSIONS:-3.1 5.0}"
+  VERSIONS="${VERSIONS:-3.1}"
   image_postfix="-centos7"
   image_prefix="dotnet"
   docker_filename="Dockerfile"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-  VERSIONS="${VERSIONS:-3.1 5.0 6.0}"
+  VERSIONS="${VERSIONS:-3.1 6.0}"
   image_prefix="ubi8"
   docker_filename="Dockerfile.rhel8"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  VERSIONS="${VERSIONS:-3.1 5.0 6.0}"
+  VERSIONS="${VERSIONS:-3.1 6.0}"
   image_prefix="fedora"
   docker_filename="Dockerfile.fedora"
 else
