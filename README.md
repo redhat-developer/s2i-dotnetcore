@@ -11,15 +11,15 @@ Versions
 
 .NET Core versions currently provided are:
 
+* 3.1 (RHEL 7, RHEL 8, CentOS 7, Fedora)
+* 6.0 (RHEL 8, Fedora)
 * [RETIRED] 1.0 (RHEL 7, CentOS 7)
 * [RETIRED] 1.1 (RHEL 7)
 * [RETIRED] 2.0 (RHEL 7, CentOS 7)
 * [RETIRED] 2.1 (RHEL 7, RHEL 8, CentOS 7)
 * [RETIRED] 2.2 (RHEL 7, CentOS 7)
 * [RETIRED] 3.0 (RHEL 7, RHEL 8)
-* 3.1 (RHEL 7, RHEL 8, CentOS 7, Fedora)
 * [RETIRED] 5.0 (RHEL 8, CentOS 7, Fedora)
-* 6.0 (RHEL 8, Fedora)
 
 Building
 ----------------
