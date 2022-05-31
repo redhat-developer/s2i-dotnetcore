@@ -11,15 +11,15 @@ Versions
 
 .NET Core versions currently provided are:
 
+* 3.1 (RHEL 7, RHEL 8, CentOS 7, Fedora)
+* 6.0 (RHEL 8, Fedora)
 * [RETIRED] 1.0 (RHEL 7, CentOS 7)
 * [RETIRED] 1.1 (RHEL 7)
 * [RETIRED] 2.0 (RHEL 7, CentOS 7)
 * [RETIRED] 2.1 (RHEL 7, RHEL 8, CentOS 7)
 * [RETIRED] 2.2 (RHEL 7, CentOS 7)
 * [RETIRED] 3.0 (RHEL 7, RHEL 8)
-* 3.1 (RHEL 7, RHEL 8, CentOS 7, Fedora)
-* 5.0 (RHEL 8, CentOS 7, Fedora)
-* 6.0 (RHEL 8, Fedora)
+* [RETIRED] 5.0 (RHEL 8, CentOS 7, Fedora)
 
 Building
 ----------------
@@ -79,13 +79,13 @@ For information about usage of Docker image for .NET Core 6.0,
 see [6.0 builder usage documentation](6.0/build/README.md) and
 [6.0 runtime usage documentation](6.0/runtime/README.md).
 
-For information about usage of Docker image for .NET Core 5.0,
-see [5.0 builder usage documentation](5.0/build/README.md) and
-[5.0 runtime usage documentation](5.0/runtime/README.md).
-
 For information about usage of Docker image for .NET Core 3.1,
 see [3.1 builder usage documentation](3.1/build/README.md) and
 [3.1 runtime usage documentation](3.1/runtime/README.md).
+
+For information about usage of Docker image for .NET Core 5.0,
+see [5.0 builder usage documentation](5.0/build/README.md) and
+[5.0 runtime usage documentation](5.0/runtime/README.md).
 
 For information about usage of Docker image for .NET Core 3.0,
 see [3.0 builder usage documentation](3.0/build/README.md) and

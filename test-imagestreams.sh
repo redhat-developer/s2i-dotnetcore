@@ -23,7 +23,7 @@ usage () {
   echo ""
   echo "-----------------------------------------------------"
   echo "VERSIONS            The list of expected versions."
-  echo "                    Defaults to all versions. i.e '3.1 5.0'."
+  echo "                    Defaults to all versions. i.e '3.1 6.0'."
   echo ""
   echo "IMAGE_OS            The base os image to use when building"
   echo "                    the containers."
@@ -93,7 +93,7 @@ case "$IMAGE_OS" in
   imagestreams_file_name=dotnet_imagestreams_fedora.json
   ;;
 "rhel*")
-  VERSIONS="${VERSIONS:-3.1}"
+  VERSIONS="${VERSIONS:-3.1 6.0}"
   imagestreams_file_name=dotnet_imagestreams.json
   ;;
 *)
