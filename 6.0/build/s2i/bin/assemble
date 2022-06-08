@@ -122,21 +122,20 @@ if [ "$BUILD_TYPE" == "source" ]; then
   source /opt/app-root/etc/trust_ssl_dirs
 
   # npm
+  if [ ! -z $HTTP_PROXY ]; then
+    echo "---> Setting npm http proxy"
+    npm config set proxy $HTTP_PROXY
+  fi
+  if [ ! -z $HTTPS_PROXY ]; then
+    echo "---> Setting npm https proxy"
+    npm config set https-proxy $HTTPS_PROXY
+  fi
+  if [ ! -z $NPM_MIRROR ]; then
+    echo "---> Setting npm mirror"
+    npm config set registry $NPM_MIRROR
+  fi
   if [ -n "${DOTNET_NPM_TOOLS}" ]; then
     echo "---> Installing npm tools..."
-
-    if [ ! -z $HTTP_PROXY ]; then
-      echo "---> Setting npm http proxy"
-      npm config set proxy $HTTP_PROXY
-    fi
-    if [ ! -z $HTTPS_PROXY ]; then
-      echo "---> Setting npm https proxy"
-      npm config set https-proxy $HTTPS_PROXY
-    fi
-    if [ ! -z $NPM_MIRROR ]; then
-      echo "---> Setting npm mirror"
-      npm config set registry $NPM_MIRROR
-    fi
 
     pushd /opt/app-root
     npm install ${DOTNET_NPM_TOOLS}
