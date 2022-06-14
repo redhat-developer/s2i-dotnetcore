@@ -697,6 +697,22 @@ test_repos() {
     assert_contains "$output" "Complete!"
 }
 
+test_npm_mirror() {
+  test_start
+
+  local app=asp-net-hello-world
+  local image=$(s2i_image_tag ${app})
+  local enabled_string="---> Setting npm mirror"
+
+  # Check that it isn't setting an npm mirror when it is not specified
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  assert_not_contains "${s2i_build}" "${enabled_string}"
+
+  # And check that it is setting an npm mirror when it is specified
+  local s2i_build=$(s2i_build_output_log ${app} ${image} -e NPM_MIRROR='https://TEST.MIRROR')
+  assert_contains "${s2i_build}" "${enabled_string}"
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -704,6 +720,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_config
   test_usage
   test_repos
+  test_npm_mirror
   test_consoleapp
   test_multiframework
   test_fsharp
