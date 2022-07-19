@@ -48,7 +48,7 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-npm_version=6.14.13
+npm_version=6.14.15
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
@@ -56,13 +56,13 @@ sdk_version=3.1.116
 npm_version=6.14.11
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=3.1.119
+sdk_version=3.1.419
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=3.1.119
+sdk_version=3.1.419
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=3.1.417
+sdk_version=3.1.419
 npm_version=8.3.1
 fi
 
@@ -697,6 +697,22 @@ test_repos() {
     assert_contains "$output" "Complete!"
 }
 
+test_npm_mirror() {
+  test_start
+
+  local app=asp-net-hello-world
+  local image=$(s2i_image_tag ${app})
+  local enabled_string="---> Setting npm mirror"
+
+  # Check that it isn't setting an npm mirror when it is not specified
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  assert_not_contains "${s2i_build}" "${enabled_string}"
+
+  # And check that it is setting an npm mirror when it is specified
+  local s2i_build=$(s2i_build_output_log ${app} ${image} -e NPM_MIRROR='https://TEST.MIRROR')
+  assert_contains "${s2i_build}" "${enabled_string}"
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -704,6 +720,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_config
   test_usage
   test_repos
+  test_npm_mirror
   test_consoleapp
   test_multiframework
   test_fsharp
