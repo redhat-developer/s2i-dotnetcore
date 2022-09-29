@@ -1,0 +1,58 @@
+FROM ubi8/dotnet-60-runtime
+# This image provides a .NET 6.0 environment you can use to run your .NET
+# applications.
+
+ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:/opt/app-root/.dotnet/tools/:${PATH} \
+    STI_SCRIPTS_PATH=/usr/libexec/s2i \
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
+# This skips the first time running text
+    DOTNET_NOLOGO=true
+
+LABEL io.k8s.description="Platform for building and running .NET 6 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-60"
+
+# Labels consumed by Red Hat build service
+LABEL name="ubi8/dotnet-60" \
+      com.redhat.component="dotnet-60-container" \
+      version="6.0" \
+      release="1"
+
+# Switch to root for package installs
+USER 0
+
+# Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
+COPY ./s2i/bin/ /usr/libexec/s2i
+
+# Install packages:
+# - dotnet-sdk--*: provides the .NET SDK.
+# - npm: provides SDK for building NodeJS web front-ends.
+# - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
+RUN INSTALL_PKGS="dotnet-sdk-6.0 npm procps-ng" && \
+    yum -y module enable nodejs:14 && \
+    yum install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=False $INSTALL_PKGS && \
+    rpm -V $INSTALL_PKGS && \
+    yum clean all -y && \
+# yum cache files may still exist (and quite large in size)
+    rm -rf /var/cache/yum/*
+
+# Directory with the sources is set as the working directory.
+RUN mkdir /opt/app-root/src
+WORKDIR /opt/app-root/src
+
+# Build the container tool.
+RUN /usr/libexec/s2i/container-tool build-tool
+
+# Since $HOME is set to /opt/app-root, the yum install may have created config
+# directories (such as ~/.pki/nssdb) there. These will be owned by root and can
+# cause actions that work on all of /opt/app-root to fail. So we need to fix
+# the permissions on those too.
+RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
+
+# Needed for the `dotnet watch` to detect changes in a container
+ENV  DOTNET_USE_POLLING_FILE_WATCHER=true
+
+# Run container by default as user with id 1001 (default)
+USER 1001
+
+# Set the default CMD to print the usage of the language image.
+CMD /usr/libexec/s2i/usage

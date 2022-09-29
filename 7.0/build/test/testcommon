@@ -1,0 +1,335 @@
+# This code is the same for the build and runtime images.
+# The code is duplicated in both folders because the images are built
+# and tested after copying the sub-directories into a container repo.
+
+TEST_PORT=${TEST_PORT:-8080}
+CURLE_COULNDT_CONNECT=7
+CURLE_RECV_ERROR=56
+TEST_FAILURES=""
+
+# Keep 'set +x' and log messages separate from stdout/err.
+exec 3>&1
+if [ "$DEBUG" != "" ]; then
+  BASH_XTRACEFD=3
+  set -x
+fi
+
+info() {
+  echo -e "\e[1m[INFO] $@\e[0m" >&3
+}
+
+error() {
+  echo -e "[ERROR] $@" >&3
+  # print stacktrace
+  i=0; while caller $i >&3 ;do ((i++)) ;done
+}
+
+error_exit() {
+  local code=$1
+  if [ "$STOP_ON_ERROR" == "true" ]; then
+    exit $code
+  fi
+
+  TEST_FAILURES="${TEST_FAILURES} ${TEST_NAME}:${BASH_LINENO[1]}"
+}
+
+_S2I_PATH=$(command -v s2i)
+if [ -z "$_S2I_PATH" ]; then
+  error "s2i is not on PATH. Please install s2i or download it from https://github.com/openshift/source-to-image."
+  exit 1
+fi
+
+_PODMAN_PATH=$(command -v podman)
+_DOCKER_PATH=$(command -v docker)
+if [ -f "$_PODMAN_PATH" ]; then
+  info "Using podman"
+  docker() {
+    $_PODMAN_PATH "$@"
+  }
+  USING_PODMAN=y
+elif [ -f "$_DOCKER_PATH" ]; then
+  info "Using docker"
+  USING_PODMAN=""
+else
+  error "docker/podman are not on PATH. Please install podman or docker."
+  exit 1
+fi
+
+assert_contains() {
+  local actual="$1"
+  local expected="$2"
+
+  if ! echo "${actual}" | grep -qP -- "${expected}"; then
+    error "'${actual}' does not contain '${expected}'"
+    error_exit 1
+  fi
+}
+
+assert_contains_multiline() {
+  local actual=$(echo "$1" | tr -d '\r' | tr '\n' ' ')
+  local expected=$(echo "$2" | tr -d '\r' | tr '\n' ' ')
+
+  assert_contains "${actual}" "${expected}"
+}
+
+assert_not_contains() {
+  local actual="$1"
+  local unexpected="$2"
+
+  if echo "${actual}" | grep -qP -- "${unexpected}"; then
+    error "'${actual}' contains '${unexpected}'"
+    error_exit 1
+  fi
+}
+
+assert_equal() {
+  local actual="$1"
+  local expected="$2"
+
+  if ! [ "$actual" == "$expected" ]; then
+    error "'${actual}' does not equal '${expected}'"
+    error_exit 1
+  fi
+}
+
+assert_completed_build() {
+  local image="$1"
+  local log="$2"
+
+  assert_contains "${log}" "s2i build completed successfully"
+}
+
+test_start() {
+  info "Running ${FUNCNAME[1]}"
+  TEST_NAME="${FUNCNAME[1]}"
+}
+
+docker_run() {
+  local image="$1"
+  shift
+
+  docker_run_withargs "${image}" "" "$@"
+}
+
+docker_run_withargs() {
+  local image="$1"
+  local args="$2"
+  shift 2
+
+  local output;
+  output=$(docker run --rm ${args} ${image} "$@" 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+  else
+    echo "$output"
+  fi
+}
+
+docker_run_as() {
+  local image="$1"
+  local user="$2"
+  shift 2
+
+  local output;
+  output=$(docker run --rm --user="${user}" ${image} "$@" 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+  else
+    echo "$output"
+  fi
+}
+
+docker_run_as_d() {
+  local image="$1"
+  local user="$2"
+
+  local output;
+  output=$(docker run --user="${user}" -d -p ${TEST_PORT}:8080 ${image} 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-container"
+  else
+    echo "$output"
+  fi
+}
+
+docker_run_d() {
+  local image="$1"
+  local output;
+  output=$(docker run -d -p ${TEST_PORT}:8080 ${image} 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-container"
+  else
+    echo "$output"
+  fi
+}
+
+docker_get_env() {
+  local image="$1"
+  local name="$2"
+
+  local env=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{println $value}}{{end}}' ${image})
+  local line=$(echo "$env" | grep "${name}=")
+  echo ${line#*=}
+}
+
+docker_get_exposedports() {
+  local image="$1"
+  docker inspect ${image} | jq -c '.[].Config.ExposedPorts'
+}
+
+docker_build() {
+  local path="$1"
+  local output;
+  # unique id to work around podman issue https://github.com/containers/libpod/issues/3191
+  local id=$(cat /proc/sys/kernel/random/uuid)
+  output=$(docker build --no-cache -t $id $path  2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-image"
+  else
+    echo "$id"
+  fi
+}
+
+docker_exec() {
+  local container="$1"
+  shift
+
+  local output;
+  output=$(docker exec ${container} "$@" 2>&1)
+  if [ $? -ne 0 ]; then
+    error "$output"
+  else
+    echo "$output"
+  fi
+}
+
+docker_rm() {
+  local container="$1"
+  docker rm -f "${container}" >/dev/null 2>&1
+}
+
+docker_rmi() {
+  local image="$1"
+  docker rmi -f "${image}" >/dev/null 2>&1
+}
+
+docker_commandpath() {
+  local image="$1"
+  local command="$2"
+
+  docker_run ${image} bash -c "command -v ${command}"
+}
+
+curl_retry() {
+  local url="$1"
+  local max_attempts="${2:-10}"
+
+  local output
+  local attempt=1
+  local rv=$CURLE_COULNDT_CONNECT
+  while [ $rv -ne 0 -a $attempt -le $max_attempts ]; do
+    output=$(curl -sS "$url" 2>&1)
+    rv=$?
+    if [ $rv -eq $CURLE_COULNDT_CONNECT -o $rv -eq $CURLE_RECV_ERROR ]; then
+      sleep 1
+    fi
+    attempt=$(( $attempt + 1 ))
+  done
+  if [ $rv -ne 0 ]; then
+    error "$output"
+  else
+    echo "$output"
+  fi
+}
+
+container_url() {
+  local container="$1"
+  local output;
+  output=$(docker inspect --format="{{ .NetworkSettings.IPAddress }}" "${container}")
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-url"
+  else
+    if [ "$USING_PODMAN" ]; then
+      echo "http://localhost:8080"
+    else
+      echo "http://$output:8080"
+   fi
+  fi
+}
+
+s2i_image_tag() {
+  local app="$1"
+  echo "${IMAGE_NAME}-${app}"
+}
+
+s2i_build_core() {
+  local tag="$1"
+  local pull_policy="$2"
+  shift 2
+
+  if [ "$USING_PODMAN" ]; then
+    local pull_arg
+    if [ "$pull_policy" == "--pull-policy=never" ]; then
+      pull_arg="--pull=false"
+    elif [ "$pull_policy" == "--pull-policy=always" ]; then
+      pull_arg="--pull-always"
+    else
+      error "Unsupported pull_policy: $pull_policy"
+      exit 1
+    fi
+
+    build_folder=/tmp/s2i-dotnet/${tag}
+    rm -rf "$build_folder"
+    s2i build --as-dockerfile "$build_folder/Dockerfile" "$@" ${IMAGE_NAME} "${tag}" 2>&1
+    podman build $pull_arg --no-cache --security-opt label=disable -t "${tag}" "$build_folder" 2>&1
+    if [ $? -eq 0 ]; then
+      echo "s2i build completed successfully"
+    fi
+    rm -rf "$build_folder"
+  else
+    s2i build $pull_policy "$@" ${IMAGE_NAME} ${tag} 2>&1
+    if [ $? -eq 0 ]; then
+      echo "s2i build completed successfully"
+    fi
+  fi
+}
+
+s2i_build_output_log() {
+  local app="$1"
+  local tag="$2"
+  shift 2
+
+  if [[ "$@" != *"--incremental"* ]]; then
+    docker_rmi ${tag}
+  fi
+
+  s2i_build_core ${tag} --pull-policy=never "$@" "file://${test_dir}/${app}"
+}
+
+s2i_build() {
+  local app="$1"
+  local tag=$(s2i_image_tag ${app})
+  shift 1
+
+  local output;
+  output=$(s2i_build_output_log ${app} ${tag} "$@")
+  if [ $? -ne 0 ]; then
+    error "$output"
+    echo "no-image"
+  else
+    echo "$tag"
+  fi
+}
+
+s2i_usage() {
+  local image="$1"
+  if [ "$USING_PODMAN" ]; then
+    podman run --rm $image bash -c /usr/libexec/s2i/usage
+  else
+    s2i usage $image
+  fi
+}
