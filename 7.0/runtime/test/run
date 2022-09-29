@@ -244,8 +244,8 @@ test_s2i_build() {
 test_repos() {
     test_start
 
-    local output=$(docker_run_as $IMAGE_NAME 0 yum install -y zlib-devel)
-    assert_contains "$output" "Complete!"
+    local output=$(docker_run_as $IMAGE_NAME 0 microdnf install -y zlib-devel)
+    assert_contains "$output" "Complete"
 }
 
 info "Testing ${IMAGE_NAME}"
@@ -262,7 +262,9 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_s2i_usage
   test_s2i_build
   test_run_dotnet_in_dockerfile
-  #test_repos
+  if [ "$IMAGE_OS" = "RHEL8" ]; then
+    test_repos
+  fi
 fi
 
 if [ "$STOP_ON_ERROR" != "true" ]; then
