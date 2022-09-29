@@ -11,7 +11,7 @@ const keycloakConfig = {
 export const keycloak = Keycloak(keycloakConfig);
 
 export const init = (onSuccess) => {
-  keycloak.init({ onLoad: 'login-required', promiseType: 'native' }).then((authenticated) => {
+  keycloak.init({ onLoad: 'login-required', promiseType: 'native', pkceMethod: 'S256' }).then((authenticated) => {
     if (authenticated && onSuccess) {
       onSuccess();
     }

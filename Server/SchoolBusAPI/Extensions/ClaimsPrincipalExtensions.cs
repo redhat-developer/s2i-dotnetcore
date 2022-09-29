@@ -9,10 +9,10 @@ namespace SchoolBusAPI.Extensions
             var preferredUsername = principal.FindFirstValue("preferred_username");
 
             var usernames = preferredUsername?.Split("@");
-            var username = usernames?[0].ToUpperInvariant();
+            var username = principal.FindFirstValue("idir_username"); //usernames?[0].ToUpperInvariant();
             var directory = usernames?[1].ToUpperInvariant();
 
-            var userGuidClaim = directory?.ToUpperInvariant() == "IDIR" ? "idir_userid" : "bceid_userid";
+            var userGuidClaim = directory?.ToUpperInvariant() == "IDIR" ? "idir_user_guid" : "bceid_userid";
             var userGuid = principal.FindFirstValue(userGuidClaim)?.ToUpperInvariant();
 
             return (username, userGuid, directory);
