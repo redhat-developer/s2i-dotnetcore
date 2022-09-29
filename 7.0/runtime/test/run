@@ -28,23 +28,23 @@ IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-60-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-70-runtime-centos7}
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-60-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-70-runtime}
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-60-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-70-runtime}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-dotnet_version_series="6.0"
+dotnet_version_series="7.0"
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="6.0.5"
+dotnet_version="7.0.0-rc.1.22426.10"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="6.0.3"
+dotnet_version="7.0.0-rc.1.22426.10"
 fi
 
 test_dotnet() {
@@ -55,7 +55,7 @@ test_dotnet() {
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
   # Check version
   if [ "$SKIP_VERSION_CHECK" != "true" ]; then
-    assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version: ${dotnet_version}$"
+    assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version:\s*${dotnet_version}$"
   fi
 }
 
@@ -262,7 +262,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_s2i_usage
   test_s2i_build
   test_run_dotnet_in_dockerfile
-  test_repos
+  #test_repos
 fi
 
 if [ "$STOP_ON_ERROR" != "true" ]; then

@@ -31,14 +31,14 @@ IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-60-centos7}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-60-runtime-centos7}
+  IMAGE_NAME=${IMAGE_NAME:-dotnet/dotnet-70-centos7}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-dotnet/dotnet-70-runtime-centos7}
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-60}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-ubi8/dotnet-60-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-70}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-ubi8/dotnet-70-runtime}
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-60}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-fedora/dotnet-60-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-70}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-fedora/dotnet-70-runtime}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -47,11 +47,11 @@ source ${test_dir}/testcommon
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=6.0.105
-npm_version=6.14.15
+sdk_version=7.0.100-rc.1.22431.12
+npm_version=6.14.17
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=6.0.103
+sdk_version=7.0.100-rc.1.22431.12
 npm_version=8.3.1
 fi
 
@@ -329,7 +329,7 @@ test_config_1() {
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
   # DOTNET_ASSEMBLY_NAME=SampleApp
-  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/net6.0/SampleApp.dll"
+  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/net7.0/SampleApp.dll"
   # DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
   assert_contains "${s2i_build}" 'Restored /opt/app-root/src/src/app/app.csproj \([^)]+\)\.' # Includes S2iDotNetCoreDummy from myget.org.
   # DOTNET_PACK=true
@@ -475,12 +475,12 @@ test_imagestream_sample() {
   # test the sample app defined with the imagestreams:
   # "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git",
   # "sampleContextDir": "app",
-  # "sampleRef": "dotnet-6.0"
+  # "sampleRef": "dotnet-7.0"
 
   # build image
   local image=$(s2i_image_tag sample)
   docker_rmi ${tag}
-  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnet-6.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
+  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnet-7.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -637,7 +637,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_image
   test_config
   test_usage
-  test_repos
+  #test_repos
   test_npm_mirror
   test_consoleapp
   test_multiframework
