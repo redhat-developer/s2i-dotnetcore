@@ -63,9 +63,6 @@ RUN microdnf install -y nss_wrapper tar gzip unzip findutils shadow-utils libicu
     ln -s /opt/dotnet/dotnet /usr/bin/dotnet
 ENV DOTNET_ROOT=/opt/dotnet
 
-# Get prefix path and path to scripts rather than hard-code them in scripts
-ENV CONTAINER_SCRIPTS_PATH=/opt/app-root
-
 # Add default user
 RUN mkdir -p ${DOTNET_APP_PATH} ${DOTNET_DATA_PATH} && \
     useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
