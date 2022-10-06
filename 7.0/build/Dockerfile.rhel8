@@ -57,5 +57,5 @@ ENV  DOTNET_USE_POLLING_FILE_WATCHER=true
 # Run container by default as user with id 1001 (default)
 USER 1001
 
-# Set the default CMD to print the usage of the language image.
-CMD /usr/libexec/s2i/usage
+# Set the default CMD to start a shell.
+CMD /bin/bash
