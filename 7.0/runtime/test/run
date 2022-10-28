@@ -89,7 +89,7 @@ test_debuggable() {
   test_start
 
   # VSDBG (the .NET command line debugger) install script dependencies are met.
-  if [ "$(uname -m)" != "s390x" ]; then
+  if [ "$(uname -m)" != "s390x" -a "$(uname -m)" != "ppc64le" ]; then
     local install_command="curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /tmp/vsdbg"
     assert_contains "$(docker_run $IMAGE_NAME bash -c "$install_command")" "Successfully installed vsdbg at '/tmp/vsdbg'"
   fi

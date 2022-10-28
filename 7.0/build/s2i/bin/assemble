@@ -13,6 +13,7 @@ ARCHMAP=(
   ["i386"]="x86"
   ["x86_64"]="x64"
   ["s390x"]="s390x"
+  ["ppc64le"]="ppc64le"
 )
 
 if [ -n "${DOTNET_VERBOSITY}" ]; then

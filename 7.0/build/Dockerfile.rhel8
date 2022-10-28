@@ -35,7 +35,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 #     yum clean all -y && \
 # # yum cache files may still exist (and quite large in size)
 #     rm -rf /var/cache/yum/*
-RUN microdnf -y module enable nodejs:14 && \
+RUN microdnf -y module enable nodejs:16 && \
     microdnf install -y npm nodejs-nodemon rsync procps-ng findutils
 
 # Directory with the sources is set as the working directory.
