@@ -82,48 +82,6 @@
                             "kind": "DockerImage",
                             "name": "registry.access.redhat.com/ubi8/dotnet-70:7.0"
                         }
-                    },
-                    {
-                        "name": "6.0-ubi8",
-                        "annotations": {
-                            "openshift.io/display-name": ".NET 6 (UBI 8)",
-                            "description": "Build and run .NET 6 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/6.0/build/README.md.",
-                            "iconClass": "icon-dotnet",
-                            "tags": "builder,.net,dotnet,dotnetcore,dotnet60",
-                            "supports": "dotnet:6.0,dotnet",
-                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
-                            "sampleContextDir": "app",
-                            "sampleRef": "dotnet-6.0",
-                            "version": "6.0"
-                        },
-                        "referencePolicy": {
-                            "type": "Local"
-                        },
-                        "from": {
-                            "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/ubi8/dotnet-60:6.0"
-                        }
-                    },
-                    {
-                        "name": "6.0",
-                        "annotations": {
-                            "openshift.io/display-name": ".NET 6 (UBI 8)",
-                            "description": "Build and run .NET 6 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/6.0/build/README.md.",
-                            "iconClass": "icon-dotnet",
-                            "tags": "builder,.net,dotnet,dotnetcore,dotnet60,hidden",
-                            "supports": "dotnet:6.0,dotnet",
-                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
-                            "sampleContextDir": "app",
-                            "sampleRef": "dotnetcore-6.0",
-                            "version": "6.0"
-                        },
-                        "referencePolicy": {
-                            "type": "Local"
-                        },
-                        "from": {
-                            "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/ubi8/dotnet-60:6.0"
-                        }
                     }
                 ]
             }
@@ -191,42 +149,6 @@
                         "from": {
                             "kind": "DockerImage",
                             "name": "registry.access.redhat.com/ubi8/dotnet-70-runtime:7.0"
-                        }
-                    },
-                    {
-                        "name": "6.0-ubi8",
-                        "annotations": {
-                            "openshift.io/display-name": ".NET 6 Runtime (UBI 8)",
-                            "description": "Run .NET 6 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/6.0/runtime/README.md.",
-                            "iconClass": "icon-dotnet",
-                            "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime",
-                            "supports": "dotnet-runtime",
-                            "version": "6.0"
-                        },
-                        "referencePolicy": {
-                            "type": "Local"
-                        },
-                        "from": {
-                            "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/ubi8/dotnet-60-runtime:6.0"
-                        }
-                    },
-                    {
-                        "name": "6.0",
-                        "annotations": {
-                            "openshift.io/display-name": ".NET 6 Runtime (UBI 8)",
-                            "description": "Run .NET 6 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/6.0/runtime/README.md.",
-                            "iconClass": "icon-dotnet",
-                            "tags": "runtime,.net-runtime,dotnet-runtime,dotnetcore-runtime,hidden",
-                            "supports": "dotnet-runtime",
-                            "version": "6.0"
-                        },
-                        "referencePolicy": {
-                            "type": "Local"
-                        },
-                        "from": {
-                            "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/ubi8/dotnet-60-runtime:6.0"
                         }
                     }
                 ]
