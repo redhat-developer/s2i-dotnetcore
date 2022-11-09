@@ -47,12 +47,12 @@ source ${test_dir}/testcommon
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=7.0.100-rc.1.22431.12
-npm_version=6.14.17
+sdk_version=7.0.100
+npm_version=8.15.0
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=7.0.100-rc.1.22431.12
-npm_version=8.3.1
+sdk_version=7.0.100
+npm_version=8.15.0
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -295,7 +295,7 @@ test_templates() {
 
   # mvc is a pure ASP.NET Core MVC web application
   # angular and reactredux include a front-end which is built using npm packages.
-  local templates=(mvc angular)
+  local templates=(mvc react angular)
   for template in ${templates[@]}; do
     test_template $template
   done
