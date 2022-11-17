@@ -14,6 +14,7 @@ LABEL io.k8s.description="Platform for building and running .NET 6 applications"
 # Labels consumed by Red Hat build service
 LABEL name="ubi8/dotnet-60" \
       com.redhat.component="dotnet-60-container" \
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
       version="6.0" \
       release="1"
 
