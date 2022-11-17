@@ -29,7 +29,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # - npm: provides SDK for building NodeJS web front-ends.
 # - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
 RUN INSTALL_PKGS="dotnet-sdk-7.0 npm procps-ng" && \
-    microdnf -y module enable nodejs:16 && \
+    microdnf -y module enable nodejs:18 && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     microdnf clean all -y && \
