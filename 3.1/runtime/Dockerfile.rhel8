@@ -26,6 +26,7 @@ LABEL io.k8s.description="Platform for running .NET Core 3.1 applications" \
 # Labels consumed by Red Hat build service
 LABEL name="ubi8/dotnet-31-runtime" \
       com.redhat.component="dotnet-31-runtime-container" \
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
       version="3.1" \
       release="1" \
       architecture="x86_64"
