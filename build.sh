@@ -118,7 +118,7 @@ elif [ "$IMAGE_OS" = "RHEL8" ]; then
   image_prefix="ubi8"
   docker_filename="Dockerfile.rhel8"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  VERSIONS="${VERSIONS:-3.1 6.0 7.0}"
+  VERSIONS="${VERSIONS:-3.1 6.0}"
   image_prefix="fedora"
   docker_filename="Dockerfile.fedora"
 else
