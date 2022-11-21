@@ -46,11 +46,11 @@ dotnet_version_series="3.1"
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 dotnet_version="3.1.16"
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="3.1.25"
+dotnet_version="3.1.30"
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
-dotnet_version="3.1.25"
+dotnet_version="3.1.30"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="3.1.23"
+dotnet_version="3.1.30"
 fi
 
 test_dotnet() {

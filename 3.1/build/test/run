@@ -48,7 +48,7 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
 source ${test_dir}/testcommon
 
-npm_version=6.14.15
+npm_version=6.14.17
 
 if [ "$IMAGE_OS" = "CENTOS" ]; then
 # sdk version supported on CentOS
@@ -56,13 +56,13 @@ sdk_version=3.1.116
 npm_version=6.14.11
 elif [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=3.1.419
+sdk_version=3.1.424
 elif [ "$IMAGE_OS" = "RHEL7" ]; then
 # sdk version supported on RHEL7
-sdk_version=3.1.419
+sdk_version=3.1.424
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=3.1.419
+sdk_version=3.1.424
 npm_version=8.3.1
 fi
 
@@ -290,7 +290,7 @@ test_templates() {
 
   # mvc is a pure ASP.NET Core MVC web application
   # angular and reactredux include a front-end which is built using npm packages.
-  local templates=(mvc angular reactredux)
+  local templates=(mvc reactredux)
   for template in ${templates[@]}; do
     test_template $template
   done
@@ -649,14 +649,14 @@ test_incremental()
   local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=true)
 
   # verify packages are installed
-  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg"
+  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
   # perform a second build, with the incremental flag
   s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
   # verify NO other packages are installed
-  assert_not_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg"
+  assert_not_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
@@ -675,7 +675,7 @@ test_incremental_without_packages()
   local image=$(s2i_image_tag ${app})
   local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=false)
   # verify packages are installed
-  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg"
+  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 

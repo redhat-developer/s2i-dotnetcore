@@ -48,7 +48,7 @@ source ${test_dir}/testcommon
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
 sdk_version=7.0.100
-npm_version=8.15.0
+npm_version=8.19.1
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
 sdk_version=7.0.100
@@ -576,14 +576,14 @@ test_incremental()
   local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=true)
 
   # verify packages are installed
-  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg"
+  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
   # perform a second build, with the incremental flag
   s2i_build=$(s2i_build_output_log ${app} ${image} --incremental -e DOTNET_INCREMENTAL=true)
   # verify NO other packages are installed
-  assert_not_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg"
+  assert_not_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
@@ -602,7 +602,7 @@ test_incremental_without_packages()
   local image=$(s2i_image_tag ${app})
   local s2i_build=$(s2i_build_output_log ${app} ${image} -e DOTNET_INCREMENTAL=false)
   # verify packages are installed
-  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg"
+  assert_contains "${s2i_build}" "GET https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg"
   # verify the build completes succesfully
   assert_completed_build ${image} "${s2i_build}"
 
