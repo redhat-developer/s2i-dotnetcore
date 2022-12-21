@@ -11,7 +11,6 @@ Versions
 
 .NET Core versions currently provided are:
 
-* 3.1 (RHEL 7, RHEL 8, CentOS 7, Fedora)
 * 6.0 (RHEL 8, Fedora)
 * 7.0 (RHEL 8, Fedora)
 * [RETIRED] 1.0 (RHEL 7, CentOS 7)
@@ -20,6 +19,7 @@ Versions
 * [RETIRED] 2.1 (RHEL 7, RHEL 8, CentOS 7)
 * [RETIRED] 2.2 (RHEL 7, CentOS 7)
 * [RETIRED] 3.0 (RHEL 7, RHEL 8)
+* [RETIRED] 3.1 (RHEL 7, RHEL 8, CentOS 7, Fedora)
 * [RETIRED] 5.0 (RHEL 8, CentOS 7, Fedora)
 
 Building
@@ -30,12 +30,8 @@ $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
 $ sudo VERSIONS=7.0 ./build.sh
 ```
 
-Note: to build RHEL 7 based images, you need to run the build on a
-properly subscribed RHEL 7 machine. On RHEL 8 systems, RHEL 8 images
-are built by default. On non-RHEL, building CentOS images is the default.
-
 To override the default basis of the image, set IMAGE_OS to the desired
-base system, such as IMAGE_OS=CENTOS or IMAGE_OS=RHEL8.
+base system, such as IMAGE_OS=FEDORA or IMAGE_OS=RHEL8.
 
 Installing
 ----------------
@@ -113,17 +109,6 @@ see [1.1 usage documentation](1.1/README.md).
 
 For information about usage of Docker image for .NET Core 1.0,
 see [1.0 usage documentation](1.0/README.md).
-
-Image name structure
-------------------------
-
-##### Structure: dotnet/1-2-3
-
-1. Platform name: 'dotnetcore' for 1.x, 'dotnet' for 2.0+
-2. Platform version (without dots)
-3. Base image: 'rhel7' or 'centos7'
-
-Examples: `dotnet/dotnetcore-10-rhel7`, `dotnet/dotnet-31-centos7`
 
 OpenShift Templates
 -------------------

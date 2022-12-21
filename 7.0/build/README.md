@@ -45,10 +45,6 @@ Repository organization
 
   Fedora based Dockerfile.
 
-* **Dockerfile**
-
-  CentOS based Dockerfile.
-
 * **`root/usr/bin/`**
 
   This folder contains common scripts.
