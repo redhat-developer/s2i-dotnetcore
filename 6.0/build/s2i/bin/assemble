@@ -267,3 +267,6 @@ fi
 
 # fix permissions
 fix-permissions /opt/app-root
+
+# delete build artefacts in tmp folder which are causing problems in run mode
+rm -rf /tmp/.dotnet/shm/*
