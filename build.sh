@@ -16,8 +16,7 @@
 #
 # IMAGE_OS        The base os image to use when building
 #                 the containers.
-#                 Options are RHEL8, and
-#                 FEDORA.
+#                 Options are RHEL8 and FEDORA.
 #                 Defaults to match the OS.
 #
 # TEST_PORT       specifies the port on the docker host

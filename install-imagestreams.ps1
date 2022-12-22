@@ -146,7 +146,7 @@ if($Remove.IsPresent)
     exit
 }
 
-$imagestreams_url = "https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams_centos.json"
+$imagestreams_url = "https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json"
 
 # Determine namespace
 If (-not ($PSBoundParameters.ContainsKey("Namespace")))
