@@ -56,10 +56,6 @@ Repository organization
 
   Fedora based Dockerfile.
 
-* **Dockerfile**
-
-  CentOS based Dockerfile.
-
 * **`test/`**
 
   This folder contains binary archives of [S2I](https://github.com/openshift/source-to-image)

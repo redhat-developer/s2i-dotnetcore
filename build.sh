@@ -12,12 +12,11 @@
 #                 test application used in OpenShift
 #
 # VERSIONS        The list of versions to build/test.
-#                 Defaults to all versions. i.e "3.1 6.0".
+#                 Defaults to all versions. i.e "6.0 7.0".
 #
 # IMAGE_OS        The base os image to use when building
 #                 the containers.
-#                 Options are CENTOS, RHEL7, RHEL8, and
-#                 FEDORA.
+#                 Options are RHEL8 and FEDORA.
 #                 Defaults to match the OS.
 #
 # TEST_PORT       specifies the port on the docker host
@@ -31,7 +30,7 @@
 #
 # Usage:
 #       $ sudo ./build.sh
-#       $ sudo VERSIONS=3.1 ./build.sh
+#       $ sudo VERSIONS=6.0 ./build.sh
 #
 
 if [ "${DEBUG}" == "true" ]; then
@@ -94,12 +93,8 @@ test_images() {
 
 if [ -z "${IMAGE_OS}" ]; then
   # Default to CentOS when not on RHEL.
-  if [[ `grep "Red Hat Enterprise Linux Server release 7" /etc/redhat-release` ]]; then
-    export IMAGE_OS="RHEL7"
-  elif [[ `grep "Red Hat Enterprise Linux release 8" /etc/redhat-release` ]]; then
+  if [[ `grep "Red Hat Enterprise Linux release 8" /etc/redhat-release` ]]; then
     export IMAGE_OS="RHEL8"
-  elif [[ `grep "CentOS" /etc/redhat-release` ]]; then
-    export IMAGE_OS="CENTOS"
   elif [[ `grep "Fedora" /etc/redhat-release` ]]; then
     export IMAGE_OS="FEDORA"
   else
@@ -108,24 +103,14 @@ if [ -z "${IMAGE_OS}" ]; then
   fi
 fi
 
-if [ "$IMAGE_OS" = "CENTOS" ]; then
-  VERSIONS="${VERSIONS:-3.1}"
-  image_postfix="-centos7"
-  image_prefix="dotnet"
-  docker_filename="Dockerfile"
-elif [ "$IMAGE_OS" = "RHEL8" ]; then
-  VERSIONS="${VERSIONS:-3.1 6.0 7.0}"
+if [ "$IMAGE_OS" = "RHEL8" ]; then
+  VERSIONS="${VERSIONS:-6.0 7.0}"
   image_prefix="ubi8"
   docker_filename="Dockerfile.rhel8"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  VERSIONS="${VERSIONS:-3.1 6.0}"
+  VERSIONS="${VERSIONS:-6.0}"
   image_prefix="fedora"
   docker_filename="Dockerfile.fedora"
-else
-  VERSIONS="${VERSIONS:-3.1}"
-  image_postfix="-rhel7"
-  image_prefix="dotnet"
-  docker_filename="Dockerfile.rhel7"
 fi
 
 for v in ${VERSIONS}; do
