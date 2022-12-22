@@ -260,6 +260,9 @@ if [ "$DOTNET_INCREMENTAL" == "true" ]; then
 fi
 rm -rf /opt/app-root/{.nuget,.local}
 
+# delete build artefacts in tmp folder which are causing problems in run mode
+rm -rf /tmp/.dotnet
+
 if [ "$DOTNET_RM_SRC" == "true" ]; then
   echo "---> Removing sources..."
   rm -rf /opt/app-root/src/*
@@ -267,6 +270,3 @@ fi
 
 # fix permissions
 fix-permissions /opt/app-root
-
-# delete build artefacts in tmp folder which are causing problems in run mode
-rm -rf /tmp/.dotnet/shm/*
