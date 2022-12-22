@@ -53,6 +53,8 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 RUN INSTALL_PKGS="aspnetcore-runtime-7.0 nss_wrapper findutils shadow-utils tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
+# ubi-minimal doesn't include timezones, restore them.
+    microdnf reinstall tzdata -y && \
     microdnf clean all -y && \
  # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/*
