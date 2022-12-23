@@ -39,7 +39,7 @@ source ${test_dir}/testcommon
 dotnet_version_series="7.0"
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="7.0.0"
+dotnet_version="7.0.1"
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 dotnet_version="7.0.0"
 fi
@@ -115,6 +115,14 @@ test_data_folder() {
   # check a writable data folder is available
   assert_equal $(docker_run $IMAGE_NAME "stat -c %a /opt/app-root/data") "777"
 }
+
+test_timezones() {
+  test_start
+
+  # verify timezone data is available
+  assert_contains $(docker_run $IMAGE_NAME "stat -c %n /usr/share/zoneinfo/UTC") "/usr/share/zoneinfo/UTC"
+}
+
 
 test_user() {
   test_start
@@ -252,6 +260,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_envvars
   test_default_cmd
   test_data_folder
+  test_timezones
   test_debuggable
   test_user
   test_port
