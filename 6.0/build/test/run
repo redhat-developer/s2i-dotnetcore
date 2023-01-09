@@ -627,6 +627,24 @@ test_npm_mirror() {
   assert_contains "${s2i_build}" "${enabled_string}"
 }
 
+test_rm_tmp_dotnet() {
+  test_start
+
+  # rm-tmp-dotnet creates a directory at /tmp/.dotnet/shm during assemble.
+  local app=rm-tmp-dotnet
+
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+  local tmp_dotnet=$(docker run --rm ${image} stat /tmp/.dotnet 2>&1)
+
+  # cleanup
+  docker_rmi ${image}
+
+  # verify /tmp/.dotnet was removed
+  assert_contains "${tmp_dotnet}" "No such file or directory"
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -634,6 +652,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_config
   test_usage
   test_repos
+  test_rm_tmp_dotnet
   test_npm_mirror
   test_consoleapp
   test_multiframework
