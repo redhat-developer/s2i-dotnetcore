@@ -33,8 +33,8 @@ elif [ "$IMAGE_OS" = "FEDORA" ]; then
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
-test_dir="$(readlink -zf $(dirname "${BASH_SOURCE[0]}"))"
-source ${test_dir}/testcommon
+test_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
+source "${test_dir}/testcommon"
 
 dotnet_version_series="7.0"
 
