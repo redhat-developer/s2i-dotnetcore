@@ -43,11 +43,11 @@ source "${test_dir}/testcommon"
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=6.0.110
+sdk_version=6.0.113
 npm_version=6.14.17
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=6.0.110
+sdk_version=6.0.113
 npm_version=8.15.0
 fi
 
@@ -611,6 +611,22 @@ test_repos() {
   assert_contains "$output" "Complete!"
 }
 
+test_rpm_packages() {
+  test_start
+
+  local current_list="${test_dir}/packages.actual.list"
+  rm -f "${current_list}"
+  # the ${IMAGE_OS,,} syntax converts IMAGE_OS to lowercase
+  local package_list_file="packages.${IMAGE_OS,,}.list"
+
+  # get the list of installed packages
+  docker_run "${IMAGE_NAME}" '/bin/bash' '-c' 'rpm -qa --queryformat "%{NAME}\n" | sort -u' > "${current_list}"
+
+  # verify the list of packages hasn't changed
+  diff -u <(cat "${current_list}") <(cat "${test_dir}/${package_list_file}")
+  assert_equal "$?" 0
+}
+
 test_npm_mirror() {
   test_start
 
@@ -652,6 +668,9 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_config
   test_usage
   test_repos
+  if [ "${IMAGE_OS}" = "RHEL8" ]; then
+    test_rpm_packages
+  fi
   test_rm_tmp_dotnet
   test_npm_mirror
   test_consoleapp
