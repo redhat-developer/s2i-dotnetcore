@@ -43,7 +43,7 @@ source "${test_dir}/testcommon"
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=7.0.102
+sdk_version=7.0.103
 npm_version=8.19.2
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
@@ -623,16 +623,23 @@ test_repos() {
 test_rpm_packages() {
   test_start
 
-  local current_list="${test_dir}/packages.actual.list"
-  rm -f "${current_list}"
+  local new_list="${test_dir}/packages.new.list"
+  rm -f "${new_list}"
+  local package_list_file
   # the ${IMAGE_OS,,} syntax converts IMAGE_OS to lowercase
-  local package_list_file="packages.${IMAGE_OS,,}.list"
+  package_list_file="${test_dir}/packages.${IMAGE_OS,,}.$(uname -m).list"
+  if [ ! -f "${package_list_file}" ]; then
+    package_list_file="${test_dir}/packages.${IMAGE_OS,,}.list"
+    if [ ! -f "${package_list_file}" ]; then
+        package_list_file="${test_dir}/packages.list"
+    fi
+  fi
 
   # get the list of installed packages
-  docker_run "${IMAGE_NAME}" '/bin/bash' '-c' 'rpm -qa --queryformat "%{NAME}\n" | sort -u' > "${current_list}"
+  docker_run "${IMAGE_NAME}" '/bin/bash' '-c' 'rpm -qa --queryformat "%{NAME}\n" | sort -u' > "${new_list}"
 
   # verify the list of packages hasn't changed
-  diff -u <(cat "${current_list}") <(cat "${test_dir}/${package_list_file}")
+  diff -u "${package_list_file}" "${new_list}"
   assert_equal "$?" 0
 }
 
@@ -679,6 +686,8 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_default_cmd
   if [ "$IMAGE_OS" = "RHEL8" ]; then
     test_repos
+  fi
+  if [ "${IMAGE_OS}" = "RHEL8" ] && [ "$(uname -m)" = "x86_64" ] ; then
     test_rpm_packages
   fi
   test_rm_tmp_dotnet

@@ -43,7 +43,7 @@ source "${test_dir}/testcommon"
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=6.0.113
+sdk_version=6.0.114
 npm_version=6.14.17
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
@@ -283,6 +283,11 @@ test_templates() {
   # mvc is a pure ASP.NET Core MVC web application
   # angular and reactredux include a front-end which is built using npm packages.
   local templates=(mvc angular)
+  # the angular template fails on aarch64 with node-gyp errors.
+  # https://github.com/redhat-developer/s2i-dotnetcore/pull/446#issuecomment-1423668736
+  if [[ "$(uname -m)" == "aarch64" ]]; then
+    templates=(mvc)
+  fi
   for template in ${templates[@]}; do
     test_template $template
   done
@@ -614,16 +619,23 @@ test_repos() {
 test_rpm_packages() {
   test_start
 
-  local current_list="${test_dir}/packages.actual.list"
-  rm -f "${current_list}"
+  local new_list="${test_dir}/packages.new.list"
+  rm -f "${new_list}"
+  local package_list_file
   # the ${IMAGE_OS,,} syntax converts IMAGE_OS to lowercase
-  local package_list_file="packages.${IMAGE_OS,,}.list"
+  package_list_file="${test_dir}/packages.${IMAGE_OS,,}.$(uname -m).list"
+  if [ ! -f "${package_list_file}" ]; then
+    package_list_file="${test_dir}/packages.${IMAGE_OS,,}.list"
+    if [ ! -f "${package_list_file}" ]; then
+        package_list_file="${test_dir}/packages.list"
+    fi
+  fi
 
   # get the list of installed packages
-  docker_run "${IMAGE_NAME}" '/bin/bash' '-c' 'rpm -qa --queryformat "%{NAME}\n" | sort -u' > "${current_list}"
+  docker_run "${IMAGE_NAME}" '/bin/bash' '-c' 'rpm -qa --queryformat "%{NAME}\n" | sort -u' > "${new_list}"
 
   # verify the list of packages hasn't changed
-  diff -u <(cat "${current_list}") <(cat "${test_dir}/${package_list_file}")
+  diff -u "${package_list_file}" "${new_list}"
   assert_equal "$?" 0
 }
 
@@ -668,7 +680,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_config
   test_usage
   test_repos
-  if [ "${IMAGE_OS}" = "RHEL8" ]; then
+  if [ "${IMAGE_OS}" = "RHEL8" ] && [ "$(uname -m)" = "x86_64" ]; then
     test_rpm_packages
   fi
   test_rm_tmp_dotnet
