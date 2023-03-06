@@ -283,9 +283,9 @@ test_templates() {
   # mvc is a pure ASP.NET Core MVC web application
   # angular and reactredux include a front-end which is built using npm packages.
   local templates=(mvc angular)
-  # the angular template fails on aarch64 with node-gyp errors.
+  # the angular template fails on aarch64/s390x with node-gyp errors.
   # https://github.com/redhat-developer/s2i-dotnetcore/pull/446#issuecomment-1423668736
-  if [[ "$(uname -m)" == "aarch64" ]]; then
+  if [[ "$(uname -m)" == "aarch64" ]] || [[ "$(uname -m)" == "s390x" ]]; then
     templates=(mvc)
   fi
   for template in ${templates[@]}; do
