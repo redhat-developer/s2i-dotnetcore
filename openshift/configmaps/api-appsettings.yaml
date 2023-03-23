@@ -24,7 +24,12 @@ objects:
                     "Name": "Async",
                     "Args": {
                         "configure": [
-                            { "Name": "Console" }
+                            { 
+                                "Name": "Console",
+                                "Args": {
+                                    "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}"
+                                }
+                            }
                         ]
                     }
                 },
@@ -46,7 +51,7 @@ objects:
               "Schoolbus": "Host=localhost;Username=test1;Password=test1;Database=test1"
           },
           "JWT": {
-              "Authority": "https://dev.oidc.gov.bc.ca/auth/realms/<realmid>",
+              "Authority": "https://dev.loginproxy.gov.bc.ca/auth/realms/<realmid>",
               "Audience": "<app-id>"
           },
           "CCW_USER_ID": "user",
