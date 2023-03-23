@@ -2,6 +2,9 @@
 const { OpenShiftClientX } = require("@bcgov/pipeline-cli");
 const path = require("path");
 
+const util = require("./utils");
+const KeyCloakClient = require("./keycloak");
+
 module.exports = (settings) => {
   const phases = settings.phases;
   const options = settings.options;
@@ -15,23 +18,34 @@ module.exports = (settings) => {
     path.resolve(__dirname, "../../openshift")
   );
   var objects = [];
+  const kc = new KeyCloakClient(settings, oc);
 
-  console.log("Adding Db postgresql secret");
-
-  objects.push(
-    ...oc.processDeploymentTemplate(
-      `${templatesLocalBaseUrl}/secrets/db-postgresql-secrets.yaml`,
-      {
-        param: {
-          PROJECT_NAME: `${phases[phase].name}`,
-          NAME: `${phases[phase].name}-db`,
-          SUFFIX: phases[phase].suffix,
-          POSTGRESQL_USER: phases[phase].dbUser,
-          ENV: phases[phase].phase,
-        },
-      }
-    )
+  const dbSecret = util.getSecret(
+    oc,
+    phases[phase].namespace,
+    `${phases[phase].name}-db-${phases[phase].phase}`
   );
+
+  kc.addUris();
+
+  if (!dbSecret) {
+    console.log("Adding Db postgresql secret");
+
+    objects.push(
+      ...oc.processDeploymentTemplate(
+        `${templatesLocalBaseUrl}/secrets/db-postgresql-secrets.yaml`,
+        {
+          param: {
+            PROJECT_NAME: `${phases[phase].name}`,
+            NAME: `${phases[phase].name}-db`,
+            SUFFIX: phases[phase].suffix,
+            POSTGRESQL_USER: phases[phase].dbUser,
+            ENV: phases[phase].phase,
+          },
+        }
+      )
+    );
+  }
 
   objects.push(
     ...oc.processDeploymentTemplate(
