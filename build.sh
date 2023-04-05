@@ -114,8 +114,8 @@ elif [ "$IMAGE_OS" = "FEDORA" ]; then
 fi
 
 for v in ${VERSIONS}; do
-  build_name="${image_prefix}/$(base_image_name ${v})${image_postfix}"
-  runtime_name="${image_prefix}/$(base_image_name ${v})-runtime${image_postfix}"
+  build_name="localhost/${image_prefix}/$(base_image_name ${v})${image_postfix}"
+  runtime_name="localhost/${image_prefix}/$(base_image_name ${v})-runtime${image_postfix}"
 
   # Build the runtime image
   build_image "${v}/runtime" "${docker_filename}" "${runtime_name}"

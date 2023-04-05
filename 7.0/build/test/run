@@ -30,11 +30,11 @@ STOP_ON_ERROR=${STOP_ON_ERROR:-true}
 IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-70}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-ubi8/dotnet-70-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-localhost/ubi8/dotnet-70}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-localhost/ubi8/dotnet-70-runtime}
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-70}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-fedora/dotnet-70-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-localhost/fedora/dotnet-70}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-localhost/fedora/dotnet-70-runtime}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
