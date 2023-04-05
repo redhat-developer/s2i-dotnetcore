@@ -27,9 +27,9 @@ STOP_ON_ERROR=${STOP_ON_ERROR:-true}
 IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-ubi8/dotnet-60-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-localhost/ubi8/dotnet-60-runtime}
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-fedora/dotnet-60-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-localhost/fedora/dotnet-60-runtime}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
