@@ -7,6 +7,7 @@ using MimeKit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 
 namespace SchoolBusAPI.Services
 {
@@ -29,13 +30,16 @@ namespace SchoolBusAPI.Services
     public class EmailService : ServiceBase, IEmailService
     {
         private readonly IConfiguration Configuration;
+        private readonly ILogger<EmailService> _logger;
 
         /// <summary>
         /// Create a email service
         /// </summary>
-        public EmailService(DbAppContext context, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(httpContextAccessor, context, mapper)
+        public EmailService(DbAppContext context, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IMapper mapper, ILogger<EmailService> logger) 
+            : base(httpContextAccessor, context, mapper)
         {
             Configuration = configuration;
+            _logger = logger;
         }
 
         /// <summary>
@@ -97,16 +101,16 @@ namespace SchoolBusAPI.Services
                     {
                         client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
                         {
-                            Console.WriteLine("Starting certificate validation.");
+                            _logger.LogInformation("Starting certificate validation.");
                             if (sslPolicyErrors == SslPolicyErrors.None)
                             {
-                                Console.WriteLine("Cerficiate valid");
+                                _logger.LogInformation("Certificate valid");
                                 return true;
                             }
 
                             if (chain.ChainElements == null || chain.ChainElements.Count == 0)
                             {
-                                Console.WriteLine("No certificates found in chain.");
+                                _logger.LogError("No certificates found in chain.");
                                 return false;
                             }
 
@@ -120,19 +124,19 @@ namespace SchoolBusAPI.Services
                     {
                         email.mailSent = false;
                         email.errorInfo = "Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.";
-                        Console.WriteLine($"Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.");
+                        _logger.LogError($"Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.");
                         return new ObjectResult(email);
                     }
                     catch (Exception ex)
                     {
                         email.mailSent = false;
                         email.errorInfo = $"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}.";
-                        Console.WriteLine($"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}");
+                        _logger.LogError($"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}");
                         return new ObjectResult(email);
                     }
 
                     client.Send(emailMessage);
-                    Console.WriteLine("Email sent.");
+                    _logger.LogInformation("Email sent.");
                     client.Disconnect(true);
 
                     email.mailSent = true;

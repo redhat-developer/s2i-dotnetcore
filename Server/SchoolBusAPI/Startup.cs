@@ -313,7 +313,8 @@ namespace SchoolBusAPI
         {
             DbContextOptionsBuilder<DbAppContext> options = new DbContextOptionsBuilder<DbAppContext>();
             options.UseNpgsql(GetConnectionString());
-            DbAppContextFactory dbAppContextFactory = new DbAppContextFactory(null, options.Options);
+            var logger = serviceProvider.GetRequiredService<ILogger<DbAppContext>>();
+            DbAppContextFactory dbAppContextFactory = new DbAppContextFactory(null, options.Options, logger);
             return dbAppContextFactory;
         }
 

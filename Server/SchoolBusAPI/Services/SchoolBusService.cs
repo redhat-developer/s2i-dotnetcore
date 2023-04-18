@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using System.Text;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 
 namespace SchoolBusAPI.Services
 {
@@ -170,14 +171,17 @@ namespace SchoolBusAPI.Services
     {
         private readonly DbAppContext _context;
         private readonly IConfiguration Configuration;
+        private readonly ILogger<SchoolBusService> _logger;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, IMapper mapper) : base(httpContextAccessor, context, mapper)
+        public SchoolBusService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, IMapper mapper, ILogger<SchoolBusService> logger) 
+            : base(httpContextAccessor, context, mapper)
         {
             _context = context;
             Configuration = configuration;
+            _logger = logger;
         }
 
         /// <summary>
@@ -666,7 +670,8 @@ namespace SchoolBusAPI.Services
                 catch (Exception e)
                 {
                     result = null;
-                    Console.WriteLine(e.ToString());
+                    string exceptionMessage = e.ToString();
+                    _logger.LogError($"SchoolbusesIdPdfpermitGetAsync exception: {exceptionMessage}");
                 }
 
                 finally
@@ -679,7 +684,8 @@ namespace SchoolBusAPI.Services
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine(e.ToString());
+                            string exceptionMessage = e.ToString();
+                            _logger.LogError($"SchoolbusesIdPdfpermitGetAsync exception: {exceptionMessage}");
                         }
                     }
 

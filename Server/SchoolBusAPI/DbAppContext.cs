@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 using SchoolBusAPI.Extensions;
 using SchoolBusAPI.ViewModels;
 using SchoolBusCommon;
@@ -32,16 +33,18 @@ namespace SchoolBusAPI.Models
     {
         DbContextOptions<DbAppContext> _options;
         IHttpContextAccessor _httpContextAccessor;
+        ILogger<DbAppContext> _logger;
 
-        public DbAppContextFactory(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options)
+        public DbAppContextFactory(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options, ILogger<DbAppContext> logger)
         {
             _options = options;
             _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
         }
 
         public IDbAppContext Create()
         {
-            return new DbAppContext(_httpContextAccessor, _options);
+            return new DbAppContext(_httpContextAccessor, _options, _logger);
         }
     }
 
@@ -88,14 +91,16 @@ namespace SchoolBusAPI.Models
     public class DbAppContext : DbContext, IDbAppContext
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILogger<DbAppContext> _logger;
 
         /// <summary>
         /// Constructor for Class used for Entity Framework access.
         /// </summary>
-        public DbAppContext(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options)
+        public DbAppContext(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options, ILogger<DbAppContext> logger)
                                 : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
         }
 
         /// <summary>
@@ -335,7 +340,8 @@ namespace SchoolBusAPI.Models
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e.ToString());
+                        string exceptionMessage = e.ToString();
+                        _logger.LogError($"DbAppContext exception: {exceptionMessage}");
                     }
                 }
             }
