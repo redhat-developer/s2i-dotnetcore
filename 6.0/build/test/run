@@ -43,8 +43,8 @@ source "${test_dir}/testcommon"
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=6.0.114
-npm_version=6.14.17
+sdk_version=6.0.116
+npm_version=8.19.3
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
 sdk_version=6.0.113
@@ -282,12 +282,7 @@ test_templates() {
 
   # mvc is a pure ASP.NET Core MVC web application
   # angular and reactredux include a front-end which is built using npm packages.
-  local templates=(mvc angular)
-  # the angular template fails on aarch64/s390x with node-gyp errors.
-  # https://github.com/redhat-developer/s2i-dotnetcore/pull/446#issuecomment-1423668736
-  if [[ "$(uname -m)" == "aarch64" ]] || [[ "$(uname -m)" == "s390x" ]]; then
-    templates=(mvc)
-  fi
+  local templates=(mvc angular react)
   for template in ${templates[@]}; do
     test_template $template
   done
