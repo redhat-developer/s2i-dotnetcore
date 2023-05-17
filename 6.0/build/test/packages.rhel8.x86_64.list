@@ -135,6 +135,7 @@ nodejs
 npm
 npth
 nss_wrapper
+nss_wrapper-libs
 openldap
 openssl
 openssl-libs
@@ -212,6 +213,7 @@ python3-setuptools-wheel
 python3-six
 python3-subscription-manager-rhsm
 python3-syspurpose
+python3-systemd
 python3-urllib3
 readline
 redhat-release
