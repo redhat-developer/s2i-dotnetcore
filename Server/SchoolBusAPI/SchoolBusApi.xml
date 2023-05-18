@@ -192,7 +192,7 @@
             the started transaction.
             </returns>
         </member>
-        <member name="M:SchoolBusAPI.Models.DbAppContext.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.EntityFrameworkCore.DbContextOptions{SchoolBusAPI.Models.DbAppContext})">
+        <member name="M:SchoolBusAPI.Models.DbAppContext.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.EntityFrameworkCore.DbContextOptions{SchoolBusAPI.Models.DbAppContext},Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Models.DbAppContext})">
             <summary>
             Constructor for Class used for Entity Framework access.
             </summary>
@@ -5234,7 +5234,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.EmailService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
+        <member name="M:SchoolBusAPI.Services.EmailService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Services.EmailService})">
             <summary>
             Create a email service
             </summary>
@@ -6093,7 +6093,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.SchoolBusService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext,AutoMapper.IMapper)">
+        <member name="M:SchoolBusAPI.Services.SchoolBusService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Services.SchoolBusService})">
             <summary>
             Create a service and set the database context
             </summary>

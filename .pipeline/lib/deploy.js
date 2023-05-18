@@ -3,7 +3,6 @@ const { OpenShiftClientX } = require("@bcgov/pipeline-cli");
 const path = require("path");
 
 const util = require("./utils");
-const KeyCloakClient = require("./keycloak");
 
 module.exports = (settings) => {
   const phases = settings.phases;
@@ -18,15 +17,11 @@ module.exports = (settings) => {
     path.resolve(__dirname, "../../openshift")
   );
   var objects = [];
-  const kc = new KeyCloakClient(settings, oc);
-
   const dbSecret = util.getSecret(
     oc,
     phases[phase].namespace,
     `${phases[phase].name}-db-${phases[phase].phase}`
   );
-
-  kc.addUris();
 
   if (!dbSecret) {
     console.log("Adding Db postgresql secret");
