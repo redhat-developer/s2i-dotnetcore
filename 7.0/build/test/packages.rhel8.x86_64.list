@@ -103,6 +103,7 @@ nodejs
 npm
 npth
 nss_wrapper
+nss_wrapper-libs
 openldap
 openssl
 openssl-libs

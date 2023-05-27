@@ -95,6 +95,7 @@ ncurses-libs
 nettle
 npth
 nss_wrapper
+nss_wrapper-libs
 openldap
 openssl-libs
 p11-kit
