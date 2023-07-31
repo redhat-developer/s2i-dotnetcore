@@ -43,8 +43,8 @@ source "${test_dir}/testcommon"
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=6.0.116
-npm_version=8.19.3
+sdk_version=6.0.120
+npm_version=9.5.0
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
 sdk_version=6.0.116
