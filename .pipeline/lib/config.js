@@ -2,7 +2,7 @@
 const options = require("@bcgov/pipeline-cli").Util.parseArguments();
 
 const changeId = options.pr; //aka pull-request
-const version = "2.0.0";
+const version = "2.0.6";
 const name = "sbi"; //project name prefix
 
 Object.assign(options.git, { owner: "ychung-mot", repository: "schoolbus" });

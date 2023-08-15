@@ -1,6 +1,6 @@
 {
   "name": "schoolbus-client",
-  "version": "2.0.0",
+  "version": "2.0.6",
   "description": "School Bus JavaScript Web Application",
   "private": true,
   "repository": {
