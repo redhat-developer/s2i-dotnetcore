@@ -17,7 +17,7 @@ using SchoolBusAPI.Extensions;
 using Ws.Ccw.Reference;
 using SchoolBusCcw;
 using System;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using AutoMapper;
 using System.Collections.Generic;
 using SchoolBusAPI.ViewModels;
@@ -99,17 +99,15 @@ namespace SchoolBusAPI.Services
         private readonly DbAppContext _context;
         private readonly IConfiguration _configuration;
         private readonly ICCWService _ccwService;
-        private readonly ILogger<CCWDataService> _logger;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public CCWDataService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, ICCWService ccwService, ILogger<CCWDataService> logger, IMapper mapper) : base(httpContextAccessor, context, mapper)
+        public CCWDataService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, ICCWService ccwService, IMapper mapper) : base(httpContextAccessor, context, mapper)
         {
             _context = context;
             _configuration = configuration;
             _ccwService = ccwService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -194,7 +192,7 @@ namespace SchoolBusAPI.Services
                 }
                 catch (Exception)
                 {
-                    _logger.LogInformation($"{logPrefix} Exception occured parsing registration number {regi}.");
+                    Log.Information($"{logPrefix} Exception occured parsing registration number {regi}.");
                 }
 
                 vehicle = _ccwService.GetBCVehicleForRegistrationNumber(regi, userId, guid, directory);
@@ -222,11 +220,11 @@ namespace SchoolBusAPI.Services
             if (_context.CCWDatas.Any(x => x.ICBCRegistrationNumber == icbcRegistrationNumber))
             {
                 ccwdata = _context.CCWDatas.First(x => x.ICBCRegistrationNumber == icbcRegistrationNumber);
-                _logger.LogInformation($"{logPrefix} Found CCW record for Registration # " + ccwdata.ICBCRegistrationNumber);
+                Log.Information($"{logPrefix} Found CCW record for Registration # " + ccwdata.ICBCRegistrationNumber);
             }
             else
             {
-                _logger.LogInformation($"{logPrefix} Creating new CCW record");
+                Log.Information($"{logPrefix} Creating new CCW record");
                 ccwdata = new CCWData();
             }
 
@@ -258,9 +256,7 @@ namespace SchoolBusAPI.Services
             ccwdata.ICBCRegOwnerRODL = vehicle.owner.driverLicenseNumber;
             ccwdata.ICBCSeatingCapacity = SanitizeInt(vehicle.seatingCapacity);
             ccwdata.ICBCVehicleType = vehicle.vehicleType + " - " + vehicle.vehicleTypeDescription;
-
             ccwdata.ICBCVehicleIdentificationNumber = vehicle.serialNumber;
-
             ccwdata.NSCPlateDecal = vehicle.decalNumber;
             ccwdata.NSCPolicyEffectiveDate = vehicle.policyStartDate;
             ccwdata.NSCPolicyExpiryDate = vehicle.policyExpiryDate;
@@ -363,7 +359,7 @@ namespace SchoolBusAPI.Services
                 _context.Add(ccwdata);
             }
 
-            _logger.LogInformation($"{logPrefix} CCW data has been added/updated.");
+            Log.Information($"{logPrefix} CCW data has been added/updated.");
             _context.SaveChanges();
 
             return ccwdata;

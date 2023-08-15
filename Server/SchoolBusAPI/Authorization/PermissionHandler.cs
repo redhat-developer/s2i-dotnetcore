@@ -28,12 +28,10 @@ namespace SchoolBusAPI.Authorization
     /// </remarks>
     public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
-        private ILogger _logger;
         private IHttpContextAccessor _httpContextAccessor;
 
-        public PermissionHandler(ILogger logger, IHttpContextAccessor httpContextAccessor)
+        public PermissionHandler(IHttpContextAccessor httpContextAccessor)
         {
-            _logger = logger;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -53,7 +51,7 @@ namespace SchoolBusAPI.Authorization
             }
             else
             {
-                _logger.Information("RequiresPermission - {user} - {url}", user.Identity.Name, _httpContextAccessor.HttpContext.Request.Path);
+                Log.Information("RequiresPermission - {user} - {url}", user.Identity.Name, _httpContextAccessor.HttpContext.Request.Path);
             }
 
             return Task.CompletedTask;

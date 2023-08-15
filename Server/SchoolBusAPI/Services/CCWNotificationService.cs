@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Models;
@@ -72,8 +73,10 @@ namespace SchoolBusAPI.Services
                 }
             }
 
-            dateFrom = dateFrom.Date;
-            dateTo = dateTo.AddDays(1).Date.AddSeconds(-1);
+            var utcDateFrom = dateFrom.ToUniversalTime();
+            var utcDateTo = dateTo.ToUniversalTime().AddDays(1);
+            dateFrom = new DateTime(utcDateFrom.Year, utcDateFrom.Month, utcDateFrom.Day, 0, 0, 0, DateTimeKind.Utc);
+            dateTo = new DateTime(utcDateTo.Year, utcDateTo.Month, utcDateTo.Day, 0, 0, 0, DateTimeKind.Utc).AddSeconds(-1);
 
             var notifications = data.SelectMany(x => x.CCWNotifications)
                 .Include(x => x.CCWNotificationDetails)
@@ -81,7 +84,9 @@ namespace SchoolBusAPI.Services
                     .ThenInclude(x => x.SchoolBusOwner)
                 .Include(x => x.SchoolBus)
                     .ThenInclude(x => x.Inspector)
-                .Where(x => x.CreateTimestamp.Date >= dateFrom && x.CreateTimestamp.Date <= dateTo);
+                .Where(x => 
+                    new DateTime(x.CreateTimestamp.Year, x.CreateTimestamp.Month, x.CreateTimestamp.Day, 0, 0, 0, DateTimeKind.Utc) >= dateFrom 
+                    && new DateTime(x.CreateTimestamp.Year, x.CreateTimestamp.Month, x.CreateTimestamp.Day, 0, 0, 0, DateTimeKind.Utc) <= dateTo);
 
             if (hideRead)
             {

@@ -17,14 +17,13 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using SchoolBusAPI.Mappings;
 using SchoolBusAPI.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using System.Text;
 using AutoMapper;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace SchoolBusAPI.Services
 {
@@ -171,17 +170,15 @@ namespace SchoolBusAPI.Services
     {
         private readonly DbAppContext _context;
         private readonly IConfiguration Configuration;
-        private readonly ILogger<SchoolBusService> _logger;
 
         /// <summary>
         /// Create a service and set the database context
         /// </summary>
-        public SchoolBusService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, IMapper mapper, ILogger<SchoolBusService> logger) 
+        public SchoolBusService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, DbAppContext context, IMapper mapper) 
             : base(httpContextAccessor, context, mapper)
         {
             _context = context;
             Configuration = configuration;
-            _logger = logger;
         }
 
         /// <summary>
@@ -671,7 +668,7 @@ namespace SchoolBusAPI.Services
                 {
                     result = null;
                     string exceptionMessage = e.ToString();
-                    _logger.LogError($"SchoolbusesIdPdfpermitGetAsync exception: {exceptionMessage}");
+                    Log.Error($"SchoolbusesIdPdfpermitGetAsync exception: {exceptionMessage}");
                 }
 
                 finally
@@ -685,7 +682,7 @@ namespace SchoolBusAPI.Services
                         catch (Exception e)
                         {
                             string exceptionMessage = e.ToString();
-                            _logger.LogError($"SchoolbusesIdPdfpermitGetAsync exception: {exceptionMessage}");
+                            Log.Error($"SchoolbusesIdPdfpermitGetAsync exception: {exceptionMessage}");
                         }
                     }
 

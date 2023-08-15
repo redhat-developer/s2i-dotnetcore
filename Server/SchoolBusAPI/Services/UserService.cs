@@ -413,7 +413,10 @@ namespace SchoolBusAPI.Services
 
             if (includeInactive == null || includeInactive == false)
             {
-                data = data.Where(ur => !ur.ExpiryDate.HasValue || ur.ExpiryDate == DateTime.MinValue || ur.ExpiryDate > DateTime.Now);
+                data = data.Where(ur => 
+                    !ur.ExpiryDate.HasValue 
+                    || ur.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                    || ur.ExpiryDate > DateTime.UtcNow);
             }
 
             var inspectors = data

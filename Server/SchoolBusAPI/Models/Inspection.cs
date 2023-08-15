@@ -9,17 +9,10 @@
  */
 
 using System;
-using System.Linq;
-using System.IO;
 using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -59,10 +52,6 @@ namespace SchoolBusAPI.Models
             this.InspectionTypeCode = InspectionTypeCode;
             this.InspectionResultCode = InspectionResultCode;
             this.CreatedDate = CreatedDate;
-
-
-
-
             this.SchoolBus = SchoolBus;
             this.Inspector = Inspector;
             this.Notes = Notes;
@@ -237,7 +226,6 @@ namespace SchoolBusAPI.Models
                 ) &&                 
                 (
                     this.InspectionDate == other.InspectionDate ||
-                    this.InspectionDate != null &&
                     this.InspectionDate.Equals(other.InspectionDate)
                 ) &&                 
                 (
@@ -252,7 +240,6 @@ namespace SchoolBusAPI.Models
                 ) &&                 
                 (
                     this.CreatedDate == other.CreatedDate ||
-                    this.CreatedDate != null &&
                     this.CreatedDate.Equals(other.CreatedDate)
                 ) &&                 
                 (
@@ -299,23 +286,18 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                   
-                if (this.InspectionDate != null)
-                {
-                    hash = hash * 59 + this.InspectionDate.GetHashCode();
-                }                if (this.InspectionTypeCode != null)
+                hash = hash * 59 + this.Id.GetHashCode();
+                hash = hash * 59 + this.InspectionDate.GetHashCode();
+                if (this.InspectionTypeCode != null)
                 {
                     hash = hash * 59 + this.InspectionTypeCode.GetHashCode();
-                }                
-                                if (this.InspectionResultCode != null)
+                }
+                if (this.InspectionResultCode != null)
                 {
                     hash = hash * 59 + this.InspectionResultCode.GetHashCode();
-                }                
-                                   
-                if (this.CreatedDate != null)
-                {
-                    hash = hash * 59 + this.CreatedDate.GetHashCode();
-                }                   
+                }
+
+                hash = hash * 59 + this.CreatedDate.GetHashCode();
                 if (this.SchoolBus != null)
                 {
                     hash = hash * 59 + this.SchoolBus.GetHashCode();
@@ -323,19 +305,20 @@ namespace SchoolBusAPI.Models
                 if (this.Inspector != null)
                 {
                     hash = hash * 59 + this.Inspector.GetHashCode();
-                }                if (this.Notes != null)
+                }
+                if (this.Notes != null)
                 {
                     hash = hash * 59 + this.Notes.GetHashCode();
-                }                
-                                if (this.RIPInspectionId != null)
+                }
+                if (this.RIPInspectionId != null)
                 {
                     hash = hash * 59 + this.RIPInspectionId.GetHashCode();
-                }                
-                                if (this.PreviousNextInspectionDate != null)
+                }
+                if (this.PreviousNextInspectionDate != null)
                 {
                     hash = hash * 59 + this.PreviousNextInspectionDate.GetHashCode();
-                }                
-                                if (this.PreviousNextInspectionTypeCode != null)
+                }
+                if (this.PreviousNextInspectionTypeCode != null)
                 {
                     hash = hash * 59 + this.PreviousNextInspectionTypeCode.GetHashCode();
                 }                

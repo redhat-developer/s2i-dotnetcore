@@ -192,7 +192,7 @@
             the started transaction.
             </returns>
         </member>
-        <member name="M:SchoolBusAPI.Models.DbAppContext.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.EntityFrameworkCore.DbContextOptions{SchoolBusAPI.Models.DbAppContext},Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Models.DbAppContext})">
+        <member name="M:SchoolBusAPI.Models.DbAppContext.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.EntityFrameworkCore.DbContextOptions{SchoolBusAPI.Models.DbAppContext})">
             <summary>
             Constructor for Class used for Entity Framework access.
             </summary>
@@ -4622,11 +4622,6 @@
             <param name="bindingContext"></param>
             <returns></returns>
         </member>
-        <member name="T:SchoolBusAPI.Program">
-            <summary>
-            The main Program for the application.
-            </summary>
-        </member>
         <member name="M:SchoolBusAPI.Seeders.CCWJurisdictionSeeder.GetDefaultCCWJurisdictions(SchoolBusAPI.Models.DbAppContext)">
             <summary>
             Returns a list of users to be populated in all environments.
@@ -4764,7 +4759,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.CCWDataService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext,SchoolBusCcw.ICCWService,Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Services.CCWDataService},AutoMapper.IMapper)">
+        <member name="M:SchoolBusAPI.Services.CCWDataService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext,SchoolBusCcw.ICCWService,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -5234,7 +5229,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.EmailService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Services.EmailService})">
+        <member name="M:SchoolBusAPI.Services.EmailService.#ctor(SchoolBusAPI.Models.DbAppContext,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper)">
             <summary>
             Create a email service
             </summary>
@@ -6093,7 +6088,7 @@
             
             </summary>
         </member>
-        <member name="M:SchoolBusAPI.Services.SchoolBusService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Services.SchoolBusService})">
+        <member name="M:SchoolBusAPI.Services.SchoolBusService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,SchoolBusAPI.Models.DbAppContext,AutoMapper.IMapper)">
             <summary>
             Create a service and set the database context
             </summary>
@@ -6588,24 +6583,6 @@
             <param name="surname"></param>
             <param name="includeInactive">True if Inactive users will be returned</param>
             <response code="200">OK</response>
-        </member>
-        <member name="T:SchoolBusAPI.Startup">
-            <summary>
-            The application Startup class
-            </summary>
-        </member>
-        <member name="M:SchoolBusAPI.Startup.SetupHangfireCreateJob(Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Startup})">
-            <summary>
-            Setup the Hangfire job to populate the CCW Data table.
-            Only necessary after a new deploy to PROD with an empty database.
-            </summary>
-            <param name="logger"></param>
-        </member>
-        <member name="M:SchoolBusAPI.Startup.SetupHangfireUpdateJob(Microsoft.Extensions.Logging.ILogger{SchoolBusAPI.Startup})">
-            <summary>
-            Setup the Hangfire job to update the CCW Data table.        
-            </summary>
-            <param name="logger"></param>
         </member>
         <member name="T:SchoolBusAPI.ViewModels.AttachmentViewModel">
             <summary>

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using SchoolBusAPI.Extensions;
 using SchoolBusAPI.ViewModels;
 using SchoolBusCommon;
@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 
 namespace SchoolBusAPI.Models
 {    
@@ -33,18 +32,16 @@ namespace SchoolBusAPI.Models
     {
         DbContextOptions<DbAppContext> _options;
         IHttpContextAccessor _httpContextAccessor;
-        ILogger<DbAppContext> _logger;
 
-        public DbAppContextFactory(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options, ILogger<DbAppContext> logger)
+        public DbAppContextFactory(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options)
         {
             _options = options;
             _httpContextAccessor = httpContextAccessor;
-            _logger = logger;
         }
 
         public IDbAppContext Create()
         {
-            return new DbAppContext(_httpContextAccessor, _options, _logger);
+            return new DbAppContext(_httpContextAccessor, _options);
         }
     }
 
@@ -91,16 +88,14 @@ namespace SchoolBusAPI.Models
     public class DbAppContext : DbContext, IDbAppContext
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ILogger<DbAppContext> _logger;
 
         /// <summary>
         /// Constructor for Class used for Entity Framework access.
         /// </summary>
-        public DbAppContext(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options, ILogger<DbAppContext> logger)
+        public DbAppContext(IHttpContextAccessor httpContextAccessor, DbContextOptions<DbAppContext> options)
                                 : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
-            _logger = logger;
         }
 
         /// <summary>
@@ -114,6 +109,37 @@ namespace SchoolBusAPI.Models
             modelBuilder.Entity<Contact>()
                 .HasOne(s => s.SchoolBusOwner)
                 .WithMany(g => g.Contacts);
+
+            /*
+            // Npgsql 6+ datetime type issue
+            var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
+                v => v.ToUniversalTime(),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+            var nullableDateTimeConverter = new ValueConverter<DateTime?, DateTime?>(
+                v => v.HasValue ? v.Value.ToUniversalTime() : v,
+                v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v);
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (entityType.IsKeyless)
+                {
+                    continue;
+                }
+
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime))
+                    {
+                        property.SetValueConverter(dateTimeConverter);
+                    }
+                    else if (property.ClrType == typeof(DateTime?))
+                    {
+                        property.SetValueConverter(nullableDateTimeConverter);
+                    }
+                }
+            }
+            */
         }
 
         public virtual DbSet<Audit> Audits { get; set; }
@@ -341,7 +367,7 @@ namespace SchoolBusAPI.Models
                     catch (Exception e)
                     {
                         string exceptionMessage = e.ToString();
-                        _logger.LogError($"DbAppContext exception: {exceptionMessage}");
+                        Log.Error($"DbAppContext exception: {exceptionMessage}");
                     }
                 }
             }

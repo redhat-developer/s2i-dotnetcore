@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +16,14 @@ namespace SchoolBusAPI.Seeders
     public class SeedFactory<T> where T : DbContext
     {
         private readonly IWebHostEnvironment _env;
-        private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
 
         private List<Seeder<T>> SeederInstances = new List<Seeder<T>>();
 
-        public SeedFactory(IConfiguration configuration, IWebHostEnvironment env, ILogger logger)
+        public SeedFactory(IConfiguration configuration, IWebHostEnvironment env)
         {
             _env = env;
             _configuration = configuration;
-            _logger = logger;
 
             this.LoadSeeders();
             SeederInstances.Sort(new SeederComparer());
@@ -33,17 +31,17 @@ namespace SchoolBusAPI.Seeders
 
         private void LoadSeeders()
         {
-            _logger.LogDebug("Loading seeders...");
+            Log.Debug("Loading seeders...");
 
             Assembly assembly = typeof(SeedFactory<T>).GetTypeInfo().Assembly;
             List<Type> Types = assembly.GetTypes().Where(t => t.GetTypeInfo().IsSubclassOf(typeof(Seeder<T>))).ToList();
             foreach (Type type in Types)
             {
-                _logger.LogDebug($"\tCreating instance of {type.Name}...");
-                SeederInstances.Add((Seeder<T>)Activator.CreateInstance(type, _configuration, _env, _logger));
+               Log.Debug($"\tCreating instance of {type.Name}...");
+               SeederInstances.Add((Seeder<T>)Activator.CreateInstance(type, _configuration, _env));
             }
 
-            _logger.LogDebug($"\tA total of {Types.Count} seeders loaded.");
+            Log.Debug($"\tA total of {Types.Count} seeders loaded.");
         }
 
         public void Seed(T context)

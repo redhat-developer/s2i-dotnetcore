@@ -34,7 +34,6 @@
     "keycloak-js": "^19.0.2",
     "lodash": "^4.17.21",
     "moment": "^2.27.0",
-    "node-sass": "^7.0.1",
     "preval.macro": "^5.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -49,7 +48,8 @@
     "react-router-bootstrap": "^0.23.1",
     "react-scripts": "^5.0.1",
     "redux": "^3.7.2",
-    "redux-devtools-extension": "^2.13.8"
+    "redux-devtools-extension": "^2.13.8",
+    "sass": "^1.58.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,6 +1,6 @@
 ﻿using Hangfire;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.Services;
 using SchoolBusCcw;
@@ -21,19 +21,15 @@ namespace SchoolBusAPI.Hangfire
         private readonly DbAppContext _context;
         private readonly IConfiguration _configuration;
         private readonly ICCWDataService _ccwDataService;
-        private readonly ILogger _logger;
-
         private readonly string _userId;
         private readonly string _userGuid;
         private readonly string _userDir;
 
-        public CcwJobService(DbAppContext context, IConfiguration configuration, ICCWDataService ccwDataService, ILogger<CcwJobService> logger)
+        public CcwJobService(DbAppContext context, IConfiguration configuration, ICCWDataService ccwDataService)
         {
             _context = context;
             _configuration = configuration;
             _ccwDataService = ccwDataService;
-            _logger = logger;
-
             _userId = _configuration["CCW_USER_ID"];
             _userGuid = _configuration["CCW_USER_GUID"];
             _userDir = _configuration["CCW_USER_DIR"];
@@ -76,9 +72,9 @@ namespace SchoolBusAPI.Hangfire
 
                 if (cCWData == null)
                 {
-                    _logger.LogInformation($"[Hangfire] PopulateCCWJob - No data from CCW for regi: {regi} vin: {vin}, plate: {plate}.");
+                    Log.Information($"[Hangfire] PopulateCCWJob - No data from CCW for regi: {regi} vin: {vin}, plate: {plate}.");
                     _context.SaveChanges();
-                    _logger.LogInformation($"[Hangfire] PopulateCCWJob - Updated bus record timestamp with the ID {data.Id}.");
+                    Log.Information($"[Hangfire] PopulateCCWJob - Updated bus record timestamp with the ID {data.Id}.");
                     return;
                 }
 
@@ -86,7 +82,7 @@ namespace SchoolBusAPI.Hangfire
 
                 // ensure that the record is touched in the database
                 _context.SaveChanges();
-                _logger.LogInformation($"[Hangfire] PopulateCCWJob - Saved bus record with the ID {data.Id}.");
+                Log.Information($"[Hangfire] PopulateCCWJob - Saved bus record with the ID {data.Id}.");
             }
         }
 
@@ -110,7 +106,7 @@ namespace SchoolBusAPI.Hangfire
 
                 if (maxUpdateCount > 500)
                 {
-                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - Today's max update count({maxUpdateCount}) reached.");
+                    Log.Information($"[Hangfire] UpdateCCWJob - Today's max update count({maxUpdateCount}) reached.");
                     return;
                 }
 
@@ -138,9 +134,9 @@ namespace SchoolBusAPI.Hangfire
                 // fetch did not work, but we don't want it to fire again, so update the timestamp.
                 if (cCWData == null)
                 {
-                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - No data from CCW for regi: {regi} vin: {vin}, plate: {plate}.");
+                    Log.Information($"[Hangfire] UpdateCCWJob - No data from CCW for regi: {regi} vin: {vin}, plate: {plate}.");
                     _context.SaveChanges();
-                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - Updated bus record timestamp with the ID {data.Id}.");
+                    Log.Information($"[Hangfire] UpdateCCWJob - Updated bus record timestamp with the ID {data.Id}.");
                     return;
                 }
 
@@ -165,7 +161,7 @@ namespace SchoolBusAPI.Hangfire
                     }
 
                     _context.SaveChanges();
-                    _logger.LogInformation($"[Hangfire] UpdateCCWJob - Saved bus record with the ID {data.Id}.");
+                    Log.Information($"[Hangfire] UpdateCCWJob - Saved bus record with the ID {data.Id}.");
                 }
             }
 
