@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
+using SchoolBusCommon.Helpers;
 
 namespace SchoolBusAPI.Services
 {
@@ -252,7 +253,9 @@ namespace SchoolBusAPI.Services
                 result.GivenName = User.FindFirst(ClaimTypes.GivenName).Value;
                 result.Surname = User.FindFirst(ClaimTypes.Surname).Value;
 
-                DateTime today = DateTime.UtcNow.Date;
+                DateTime today = DateUtils.ConvertPacificToUtcTime(
+                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0));
+
                 DateTime dateTo = today.AddDays(31).AddSeconds(-1);
 
                 int overdue = _context.SchoolBuss.AsNoTracking()

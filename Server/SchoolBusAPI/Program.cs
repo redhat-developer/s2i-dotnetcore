@@ -316,11 +316,8 @@ DbAppContextFactory CreateDbAppContextFactory(IServiceProvider serviceProvider)
     return dbAppContextFactory;
 }
 
-/// <summary>
-/// Setup the Hangfire job to populate the CCW Data table.
-/// Only necessary after a new deploy to PROD with an empty database.
-/// </summary>
-/// <param name="logger"></param>
+// Setup the Hangfire job to populate the CCW Data table.
+// Only necessary after a new deploy to PROD with an empty database.
 void SetupHangfireCreateJob()
 {
     Log.Information("Attempting setup of Hangfire Create CCW job ...");
@@ -345,10 +342,7 @@ void SetupHangfireCreateJob()
     }
 }
 
-/// <summary>
-/// Setup the Hangfire job to update the CCW Data table.        
-/// </summary>
-/// <param name="logger"></param>
+// Setup the Hangfire job to update the CCW Data table
 void SetupHangfireUpdateJob()
 {
     Log.Information("Attempting setup of Hangfire Update CCW job ...");

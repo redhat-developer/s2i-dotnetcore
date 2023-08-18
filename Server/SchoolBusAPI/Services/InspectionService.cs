@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using SchoolBusAPI.Authorization;
 using SchoolBusAPI.ViewModels;
+using SchoolBusCommon.Helpers;
 
 namespace SchoolBusAPI.Services
 {
@@ -284,7 +285,9 @@ namespace SchoolBusAPI.Services
 
         public InspectionCountsViewModel GetInspectionCounts(int?[] districts, int?[] inspectors)
         {
-            DateTime today = DateTime.UtcNow.Date;
+            DateTime today = DateUtils.ConvertPacificToUtcTime(
+                new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0));
+
             DateTime dateTo = today.AddDays(31).AddSeconds(-1);
 
             var data = DbContext.SchoolBuss.AsNoTracking();

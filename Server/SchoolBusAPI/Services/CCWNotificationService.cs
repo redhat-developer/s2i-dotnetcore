@@ -7,6 +7,7 @@ using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
+using SchoolBusCommon.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,10 +74,13 @@ namespace SchoolBusAPI.Services
                 }
             }
 
-            var utcDateFrom = dateFrom.ToUniversalTime();
-            var utcDateTo = dateTo.ToUniversalTime().AddDays(1);
-            dateFrom = new DateTime(utcDateFrom.Year, utcDateFrom.Month, utcDateFrom.Day, 0, 0, 0, DateTimeKind.Utc);
-            dateTo = new DateTime(utcDateTo.Year, utcDateTo.Month, utcDateTo.Day, 0, 0, 0, DateTimeKind.Utc).AddSeconds(-1);
+            dateFrom = DateUtils.ConvertPacificToUtcTime(
+                new DateTime(dateFrom.Year, dateFrom.Month, dateFrom.Day, 0, 0, 0));
+
+            dateTo = DateUtils.ConvertPacificToUtcTime(
+                new DateTime(dateTo.Year, dateTo.Month, dateTo.Day, 0, 0, 0))
+                    .AddDays(1)
+                    .AddSeconds(-1);
 
             var notifications = data.SelectMany(x => x.CCWNotifications)
                 .Include(x => x.CCWNotificationDetails)
@@ -85,8 +89,8 @@ namespace SchoolBusAPI.Services
                 .Include(x => x.SchoolBus)
                     .ThenInclude(x => x.Inspector)
                 .Where(x => 
-                    new DateTime(x.CreateTimestamp.Year, x.CreateTimestamp.Month, x.CreateTimestamp.Day, 0, 0, 0, DateTimeKind.Utc) >= dateFrom 
-                    && new DateTime(x.CreateTimestamp.Year, x.CreateTimestamp.Month, x.CreateTimestamp.Day, 0, 0, 0, DateTimeKind.Utc) <= dateTo);
+                    x.CreateTimestamp >= dateFrom 
+                    && x.CreateTimestamp <= dateTo);
 
             if (hideRead)
             {

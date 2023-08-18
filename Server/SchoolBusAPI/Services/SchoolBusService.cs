@@ -24,6 +24,7 @@ using System.Net.Http;
 using System.Text;
 using AutoMapper;
 using Serilog;
+using SchoolBusCommon.Helpers;
 
 namespace SchoolBusAPI.Services
 {
@@ -959,15 +960,21 @@ namespace SchoolBusAPI.Services
                     data = data.Where(x => x.NextInspectionTypeCode.ToLower() == "re-inspection");
                 }
 
-                if (startDate != null)
+                if (startDate is DateTime sDate)
                 {
-                    var dateFrom = ((DateTime)startDate).Date;
+                    var dateFrom = DateUtils.ConvertPacificToUtcTime(
+                        new DateTime(sDate.Year, sDate.Month, sDate.Day, 0, 0, 0));
+
                     data = data.Where(x => x.NextInspectionDate >= dateFrom);
                 }
 
-                if (endDate != null)
+                if (endDate is DateTime eDate)
                 {
-                    var dateTo = ((DateTime)endDate).Date.AddDays(1).AddSeconds(-1);
+                    var dateTo = DateUtils.ConvertPacificToUtcTime(
+                        new DateTime(eDate.Year, eDate.Month, eDate.Day, 0, 0, 0))
+                            .AddDays(1)
+                            .AddSeconds(-1);
+
                     data = data.Where(x => x.NextInspectionDate <= dateTo);
                 }
             }
