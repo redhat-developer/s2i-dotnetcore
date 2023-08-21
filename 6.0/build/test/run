@@ -324,6 +324,9 @@ test_config_1() {
   # DOTNET_TEST_PROJECTS=test/test1 test/test2
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
+  # DOTNET_TEST_CONFIGURATION=Debug
+  assert_contains "${s2i_build}" "test1/bin/Debug"
+  assert_contains "${s2i_build}" "test2/bin/Debug"
   # DOTNET_ASSEMBLY_NAME=SampleApp
   assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/net6.0/SampleApp.dll"
   # DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
@@ -371,6 +374,9 @@ test_config_2() {
   # DOTNET_TEST_PROJECTS=test/test1/test1.csproj test/test2
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
   assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
+  # DOTNET_TEST_CONFIGURATION=Release
+  assert_contains "${s2i_build}" "test1/bin/Release"
+  assert_contains "${s2i_build}" "test2/bin/Release"
 
   # DOTNET_VERBOSITY=normal
   ## Environment

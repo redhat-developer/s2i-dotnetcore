@@ -187,6 +187,7 @@ fi
 if [ "$BUILD_TYPE" == "source" ]; then
   # User settable environment
   DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
+  DOTNET_TEST_CONFIGURATION="${DOTNET_TEST_CONFIGURATION:-Debug}"
 
   RESTORE_OPTIONS=""
   # If true, run dotnet restore with --disable-parallel
@@ -208,7 +209,7 @@ if [ "$BUILD_TYPE" == "source" ]; then
       echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
       dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
       echo "---> Running test project: $TEST_PROJECT..."
-      dotnet test "$TEST_PROJECT" -f "$DOTNET_FRAMEWORK" $VERBOSITY_OPTION --no-restore
+      dotnet test "$TEST_PROJECT" -c "$DOTNET_TEST_CONFIGURATION" -f "$DOTNET_FRAMEWORK" $VERBOSITY_OPTION --no-restore
   done
 
   # publish application
