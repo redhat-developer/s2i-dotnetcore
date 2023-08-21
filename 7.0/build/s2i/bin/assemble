@@ -187,7 +187,6 @@ fi
 if [ "$BUILD_TYPE" == "source" ]; then
   # User settable environment
   DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
-  # Keeping this 'Debug' for backwards compatibility
   DOTNET_TEST_CONFIGURATION="${DOTNET_TEST_CONFIGURATION:-Debug}"
 
   RESTORE_OPTIONS=""
