@@ -21,7 +21,7 @@ objects:
           from:
             kind: DockerImage
             # name: registry.redhat.io/dotnet/dotnet-31-rhel7:3.1-24
-            name: name: registry.redhat.io/rhel8/dotnet-70:7.0-18
+            name: registry.redhat.io/rhel8/dotnet-70:7.0-18
           # name: "3.1"
           name: "7.0"
           referencePolicy:
