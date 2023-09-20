@@ -17,21 +17,21 @@ For example to create an image for [s2i-dotnetcore-ex](https://github.com/redhat
 
 Publish the application:
 ```
-$ git clone -b dotnet-7.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
+$ git clone -b dotnet-8.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
 $ cd s2i-dotnetcore-ex/app
 $ dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App
 ```
 
 To create an image using `s2i`:
 ```
-$ s2i build bin/Release/net7.0/publish ubi8/dotnet-70-runtime s2i-dotnetcore-ex
+$ s2i build bin/Release/net8.0/publish ubi8/dotnet-80-runtime s2i-dotnetcore-ex
 ```
 
 To create an image using `docker`/`podman`:
 ```
 $ cat > Dockerfile <<EOF
-FROM ubi8/dotnet-70-runtime
-ADD bin/Release/net7.0/publish/. .
+FROM ubi8/dotnet-80-runtime
+ADD bin/Release/net8.0/publish/. .
 CMD [ "dotnet", "app.dll" ]
 EOF
 $ docker build -t s2i-dotnetcore-ex .
@@ -91,7 +91,7 @@ They must not to be overridden.
 
 * **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
 
-    These variables contain the framework (`net7.0`) and .NET version (`7.0`) respectively.
+    These variables contain the framework (`net8.0`) and .NET version (`8.0`) respectively.
 
 * **DOTNET_RUNNING_IN_CONTAINER**
 

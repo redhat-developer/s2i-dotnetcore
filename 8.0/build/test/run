@@ -30,11 +30,11 @@ STOP_ON_ERROR=${STOP_ON_ERROR:-true}
 IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-localhost/ubi8/dotnet-70}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-localhost/ubi8/dotnet-70-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-localhost/ubi8/dotnet-80}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-localhost/ubi8/dotnet-80-runtime}
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-localhost/fedora/dotnet-70}
-  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-localhost/fedora/dotnet-70-runtime}
+  IMAGE_NAME=${IMAGE_NAME:-localhost/fedora/dotnet-80}
+  RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-localhost/fedora/dotnet-80-runtime}
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -43,11 +43,11 @@ source "${test_dir}/testcommon"
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
-sdk_version=7.0.105
+sdk_version=8.0.105
 npm_version=9.5.0
 elif [ "$IMAGE_OS" = "FEDORA" ]; then
 # sdk version supported on Fedora
-sdk_version=7.0.105
+sdk_version=8.0.105
 npm_version=8.15.0
 fi
 
@@ -337,7 +337,7 @@ test_config_1() {
   assert_contains "${s2i_build}" "test1/bin/Debug"
   assert_contains "${s2i_build}" "test2/bin/Debug"
   # DOTNET_ASSEMBLY_NAME=SampleApp
-  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/net7.0/SampleApp.dll"
+  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/net8.0/SampleApp.dll"
   # DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://www.myget.org/F/s2i-dotnetcore
   assert_contains "${s2i_build}" 'Restored /opt/app-root/src/src/app/app.csproj \([^)]+\)\.' # Includes S2iDotNetCoreDummy from myget.org.
   # DOTNET_PACK=true
@@ -486,12 +486,12 @@ test_imagestream_sample() {
   # test the sample app defined with the imagestreams:
   # "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git",
   # "sampleContextDir": "app",
-  # "sampleRef": "dotnet-7.0"
+  # "sampleRef": "dotnet-8.0"
 
   # build image
   local image=$(s2i_image_tag sample)
   docker_rmi ${tag}
-  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnet-7.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
+  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnet-8.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})

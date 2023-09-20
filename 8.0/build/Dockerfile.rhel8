@@ -1,5 +1,5 @@
-FROM ubi8/dotnet-70-runtime
-# This image provides a .NET 7.0 environment you can use to run your .NET
+FROM ubi8/dotnet-80-runtime
+# This image provides a .NET 8.0 environment you can use to run your .NET
 # applications.
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_modules/.bin:/opt/app-root/.dotnet/tools/:${PATH} \
@@ -8,14 +8,14 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/node_m
 # This skips the first time running text
     DOTNET_NOLOGO=true
 
-LABEL io.k8s.description="Platform for building and running .NET 7 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-70"
+LABEL io.k8s.description="Platform for building and running .NET 8 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-80"
 
 # Labels consumed by Red Hat build service
-LABEL name="ubi8/dotnet-70" \
-      com.redhat.component="dotnet-70-container" \
+LABEL name="ubi8/dotnet-80" \
+      com.redhat.component="dotnet-80-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      version="7.0" \
+      version="8.0" \
       release="2"
 
 # Switch to root for package installs
@@ -28,7 +28,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # - dotnet-sdk--*: provides the .NET SDK.
 # - npm: provides SDK for building NodeJS web front-ends.
 # - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
-RUN INSTALL_PKGS="dotnet-sdk-7.0 npm procps-ng" && \
+RUN INSTALL_PKGS="dotnet-sdk-8.0 npm procps-ng" && \
     microdnf -y module enable nodejs:18 && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
