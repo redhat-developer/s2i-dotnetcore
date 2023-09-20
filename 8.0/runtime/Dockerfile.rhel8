@@ -1,5 +1,5 @@
 FROM registry.access.redhat.com/ubi8-minimal
-# This image provides a .NET 7.0 environment you can use to run your .NET
+# This image provides a .NET 8.0 environment you can use to run your .NET
 # applications.
 
 EXPOSE 8080
@@ -9,25 +9,25 @@ ENV HOME=/opt/app-root \
     DOTNET_APP_PATH=/opt/app-root/app \
     DOTNET_DATA_PATH=/opt/app-root/data \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
-    DOTNET_CORE_VERSION=7.0 \
-    DOTNET_FRAMEWORK=net7.0 \
+    DOTNET_CORE_VERSION=8.0 \
+    DOTNET_FRAMEWORK=net8.0 \
 # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir
 
-LABEL io.k8s.description="Platform for running .NET 7 applications" \
-      io.k8s.display-name=".NET 7" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet70-runtime" \
+LABEL io.k8s.description="Platform for running .NET 8 applications" \
+      io.k8s.display-name=".NET 8" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet80-runtime" \
       io.openshift.expose-services="8080:http" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
       io.s2i.scripts-url=image:///usr/libexec/s2i
 
 
 # Labels consumed by Red Hat build service
-LABEL name="ubi8/dotnet-70-runtime" \
-      com.redhat.component="dotnet-70-runtime-container" \
+LABEL name="ubi8/dotnet-80-runtime" \
+      com.redhat.component="dotnet-80-runtime-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      version="7.0" \
+      version="8.0" \
       release="2"
 
 # Don't download/extract docs for nuget packages
@@ -50,7 +50,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # - aspnetcore-runtime-*: provides the .NET runtime and ASP.NET Core shared framework.
 # - nss_wrapper: used by the 'generate_container_user' script.
 # - findutils: provides 'find' which is used by the 'assemble' script.
-RUN INSTALL_PKGS="aspnetcore-runtime-7.0 nss_wrapper findutils shadow-utils tar gzip" && \
+RUN INSTALL_PKGS="aspnetcore-runtime-8.0 nss_wrapper findutils shadow-utils tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
 # ubi-minimal doesn't include timezones, restore them.

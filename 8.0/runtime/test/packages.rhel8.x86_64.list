@@ -1,4 +1,4 @@
-aspnetcore-runtime-7.0
+aspnetcore-runtime-8.0
 audit-libs
 basesystem
 bash
@@ -12,8 +12,8 @@ crypto-policies
 curl
 cyrus-sasl-lib
 dotnet-host
-dotnet-hostfxr-7.0
-dotnet-runtime-7.0
+dotnet-hostfxr-8.0
+dotnet-runtime-8.0
 elfutils-libelf
 file-libs
 filesystem
