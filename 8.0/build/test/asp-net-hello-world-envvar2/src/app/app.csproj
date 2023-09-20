@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <DebugType>portable</DebugType>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>SampleApp</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="wwwroot\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../lib/lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Newtonsoft.Json is used by test_incremental, test_incremental_without_packages -->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <!-- S2iDotNetCoreDummy is used by test_config_2 -->
+    <PackageReference Include="S2iDotNetCoreDummy" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>
