@@ -76,7 +76,7 @@ build_image() {
       return
     fi
     pushd ${path} &>/dev/null
-      docker build --no-cache -f ${docker_filename} -t ${name} .
+      docker build --no-cache --build-arg=DOTNET_TARBALL=$DOTNET_TARBALL -f ${docker_filename} -t ${name} .
       check_result_msg $? "Building Docker image ${name} FAILED!"
     popd &>/dev/null
   fi
