@@ -52,10 +52,6 @@ Repository organization
   UBI 8 / RHEL 8 based Dockerfile. No RHEL subscription is required, but without
   one only UBI RPMs can be added to the container.
 
-* **Dockerfile.fedora**
-
-  Fedora based Dockerfile.
-
 * **`test/`**
 
   This folder contains binary archives of [S2I](https://github.com/openshift/source-to-image)

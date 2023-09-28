@@ -1,7 +1,9 @@
 FROM registry.access.redhat.com/ubi8-minimal
+
+ARG DOTNET_TARBALL
+
 # This image provides a .NET 8.0 environment you can use to run your .NET
 # applications.
-
 EXPOSE 8080
 
 ENV HOME=/opt/app-root \
@@ -28,7 +30,7 @@ LABEL name="ubi8/dotnet-80-runtime" \
       com.redhat.component="dotnet-80-runtime-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
       version="8.0" \
-      release="2"
+      release="1"
 
 # Don't download/extract docs for nuget packages
 ENV NUGET_XMLDOC_MODE=skip
@@ -50,14 +52,25 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # - aspnetcore-runtime-*: provides the .NET runtime and ASP.NET Core shared framework.
 # - nss_wrapper: used by the 'generate_container_user' script.
 # - findutils: provides 'find' which is used by the 'assemble' script.
-RUN INSTALL_PKGS="aspnetcore-runtime-8.0 nss_wrapper findutils shadow-utils tar gzip" && \
+RUN [ -n "${DOTNET_TARBALL}" ] || ( \
+    INSTALL_PKGS="aspnetcore-runtime-8.0 nss_wrapper findutils shadow-utils tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
 # ubi-minimal doesn't include timezones, restore them.
     ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \
     microdnf clean all -y && \
  # yum cache files may still exist (and quite large in size)
-    rm -rf /var/cache/yum/*
+    rm -rf /var/cache/yum/* )
+# Add .NET from a tarball for CI/development.
+RUN [ -z "${DOTNET_TARBALL}" ] || ( \
+    microdnf install -y nss_wrapper tar gzip unzip findutils shadow-utils libicu && \
+    ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \
+    curl "${DOTNET_TARBALL}" -o /tmp/dotnet.tar.gz && \
+    mkdir /opt/dotnet && \
+    tar -xf /tmp/dotnet.tar.gz -C /opt/dotnet && \
+    ln -s /opt/dotnet/dotnet /usr/bin/dotnet && \
+    mkdir /etc/dotnet/ && \
+    echo '/opt/dotnet' > /etc/dotnet/install_location )
 
 # Add default user
 RUN mkdir -p ${DOTNET_APP_PATH} ${DOTNET_DATA_PATH} && \
