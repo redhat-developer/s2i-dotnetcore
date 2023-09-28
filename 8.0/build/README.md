@@ -41,10 +41,6 @@ Repository organization
   UBI 8 / RHEL 8 based Dockerfile. No RHEL subscription is required, but without
   one only UBI RPMs can be added to the container.
 
-* **Dockerfile.fedora**
-
-  Fedora based Dockerfile.
-
 * **`root/usr/bin/`**
 
   This folder contains common scripts.

@@ -26,11 +26,7 @@ STOP_ON_ERROR=${STOP_ON_ERROR:-true}
 
 IMAGE_OS=${IMAGE_OS:-RHEL8}
 
-if [ "$IMAGE_OS" = "RHEL8" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-localhost/ubi8/dotnet-80-runtime}
-elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  IMAGE_NAME=${IMAGE_NAME:-localhost/fedora/dotnet-80-runtime}
-fi
+IMAGE_NAME=${IMAGE_NAME:-localhost/ubi8/dotnet-80-runtime}
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
@@ -39,9 +35,7 @@ source "${test_dir}/testcommon"
 dotnet_version_series="8.0"
 
 if [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="8.0.5"
-elif [ "$IMAGE_OS" = "FEDORA" ]; then
-dotnet_version="8.0.5"
+dotnet_version="8.0.0-rc.1.23419.4"
 fi
 
 test_dotnet() {
@@ -181,7 +175,7 @@ test_aspnet() {
   # create image
   cat >Dockerfile <<EOF
 FROM ${IMAGE_NAME}
-ADD app-$(uname -m).tar.gz .
+ADD app.tar.gz .
 CMD [ "dotnet", "aspnet-hello-world.dll" ]
 EOF
   local image=$(docker_build .)
@@ -233,14 +227,14 @@ test_s2i_build() {
 
   # extract the pre-compiled application from the aspnet test
   rm -rf ${test_dir}/${app}
-  mkdir ${test_dir}/${app} && tar -C ${test_dir}/${app} -xf ${test_dir}/aspnet-hello-world/app-$(uname -m).tar.gz
+  mkdir ${test_dir}/${app} && tar -C ${test_dir}/${app} -xf ${test_dir}/aspnet-hello-world/app.tar.gz
   # Verify the entry point assembly is detected and ran
   local image=$(s2i_build $app)
   verify_aspnet_image_works ${image}
 
   # extract the pre-compiled application from the aspnet test in a nested folder
   rm -rf ${test_dir}/${app}
-  mkdir -p ${test_dir}/${app}/nested && tar -C ${test_dir}/${app}/nested -xf ${test_dir}/aspnet-hello-world/app-$(uname -m).tar.gz
+  mkdir -p ${test_dir}/${app}/nested && tar -C ${test_dir}/${app}/nested -xf ${test_dir}/aspnet-hello-world/app.tar.gz
   # Verify the entry point assembly is detected and ran using DOTNET_STARTUP_ASSEMBLY.
   image=$(s2i_build $app -e DOTNET_STARTUP_ASSEMBLY=nested/aspnet-hello-world.dll)
   verify_aspnet_image_works ${image}
