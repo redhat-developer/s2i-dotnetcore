@@ -29,10 +29,12 @@ Building
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ sudo VERSIONS=7.0 ./build.sh
+$ ./build.sh 7.0
 ```
 
-To override the default basis of the image, set `IMAGE_OS` to the desired base system, such as `IMAGE_OS=FEDORA` or `IMAGE_OS=RHEL8`.
+To override the default basis of the image, you can use the `--base-os` argument. For example: `--base-os fedora` or `--base-os rhel8`.
+
+For an overview of all build script arguments, run: `./build.sh --help`.
 
 Installing
 ----------------
