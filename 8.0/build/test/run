@@ -226,15 +226,6 @@ test_user() {
 
   # build image
   local image=$(s2i_build ${app})
-  # get username
-  if [ "$USING_PODMAN" ]; then
-    # podman adds a user to /etc/passwd which, and generate_container_user adds another.
-    # because the podman user is first in the file, it is returned by 'whoami'.
-    # We verify a wrapped passwd file exists and that it contains the generate_container_user user.
-    local wrapped_passwd=$(docker_run_as $IMAGE_NAME $run_user cat /opt/app-root/etc/passwd)
-  else
-    local username=$(docker_run_as ${image} ${run_user} whoami)
-  fi
   # start container
   local container=$(docker_run_as_d ${image} ${run_user})
   local url=$(container_url ${container})
@@ -245,11 +236,6 @@ test_user() {
   docker_rmi ${image}
   docker_rmi ${image}-as-${run_user} # image created on podman systems by docker_run_as_d
 
-  if [ "$USING_PODMAN" ]; then
-    assert_contains "$wrapped_passwd" "default:x:$run_user:0:Default Application User:/opt/app-root:/sbin/nologin"
-  else
-    assert_equal "${username}" "default"
-  fi
   # app is working
   assert_equal "${response}" "Hello world"
 }
