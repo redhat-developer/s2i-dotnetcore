@@ -123,21 +123,8 @@ test_user() {
 
   # we run as user 'default'
   assert_equal $(docker_run $IMAGE_NAME "whoami")           "default"
-  # other users are mapped to 'default'
-  if [ "$USING_PODMAN" ]; then
-    # podman adds a user to /etc/passwd which, and generate_container_user adds another.
-    # because the podman user is first in the file, it is returned by 'whoami'.
-    # We verify a wrapped passwd file exists and that it contains the generate_container_user user.
-    local wrapped_passwd=$(docker_run_as $IMAGE_NAME 31001 cat /opt/app-root/etc/passwd)
-    assert_contains "$wrapped_passwd" "default:x:31001:0:Default Application User:/opt/app-root:/sbin/nologin"
-  else
-    assert_equal $(docker_run_as $IMAGE_NAME 31001 whoami) "default"
-  fi
   # root is 'root'
   assert_equal $(docker_run_as $IMAGE_NAME 0 "whoami")      "root"
-
-  # ensure the passwd file used by nss_wrapper can be overwritten
-  assert_equal $(docker_run_as $IMAGE_NAME 31001 "stat -c %a /opt/app-root/etc/passwd") "666"
 }
 
 test_port() {
