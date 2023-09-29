@@ -1,43 +1,95 @@
 #!/bin/bash
 #
-# Build Docker images and run tests.
-#
-# PRE: Docker daemon running, s2i binary available.
-#
-# Supported environment variables:
-#
-# -----------------------------------------------------
-# TEST_OPENSHIFT  If 'true' run tests to make sure
-#                 released images work against the
-#                 test application used in OpenShift
-#
-# VERSIONS        The list of versions to build/test.
-#                 Defaults to all versions. i.e "6.0 7.0".
-#
-# IMAGE_OS        The base os image to use when building
-#                 the containers.
-#                 Options are RHEL8 and FEDORA.
-#                 Defaults to match the OS.
-#
-# TEST_PORT       specifies the port on the docker host
-#                 to bind to when creating containers
-#                 during the asp.net tests. Affects
-#                 tests only.
-#
-# FORCE           rebuild the containers even if they
-#                 already exist.
-# -----------------------------------------------------
-#
-# Usage:
-#       $ sudo ./build.sh
-#       $ sudo VERSIONS=6.0 ./build.sh
-#
+# Build container images and run tests.
 
-if [ "${DEBUG}" == "true" ]; then
-  set -x
+set -euo pipefail
+
+print_usage()
+{
+    echo "Usage: $0 <VERSION>..."
+    echo "Build Container images and run tests."
+    echo ""
+    echo "Arguments:"
+    echo "  --base-os   <os>         Choose between different Dockerfiles"
+    echo "  --no-build               Skip building the image"
+    echo "  --no-test                Skip running the tests"
+    echo "  --test-port <port>       Local TCP port used for tests"
+    echo "  --debug                  Print the bash script commands before executing them"
+    echo "  --dotnet-tarball <url>   Tarball containing a .NET SDK to be used instead of distro packages"
+    echo "  --ci                     Indicates the .NET version built is an unreleased CI version"
+}
+
+RUN_TESTS=true
+DOTNET_TARBALL=
+CI=false
+if [ $# -eq 0 ]; then
+  # backwards compatibility: accept arguments through environment variables.
+  DEBUG=${DEBUG:-}
+  if [ "${DEBUG}" == "true" ]; then
+    set -x
+  fi
+  BASE_OS=$(echo "${IMAGE_OS:-}" | tr '[:upper:]' '[:lower:]')
+  VERSIONS="${VERSIONS:-}"
+  TEST_PORT="${TEST_PORT:-}"
+  RUN_BUILD=
+  if [ "${FORCE:-}" != "false" ]; then
+    RUN_BUILD=true
+  fi
+else
+  DEBUG=
+  BASE_OS=
+  VERSIONS=""
+  TEST_PORT=8080
+  RUN_BUILD=true
 fi
 
-FORCE=${FORCE:-false}
+while [ $# -ne 0 ]
+do
+    name="$1"
+    case "$name" in
+        --base-os)
+            shift
+            BASE_OS="$1"
+            ;;
+        --no-build)
+            RUN_BUILD=false
+            ;;
+        --no-test)
+            RUN_TESTS=false
+            ;;
+        --test-port)
+            shift
+            TEST_PORT="$1"
+            ;;
+        --dotnet-tarball)
+            shift
+            DOTNET_TARBALL="$1"
+            ;;
+        --debug)
+            set -x
+            DEBUG=true
+            ;;
+        --ci)
+            CI=true
+            ;;
+        --help)
+            print_usage
+            exit 0
+            break
+            ;;
+        *)
+            VERSIONS="$VERSIONS $1"
+            ;;
+    esac
+    shift
+done
+
+VERSIONS=$(echo "$VERSIONS" | xargs)
+
+if [ -z "$VERSIONS" ]; then
+  echo "error: no versions specified" 2>&1
+  exit 1
+fi
 
 # Use podman instead of docker when available.
 if command -v podman >/dev/null; then
@@ -46,14 +98,23 @@ if command -v podman >/dev/null; then
   }
 fi
 
-base_image_name() {
-  local version=$1
-  local v_no_dot=$(echo ${version} | sed 's/\.//g')
-  echo "dotnet-${v_no_dot}";
-}
-
 image_exists() {
   docker inspect $1 &>/dev/null
+}
+
+default_base_os_for_version() {
+  local version=$1
+  echo "rhel8"
+}
+
+os_image_prefix_for() {
+  local version=$1
+  local base_os=$2
+  if [ "$base_os" == "rhel8" ]; then
+    echo "ubi8"
+  else
+    echo "$base_os"
+  fi
 }
 
 check_result_msg() {
@@ -69,75 +130,64 @@ build_image() {
   local path=$1
   local docker_filename=$2
   local name=$3
-  if $FORCE || ! image_exists ${name}; then
-    echo "Building Docker image ${name} ..."
-    if [ ! -d "${path}" ]; then
-      echo "No directory found at given location '${path}'. Skipping this image."
-      return
-    fi
-    pushd ${path} &>/dev/null
-      docker build --no-cache --build-arg=DOTNET_TARBALL=$DOTNET_TARBALL -f ${docker_filename} -t ${name} .
-      check_result_msg $? "Building Docker image ${name} FAILED!"
-    popd &>/dev/null
+
+  if [ "$RUN_BUILD" == "false" ]; then
+    return
   fi
+
+  if [ "$RUN_BUILD" == "" ] && image_exists ${name}; then
+    return
+  fi
+
+  echo "Building Docker image ${name} ..."
+  if [ ! -d "${path}" ]; then
+    echo "No directory found at given location '${path}'. Skipping this image."
+    return
+  fi
+  pushd ${path} &>/dev/null
+    docker build --no-cache --build-arg=DOTNET_TARBALL=$DOTNET_TARBALL -f ${docker_filename} -t ${name} .
+    check_result_msg $? "Building Docker image ${name} FAILED!"
+  popd &>/dev/null
 }
 
 test_images() {
   local path=$1
-  local test_image=$2
-  local runtime_image=$3
+  local base_os=$2
+  local test_image=$3
+  local runtime_image=$4
+
+  if [ "$RUN_TESTS" == "false" ]; then
+    return
+  fi
+
+  local image_os=$(echo "$base_os" | tr '[:lower:]' '[:upper:]')
+
   echo "Running tests..."
-  IMAGE_NAME=${test_image} RUNTIME_IMAGE_NAME=${runtime_image} ${path}/run
+  DEBUG=$DEBUG IMAGE_OS=${image_os} SKIP_VERSION_CHECK=$CI IMAGE_NAME=${test_image} RUNTIME_IMAGE_NAME=${runtime_image} ${path}/run
   check_result_msg $? "Tests FAILED!"
 }
 
-if [ -z "${IMAGE_OS}" ]; then
-  # Default to CentOS when not on RHEL.
-  if [[ `grep "Red Hat Enterprise Linux release 8" /etc/redhat-release` ]]; then
-    export IMAGE_OS="RHEL8"
-  elif [[ `grep "Fedora" /etc/redhat-release` ]]; then
-    export IMAGE_OS="FEDORA"
-  else
-    echo 1>&2 "Set IMAGE_OS to specify the base image."
-    exit 1
+for VERSION in ${VERSIONS}; do
+  # use the specified BASE_OS, or default to the prefered os when unset.
+  base_os_for_version="$BASE_OS"
+  if [ -z "$base_os_for_version" ]; then
+    base_os_for_version=$(default_base_os_for_version $VERSION)
   fi
-fi
 
-if [ "$IMAGE_OS" = "RHEL8" ]; then
-  VERSIONS="${VERSIONS:-6.0 7.0}"
-  image_prefix="ubi8"
-  docker_filename="Dockerfile.rhel8"
-elif [ "$IMAGE_OS" = "FEDORA" ]; then
-  VERSIONS="${VERSIONS:-6.0}"
-  image_prefix="fedora"
-  docker_filename="Dockerfile.fedora"
-fi
+  docker_filename="Dockerfile.$base_os_for_version"
 
-for v in ${VERSIONS}; do
-  build_name="localhost/${image_prefix}/$(base_image_name ${v})${image_postfix}"
-  runtime_name="localhost/${image_prefix}/$(base_image_name ${v})-runtime${image_postfix}"
+  image_prefix=$(os_image_prefix_for $VERSION $base_os_for_version)
+  version_no_dot=$(echo ${VERSION} | sed 's/\.//g')
+  build_name="localhost/${image_prefix}/dotnet-$version_no_dot"
+  runtime_name="localhost/${image_prefix}/dotnet-$version_no_dot-runtime"
 
   # Build the runtime image
-  build_image "${v}/runtime" "${docker_filename}" "${runtime_name}"
-  test_images "${v}/runtime/test" "${runtime_name}"
+  build_image "$VERSION/runtime" "${docker_filename}" "${runtime_name}"
+  test_images "$VERSION/runtime/test" "$base_os_for_version" "${runtime_name}" "${runtime_name}"
 
   # Build the build image
-  build_image "${v}/build" "${docker_filename}" "${build_name}"
-  test_images "${v}/build/test" "${build_name}" "${runtime_name}"
-
-  if [ "$TEST_OPENSHIFT" = "true" ]; then
-    build_name="registry.access.redhat.com/${build_name}:latest"
-    runtime_name="registry.access.redhat.com/${runtime_name}:latest"
-    pushd ${v} &>/dev/null
-      echo "Running OpenShift tests on image ${runtime_name} ..."
-      IMAGE_NAME="${runtime_name}" OPENSHIFT_ONLY=true ./runtime/test/run
-      check_result_msg $? "Tests for image ${runtime_name} FAILED!"
-
-      echo "Running OpenShift tests on image ${build_name} ..."
-      IMAGE_NAME="${build_name}" RUNTIME_IMAGE_NAME="${runtime_name}" OPENSHIFT_ONLY=true ./build/test/run
-      check_result_msg $? "Tests for image ${build_name} FAILED!"
-    popd &>/dev/null
-  fi
+  build_image "$VERSION/build" "${docker_filename}" "${build_name}"
+  test_images "$VERSION/build/test" "$base_os_for_version" "${build_name}" "${runtime_name}"
 done
 
 echo "ALL builds and tests were successful!"
