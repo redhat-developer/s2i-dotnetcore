@@ -6,7 +6,7 @@ set -euo pipefail
 
 print_usage()
 {
-    echo "Usage: $0 <VERSION>..."
+    echo "Usage: $0 [<VERSION>...]"
     echo "Build Container images and run tests."
     echo ""
     echo "Arguments:"
@@ -92,9 +92,9 @@ done
 
 VERSIONS=$(echo "$VERSIONS" | xargs)
 
+# default to building the currently supported versions.
 if [ -z "$VERSIONS" ]; then
-  echo "error: no versions specified" 2>&1
-  exit 1
+  VERSIONS="6.0 7.0"
 fi
 
 # Use podman instead of docker when available.
