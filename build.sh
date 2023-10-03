@@ -17,7 +17,7 @@ print_usage()
     echo "  --test-port <port>       Local TCP port used for tests"
     echo "  --debug                  Print the bash script commands before executing them"
     echo "  --dotnet-tarball <url>   Tarball containing a .NET SDK to be used instead of distro packages"
-    echo "  --ci                     Indicates the .NET version built is an unreleased CI version"
+    echo "  --ci                     Indicates the build is a CI/dev version."
 }
 
 RUN_TESTS=true
