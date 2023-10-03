@@ -11,6 +11,7 @@ print_usage()
     echo ""
     echo "Arguments:"
     echo "  --base-os   <os>         Choose between different Dockerfiles"
+    echo "  --continue-on-error      Don't stop executing tests when an error occurs"
     echo "  --no-build               Skip building the image"
     echo "  --no-test                Skip running the tests"
     echo "  --test-port <port>       Local TCP port used for tests"
@@ -35,12 +36,14 @@ if [ $# -eq 0 ]; then
   if [ "${FORCE:-}" != "false" ]; then
     RUN_BUILD=true
   fi
+  STOP_ON_ERROR=${STOP_ON_ERROR:-true}
 else
   DEBUG=
   BASE_OS=
   VERSIONS=""
   TEST_PORT=8080
   RUN_BUILD=true
+  STOP_ON_ERROR=true
 fi
 
 while [ $# -ne 0 ]
@@ -68,6 +71,9 @@ do
         --debug)
             set -x
             DEBUG=true
+            ;;
+        --continue-on-error)
+            STOP_ON_ERROR=false
             ;;
         --ci)
             CI=true
@@ -163,7 +169,7 @@ test_images() {
   local image_os=$(echo "$base_os" | tr '[:lower:]' '[:upper:]')
 
   echo "Running tests..."
-  DEBUG=$DEBUG IMAGE_OS=${image_os} SKIP_VERSION_CHECK=$CI IMAGE_NAME=${test_image} RUNTIME_IMAGE_NAME=${runtime_image} ${path}/run
+  STOP_ON_ERROR=$STOP_ON_ERROR DEBUG=$DEBUG IMAGE_OS=${image_os} SKIP_VERSION_CHECK=$CI IMAGE_NAME=${test_image} RUNTIME_IMAGE_NAME=${runtime_image} ${path}/run
   check_result_msg $? "Tests FAILED!"
 }
 
