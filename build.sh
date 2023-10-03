@@ -23,28 +23,12 @@ print_usage()
 RUN_TESTS=true
 DOTNET_TARBALL=
 CI=false
-if [ $# -eq 0 ]; then
-  # backwards compatibility: accept arguments through environment variables.
-  DEBUG=${DEBUG:-}
-  if [ "${DEBUG}" == "true" ]; then
-    set -x
-  fi
-  BASE_OS=$(echo "${IMAGE_OS:-}" | tr '[:upper:]' '[:lower:]')
-  VERSIONS="${VERSIONS:-}"
-  TEST_PORT="${TEST_PORT:-}"
-  RUN_BUILD=
-  if [ "${FORCE:-}" != "false" ]; then
-    RUN_BUILD=true
-  fi
-  STOP_ON_ERROR=${STOP_ON_ERROR:-true}
-else
-  DEBUG=
-  BASE_OS=
-  VERSIONS=""
-  TEST_PORT=8080
-  RUN_BUILD=true
-  STOP_ON_ERROR=true
-fi
+DEBUG=
+BASE_OS=
+VERSIONS=""
+TEST_PORT=8080
+RUN_BUILD=true
+STOP_ON_ERROR=true
 
 while [ $# -ne 0 ]
 do
@@ -138,10 +122,6 @@ build_image() {
   local name=$3
 
   if [ "$RUN_BUILD" == "false" ]; then
-    return
-  fi
-
-  if [ "$RUN_BUILD" == "" ] && image_exists ${name}; then
     return
   fi
 
