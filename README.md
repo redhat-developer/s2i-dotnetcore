@@ -27,9 +27,11 @@ The images support OpenShift [source-to-image](https://github.com/openshift/sour
 Building
 ----------------
 
+You can build (and test) the images by executing the `build.sh` script and pass it the versions to build.
+
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ ./build.sh 7.0
+$ ./build.sh 6.0 7.0
 ```
 
 To override the default basis of the image, you can use the `--base-os` argument. For example: `--base-os fedora` or `--base-os rhel8`.
