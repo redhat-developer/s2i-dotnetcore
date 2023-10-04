@@ -117,8 +117,11 @@ test_timezones() {
 test_user() {
   test_start
 
-  # we run as user 'default'
+  # we run as user 'default' which has a uid of 1001.
   assert_equal $(docker_run $IMAGE_NAME "whoami")           "default"
+  assert_equal $(docker_run $IMAGE_NAME "id -u")            "1001"
+  # APP_UID is set to match the uid of the default user.
+  assert_equal $(docker_get_env $IMAGE_NAME APP_UID)        "1001"
   # root is 'root'
   assert_equal $(docker_run_as $IMAGE_NAME 0 "whoami")      "root"
 }
@@ -128,8 +131,8 @@ test_port() {
 
   # Port 8080 is exposed
   assert_equal $(docker_get_exposedports $IMAGE_NAME) '{"8080/tcp":{}}'
-  # The environment variable used by ASP.NET Core matches
-  assert_equal $(docker_get_env $IMAGE_NAME ASPNETCORE_URLS) "http://*:8080"
+  # The environment variable used by ASP.NET Core matches the exposed port.
+  assert_equal $(docker_get_env $IMAGE_NAME ASPNETCORE_HTTP_PORTS) "8080"
 }
 
 verify_aspnet_image_works() {

@@ -59,13 +59,13 @@ RUN /usr/libexec/s2i/container-tool build-tool
 # directories (such as ~/.pki/nssdb) there. These will be owned by root and can
 # cause actions that work on all of /opt/app-root to fail. So we need to fix
 # the permissions on those too.
-RUN chown -R 1001:0 /opt/app-root && fix-permissions /opt/app-root
+RUN chown -R $APP_UID:0 /opt/app-root && fix-permissions /opt/app-root
 
 # Needed for the `dotnet watch` to detect changes in a container
 ENV  DOTNET_USE_POLLING_FILE_WATCHER=true
 
-# Run container by default as user with id 1001 (default)
-USER 1001
+# Run container rootless.
+USER $APP_UID
 
 # Set the default CMD to start a shell.
 CMD /bin/bash

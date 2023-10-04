@@ -69,10 +69,9 @@ Environment variables
 The following variables are set so they can be used from scripts.
 They must not to be overridden.
 
-* **ASPNETCORE_URLS**
+* **ASPNETCORE_HTTP_PORTS**
 
-    This variable is set to `http://*:8080` to configure ASP.NET Core to use the
-    port exposed by the image.
+    This variable is set to `8080` to configure ASP.NET Core to use the port exposed by the image.
 
 * **DOTNET_APP_PATH,DOTNET_DEFAULT_CMD,DOTNET_DATA_PATH**
 
@@ -92,3 +91,9 @@ They must not to be overridden.
 * **DOTNET_RUNNING_IN_CONTAINER**
 
     Like Microsoft images, this is set to `true` and can be used to detect the application is built/running in a container.
+
+* **APP_UID**
+
+    Like Microsoft images, this is set to the rootless user's uid to enable switching to that user
+    in a Dockerfile using the the instruction: `USER $APP_UID`.
+.
