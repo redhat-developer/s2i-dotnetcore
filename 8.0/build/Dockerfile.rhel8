@@ -28,10 +28,9 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 
 # Install packages:
 # - dotnet-sdk--*: provides the .NET SDK.
-# - npm: provides SDK for building NodeJS web front-ends.
 # - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="dotnet-sdk-8.0 npm procps-ng" && \
+    INSTALL_PKGS="dotnet-sdk-8.0 procps-ng" && \
     microdnf -y module enable nodejs:18 && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
@@ -40,7 +39,7 @@ RUN [ -n "${DOTNET_TARBALL}" ] || ( \
     rm -rf /var/cache/yum/* )
 # Tarball install (in the runtime base image)
 RUN [ -z "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="npm procps-ng" && \
+    INSTALL_PKGS="procps-ng" && \
     microdnf -y module enable nodejs:18 && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \

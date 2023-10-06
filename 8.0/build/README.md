@@ -128,11 +128,6 @@ a `.s2i/environment` file inside your source code repository.
     Used to specify a list of .NET tools to install before building the app. It is possible to install a specific version by postpending
     the package name with `@<version>`. Defaults to ``.
 
-* **DOTNET_NPM_TOOLS**
-
-    Used to specify a list of npm packages to install before building the app.
-    Defaults to ``.
-
 * **DOTNET_TEST_PROJECTS**
 
     Used to specify the list of test projects to run. This must be project files or folders containing a
@@ -173,10 +168,6 @@ a `.s2i/environment` file inside your source code repository.
     When set to `true`, the NuGet packages will be kept so they can be re-used for an incremental build.
     Defaults to `false`.
 
-* **NPM_MIRROR**
-
-    Use a custom NPM registry mirror to download packages during the build process.
-
 * **DOTNET_STARTUP_ASSEMBLY**
 
     Used to specify the path of the entrypoint assembly within the source repository. When set,
@@ -190,9 +181,3 @@ a `.s2i/environment` file inside your source code repository.
 
     This is set to `true` to ensure the `dotnet watch` command works in a container. This command is not used by the default scripts.
 
-NPM
----
-
-Typical modern web applications rely on javascript tools to build the front-end.
-The image includes npm (node package manager) to install these tools. Packages can be
-installed by setting `DOTNET_NPM_TOOLS` and by calling `npm install` in the build process.
