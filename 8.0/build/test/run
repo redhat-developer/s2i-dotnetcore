@@ -39,7 +39,6 @@ source "${test_dir}/testcommon"
 if [ "$IMAGE_OS" = "RHEL8" ]; then
 # sdk version supported on RHEL8
 sdk_version=8.0.100-rc.1.23463.5
-npm_version=9.5.1
 fi
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
@@ -124,12 +123,6 @@ test_image() {
 
   # Verify the `dotnet watch` command can detect file changes in the container.
   assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true$"
-
-  # verify npm is available
-  local image_npm_version=$(docker_run ${IMAGE_NAME} 'npm --version')
-  if [ "$SKIP_VERSION_CHECK" != "true" ]; then
-    assert_equal "${image_npm_version}" "${npm_version}"
-  fi
 
   # verify no 'Welcome' message appears, due to running first time actions in build Dockerfile.
   local dotnet_help=$(docker_run ${IMAGE_NAME} 'dotnet help')
@@ -267,7 +260,6 @@ test_templates() {
   test_start
 
   # mvc is a pure ASP.NET Core MVC web application
-  # angular and reactredux include a front-end which is built using npm packages.
   local templates=(mvc)
   for template in ${templates[@]}; do
     test_template $template
@@ -293,8 +285,6 @@ test_config_1() {
   local dotnetrpm_path=$(docker_run ${image} bash -c "command -v dotnet-rpm")
   local packed_app=$(docker_run ${image} ls /opt/app-root/app.tar.gz)
   local src_folder_content=$(docker_run ${image} ls -a /opt/app-root/src)
-  # ;true is there because 'npm ls' can error, for some random reason
-  local npm_packages=$(docker_run ${image} bash -c "npm ls; true")
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})
@@ -320,8 +310,6 @@ test_config_1() {
   # DOTNET_PACK=true
   assert_contains "${s2i_build}" "Packing application..."
   assert_equal "${packed_app}" "/opt/app-root/app.tar.gz"
-  # DOTNET_NPM_TOOLS=gulp
-  assert_contains "${npm_packages}" "gulp@"
   # DOTNET_TOOLS=dotnet-symbol@1.0.5 dotnet-serve
   assert_equal "${watch_path}" "/opt/app-root/.dotnet/tools/dotnet-symbol"
   assert_equal "${dotnetrpm_path}" "/opt/app-root/.dotnet/tools/dotnet-rpm"
@@ -626,22 +614,6 @@ test_rpm_packages() {
   assert_equal "$?" 0
 }
 
-test_npm_mirror() {
-  test_start
-
-  local app=asp-net-hello-world
-  local image=$(s2i_image_tag ${app})
-  local enabled_string="---> Setting npm mirror"
-
-  # Check that it isn't setting an npm mirror when it is not specified
-  local s2i_build=$(s2i_build_output_log ${app} ${image})
-  assert_not_contains "${s2i_build}" "${enabled_string}"
-
-  # And check that it is setting an npm mirror when it is specified
-  local s2i_build=$(s2i_build_output_log ${app} ${image} -e NPM_MIRROR='https://TEST.MIRROR')
-  assert_contains "${s2i_build}" "${enabled_string}"
-}
-
 test_rm_tmp_dotnet() {
   test_start
 
@@ -674,7 +646,6 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
     test_rpm_packages
   fi
   test_rm_tmp_dotnet
-  test_npm_mirror
   test_consoleapp
   test_multiframework
   test_fsharp
