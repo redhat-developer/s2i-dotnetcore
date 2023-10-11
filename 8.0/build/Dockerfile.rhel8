@@ -2,13 +2,18 @@ FROM ubi8/dotnet-80-runtime
 # This image provides a .NET 8.0 environment you can use to run your .NET
 # applications.
 
+ARG DOTNET_SDK_VERSION=8.0
+ARG RELEASE=1
+ARG IS_CI
 ARG DOTNET_TARBALL
 
-ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotnet/tools/:${PATH} \
+ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotnet/tools:${PATH} \
     STI_SCRIPTS_PATH=/usr/libexec/s2i \
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
-# This skips the first time running text
-    DOTNET_NOLOGO=true
+    # This skips the first time running text
+    DOTNET_NOLOGO=true \
+    # Like Microsoft images, provide the SDK version
+    DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
 LABEL io.k8s.description="Platform for building and running .NET 8 applications" \
       io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-80"
@@ -44,6 +49,14 @@ RUN [ -z "${DOTNET_TARBALL}" ] || ( \
     microdnf clean all -y && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/* )
+
+# Check the versions of the environment variables match the installed versions.
+RUN [ "$IS_CI" == "true" ] || ( \
+        printf "Checking framework versions ${DOTNET_VERSION} and ${ASPNET_VERSION} against:\n$(dotnet --list-runtimes)" && \
+        dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " && \
+        dotnet --list-runtimes | grep "Microsoft.AspNetCore.App ${ASPNET_VERSION} " && \
+        printf "Checking SDK version ${DOTNET_SDK_VERSION} against:\n$(dotnet --list-sdks)" && \
+        dotnet --list-sdks | grep "^${DOTNET_SDK_VERSION} " )
 
 # Directory with the sources is set as the working directory.
 RUN mkdir /opt/app-root/src
