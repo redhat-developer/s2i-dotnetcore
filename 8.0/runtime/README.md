@@ -69,9 +69,10 @@ Environment variables
 The following variables are set so they can be used from scripts.
 They must not to be overridden.
 
-* **ASPNETCORE_HTTP_PORTS**
+* **ASPNETCORE_URLS**
 
-    This variable is set to `8080` to configure ASP.NET Core to use the port exposed by the image.
+    This variable is set to `http://*:8080` to configure ASP.NET Core to use the
+    port exposed by the image.
 
 * **DOTNET_APP_PATH,DOTNET_DEFAULT_CMD,DOTNET_DATA_PATH**
 
@@ -96,4 +97,3 @@ They must not to be overridden.
 
     Like Microsoft images, this is set to the rootless user's uid to enable switching to that user
     in a Dockerfile using the the instruction: `USER $APP_UID`.
-.
