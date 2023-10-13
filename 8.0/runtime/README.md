@@ -78,11 +78,29 @@ They must not to be overridden.
     These variables contain the working directory (`/opt/app-root/app`), the default CMD of the runtime image (`default-cmd.sh`)
     and an empty folder you can use to store your application data (`/opt/app-root/data`) and make persistent with a volume mount.
 
+* **SSL_CERT_DIR**
+
+    Used to specify a list of colon (`:`) separated directories with certificates to trust.
+    To load the default system directory, you can include `/etc/ssl/certs`.
+    Adding directories that do not exist do not cause errors.
+
+    It's recommended to use absolute paths.
+    If you use an s2i build, you can refer to a directory that is part of the s2i source repository using `/opt/app-root/src`
+    as the base directory. To refer to a directory that is part of the s2i application, you can use `/opt/app-root/app`
+    as the base directory.
+    Note that these certificates will be loaded also from the source repository when the application runs
+    unless `DOTNET_RM_SRC` is set to true to remove the application sources from the application image.
+
 * **DOTNET_SSL_DIRS**
 
     Used to specify a list of folders/files with additional certificates to trust. The certificates are trusted by each process that runs
-    during the build and all processes that run in the image after the build (including the application that was built). The items
+    during the s2i build and all processes that run in the image after the build (including the application that was built). The items
     can be absolute paths (starting with `/`) or paths in the source repository (e.g. `certificates`). Defaults to ``.
+
+    Because `SSL_CERT_DIR` is a well-known variable that is not limited to .NET it is preferable to use that instead of `DOTNET_SSL_DIRS`.
+
+    ** Breaking change **: since .NET 8, `DOTNET_SSL_DIRS` certificates are no longer loaded by an image ENTRYPOINT.
+    Applications that use the default source-to-image (s2i) scripts still load `DOTNET_SSL_DIRS` automatically.
 
 * **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
 

@@ -110,7 +110,7 @@ test_image() {
   test_start
 
   # verify dotnet is available
-  local image_dotnet_version=$(docker_run ${IMAGE_NAME} 'dotnet --version')
+  local image_dotnet_version=$(docker_run ${IMAGE_NAME} dotnet --version)
   if [ "$SKIP_VERSION_CHECK" != "true" ]; then
     assert_equal "${image_dotnet_version}" "${sdk_version}"
   fi
@@ -125,7 +125,7 @@ test_image() {
   assert_contains "${env}" "DOTNET_USE_POLLING_FILE_WATCHER=true$"
 
   # verify no 'Welcome' message appears, due to running first time actions in build Dockerfile.
-  local dotnet_help=$(docker_run ${IMAGE_NAME} 'dotnet help')
+  local dotnet_help=$(docker_run ${IMAGE_NAME} dotnet help)
   assert_not_contains "${dotnet_help}" "Welcome"
 
   # Certificate folders created by the 1001 user are not accepted by .NET
@@ -503,7 +503,6 @@ test_certificates() {
   # - certdir1          : contains 1 certificate in 1 file
   # - certdir2          : contains 2 certificates in 1 file
   # - certdir3/cert.pem : file containing 1 certificate
-  # DOTNET_RM_SRC=true to check these certificates are copied outside the src folder.
   local count_with_additional=$(docker_run_certificatecount -e DOTNET_SSL_DIRS='/doesntexist certdir1 certdir2 certdir3/cert.pem')
   assert_equal "$count_with_additional" "$(($default_count + 4))"
 }

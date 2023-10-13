@@ -42,11 +42,11 @@ test_dotnet() {
   test_start
 
   # ENTRYPOINT enables scl so dotnet is available
-  assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Host"
+  assert_contains "$(docker_run $IMAGE_NAME dotnet --info)" "Host"
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
   # Check version
   if [ "$SKIP_VERSION_CHECK" != "true" ]; then
-    assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version:\s*${dotnet_version}$"
+    assert_contains "$(docker_run $IMAGE_NAME dotnet --info)" "Version:\s*${dotnet_version}$"
   fi
 }
 
@@ -103,14 +103,14 @@ test_data_folder() {
   test_start
 
   # check a writable data folder is available
-  assert_equal $(docker_run $IMAGE_NAME "stat -c %a /opt/app-root/data") "777"
+  assert_equal $(docker_run $IMAGE_NAME stat -c %a /opt/app-root/data) "777"
 }
 
 test_timezones() {
   test_start
 
   # verify timezone data is available
-  assert_contains $(docker_run $IMAGE_NAME "stat -c %n /usr/share/zoneinfo/UTC") "/usr/share/zoneinfo/UTC"
+  assert_contains $(docker_run $IMAGE_NAME stat -c %n /usr/share/zoneinfo/UTC) "/usr/share/zoneinfo/UTC"
 }
 
 
@@ -118,12 +118,12 @@ test_user() {
   test_start
 
   # we run as user 'default' which has a uid of 1001.
-  assert_equal $(docker_run $IMAGE_NAME "whoami")           "default"
-  assert_equal $(docker_run $IMAGE_NAME "id -u")            "1001"
+  assert_equal $(docker_run $IMAGE_NAME whoami)           "default"
+  assert_equal $(docker_run $IMAGE_NAME id -u)            "1001"
   # APP_UID is set to match the uid of the default user.
-  assert_equal $(docker_get_env $IMAGE_NAME APP_UID)        "1001"
+  assert_equal $(docker_get_env $IMAGE_NAME APP_UID)      "1001"
   # root is 'root'
-  assert_equal $(docker_run_as $IMAGE_NAME 0 "whoami")      "root"
+  assert_equal $(docker_run_as $IMAGE_NAME 0 whoami)      "root"
 }
 
 test_port() {

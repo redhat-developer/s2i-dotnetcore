@@ -21,26 +21,21 @@ if [ -n "$DOTNET_SSL_DIRS" ]; then
     export _USER_SSL_CERT_DIR
   fi
 
-  # Append _USER_SSL_CERT_DIR to DOTNET_SSL_DIRS.
-  _DOTNET_SSL_DIRS="$DOTNET_SSL_DIRS $_USER_SSL_CERT_DIR"
-
-  # Create/replace certificate folder.
+  # If the user specifies files instead of directories in DOTNET_SSL_DIRS
+  # we add them as links in this folder.
+  DOTNET_SSL_CERT_DIR="/opt/app-root/ssl_dir"
   rm -rf "$DOTNET_SSL_CERT_DIR"
   mkdir "$DOTNET_SSL_CERT_DIR"
 
-  # Populate it with certificates.
+  # Loop over DOTNET_SSL_DIRS and create links in DOTNET_SSL_CERT_DIR for files
+  # and track directories in _DOTNET_SSL_DIRS.
   CERT_ID=0
-  for SSL_DIR in $_DOTNET_SSL_DIRS; do
+  for SSL_DIR in $DOTNET_SSL_DIRS; do
     if [ -d "$SSL_DIR" ]; then
-      # Create a symbolic link for each certificate in the directory.
-      CERTFILES=(`find -L "$SSL_DIR" -maxdepth 1 -type f -exec realpath --no-symlinks {} \;`)
-      for CERT_FILE in ${CERTFILES[@]}
-      do
-        ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
-        CERT_ID=$((CERT_ID + 1))
-      done
+      # Track directories in _DOTNET_SSL_DIRS.
+      _DOTNET_SSL_DIRS="$_DOTNET_SSL_DIRS:$(realpath --no-symlinks "$SSL_DIR")"
     elif [ -f "$SSL_DIR" ]; then
-      # Create a symbolic link to the file.
+      # Create a symbolic link to the file in DOTNET_SSL_CERT_DIR.
       CERT_FILE=$(realpath --no-symlinks "$SSL_DIR")
       ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
       CERT_ID=$((CERT_ID + 1))
@@ -53,6 +48,5 @@ if [ -n "$DOTNET_SSL_DIRS" ]; then
     rmdir /opt/app-root/src
   fi
 
-  # Use the certificate folder.
-  export SSL_CERT_DIR="$DOTNET_SSL_CERT_DIR"
+  export SSL_CERT_DIR="$_DOTNET_SSL_DIRS:$DOTNET_SSL_CERT_DIR:$_USER_SSL_CERT_DIR"
 fi
