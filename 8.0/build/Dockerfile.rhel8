@@ -23,7 +23,7 @@ LABEL name="ubi8/dotnet-80" \
       com.redhat.component="dotnet-80-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
       version="8.0" \
-      release="1"
+      release="$RELEASE"
 
 # Switch to root for package installs
 USER 0
