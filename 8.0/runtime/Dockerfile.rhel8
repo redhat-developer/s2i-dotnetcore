@@ -19,7 +19,7 @@ ENV HOME=/opt/app-root \
     # Don't download/extract docs for nuget packages
     NUGET_XMLDOC_MODE=skip \
     # Configure ASP.NET Core to use the exposed port
-    ASPNETCORE_HTTP_PORTS=8080 \
+    ASPNETCORE_URLS=http://*:8080 \
     # Like Microsoft images, set APP_UID to the UID of the non-root user.
     APP_UID=1001
 

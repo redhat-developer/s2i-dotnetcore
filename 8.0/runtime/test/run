@@ -131,8 +131,8 @@ test_port() {
 
   # Port 8080 is exposed
   assert_equal $(docker_get_exposedports $IMAGE_NAME) '{"8080/tcp":{}}'
-  # The environment variable used by ASP.NET Core matches the exposed port.
-  assert_equal $(docker_get_env $IMAGE_NAME ASPNETCORE_HTTP_PORTS) "8080"
+  # The environment variable used by ASP.NET Core matches
+  assert_equal $(docker_get_env $IMAGE_NAME ASPNETCORE_URLS) "http://*:8080"
 }
 
 verify_aspnet_image_works() {
