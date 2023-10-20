@@ -2,6 +2,7 @@ FROM ubi8/dotnet-80-runtime
 # This image provides a .NET 8.0 environment you can use to run your .NET
 # applications.
 
+# DOTNET_SDK_VERSION must be set to the full SDK version, unless IS_CI is set to true.
 ARG DOTNET_SDK_VERSION=8.0
 ARG RELEASE=1
 ARG IS_CI

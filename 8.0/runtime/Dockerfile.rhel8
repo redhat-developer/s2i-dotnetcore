@@ -1,5 +1,6 @@
 FROM registry.access.redhat.com/ubi8-minimal
 
+# DOTNET_VERSION and ASPNET_VERSION must be set to the full framework versions, unless IS_CI is set to true.
 ARG DOTNET_VERSION=8.0
 ARG ASPNET_VERSION=8.0
 ARG RELEASE=1
