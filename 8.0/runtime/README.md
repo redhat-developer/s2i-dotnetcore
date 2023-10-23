@@ -92,6 +92,8 @@ They must not to be overridden.
 
 * **DOTNET_SSL_DIRS**
 
+    **Deprecated** Please use `SSL_CERT_DIR` instead.
+
     Used to specify a list of space separated (' ') folders/files with additional certificates to trust.
     The certificates are trusted by each process that runs uring the s2i build and all processes that run in the image
     after the build (including the application that was built).
@@ -100,7 +102,7 @@ They must not to be overridden.
 
     Because `SSL_CERT_DIR` is a well-known OpenSSL variable, it is preferable to use that instead of `DOTNET_SSL_DIRS`.
 
-    ** Breaking change **: since .NET 8, `DOTNET_SSL_DIRS` certificates are no longer loaded by an image ENTRYPOINT.
+    **Breaking change** Since .NET 8, `DOTNET_SSL_DIRS` certificates are no longer loaded by an image ENTRYPOINT.
     Applications that use the default source-to-image (s2i) scripts still load `DOTNET_SSL_DIRS` automatically.
     To continue loading these certificates in other cases, you can change to use `SSL_CERT_DIR` instead.
 

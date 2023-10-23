@@ -1,6 +1,8 @@
 # Trust certificates from all DOTNET_SSL_DIRS.
 if [ -n "$DOTNET_SSL_DIRS" ]; then
 
+  echo "warn: DOTNET_SSL_DIRS is deprecated. Please use SSL_CERT_DIR instead."
+
   # For backwards compatibility we need to run this in the src folder.
   # Create one if it does not exist.
   if [ ! -d /opt/app-root/src ]; then
