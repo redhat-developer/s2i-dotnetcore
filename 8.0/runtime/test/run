@@ -34,20 +34,12 @@ source "${test_dir}/testcommon"
 
 dotnet_version_series="8.0"
 
-if [ "$IMAGE_OS" = "RHEL8" ]; then
-dotnet_version="8.0.0-rc.1.23419.4"
-fi
-
 test_dotnet() {
   test_start
 
   # ENTRYPOINT enables scl so dotnet is available
   assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Host"
   assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
-  # Check version
-  if [ "$SKIP_VERSION_CHECK" != "true" ]; then
-    assert_contains "$(docker_run $IMAGE_NAME "dotnet --info")" "Version:\s*${dotnet_version}$"
-  fi
 }
 
 test_envvars() {
@@ -60,16 +52,17 @@ test_envvars() {
   # DOTNET_DATA_PATH
   assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DATA_PATH) "/opt/app-root/data"
 
-  # DOTNET_CORE_VERSION
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_CORE_VERSION) "${dotnet_version_series}"
-  # DOTNET_FRAMEWORK
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_FRAMEWORK) "net${dotnet_version_series}"
-
   # .NET determines culture based on LANG. It must be empty/unset to use the 'Invariant' culture
   assert_equal $(docker_get_env $IMAGE_NAME LANG) ""
 
   # Like Microsoft images, we set this to 'true'
   assert_equal $(docker_get_env $IMAGE_NAME DOTNET_RUNNING_IN_CONTAINER) "true"
+
+  # Like Microsoft images, we set set DOTNET_VERSION and ASPNET_VERSION.
+  # Their values get checked during the build.
+  # This is to ensure they are provided as environment variables.
+  assert_contains $(docker_get_env $IMAGE_NAME DOTNET_VERSION) "$dotnet_version_series"
+  assert_contains $(docker_get_env $IMAGE_NAME ASPNET_VERSION) "$dotnet_version_series"
 }
 
 test_debuggable() {

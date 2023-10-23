@@ -85,10 +85,6 @@ They must not to be overridden.
     during the build and all processes that run in the image after the build (including the application that was built). The items
     can be absolute paths (starting with `/`) or paths in the source repository (e.g. `certificates`). Defaults to ``.
 
-* **DOTNET_FRAMEWORK,DOTNET_CORE_VERSION**
-
-    These variables contain the framework (`net8.0`) and .NET version (`8.0`) respectively.
-
 * **DOTNET_RUNNING_IN_CONTAINER**
 
     Like Microsoft images, this is set to `true` and can be used to detect the application is built/running in a container.

@@ -1,5 +1,10 @@
 FROM registry.access.redhat.com/ubi8-minimal
 
+# DOTNET_VERSION and ASPNET_VERSION must be set to the full framework versions, unless IS_CI is set to true.
+ARG DOTNET_VERSION=8.0
+ARG ASPNET_VERSION=8.0
+ARG RELEASE=1
+ARG IS_CI
 ARG DOTNET_TARBALL
 
 # This image provides a .NET 8.0 environment you can use to run your .NET
@@ -11,8 +16,6 @@ ENV HOME=/opt/app-root \
     DOTNET_APP_PATH=/opt/app-root/app \
     DOTNET_DATA_PATH=/opt/app-root/data \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
-    DOTNET_CORE_VERSION=8.0 \
-    DOTNET_FRAMEWORK=net8.0 \
     # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir \
@@ -21,7 +24,10 @@ ENV HOME=/opt/app-root \
     # Configure ASP.NET Core to use the exposed port
     ASPNETCORE_URLS=http://*:8080 \
     # Like Microsoft images, set APP_UID to the UID of the non-root user.
-    APP_UID=1001
+    APP_UID=1001 \
+    # Like Microsoft images, provide the .NET and ASP.NET shared framework versions.
+    DOTNET_VERSION=$DOTNET_VERSION \
+    ASPNET_VERSION=$ASPNET_VERSION
 
 LABEL io.k8s.description="Platform for running .NET 8 applications" \
       io.k8s.display-name=".NET 8" \
@@ -36,7 +42,7 @@ LABEL name="ubi8/dotnet-80-runtime" \
       com.redhat.component="dotnet-80-runtime-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
       version="8.0" \
-      release="1"
+      release="$RELEASE"
 
 # Each language image can have 'contrib' a directory with extra files needed to
 # run and build the applications.
@@ -69,6 +75,12 @@ RUN [ -z "${DOTNET_TARBALL}" ] || ( \
     ln -s /opt/dotnet/dotnet /usr/bin/dotnet && \
     mkdir /etc/dotnet/ && \
     echo '/opt/dotnet' > /etc/dotnet/install_location )
+
+# Check the versions of the environment variables match the installed versions.
+RUN [ "$IS_CI" == "true" ] || ( \
+        printf "Checking framework versions ${DOTNET_VERSION} and ${ASPNET_VERSION} against:\n$(dotnet --list-runtimes)" && \
+        dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " && \
+        dotnet --list-runtimes | grep "Microsoft.AspNetCore.App ${ASPNET_VERSION} " )
 
 # Add default user
 RUN mkdir -p ${DOTNET_APP_PATH} ${DOTNET_DATA_PATH} && \
