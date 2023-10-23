@@ -36,10 +36,7 @@ OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 test_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
 source "${test_dir}/testcommon"
 
-if [ "$IMAGE_OS" = "RHEL8" ]; then
-# sdk version supported on RHEL8
-sdk_version=8.0.100-rc.1.23463.5
-fi
+dotnet_version_series="8.0"
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
@@ -110,10 +107,12 @@ test_image() {
   test_start
 
   # verify dotnet is available
-  local image_dotnet_version=$(docker_run ${IMAGE_NAME} dotnet --version)
-  if [ "$SKIP_VERSION_CHECK" != "true" ]; then
-    assert_equal "${image_dotnet_version}" "${sdk_version}"
-  fi
+  assert_contains $(docker_run ${IMAGE_NAME} dotnet --version) "$dotnet_version_series"
+
+  # Like Microsoft images, we set set DOTNET_SDK_VERSION.
+  # Its value get checked during the build.
+  # This is to ensure it is provided as environment variables.
+  assert_contains $(docker_get_env $IMAGE_NAME DOTNET_SDK_VERSION) "$dotnet_version_series"
 
   # Verify $HOME != $CWD. See https://github.com/redhat-developer/s2i-dotnetcore/issues/28
   local working_dir=$(docker_run ${IMAGE_NAME} pwd)

@@ -150,9 +150,10 @@ a `.s2i/environment` file inside your source code repository.
     `Release` or `Debug`.  This is passed to the `dotnet publish` invocation.
     Defaults to `Release`.
 
-* **ASPNETCORE_HTTP_PORTS**
+* **ASPNETCORE_URLS**
 
-    This variable is set to `8080` to configure ASP.NET Core to use the port exposed by the image.
+    This variable is set to `http://*:8080` to configure ASP.NET Core to use the
+    port exposed by the image.
 
 * **HTTP_PROXY, HTTPS_PROXY**
 
