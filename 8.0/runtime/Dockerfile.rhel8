@@ -18,7 +18,6 @@ ENV HOME=/opt/app-root \
     DOTNET_DEFAULT_CMD=default-cmd.sh \
     # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
-    DOTNET_SSL_CERT_DIR=/opt/app-root/ssl_dir \
     # Don't download/extract docs for nuget packages
     NUGET_XMLDOC_MODE=skip \
     # Configure ASP.NET Core to use the exposed port
@@ -95,8 +94,6 @@ CMD "./${DOTNET_DEFAULT_CMD}"
 # writable as OpenShift default security model is to run the container under
 # random UID.
 RUN chown -R $APP_UID:0 /opt/app-root && fix-permissions /opt/app-root
-
-ENTRYPOINT [ "container-entrypoint" ]
 
 # Run container rootless.
 USER $APP_UID
