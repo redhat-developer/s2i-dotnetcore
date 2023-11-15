@@ -26,9 +26,10 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 
 # Install packages:
 # - dotnet-sdk--*: provides the .NET SDK.
-# - npm: provides SDK for building NodeJS web front-ends.
+# - nodejs-npm: provides SDK for building NodeJS web front-ends.
 # - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
-RUN INSTALL_PKGS="npm nodejs-nodemon dotnet-sdk-6.0 rsync procps-ng findutils" && \
+# - glibc-langpack-en: stop bash from printing warnings about the 'en_US' locale when invoked through an MSBuild Exec Task.
+RUN INSTALL_PKGS="nodejs-npm nodejs-nodemon dotnet-sdk-6.0 rsync procps-ng findutils glibc-langpack-en" && \
     yum install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=False $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \

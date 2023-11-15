@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <DebugType>portable</DebugType>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <Target Name="RunExecTask" AfterTargets="Build">
+    <!-- Under LogStandardErrorAsError, any standard error output results a failed Task. -->
+    <Exec Command="echo Running RunExecTask" LogStandardErrorAsError="true" />
+  </Target>
+
+</Project>
