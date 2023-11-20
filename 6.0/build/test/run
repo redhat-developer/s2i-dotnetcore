@@ -674,6 +674,27 @@ test_rm_tmp_dotnet() {
   assert_contains "${tmp_dotnet}" "No such file or directory"
 }
 
+test_msbuild_exec_task() {
+  test_start
+
+  # msbuild-exec-task uses an MSBuild Exec Task.
+  # MSBuild Exec sets the en_US locale. This test verifies the locale doesn't cause issues in the container image.
+  # See https://github.com/redhat-developer/s2i-dotnetcore/issues/478.
+  local app=msbuild-exec-task
+
+  # build image
+  local image=$(s2i_image_tag ${app})
+  local s2i_build=$(s2i_build_output_log ${app} ${image})
+
+  # cleanup
+  docker_rmi ${image}
+
+  # verify the Exec task ran
+  assert_contains "${s2i_build}" "Running RunExecTask"
+  # verify the build did not fail
+  assert_completed_build ${image} "${s2i_build}"
+}
+
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -699,6 +720,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_binary
   test_incremental
   test_incremental_without_packages
+  test_msbuild_exec_task
 else
   test_imagestream_sample
 fi
