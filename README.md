@@ -10,6 +10,7 @@ The images support OpenShift [source-to-image](https://github.com/openshift/sour
 |--|--|--|
 | 6.0 | UBI 8, Fedora | [SDK image](6.0/build/README.md) <br/> [Runtime image](6.0/runtime/README.md)
 | 7.0 | UBI 8, Fedora | [SDK image](7.0/build/README.md) <br/> [Runtime image](7.0/runtime/README.md)
+| 8.0 | UBI 8         | [SDK image](8.0/build/README.md) <br/> [Runtime image](8.0/runtime/README.md)
 
 ## EOL Versions
 
@@ -31,7 +32,7 @@ You can build (and test) the images by executing the `build.sh` script and pass 
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ ./build.sh 6.0 7.0
+$ ./build.sh --ci 6.0 7.0
 ```
 
 To override the default basis of the image, you can use the `--base-os` argument. For example: `--base-os fedora` or `--base-os rhel8`.
