@@ -115,3 +115,7 @@ They must not to be overridden.
 
     Like Microsoft images, this is set to the rootless user's uid to enable switching to that user
     in a Dockerfile using the the instruction: `USER $APP_UID`.
+
+* **DOTNET_VERSION**, **ASPNET_VERSION**
+
+    These variables contain the version of the .NET runtime and ASP.NET Core runtime.
