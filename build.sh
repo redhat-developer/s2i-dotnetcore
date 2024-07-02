@@ -78,7 +78,7 @@ VERSIONS=$(echo "$VERSIONS" | xargs)
 
 # default to building the currently supported versions.
 if [ -z "$VERSIONS" ]; then
-  VERSIONS="6.0 7.0"
+  VERSIONS="6.0 8.0"
 fi
 
 # Use podman instead of docker when available.
