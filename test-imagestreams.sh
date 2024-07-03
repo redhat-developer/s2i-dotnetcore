@@ -23,7 +23,7 @@ usage () {
   echo ""
   echo "-----------------------------------------------------"
   echo "VERSIONS            The list of expected versions."
-  echo "                    Defaults to all versions. i.e '3.1 6.0 7.0'."
+  echo "                    Defaults to all versions. i.e '6.0 8.0'."
   echo ""
   echo "IMAGE_OS            The base os image to use when building"
   echo "                    the containers."
@@ -84,16 +84,16 @@ fi
 IMAGE_OS=$(echo "$IMAGE_OS" | tr '[:upper:]' '[:lower:]')
 
 case "$IMAGE_OS" in
-"centos*")
+centos*)
   VERSIONS="${VERSIONS:-3.1}"
   imagestreams_file_name=dotnet_imagestreams_centos.json
   ;;
-"fedora")
-  VERSIONS="${VERSIONS:-3.1}"
+fedora)
+  VERSIONS="${VERSIONS:-6.0}"
   imagestreams_file_name=dotnet_imagestreams_fedora.json
   ;;
-"rhel*")
-  VERSIONS="${VERSIONS:-3.1 6.0 7.0}"
+rhel*)
+  VERSIONS="${VERSIONS:-6.0 8.0}"
   imagestreams_file_name=dotnet_imagestreams.json
   ;;
 *)
@@ -114,12 +114,12 @@ echo "Testing ${imagestreams_file_name}"
 
 project_name=s2i-dotnetcore-imagestream-"$RANDOM"
 oc new-project "$project_name" >/dev/null
-install_arguments=(--os "$IMAGE_OS" -i "$imagestreams_file_name")
+install_arguments=()
 if [[ -n ${REGISTRY_USERNAME:-} ]]; then
   install_arguments+=(--user "$REGISTRY_USERNAME")
   install_arguments+=(--password "$REGISTRY_PASSWORD")
 fi
-./install-imagestreams.sh "${install_arguments[@]}"
+oc apply -f "$imagestreams_file_name"
 oc_output="$(oc get -o json is | jq --raw-output '.items[].metadata.name')"
 mapfile -t imagestreams <<< "$oc_output"
 
@@ -164,7 +164,7 @@ for imagestream in "${imagestreams[@]}"; do
     from=${names_and_sources[$((index+1))]}
 
     if [[ $name = 'latest' ]]; then
-      if [[ $from != "$latest" ]]; then
+      if [[ $from != "$latest-ubi8" ]]; then
         echo "FAIL: 'latest' tag points to '$from', expected '$latest'."
         exit 5
       fi
@@ -226,7 +226,7 @@ for version in ${VERSIONS}; do
   sample_apps=("s2i-dotnetcore-ex" "s2i-dotnetcore-persistent-ex")
 
   for application in "${sample_apps[@]}"; do
-    application_source="dotnet:${version}~https://github.com/redhat-developer/${application}#dotnetcore-${version}"
+    application_source="dotnet:${version}~https://github.com/redhat-developer/${application}#dotnet-${version}"
 
     echo -n "Testing $application for .NET Core $version using $application_source "
 
