@@ -20,7 +20,7 @@ The application is being developed as an open source solution.
 
 ## Prerequisites
 
-- .Net Core 3.1 SDK
+- .Net 7
 - Node.JS v13.7.0 or newer
 - PostgreSQL 10
 
