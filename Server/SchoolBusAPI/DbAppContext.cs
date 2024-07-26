@@ -96,6 +96,7 @@ namespace SchoolBusAPI.Models
                                 : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         /// <summary>
