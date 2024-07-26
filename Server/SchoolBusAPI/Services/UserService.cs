@@ -193,6 +193,7 @@ namespace SchoolBusAPI.Services
                 return districtError;
 
             var user = Mapper.Map<User>(item);
+            user.District = _context.Districts.First(x => x.Id == item.District.Id);
 
             _context.Users.Add(user);
 
