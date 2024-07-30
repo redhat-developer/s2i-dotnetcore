@@ -383,7 +383,7 @@ parameters:
       1Gi, 2Gi.  Ensure this is sized correctly.  Refer to the container documentation
       for details.
     required: true
-    value: 5Gi
+    value: 10Gi
   - name: BACKUP_VOLUME_CLASS
     displayName: Backup Volume Class
     description:
@@ -410,7 +410,7 @@ parameters:
       backups, e.g. 512Mi, 1Gi, 2Gi.  Ensure this is sized correctly.  It should be
       large enough to contain your largest database.
     required: true
-    value: 1Gi
+    value: 10Gi
   - name: VERIFICATION_VOLUME_CLASS
     displayName: Backup Volume Class
     description:
