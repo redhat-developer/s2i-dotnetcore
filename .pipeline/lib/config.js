@@ -30,7 +30,7 @@ const phases = {
     host: `sbi-e82e9a-dev.apps.silver.devops.gov.bc.ca`,
     dotnet_env: "Development",
     dbUser: "userUXN",
-    dbSize: "6Gi",
+    dbSize: "10Gi",
     transient: true,
     backupVolume: "schoolbus",
     backupVolumeSize: "10Gi",
