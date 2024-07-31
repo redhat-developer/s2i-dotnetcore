@@ -170,7 +170,7 @@ parameters:
     displayName: Persistent Volume Size
     description: The size of the persistent volume , e.g. 512Mi, 1Gi, 2Gi.
     required: true
-    value: 6Gi
+    value: 5Gi
   - name: PERSISTENT_VOLUME_CLASS
     displayName: Persistent Volume Class name
     description: The class of the volume; netapp-file-standard, netapp-file-block
