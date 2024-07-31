@@ -33,8 +33,8 @@ const phases = {
     dbSize: "10Gi",
     transient: true,
     backupVolume: "schoolbus",
-    backupVolumeSize: "5Gi",
-    verificationVolumeSize: "5Gi",
+    backupVolumeSize: "10Gi",
+    verificationVolumeSize: "10Gi",
   },
   test: {
     namespace: "e82e9a-test",
