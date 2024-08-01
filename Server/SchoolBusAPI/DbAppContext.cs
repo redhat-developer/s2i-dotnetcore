@@ -280,7 +280,8 @@ namespace SchoolBusAPI.Models
             var modifiedEntries = ChangeTracker.Entries()
                     .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted).ToList();
 
-            DateTime currentTime = DateTime.UtcNow;
+            DateTime utcCurrentTime = DateTime.UtcNow;
+            DateTime currentTime = DateTime.SpecifyKind(utcCurrentTime, DateTimeKind.Unspecified);
 
             foreach (var entry in modifiedEntries)
             {
