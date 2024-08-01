@@ -256,7 +256,8 @@ namespace SchoolBusAPI.Services
                 DateTime today = DateUtils.ConvertPacificToUtcTime(
                     new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0));
 
-                DateTime dateTo = today.AddDays(31).AddSeconds(-1);
+                DateTime utcDateTo = today.AddDays(31).AddSeconds(-1);
+                DateTime dateTo = DateTime.SpecifyKind(utcDateTo, DateTimeKind.Unspecified);
 
                 int overdue = _context.SchoolBuss.AsNoTracking()
                     .Count(x => x.Inspector.Id == id && x.NextInspectionDate < today && x.Status.ToLower() == "active");
