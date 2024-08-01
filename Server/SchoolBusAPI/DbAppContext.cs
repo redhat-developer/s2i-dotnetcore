@@ -96,6 +96,7 @@ namespace SchoolBusAPI.Models
                                 : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
+            // To fix datetime utc issue after upgraded to .net 7.0
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
