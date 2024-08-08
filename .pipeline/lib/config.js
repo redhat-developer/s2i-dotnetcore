@@ -64,11 +64,11 @@ const phases = {
     tag: `prod-${version}`,
     host: `sbi-e82e9a-prod.apps.silver.devops.gov.bc.ca`,
     dbUser: "userKIX",
-    dbSize: "6Gi",
+    dbSize: "10Gi",
     dotnet_env: "Production",
     backupVolume: "schoolbus",
-    backupVolumeSize: "5Gi",
-    verificationVolumeSize: "5Gi",
+    backupVolumeSize: "10Gi",
+    verificationVolumeSize: "10Gi",
   },
 };
 
