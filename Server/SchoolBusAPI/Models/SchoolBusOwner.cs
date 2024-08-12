@@ -10,16 +10,11 @@
 
 using System;
 using System.Linq;
-using System.IO;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -57,9 +52,6 @@ namespace SchoolBusAPI.Models
             this.Name = Name;
             this.Status = Status;
             this.DateCreated = DateCreated;
-
-
-
             this.PrimaryContact = PrimaryContact;
             this.District = District;
             this.Contacts = Contacts;
@@ -229,7 +221,6 @@ namespace SchoolBusAPI.Models
                 ) &&                 
                 (
                     this.DateCreated == other.DateCreated ||
-                    this.DateCreated != null &&
                     this.DateCreated.Equals(other.DateCreated)
                 ) &&                 
                 (
@@ -276,19 +267,17 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                if (this.Name != null)
+                hash = hash * 59 + this.Id.GetHashCode();                
+                if (this.Name != null)
                 {
                     hash = hash * 59 + this.Name.GetHashCode();
-                }                
-                                if (this.Status != null)
+                }
+                if (this.Status != null)
                 {
                     hash = hash * 59 + this.Status.GetHashCode();
-                }                
-                                   
-                if (this.DateCreated != null)
-                {
-                    hash = hash * 59 + this.DateCreated.GetHashCode();
-                }                   
+                }
+
+                hash = hash * 59 + this.DateCreated.GetHashCode();
                 if (this.PrimaryContact != null)
                 {
                     hash = hash * 59 + this.PrimaryContact.GetHashCode();

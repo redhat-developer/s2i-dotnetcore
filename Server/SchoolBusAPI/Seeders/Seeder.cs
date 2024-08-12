@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +14,10 @@ namespace SchoolBusAPI.Seeders
         public const string AllProfiles = "all";
 
         private IWebHostEnvironment _env;
-        protected ILogger _logger;
 
-        internal Seeder(IConfiguration configuration, IWebHostEnvironment env, ILogger logger)
+        internal Seeder(IConfiguration configuration, IWebHostEnvironment env)
         {
             _env = env;
-            _logger = logger;
             Configuration = configuration;
         }
 
@@ -43,12 +41,12 @@ namespace SchoolBusAPI.Seeders
         {
             if (this.TriggerProfiles.Contains(_env.EnvironmentName, StringComparer.OrdinalIgnoreCase) || this.TriggerProfiles.Contains(AllProfiles, StringComparer.OrdinalIgnoreCase))
             {
-                _logger.LogDebug("The trigger for {0} ({1}) matches the deployment profile ({2}); executing...", this.GetType().Name, string.Join(", ", this.TriggerProfiles), AllProfiles);
+                Log.Debug("The trigger for {0} ({1}) matches the deployment profile ({2}); executing...", this.GetType().Name, string.Join(", ", this.TriggerProfiles), AllProfiles);
                 this.Invoke(context);
             }
             else
             {
-                _logger.LogDebug("Trigger profile(s) for {0} ({1}), do not match the deployment profile ({2}); skipping...", this.GetType().Name, string.Join(", ", this.TriggerProfiles), _env.EnvironmentName);
+                Log.Debug("Trigger profile(s) for {0} ({1}), do not match the deployment profile ({2}); skipping...", this.GetType().Name, string.Join(", ", this.TriggerProfiles), _env.EnvironmentName);
             }
         }
     }

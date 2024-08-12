@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
+using SchoolBusCommon.Helpers;
 
 namespace SchoolBusAPI.Services
 {
@@ -238,13 +239,13 @@ namespace SchoolBusAPI.Services
             if (id != null)
             {
                 User currentUser = _context.Users
-                                        .AsNoTracking()
-                                        .Include(x => x.District)
-                                        .Include(x => x.UserRoles)
-                                            .ThenInclude(y => y.Role)
-                                                .ThenInclude(z => z.RolePermissions)
-                                                    .ThenInclude(z => z.Permission)
-                                        .First(x => x.Id == id);
+                    .AsNoTracking()
+                    .Include(x => x.District)
+                    .Include(x => x.UserRoles)
+                        .ThenInclude(y => y.Role)
+                            .ThenInclude(z => z.RolePermissions)
+                                .ThenInclude(z => z.Permission)
+                    .First(x => x.Id == id);
 
                 var result = Mapper.Map<CurrentUserViewModel>(currentUser);
 
@@ -252,8 +253,11 @@ namespace SchoolBusAPI.Services
                 result.GivenName = User.FindFirst(ClaimTypes.GivenName).Value;
                 result.Surname = User.FindFirst(ClaimTypes.Surname).Value;
 
-                DateTime today = DateTime.UtcNow.Date;
-                DateTime dateTo = today.AddDays(31).AddSeconds(-1);
+                DateTime today = DateUtils.ConvertPacificToUtcTime(
+                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0));
+
+                DateTime utcDateTo = today.AddDays(31).AddSeconds(-1);
+                DateTime dateTo = DateTime.SpecifyKind(utcDateTo, DateTimeKind.Unspecified);
 
                 int overdue = _context.SchoolBuss.AsNoTracking()
                     .Count(x => x.Inspector.Id == id && x.NextInspectionDate < today && x.Status.ToLower() == "active");
@@ -279,26 +283,51 @@ namespace SchoolBusAPI.Services
                 result.CCWNotifications = ccwNotifications;
 
                 result.Permissions =
-                    currentUser
-                    .UserRoles
-                    .Where(ur => (ur.EffectiveDate == DateTime.MinValue || ur.EffectiveDate <= DateTime.Now) && (!ur.ExpiryDate.HasValue || ur.ExpiryDate == DateTime.MinValue || ur.ExpiryDate > DateTime.Now))
-                    .Select(ur => ur.Role)
-                    .Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Now) //active roles
-                    .SelectMany(r => r.RolePermissions.Select(rp => rp.Permission))
-                    .Where(p => !p.ExpiryDate.HasValue || p.ExpiryDate == DateTime.MinValue || p.ExpiryDate > DateTime.Now) //active permissions
-                    .ToLookup(p => p.Code)
-                    .Select(p => p.First())
-                    .Select(p => p.Code)
-                    .ToList();
+                    currentUser.UserRoles
+                        .Where(ur => 
+                            (ur.EffectiveDate == DateTime.MinValue.ToUniversalTime() 
+                                || ur.EffectiveDate <= DateTime.UtcNow) 
+                            && (!ur.ExpiryDate.HasValue 
+                                || ur.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                                || ur.ExpiryDate > DateTime.UtcNow))
+                        .Select(ur => ur.Role)
+                        .Where(r => 
+                            !r.ExpiryDate.HasValue 
+                            || r.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                            || r.ExpiryDate > DateTime.UtcNow) //active roles
+                        .SelectMany(r => r.RolePermissions.Select(rp => rp.Permission))
+                        .Where(p => 
+                            !p.ExpiryDate.HasValue 
+                            || p.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                            || p.ExpiryDate > DateTime.UtcNow) //active permissions
+                        .ToLookup(p => p.Code)
+                        .Select(p => p.First())
+                        .Select(p => p.Code)
+                        .ToList();
 
-                result.IsSystemAdmin = currentUser.UserRoles.Any(x => x.Role.Name == Roles.SystemAdmininstrator 
-                        && (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
+                result.IsSystemAdmin = currentUser.UserRoles.Any(x => 
+                    x.Role.Name == Roles.SystemAdmininstrator 
+                    && (x.EffectiveDate == DateTime.MinValue.ToUniversalTime() 
+                        || x.EffectiveDate <= DateTime.UtcNow) 
+                    && (!x.ExpiryDate.HasValue 
+                        || x.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                        || x.ExpiryDate > DateTime.UtcNow));
                 
-                result.IsInspector = currentUser.UserRoles.Any(x => x.Role.Name == Roles.Inspector
-                        && (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
+                result.IsInspector = currentUser.UserRoles.Any(x => 
+                    x.Role.Name == Roles.Inspector
+                    && (x.EffectiveDate == DateTime.MinValue.ToUniversalTime() 
+                        || x.EffectiveDate <= DateTime.UtcNow) 
+                    && (!x.ExpiryDate.HasValue 
+                        || x.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                        || x.ExpiryDate > DateTime.UtcNow));
 
-                result.IsManager = currentUser.UserRoles.Any(x => x.Role.Name == Roles.Manager
-                        && (x.EffectiveDate == DateTime.MinValue || x.EffectiveDate <= DateTime.Now) && (!x.ExpiryDate.HasValue || x.ExpiryDate == DateTime.MinValue || x.ExpiryDate > DateTime.Now));
+                result.IsManager = currentUser.UserRoles.Any(x => 
+                    x.Role.Name == Roles.Manager
+                    && (x.EffectiveDate == DateTime.MinValue.ToUniversalTime() 
+                        || x.EffectiveDate <= DateTime.UtcNow) 
+                    && (!x.ExpiryDate.HasValue 
+                        || x.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                        || x.ExpiryDate > DateTime.UtcNow));
 
                 return new ObjectResult(result);
             }

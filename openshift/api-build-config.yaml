@@ -9,7 +9,8 @@ objects:
   - apiVersion: v1
     kind: ImageStream
     metadata:
-      name: dotnet-31-rhel7
+      # name: dotnet-31-rhel7
+      name: dotnet-70
       labels:
         shared: "true"
     spec:
@@ -19,8 +20,10 @@ objects:
         - annotations: null
           from:
             kind: DockerImage
-            name: registry.redhat.io/dotnet/dotnet-31-rhel7:3.1-24
-          name: "3.1"
+            # name: registry.redhat.io/dotnet/dotnet-31-rhel7:3.1-24
+            name: registry.redhat.io/rhel8/dotnet-70:7.0-18
+          # name: "3.1"
+          name: "7.0"
           referencePolicy:
             type: Local
   - apiVersion: v1
@@ -85,7 +88,8 @@ objects:
               value: SchoolBusAPI/SchoolBusAPI.csproj
           from:
             kind: ImageStreamTag
-            name: "dotnet-31-rhel7:3.1"
+            # name: "dotnet-31-rhel7:3.1"
+            name: "dotnet-70:7.0"
         type: Source
 parameters:
   - description: Name of the project (SCHOOLBUS)

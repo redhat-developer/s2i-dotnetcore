@@ -125,9 +125,14 @@ namespace SchoolBusAPI.Services
         {
             var permissions = _context.Permissions
                 .AsNoTracking()
-                .Where(p => !p.ExpiryDate.HasValue || p.ExpiryDate == DateTime.MinValue || p.ExpiryDate > DateTime.Now);
+                .Where(p => 
+                    !p.ExpiryDate.HasValue 
+                    || p.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                    || p.ExpiryDate > DateTime.UtcNow);
 
-            return new ObjectResult(Mapper.Map<List<PermissionViewModel>>(permissions));
+            return new ObjectResult(
+                Mapper.Map<List<PermissionViewModel>>(
+                    permissions));
         }
 
         /// <summary>

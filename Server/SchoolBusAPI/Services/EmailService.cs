@@ -7,7 +7,7 @@ using MimeKit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace SchoolBusAPI.Services
 {
@@ -30,16 +30,14 @@ namespace SchoolBusAPI.Services
     public class EmailService : ServiceBase, IEmailService
     {
         private readonly IConfiguration Configuration;
-        private readonly ILogger<EmailService> _logger;
 
         /// <summary>
         /// Create a email service
         /// </summary>
-        public EmailService(DbAppContext context, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IMapper mapper, ILogger<EmailService> logger) 
+        public EmailService(DbAppContext context, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IMapper mapper) 
             : base(httpContextAccessor, context, mapper)
         {
             Configuration = configuration;
-            _logger = logger;
         }
 
         /// <summary>
@@ -80,7 +78,7 @@ namespace SchoolBusAPI.Services
                     {
                         if (mailTo != string.Empty)
                         {
-                            emailMessage.To.Add(new MailboxAddress(mailTo));
+                            emailMessage.To.Add(new MailboxAddress(mailTo, mailTo));
                         }
                     }
 
@@ -88,7 +86,7 @@ namespace SchoolBusAPI.Services
                     {
                         if (cc != string.Empty)
                         {
-                            emailMessage.Cc.Add(new MailboxAddress(cc));
+                            emailMessage.Cc.Add(new MailboxAddress(cc, cc));
                         }
                     }
 
@@ -101,16 +99,16 @@ namespace SchoolBusAPI.Services
                     {
                         client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
                         {
-                            _logger.LogInformation("Starting certificate validation.");
+                            Log.Information("Starting certificate validation.");
                             if (sslPolicyErrors == SslPolicyErrors.None)
                             {
-                                _logger.LogInformation("Certificate valid");
+                                Log.Information("Certificate valid");
                                 return true;
                             }
 
                             if (chain.ChainElements == null || chain.ChainElements.Count == 0)
                             {
-                                _logger.LogError("No certificates found in chain.");
+                                Log.Error("No certificates found in chain.");
                                 return false;
                             }
 
@@ -124,19 +122,19 @@ namespace SchoolBusAPI.Services
                     {
                         email.mailSent = false;
                         email.errorInfo = "Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.";
-                        _logger.LogError($"Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.");
+                        Log.Error($"Unable to process the SSL Certificate.  Certificate may be untrusted, or the server does not accept SSL.");
                         return new ObjectResult(email);
                     }
                     catch (Exception ex)
                     {
                         email.mailSent = false;
                         email.errorInfo = $"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}.";
-                        _logger.LogError($"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}");
+                        Log.Error($"Unknown error occurred: ({ex.GetType().ToString()}) {ex.Message}");
                         return new ObjectResult(email);
                     }
 
                     client.Send(emailMessage);
-                    _logger.LogInformation("Email sent.");
+                    Log.Information("Email sent.");
                     client.Disconnect(true);
 
                     email.mailSent = true;

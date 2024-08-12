@@ -20,7 +20,7 @@ The application is being developed as an open source solution.
 
 ## Prerequisites
 
-- .Net Core 3.1 SDK
+- .Net 7
 - Node.JS v13.7.0 or newer
 - PostgreSQL 10
 
@@ -131,4 +131,3 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 
 This repository is maintained by [BC Ministry of Transportation](http://www.th.gov.bc.ca/).
 Click [here](https://github.com/orgs/bcgov/teams/tran/repositories) for a complete list of our repositories on GitHub.
-

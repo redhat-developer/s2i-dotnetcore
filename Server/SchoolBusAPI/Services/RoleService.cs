@@ -18,7 +18,6 @@ using SchoolBusAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using SchoolBusAPI.Authorization;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace SchoolBusAPI.Services
 {
@@ -111,7 +110,10 @@ namespace SchoolBusAPI.Services
 
             if (!includeExpired)
             {
-                data = data.Where(r => !r.ExpiryDate.HasValue || r.ExpiryDate == DateTime.MinValue || r.ExpiryDate > DateTime.Now);
+                data = data.Where(r => 
+                    !r.ExpiryDate.HasValue 
+                    || r.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                    || r.ExpiryDate > DateTime.UtcNow);
             }
 
             var roles = Mapper.Map<List<RoleViewModel>>(data);
@@ -201,9 +203,15 @@ namespace SchoolBusAPI.Services
             var permissions =
                 role
                 .RolePermissions
-                .Where(rp => !rp.ExpiryDate.HasValue || rp.ExpiryDate == DateTime.MinValue || rp.ExpiryDate > DateTime.Now)
+                .Where(rp => 
+                    !rp.ExpiryDate.HasValue 
+                    || rp.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                    || rp.ExpiryDate > DateTime.UtcNow)
                 .Select(rp => rp.Permission)
-                .Where(p => !p.ExpiryDate.HasValue || p.ExpiryDate == DateTime.MinValue || p.ExpiryDate > DateTime.Now);
+                .Where(p => 
+                    !p.ExpiryDate.HasValue 
+                    || p.ExpiryDate == DateTime.MinValue.ToUniversalTime() 
+                    || p.ExpiryDate > DateTime.UtcNow);
 
             return new ObjectResult(Mapper.Map<List<PermissionViewModel>>(permissions));
         }

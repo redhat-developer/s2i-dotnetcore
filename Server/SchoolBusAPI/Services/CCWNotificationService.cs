@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using SchoolBusAPI.Authorization;
 using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Models;
 using SchoolBusAPI.ViewModels;
+using SchoolBusCommon.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,8 +74,13 @@ namespace SchoolBusAPI.Services
                 }
             }
 
-            dateFrom = dateFrom.Date;
-            dateTo = dateTo.AddDays(1).Date.AddSeconds(-1);
+            dateFrom = DateUtils.ConvertPacificToUtcTime(
+                new DateTime(dateFrom.Year, dateFrom.Month, dateFrom.Day, 0, 0, 0));
+
+            dateTo = DateUtils.ConvertPacificToUtcTime(
+                new DateTime(dateTo.Year, dateTo.Month, dateTo.Day, 0, 0, 0))
+                    .AddDays(1)
+                    .AddSeconds(-1);
 
             var notifications = data.SelectMany(x => x.CCWNotifications)
                 .Include(x => x.CCWNotificationDetails)
@@ -81,7 +88,9 @@ namespace SchoolBusAPI.Services
                     .ThenInclude(x => x.SchoolBusOwner)
                 .Include(x => x.SchoolBus)
                     .ThenInclude(x => x.Inspector)
-                .Where(x => x.CreateTimestamp.Date >= dateFrom && x.CreateTimestamp.Date <= dateTo);
+                .Where(x => 
+                    x.CreateTimestamp >= dateFrom 
+                    && x.CreateTimestamp <= dateTo);
 
             if (hideRead)
             {

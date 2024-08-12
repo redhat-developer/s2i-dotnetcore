@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SchoolBusAPI.Models;
+using SchoolBusCommon.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -251,7 +252,8 @@ namespace SchoolBusAPI.Extensions
                     user.UserRoles.Add(
                         new UserRole
                         {
-                            EffectiveDate = DateTime.UtcNow.Date,
+                            EffectiveDate = DateUtils.ConvertPacificToUtcTime(
+                                new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)),
                             Role = role
                         });
                 }

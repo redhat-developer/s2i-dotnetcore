@@ -9,17 +9,9 @@
  */
 
 using System;
-using System.Linq;
-using System.IO;
 using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using SchoolBusAPI.Models;
 
 namespace SchoolBusAPI.Models
 {
@@ -49,7 +41,6 @@ namespace SchoolBusAPI.Models
         {   
             this.Id = Id;
             this.EffectiveDate = EffectiveDate;
-
             this.ExpiryDate = ExpiryDate;
             this.Role = Role;
         }
@@ -158,7 +149,6 @@ namespace SchoolBusAPI.Models
                 ) &&                 
                 (
                     this.EffectiveDate == other.EffectiveDate ||
-                    this.EffectiveDate != null &&
                     this.EffectiveDate.Equals(other.EffectiveDate)
                 ) &&                 
                 (
@@ -185,11 +175,9 @@ namespace SchoolBusAPI.Models
                 int hash = 41;
                 // Suitable nullity checks
                                    
-                hash = hash * 59 + this.Id.GetHashCode();                   
-                if (this.EffectiveDate != null)
-                {
-                    hash = hash * 59 + this.EffectiveDate.GetHashCode();
-                }                if (this.ExpiryDate != null)
+                hash = hash * 59 + this.Id.GetHashCode();
+                hash = hash * 59 + this.EffectiveDate.GetHashCode();
+                if (this.ExpiryDate != null)
                 {
                     hash = hash * 59 + this.ExpiryDate.GetHashCode();
                 }                

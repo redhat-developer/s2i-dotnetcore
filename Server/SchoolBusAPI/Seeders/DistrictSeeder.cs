@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using SchoolBusAPI.Extensions;
 using SchoolBusAPI.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace SchoolBusAPI.Seeders
 {
@@ -15,8 +11,8 @@ namespace SchoolBusAPI.Seeders
     {
         private string[] ProfileTriggers = { AllProfiles };
 
-        public DistrictSeeder(IConfiguration configuration, IWebHostEnvironment env, ILogger logger) 
-            : base(configuration, env, logger)
+        public DistrictSeeder(IConfiguration configuration, IWebHostEnvironment env) 
+            : base(configuration, env)
         { }
 
         protected override IEnumerable<string> TriggerProfiles

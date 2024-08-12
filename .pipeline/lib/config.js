@@ -2,7 +2,7 @@
 const options = require("@bcgov/pipeline-cli").Util.parseArguments();
 
 const changeId = options.pr; //aka pull-request
-const version = "2.0.0";
+const version = "2.0.6";
 const name = "sbi"; //project name prefix
 
 Object.assign(options.git, { owner: "ychung-mot", repository: "schoolbus" });
@@ -30,11 +30,11 @@ const phases = {
     host: `sbi-e82e9a-dev.apps.silver.devops.gov.bc.ca`,
     dotnet_env: "Development",
     dbUser: "userUXN",
-    dbSize: "5Gi",
+    dbSize: "10Gi",
     transient: true,
     backupVolume: "schoolbus",
-    backupVolumeSize: "5Gi",
-    verificationVolumeSize: "5Gi",
+    backupVolumeSize: "10Gi",
+    verificationVolumeSize: "10Gi",
   },
   test: {
     namespace: "e82e9a-test",
@@ -47,7 +47,7 @@ const phases = {
     tag: `test-${version}`,
     host: `sbi-e82e9a-test.apps.silver.devops.gov.bc.ca`,
     dbUser: "user7KU",
-    dbSize: "5Gi",
+    dbSize: "6Gi",
     dotnet_env: "Staging",
     backupVolume: "schoolbus",
     backupVolumeSize: "5Gi",

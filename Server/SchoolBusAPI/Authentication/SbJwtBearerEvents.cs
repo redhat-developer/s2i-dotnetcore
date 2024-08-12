@@ -13,12 +13,10 @@ namespace SchoolBusAPI.Authentication
     public class SbJwtBearerEvents : JwtBearerEvents
     {
         private DbAppContext _dbContext;
-        private ILogger<SbJwtBearerEvents> _logger;
 
-        public SbJwtBearerEvents(DbAppContext dbContext, ILogger<SbJwtBearerEvents> logger) : base()
+        public SbJwtBearerEvents(DbAppContext dbContext) : base()
         {
             _dbContext = dbContext;
-            _logger = logger;
         }
 
         public override async Task AuthenticationFailed(AuthenticationFailedContext context)

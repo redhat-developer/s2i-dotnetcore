@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using SchoolBusAPI.Extensions;
 using System;
 using System.Net;
@@ -11,11 +11,9 @@ namespace SchoolBusAPI.Middlewares
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(RequestDelegate next)
         {
-            _logger = logger;
             _next = next;
         }
 
@@ -31,7 +29,7 @@ namespace SchoolBusAPI.Middlewares
                     return;
 
                 var guid = Guid.NewGuid();
-                _logger.LogError($"HMCR Exception{guid}: {ex}");
+                Log.Error($"HMCR Exception{guid}: {ex}");
                 await HandleExceptionAsync(httpContext, guid);
             }
         }
