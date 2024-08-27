@@ -964,6 +964,8 @@ namespace SchoolBusAPI.Services
                 {
                     var dateFrom = DateUtils.ConvertPacificToUtcTime(
                         new DateTime(sDate.Year, sDate.Month, sDate.Day, 0, 0, 0));
+                    // TH-120363
+                    dateFrom = DateTime.SpecifyKind(dateFrom, DateTimeKind.Unspecified);
 
                     data = data.Where(x => x.NextInspectionDate >= dateFrom);
                 }
@@ -974,6 +976,8 @@ namespace SchoolBusAPI.Services
                         new DateTime(eDate.Year, eDate.Month, eDate.Day, 0, 0, 0))
                             .AddDays(1)
                             .AddSeconds(-1);
+                    // TH-120363
+                    dateTo = DateTime.SpecifyKind(dateTo, DateTimeKind.Unspecified);
 
                     data = data.Where(x => x.NextInspectionDate <= dateTo);
                 }
