@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+# Trust certificates from DOTNET_SSL_DIRS.
+source /opt/app-root/etc/trust_ssl_dirs
+
+cd $DOTNET_APP_PATH
+
+echo "---> Running application ..."
+exec "./$DOTNET_DEFAULT_CMD"

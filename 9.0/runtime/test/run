@@ -1,0 +1,286 @@
+#!/bin/bash
+#
+# The 'run' script performs simple tests that verifies usability
+# of the image
+#
+# IMAGE_NAME specifies a name of the candidate image used for testing.
+# The image has to be available before this script is executed.
+#
+# TEST_PORT specifies the port on the docker host to be used for testing.
+# The container application will still use 8080, but this port will be bound
+# to the running container when testing asp.net projects.
+#
+# DEBUG environment variable, if not empty, makes 'run' to log every step
+# of testing.
+#
+# STOP_ON_ERROR determines if the tests should exit on encountering
+# the first error, or keep going and list all failed tests at the end.
+# Defaults to 'true', can be set to 'false'.
+#
+# SKIP_VERSION_CHECK environment variable, if 'true', versions are not checked.
+#
+# Example usage: $ sudo ./test/run
+
+
+STOP_ON_ERROR=${STOP_ON_ERROR:-true}
+
+IMAGE_OS=${IMAGE_OS:-RHEL8}
+
+IMAGE_NAME=${IMAGE_NAME:-localhost/ubi8/dotnet-80-runtime}
+OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
+
+test_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
+source "${test_dir}/testcommon"
+
+dotnet_version_series="8.0"
+
+test_dotnet() {
+  test_start
+
+  # ENTRYPOINT enables scl so dotnet is available
+  assert_contains "$(docker_run $IMAGE_NAME dotnet --info)" "Host"
+  assert_contains "$(docker run --rm ${IMAGE_NAME} dotnet)" "Usage: dotnet"
+}
+
+test_envvars() {
+  test_start
+
+  # DOTNET_APP_PATH
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_APP_PATH) "/opt/app-root/app"
+  # DOTNET_DEFAULT_CMD
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DEFAULT_CMD) "default-cmd.sh"
+  # DOTNET_DATA_PATH
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DATA_PATH) "/opt/app-root/data"
+
+  # .NET determines culture based on LANG. It must be empty/unset to use the 'Invariant' culture
+  assert_equal $(docker_get_env $IMAGE_NAME LANG) ""
+
+  # Like Microsoft images, we set this to 'true'
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_RUNNING_IN_CONTAINER) "true"
+
+  # Like Microsoft images, we set set DOTNET_VERSION and ASPNET_VERSION.
+  # Their values get checked during the build.
+  # This is to ensure they are provided as environment variables.
+  assert_contains $(docker_get_env $IMAGE_NAME DOTNET_VERSION) "$dotnet_version_series"
+  assert_contains $(docker_get_env $IMAGE_NAME ASPNET_VERSION) "$dotnet_version_series"
+}
+
+test_debuggable() {
+  test_start
+
+  # VSDBG (the .NET command line debugger) install script dependencies are met.
+  if [ "$(uname -m)" != "s390x" -a "$(uname -m)" != "ppc64le" ]; then
+    local install_command="curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /tmp/vsdbg"
+    assert_contains "$(docker_run $IMAGE_NAME bash -c "$install_command")" "Successfully installed vsdbg at '/tmp/vsdbg'"
+  fi
+}
+
+test_default_cmd() {
+  test_start
+
+  # verify the default command is bash.
+  local container=$(docker_run_withargs $IMAGE_NAME -td) # use '-t' to stop bash from exiting.
+  local processes=$(docker top $container)
+  # cleanup
+  docker_rm ${container}
+
+  # Ensure there is a single bash process.
+  #  The output of 'docker top' looks like
+  #      USER        PID         PPID        %CPU        ELAPSED           TTY         TIME        COMMAND
+  #      root        1           0           0.000       16m30.479579703s  pts/0       0s          /bin/bash
+  assert_equal $(echo "$processes" | wc -l) "2"
+  assert_contains_multiline "$processes" "/bin/bash"
+}
+
+test_data_folder() {
+  test_start
+
+  # check a writable data folder is available
+  assert_equal $(docker_run $IMAGE_NAME stat -c %a /opt/app-root/data) "777"
+}
+
+test_timezones() {
+  test_start
+
+  # verify timezone data is available
+  assert_contains $(docker_run $IMAGE_NAME stat -c %n /usr/share/zoneinfo/UTC) "/usr/share/zoneinfo/UTC"
+}
+
+
+test_user() {
+  test_start
+
+  # we run as user 'default' which has a uid of 1001.
+  assert_equal $(docker_run $IMAGE_NAME whoami)           "default"
+  assert_equal $(docker_run $IMAGE_NAME id -u)            "1001"
+  # APP_UID is set to match the uid of the default user.
+  assert_equal $(docker_get_env $IMAGE_NAME APP_UID)      "1001"
+  # root is 'root'
+  assert_equal $(docker_run_as $IMAGE_NAME 0 whoami)      "root"
+}
+
+test_port() {
+  test_start
+
+  # Port 8080 is exposed
+  assert_equal $(docker_get_exposedports $IMAGE_NAME) '{"8080/tcp":{}}'
+  # The environment variable used by ASP.NET Core matches
+  assert_equal $(docker_get_env $IMAGE_NAME ASPNETCORE_URLS) "http://*:8080"
+}
+
+verify_aspnet_image_works() {
+  local image=$1
+
+  # start container
+  local container=$(docker_run_d ${image})
+
+  # request
+  local url=$(container_url ${container})
+  local response=$(curl_retry ${url})
+
+  # cleanup
+  docker_rm ${container}
+  docker_rmi ${image}
+
+  # assert
+  assert_equal "${response}" "Hello World!"
+}
+
+test_aspnet() {
+  test_start
+
+  pushd ${test_dir}/aspnet-hello-world >/dev/null
+
+  # create image
+  cat >Dockerfile <<EOF
+FROM ${IMAGE_NAME}
+ADD app.tar.gz .
+CMD [ "dotnet", "aspnet-hello-world.dll" ]
+EOF
+  local image=$(docker_build .)
+
+  verify_aspnet_image_works $image
+
+  popd >/dev/null
+}
+
+test_run_dotnet_in_dockerfile() {
+  test_start
+
+  local build_dir="${test_dir}/dockerfile-run-dotnet"
+  rm -rf "$build_dir"
+  mkdir "$build_dir"
+  pushd "$build_dir" > /dev/null
+
+  # build image from Dockerfile that uses the 'dotnet' command on a RUN instruction.
+  cat >Dockerfile <<EOF
+FROM ${IMAGE_NAME}
+RUN dotnet --info
+CMD ["/usr/bin/echo", "Hello world!"]
+EOF
+  local image=$(docker_build .)
+  local output=$(docker_run ${image})
+
+  # cleanup
+  docker_rmi ${image}
+
+  # verify the image build produced a working image
+  assert_contains "$output" "Hello world!"
+
+  popd >/dev/null
+}
+
+test_s2i_usage() {
+  test_start
+
+  local output=$(s2i_usage ${IMAGE_NAME} 2>&1)
+
+  # s2i usage describes this is for pre-compiled applications
+  assert_contains "$output" "image for pre-compiled application"
+}
+
+test_s2i_build() {
+  test_start
+
+  local app=precompiled
+
+  # extract the pre-compiled application from the aspnet test
+  rm -rf ${test_dir}/${app}
+  mkdir ${test_dir}/${app} && tar -C ${test_dir}/${app} -xf ${test_dir}/aspnet-hello-world/app.tar.gz
+  # Verify the entry point assembly is detected and ran
+  local image=$(s2i_build $app)
+  verify_aspnet_image_works ${image}
+
+  # extract the pre-compiled application from the aspnet test in a nested folder
+  rm -rf ${test_dir}/${app}
+  mkdir -p ${test_dir}/${app}/nested && tar -C ${test_dir}/${app}/nested -xf ${test_dir}/aspnet-hello-world/app.tar.gz
+  # Verify the entry point assembly is detected and ran using DOTNET_STARTUP_ASSEMBLY.
+  image=$(s2i_build $app -e DOTNET_STARTUP_ASSEMBLY=nested/aspnet-hello-world.dll)
+  verify_aspnet_image_works ${image}
+}
+
+test_repos() {
+    test_start
+
+    local output=$(docker_run_as $IMAGE_NAME 0 microdnf install -y zlib-devel)
+    assert_contains "$output" "Complete"
+}
+
+test_rpm_packages() {
+  test_start
+
+  local new_list="${test_dir}/packages.new.list"
+  rm -f "${new_list}"
+  local package_list_file
+  # the ${IMAGE_OS,,} syntax converts IMAGE_OS to lowercase
+  package_list_file="${test_dir}/packages.${IMAGE_OS,,}.$(uname -m).list"
+  if [ ! -f "${package_list_file}" ]; then
+    package_list_file="${test_dir}/packages.${IMAGE_OS,,}.list"
+    if [ ! -f "${package_list_file}" ]; then
+        package_list_file="${test_dir}/packages.list"
+    fi
+  fi
+
+  # get the list of installed packages
+  docker_run "${IMAGE_NAME}" '/bin/bash' '-c' 'rpm -qa --queryformat "%{NAME}\n" | sort -u' > "${new_list}"
+
+  # verify the list of packages hasn't changed
+  diff -u "${package_list_file}" "${new_list}"
+  assert_equal "$?" 0
+}
+
+info "Testing ${IMAGE_NAME}"
+
+if [ ${OPENSHIFT_ONLY} != true ]; then
+  test_dotnet
+  test_envvars
+  test_default_cmd
+  test_data_folder
+  test_timezones
+  test_debuggable
+  test_user
+  test_port
+  test_aspnet
+  test_s2i_usage
+  test_s2i_build
+  test_run_dotnet_in_dockerfile
+  if [ "$IMAGE_OS" = "RHEL8" ]; then
+    test_repos
+  fi
+  if [ "${IMAGE_OS}" = "RHEL8" ] && [ "$(uname -m)" = "x86_64" ] ; then
+    test_rpm_packages
+  fi
+fi
+
+if [ "$STOP_ON_ERROR" != "true" ]; then
+  failures=(${TEST_FAILURES})
+  if [ ${#failures[@]} -gt 0 ]; then
+    echo "[ERROR] Tests failed: ${#failures[@]}"
+    for item in ${failures[@]}; do
+      echo "  ${item}"
+    done
+    exit 1
+  fi
+fi
+
+info "All tests finished successfully."

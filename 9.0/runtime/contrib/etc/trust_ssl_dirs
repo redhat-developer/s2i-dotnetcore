@@ -1,0 +1,54 @@
+# Trust certificates from all DOTNET_SSL_DIRS.
+if [ -n "$DOTNET_SSL_DIRS" ]; then
+
+  echo "warn: DOTNET_SSL_DIRS is deprecated. Please use SSL_CERT_DIR instead."
+
+  # For backwards compatibility we need to run this in the src folder.
+  # Create one if it does not exist.
+  if [ ! -d /opt/app-root/src ]; then
+    mkdir /opt/app-root/src
+    _REMOVE_SRC_DIR=true
+  fi
+  pushd /opt/app-root/src >/dev/null
+
+  # Store SSL_CERT_DIR since we'll overwrite it and we want to support
+  # calling this script several times.
+  if [ -z ${_USER_SSL_CERT_DIR+x} ]; then
+    # If SSL_CERT_DIR is unset, use the default location.
+    if [ -z ${SSL_CERT_DIR+x} ]; then
+      _USER_SSL_CERT_DIR=/etc/pki/tls/certs
+    else
+      _USER_SSL_CERT_DIR="${SSL_CERT_DIR}"
+    fi
+    export _USER_SSL_CERT_DIR
+  fi
+
+  # If the user specifies files instead of directories in DOTNET_SSL_DIRS
+  # we add them as links in this folder.
+  DOTNET_SSL_CERT_DIR="/opt/app-root/ssl_dir"
+  rm -rf "$DOTNET_SSL_CERT_DIR"
+  mkdir "$DOTNET_SSL_CERT_DIR"
+
+  # Loop over DOTNET_SSL_DIRS and create links in DOTNET_SSL_CERT_DIR for files
+  # and track directories in _DOTNET_SSL_DIRS.
+  CERT_ID=0
+  for SSL_DIR in $DOTNET_SSL_DIRS; do
+    if [ -d "$SSL_DIR" ]; then
+      # Track directories in _DOTNET_SSL_DIRS.
+      _DOTNET_SSL_DIRS="$_DOTNET_SSL_DIRS:$(realpath --no-symlinks "$SSL_DIR")"
+    elif [ -f "$SSL_DIR" ]; then
+      # Create a symbolic link to the file in DOTNET_SSL_CERT_DIR.
+      CERT_FILE=$(realpath --no-symlinks "$SSL_DIR")
+      ln -s "$CERT_FILE" "$DOTNET_SSL_CERT_DIR/_s2i$CERT_ID"
+      CERT_ID=$((CERT_ID + 1))
+    fi
+  done
+
+  popd >/dev/null
+  # Remove temporary src folder.
+  if [ "$_REMOVE_SRC_DIR" = true ] ; then
+    rmdir /opt/app-root/src
+  fi
+
+  export SSL_CERT_DIR="$_DOTNET_SSL_DIRS:$DOTNET_SSL_CERT_DIR:$_USER_SSL_CERT_DIR"
+fi
