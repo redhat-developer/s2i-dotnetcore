@@ -187,7 +187,7 @@ if [ "$BUILD_TYPE" == "source" ]; then
       echo "---> Restoring test project ($TEST_PROJECT) dependencies..."
       dotnet restore "$TEST_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
       echo "---> Running test project: $TEST_PROJECT..."
-      dotnet test "$TEST_PROJECT" -c "$DOTNET_TEST_CONFIGURATION" -f net8.0 $VERBOSITY_OPTION --no-restore
+      dotnet test "$TEST_PROJECT" -c "$DOTNET_TEST_CONFIGURATION" -f net9.0 $VERBOSITY_OPTION --no-restore
   done
 
   # publish application
@@ -205,7 +205,7 @@ if [ "$BUILD_TYPE" == "source" ]; then
   echo "---> Restoring application dependencies..."
   dotnet restore "$DOTNET_STARTUP_PROJECT" $RESTORE_OPTIONS $VERBOSITY_OPTION
   echo "---> Publishing application..."
-  dotnet publish "$DOTNET_STARTUP_PROJECT" -f net8.0 -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
+  dotnet publish "$DOTNET_STARTUP_PROJECT" -f net9.0 -c "$DOTNET_CONFIGURATION" $VERBOSITY_OPTION \
          $DOTNET_PUBLISH_OPTIONS -o "$DOTNET_APP_PATH"
 else
   # binary build: move pre-compiled application

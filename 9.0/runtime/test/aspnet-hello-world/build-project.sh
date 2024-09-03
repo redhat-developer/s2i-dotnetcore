@@ -2,6 +2,6 @@
 
 rm -rf bin obj
 
-dotnet publish -f net8.0 -c Release
+dotnet publish -f net9.0 -c Release
 
-tar -czvf app.tar.gz -C bin/Release/net8.0/publish .
+tar -czvf app.tar.gz -C bin/Release/net9.0/publish .
