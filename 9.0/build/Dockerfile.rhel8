@@ -1,9 +1,9 @@
-FROM ubi8/dotnet-80-runtime
-# This image provides a .NET 8.0 environment you can use to run your .NET
+FROM ubi8/dotnet-90-runtime
+# This image provides a .NET 9.0 environment you can use to run your .NET
 # applications.
 
 # DOTNET_SDK_VERSION must be set to the full SDK version, unless IS_CI is set to true.
-ARG DOTNET_SDK_VERSION=8.0
+ARG DOTNET_SDK_VERSION=9.0
 ARG RELEASE=1
 ARG IS_CI
 ARG DOTNET_TARBALL
@@ -17,13 +17,13 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotne
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
 LABEL io.k8s.description="Platform for building and running .NET 8 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-80"
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-90"
 
 # Labels consumed by Red Hat build service
-LABEL name="ubi8/dotnet-80" \
-      com.redhat.component="dotnet-80-container" \
+LABEL name="ubi8/dotnet-90" \
+      com.redhat.component="dotnet-90-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      version="8.0" \
+      version="9.0" \
       release="$RELEASE"
 
 # Switch to root for package installs
@@ -36,7 +36,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # - dotnet-sdk--*: provides the .NET SDK.
 # - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="dotnet-sdk-8.0 procps-ng" && \
+    INSTALL_PKGS="dotnet-sdk-9.0 procps-ng" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     microdnf clean all -y && \
