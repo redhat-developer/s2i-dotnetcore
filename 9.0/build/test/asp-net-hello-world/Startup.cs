@@ -42,7 +42,7 @@ namespace SampleApp
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
-                .UseUrls("http://0.0.0.0:8080")
+                .UseUrls("http://*:8080")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .Build();
