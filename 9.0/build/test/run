@@ -297,8 +297,8 @@ test_config_1() {
   # DOTNET_STARTUP_PROJECT=src/app
   assert_equal "${response}" "Hello world"
   # DOTNET_TEST_PROJECTS=test/test1 test/test2
-  assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
-  assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
+  assert_contains "${s2i_build}" "Finished:    test1"
+  assert_contains "${s2i_build}" "Finished:    test2"
   # DOTNET_TEST_CONFIGURATION=Debug
   assert_contains "${s2i_build}" "test1/bin/Debug"
   assert_contains "${s2i_build}" "test2/bin/Debug"
@@ -345,8 +345,8 @@ test_config_2() {
   # The config file was used to restore S2iDotNetCoreDummy and didn't cause issues for the test and tool install.
   assert_equal "${response}" "Hello world"
   # DOTNET_TEST_PROJECTS=test/test1/test1.csproj test/test2
-  assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test1"
-  assert_contains "${s2i_build}" "Test run for /opt/app-root/src/test/test2"
+  assert_contains "${s2i_build}" "Finished:    test1"
+  assert_contains "${s2i_build}" "Finished:    test2"
   # DOTNET_TEST_CONFIGURATION=Release
   assert_contains "${s2i_build}" "test1/bin/Release"
   assert_contains "${s2i_build}" "test2/bin/Release"
