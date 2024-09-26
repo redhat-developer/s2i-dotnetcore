@@ -258,6 +258,7 @@ namespace SchoolBusAPI.Services
                 }
 
                 var exists = _context.Inspections.Any(a => a.Id == item.Id);
+                item.InspectionDate = DateTime.SpecifyKind(item.InspectionDate, DateTimeKind.Unspecified);
                 if (exists)
                 {
                     _context.Inspections.Update(item);
