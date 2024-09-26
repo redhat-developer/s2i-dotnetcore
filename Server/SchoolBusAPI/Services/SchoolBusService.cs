@@ -292,6 +292,8 @@ namespace SchoolBusAPI.Services
                         item.CCWData = null;
                     }
                 }
+
+                item.NextInspectionDate = DateTime.SpecifyKind(item.NextInspectionDate.GetValueOrDefault(), DateTimeKind.Unspecified);
             }
         }
 
