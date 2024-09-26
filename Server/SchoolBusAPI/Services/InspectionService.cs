@@ -269,6 +269,8 @@ namespace SchoolBusAPI.Services
                 {
                     // Inspection has a special field, createdDate which is set to now.
                     item.CreatedDate = DateTime.UtcNow;
+                    // TH-120363
+                    item.CreatedDate = DateTime.SpecifyKind(item.CreatedDate, DateTimeKind.Unspecified);
                     _context.Inspections.Add(item);
                 }
                 _context.SaveChanges();
