@@ -294,6 +294,7 @@ namespace SchoolBusAPI.Services
                 }
 
                 item.NextInspectionDate = DateTime.SpecifyKind(item.NextInspectionDate.GetValueOrDefault(), DateTimeKind.Unspecified);
+                item.PermitIssueDate = DateTime.SpecifyKind(item.PermitIssueDate.GetValueOrDefault(), DateTimeKind.Unspecified);
             }
         }
 
