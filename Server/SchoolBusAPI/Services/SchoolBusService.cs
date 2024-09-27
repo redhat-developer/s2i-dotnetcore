@@ -847,6 +847,7 @@ namespace SchoolBusAPI.Services
 
                 item.PermitNumber = permit;
                 item.PermitIssueDate = DateTime.UtcNow;
+                item.PermitIssueDate = DateTime.SpecifyKind(item.PermitIssueDate.GetValueOrDefault(), DateTimeKind.Unspecified);
 
                 _context.SchoolBuss.Update(item);
                 _context.SaveChanges();
