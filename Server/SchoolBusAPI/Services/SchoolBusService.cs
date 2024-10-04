@@ -319,6 +319,14 @@ namespace SchoolBusAPI.Services
                     .Include(x => x.Inspector)
                     .Include(x => x.CCWData)
                     .First(a => a.Id == id);
+                if (result.PermitIssueDate != null && result.PermitIssueDate.Value.Year == 1) 
+                {
+                    result.PermitIssueDate = null;
+                }
+                if (result.NextInspectionDate != null && result.NextInspectionDate.Value.Year == 1)
+                {
+                    result.NextInspectionDate = null;
+                }
                 return new ObjectResult(result);
             }
             else
@@ -988,6 +996,17 @@ namespace SchoolBusAPI.Services
             }
 
             var result = data.ToList();
+            foreach (var item in result)
+            {
+                if (item.NextInspectionDate.HasValue && item.NextInspectionDate.Value.Year == 1)
+                {
+                    item.NextInspectionDate = null;
+                }
+                if (item.PermitIssueDate.HasValue && item.PermitIssueDate.Value.Year == 1)
+                {
+                    item.PermitIssueDate = null;
+                }
+            }
             return new ObjectResult(result);
         }
 

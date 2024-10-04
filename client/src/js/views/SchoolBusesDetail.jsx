@@ -473,8 +473,14 @@ class SchoolBusesDetail extends React.Component {
                         </Button>
                       )}
                       {bus.permitIssueDate && (
+                        // <small id="issued-date">
+                        //   &nbsp;(Issued: {formatDateTime(bus.permitIssueDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)})
+                        // </small>
+
                         <small id="issued-date">
-                          &nbsp;(Issued: {formatDateTime(bus.permitIssueDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)})
+                          &nbsp;{bus.permitIssueDate && bus.permitIssueDate.includes("0001-01-01")
+                            ? ""
+                            : "(Issued: " + formatDateTime(bus.permitIssueDate, Constant.DATE_SHORT_MONTH_DAY_YEAR) + ")"}
                         </small>
                       )}
                     </h1>
@@ -693,20 +699,48 @@ class SchoolBusesDetail extends React.Component {
                         <ColDisplay md={4} label="Policy #">
                           {ccw.nscPolicyNumber}
                         </ColDisplay>
-                        <ColDisplay md={4} label="Status Date">
+                        {/* <ColDisplay md={4} label="Status Date">
                           {formatDateTime(ccw.nscPolicyStatusDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
+                        </ColDisplay> */}
+                        <ColDisplay md={4} label="Status Date">
+                          {ccw.nscPolicyStatusDate && ccw.nscPolicyStatusDate.includes("0001-01-01")
+                            ? ""
+                            : formatDateTime(ccw.nscPolicyStatusDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
+
+
                         <ColDisplay md={4} label="Status">
                           {ccw.nscPolicyStatus}
                         </ColDisplay>
                       </Row>
                       <Row>
-                        <ColDisplay md={4} label="Effective Date">
+                        {/* <ColDisplay md={4} label="Effective Date">
                           {formatDateTime(ccw.nscPolicyEffectiveDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
+                        </ColDisplay> */}
+
+
+                        <ColDisplay md={4} label="Effective Date">
+                          {ccw.nscPolicyEffectiveDate && ccw.nscPolicyEffectiveDate.includes("0001-01-01")
+                            ? ""
+                            : formatDateTime(ccw.nscPolicyEffectiveDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
-                        <ColDisplay md={4} label="Expiry Date">
+
+
+
+
+                        {/* <ColDisplay md={4} label="Expiry Date">
                           {formatDateTime(ccw.nscPolicyExpiryDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
+                        </ColDisplay> */}
+
+                        <ColDisplay md={4} label="Expiry Date">
+                          {ccw.nscPolicyExpiryDate && ccw.nscPolicyExpiryDate.includes("0001-01-01")
+                            ? ""
+                            : formatDateTime(ccw.nscPolicyExpiryDate, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
+
+
+
+
                         <ColDisplay md={4} label="Plate Decal #">
                           {ccw.nscPlateDecal}
                         </ColDisplay>
@@ -913,7 +947,9 @@ class SchoolBusesDetail extends React.Component {
                           {ccw.icbcFleetUnitNo}
                         </ColDisplay>
                         <ColDisplay md={3} label="CVIP Expiry">
-                          {formatDateTime(ccw.icbccvipExpiry, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
+                          {ccw.icbccvipExpiry && ccw.icbccvipExpiry.includes("0001-01-01")
+                            ? ""
+                            : formatDateTime(ccw.icbccvipExpiry, Constant.DATE_SHORT_MONTH_DAY_YEAR)}
                         </ColDisplay>
                         <ColDisplay md={3} label="N&amp;O">
                           {ccw.icbcNotesAndOrders}

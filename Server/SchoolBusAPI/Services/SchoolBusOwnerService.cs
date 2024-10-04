@@ -452,6 +452,7 @@ namespace SchoolBusAPI.Services
                     .OrderByDescending(x => x.NextInspectionDate)
                     .First();
                 result = schoolbus.NextInspectionDate;
+                if (schoolbus.NextInspectionDate != null && schoolbus.NextInspectionDate.Value.Year == 1) { result = null; }
             }
             return result;
         }
