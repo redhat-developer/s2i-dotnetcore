@@ -532,6 +532,7 @@ namespace SchoolBusAPI.Services
         {
             AdjustSchoolBusOwner(body);
             body.DateCreated = DateTime.UtcNow;
+            body.DateCreated = DateTime.SpecifyKind(body.DateCreated, DateTimeKind.Unspecified);
             _context.SchoolBusOwners.Add(body);
             _context.SaveChanges();
             return new ObjectResult(body);
