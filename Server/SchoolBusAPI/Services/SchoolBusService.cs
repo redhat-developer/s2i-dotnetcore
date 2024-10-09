@@ -292,6 +292,9 @@ namespace SchoolBusAPI.Services
                         item.CCWData = null;
                     }
                 }
+
+                item.NextInspectionDate = DateTime.SpecifyKind(item.NextInspectionDate.GetValueOrDefault(), DateTimeKind.Unspecified);
+                item.PermitIssueDate = DateTime.SpecifyKind(item.PermitIssueDate.GetValueOrDefault(), DateTimeKind.Unspecified);
             }
         }
 
@@ -316,6 +319,14 @@ namespace SchoolBusAPI.Services
                     .Include(x => x.Inspector)
                     .Include(x => x.CCWData)
                     .First(a => a.Id == id);
+                if (result.PermitIssueDate != null && result.PermitIssueDate.Value.Year == 1) 
+                {
+                    result.PermitIssueDate = null;
+                }
+                if (result.NextInspectionDate != null && result.NextInspectionDate.Value.Year == 1)
+                {
+                    result.NextInspectionDate = null;
+                }
                 return new ObjectResult(result);
             }
             else
@@ -844,6 +855,7 @@ namespace SchoolBusAPI.Services
 
                 item.PermitNumber = permit;
                 item.PermitIssueDate = DateTime.UtcNow;
+                item.PermitIssueDate = DateTime.SpecifyKind(item.PermitIssueDate.GetValueOrDefault(), DateTimeKind.Unspecified);
 
                 _context.SchoolBuss.Update(item);
                 _context.SaveChanges();
@@ -964,6 +976,8 @@ namespace SchoolBusAPI.Services
                 {
                     var dateFrom = DateUtils.ConvertPacificToUtcTime(
                         new DateTime(sDate.Year, sDate.Month, sDate.Day, 0, 0, 0));
+                    // TH-120363
+                    dateFrom = DateTime.SpecifyKind(dateFrom, DateTimeKind.Unspecified);
 
                     data = data.Where(x => x.NextInspectionDate >= dateFrom);
                 }
@@ -974,12 +988,25 @@ namespace SchoolBusAPI.Services
                         new DateTime(eDate.Year, eDate.Month, eDate.Day, 0, 0, 0))
                             .AddDays(1)
                             .AddSeconds(-1);
+                    // TH-120363
+                    dateTo = DateTime.SpecifyKind(dateTo, DateTimeKind.Unspecified);
 
                     data = data.Where(x => x.NextInspectionDate <= dateTo);
                 }
             }
 
             var result = data.ToList();
+            foreach (var item in result)
+            {
+                if (item.NextInspectionDate.HasValue && item.NextInspectionDate.Value.Year == 1)
+                {
+                    item.NextInspectionDate = null;
+                }
+                if (item.PermitIssueDate.HasValue && item.PermitIssueDate.Value.Year == 1)
+                {
+                    item.PermitIssueDate = null;
+                }
+            }
             return new ObjectResult(result);
         }
 

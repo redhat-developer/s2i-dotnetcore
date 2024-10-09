@@ -452,6 +452,7 @@ namespace SchoolBusAPI.Services
                     .OrderByDescending(x => x.NextInspectionDate)
                     .First();
                 result = schoolbus.NextInspectionDate;
+                if (schoolbus.NextInspectionDate != null && schoolbus.NextInspectionDate.Value.Year == 1) { result = null; }
             }
             return result;
         }
@@ -531,6 +532,7 @@ namespace SchoolBusAPI.Services
         {
             AdjustSchoolBusOwner(body);
             body.DateCreated = DateTime.UtcNow;
+            body.DateCreated = DateTime.SpecifyKind(body.DateCreated, DateTimeKind.Unspecified);
             _context.SchoolBusOwners.Add(body);
             _context.SaveChanges();
             return new ObjectResult(body);

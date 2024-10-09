@@ -11,8 +11,17 @@ const keycloakConfig = {
 export const keycloak = Keycloak(keycloakConfig);
 
 export const init = (onSuccess) => {
-  keycloak.init({ onLoad: 'login-required', promiseType: 'native', pkceMethod: 'S256' }).then((authenticated) => {
+  keycloak.init({ 
+    onLoad: 'login-required', 
+    promiseType: 'native', 
+    pkceMethod: 'S256', 
+  }).then((authenticated) => {
     if (authenticated && onSuccess) {
+      // Clean up the URL by removing any unwanted query parameters like 'iss'
+      const url = window.location.href;
+      const cleanUrl = url.split('&iss=')[0]; // Remove everything after &iss=
+      // clean the URL without refreshing the page
+      window.history.replaceState(null, null, cleanUrl);
       onSuccess();
     }
   });

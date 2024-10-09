@@ -325,6 +325,19 @@ namespace SchoolBusAPI.Services
                 }
             }
 
+            // TH-121015
+            DateTime dateFetched = DateTime.SpecifyKind(ccwdata.DateFetched.GetValueOrDefault(), DateTimeKind.Unspecified);
+            DateTime icbcVipExpiry = DateTime.SpecifyKind(ccwdata.ICBCCVIPExpiry.GetValueOrDefault(), DateTimeKind.Unspecified);
+            DateTime nscPolicyEffectiveDate = DateTime.SpecifyKind(ccwdata.NSCPolicyEffectiveDate.GetValueOrDefault(), DateTimeKind.Unspecified);
+            DateTime nscPolicyExpiryDate = DateTime.SpecifyKind(ccwdata.NSCPolicyExpiryDate.GetValueOrDefault(), DateTimeKind.Unspecified);
+            DateTime nscPolicyStatusDate = DateTime.SpecifyKind(ccwdata.NSCPolicyStatusDate.GetValueOrDefault(), DateTimeKind.Unspecified);
+            ccwdata.DateFetched = dateFetched;
+            ccwdata.ICBCCVIPExpiry = icbcVipExpiry;
+            ccwdata.NSCPolicyEffectiveDate = nscPolicyEffectiveDate;
+            ccwdata.NSCPolicyExpiryDate = nscPolicyExpiryDate;
+            ccwdata.NSCPolicyStatusDate = nscPolicyStatusDate;
+
+
             if (ccwdata.Id > 0)
             {
                 var bus = _context.SchoolBuss.FirstOrDefault(x => x.CCWDataId == ccwdata.Id);

@@ -325,12 +325,16 @@ namespace SchoolBusAPI.Services
                 user.UserRoles = new List<UserRole>();
             }
 
+            // TH - 121015
+            DateTime effectiveDate = DateTime.SpecifyKind(item.EffectiveDate, DateTimeKind.Unspecified);
+            DateTime expiryDate = DateTime.SpecifyKind(item.ExpiryDate.GetValueOrDefault(), DateTimeKind.Unspecified);
+
             // create a new UserRole based on the view model.
             user.UserRoles.Add(new UserRole
                 {
                     Role = _context.Roles.First(x => x.Id == item.RoleId),
-                    EffectiveDate = item.EffectiveDate,
-                    ExpiryDate = item.ExpiryDate
+                    EffectiveDate = effectiveDate,
+                    ExpiryDate = expiryDate
                 }
             );
 
@@ -352,9 +356,10 @@ namespace SchoolBusAPI.Services
 
             var userRole = _context.UserRoles
                 .Include(x => x.Role)
-                .First(x => x.Id == item.Id);                
-
-            userRole.ExpiryDate = item.ExpiryDate;
+                .First(x => x.Id == item.Id);
+            // TH-121015
+            DateTime expiryDate = DateTime.SpecifyKind(item.ExpiryDate.GetValueOrDefault(), DateTimeKind.Unspecified);
+            userRole.ExpiryDate = expiryDate;
 
             _context.SaveChanges();
             return new StatusCodeResult(201);

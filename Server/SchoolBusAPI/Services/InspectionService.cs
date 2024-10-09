@@ -197,6 +197,9 @@ namespace SchoolBusAPI.Services
             var exists = _context.Inspections.Any(a => a.Id == id);
             if (exists && id == item.Id)
             {
+                item.CreatedDate = DateTime.SpecifyKind(item.CreatedDate, DateTimeKind.Unspecified);
+                item.InspectionDate = DateTime.SpecifyKind(item.InspectionDate, DateTimeKind.Unspecified);
+                item.PreviousNextInspectionDate = DateTime.SpecifyKind(item.PreviousNextInspectionDate.GetValueOrDefault(), DateTimeKind.Unspecified);
                 _context.Inspections.Update(item);
                 // Save the changes
                 _context.SaveChanges();
@@ -258,6 +261,7 @@ namespace SchoolBusAPI.Services
                 }
 
                 var exists = _context.Inspections.Any(a => a.Id == item.Id);
+                item.InspectionDate = DateTime.SpecifyKind(item.InspectionDate, DateTimeKind.Unspecified);
                 if (exists)
                 {
                     _context.Inspections.Update(item);
@@ -269,6 +273,8 @@ namespace SchoolBusAPI.Services
                 {
                     // Inspection has a special field, createdDate which is set to now.
                     item.CreatedDate = DateTime.UtcNow;
+                    // TH-120363
+                    item.CreatedDate = DateTime.SpecifyKind(item.CreatedDate, DateTimeKind.Unspecified);
                     _context.Inspections.Add(item);
                 }
                 _context.SaveChanges();
