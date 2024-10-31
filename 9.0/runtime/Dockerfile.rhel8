@@ -28,9 +28,9 @@ ENV HOME=/opt/app-root \
     DOTNET_VERSION=$DOTNET_VERSION \
     ASPNET_VERSION=$ASPNET_VERSION
 
-LABEL io.k8s.description="Platform for running .NET 8 applications" \
-      io.k8s.display-name=".NET 8" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet80-runtime" \
+LABEL io.k8s.description="Platform for running .NET 9 applications" \
+      io.k8s.display-name=".NET 9" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet90-runtime" \
       io.openshift.expose-services="8080:http" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
       io.s2i.scripts-url=image:///usr/libexec/s2i
