@@ -119,7 +119,7 @@ fi
 if [ "$BUILD_TYPE" == "source" ]; then
   echo "Using SDK: $(dotnet --version)"
 
-  # Trust certificates from DOTNET_SSL_DIRS.
+  # Print DOTNET_SSL_DIRS unsupported.
   source /opt/app-root/etc/trust_ssl_dirs
 
   # dotnet tools
