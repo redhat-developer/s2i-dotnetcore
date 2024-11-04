@@ -297,8 +297,8 @@ test_config_1() {
   # DOTNET_STARTUP_PROJECT=src/app
   assert_equal "${response}" "Hello world"
   # DOTNET_TEST_PROJECTS=test/test1 test/test2
-  assert_contains "${s2i_build}" "Finished:    test1"
-  assert_contains "${s2i_build}" "Finished:    test2"
+  assert_contains "${s2i_build}" "Passed!.*test1"
+  assert_contains "${s2i_build}" "Passed!.*test2"
   # DOTNET_TEST_CONFIGURATION=Debug
   assert_contains "${s2i_build}" "test1/bin/Debug"
   assert_contains "${s2i_build}" "test2/bin/Debug"
@@ -469,43 +469,6 @@ test_imagestream_sample() {
   assert_contains "${response}" "html"
 }
 
-docker_run_certificatecount()
-{
-  local app=certificatecount
-
-  # build image
-  local image=$(s2i_build ${app} "$@")
-  local output=$(docker_run ${image})
-  # cleanup
-  docker_rmi ${image}
-
-  echo $output | awk '{print $NF}'
-}
-
-test_certificates() {
-  test_start
-
-  local default_count=$(docker_run_certificatecount)
-  # It is unlikely to have less than 100 certificates.
-  if [ "$default_count" -lt 100 ]; then
-    error "Default number of certificates is too low: '${default_count}'"
-    exit 1
-  fi
-
-  # DOTNET_SSL_DIRS=/doesntexist
-  # We add a non existing directory, which must be ingored.
-  local default_count_with_nonexist=$(docker_run_certificatecount -e DOTNET_SSL_DIRS=/doesntexist)
-  assert_equal "$default_count" "$default_count_with_nonexist"
-
-  # DOTNET_SSL_DIRS=/doesntexist certdir1 certdir2 certdir3/cert.pem
-  # - /doesntexist      : ignored
-  # - certdir1          : contains 1 certificate in 1 file
-  # - certdir2          : contains 2 certificates in 1 file
-  # - certdir3/cert.pem : file containing 1 certificate
-  local count_with_additional=$(docker_run_certificatecount -e DOTNET_SSL_DIRS='/doesntexist certdir1 certdir2 certdir3/cert.pem')
-  assert_equal "$count_with_additional" "$(($default_count + 4))"
-}
-
 test_binary()
 {
   test_start
@@ -674,7 +637,6 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_split_build
   test_templates
   test_user
-  test_certificates
   test_binary
   test_incremental
   test_incremental_without_packages

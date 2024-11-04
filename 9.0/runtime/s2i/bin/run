@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Trust certificates from DOTNET_SSL_DIRS.
+# Print DOTNET_SSL_DIRS unsupported.
 source /opt/app-root/etc/trust_ssl_dirs
 
 cd $DOTNET_APP_PATH
