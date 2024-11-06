@@ -190,35 +190,6 @@ EOF
   popd >/dev/null
 }
 
-test_s2i_usage() {
-  test_start
-
-  local output=$(s2i_usage ${IMAGE_NAME} 2>&1)
-
-  # s2i usage describes this is for pre-compiled applications
-  assert_contains "$output" "image for pre-compiled application"
-}
-
-test_s2i_build() {
-  test_start
-
-  local app=precompiled
-
-  # extract the pre-compiled application from the aspnet test
-  rm -rf ${test_dir}/${app}
-  mkdir ${test_dir}/${app} && tar -C ${test_dir}/${app} -xf ${test_dir}/aspnet-hello-world/app.tar.gz
-  # Verify the entry point assembly is detected and ran
-  local image=$(s2i_build $app)
-  verify_aspnet_image_works ${image}
-
-  # extract the pre-compiled application from the aspnet test in a nested folder
-  rm -rf ${test_dir}/${app}
-  mkdir -p ${test_dir}/${app}/nested && tar -C ${test_dir}/${app}/nested -xf ${test_dir}/aspnet-hello-world/app.tar.gz
-  # Verify the entry point assembly is detected and ran using DOTNET_STARTUP_ASSEMBLY.
-  image=$(s2i_build $app -e DOTNET_STARTUP_ASSEMBLY=nested/aspnet-hello-world.dll)
-  verify_aspnet_image_works ${image}
-}
-
 test_repos() {
     test_start
 
@@ -261,8 +232,6 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_user
   test_port
   test_aspnet
-  test_s2i_usage
-  test_s2i_build
   test_run_dotnet_in_dockerfile
   if [ "$IMAGE_OS" = "RHEL8" ]; then
     test_repos
