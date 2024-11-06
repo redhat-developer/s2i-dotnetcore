@@ -17,7 +17,9 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotne
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
 LABEL io.k8s.description="Platform for building and running .NET 9 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-90"
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-90" \
+      io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
+      io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
 LABEL name="ubi8/dotnet-90" \
@@ -28,6 +30,10 @@ LABEL name="ubi8/dotnet-90" \
 
 # Switch to root for package installs
 USER 0
+
+# Each language image can have 'contrib' a directory with extra files needed to
+# run and build the applications.
+COPY ./contrib/ /opt/app-root
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i

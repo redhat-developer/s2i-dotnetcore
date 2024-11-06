@@ -31,10 +31,7 @@ ENV HOME=/opt/app-root \
 LABEL io.k8s.description="Platform for running .NET 9 applications" \
       io.k8s.display-name=".NET 9" \
       io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet90-runtime" \
-      io.openshift.expose-services="8080:http" \
-      io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
-      io.s2i.scripts-url=image:///usr/libexec/s2i
-
+      io.openshift.expose-services="8080:http"
 
 # Labels consumed by Red Hat build service
 LABEL name="ubi8/dotnet-90-runtime" \
@@ -43,14 +40,7 @@ LABEL name="ubi8/dotnet-90-runtime" \
       version="9.0" \
       release="$RELEASE"
 
-# Each language image can have 'contrib' a directory with extra files needed to
-# run and build the applications.
-COPY ./contrib/ /opt/app-root
-
 COPY ./root/usr/bin /usr/bin
-
-# Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
-COPY ./s2i/bin/ /usr/libexec/s2i
 
 # Install packages:
 # - aspnetcore-runtime-*: provides the .NET runtime and ASP.NET Core shared framework.
