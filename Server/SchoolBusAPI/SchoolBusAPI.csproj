@@ -9,7 +9,7 @@
     <Company>Ministry of Transportation and Infrastructure</Company>
     <Description>The API server for the schoolbus inspection application.</Description>
     <Copyright>Copyright© 2017, Province of British Columbia.</Copyright>
-    <Version>2.0.7</Version>
+    <Version>2.0.8</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
