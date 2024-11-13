@@ -76,11 +76,15 @@ namespace SchoolBusAPI.Services
 
             dateFrom = DateUtils.ConvertPacificToUtcTime(
                 new DateTime(dateFrom.Year, dateFrom.Month, dateFrom.Day, 0, 0, 0));
+            dateFrom = DateTime.SpecifyKind(dateFrom, DateTimeKind.Unspecified);
+            
+
 
             dateTo = DateUtils.ConvertPacificToUtcTime(
                 new DateTime(dateTo.Year, dateTo.Month, dateTo.Day, 0, 0, 0))
                     .AddDays(1)
                     .AddSeconds(-1);
+            dateTo = DateTime.SpecifyKind(dateTo, DateTimeKind.Unspecified);
 
             var notifications = data.SelectMany(x => x.CCWNotifications)
                 .Include(x => x.CCWNotificationDetails)
