@@ -8,8 +8,8 @@ The images support OpenShift [source-to-image](https://github.com/openshift/sour
 
 | Version | OS | Documentation
 |--|--|--|
-| 6.0 | UBI 8, Fedora | [SDK image](6.0/build/README.md) <br/> [Runtime image](6.0/runtime/README.md)
 | 8.0 | UBI 8         | [SDK image](8.0/build/README.md) <br/> [Runtime image](8.0/runtime/README.md)
+| 9.0 | UBI 8         | [SDK image](9.0/build/README.md) <br/> [Runtime image](9.0/runtime/README.md)
 
 ## EOL Versions
 
@@ -23,6 +23,7 @@ The images support OpenShift [source-to-image](https://github.com/openshift/sour
 | 3.0 | RHEL 7, UBI 8 | [SDK image](3.0/build/README.md) <br/> [Runtime image](3.0/runtime/README.md)
 | 3.1 | RHEL 7, UBI 8,  <br/> CentOS 7, Fedora | [SDK image](3.1/build/README.md) <br/> [Runtime image](3.1/runtime/README.md)
 | 5.0 | UBI 8, CentOS 7,  <br/> Fedora | [SDK image](5.0/build/README.md) <br/> [Runtime image](5.0/runtime/README.md)
+| 6.0 | UBI 8, Fedora | [SDK image](6.0/build/README.md) <br/> [Runtime image](6.0/runtime/README.md)
 | 7.0 | UBI 8, Fedora | [SDK image](7.0/build/README.md) <br/> [Runtime image](7.0/runtime/README.md)
 
 Building
@@ -32,7 +33,7 @@ You can build (and test) the images by executing the `build.sh` script and pass 
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ ./build.sh --ci 6.0 8.0
+$ ./build.sh --ci 8.0 9.0
 ```
 
 To override the default basis of the image, you can use the `--base-os` argument. For example: `--base-os fedora` or `--base-os rhel8`.
