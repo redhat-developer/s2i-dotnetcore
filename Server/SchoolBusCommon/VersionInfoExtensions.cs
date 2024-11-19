@@ -54,7 +54,7 @@ namespace SchoolBusCommon
                 Description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>().Description,
                 FileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version,
                 FileCreationTime = creationTime.ToString("O"), // Use the round trip format as it includes the time zone.
-                InformationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion,
+                InformationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion.Split('+')[0],
                 TargetFramework = assembly.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName,
                 Title = assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title,
                 ImageRuntimeVersion = assembly.ImageRuntimeVersion,

@@ -160,6 +160,10 @@ namespace SchoolBusAPI.Hangfire
                         bus.LicencePlateNumber = cCWData.ICBCLicencePlateNumber;
                     }
 
+                    // SB-429
+                    DateTime convertedLastUpdatedTimestamp = DateTime.SpecifyKind(bus.CCWData.LastUpdateTimestamp, DateTimeKind.Unspecified);
+                    bus.CCWData.LastUpdateTimestamp = convertedLastUpdatedTimestamp;
+
                     _context.SaveChanges();
                     Log.Information($"[Hangfire] UpdateCCWJob - Saved bus record with the ID {data.Id}.");
                 }
