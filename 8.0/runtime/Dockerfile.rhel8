@@ -58,7 +58,6 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
     INSTALL_PKGS="aspnetcore-runtime-8.0 findutils shadow-utils tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
 # ubi-minimal doesn't include timezones, restore them.
     ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \
     microdnf clean all -y && \

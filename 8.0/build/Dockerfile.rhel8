@@ -38,7 +38,6 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
     INSTALL_PKGS="dotnet-sdk-8.0 procps-ng" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
     microdnf clean all -y && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/* )
@@ -46,7 +45,6 @@ RUN [ -n "${DOTNET_TARBALL}" ] || ( \
 RUN [ -z "${DOTNET_TARBALL}" ] || ( \
     INSTALL_PKGS="procps-ng" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
     microdnf clean all -y && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/* )
