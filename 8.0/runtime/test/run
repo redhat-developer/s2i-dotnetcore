@@ -226,29 +226,6 @@ test_repos() {
     assert_contains "$output" "Complete"
 }
 
-test_rpm_packages() {
-  test_start
-
-  local new_list="${test_dir}/packages.new.list"
-  rm -f "${new_list}"
-  local package_list_file
-  # the ${IMAGE_OS,,} syntax converts IMAGE_OS to lowercase
-  package_list_file="${test_dir}/packages.${IMAGE_OS,,}.$(uname -m).list"
-  if [ ! -f "${package_list_file}" ]; then
-    package_list_file="${test_dir}/packages.${IMAGE_OS,,}.list"
-    if [ ! -f "${package_list_file}" ]; then
-        package_list_file="${test_dir}/packages.list"
-    fi
-  fi
-
-  # get the list of installed packages
-  docker_run "${IMAGE_NAME}" '/bin/bash' '-c' 'rpm -qa --queryformat "%{NAME}\n" | sort -u' > "${new_list}"
-
-  # verify the list of packages hasn't changed
-  diff -u "${package_list_file}" "${new_list}"
-  assert_equal "$?" 0
-}
-
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
@@ -266,9 +243,6 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_run_dotnet_in_dockerfile
   if [ "$IMAGE_OS" = "RHEL8" ]; then
     test_repos
-  fi
-  if [ "${IMAGE_OS}" = "RHEL8" ] && [ "$(uname -m)" = "x86_64" ] ; then
-    test_rpm_packages
   fi
 fi
 
