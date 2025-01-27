@@ -44,13 +44,13 @@ objects:
               ports:
                 - containerPort: 8080
                   protocol: TCP
-              resources:
-                requests:
-                  cpu: 250m
-                  memory: 32Mi
-                limits:
-                  cpu: 250m
-                  memory: 64Mi
+              # resources:
+              #   requests:
+              #     cpu: 250m
+              #     memory: 32Mi
+              #   limits:
+              #     cpu: 250m
+              #     memory: 64Mi
               env:
                 - name: REACT_APP_SSO_HOST
                   valueFrom:
