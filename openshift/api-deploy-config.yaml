@@ -52,13 +52,13 @@ objects:
               ports:
                 - containerPort: 8080
                   protocol: TCP
-              resources:
-                requests:
-                  cpu: 500m
-                  memory: 512Mi
-                limits:
-                  cpu: 750m
-                  memory: 768Mi
+              # resources:
+              #   requests:
+              #     cpu: 500m
+              #     memory: 512Mi
+              #   limits:
+              #     cpu: 750m
+              #     memory: 768Mi
               livenessProbe:
                 httpGet:
                   path: /healthz
