@@ -127,6 +127,8 @@ objects:
     apiVersion: v1
     metadata:
       name: ${NAME}-${ENV}
+      labels:
+        deployment: ${NAME}${SUFFIX}
     labels:
       shared: "true"
     spec:

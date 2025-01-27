@@ -87,6 +87,8 @@ objects:
     metadata:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
+      labels:
+        deployment: ${NAME}${SUFFIX}
     spec:
       ports:
         - name: web
