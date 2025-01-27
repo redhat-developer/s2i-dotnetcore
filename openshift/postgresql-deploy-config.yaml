@@ -13,7 +13,8 @@ objects:
     spec:
       replicas: 1
       selector:
-        deploymentconfig: ${NAME}-${ENV}
+        # deploymentconfig: ${NAME}-${ENV}
+        deployment: ${NAME}${SUFFIX}
       strategy:
         activeDeadlineSeconds: 21600
         resources: {}
@@ -24,7 +25,8 @@ objects:
         metadata:
           name: ${NAME}-${ENV}
           labels:
-            deploymentconfig: ${NAME}-${ENV}
+            # deploymentconfig: ${NAME}-${ENV}
+            deployment: ${NAME}${SUFFIX}
         spec:
           containers:
             - image: image-registry.openshift-image-registry.svc:5000/e82e9a-tools/${IMAGE_STREAM_TAG}
@@ -131,7 +133,8 @@ objects:
           port: 5432
           targetPort: 5432
       selector:
-        deploymentconfig: ${NAME}-${ENV}
+        # deploymentconfig: ${NAME}-${ENV}
+        deployment: ${NAME}${SUFFIX}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME

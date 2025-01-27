@@ -25,13 +25,15 @@ objects:
     spec:
       replicas: 1
       selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+        # deploymentconfig: ${NAME}${SUFFIX}
+        deployment: ${NAME}${SUFFIX}
       strategy: {}
       template:
         metadata:
           creationTimestamp: null
           labels:
-            deploymentconfig: ${NAME}${SUFFIX}
+            # deploymentconfig: ${NAME}${SUFFIX}
+            deployment: ${NAME}${SUFFIX}
         spec:
           containers:
             - image: ${NAME}:${VERSION}
@@ -91,7 +93,8 @@ objects:
           protocol: TCP
           targetPort: 8080
       selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+        # deploymentconfig: ${NAME}${SUFFIX}
+        deployment: ${NAME}${SUFFIX}
   - apiVersion: route.openshift.io/v1
     kind: Route
     metadata:
