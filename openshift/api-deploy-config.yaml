@@ -22,11 +22,14 @@ objects:
     metadata:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
+      labels:
+        deployment: ${NAME}${SUFFIX}
     spec:
       replicas: 1
       selector:
         # deploymentconfig: ${NAME}${SUFFIX}
-        deployment: ${NAME}${SUFFIX}
+        matchLabels:
+          deployment: ${NAME}${SUFFIX}
       strategy:
         activeDeadlineSeconds: 21600
         rollingParams:
