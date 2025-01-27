@@ -124,8 +124,7 @@ objects:
         requests:
           storage: "${PERSISTENT_VOLUME_SIZE}"
   - kind: Service
-    # apiVersion: v1
-    apiVersion: apps/v1
+    apiVersion: v1
     metadata:
       name: ${NAME}-${ENV}
       labels:

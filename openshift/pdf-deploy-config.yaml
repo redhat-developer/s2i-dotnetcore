@@ -82,8 +82,7 @@ objects:
               name: ${NAME}:${VERSION}
           type: ImageChange
         - type: ConfigChange
-  # - apiVersion: v1 #service: pdf
-  - apiVersion: apps/v1 #service: pdf
+  - apiVersion: v1 #service: pdf
     kind: Service
     metadata:
       creationTimestamp: null
