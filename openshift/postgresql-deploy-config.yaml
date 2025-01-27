@@ -4,15 +4,15 @@ metadata:
   name: ${PROJECT_NAME}
 objects:
   - apiVersion: v1
-    kind: DeploymentConfig
+    kind: Deployment
     metadata:
       name: ${NAME}-${ENV}
     labels:
       shared: "true"
     spec:
       replicas: 1
-      selector:
-        deploymentconfig: ${NAME}-${ENV}
+      # selector:
+      #   deploymentconfig: ${NAME}-${ENV}
       strategy:
         activeDeadlineSeconds: 21600
         resources: {}
@@ -129,8 +129,8 @@ objects:
           protocol: TCP
           port: 5432
           targetPort: 5432
-      selector:
-        deploymentconfig: ${NAME}-${ENV}
+      # selector:
+      #   deploymentconfig: ${NAME}-${ENV}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME

@@ -17,7 +17,7 @@ objects:
       lookupPolicy:
         local: false
   - apiVersion: v1
-    kind: DeploymentConfig
+    kind: Deployment
     metadata:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
@@ -89,13 +89,13 @@ objects:
           port: 8080
           protocol: TCP
           targetPort: 8080
-      selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+      # selector:
+      #   deploymentconfig: ${NAME}${SUFFIX}
   - apiVersion: route.openshift.io/v1
     kind: Route
     metadata:
-      annotations:
-        haproxy.router.openshift.io/timeout: 1h
+      # annotations:
+      #   haproxy.router.openshift.io/timeout: 1h
       creationTimestamp: null
       name: ${NAME}-${ENV}
     spec:

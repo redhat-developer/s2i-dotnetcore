@@ -50,14 +50,14 @@ objects:
       ftp-url: "${FTP_URL}"
       ftp-user: "${FTP_USER}"
       ftp-password: "${FTP_PASSWORD}"
-  - kind: DeploymentConfig
+  - kind: Deployment
     apiVersion: v1
     metadata:
       name: "${NAME}-${ENV}"
       labels:
         template: "${NAME}-${ENV}"
-      annotations:
-        description: Defines how to deploy the ${NAME}-${ENV}
+      # annotations:
+      #   description: Defines how to deploy the ${NAME}-${ENV}
     spec:
       strategy:
         type: Recreate

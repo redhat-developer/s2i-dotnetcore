@@ -17,14 +17,14 @@ objects:
       lookupPolicy:
         local: false
   - apiVersion: v1 #dc: pdf
-    kind: DeploymentConfig
+    kind: Deployment
     metadata:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
     spec:
       replicas: 1
-      selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+      # selector:
+      #   deploymentconfig: ${NAME}${SUFFIX}
       strategy:
         activeDeadlineSeconds: 21600
         rollingParams:
@@ -33,7 +33,7 @@ objects:
           maxUnavailable: 1
           timeoutSeconds: 600
           updatePeriodSeconds: 1
-        type: Rolling
+        type: RollingUpdate
       template:
         metadata:
           creationTimestamp: null
@@ -87,8 +87,8 @@ objects:
           port: 8080
           protocol: TCP
           targetPort: 8080
-      selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+      # selector:
+      #   deploymentconfig: ${NAME}${SUFFIX}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
