@@ -90,8 +90,8 @@ objects:
           port: 8080
           protocol: TCP
           targetPort: 8080
-      # selector:
-      #   deploymentconfig: ${NAME}${SUFFIX}
+      selector:
+        deploymentconfig: ${NAME}${SUFFIX}
   - apiVersion: route.openshift.io/v1
     kind: Route
     metadata:
