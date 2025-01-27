@@ -138,9 +138,7 @@ objects:
           port: 5432
           targetPort: 5432
       selector:
-        # deploymentconfig: ${NAME}-${ENV}
-        matchLabels:
-          deployment: ${NAME}-${ENV}
+        deployment: ${NAME}-${ENV}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME

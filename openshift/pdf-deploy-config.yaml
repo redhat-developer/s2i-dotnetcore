@@ -96,9 +96,7 @@ objects:
           protocol: TCP
           targetPort: 8080
       selector:
-        # deploymentconfig: ${NAME}${SUFFIX}
-        matchLabels:
-          deployment: ${NAME}${SUFFIX}
+        deployment: ${NAME}${SUFFIX}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
