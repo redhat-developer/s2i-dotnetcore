@@ -22,11 +22,14 @@ objects:
     metadata:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
+      labels:
+        deployment: ${NAME}${SUFFIX}
     spec:
       replicas: 1
       selector:
         # deploymentconfig: ${NAME}${SUFFIX}
-        deployment: ${NAME}${SUFFIX}
+        matchLabels:
+          deployment: ${NAME}${SUFFIX}
       strategy: {}
       template:
         metadata:
@@ -94,7 +97,8 @@ objects:
           targetPort: 8080
       selector:
         # deploymentconfig: ${NAME}${SUFFIX}
-        deployment: ${NAME}${SUFFIX}
+        matchLabels:
+          deployment: ${NAME}${SUFFIX}
   - apiVersion: route.openshift.io/v1
     kind: Route
     metadata:

@@ -8,13 +8,16 @@ objects:
     kind: Deployment
     metadata:
       name: ${NAME}-${ENV}
+      labels:
+        deployment: ${NAME}${SUFFIX}
     labels:
       shared: "true"
     spec:
       replicas: 1
       selector:
         # deploymentconfig: ${NAME}-${ENV}
-        deployment: ${NAME}${SUFFIX}
+        matchLabels:
+          deployment: ${NAME}${SUFFIX}
       strategy:
         activeDeadlineSeconds: 21600
         resources: {}
@@ -134,7 +137,8 @@ objects:
           targetPort: 5432
       selector:
         # deploymentconfig: ${NAME}-${ENV}
-        deployment: ${NAME}${SUFFIX}
+        matchLabels:
+          deployment: ${NAME}${SUFFIX}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME

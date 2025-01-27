@@ -22,11 +22,14 @@ objects:
     metadata:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
+      labels:
+        deployment: ${NAME}${SUFFIX}
     spec:
       replicas: 1
       selector:
         # deploymentconfig: ${NAME}${SUFFIX}
-        deployment: ${NAME}${SUFFIX}
+        matchLabels:
+          deployment: ${NAME}${SUFFIX}
       strategy:
         activeDeadlineSeconds: 21600
         rollingParams:
@@ -92,7 +95,8 @@ objects:
           targetPort: 8080
       selector:
         # deploymentconfig: ${NAME}${SUFFIX}
-        deployment: ${NAME}${SUFFIX}
+        matchLabels:
+          deployment: ${NAME}${SUFFIX}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
