@@ -11,7 +11,8 @@ defaults:
 
 jobs:
   cancel-previous-runs:
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: write
     steps:
@@ -21,7 +22,8 @@ jobs:
           access_token: ${{ github.token }}
 
   build:
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: ./.pipeline
@@ -38,7 +40,8 @@ jobs:
           DEBUG=* npm run build -- --pr=${{ github.event.pull_request.number }} --git.branch.name=${{github.head_ref}} --git.ref=${{github.head_ref}}
 
   deploy-to-dev:
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [build]
     defaults:
       run:
@@ -59,7 +62,8 @@ jobs:
     needs: [build, deploy-to-dev]
     environment:
       name: test
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: ./.pipeline
@@ -79,7 +83,8 @@ jobs:
     needs: [build, deploy-to-test]
     environment:
       name: prod
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: ./.pipeline
