@@ -124,11 +124,12 @@ objects:
         requests:
           storage: "${PERSISTENT_VOLUME_SIZE}"
   - kind: Service
-    apiVersion: v1
+    # apiVersion: v1
+    apiVersion: apps/v1
     metadata:
       name: ${NAME}-${ENV}
       labels:
-        deployment: ${NAME}${SUFFIX}
+        deployment: ${NAME}-${ENV}
     labels:
       shared: "true"
     spec:
@@ -140,7 +141,7 @@ objects:
       selector:
         # deploymentconfig: ${NAME}-${ENV}
         matchLabels:
-          deployment: ${NAME}${SUFFIX}
+          deployment: ${NAME}-${ENV}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
