@@ -9,7 +9,7 @@ objects:
     metadata:
       name: ${NAME}-${ENV}
       labels:
-        deployment: ${NAME}${SUFFIX}
+        deployment: ${NAME}${ENV}
     labels:
       shared: "true"
     spec:
