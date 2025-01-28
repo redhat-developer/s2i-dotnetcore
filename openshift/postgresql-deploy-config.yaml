@@ -127,9 +127,9 @@ objects:
     apiVersion: v1
     metadata:
       name: ${NAME}-${ENV}
-    labels:
-      shared: "true"
-      deployment: ${NAME}-${ENV}
+      labels:
+        shared: "true"
+        deployment: ${NAME}-${ENV}
     spec:
       ports:
         - name: postgresql
