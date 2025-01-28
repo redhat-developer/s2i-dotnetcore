@@ -39,7 +39,7 @@ objects:
             deployment: ${NAME}${SUFFIX}
         spec:
           containers:
-            - image: ${NAME}:${VERSION}
+            - image: image-registry.openshift-image-registry.svc:5000/e82e9a-tools:${NAME}:${VERSION}
               name: client
               ports:
                 - containerPort: 8080
