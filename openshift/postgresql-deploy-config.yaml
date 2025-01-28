@@ -3,7 +3,6 @@ apiVersion: template.openshift.io/v1
 metadata:
   name: ${PROJECT_NAME}
 objects:
-  # - apiVersion: v1
   - apiVersion: apps/v1
     kind: Deployment
     metadata:
