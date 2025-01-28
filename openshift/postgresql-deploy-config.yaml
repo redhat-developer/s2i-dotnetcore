@@ -127,10 +127,9 @@ objects:
     apiVersion: v1
     metadata:
       name: ${NAME}-${ENV}
-      labels:
-        deployment: ${NAME}-${ENV}
     labels:
       shared: "true"
+      deployment: ${NAME}-${ENV}
     spec:
       ports:
         - name: postgresql
@@ -138,9 +137,7 @@ objects:
           port: 5432
           targetPort: 5432
       selector:
-        # deployment: ${NAME}-${ENV}
-        matchLabels:
-          deployment: ${NAME}-${ENV}
+        deployment: ${NAME}-${ENV}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
