@@ -17,7 +17,7 @@ objects:
       selector:
         # deploymentconfig: ${NAME}-${ENV}
         matchLabels:
-          deployment: ${NAME}${SUFFIX}
+          deployment: ${NAME}${ENV}
       strategy:
         activeDeadlineSeconds: 21600
         resources: {}
@@ -29,7 +29,7 @@ objects:
           name: ${NAME}-${ENV}
           labels:
             # deploymentconfig: ${NAME}-${ENV}
-            deployment: ${NAME}${SUFFIX}
+            deployment: ${NAME}${ENV}
         spec:
           containers:
             - image: image-registry.openshift-image-registry.svc:5000/e82e9a-tools/${IMAGE_STREAM_TAG}
