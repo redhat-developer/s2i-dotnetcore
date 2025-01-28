@@ -9,7 +9,7 @@ objects:
     metadata:
       name: ${NAME}-${ENV}
       labels:
-        deployment: ${NAME}${ENV}
+        deployment: ${NAME}-${ENV}
     labels:
       shared: "true"
     spec:
@@ -17,7 +17,7 @@ objects:
       selector:
         # deploymentconfig: ${NAME}-${ENV}
         matchLabels:
-          deployment: ${NAME}${ENV}
+          deployment: ${NAME}-${ENV}
       strategy:
         activeDeadlineSeconds: 21600
         resources: {}
