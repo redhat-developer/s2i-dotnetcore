@@ -16,15 +16,20 @@ objects:
     spec:
       lookupPolicy:
         local: false
-  - apiVersion: v1 #dc: api
-    kind: DeploymentConfig
+  # - apiVersion: v1 #dc: api
+  - apiVersion: apps/v1
+    kind: Deployment
     metadata:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
+      labels:
+        deployment: ${NAME}${SUFFIX}
     spec:
       replicas: 1
       selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+        # deploymentconfig: ${NAME}${SUFFIX}
+        matchLabels:
+          deployment: ${NAME}${SUFFIX}
       strategy:
         activeDeadlineSeconds: 21600
         rollingParams:
@@ -33,26 +38,27 @@ objects:
           maxUnavailable: 1
           timeoutSeconds: 600
           updatePeriodSeconds: 1
-        type: Rolling
+        type: RollingUpdate
       template:
         metadata:
           creationTimestamp: null
           labels:
-            deploymentconfig: ${NAME}${SUFFIX}
+            # deploymentconfig: ${NAME}${SUFFIX}
+            deployment: ${NAME}${SUFFIX}
         spec:
           containers:
-            - image: ${NAME}:${VERSION}
+            - image: image-registry.openshift-image-registry.svc:5000/e82e9a-${ENV}/${NAME}:${VERSION}
               name: api
               ports:
                 - containerPort: 8080
                   protocol: TCP
-              resources:
-                requests:
-                  cpu: 500m
-                  memory: 512Mi
-                limits:
-                  cpu: 750m
-                  memory: 768Mi
+              # resources:
+              #   requests:
+              #     cpu: 500m
+              #     memory: 512Mi
+              #   limits:
+              #     cpu: 750m
+              #     memory: 768Mi
               livenessProbe:
                 httpGet:
                   path: /healthz
@@ -160,7 +166,8 @@ objects:
           protocol: TCP
           targetPort: 8080
       selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+        # deploymentconfig: ${NAME}${SUFFIX}
+        deployment: ${NAME}${SUFFIX}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME

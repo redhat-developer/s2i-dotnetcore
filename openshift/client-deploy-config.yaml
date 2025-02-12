@@ -16,35 +16,41 @@ objects:
     spec:
       lookupPolicy:
         local: false
-  - apiVersion: v1
-    kind: DeploymentConfig
+  # - apiVersion: v1
+  - apiVersion: apps/v1
+    kind: Deployment
     metadata:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
+      labels:
+        deployment: ${NAME}${SUFFIX}
     spec:
       replicas: 1
       selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+        # deploymentconfig: ${NAME}${SUFFIX}
+        matchLabels:
+          deployment: ${NAME}${SUFFIX}
       strategy: {}
       template:
         metadata:
           creationTimestamp: null
           labels:
-            deploymentconfig: ${NAME}${SUFFIX}
+            # deploymentconfig: ${NAME}${SUFFIX}
+            deployment: ${NAME}${SUFFIX}
         spec:
           containers:
-            - image: ${NAME}:${VERSION}
+            - image: image-registry.openshift-image-registry.svc:5000/e82e9a-${ENV}/${NAME}:${VERSION}
               name: client
               ports:
                 - containerPort: 8080
                   protocol: TCP
-              resources:
-                requests:
-                  cpu: 250m
-                  memory: 32Mi
-                limits:
-                  cpu: 250m
-                  memory: 64Mi
+              # resources:
+              #   requests:
+              #     cpu: 250m
+              #     memory: 32Mi
+              #   limits:
+              #     cpu: 250m
+              #     memory: 64Mi
               env:
                 - name: REACT_APP_SSO_HOST
                   valueFrom:
@@ -83,6 +89,8 @@ objects:
     metadata:
       creationTimestamp: null
       name: ${NAME}${SUFFIX}
+      labels:
+        deployment: ${NAME}${SUFFIX}
     spec:
       ports:
         - name: web
@@ -90,12 +98,12 @@ objects:
           protocol: TCP
           targetPort: 8080
       selector:
-        deploymentconfig: ${NAME}${SUFFIX}
+        deployment: ${NAME}${SUFFIX}
   - apiVersion: route.openshift.io/v1
     kind: Route
     metadata:
-      annotations:
-        haproxy.router.openshift.io/timeout: 1h
+      # annotations:
+      #   haproxy.router.openshift.io/timeout: 1h
       creationTimestamp: null
       name: ${NAME}-${ENV}
     spec:
@@ -151,3 +159,5 @@ parameters:
     name: SOURCE_REPOSITORY_REF
     required: false
     value: ""
+
+

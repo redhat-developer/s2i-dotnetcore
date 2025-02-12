@@ -50,20 +50,24 @@ objects:
       ftp-url: "${FTP_URL}"
       ftp-user: "${FTP_USER}"
       ftp-password: "${FTP_PASSWORD}"
-  - kind: DeploymentConfig
-    apiVersion: v1
+  - kind: Deployment
+    # apiVersion: v1
+    apiVersion: apps/v1
     metadata:
       name: "${NAME}-${ENV}"
       labels:
         template: "${NAME}-${ENV}"
-      annotations:
-        description: Defines how to deploy the ${NAME}-${ENV}
+        name: "${NAME}-${ENV}"
+      # annotations:
+      #   description: Defines how to deploy the ${NAME}-${ENV}
     spec:
       strategy:
         type: Recreate
       replicas: 1
       selector:
-        name: "${NAME}-${ENV}"
+        # name: "${NAME}-${ENV}"
+        matchLabels:
+          name: "${NAME}-${ENV}"
       template:
         metadata:
           name: "${NAME}-${ENV}"

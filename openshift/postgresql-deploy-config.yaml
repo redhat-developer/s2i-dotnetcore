@@ -3,16 +3,20 @@ apiVersion: template.openshift.io/v1
 metadata:
   name: ${PROJECT_NAME}
 objects:
-  - apiVersion: v1
-    kind: DeploymentConfig
+  - apiVersion: apps/v1
+    kind: Deployment
     metadata:
       name: ${NAME}-${ENV}
+      labels:
+        deployment: ${NAME}-${ENV}
     labels:
       shared: "true"
     spec:
       replicas: 1
       selector:
-        deploymentconfig: ${NAME}-${ENV}
+        # deploymentconfig: ${NAME}-${ENV}
+        matchLabels:
+          deployment: ${NAME}-${ENV}
       strategy:
         activeDeadlineSeconds: 21600
         resources: {}
@@ -23,7 +27,8 @@ objects:
         metadata:
           name: ${NAME}-${ENV}
           labels:
-            deploymentconfig: ${NAME}-${ENV}
+            # deploymentconfig: ${NAME}-${ENV}
+            deployment: ${NAME}-${ENV}
         spec:
           containers:
             - image: image-registry.openshift-image-registry.svc:5000/e82e9a-tools/${IMAGE_STREAM_TAG}
@@ -50,13 +55,13 @@ objects:
               ports:
                 - containerPort: 5432
                   protocol: TCP
-              resources:
-                requests:
-                  cpu: 250m
-                  memory: 512Mi
-                limits:
-                  cpu: 500m
-                  memory: 1Gi
+              # resources:
+              #   requests:
+              #     cpu: 250m
+              #     memory: 512Mi
+              #   limits:
+              #     cpu: 500m
+              #     memory: 1Gi
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
               volumeMounts:
@@ -121,8 +126,9 @@ objects:
     apiVersion: v1
     metadata:
       name: ${NAME}-${ENV}
-    labels:
-      shared: "true"
+      labels:
+        shared: "true"
+        deployment: ${NAME}-${ENV}
     spec:
       ports:
         - name: postgresql
@@ -130,7 +136,7 @@ objects:
           port: 5432
           targetPort: 5432
       selector:
-        deploymentconfig: ${NAME}-${ENV}
+        deployment: ${NAME}-${ENV}
 parameters:
   - description: Name of the project (SCHOOLBUS)
     displayName: PROJECT_NAME
