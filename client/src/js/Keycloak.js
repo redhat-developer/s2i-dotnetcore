@@ -8,7 +8,7 @@ const keycloakConfig = {
     : process.env.REACT_APP_SSO_CLIENT,
 };
 
-export const keycloak = Keycloak(keycloakConfig);
+export const keycloak = new Keycloak(keycloakConfig);
 
 export const init = (onSuccess) => {
   keycloak.init({ 
