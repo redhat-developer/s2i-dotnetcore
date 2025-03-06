@@ -1,0 +1,31 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [ "8.0", "9.0" ]
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Download s2i
+        run: |
+          set -euo pipefail
+          mkdir source-to-image
+          pushd source-to-image
+          wget --no-verbose https://github.com/openshift/source-to-image/releases/download/v1.4.0/source-to-image-v1.4.0-d3544c7e-linux-amd64.tar.gz
+          tar xf source-to-image-v1.4.0-d3544c7e-linux-amd64.tar.gz
+          popd
+      - name: Print Diagnostics
+        run: |
+          PATH=$PATH:$(pwd)/source-to-image/
+          uname -a
+          cat /etc/os-release
+          docker --version
+          podman --version
+          s2i version
+      - name: Build
+        run: |
+          PATH=$PATH:$(pwd)/source-to-image/
+          ./build.sh --ci ${{ matrix.version }}

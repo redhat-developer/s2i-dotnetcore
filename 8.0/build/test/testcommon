@@ -59,7 +59,7 @@ assert_contains() {
   local actual="$1"
   local expected="$2"
 
-  if ! echo "${actual}" | grep -qP -- "${expected}"; then
+  if ! echo "${actual}" | grep -P -- "${expected}" >/dev/null; then
     error "'${actual}' does not contain '${expected}'"
     error_exit 1
   fi
@@ -76,7 +76,7 @@ assert_not_contains() {
   local actual="$1"
   local unexpected="$2"
 
-  if echo "${actual}" | grep -qP -- "${unexpected}"; then
+  if echo "${actual}" | grep -P -- "${unexpected}" >/dev/null; then
     error "'${actual}' contains '${unexpected}'"
     error_exit 1
   fi
