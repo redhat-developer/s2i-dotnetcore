@@ -74,16 +74,6 @@ objects:
                 - name: APP_NAME
                   value: ${PROJECT_NAME}
       test: false
-      triggers:
-        - imageChangeParams:
-            automatic: true
-            containerNames:
-              - client
-            from:
-              kind: ImageStreamTag
-              name: ${NAME}:${VERSION}
-          type: ImageChange
-        - type: ConfigChange
   - apiVersion: v1
     kind: Service
     metadata:

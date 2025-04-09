@@ -144,16 +144,6 @@ objects:
                 defaultMode: 420
                 name: api-appsettings-${ENV}
       test: false
-      triggers:
-        - imageChangeParams:
-            automatic: true
-            containerNames:
-              - api
-            from:
-              kind: ImageStreamTag
-              name: ${NAME}:${VERSION}
-          type: ImageChange
-        - type: ConfigChange
   - apiVersion: v1 #service: api
     kind: Service
     metadata:

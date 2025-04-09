@@ -98,17 +98,6 @@ objects:
               persistentVolumeClaim:
                 claimName: sb-db-dev-psql17-pvc
       test: false
-      triggers:
-        - type: ConfigChange
-        - imageChangeParams:
-            automatic: true
-            containerNames:
-              - ${NAME}-${ENV}
-            from:
-              kind: ImageStreamTag
-              name: ${IMAGE_STREAM_TAG}
-              namespace: e82e9a-tools
-          type: ImageChange
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
