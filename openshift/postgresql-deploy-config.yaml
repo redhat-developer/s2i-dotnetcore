@@ -38,17 +38,17 @@ objects:
                 - name: POSTGRESQL_USER
                   valueFrom:
                     secretKeyRef:
-                      name: ${NAME}-${ENV}
+                      name: sbi-db-dev
                       key: database-user
                 - name: POSTGRESQL_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${NAME}-${ENV}
+                      name: sbi-db-dev
                       key: database-password
                 - name: POSTGRESQL_ADMIN_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${NAME}-${ENV}
+                      name: sbi-db-dev
                       key: admin-password
                 - name: POSTGRESQL_DATABASE
                   value: ${POSTGRESQL_DATABASE_NAME}
@@ -96,7 +96,7 @@ objects:
           volumes:
             - name: "${NAME}-${ENV}-data"
               persistentVolumeClaim:
-                claimName: ${NAME}-${ENV}-pvc
+                claimName: sb-db-dev-psql17-pvc
       test: false
       triggers:
         - type: ConfigChange
@@ -147,7 +147,7 @@ parameters:
     displayName: Name
     description: The name assigned to all of the OpenShift resources associated to the PostgreSQL instance.
     required: true
-    value: db
+    value: db16
   - description: A name suffix used for all objects
     displayName: Suffix
     name: SUFFIX
@@ -166,7 +166,7 @@ parameters:
   - description: ImageStreamTag
     displayName: ImageStreamTag
     name: IMAGE_STREAM_TAG
-    value: "postgresql-10-rhel8:1"
+    value: "postgresql-16-rhel8:1"
   - name: POSTGRESQL_DATABASE_NAME
     displayName: PostgreSQL Database Name
     description: The name of the PostgreSQL database.

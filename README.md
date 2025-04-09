@@ -22,7 +22,7 @@ The application is being developed as an open source solution.
 
 - .Net 7
 - Node.JS v13.7.0 or newer
-- PostgreSQL 10
+- PostgreSQL 16
 
 ## Dependencies
 
