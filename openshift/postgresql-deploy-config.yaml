@@ -147,7 +147,7 @@ parameters:
     displayName: Name
     description: The name assigned to all of the OpenShift resources associated to the PostgreSQL instance.
     required: true
-    value: db16
+    value: db
   - description: A name suffix used for all objects
     displayName: Suffix
     name: SUFFIX
