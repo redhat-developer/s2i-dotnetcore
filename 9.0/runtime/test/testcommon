@@ -2,6 +2,11 @@
 # The code is duplicated in both folders because the images are built
 # and tested after copying the sub-directories into a container repo.
 
+SCRIPT_PATH=$(realpath $0)
+SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+SCRIPT_BIN_DIR="$SCRIPT_DIR/.bin"
+PATH="$SCRIPT_BIN_DIR:$PATH"
+
 TEST_PORT=${TEST_PORT:-8080}
 CURLE_COULNDT_CONNECT=7
 CURLE_RECV_ERROR=56
@@ -33,10 +38,16 @@ error_exit() {
   TEST_FAILURES="${TEST_FAILURES} ${TEST_NAME}:${BASH_LINENO[1]}"
 }
 
-_S2I_PATH=$(command -v s2i)
-if [ -z "$_S2I_PATH" ]; then
-  error "s2i is not on PATH. Please install s2i or download it from https://github.com/openshift/source-to-image."
-  exit 1
+if [ -z "$(command -v s2i)" ]; then
+  info "s2i is not on PATH. A version of s2i will be downloaded to $SCRIPT_BIN_DIR."
+  mkdir -p "$SCRIPT_BIN_DIR"
+  ARCH="$(uname -m)"
+  if [[ "$ARCH" == aarch64 ]]; then
+    ARCH=arm64
+  elif [[ "$ARCH" == x86_64 ]]; then
+    ARCH=amd64
+  fi
+  curl -sL "https://github.com/openshift/source-to-image/releases/download/v1.4.0/source-to-image-v1.4.0-d3544c7e-linux-$ARCH.tar.gz" | tar -xz -C "$SCRIPT_BIN_DIR"
 fi
 
 _PODMAN_PATH=$(command -v podman)
