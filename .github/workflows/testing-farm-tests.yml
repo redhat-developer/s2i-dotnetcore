@@ -8,7 +8,7 @@ jobs:
     name: ".DOTNET_CONTAINER tests: ${{ matrix.version }} - ${{ matrix.os_test }}"
     runs-on: ubuntu-latest
     concurrency:
-      group: container-${{ github.event.issue.number }}-${{ matrix.version }}-${{ matrix.os_test }}
+      group: dotnet-${{ github.event.issue.number }}-${{ matrix.version }}-${{ matrix.arch }}-${{ matrix.os_test }}
       cancel-in-progress: true
     strategy:
       fail-fast: false
