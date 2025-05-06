@@ -1,0 +1,48 @@
+on:
+  issue_comment:
+    types:
+      - created
+jobs:
+  container-tests:
+    # This job only runs for '[test]' pull request comments by owner, member
+    name: ".DOTNET_CONTAINER tests: ${{ matrix.version }} - ${{ matrix.os_test }}"
+    runs-on: ubuntu-latest
+    concurrency:
+      group: container-${{ github.event.issue.number }}-${{ matrix.version }}-${{ matrix.os_test }}
+      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [ "8.0", "9.0" ]
+        os_test: [ "rhel8" ]
+
+    if: |
+      github.event.issue.pull_request
+      && contains(github.event.comment.body, '[test]')
+      && contains(fromJson('["OWNER", "MEMBER"]'), github.event.comment.author_association)
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set compose name
+        id: vars
+        run: |
+          compose="RHEL-8.10.0-Nightly"
+          if [[ "${{ matrix.os_test }}" == "rhel9" ]]; then
+            compose="RHEL-9.4.0-Nightly"
+          fi
+          echo "compose=$compose" >> "$GITHUB_OUTPUT"
+
+      - name: Schedule tests for ${{ matrix.version }} - ${{ matrix.os_test }}
+        uses: sclorg/testing-farm-as-github-action@main
+        with:
+          api_key:  ${{ secrets.TF_INTERNAL_API_KEY }}
+          compose:  ${{ steps.vars.outputs.compose }}
+          git_url:  "https://gitlab.cee.redhat.com/platform-eng-core-services/sclorg-tmt-plans"
+          git_ref:  "master"
+          tf_scope: "private"
+          tmt_plan_regex: "{{ matrix.os_test }}-dotnet$"
+          update_pull_request_status: true
+          create_issue_comment: true
+          pull_request_status_name: "${{ matrix.os_test }} - ${{ matrix.version }}"
+          variables: "REPO_URL=${{ github.server_url }}/${{ github.repository }};REPO_NAME=${{ github.repository }};PR_NUMBER=${{ github.event.issue.number }};VERSIONS=${{ matrix.version }};OS=${{ matrix.os_test }}"
