@@ -41,7 +41,7 @@ jobs:
           git_url:  "https://gitlab.cee.redhat.com/platform-eng-core-services/sclorg-tmt-plans"
           git_ref:  "master"
           tf_scope: "private"
-          tmt_plan_regex: "{{ matrix.os_test }}-dotnet$"
+          tmt_plan_regex: "${{ matrix.os_test }}-dotnet$"
           update_pull_request_status: true
           create_issue_comment: true
           pull_request_status_name: "${{ matrix.os_test }} - ${{ matrix.version }}"
