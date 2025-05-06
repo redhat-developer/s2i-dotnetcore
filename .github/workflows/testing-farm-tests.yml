@@ -14,7 +14,8 @@ jobs:
       fail-fast: false
       matrix:
         version: [ "8.0", "9.0" ]
-        os_test: [ "rhel8" ]
+        os_test: [ "rhel8", "rhel9" ]
+        arch: [ "x86_64", "aarch64" ]
 
     if: |
       github.event.issue.pull_request
@@ -27,9 +28,9 @@ jobs:
       - name: Set compose name
         id: vars
         run: |
-          compose="RHEL-8.10.0-Nightly"
+          compose="RHEL-8-Nightly"
           if [[ "${{ matrix.os_test }}" == "rhel9" ]]; then
-            compose="RHEL-9.4.0-Nightly"
+            compose="RHEL-9-Nightly"
           fi
           echo "compose=$compose" >> "$GITHUB_OUTPUT"
 
@@ -42,7 +43,8 @@ jobs:
           git_ref:  "master"
           tf_scope: "private"
           tmt_plan_regex: "${{ matrix.os_test }}-dotnet$"
+          arch: "${{ matrix.arch }}"
           update_pull_request_status: true
           create_issue_comment: true
-          pull_request_status_name: "${{ matrix.os_test }} - ${{ matrix.version }}"
+          pull_request_status_name: "${{ matrix.os_test }} (${{ matrix.arch }}) - ${{ matrix.version }}"
           variables: "REPO_URL=${{ github.server_url }}/${{ github.repository }};REPO_NAME=${{ github.repository }};PR_NUMBER=${{ github.event.issue.number }};VERSIONS=${{ matrix.version }};OS=${{ matrix.os_test }}"
