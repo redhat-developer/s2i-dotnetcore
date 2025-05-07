@@ -62,6 +62,11 @@ do
         --ci)
             CI=true
             ;;
+        --github-ci)
+            CI=true
+            DEBUG=true
+            STOP_ON_ERROR=false
+            ;;
         --help)
             print_usage
             exit 0
