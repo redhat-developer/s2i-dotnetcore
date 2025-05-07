@@ -5,7 +5,7 @@ on:
 jobs:
   container-tests:
     # This job only runs for '[test]' pull request comments by owner, member
-    name: ".DOTNET_CONTAINER tests: ${{ matrix.version }} - ${{ matrix.os_test }}"
+    name: ".DOTNET_CONTAINER tests: ${{ matrix.version }}-${{ matrix.arch }}-${{ matrix.os_test }}"
     runs-on: ubuntu-latest
     concurrency:
       group: dotnet-${{ github.event.issue.number }}-${{ matrix.version }}-${{ matrix.arch }}-${{ matrix.os_test }}
@@ -15,7 +15,7 @@ jobs:
       matrix:
         version: [ "8.0", "9.0" ]
         os_test: [ "rhel8", "rhel9" ]
-        arch: [ "x86_64", "aarch64" ]
+        arch: [ "x86_64", "aarch64" , "s390x", "ppc64le" ]
 
     if: |
       github.event.issue.pull_request
