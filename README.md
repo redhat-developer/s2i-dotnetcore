@@ -1,4 +1,4 @@
-# .NET S2I Container Images
+# .NET S2I Container Images - TESTING
 
 This repository contains the sources for building .NET SDK and runtime container images.
 
