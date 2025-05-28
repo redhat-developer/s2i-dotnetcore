@@ -585,7 +585,7 @@ test_incremental_without_packages()
 test_repos() {
   test_start
 
-  local output=$(docker_run_as $IMAGE_NAME 0 microdnf install -y zlib-devel)
+  local output=$(docker_run_as $IMAGE_NAME 0 bash -c 'microdnf install -y zlib-devel || dnf install -y zlib-devel')
   assert_contains "$output" "Complete"
 }
 
@@ -635,9 +635,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_config
   test_usage
   test_default_cmd
-  if [ "$IMAGE_OS" = "RHEL8" ]; then
-    test_repos
-  fi
+  test_repos
   test_rm_tmp_dotnet
   test_consoleapp
   test_multiframework
