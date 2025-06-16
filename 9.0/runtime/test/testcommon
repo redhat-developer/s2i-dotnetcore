@@ -274,7 +274,7 @@ container_url() {
 
 s2i_image_tag() {
   local app="$1"
-  echo "localhost/${IMAGE_NAME}-${app}"
+  echo "localhost/${IMAGE_NAME%@*}-${app}"
 }
 
 s2i_build_core() {
