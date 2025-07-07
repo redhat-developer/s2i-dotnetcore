@@ -1,0 +1,86 @@
+FROM ubi8/dotnet-90-runtime
+# This image provides a .NET 9.0 environment you can use to run your .NET
+# applications.
+
+# DOTNET_SDK_VERSION must be set to the full SDK version, unless IS_CI is set to true.
+ARG DOTNET_SDK_VERSION=9.0
+ARG RELEASE=1
+ARG IS_CI
+ARG DOTNET_TARBALL
+
+ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotnet/tools:${PATH} \
+    STI_SCRIPTS_PATH=/usr/libexec/s2i \
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
+    # This skips the first time running text
+    DOTNET_NOLOGO=true \
+    # Like Microsoft images, provide the SDK version
+    DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
+
+LABEL io.k8s.description="Platform for building and running .NET 9 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-90" \
+      io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
+      io.s2i.scripts-url=image:///usr/libexec/s2i
+
+# Labels consumed by Red Hat build service
+LABEL name="ubi8/dotnet-90" \
+      com.redhat.component="dotnet-90-container" \
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
+      version="9.0" \
+      release="$RELEASE"
+
+# Switch to root for package installs
+USER 0
+
+# Each language image can have 'contrib' a directory with extra files needed to
+# run and build the applications.
+COPY ./contrib/ /opt/app-root
+
+# Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
+COPY ./s2i/bin/ /usr/libexec/s2i
+
+# Install packages:
+# - dotnet-sdk--*: provides the .NET SDK.
+# - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
+RUN [ -n "${DOTNET_TARBALL}" ] || ( \
+    INSTALL_PKGS="dotnet-sdk-9.0 procps-ng" && \
+    microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
+    microdnf clean all -y && \
+# yum cache files may still exist (and quite large in size)
+    rm -rf /var/cache/yum/* )
+# Tarball install (in the runtime base image)
+RUN [ -z "${DOTNET_TARBALL}" ] || ( \
+    INSTALL_PKGS="procps-ng" && \
+    microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
+    microdnf clean all -y && \
+# yum cache files may still exist (and quite large in size)
+    rm -rf /var/cache/yum/* )
+
+# Check the versions of the environment variables match the installed versions.
+RUN [ "$IS_CI" == "true" ] || ( \
+        printf "Checking framework versions ${DOTNET_VERSION} and ${ASPNET_VERSION} against:\n$(dotnet --list-runtimes)" && \
+        dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " && \
+        dotnet --list-runtimes | grep "Microsoft.AspNetCore.App ${ASPNET_VERSION} " && \
+        printf "Checking SDK version ${DOTNET_SDK_VERSION} against:\n$(dotnet --list-sdks)" && \
+        dotnet --list-sdks | grep "^${DOTNET_SDK_VERSION} " )
+
+# Directory with the sources is set as the working directory.
+RUN mkdir /opt/app-root/src
+WORKDIR /opt/app-root/src
+
+# Build the container tool.
+RUN /usr/libexec/s2i/container-tool build-tool
+
+# Since $HOME is set to /opt/app-root, the yum install may have created config
+# directories (such as ~/.pki/nssdb) there. These will be owned by root and can
+# cause actions that work on all of /opt/app-root to fail. So we need to fix
+# the permissions on those too.
+RUN chown -R $APP_UID:0 /opt/app-root && fix-permissions /opt/app-root
+
+# Needed for the `dotnet watch` to detect changes in a container
+ENV  DOTNET_USE_POLLING_FILE_WATCHER=true
+
+# Run container rootless.
+USER $APP_UID
+
+# Set the default CMD to start a shell.
+CMD /bin/bash
