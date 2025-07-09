@@ -1,7 +1,7 @@
 #!/bin/sh
 
-DISTRO=`cat /etc/*-release | grep ^ID= | grep -Po '".*?"' | tr -d '"'`
-NAMESPACE=dotnet
+NAMESPACE=ubi9
+IMAGE=${NAMESPACE}/dotnet-100
 
 cat <<EOF
 This is a S2I .Net ${DISTRO} base image:
@@ -9,7 +9,7 @@ To use it, install S2I: https://github.com/openshift/source-to-image
 
 Sample invocation:
 
-sudo s2i build https://github.com/redhat-developer/s2i-dotnetcore-ex.git --context-dir=app --ref=dotnet-9.0 ${NAMESPACE}/dotnet-90-${DISTRO}8 dotnet-sample-app
+sudo s2i build https://github.com/redhat-developer/s2i-dotnetcore-ex.git --context-dir=app --ref=dotnet-10.0 ${IMAGE} dotnet-sample-app
 
 You can then run the resulting image via:
 sudo docker run -p 8080:8080 dotnet-sample-app

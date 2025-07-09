@@ -14,7 +14,7 @@ using standalone [S2I](https://github.com/openshift/source-to-image) and then ru
 resulting image with `docker`/`podman` execute:
 
     ```
-    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=9.0/build/test/asp-net-hello-world ubi8/dotnet-90 dotnet-sample-app
+    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=10.0/build/test/asp-net-hello-world ubi9/dotnet-100 dotnet-sample-app
     $ sudo docker run -p 8080:8080 dotnet-sample-app
     ```
 
@@ -36,9 +36,9 @@ will be re-used. To keep NuGet packages so they can be reused, you must set
 Repository organization
 ------------------------
 
-* **Dockerfile.rhel8**
+* **Dockerfile.rhel9**
 
-  UBI 8 / RHEL 8 based Dockerfile. No RHEL subscription is required, but without
+  UBI 9 / RHEL 9 based Dockerfile. No RHEL subscription is required, but without
   one only UBI RPMs can be added to the container.
 
 * **`root/usr/bin/`**

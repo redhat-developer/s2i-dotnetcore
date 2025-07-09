@@ -1,5 +1,5 @@
 .NET Runtime image
-=================
+==================
 
 This repository contains the source for building a container image that
 can be used as a base in which to run already built .NET applications.
@@ -17,21 +17,21 @@ For example to create an image for [s2i-dotnetcore-ex](https://github.com/redhat
 
 Publish the application:
 ```
-$ git clone -b dotnet-9.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
+$ git clone -b dotnet-10.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
 $ cd s2i-dotnetcore-ex/app
 $ dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App
 ```
 
 To create an image using `s2i`:
 ```
-$ s2i build bin/Release/net9.0/publish ubi8/dotnet-90-runtime s2i-dotnetcore-ex
+$ s2i build bin/Release/net10.0/publish ubi9/dotnet-100-runtime s2i-dotnetcore-ex
 ```
 
 To create an image using `docker`/`podman`:
 ```
 $ cat > Dockerfile <<EOF
-FROM ubi8/dotnet-90-runtime
-ADD bin/Release/net9.0/publish/. .
+FROM ubi9/dotnet-100-runtime
+ADD bin/Release/net10.0/publish/. .
 CMD [ "dotnet", "app.dll" ]
 EOF
 $ docker build -t s2i-dotnetcore-ex .
@@ -47,9 +47,9 @@ Visit the web application that is running in the container with a browser at [ht
 Repository organization
 ------------------------
 
-* **Dockerfile.rhel8**
+* **Dockerfile.rhel9**
 
-  UBI 8 / RHEL 8 based Dockerfile. No RHEL subscription is required, but without
+  UBI 9 / RHEL 9 based Dockerfile. No RHEL subscription is required, but without
   one only UBI RPMs can be added to the container.
 
 * **`test/`**
