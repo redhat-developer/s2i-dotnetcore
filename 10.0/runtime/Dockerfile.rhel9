@@ -1,13 +1,13 @@
-FROM registry.access.redhat.com/ubi8-minimal
+FROM registry.access.redhat.com/ubi9-minimal
 
 # DOTNET_VERSION and ASPNET_VERSION must be set to the full framework versions, unless IS_CI is set to true.
-ARG DOTNET_VERSION=9.0
-ARG ASPNET_VERSION=9.0
+ARG DOTNET_VERSION=10.0
+ARG ASPNET_VERSION=10.0
 ARG RELEASE=1
 ARG IS_CI
 ARG DOTNET_TARBALL
 
-# This image provides a .NET 9.0 environment you can use to run your .NET
+# This image provides a .NET 10.0 environment you can use to run your .NET
 # applications.
 EXPOSE 8080
 
@@ -28,16 +28,16 @@ ENV HOME=/opt/app-root \
     DOTNET_VERSION=$DOTNET_VERSION \
     ASPNET_VERSION=$ASPNET_VERSION
 
-LABEL io.k8s.description="Platform for running .NET 9 applications" \
-      io.k8s.display-name=".NET 9" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet90-runtime" \
+LABEL io.k8s.description="Platform for running .NET 10 applications" \
+      io.k8s.display-name=".NET 10" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet100-runtime" \
       io.openshift.expose-services="8080:http"
 
 # Labels consumed by Red Hat build service
-LABEL name="ubi8/dotnet-90-runtime" \
-      com.redhat.component="dotnet-90-runtime-container" \
+LABEL name="ubi9/dotnet-100-runtime" \
+      com.redhat.component="dotnet-100-runtime-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      version="9.0" \
+      version="10.0" \
       release="$RELEASE"
 
 COPY ./root/usr/bin /usr/bin
@@ -46,7 +46,7 @@ COPY ./root/usr/bin /usr/bin
 # - aspnetcore-runtime-*: provides the .NET runtime and ASP.NET Core shared framework.
 # - findutils: provides 'find' which is used by the 'assemble' script.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="aspnetcore-runtime-9.0 findutils shadow-utils tar gzip" && \
+    INSTALL_PKGS="aspnetcore-runtime-10.0 findutils shadow-utils tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
 # ubi-minimal doesn't include timezones, restore them.
     ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \

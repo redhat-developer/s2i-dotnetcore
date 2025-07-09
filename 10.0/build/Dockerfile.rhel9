@@ -1,9 +1,9 @@
-FROM ubi8/dotnet-90-runtime
-# This image provides a .NET 9.0 environment you can use to run your .NET
+FROM ubi9/dotnet-100-runtime
+# This image provides a .NET 10.0 environment you can use to run your .NET
 # applications.
 
 # DOTNET_SDK_VERSION must be set to the full SDK version, unless IS_CI is set to true.
-ARG DOTNET_SDK_VERSION=9.0
+ARG DOTNET_SDK_VERSION=10.0
 ARG RELEASE=1
 ARG IS_CI
 ARG DOTNET_TARBALL
@@ -16,16 +16,16 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotne
     # Like Microsoft images, provide the SDK version
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
-LABEL io.k8s.description="Platform for building and running .NET 9 applications" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-90" \
+LABEL io.k8s.description="Platform for building and running .NET 10 applications" \
+      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-100" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
       io.s2i.scripts-url=image:///usr/libexec/s2i
 
 # Labels consumed by Red Hat build service
-LABEL name="ubi8/dotnet-90" \
-      com.redhat.component="dotnet-90-container" \
+LABEL name="ubi9/dotnet-100" \
+      com.redhat.component="dotnet-100-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      version="9.0" \
+      version="10.0" \
       release="$RELEASE"
 
 # Switch to root for package installs
@@ -42,7 +42,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # - dotnet-sdk--*: provides the .NET SDK.
 # - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="dotnet-sdk-9.0 procps-ng" && \
+    INSTALL_PKGS="dotnet-sdk-10.0 procps-ng" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     microdnf clean all -y && \
 # yum cache files may still exist (and quite large in size)
