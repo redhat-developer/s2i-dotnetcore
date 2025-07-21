@@ -83,7 +83,7 @@ VERSIONS=$(echo "$VERSIONS" | xargs)
 
 # default to building the currently supported versions.
 if [ -z "$VERSIONS" ]; then
-  VERSIONS="6.0 8.0"
+  VERSIONS="8.0 9.0"
 fi
 
 # Use podman instead of docker when available.
@@ -99,7 +99,11 @@ image_exists() {
 
 default_base_os_for_version() {
   local version=$1
-  echo "rhel8"
+  if [[ $version == 10.0 ]]; then
+    echo "rhel9"
+  else
+    echo "rhel8"
+  fi
 }
 
 os_image_prefix_for() {
@@ -107,6 +111,8 @@ os_image_prefix_for() {
   local base_os=$2
   if [ "$base_os" == "rhel8" ]; then
     echo "ubi8"
+  elif [ "$base_os" == "rhel9" ]; then
+    echo "ubi9"
   else
     echo "$base_os"
   fi
@@ -136,9 +142,14 @@ build_image() {
     return
   fi
   pushd ${path} &>/dev/null
+    build_params=()
+    if [ -f argfile.conf ]; then
+      build_params+=( "--build-arg-file=argfile.conf" )
+    fi
     docker build --no-cache \
       --build-arg=DOTNET_TARBALL=$DOTNET_TARBALL \
       --build-arg=IS_CI=$CI \
+      "${build_params[@]}" \
       -f ${docker_filename} -t ${name} .
     check_result_msg $? "Building Docker image ${name} FAILED!"
   popd &>/dev/null
