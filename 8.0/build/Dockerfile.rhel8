@@ -4,7 +4,6 @@ FROM ubi8/dotnet-80-runtime
 
 # DOTNET_SDK_VERSION must be set to the full SDK version, unless IS_CI is set to true.
 ARG DOTNET_SDK_VERSION=8.0
-ARG RELEASE=1
 ARG IS_CI
 ARG DOTNET_TARBALL
 
@@ -17,14 +16,17 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotne
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
 LABEL io.k8s.description="Platform for building and running .NET 8 applications" \
+      io.k8s.display-name=".NET 8 SDK" \
       io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-80"
 
 # Labels consumed by Red Hat build service
 LABEL name="ubi8/dotnet-80" \
+      description="Platform for building and running .NET 8 applications" \
+      summary=".NET 8 SDK" \
       com.redhat.component="dotnet-80-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
       version="8.0" \
-      release="$RELEASE"
+      sdk_version="$DOTNET_SDK_VERSION"
 
 # Switch to root for package installs
 USER 0
