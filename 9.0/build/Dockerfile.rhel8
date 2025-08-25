@@ -16,7 +16,7 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotne
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
 LABEL io.k8s.description="Platform for building and running .NET 9 applications" \
-      io.k8s.display-name=".NET 8 SDK" \
+      io.k8s.display-name=".NET 9 SDK" \
       io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-90" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
       io.s2i.scripts-url=image:///usr/libexec/s2i
