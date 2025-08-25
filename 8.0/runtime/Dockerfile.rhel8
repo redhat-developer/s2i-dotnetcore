@@ -3,7 +3,6 @@ FROM registry.access.redhat.com/ubi8-minimal
 # DOTNET_VERSION and ASPNET_VERSION must be set to the full framework versions, unless IS_CI is set to true.
 ARG DOTNET_VERSION=8.0
 ARG ASPNET_VERSION=8.0
-ARG RELEASE=1
 ARG IS_CI
 ARG DOTNET_TARBALL
 
@@ -38,10 +37,12 @@ LABEL io.k8s.description="Platform for running .NET 8 applications" \
 
 # Labels consumed by Red Hat build service
 LABEL name="ubi8/dotnet-80-runtime" \
+      description="Platform for running .NET 8 applications" \
+      summary=".NET 8 runtime" \
       com.redhat.component="dotnet-80-runtime-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
       version="8.0" \
-      release="$RELEASE"
+      dotnet_version="$DOTNET_VERSION"
 
 # Each language image can have 'contrib' a directory with extra files needed to
 # run and build the applications.
