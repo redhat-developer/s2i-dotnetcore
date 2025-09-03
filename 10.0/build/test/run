@@ -9,7 +9,7 @@
 # form of example.com/project/repository/image@sha256:hashinhex
 #
 # RUNTIME_IMAGE_NAME specifies the name of the runtime image used for split
-# builds.  If blank or unset, it is computed automatically as the base image
+# builds. If blank or unset, it is computed automatically as the base image
 # used to build IMAGE_NAME.
 #
 # OPENSHIFT_ONLY environment variable, if 'true', only tests features used by
@@ -45,7 +45,6 @@ if [[ ${RUNTIME_IMAGE_NAME:-} == "" ]]; then
   echo "${base_image}"
   RUNTIME_IMAGE_NAME="${base_image}"
 fi
-
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
