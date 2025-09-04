@@ -5,7 +5,6 @@ ARG DOTNET_VERSION=10.0
 ARG ASPNET_VERSION=10.0
 ARG IS_CI
 ARG DOTNET_TARBALL
-ARG ENABLE_COPR=0
 
 # This image provides a .NET 10.0 environment you can use to run your .NET
 # applications.
@@ -48,7 +47,6 @@ COPY ./root/usr/bin /usr/bin
 # - aspnetcore-runtime-*: provides the .NET runtime and ASP.NET Core shared framework.
 # - findutils: provides 'find' which is used by the 'assemble' script.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    ( [ "${ENABLE_COPR}" == 1 ] && curl https://copr.fedorainfracloud.org/coprs/g/dotnet-sig/dotnet-preview/repo/rhel-9/group_dotnet-sig-dotnet-preview-rhel-9.repo > /etc/yum.repos.d/dotnet.repo ) ; \
     INSTALL_PKGS="aspnetcore-runtime-10.0 findutils shadow-utils tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
 # ubi-minimal doesn't include timezones, restore them.
