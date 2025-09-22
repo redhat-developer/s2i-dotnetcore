@@ -27,8 +27,7 @@ LABEL name="ubi9/dotnet-100" \
       summary=".NET 10 SDK" \
       com.redhat.component="dotnet-100-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      # .NET version for this component
-      dotnet_version="$DOTNET_SDK_VERSION"
+      dotnet_sdk_version="$DOTNET_SDK_VERSION"
 
 # Switch to root for package installs
 USER 0
