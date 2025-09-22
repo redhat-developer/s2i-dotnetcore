@@ -38,8 +38,9 @@ LABEL name="ubi9/dotnet-100-runtime" \
       summary=".NET 10 runtime" \
       com.redhat.component="dotnet-100-runtime-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      version="10.0" \
-      dotnet_version="$DOTNET_VERSION"
+      dotnet_version_major_minor="10.0" \
+      dotnet_version="$DOTNET_VERSION" \
+      aspnet_version="$ASPNET_VERSION"
 
 COPY ./root/usr/bin /usr/bin
 
