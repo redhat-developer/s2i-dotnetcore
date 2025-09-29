@@ -1,4 +1,4 @@
-FROM ubi9/dotnet-100-runtime
+FROM ubi9/dotnet-100-aspnet
 # This image provides a .NET 10.0 environment you can use to run your .NET
 # applications.
 

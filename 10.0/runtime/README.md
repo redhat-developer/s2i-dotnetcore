@@ -2,47 +2,20 @@
 ==================
 
 This repository contains the source for building a container image that
-can be used as a base in which to run already built .NET applications.
-
-The container image can be used as a base image using [docker](http://docker.io)/[podman](https://podman.io/).
-Or you can build an application image using [s2i](https://github.com/openshift/source-to-image/releases).
-The image can be run using `docker`/`podman`.
+can be used as a base for framework-dependent .NET Core applications.
+For framework dependent ASP.NET Core applications, use the "ASP.NET Core Runtime image" instead.
 
 Usage
 ---------------------
-The distributale binaries of an application should be copied to this image and
-a new docker image should be created using this image as the base.
 
-For example to create an image for [s2i-dotnetcore-ex](https://github.com/redhat-developer/s2i-dotnetcore-ex)
+To containerize a .NET console application, you can use the .NET (10+) SDK's `PublishContainer` target with the `ContainerBaseImage` property set to the desired base image.
 
-Publish the application:
+For example:
+
 ```
-$ git clone -b dotnet-10.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git
-$ cd s2i-dotnetcore-ex/app
-$ dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App
+dotnet publish /p:ContainerBaseImage=registry.access.redhat.com/ubi9/dotnet-100-runtime /t:PublishContainer -v detailed
 ```
 
-To create an image using `s2i`:
-```
-$ s2i build bin/Release/net10.0/publish ubi9/dotnet-100-runtime s2i-dotnetcore-ex
-```
-
-To create an image using `docker`/`podman`:
-```
-$ cat > Dockerfile <<EOF
-FROM ubi9/dotnet-100-runtime
-ADD bin/Release/net10.0/publish/. .
-CMD [ "dotnet", "app.dll" ]
-EOF
-$ docker build -t s2i-dotnetcore-ex .
-```
-
-Start a container:
-```
-$ docker run --rm -p 8080:8080 s2i-dotnetcore-ex
-```
-
-Visit the web application that is running in the container with a browser at [http://localhost:8080].
 
 Repository organization
 ------------------------
@@ -57,10 +30,10 @@ Repository organization
   This folder contains binary archives of [S2I](https://github.com/openshift/source-to-image)
   dotnet sample applications.
 
-  * **`asp-net-hello-world/`**
+  * **`console-hello-world/`**
 
     ASP .Net hello world example app used for testing purposes. Sources are precompiled in `app.tar.gz`.
-    See [build-project.sh](test/aspnet-hello-world/build-project.sh) for as to how to produce
+    See [build-project.sh](test/console-hello-world/build-project.sh) for as to how to produce
     the binary.
 
 Environment variables
