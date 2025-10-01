@@ -60,11 +60,10 @@ test_envvars() {
   # Like Microsoft images, we set this to 'true'
   assert_equal $(docker_get_env $IMAGE_NAME DOTNET_RUNNING_IN_CONTAINER) "true"
 
-  # Like Microsoft images, we set set DOTNET_VERSION and ASPNET_VERSION.
-  # Their values get checked during the build.
+  # Like Microsoft images, we set set DOTNET_VERSION.
+  # Its value gets checked during the build.
   # This is to ensure they are provided as environment variables.
   assert_contains $(docker_get_env $IMAGE_NAME DOTNET_VERSION) "$dotnet_version_series"
-  assert_contains $(docker_get_env $IMAGE_NAME ASPNET_VERSION) "$dotnet_version_series"
 }
 
 test_debuggable() {
@@ -130,38 +129,33 @@ test_port() {
   assert_equal $(docker_get_env $IMAGE_NAME ASPNETCORE_URLS) "http://*:8080"
 }
 
-verify_aspnet_image_works() {
+verify_console_image_works() {
   local image=$1
 
-  # start container
-  local container=$(docker_run_d ${image})
-
-  # request
-  local url=$(container_url ${container})
-  local response=$(curl_retry ${url})
+  # run container and capture output
+  local output=$(docker_run ${image})
 
   # cleanup
-  docker_rm ${container}
   docker_rmi ${image}
 
   # assert
-  assert_equal "${response}" "Hello World!"
+  assert_equal "${output}" "Hello World!"
 }
 
-test_aspnet() {
+test_console() {
   test_start
 
-  pushd ${test_dir}/aspnet-hello-world >/dev/null
+  pushd ${test_dir}/console-hello-world >/dev/null
 
   # create image
   cat >Dockerfile <<EOF
 FROM ${IMAGE_NAME}
 ADD app.tar.gz .
-CMD [ "dotnet", "aspnet-hello-world.dll" ]
+CMD [ "dotnet", "console-hello-world.dll" ]
 EOF
   local image=$(docker_build .)
 
-  verify_aspnet_image_works $image
+  verify_console_image_works $image
 
   popd >/dev/null
 }
@@ -210,7 +204,7 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_debuggable
   test_user
   test_port
-  test_aspnet
+  test_console
   test_run_dotnet_in_dockerfile
   test_repos
 fi

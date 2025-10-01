@@ -160,6 +160,7 @@ test_images() {
   local base_os=$2
   local test_image=$3
   local runtime_image=$4
+  local aspnet_image=$5
 
   if [ "$RUN_TESTS" == "false" ]; then
     return
@@ -168,7 +169,7 @@ test_images() {
   local image_os=$(echo "$base_os" | tr '[:lower:]' '[:upper:]')
 
   echo "Running tests..."
-  STOP_ON_ERROR=$STOP_ON_ERROR DEBUG=$DEBUG IMAGE_OS=${image_os} SKIP_VERSION_CHECK=$CI IMAGE_NAME=${test_image} RUNTIME_IMAGE_NAME=${runtime_image} ${path}/run
+  STOP_ON_ERROR=$STOP_ON_ERROR DEBUG=$DEBUG IMAGE_OS=${image_os} SKIP_VERSION_CHECK=$CI IMAGE_NAME=${test_image} RUNTIME_IMAGE_NAME=${runtime_image} ASPNET_IMAGE_NAME=${aspnet_image} ${path}/run
   check_result_msg $? "Tests FAILED!"
 }
 
@@ -183,16 +184,18 @@ for VERSION in ${VERSIONS}; do
 
   image_prefix=$(os_image_prefix_for $VERSION $base_os_for_version)
   version_no_dot=$(echo ${VERSION} | sed 's/\.//g')
-  build_name="localhost/${image_prefix}/dotnet-$version_no_dot"
   runtime_name="localhost/${image_prefix}/dotnet-$version_no_dot-runtime"
+  aspnet_name="localhost/${image_prefix}/dotnet-$version_no_dot-aspnet"
 
-  # Build the runtime image
-  build_image "$VERSION/runtime" "${docker_filename}" "${runtime_name}"
-  test_images "$VERSION/runtime/test" "$base_os_for_version" "${runtime_name}" "${runtime_name}"
-
-  # Build the build image
-  build_image "$VERSION/build" "${docker_filename}" "${build_name}"
-  test_images "$VERSION/build/test" "$base_os_for_version" "${build_name}" "${runtime_name}"
+  for type in runtime aspnet build; do
+    if [ ! -d "$VERSION/$type" ]; then
+      continue
+    fi
+    image_name="localhost/${image_prefix}/dotnet-$version_no_dot"
+    [ "$type" = "build" ] || image_name="$image_name-$type"
+    build_image "$VERSION/$type" "${docker_filename}" "${image_name}"
+    test_images "$VERSION/$type/test" "$base_os_for_version" "${image_name}" "${runtime_name}" "${aspnet_name}"
+  done
 done
 
 echo "ALL builds and tests were successful!"

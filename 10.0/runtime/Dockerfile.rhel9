@@ -1,8 +1,7 @@
 FROM registry.access.redhat.com/ubi9-minimal
 
-# DOTNET_VERSION and ASPNET_VERSION must be set to the full framework versions, unless IS_CI is set to true.
+# DOTNET_VERSION must be set to the full framework versions, unless IS_CI is set to true.
 ARG DOTNET_VERSION=10.0
-ARG ASPNET_VERSION=10.0
 ARG IS_CI
 ARG DOTNET_TARBALL
 
@@ -23,9 +22,8 @@ ENV HOME=/opt/app-root \
     ASPNETCORE_URLS=http://*:8080 \
     # Like Microsoft images, set APP_UID to the UID of the non-root user.
     APP_UID=1001 \
-    # Like Microsoft images, provide the .NET and ASP.NET shared framework versions.
-    DOTNET_VERSION=$DOTNET_VERSION \
-    ASPNET_VERSION=$ASPNET_VERSION
+    # Like Microsoft images, provide the .NET version.
+    DOTNET_VERSION=$DOTNET_VERSION
 
 LABEL io.k8s.description="Platform for running .NET 10 applications" \
       io.k8s.display-name=".NET 10" \
@@ -35,20 +33,18 @@ LABEL io.k8s.description="Platform for running .NET 10 applications" \
 # Labels consumed by Red Hat build service
 LABEL name="ubi9/dotnet-100-runtime" \
       description="Platform for running .NET 10 applications" \
-      summary=".NET 10 runtime" \
+      summary=".NET 10 Runtime" \
       com.redhat.component="dotnet-100-runtime-container" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
       dotnet_version_major_minor="10.0" \
-      dotnet_version="$DOTNET_VERSION" \
-      aspnet_version="$ASPNET_VERSION"
+      dotnet_version="$DOTNET_VERSION"
 
 COPY ./root/usr/bin /usr/bin
 
 # Install packages:
-# - aspnetcore-runtime-*: provides the .NET runtime and ASP.NET Core shared framework.
-# - findutils: provides 'find' which is used by the 'assemble' script.
+# - dotnet-runtime-*: provides the .NET shared framework.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="aspnetcore-runtime-10.0 findutils shadow-utils tar gzip" && \
+    INSTALL_PKGS="dotnet-runtime-10.0 shadow-utils tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
 # ubi-minimal doesn't include timezones, restore them.
     ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \
@@ -57,7 +53,7 @@ RUN [ -n "${DOTNET_TARBALL}" ] || ( \
     rm -rf /var/cache/yum/* )
 # Add .NET from a tarball for CI/development.
 RUN [ -z "${DOTNET_TARBALL}" ] || ( \
-    microdnf install -y tar gzip unzip findutils shadow-utils libicu && \
+    microdnf install -y tar gzip unzip shadow-utils libicu && \
     ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \
     curl "${DOTNET_TARBALL}" -o /tmp/dotnet.tar.gz && \
     mkdir /opt/dotnet && \
@@ -68,9 +64,8 @@ RUN [ -z "${DOTNET_TARBALL}" ] || ( \
 
 # Check the versions of the environment variables match the installed versions.
 RUN [ "$IS_CI" == "true" ] || ( \
-        printf "Checking framework versions ${DOTNET_VERSION} and ${ASPNET_VERSION} against:\n$(dotnet --list-runtimes)" && \
-        dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " && \
-        dotnet --list-runtimes | grep "Microsoft.AspNetCore.App ${ASPNET_VERSION} " )
+        printf "Checking framework version ${DOTNET_VERSION} against:\n$(dotnet --list-runtimes)" && \
+        dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " )
 
 # Add default user
 RUN mkdir -p ${DOTNET_APP_PATH} ${DOTNET_DATA_PATH} && \

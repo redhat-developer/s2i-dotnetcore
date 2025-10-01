@@ -8,7 +8,7 @@
 # short image name such as 'foobar', or it may be a fully qualified name in the
 # form of example.com/project/repository/image@sha256:hashinhex
 #
-# RUNTIME_IMAGE_NAME specifies the name of the runtime image used for split
+# ASPNET_IMAGE_NAME specifies the name of the runtime image used for split
 # builds. If blank or unset, it is computed automatically as the base image
 # used to build IMAGE_NAME.
 #
@@ -37,13 +37,13 @@ IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 IMAGE_NAME=${IMAGE_NAME:-localhost/ubi9/dotnet-100}
 # Infer runtime image from SDK image when it is not explicitly set
-if [[ ${RUNTIME_IMAGE_NAME:-} == "" ]]; then
+if [[ ${ASPNET_IMAGE_NAME:-} == "" ]]; then
   if [[ $(podman images -n --filter reference="${IMAGE_NAME}") == "" ]]; then
     podman pull "${IMAGE_NAME}"
   fi
   base_image=$(podman image history --format json "${IMAGE_NAME}" | jq -r '[.[].comment | select (. != null )][0]' | cut -d' ' -f2)
   echo "${base_image}"
-  RUNTIME_IMAGE_NAME="${base_image}"
+  ASPNET_IMAGE_NAME="${base_image}"
 fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
@@ -436,7 +436,7 @@ test_split_build() {
   # we don't need to provide a CMD statement
   # app.tar.gz has a default-cmd.sh which matches with the runtime CMD.
   cat >Dockerfile <<EOF
-FROM ${RUNTIME_IMAGE_NAME}
+FROM ${ASPNET_IMAGE_NAME}
 ADD app.tar.gz .
 EOF
   image=$(docker_build .)
@@ -606,7 +606,7 @@ test_msbuild_exec_task() {
 }
 
 info "Testing ${IMAGE_NAME}"
-info "Using runtime image ${RUNTIME_IMAGE_NAME}"
+info "Using runtime image ${ASPNET_IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
   test_image

@@ -1,0 +1,43 @@
+FROM ubi9/dotnet-100-runtime
+
+# ASPNET_VERSION must be set to the full framework versions, unless IS_CI is set to true.
+ARG ASPNET_VERSION=10.0
+ARG IS_CI
+ARG DOTNET_TARBALL
+
+# Like Microsoft images, provide the ASP.NET shared framework version.
+ENV ASPNET_VERSION=$ASPNET_VERSION
+
+LABEL io.k8s.description="Platform for running ASP.NET Core 10 applications" \
+      io.k8s.display-name=".NET 10" \
+      io.openshift.tags="runtime,.net,dotnet,dotnetcore,aspnet,aspnetcore,dotnet100-aspnet"
+
+# Labels consumed by Red Hat build service
+LABEL name="ubi9/dotnet-100-aspnet" \
+      description="Platform for running ASP.NET Core 10 applications" \
+      summary="ASP.NET Core 10 Runtime" \
+      com.redhat.component="dotnet-100-aspnet-container" \
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
+      aspnet_version="$ASPNET_VERSION"
+
+USER 0
+
+# Install packages:
+# - aspnetcore-runtime-*: provides the ASP.NET Core shared framework.
+RUN [ -n "${DOTNET_TARBALL}" ] || ( \
+    INSTALL_PKGS="aspnetcore-runtime-10.0" && \
+    microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
+ # yum cache files may still exist (and quite large in size)
+    rm -rf /var/cache/yum/* )
+
+# Check the versions of the environment variables match the installed versions.
+RUN [ "$IS_CI" == "true" ] || ( \
+        printf "Checking framework versions ${DOTNET_VERSION} and ${ASPNET_VERSION} against:\n$(dotnet --list-runtimes)" && \
+        dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " && \
+        dotnet --list-runtimes | grep "Microsoft.AspNetCore.App ${ASPNET_VERSION} " )
+
+# Ensure we didn't add anything to HOME that is owned by root.
+RUN chown -R $APP_UID:0 /opt/app-root && fix-permissions /opt/app-root
+
+# Run container rootless.
+USER $APP_UID
