@@ -37,7 +37,7 @@ RUN [ "$IS_CI" == "true" ] || ( \
         dotnet --list-runtimes | grep "Microsoft.AspNetCore.App ${ASPNET_VERSION} " )
 
 # Ensure we didn't add anything to HOME that is owned by root.
-RUN chown -R $APP_UID:0 /opt/app-root && fix-permissions /opt/app-root
+RUN rm -rf ${HOME}/*
 
 # Run container rootless.
 USER $APP_UID

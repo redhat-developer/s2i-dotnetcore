@@ -47,11 +47,6 @@ They must not to be overridden.
     This variable is set to `http://*:8080` to configure ASP.NET Core to use the
     port exposed by the image.
 
-* **DOTNET_APP_PATH,DOTNET_DEFAULT_CMD,DOTNET_DATA_PATH**
-
-    These variables contain the working directory (`/opt/app-root/app`), the default CMD of the runtime image (`default-cmd.sh`)
-    and an empty folder you can use to store your application data (`/opt/app-root/data`) and make persistent with a volume mount.
-
 * **SSL_CERT_DIR**
 
     Used to specify a list of colon (`:`) separated directories with certificates to trust.

@@ -1,5 +1,0 @@
-if [ -n "$DOTNET_SSL_DIRS" ]; then
-
-  echo "error: DOTNET_SSL_DIRS is no longer supported. Certificates can be trusted using SSL_CERT_DIR."
-
-fi
