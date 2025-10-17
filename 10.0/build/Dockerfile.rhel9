@@ -7,11 +7,24 @@ ARG DOTNET_SDK_VERSION=10.0
 ARG IS_CI
 ARG DOTNET_TARBALL
 
-ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotnet/tools:${PATH} \
+# Expose the port in case the SDK image is used as a base image through s2i.
+EXPOSE 8080
+
+ENV \
+    # Add s2i bin dirs and .NET tools dir to PATH
+    PATH=/opt/app-root/.dotnet/tools:/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/bin:${PATH} \
+    # S2I
     STI_SCRIPTS_PATH=/usr/libexec/s2i \
+    DOTNET_APP_PATH=/opt/app-root/app \
+    DOTNET_DEFAULT_CMD=default-cmd.sh \
+    # Don't generate a developer certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
+    # Don't download/extract docs for nuget packages
+    NUGET_XMLDOC_MODE=skip \
     # This skips the first time running text
     DOTNET_NOLOGO=true \
+    # Needed for the `dotnet watch` to detect changes in a container
+    DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Like Microsoft images, provide the SDK version
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
@@ -31,10 +44,10 @@ LABEL name="ubi9/dotnet-100" \
 
 # Switch to root for package installs
 USER 0
+ENV HOME=/root
 
-# Each language image can have 'contrib' a directory with extra files needed to
-# run and build the applications.
-COPY ./contrib/ /opt/app-root
+# Helper scripts the user can call
+COPY ./root/usr/bin /usr/bin
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ /usr/libexec/s2i
@@ -42,15 +55,16 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # Install packages:
 # - dotnet-sdk--*: provides the .NET SDK.
 # - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
+# - findutils: provides 'find' which is used by the 'fix-permissions' script.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="dotnet-sdk-10.0 procps-ng" && \
+    INSTALL_PKGS="dotnet-sdk-10.0 procps-ng findutils" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     microdnf clean all -y && \
 # yum cache files may still exist (and quite large in size)
     rm -rf /var/cache/yum/* )
 # Tarball install (in the runtime base image)
 RUN [ -z "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="procps-ng" && \
+    INSTALL_PKGS="procps-ng findutils" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     microdnf clean all -y && \
 # yum cache files may still exist (and quite large in size)
@@ -64,24 +78,22 @@ RUN [ "$IS_CI" == "true" ] || ( \
         printf "Checking SDK version ${DOTNET_SDK_VERSION} against:\n$(dotnet --list-sdks)" && \
         dotnet --list-sdks | grep "^${DOTNET_SDK_VERSION} " )
 
-# Directory with the sources is set as the working directory.
-RUN mkdir /opt/app-root/src
-WORKDIR /opt/app-root/src
-
 # Build the container tool.
 RUN /usr/libexec/s2i/container-tool build-tool
 
-# Since $HOME is set to /opt/app-root, the yum install may have created config
-# directories (such as ~/.pki/nssdb) there. These will be owned by root and can
-# cause actions that work on all of /opt/app-root to fail. So we need to fix
-# the permissions on those too.
-RUN chown -R $APP_UID:0 /opt/app-root && fix-permissions /opt/app-root
-
-# Needed for the `dotnet watch` to detect changes in a container
-ENV  DOTNET_USE_POLLING_FILE_WATCHER=true
-
-# Run container rootless.
+# Run as the s2i assemble user
 USER $APP_UID
+# Set HOME for the random uid that runs the s2i app on OpenShift
+ENV HOME=/opt/app-root
 
-# Set the default CMD to start a shell.
-CMD /bin/bash
+# Create s2i directories used for sources and published app
+RUN mkdir -p /opt/app-root/src ${DOTNET_APP_PATH}
+
+# Trigger first run to create .NET SDK dirs and config files under $HOME.
+RUN dotnet help
+
+# Fix permissions on HOME for the random uid that runs the s2i app on OpenShift
+RUN fix-permissions /opt/app-root
+
+# Use the s2i dir for sources as the working dir
+WORKDIR /opt/app-root/src

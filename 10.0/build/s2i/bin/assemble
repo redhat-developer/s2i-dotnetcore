@@ -119,9 +119,6 @@ fi
 if [ "$BUILD_TYPE" == "source" ]; then
   echo "Using SDK: $(dotnet --version)"
 
-  # Print DOTNET_SSL_DIRS unsupported.
-  source /opt/app-root/etc/trust_ssl_dirs
-
   # dotnet tools
   if [ -n "${DOTNET_TOOLS}" ]; then
     # Build nuget sources list for when doing the restore
