@@ -7,7 +7,7 @@ ARG DOTNET_SDK_VERSION=10.0
 ARG IS_CI
 ARG DOTNET_TARBALL
 
-# Expose the port in case the SDK image because a base image through s2i.
+# Expose the port in case the SDK image is used as a base image through s2i.
 EXPOSE 8080
 
 ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotnet/tools:/opt/app-root/bin:${PATH} \
