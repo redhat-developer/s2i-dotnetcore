@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-# Print DOTNET_SSL_DIRS unsupported.
-source /opt/app-root/etc/trust_ssl_dirs
-
 if [ -n "${DOTNET_INFO}" ]; then
   /usr/libexec/s2i/container-tool info
 fi

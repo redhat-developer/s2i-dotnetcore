@@ -8,10 +8,6 @@
 # short image name such as 'foobar', or it may be a fully qualified name in the
 # form of example.com/project/repository/image@sha256:hashinhex
 #
-# ASPNET_IMAGE_NAME specifies the name of the runtime image used for split
-# builds. If blank or unset, it is computed automatically as the base image
-# used to build IMAGE_NAME.
-#
 # OPENSHIFT_ONLY environment variable, if 'true', only tests features used by
 # OpenShift's try-it feature.
 #
@@ -37,14 +33,6 @@ IMAGE_OS=${IMAGE_OS:-RHEL8}
 
 IMAGE_NAME=${IMAGE_NAME:-localhost/ubi9/dotnet-100}
 # Infer runtime image from SDK image when it is not explicitly set
-if [[ ${ASPNET_IMAGE_NAME:-} == "" ]]; then
-  if [[ $(podman images -n --filter reference="${IMAGE_NAME}") == "" ]]; then
-    podman pull "${IMAGE_NAME}"
-  fi
-  base_image=$(podman image history --format json "${IMAGE_NAME}" | jq -r '[.[].comment | select (. != null )][0]' | cut -d' ' -f2)
-  echo "${base_image}"
-  ASPNET_IMAGE_NAME="${base_image}"
-fi
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
@@ -128,6 +116,11 @@ test_image() {
   # This is to ensure it is provided as environment variables.
   assert_contains $(docker_get_env $IMAGE_NAME DOTNET_SDK_VERSION) "$dotnet_version_series"
 
+  # DOTNET_DEFAULT_CMD
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DEFAULT_CMD) "default-cmd.sh"
+  # DOTNET_APP_PATH
+  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_APP_PATH) "/opt/app-root/app"
+
   # Verify $HOME != $CWD. See https://github.com/redhat-developer/s2i-dotnetcore/issues/28
   local working_dir=$(docker_run ${IMAGE_NAME} pwd)
   assert_equal "${working_dir}" "/opt/app-root/src"
@@ -147,6 +140,13 @@ test_image() {
   # This also ensures the image doesn't include an ASP.NET Core developer certificate.
   local certificate_stores=$(docker run --rm ${IMAGE_NAME} stat /opt/app-root/.dotnet/corefx/cryptography/x509stores 2>&1)
   assert_contains "${certificate_stores}" "No such file or directory"
+}
+
+test_port() {
+  test_start
+
+  # Port 8080 is exposed (for s2i based apps)
+  assert_equal $(docker_get_exposedports $IMAGE_NAME) '{"8080/tcp":{}}'
 }
 
 test_consoleapp() {
@@ -410,54 +410,6 @@ test_config() {
   test_config_3
 }
 
-test_split_build() {
-  test_start
-
-  # test openshift chained build
-  # see 'chaining builds' in the openshift docs
-
-  # this app has DOTNET_PACK=true
-  local app=asp-net-hello-world-envvar
-
-  local build_dir="${test_dir}/split_build"
-  rm -rf "$build_dir"
-  mkdir "$build_dir"
-  pushd "$build_dir" > /dev/null
-
-  # extract app.tar.gz from build
-  local image=$(s2i_build ${app})
-  local container=$(docker create ${image})
-  docker cp ${container}:/opt/app-root/app.tar.gz app.tar.gz
-  # cleanup
-  docker_rm ${container}
-  docker_rmi ${image}
-
-  # create image based on app.tar.gz
-  # we don't need to provide a CMD statement
-  # app.tar.gz has a default-cmd.sh which matches with the runtime CMD.
-  cat >Dockerfile <<EOF
-FROM ${ASPNET_IMAGE_NAME}
-ADD app.tar.gz .
-EOF
-  image=$(docker_build .)
-
-  # user to run the app (31002) is different than user that built the app (1001).
-  local run_user=31002
-  # start container
-  local container=$(docker_run_as_d ${image} ${run_user})
-  local url=$(container_url ${container})
-  # request
-  local response=$(curl_retry ${url}/)
-  # cleanup
-  docker_rm ${container}
-  docker_rmi ${image}
-
-  # app works
-  assert_equal "${response}" "Hello world"
-
-  popd > /dev/null
-}
-
 test_imagestream_sample() {
   test_start
 
@@ -606,10 +558,10 @@ test_msbuild_exec_task() {
 }
 
 info "Testing ${IMAGE_NAME}"
-info "Using runtime image ${ASPNET_IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
   test_image
+  test_port
   test_config
   test_usage
   test_default_cmd
@@ -621,7 +573,6 @@ if [ ${OPENSHIFT_ONLY} != true ]; then
   test_vb
   test_published_files
   test_aspnetapp
-  test_split_build
   test_templates
   test_user
   test_binary

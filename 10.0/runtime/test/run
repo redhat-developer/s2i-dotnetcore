@@ -47,15 +47,11 @@ test_dotnet() {
 test_envvars() {
   test_start
 
-  # DOTNET_APP_PATH
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_APP_PATH) "/opt/app-root/app"
-  # DOTNET_DEFAULT_CMD
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DEFAULT_CMD) "default-cmd.sh"
-  # DOTNET_DATA_PATH
-  assert_equal $(docker_get_env $IMAGE_NAME DOTNET_DATA_PATH) "/opt/app-root/data"
-
   # .NET determines culture based on LANG. It must be empty/unset to use the 'Invariant' culture
   assert_equal $(docker_get_env $IMAGE_NAME LANG) ""
+
+  # Expected PATH from the base image
+  assert_equal $(docker_get_env $IMAGE_NAME PATH) "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
   # Like Microsoft images, we set this to 'true'
   assert_equal $(docker_get_env $IMAGE_NAME DOTNET_RUNNING_IN_CONTAINER) "true"
@@ -93,13 +89,6 @@ test_default_cmd() {
   assert_contains_multiline "$processes" "/bin/bash"
 }
 
-test_data_folder() {
-  test_start
-
-  # check a writable data folder is available
-  assert_equal $(docker_run $IMAGE_NAME stat -c %a /opt/app-root/data) "777"
-}
-
 test_timezones() {
   test_start
 
@@ -120,11 +109,17 @@ test_user() {
   assert_equal $(docker_run_as $IMAGE_NAME 0 whoami)      "root"
 }
 
+test_workingdir() {
+  test_start
+
+  # Verify WORKING dir is '/', matching Microsoft images.
+  local working_dir=$(docker_run ${IMAGE_NAME} pwd)
+  assert_equal "${working_dir}" "/"
+}
+
 test_port() {
   test_start
 
-  # Port 8080 is exposed
-  assert_equal $(docker_get_exposedports $IMAGE_NAME) '{"8080/tcp":{}}'
   # The environment variable used by ASP.NET Core matches
   assert_equal $(docker_get_env $IMAGE_NAME ASPNETCORE_URLS) "http://*:8080"
 }
@@ -196,10 +191,10 @@ test_repos() {
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
+  test_workingdir
   test_dotnet
   test_envvars
   test_default_cmd
-  test_data_folder
   test_timezones
   test_debuggable
   test_user
