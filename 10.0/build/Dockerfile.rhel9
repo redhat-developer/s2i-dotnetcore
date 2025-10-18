@@ -10,7 +10,9 @@ ARG DOTNET_TARBALL
 # Expose the port in case the SDK image is used as a base image through s2i.
 EXPOSE 8080
 
-ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotnet/tools:/opt/app-root/bin:${PATH} \
+ENV \
+    # Add s2i bin dirs and .NET tools dir to PATH
+    PATH=/opt/app-root/.dotnet/tools:/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/bin:${PATH} \
     # S2I
     STI_SCRIPTS_PATH=/usr/libexec/s2i \
     DOTNET_APP_PATH=/opt/app-root/app \
