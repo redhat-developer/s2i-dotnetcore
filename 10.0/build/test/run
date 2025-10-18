@@ -142,6 +142,13 @@ test_image() {
   assert_contains "${certificate_stores}" "No such file or directory"
 }
 
+test_port() {
+  test_start
+
+  # Port 8080 is exposed (for s2i based apps)
+  assert_equal $(docker_get_exposedports $IMAGE_NAME) '{"8080/tcp":{}}'
+}
+
 test_consoleapp() {
   test_start
 
@@ -551,10 +558,10 @@ test_msbuild_exec_task() {
 }
 
 info "Testing ${IMAGE_NAME}"
-info "Using runtime image ${ASPNET_IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
   test_image
+  test_port
   test_config
   test_usage
   test_default_cmd

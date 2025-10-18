@@ -109,6 +109,14 @@ test_user() {
   assert_equal $(docker_run_as $IMAGE_NAME 0 whoami)      "root"
 }
 
+test_workingdir() {
+  test_start
+
+  # Verify WORKING dir is '/', matching Microsoft images.
+  local working_dir=$(docker_run ${IMAGE_NAME} pwd)
+  assert_equal "${working_dir}" "/"
+}
+
 test_port() {
   test_start
 
@@ -183,6 +191,7 @@ test_repos() {
 info "Testing ${IMAGE_NAME}"
 
 if [ ${OPENSHIFT_ONLY} != true ]; then
+  test_workingdir
   test_dotnet
   test_envvars
   test_default_cmd

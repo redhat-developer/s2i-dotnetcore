@@ -21,6 +21,7 @@ LABEL name="ubi9/dotnet-100-aspnet" \
       aspnet_version="$ASPNET_VERSION"
 
 USER 0
+ENV HOME=/root
 
 # Install packages:
 # - aspnetcore-runtime-*: provides the ASP.NET Core shared framework.
@@ -36,8 +37,6 @@ RUN [ "$IS_CI" == "true" ] || ( \
         dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " && \
         dotnet --list-runtimes | grep "Microsoft.AspNetCore.App ${ASPNET_VERSION} " )
 
-# Ensure we didn't add anything to HOME that is owned by root.
-RUN rm -rf ${HOME}/*
-
 # Run container rootless.
 USER $APP_UID
+ENV HOME=/opt/app-root

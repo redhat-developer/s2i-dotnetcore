@@ -5,7 +5,7 @@ ARG DOTNET_VERSION=10.0
 ARG IS_CI
 ARG DOTNET_TARBALL
 
-ENV HOME=/opt/app-root \
+ENV \
     # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Configure ASP.NET Core to use the exposed port
@@ -57,13 +57,9 @@ RUN [ "$IS_CI" == "true" ] || ( \
         dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " )
 
 # Add default user
-RUN useradd -u $APP_UID -r -g 0 -d ${HOME} -s /sbin/nologin -c "Default Application User" default && \
-    install -d -m 0775 -o $APP_UID -g 0 ${HOME}
-
-# Match Microsoft working dir
-WORKDIR /
+RUN useradd -u $APP_UID -r -g 0 -d /opt/app-root -s /sbin/nologin -c "Default Application User" default && \
+    install -d -m 0775 -o $APP_UID -g 0 /opt/app-root
 
 # Run container rootless.
 USER $APP_UID
-
-CMD ["/bin/bash"]
+ENV HOME=/opt/app-root

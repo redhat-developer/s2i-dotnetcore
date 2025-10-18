@@ -42,6 +42,7 @@ LABEL name="ubi9/dotnet-100" \
 
 # Switch to root for package installs
 USER 0
+ENV HOME=/root
 
 # s2i helper scripts the user can call
 COPY ./root/usr/bin /usr/bin
@@ -75,24 +76,21 @@ RUN [ "$IS_CI" == "true" ] || ( \
         printf "Checking SDK version ${DOTNET_SDK_VERSION} against:\n$(dotnet --list-sdks)" && \
         dotnet --list-sdks | grep "^${DOTNET_SDK_VERSION} " )
 
-# Ensure the s2i directory for the published app exists
-RUN mkdir -p ${DOTNET_APP_PATH}
-
-# Directory with the sources is set as the working directory.
-RUN mkdir /opt/app-root/src
-WORKDIR /opt/app-root/src
 
 # Build the container tool.
 RUN /usr/libexec/s2i/container-tool build-tool
 
-# Since $HOME is set to /opt/app-root, the yum install may have created config
-# directories (such as ~/.pki/nssdb) there. These will be owned by root and can
-# cause actions that work on all of /opt/app-root to fail. So we need to fix
-# the permissions on those too.
-RUN chown -R $APP_UID:0 /opt/app-root && fix-permissions /opt/app-root
-
 # Run container rootless.
 USER $APP_UID
+ENV HOME=/opt/app-root
 
-# Set the default CMD to start a shell.
-CMD /bin/bash
+# Create s2i directories used for sources and published app
+RUN mkdir -p /opt/app-root/src ${DOTNET_APP_PATH}
+
+# Trigger first run to create .NET SDK dirs and config files under $HOME.
+RUN dotnet help
+
+RUN fix-permissions ${HOME}
+
+# Use the s2i dir for sources as the working dir
+WORKDIR /opt/app-root/src
