@@ -43,8 +43,9 @@ COPY ./root/usr/bin /usr/bin
 
 # Install packages:
 # - dotnet-runtime-*: provides the .NET shared framework.
+# - findutils: provides 'find' which is used by the 'fix-permissions' script.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="dotnet-runtime-10.0 shadow-utils tar gzip" && \
+    INSTALL_PKGS="dotnet-runtime-10.0 findutils shadow-utils tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
 # ubi-minimal doesn't include timezones, restore them.
     ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \
