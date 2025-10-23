@@ -9,7 +9,7 @@ ARG DOTNET_TARBALL
 ENV ASPNET_VERSION=$ASPNET_VERSION
 
 LABEL io.k8s.description="Platform for running ASP.NET Core 10 applications" \
-      io.k8s.display-name=".NET 10" \
+      io.k8s.display-name="ASP.NET Core 10" \
       io.openshift.tags="runtime,.net,dotnet,dotnetcore,aspnet,aspnetcore,dotnet100-aspnet"
 
 # Labels consumed by Red Hat build service
