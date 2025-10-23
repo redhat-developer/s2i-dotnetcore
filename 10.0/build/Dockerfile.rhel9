@@ -44,7 +44,8 @@ LABEL name="ubi9/dotnet-100" \
 
 # Switch to root for package installs
 USER 0
-ENV HOME=/root
+# Don't let root clutter the app user's HOME
+ENV HOME=
 
 # Helper scripts the user can call
 COPY ./root/usr/bin /usr/bin

@@ -21,7 +21,8 @@ LABEL name="ubi9/dotnet-100-aspnet" \
       aspnet_version="$ASPNET_VERSION"
 
 USER 0
-ENV HOME=/root
+# Don't clutter the app user's HOME
+ENV HOME=
 
 # Install packages:
 # - aspnetcore-runtime-*: provides the ASP.NET Core shared framework.
