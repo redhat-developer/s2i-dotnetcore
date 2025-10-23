@@ -11,6 +11,12 @@ The images support OpenShift [source-to-image](https://github.com/openshift/sour
 | 8.0 | UBI 8         | [SDK image](8.0/build/README.md) <br/> [Runtime image](8.0/runtime/README.md)
 | 9.0 | UBI 8         | [SDK image](9.0/build/README.md) <br/> [Runtime image](9.0/runtime/README.md)
 
+## In-development Versions
+
+| Version | OS | Documentation
+|--|--|--|
+| 10.0 | UBI 9         | [SDK image](10.0/build/README.md) <br/> [ASP.NET Core image](10.0/aspnet/README.md) <br/> [Runtime image](10.0/runtime/README.md)
+
 ## EOL Versions
 
 | Version | OS | Documentation
