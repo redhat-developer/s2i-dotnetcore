@@ -8,17 +8,20 @@ ARG DOTNET_TARBALL
 # Like Microsoft images, provide the ASP.NET shared framework version.
 ENV ASPNET_VERSION=$ASPNET_VERSION
 
-LABEL io.k8s.description="Platform for running ASP.NET Core 10 applications" \
-      io.k8s.display-name="ASP.NET Core 10" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,aspnet,aspnetcore,dotnet100-aspnet"
-
-# Labels consumed by Red Hat build service
-LABEL name="ubi9/dotnet-100-aspnet" \
-      description="Platform for running ASP.NET Core 10 applications" \
-      summary="ASP.NET Core 10 Runtime" \
-      com.redhat.component="dotnet-100-aspnet-container" \
-      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      aspnet_version="$ASPNET_VERSION"
+ARG _SUMMARY="ASP.NET Core 10 Runtime"
+ARG _DESCRIPTION="Base image for running ASP.NET Core 10.0 applications"
+LABEL \
+      # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
+      name="ubi9/dotnet-100-aspnet" \
+      summary="$_SUMMARY" \
+      description="$_DESCRIPTION" \
+      com.redhat.component="dotnet-container" \
+      io.k8s.display-name="$_SUMMARY" \
+      io.k8s.description="$_DESCRIPTION" \
+      io.openshift.tags="runtime,dotnet,aspnet,aspnetcore,dotnet-100,dotnet-100-aspnet" \
+      aspnet_version="$ASPNET_VERSION" \
+      # UBI EULA
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
 
 USER 0
 
