@@ -19,10 +19,10 @@ ARG _SUMMARY=".NET 10 SDK"
 ARG _DESCRIPTION="SDK for building .NET 10.0 applications"
 LABEL \
       # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
-      com.redhat.component="dotnet-container" \
       name="ubi9/dotnet-100" \
       summary="$_SUMMARY" \
       description="$_DESCRIPTION" \
+      com.redhat.component="dotnet-container" \
       io.k8s.display-name="$_SUMMARY" \
       io.k8s.description="$_DESCRIPTION" \
       io.openshift.tags="builder,dotnet,aspnet,aspnetcore,dotnet-100,dotnet-100-sdk" \
