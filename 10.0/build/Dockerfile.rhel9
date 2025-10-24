@@ -15,14 +15,16 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotne
     # Like Microsoft images, provide the SDK version
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
+ARG _SUMMARY=".NET 10 SDK"
+ARG _DESCRIPTION="SDK for building .NET 10.0 applications"
 LABEL \
       # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
       com.redhat.component="dotnet-container" \
       name="ubi9/dotnet-100" \
-      summary=".NET 10 SDK" \
-      io.k8s.display-name=".NET 10 SDK" \
-      io.k8s.description="SDK for building .NET 10.0 applications" \
-      description="SDK for building .NET 10.0 applications" \
+      summary="$_SUMMARY" \
+      description="$_DESCRIPTION" \
+      io.k8s.display-name="$_SUMMARY" \
+      io.k8s.description="$_DESCRIPTION" \
       io.openshift.tags="builder,dotnet,aspnet,aspnetcore,dotnet-100,dotnet-100-sdk" \
       dotnet_sdk_version="$DOTNET_SDK_VERSION" \
       # S2I

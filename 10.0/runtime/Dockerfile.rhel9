@@ -25,14 +25,16 @@ ENV HOME=/opt/app-root \
     # Like Microsoft images, provide the .NET version.
     DOTNET_VERSION=$DOTNET_VERSION
 
+ARG _SUMMARY=".NET 10 Runtime"
+ARG _DESCRIPTION="Base image for running .NET 10.0 applications"
 LABEL \
       # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
       com.redhat.component="dotnet-container" \
       name="ubi9/dotnet-100-runtime" \
-      summary=".NET 10 Runtime" \
-      io.k8s.display-name=".NET 10 Runtime" \
-      io.k8s.description="Base image for running .NET 10.0 applications" \
-      description="Base image for running .NET 10.0 applications" \
+      summary="$_SUMMARY" \
+      description="$_DESCRIPTION" \
+      io.k8s.display-name="$_SUMMARY" \
+      io.k8s.description="$_DESCRIPTION" \
       io.openshift.tags="runtime,dotnet,dotnet-100,dotnet-100-runtime" \
       io.openshift.expose-services="8080:http" \
       dotnet_version_major_minor="10.0" \

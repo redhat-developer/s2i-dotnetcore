@@ -8,14 +8,16 @@ ARG DOTNET_TARBALL
 # Like Microsoft images, provide the ASP.NET shared framework version.
 ENV ASPNET_VERSION=$ASPNET_VERSION
 
+ARG _SUMMARY="ASP.NET Core 10 Runtime"
+ARG _DESCRIPTION="Base image for running ASP.NET Core 10.0 applications"
 LABEL \
       # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
       com.redhat.component="dotnet-container" \
       name="ubi9/dotnet-100-aspnet" \
-      summary="ASP.NET Core 10 Runtime" \
-      io.k8s.display-name="ASP.NET Core 10 Runtime" \
-      io.k8s.description="Base image for running ASP.NET Core 10.0 applications" \
-      description="Base image for running ASP.NET Core 10.0 applications" \
+      summary="$_SUMMARY" \
+      description="$_DESCRIPTION" \
+      io.k8s.display-name="$_SUMMARY" \
+      io.k8s.description="$_DESCRIPTION" \
       io.openshift.tags="runtime,dotnet,aspnet,aspnetcore,dotnet-100,dotnet-100-aspnet" \
       aspnet_version="$ASPNET_VERSION" \
       # UBI EULA
