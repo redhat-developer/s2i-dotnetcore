@@ -184,3 +184,9 @@ an `.s2i/environment` file inside your source code repository.
 * **DOTNET_SDK_VERSION**
 
     This variable contains the version of the SDK.
+
+* **DOTNET_APP_PATH,DOTNET_DEFAULT_CMD**
+
+    These variables are used by source-to-image. `DOTNET_APP_PATH` is the directory that gets published to by the s2i `assemble` script.
+    The s2i `run` script makes it the working directory and then starts the script named `$DOTNET_DEFAULT_CMD` (`default-cmd.sh`) in that directory.
+    That script is responsible for starting the .NET application.
