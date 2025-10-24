@@ -25,19 +25,20 @@ ENV HOME=/opt/app-root \
     # Like Microsoft images, provide the .NET version.
     DOTNET_VERSION=$DOTNET_VERSION
 
-LABEL io.k8s.description="Platform for running .NET 10 applications" \
-      io.k8s.display-name=".NET 10" \
-      io.openshift.tags="runtime,.net,dotnet,dotnetcore,dotnet100-runtime" \
-      io.openshift.expose-services="8080:http"
-
-# Labels consumed by Red Hat build service
-LABEL name="ubi9/dotnet-100-runtime" \
-      description="Platform for running .NET 10 applications" \
+LABEL \
+      # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
+      com.redhat.component="dotnet-container" \
+      name="ubi9/dotnet-100-runtime" \
       summary=".NET 10 Runtime" \
-      com.redhat.component="dotnet-100-runtime-container" \
-      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
+      io.k8s.display-name=".NET 10 Runtime" \
+      io.k8s.description="Base image for running .NET 10.0 applications" \
+      description="Base image for running .NET 10.0 applications" \
+      io.openshift.tags="runtime,dotnet,dotnet-100,dotnet-100-runtime" \
+      io.openshift.expose-services="8080:http" \
       dotnet_version_major_minor="10.0" \
-      dotnet_version="$DOTNET_VERSION"
+      dotnet_version="$DOTNET_VERSION" \
+      # UBI EULA
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
 
 COPY ./root/usr/bin /usr/bin
 

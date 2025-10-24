@@ -15,19 +15,21 @@ ENV PATH=/opt/app-root/src/.local/bin:/opt/app-root/src/bin:/opt/app-root/.dotne
     # Like Microsoft images, provide the SDK version
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
-LABEL io.k8s.description="Platform for building and running .NET 10 applications" \
-      io.k8s.display-name=".NET 10 SDK" \
-      io.openshift.tags="builder,.net,dotnet,dotnetcore,dotnet-100" \
-      io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
-      io.s2i.scripts-url=image:///usr/libexec/s2i
-
-# Labels consumed by Red Hat build service
-LABEL name="ubi9/dotnet-100" \
-      description="Platform for building and running .NET 10 applications" \
+LABEL \
+      # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
+      com.redhat.component="dotnet-container" \
+      name="ubi9/dotnet-100" \
       summary=".NET 10 SDK" \
-      com.redhat.component="dotnet-100-container" \
-      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      dotnet_sdk_version="$DOTNET_SDK_VERSION"
+      io.k8s.display-name=".NET 10 SDK" \
+      io.k8s.description="SDK for building .NET 10.0 applications" \
+      description="SDK for building .NET 10.0 applications" \
+      io.openshift.tags="builder,dotnet,aspnet,aspnetcore,dotnet-100,dotnet-100-sdk" \
+      dotnet_sdk_version="$DOTNET_SDK_VERSION" \
+      # S2I
+      io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
+      io.s2i.scripts-url=image:///usr/libexec/s2i \
+      # UBI EULA
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
 
 # Switch to root for package installs
 USER 0
