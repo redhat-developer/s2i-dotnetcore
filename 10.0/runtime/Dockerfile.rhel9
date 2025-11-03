@@ -32,7 +32,7 @@ LABEL \
       name="ubi9/dotnet-100-runtime" \
       summary="$_SUMMARY" \
       description="$_DESCRIPTION" \
-      com.redhat.component="dotnet-container" \
+      com.redhat.component="dotnet-100-runtime-container" \
       io.k8s.display-name="$_SUMMARY" \
       io.k8s.description="$_DESCRIPTION" \
       io.openshift.tags="runtime,dotnet,dotnet-100,dotnet-100-runtime" \
