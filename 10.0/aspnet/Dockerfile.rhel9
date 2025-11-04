@@ -24,6 +24,8 @@ LABEL \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
 
 USER 0
+# Don't clutter the app user's HOME
+ENV HOME=
 
 # Install packages:
 # - aspnetcore-runtime-*: provides the ASP.NET Core shared framework.
@@ -39,8 +41,7 @@ RUN [ "$IS_CI" == "true" ] || ( \
         dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " && \
         dotnet --list-runtimes | grep "Microsoft.AspNetCore.App ${ASPNET_VERSION} " )
 
-# Ensure we didn't add anything to HOME that is owned by root.
-RUN chown -R $APP_UID:0 /opt/app-root && fix-permissions /opt/app-root
-
 # Run container rootless.
 USER $APP_UID
+# Set HOME for the random uid that runs the s2i app on OpenShift
+ENV HOME=/opt/app-root

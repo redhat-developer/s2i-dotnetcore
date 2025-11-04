@@ -5,19 +5,9 @@ ARG DOTNET_VERSION=10.0
 ARG IS_CI
 ARG DOTNET_TARBALL
 
-# This image provides a .NET 10.0 environment you can use to run your .NET
-# applications.
-EXPOSE 8080
-
-ENV HOME=/opt/app-root \
-    PATH=/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-    DOTNET_APP_PATH=/opt/app-root/app \
-    DOTNET_DATA_PATH=/opt/app-root/data \
-    DOTNET_DEFAULT_CMD=default-cmd.sh \
+ENV \
     # Microsoft's images set this to enable detecting when an app is running in a container.
     DOTNET_RUNNING_IN_CONTAINER=true \
-    # Don't download/extract docs for nuget packages
-    NUGET_XMLDOC_MODE=skip \
     # Configure ASP.NET Core to use the exposed port
     ASPNETCORE_URLS=http://*:8080 \
     # Like Microsoft images, set APP_UID to the UID of the non-root user.
@@ -42,13 +32,11 @@ LABEL \
       # UBI EULA
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
 
-COPY ./root/usr/bin /usr/bin
-
 # Install packages:
 # - dotnet-runtime-*: provides the .NET shared framework.
-# - findutils: provides 'find' which is used by the 'fix-permissions' script.
+# - tar, gzip: enable installing vsdbg into the image for debugging.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="dotnet-runtime-10.0 findutils shadow-utils tar gzip" && \
+    INSTALL_PKGS="dotnet-runtime-10.0 tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
 # ubi-minimal doesn't include timezones, restore them.
     ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \
@@ -57,7 +45,7 @@ RUN [ -n "${DOTNET_TARBALL}" ] || ( \
     rm -rf /var/cache/yum/* )
 # Add .NET from a tarball for CI/development.
 RUN [ -z "${DOTNET_TARBALL}" ] || ( \
-    microdnf install -y tar gzip unzip shadow-utils libicu && \
+    microdnf install -y tar gzip unzip libicu && \
     ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \
     curl "${DOTNET_TARBALL}" -o /tmp/dotnet.tar.gz && \
     mkdir /opt/dotnet && \
@@ -72,18 +60,10 @@ RUN [ "$IS_CI" == "true" ] || ( \
         dotnet --list-runtimes | grep "Microsoft.NETCore.App ${DOTNET_VERSION} " )
 
 # Add default user
-RUN mkdir -p ${DOTNET_APP_PATH} ${DOTNET_DATA_PATH} && \
-    useradd -u $APP_UID -r -g 0 -d ${HOME} -s /sbin/nologin \
-      -c "Default Application User" default
-
-WORKDIR ${DOTNET_APP_PATH}
-COPY default-cmd.sh ${DOTNET_DEFAULT_CMD}
-CMD "./${DOTNET_DEFAULT_CMD}"
-
-# In order to drop the root user, we have to make some directories world
-# writable as OpenShift default security model is to run the container under
-# random UID.
-RUN chown -R $APP_UID:0 /opt/app-root && fix-permissions /opt/app-root
+RUN useradd -u $APP_UID -r -g 0 -d /opt/app-root -s /sbin/nologin -c "Default Application User" default && \
+    install -d -m 0775 -o $APP_UID -g 0 /opt/app-root
 
 # Run container rootless.
 USER $APP_UID
+# Set HOME for the random uid that runs the s2i app on OpenShift
+ENV HOME=/opt/app-root
