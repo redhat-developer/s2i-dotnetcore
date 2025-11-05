@@ -15,7 +15,7 @@
             "metadata": {
                 "name": "dotnet",
                 "annotations": {
-                    "openshift.io/display-name": ".NET"
+                    "openshift.io/display-name": ".NET SDK"
                 }
             },
             "spec": {
@@ -23,63 +23,63 @@
                     {
                         "name": "latest",
                         "annotations": {
-                            "openshift.io/display-name": ".NET (Latest)",
+                            "openshift.io/display-name": ".NET SDK (Latest)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Build and run .NET applications. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/build/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates.",
+                            "description": "Build and run applications using the latest .NET SDK. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/build/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates.",
                             "iconClass": "icon-dotnet",
                             "tags": "builder,dotnet,hidden",
                             "supports": "dotnet",
                             "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
                             "sampleContextDir": "app",
-                            "sampleRef": "dotnet-9.0"
+                            "sampleRef": "dotnet-10.0"
                         },
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "9.0-ubi8"
+                            "name": "10.0"
                         },
                         "referencePolicy": {
                             "type": "Local"
                         }
                     },
                     {
-                        "name": "8.0-ubi8",
+                        "name": "10.0-ubi9",
                         "annotations": {
-                            "openshift.io/display-name": ".NET 8.0 (UBI 8)",
+                            "openshift.io/display-name": ".NET SDK 10.0 (UBI 9)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Build and run .NET 8.0 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/build/README.md.",
-                            "iconClass": "icon-dotnet",
-                            "tags": "builder,dotnet",
-                            "version": "8.0",
-                            "supports": "dotnet,dotnet:8.0",
-                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
-                            "sampleContextDir": "app",
-                            "sampleRef": "dotnet-8.0"
-                        },
-                        "from": {
-                            "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/ubi8/dotnet-80:8.0"
-                        },
-                        "referencePolicy": {
-                            "type": "Local"
-                        }
-                    },
-                    {
-                        "name": "8.0",
-                        "annotations": {
-                            "openshift.io/display-name": ".NET 8.0 (UBI 8)",
-                            "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Build and run .NET 8.0 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/build/README.md.",
+                            "description": "Build and run .NET 10.0 applications on UBI 9. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/build/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "builder,dotnet,hidden",
-                            "version": "8.0",
-                            "supports": "dotnet,dotnet:8.0",
+                            "version": "10.0",
+                            "supports": "dotnet,dotnet:10.0",
                             "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
                             "sampleContextDir": "app",
-                            "sampleRef": "dotnet-8.0"
+                            "sampleRef": "dotnet-10.0"
                         },
                         "from": {
                             "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/ubi8/dotnet-80:8.0"
+                            "name": "registry.access.redhat.com/ubi9/dotnet-100"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "10.0",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET SDK 10.0 (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Build and run .NET 10.0 applications on UBI 9. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/build/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "builder,dotnet",
+                            "version": "10.0",
+                            "supports": "dotnet,dotnet:10.0",
+                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
+                            "sampleContextDir": "app",
+                            "sampleRef": "dotnet-10.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-100"
                         },
                         "referencePolicy": {
                             "type": "Local"
@@ -88,7 +88,7 @@
                     {
                         "name": "9.0-ubi8",
                         "annotations": {
-                            "openshift.io/display-name": ".NET 9.0 (UBI 8)",
+                            "openshift.io/display-name": ".NET SDK 9.0 (UBI 8)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
                             "description": "Build and run .NET 9.0 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/build/README.md.",
                             "iconClass": "icon-dotnet",
@@ -110,7 +110,7 @@
                     {
                         "name": "9.0",
                         "annotations": {
-                            "openshift.io/display-name": ".NET 9.0 (UBI 8)",
+                            "openshift.io/display-name": ".NET SDK 9.0 (UBI 8)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
                             "description": "Build and run .NET 9.0 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/build/README.md.",
                             "iconClass": "icon-dotnet",
@@ -124,6 +124,50 @@
                         "from": {
                             "kind": "DockerImage",
                             "name": "registry.access.redhat.com/ubi8/dotnet-90:9.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "8.0-ubi8",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET SDK 8.0 (UBI 8)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Build and run .NET 8.0 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/build/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "builder,dotnet",
+                            "version": "8.0",
+                            "supports": "dotnet,dotnet:8.0",
+                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
+                            "sampleContextDir": "app",
+                            "sampleRef": "dotnet-8.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi8/dotnet-80:8.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "8.0",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET SDK 8.0 (UBI 8)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Build and run .NET 8.0 applications on UBI 8. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/build/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "builder,dotnet,hidden",
+                            "version": "8.0",
+                            "supports": "dotnet,dotnet:8.0",
+                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
+                            "sampleContextDir": "app",
+                            "sampleRef": "dotnet-8.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi8/dotnet-80:8.0"
                         },
                         "referencePolicy": {
                             "type": "Local"
@@ -148,52 +192,52 @@
                         "annotations": {
                             "openshift.io/display-name": ".NET Runtime (Latest)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Run .NET applications. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/runtime/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates.",
+                            "description": "Base image for running non-web .NET applications using the latest .NET runtime. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/runtime/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates. Instead, it is recommended to use the tag that corresponds to the .NET version targeted by your application. Unless configured differently, .NET applications won't start on a different major runtime version.",
                             "iconClass": "icon-dotnet",
                             "tags": "dotnet-runtime,hidden",
                             "supports": "dotnet-runtime"
                         },
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "9.0-ubi8"
+                            "name": "10.0"
                         },
                         "referencePolicy": {
                             "type": "Local"
                         }
                     },
                     {
-                        "name": "8.0-ubi8",
+                        "name": "10.0-ubi9",
                         "annotations": {
-                            "openshift.io/display-name": ".NET 8.0 Runtime (UBI 8)",
+                            "openshift.io/display-name": ".NET 10.0 Runtime (UBI 9)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Run .NET 8.0 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/runtime/README.md.",
-                            "iconClass": "icon-dotnet",
-                            "tags": "dotnet-runtime",
-                            "version": "8.0",
-                            "supports": "dotnet-runtime,dotnet-runtime:8.0"
-                        },
-                        "from": {
-                            "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/ubi8/dotnet-80-runtime:8.0"
-                        },
-                        "referencePolicy": {
-                            "type": "Local"
-                        }
-                    },
-                    {
-                        "name": "8.0",
-                        "annotations": {
-                            "openshift.io/display-name": ".NET 8.0 Runtime (UBI 8)",
-                            "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Run .NET 8.0 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/runtime/README.md.",
+                            "description": "Base image for running non-web .NET 10.0 applications on UBI 9. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "dotnet-runtime,hidden",
-                            "version": "8.0",
-                            "supports": "dotnet-runtime,dotnet-runtime:8.0"
+                            "version": "10.0",
+                            "supports": "dotnet-runtime,dotnet-runtime:10.0"
                         },
                         "from": {
                             "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/ubi8/dotnet-80-runtime:8.0"
+                            "name": "registry.access.redhat.com/ubi9/dotnet-100-runtime"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "10.0",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET 10.0 Runtime (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running non-web .NET 10.0 applications on UBI 9. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/runtime/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-runtime",
+                            "version": "10.0",
+                            "supports": "dotnet-runtime,dotnet-runtime:10.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-100-runtime"
                         },
                         "referencePolicy": {
                             "type": "Local"
@@ -204,7 +248,7 @@
                         "annotations": {
                             "openshift.io/display-name": ".NET 9.0 Runtime (UBI 8)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Run .NET 9.0 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/runtime/README.md.",
+                            "description": "Base image for running .NET 9.0 applications on UBI 8. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "dotnet-runtime",
                             "version": "9.0",
@@ -223,7 +267,7 @@
                         "annotations": {
                             "openshift.io/display-name": ".NET 9.0 Runtime (UBI 8)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Run .NET 9.0 applications on UBI 8. For more information about using this image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/runtime/README.md.",
+                            "description": "Base image for running .NET 9.0 applications on UBI 8. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/runtime/README.md.",
                             "iconClass": "icon-dotnet",
                             "tags": "dotnet-runtime,hidden",
                             "version": "9.0",
@@ -232,6 +276,190 @@
                         "from": {
                             "kind": "DockerImage",
                             "name": "registry.access.redhat.com/ubi8/dotnet-90-runtime:9.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "8.0-ubi8",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET 8.0 Runtime (UBI 8)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running .NET 8.0 applications on UBI 8. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/runtime/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-runtime",
+                            "version": "8.0",
+                            "supports": "dotnet-runtime,dotnet-runtime:8.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi8/dotnet-80-runtime:8.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "8.0",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET 8.0 Runtime (UBI 8)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running .NET 8.0 applications on UBI 8. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/runtime/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-runtime,hidden",
+                            "version": "8.0",
+                            "supports": "dotnet-runtime,dotnet-runtime:8.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi8/dotnet-80-runtime:8.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "image.openshift.io/v1",
+            "metadata": {
+                "name": "dotnet-aspnet",
+                "annotations": {
+                    "openshift.io/display-name": "ASP.NET Core Runtime"
+                }
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "name": "latest",
+                        "annotations": {
+                            "openshift.io/display-name": "ASP.NET Core Runtime (Latest)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running ASP.NET Core applications using the latest ASP.NET Core runtime. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/aspnet/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates. Instead, it is recommended to use the tag that corresponds to the .NET version targeted by your application. Unless configured differently, .NET applications won't start on a different major runtime version.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-aspnet,hidden",
+                            "supports": "dotnet-aspnet"
+                        },
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "name": "10.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "10.0-ubi9",
+                        "annotations": {
+                            "openshift.io/display-name": "ASP.NET Core 10.0 Runtime (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running ASP.NET Core 10.0 applications on UBI 9. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/aspnet/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-aspnet,hidden",
+                            "version": "10.0",
+                            "supports": "dotnet-aspnet,dotnet-aspnet:10.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-100-aspnet"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "10.0",
+                        "annotations": {
+                            "openshift.io/display-name": "ASP.NET Core 10.0 Runtime (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running ASP.NET Core 10.0 applications on UBI 9. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/aspnet/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-aspnet",
+                            "version": "10.0",
+                            "supports": "dotnet-aspnet,dotnet-aspnet:10.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-100-aspnet"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "9.0-ubi8",
+                        "annotations": {
+                            "openshift.io/display-name": "ASP.NET Core 9.0 Runtime (UBI 8)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running ASP.NET Core 9.0 applications on UBI 8. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/runtime/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-aspnet",
+                            "version": "9.0",
+                            "supports": "dotnet-aspnet,dotnet-aspnet:9.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi8/dotnet-90-runtime:9.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "9.0",
+                        "annotations": {
+                            "openshift.io/display-name": "ASP.NET Core 9.0 Runtime (UBI 8)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running ASP.NET Core 9.0 applications on UBI 8. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/9.0/runtime/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-aspnet,hidden",
+                            "version": "9.0",
+                            "supports": "dotnet-aspnet,dotnet-aspnet:9.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi8/dotnet-90-runtime:9.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "8.0-ubi8",
+                        "annotations": {
+                            "openshift.io/display-name": "ASP.NET Core 8.0 Runtime (UBI 8)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running ASP.NET Core 8.0 applications on UBI 8. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/runtime/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-aspnet",
+                            "version": "8.0",
+                            "supports": "dotnet-aspnet,dotnet-aspnet:8.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi8/dotnet-80-runtime:8.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "8.0",
+                        "annotations": {
+                            "openshift.io/display-name": "ASP.NET Core 8.0 Runtime (UBI 8)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running ASP.NET Core 8.0 applications on UBI 8. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/8.0/runtime/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-aspnet,hidden",
+                            "version": "8.0",
+                            "supports": "dotnet-aspnet,dotnet-aspnet:8.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi8/dotnet-80-runtime:8.0"
                         },
                         "referencePolicy": {
                             "type": "Local"
