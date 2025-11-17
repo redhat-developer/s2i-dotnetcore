@@ -93,7 +93,7 @@ fedora)
   imagestreams_file_name=dotnet_imagestreams_fedora.json
   ;;
 rhel*)
-  VERSIONS="${VERSIONS:-6.0 8.0}"
+  VERSIONS="${VERSIONS:-8.0 9.0 10.0}"
   imagestreams_file_name=dotnet_imagestreams.json
   ;;
 *)
