@@ -19,8 +19,18 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
+if [ -t 3 ]; then
+  ANSI_ESCAPE=true
+else
+  ANSI_ESCAPE=false
+fi
+
 info() {
-  echo -e "\e[1m[INFO] $@\e[0m" >&3
+  if [ "$ANSI_ESCAPE" = true ]; then
+    echo -e "\e[1m[INFO] $@\e[0m" >&3
+  else
+    echo -e "[INFO] $@" >&3
+  fi
 }
 
 error() {
