@@ -98,7 +98,7 @@ test_data_folder() {
   test_start
 
   # check a writable data folder is available
-  assert_equal $(docker_run $IMAGE_NAME stat -c %a /opt/app-root/data) "777"
+  assert_equal $(docker_run $IMAGE_NAME stat -c %a /opt/app-root/data) "775"
 }
 
 test_timezones() {
