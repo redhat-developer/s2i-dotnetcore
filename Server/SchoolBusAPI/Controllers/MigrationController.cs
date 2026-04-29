@@ -12,7 +12,7 @@ using SchoolBusAPI.Services;
 namespace SchoolBusAPI.Controllers
 {
     /// <summary>
-    /// Endpoints that return full entity data for migration to the new system
+    /// Endpoints that return full entity data for migration to the new system build bump - CW
     /// </summary>
     [ApiVersion("1.0")]
     [ApiController]
