@@ -4,6 +4,6 @@
     <!--To inherit the global NuGet package sources remove the <clear/> line below -->
     <clear />
     <add key="nuget" value="https://api.nuget.org/v3/index.json" />
-    <add key="myget" value="https://www.myget.org/F/s2i-dotnetcore" />
+    <add key="feedz" value="https://f.feedz.io/redhat-dotnet/s2i-ci/nuget/index.json" />
   </packageSources>
 </configuration>
