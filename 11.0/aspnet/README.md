@@ -12,7 +12,7 @@ To containerize a .NET application, you can use the .NET (10+) SDK's `PublishCon
 For example:
 
 ```
-dotnet publish /p:ContainerBaseImage=registry.access.redhat.com/ubi9/dotnet-100-aspnet /t:PublishContainer -v detailed
+dotnet publish /p:ContainerBaseImage=registry.access.redhat.com/ubi9/dotnet-110-aspnet /t:PublishContainer -v detailed
 ```
 
 Repository organization

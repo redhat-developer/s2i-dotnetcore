@@ -1,9 +1,9 @@
-FROM ubi9/dotnet-100-aspnet
-# This image provides a .NET 10.0 environment you can use to run your .NET
+FROM ubi9/dotnet-110-aspnet
+# This image provides a .NET 11.0 environment you can use to run your .NET
 # applications.
 
 # DOTNET_SDK_VERSION must be set to the full SDK version, unless IS_CI is set to true.
-ARG DOTNET_SDK_VERSION=10.0
+ARG DOTNET_SDK_VERSION=11.0
 ARG IS_CI
 ARG DOTNET_TARBALL
 
@@ -29,16 +29,16 @@ ENV \
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
 ARG _SUMMARY=".NET 10 SDK"
-ARG _DESCRIPTION="SDK for building .NET 10.0 applications"
+ARG _DESCRIPTION="SDK for building .NET 11.0 applications"
 LABEL \
       # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
-      name="ubi9/dotnet-100" \
+      name="ubi9/dotnet-110" \
       summary="$_SUMMARY" \
       description="$_DESCRIPTION" \
-      com.redhat.component="dotnet-100-container" \
+      com.redhat.component="dotnet-110-container" \
       io.k8s.display-name="$_SUMMARY" \
       io.k8s.description="$_DESCRIPTION" \
-      io.openshift.tags="builder,dotnet,aspnet,aspnetcore,dotnet-100,dotnet-100-sdk" \
+      io.openshift.tags="builder,dotnet,aspnet,aspnetcore,dotnet-110,dotnet-110-sdk" \
       dotnet_sdk_version="$DOTNET_SDK_VERSION" \
       # S2I
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
@@ -62,7 +62,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # - procps-ng: provides 'pidof' which is needed by the 'odo' Devfile to find the running 'dotnet' process.
 # - findutils: provides 'find' which is used by the 'fix-permissions' script.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="dotnet-sdk-10.0 procps-ng findutils" && \
+    INSTALL_PKGS="dotnet-sdk-11.0 procps-ng findutils" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
     microdnf clean all -y && \
 # yum cache files may still exist (and quite large in size)
