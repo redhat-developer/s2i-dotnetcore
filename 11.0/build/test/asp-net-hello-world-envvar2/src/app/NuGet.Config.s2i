@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <!--To inherit the global NuGet package sources remove the <clear/> line below -->
+    <clear />
+    <add key="nuget" value="https://api.nuget.org/v3/index.json" />
+    <add key="feedz" value="https://f.feedz.io/redhat-dotnet/s2i-ci/nuget/index.json" />
+  </packageSources>
+</configuration>

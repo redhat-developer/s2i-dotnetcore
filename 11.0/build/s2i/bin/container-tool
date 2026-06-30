@@ -1,0 +1,51 @@
+#!/usr/bin/sh
+
+set -e
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+# command that builds the tool, used by the image build.
+if [ "$1" == "build-tool" ]; then
+  set -x
+
+  export TMPDIR="/tmp/dotnet-tmp"
+  BUILD_DIR="${TMPDIR}/container-tool"
+  mkdir -p "$BUILD_DIR"
+  pushd "$BUILD_DIR"
+
+  # cs file
+  cp "$SCRIPT_DIR/ContainerTool.cs" .
+  # csproj
+  cat <<EOF >container-tool.csproj
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net\$(BundledNETCoreAppTargetFrameworkVersion)</TargetFramework>
+  </PropertyGroup>
+
+</Project>
+EOF
+  # nuget.config
+  cat <<EOF >nuget.config
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+  </packageSources>
+</configuration>
+EOF
+
+  dotnet publish -c Release -o published
+  cp published/* "$SCRIPT_DIR"
+
+  popd
+
+  # /tmp/.dotnet/shm is created even with the TMPDIR change,
+  # so make sure to remove that as well.
+  rm -rf "$TMPDIR" /tmp/.dotnet
+
+  exit 0
+fi
+
+exec dotnet "$SCRIPT_DIR/container-tool.dll" "$@"

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+# generate a project
+pushd /tmp/src
+dotnet new web --no-restore
+popd
+
+# ensure something exists at /tmp/.dotnet
+mkdir -p /tmp/.dotnet/shm
+
+# call base assemble script
+$STI_SCRIPTS_PATH/assemble
