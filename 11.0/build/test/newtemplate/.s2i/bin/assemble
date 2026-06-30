@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# generate the project
+pushd /tmp/src
+dotnet new $TEMPLATE --no-restore
+popd
+
+# call base assemble script
+$STI_SCRIPTS_PATH/assemble
