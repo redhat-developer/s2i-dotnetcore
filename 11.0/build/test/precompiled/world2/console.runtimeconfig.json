@@ -3,7 +3,7 @@
     "tfm": "net11.0",
     "framework": {
       "name": "Microsoft.NETCore.App",
-      "version": "11.0.0-preview.6.25358.103"
+      "version": "11.0.0-preview.5.26302.115"
     }
   }
 }
