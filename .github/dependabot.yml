@@ -6,5 +6,3 @@ updates:
     directory: /
     schedule:
       interval: monthly
-    labels:
-      - 'ready for review'
