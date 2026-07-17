@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/ubi9-minimal
 
 # DOTNET_VERSION must be set to the full framework versions, unless IS_CI is set to true.
-ARG DOTNET_VERSION=10.0
+ARG DOTNET_VERSION=11.0
 ARG IS_CI
 ARG DOTNET_TARBALL
 
@@ -16,18 +16,18 @@ ENV \
     DOTNET_VERSION=$DOTNET_VERSION
 
 ARG _SUMMARY=".NET 10 Runtime"
-ARG _DESCRIPTION="Base image for running .NET 10.0 applications"
+ARG _DESCRIPTION="Base image for running .NET 11.0 applications"
 LABEL \
       # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
-      name="ubi9/dotnet-100-runtime" \
+      name="ubi9/dotnet-110-runtime" \
       summary="$_SUMMARY" \
       description="$_DESCRIPTION" \
-      com.redhat.component="dotnet-100-runtime-container" \
+      com.redhat.component="dotnet-110-runtime-container" \
       io.k8s.display-name="$_SUMMARY" \
       io.k8s.description="$_DESCRIPTION" \
-      io.openshift.tags="runtime,dotnet,dotnet-100,dotnet-100-runtime" \
+      io.openshift.tags="runtime,dotnet,dotnet-110,dotnet-110-runtime" \
       io.openshift.expose-services="8080:http" \
-      dotnet_version_major_minor="10.0" \
+      dotnet_version_major_minor="11.0" \
       dotnet_version="$DOTNET_VERSION" \
       # UBI EULA
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
@@ -36,7 +36,7 @@ LABEL \
 # - dotnet-runtime-*: provides the .NET shared framework.
 # - tar, gzip: enable installing vsdbg into the image for debugging.
 RUN [ -n "${DOTNET_TARBALL}" ] || ( \
-    INSTALL_PKGS="dotnet-runtime-10.0 tar gzip" && \
+    INSTALL_PKGS="dotnet-runtime-11.0 tar gzip" && \
     microdnf install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 $INSTALL_PKGS && \
 # ubi-minimal doesn't include timezones, restore them.
     ( microdnf reinstall tzdata -y || microdnf update tzdata -y ) && \

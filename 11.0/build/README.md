@@ -14,7 +14,7 @@ using standalone [S2I](https://github.com/openshift/source-to-image) and then ru
 resulting image with `docker`/`podman` execute:
 
     ```
-    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=10.0/build/test/asp-net-hello-world ubi9/dotnet-100 dotnet-sample-app
+    $ sudo s2i build git://github.com/redhat-developer/s2i-dotnetcore --context-dir=11.0/build/test/asp-net-hello-world ubi9/dotnet-110 dotnet-sample-app
     $ sudo docker run -p 8080:8080 dotnet-sample-app
     ```
 

@@ -31,14 +31,14 @@ STOP_ON_ERROR=${STOP_ON_ERROR:-true}
 
 IMAGE_OS=${IMAGE_OS:-RHEL8}
 
-IMAGE_NAME=${IMAGE_NAME:-localhost/ubi9/dotnet-100}
+IMAGE_NAME=${IMAGE_NAME:-localhost/ubi9/dotnet-110}
 # Infer runtime image from SDK image when it is not explicitly set
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
 source "${test_dir}/testcommon"
 
-dotnet_version_series="10.0"
+dotnet_version_series="11.0"
 
 sample_app_url="https://github.com/redhat-developer/s2i-dotnetcore-ex.git"
 
@@ -317,7 +317,7 @@ test_config_1() {
   assert_contains "${s2i_build}" "test1/bin/Debug"
   assert_contains "${s2i_build}" "test2/bin/Debug"
   # DOTNET_ASSEMBLY_NAME=SampleApp
-  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/net10.0/SampleApp.dll"
+  assert_contains "${s2i_build}" "/opt/app-root/src/src/app/bin/Debug/net11.0/SampleApp.dll"
   # DOTNET_RESTORE_SOURCES=https://api.nuget.org/v3/index.json https://f.feedz.io/redhat-dotnet/s2i-ci/nuget/index.json
   assert_contains "${s2i_build}" 'Restored /opt/app-root/src/src/app/app.csproj \([^)]+\)\.' # Includes S2iDotNetCoreDummy from feedz.io.
   # DOTNET_PACK=true
@@ -416,12 +416,12 @@ test_imagestream_sample() {
   # test the sample app defined with the imagestreams:
   # "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex.git",
   # "sampleContextDir": "app",
-  # "sampleRef": "dotnet-10.0"
+  # "sampleRef": "dotnet-11.0"
 
   # build image
   local image=$(s2i_image_tag sample)
   docker_rmi ${tag}
-  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnet-10.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
+  local s2i_build=$(s2i_build_core ${image} --pull-policy=always --context-dir=app --ref=dotnet-11.0 https://github.com/redhat-developer/s2i-dotnetcore-ex.git 2>&1)
   # start container
   local container=$(docker_run_d ${image})
   local url=$(container_url ${container})

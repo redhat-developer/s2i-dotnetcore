@@ -83,7 +83,7 @@ VERSIONS=$(echo "$VERSIONS" | xargs)
 
 # default to building the currently supported versions.
 if [ -z "$VERSIONS" ]; then
-  VERSIONS="8.0 9.0 10.0"
+  VERSIONS="8.0 9.0 10.0 11.0"
 fi
 
 # Use podman instead of docker when available.
@@ -99,7 +99,7 @@ image_exists() {
 
 default_base_os_for_version() {
   local version=$1
-  if [[ $version == 10.0 ]]; then
+  if [[ $version == 10.0 ]] || [[ $version == 11.0 ]]; then
     echo "rhel9"
   else
     echo "rhel8"
