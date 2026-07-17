@@ -28,13 +28,13 @@ STOP_ON_ERROR=${STOP_ON_ERROR:-true}
 
 IMAGE_OS=${IMAGE_OS:-RHEL9}
 
-IMAGE_NAME=${IMAGE_NAME:-localhost/ubi9/dotnet-100-aspnet}
+IMAGE_NAME=${IMAGE_NAME:-localhost/ubi9/dotnet-110-aspnet}
 OPENSHIFT_ONLY=${OPENSHIFT_ONLY:-false}
 
 test_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
 source "${test_dir}/testcommon"
 
-dotnet_version_series="10.0"
+dotnet_version_series="11.0"
 
 test_envvars() {
   test_start
