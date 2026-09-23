@@ -28,7 +28,7 @@ ENV \
     # Like Microsoft images, provide the SDK version
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION
 
-ARG _SUMMARY=".NET 10 SDK"
+ARG _SUMMARY=".NET 11 SDK"
 ARG _DESCRIPTION="SDK for building .NET 11.0 applications"
 LABEL \
       # Labels consumed by Red Hat build pipeline, container catalog and OpenShift

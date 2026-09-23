@@ -15,7 +15,7 @@ ENV \
     # Like Microsoft images, provide the .NET version.
     DOTNET_VERSION=$DOTNET_VERSION
 
-ARG _SUMMARY=".NET 10 Runtime"
+ARG _SUMMARY=".NET 11 Runtime"
 ARG _DESCRIPTION="Base image for running .NET 11.0 applications"
 LABEL \
       # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
