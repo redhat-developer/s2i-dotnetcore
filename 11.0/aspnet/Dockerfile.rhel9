@@ -8,7 +8,7 @@ ARG DOTNET_TARBALL
 # Like Microsoft images, provide the ASP.NET shared framework version.
 ENV ASPNET_VERSION=$ASPNET_VERSION
 
-ARG _SUMMARY="ASP.NET Core 10 Runtime"
+ARG _SUMMARY="ASP.NET Core 11 Runtime"
 ARG _DESCRIPTION="Base image for running ASP.NET Core 11.0 applications"
 LABEL \
       # Labels consumed by Red Hat build pipeline, container catalog and OpenShift
