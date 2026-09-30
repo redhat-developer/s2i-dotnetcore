@@ -25,17 +25,61 @@
                         "annotations": {
                             "openshift.io/display-name": ".NET SDK (Latest)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Build and run applications using the latest .NET SDK. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/build/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates.",
+                            "description": "Build and run applications using the latest .NET SDK. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/11.0/build/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates.",
                             "iconClass": "icon-dotnet",
                             "tags": "builder,dotnet,hidden",
                             "supports": "dotnet",
                             "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
                             "sampleContextDir": "app",
-                            "sampleRef": "dotnet-10.0"
+                            "sampleRef": "dotnet-11.0"
                         },
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "10.0"
+                            "name": "11.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "11.0-ubi9",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET SDK 11.0 (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Build and run .NET 11.0 applications on UBI 9. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/11.0/build/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "builder,dotnet,hidden",
+                            "version": "11.0",
+                            "supports": "dotnet,dotnet:11.0",
+                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
+                            "sampleContextDir": "app",
+                            "sampleRef": "dotnet-11.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-110"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "11.0",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET SDK 11.0 (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Build and run .NET 11.0 applications on UBI 9. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/11.0/build/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "builder,dotnet",
+                            "version": "11.0",
+                            "supports": "dotnet,dotnet:11.0",
+                            "sampleRepo": "https://github.com/redhat-developer/s2i-dotnetcore-ex",
+                            "sampleContextDir": "app",
+                            "sampleRef": "dotnet-11.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-110"
                         },
                         "referencePolicy": {
                             "type": "Local"
@@ -192,14 +236,52 @@
                         "annotations": {
                             "openshift.io/display-name": ".NET Runtime (Latest)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Base image for running non-web .NET applications using the latest .NET runtime. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/runtime/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates. Instead, it is recommended to use the tag that corresponds to the .NET version targeted by your application. Unless configured differently, .NET applications won't start on a different major runtime version.",
+                            "description": "Base image for running non-web .NET applications using the latest .NET runtime. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/11.0/runtime/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates. Instead, it is recommended to use the tag that corresponds to the .NET version targeted by your application. Unless configured differently, .NET applications won't start on a different major runtime version.",
                             "iconClass": "icon-dotnet",
                             "tags": "dotnet-runtime,hidden",
                             "supports": "dotnet-runtime"
                         },
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "10.0"
+                            "name": "11.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "11.0-ubi9",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET 11.0 Runtime (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running non-web .NET 11.0 applications on UBI 9. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/11.0/runtime/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-runtime,hidden",
+                            "version": "11.0",
+                            "supports": "dotnet-runtime,dotnet-runtime:11.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-110-runtime"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "11.0",
+                        "annotations": {
+                            "openshift.io/display-name": ".NET 11.0 Runtime (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running non-web .NET 11.0 applications on UBI 9. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/11.0/runtime/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-runtime",
+                            "version": "11.0",
+                            "supports": "dotnet-runtime,dotnet-runtime:11.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-110-runtime"
                         },
                         "referencePolicy": {
                             "type": "Local"
@@ -338,14 +420,52 @@
                         "annotations": {
                             "openshift.io/display-name": "ASP.NET Core Runtime (Latest)",
                             "openshift.io/provider-display-name": "Red Hat, Inc.",
-                            "description": "Base image for running ASP.NET Core applications using the latest ASP.NET Core runtime. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/10.0/aspnet/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates. Instead, it is recommended to use the tag that corresponds to the .NET version targeted by your application. Unless configured differently, .NET applications won't start on a different major runtime version.",
+                            "description": "Base image for running ASP.NET Core applications using the latest ASP.NET Core runtime. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/11.0/aspnet/README.md.\n\nWARNING: By selecting this tag, your application will automatically update to use the latest version of .NET available on OpenShift, including major version updates. Instead, it is recommended to use the tag that corresponds to the .NET version targeted by your application. Unless configured differently, .NET applications won't start on a different major runtime version.",
                             "iconClass": "icon-dotnet",
                             "tags": "dotnet-aspnet,hidden",
                             "supports": "dotnet-aspnet"
                         },
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "10.0"
+                            "name": "11.0"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "11.0-ubi9",
+                        "annotations": {
+                            "openshift.io/display-name": "ASP.NET Core 11.0 Runtime (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running ASP.NET Core 11.0 applications on UBI 9. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/11.0/aspnet/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-aspnet,hidden",
+                            "version": "11.0",
+                            "supports": "dotnet-aspnet,dotnet-aspnet:11.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-110-aspnet"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    },
+                    {
+                        "name": "11.0",
+                        "annotations": {
+                            "openshift.io/display-name": "ASP.NET Core 11.0 Runtime (UBI 9)",
+                            "openshift.io/provider-display-name": "Red Hat, Inc.",
+                            "description": "Base image for running ASP.NET Core 11.0 applications on UBI 9. For more information, see https://github.com/redhat-developer/s2i-dotnetcore/tree/main/11.0/aspnet/README.md.",
+                            "iconClass": "icon-dotnet",
+                            "tags": "dotnet-aspnet",
+                            "version": "11.0",
+                            "supports": "dotnet-aspnet,dotnet-aspnet:11.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "registry.access.redhat.com/ubi9/dotnet-110-aspnet"
                         },
                         "referencePolicy": {
                             "type": "Local"
