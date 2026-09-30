@@ -11,6 +11,7 @@ The images support OpenShift [source-to-image](https://github.com/openshift/sour
 | 8.0 | UBI 8         | [SDK image](8.0/build/README.md) <br/> [Runtime image](8.0/runtime/README.md)
 | 9.0 | UBI 8         | [SDK image](9.0/build/README.md) <br/> [Runtime image](9.0/runtime/README.md)
 | 10.0 | UBI 9         | [SDK image](10.0/build/README.md) <br/> [ASP.NET Core image](10.0/aspnet/README.md) <br/> [Runtime image](10.0/runtime/README.md)
+| 11.0 | UBI 9         | [SDK image](11.0/build/README.md) <br/> [ASP.NET Core image](11.0/aspnet/README.md) <br/> [Runtime image](11.0/runtime/README.md)
 
 ## EOL Versions
 
@@ -34,7 +35,7 @@ You can build (and test) the images by executing the `build.sh` script and pass 
 
 ```
 $ git clone https://github.com/redhat-developer/s2i-dotnetcore.git
-$ ./build.sh --ci 8.0 9.0 10.0
+$ ./build.sh --ci 8.0 9.0 10.0 11.0
 ```
 
 To override the default basis of the image, you can use the `--base-os` argument. For example: `--base-os fedora` or `--base-os rhel8`.
@@ -50,11 +51,4 @@ The image streams can be added to OpenShift by importing an `dotnet_imagestreams
 oc apply -f https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/main/dotnet_imagestreams.json
 ```
 
-The `dotnet_imagestreams_*.json` files define the supported .NET versions for a specific architecture:
-
-| Architecture | File |
-|--|--|
-| x64 | https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/main/dotnet_imagestreams.json |
-| arm64 | https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/main/dotnet_imagestreams_aarch64.json |
-| ppc64le | https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/main/dotnet_imagestreams_ppc64le.json |
-| s390x | https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/main/dotnet_imagestreams_s390x.json |
+The `dotnet_imagestreams.json` file supports all architectures (x64, arm64, ppc64le, s390x).
