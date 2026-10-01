@@ -23,7 +23,7 @@ jobs:
       && contains(fromJson('["OWNER", "MEMBER"]'), github.event.comment.author_association)
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set compose name
         id: vars
